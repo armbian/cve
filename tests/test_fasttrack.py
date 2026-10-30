@@ -323,6 +323,12 @@ git -C tree -c user.name=c -c user.email=c@c commit -qam "baz: fix race" -m "com
         cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--claude"])
         self.assertEqual(self._cve_outcome(), "not-affected-needs-review")
 
+    def test_claude_not_found(self):
+        with open(self.cfg, "a") as fh:
+            fh.write(f"claude_cmd: ['{self.tmp}/no-claude']\n")
+        self.assertEqual(cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--claude"]), 2)
+        self.assertFalse((self.out / "attempts.json").exists())
+
     def test_collect_existing_work_package(self):
         cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--package"])
         tree = self.out / "work" / "CVE-2026-0003" / "6.18" / "tree"
@@ -358,7 +364,7 @@ git -C tree -c user.name=c -c user.email=c@c commit -qam "baz: fix race" -m "com
 
     def test_young_fix_waits_for_stable(self):
         with open(self.cfg, "a") as fh:
-            fh.write(f"claude_min_age_days: 100000\nclaude_cmd: ['{self.tmp / 'no-such-claude'}']\n")
+            fh.write(f"claude_min_age_days: 100000\nclaude_cmd: ['false']\n")
         cli.main(["--config", str(self.cfg), "run"])
         cli.main(["--config", str(self.cfg), "cve", "--unpatched", "--claude"])
         self.assertFalse((self.out / "work" / "CVE-2026-0003" / "6.18" / "claude.log").exists())
