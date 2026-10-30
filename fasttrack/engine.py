@@ -16,8 +16,10 @@ that needs adaptation is reported, never edited.
 
 from __future__ import annotations
 
+import logging
 import re
 import tempfile
+import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Iterable, Optional
@@ -25,6 +27,8 @@ from typing import Iterable, Optional
 from . import gitutil
 from .queue import QueuedPatch, load_queue
 from .vulns import CveRecord
+
+log = logging.getLogger(__name__)
 
 ACCEPTED = "accepted"
 PRESENT = "already-present"     # reverse-applies: the tree has it
@@ -100,10 +104,13 @@ def collect(
     seen: set[str] = set()
 
     queued: list[QueuedPatch] = load_queue(queue_root, series) if queue_root else []
+    log.info("%s: %d CVE fix commits, %d unfixed here; %d patches in stable-queue",
+             label, len(all_fix), len(unfixed), len(queued))
     for q in queued:
         cves = all_fix.get(q.upstream or "", [])
         is_kev = any(c in kev for c in cves)
         if queue_mode == "cve" and not cves:
+            log.debug("%s: queue %s: no CVE, skipped", label, q.file)
             continue
         key = q.upstream or f"queue:{q.file}"
         if key in seen:
@@ -118,6 +125,8 @@ def collect(
         seen.add(sha)
         out.append(Candidate(label, sha, subjects.get(sha, ""), "mainline",
                              sorted(set(cves)), any(c in kev for c in cves)))
+    log.info("%s: %d candidates (%d stable-queue, %d mainline)", label, len(out),
+             sum(c.source == "stable-queue" for c in out), sum(c.source == "mainline" for c in out))
     # Queue order is dependency order; never reorder it (KEV only raises urgency).
     return out
 
@@ -127,28 +136,36 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
     with tempfile.TemporaryDirectory(prefix="fasttrack-") as tmpd, \
             gitutil.Worktree(repo, ref, Path(tmpd) / "wt") as wt:
         n = 0
-        for c in candidates:
-            if c.source == "mainline":
-                if not c.patch:
-                    try:
-                        c.patch = gitutil.upstream_patch(repo, c.upstream)
-                    except gitutil.GitError as e:
-                        c.verdict, c.reason = MISSING, str(e)
-                        continue
-                c.subject = gitutil.commit_subject(repo, c.upstream, c.patch) or c.subject
-            if wt.check(c.patch, reverse=True) and not wt.check(c.patch):
-                c.verdict, c.reason = PRESENT, "change already in tree"
-                continue
-            if not wt.check(c.patch):
-                c.verdict, c.reason = CONFLICT, "does not apply unchanged; needs a manual backport or prerequisite"
-                c.files = gitutil.patch_files(c.patch)
-                if c.upstream:
-                    c.prerequisites = gitutil.prerequisite_hints(repo, ref, c.upstream, c.files)
-                continue
-            wt.apply(c.patch)
-            n += 1
-            c.verdict = ACCEPTED
-            c.filename = f"{n:04d}-{(c.upstream or 'q')[:12]}-{_slug(c.subject)}.patch"
+        for i, c in enumerate(candidates, 1):
+            _verify_one(repo, ref, wt, c)
+            if c.verdict == ACCEPTED:
+                n += 1
+                c.filename = f"{n:04d}-{(c.upstream or 'q')[:12]}-{_slug(c.subject)}.patch"
+            log.info("%s [%d/%d] %s %s: %s - %s", c.series, i, len(candidates), (c.upstream or "-")[:12],
+                     c.source, c.verdict, c.subject)
+
+
+def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate) -> None:
+    """Sets the verdict of one candidate; applies it to ``wt`` when accepted."""
+    if c.source == "mainline":
+        if not c.patch:
+            try:
+                c.patch = gitutil.upstream_patch(repo, c.upstream)
+            except gitutil.GitError as e:
+                c.verdict, c.reason = MISSING, str(e)
+                return
+        c.subject = gitutil.commit_subject(repo, c.upstream, c.patch) or c.subject
+    if wt.check(c.patch, reverse=True) and not wt.check(c.patch):
+        c.verdict, c.reason = PRESENT, "change already in tree"
+        return
+    if not wt.check(c.patch):
+        c.verdict, c.reason = CONFLICT, "does not apply unchanged; needs a manual backport or prerequisite"
+        c.files = gitutil.patch_files(c.patch)
+        if c.upstream:
+            c.prerequisites = gitutil.prerequisite_hints(repo, ref, c.upstream, c.files)
+        return
+    wt.apply(c.patch)
+    c.verdict = ACCEPTED
 
 
 def _order_mainline(repo: Path, cands: list[Candidate]) -> None:
@@ -183,7 +200,11 @@ def run_series(
     if not ref:
         raise gitutil.GitError(f"no stable branch {branch} in {repo}")
     hv = ".".join(map(str, gitutil.makefile_version(repo, ref)))
+    log.info("%s: stable head %s (%s)", label, ref[:12], hv)
+    t = time.monotonic()
     cands = collect(series, records, queue_root, kev, queue_mode)
     _order_mainline(repo, cands)
+    log.info("%s: verify %d candidates on %s", label, len(cands), ref[:12])
     verify(repo, ref, cands)
+    log.info("%s: done in %.0fs", label, time.monotonic() - t)
     return SeriesResult(label, ref, hv, releases.get(label), cands)

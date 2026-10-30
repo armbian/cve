@@ -21,9 +21,11 @@ never treated like an upstream patch.
 from __future__ import annotations
 
 import json
+import logging
 import shlex
 import subprocess
 import tempfile
+import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Optional
@@ -32,6 +34,8 @@ from . import gitutil
 from .engine import ACCEPTED, CONFLICT, MISSING, PRESENT, Candidate, _slug
 from .queue import load_queue
 from .vulns import CveRecord, parse_version
+
+log = logging.getLogger(__name__)
 
 ADAPTED = "adapted"
 CLAUDE = "claude-backport"
@@ -125,6 +129,8 @@ def resolve(
     res = Resolution(cve, label, ref, hv, status,
                      ".".join(map(str, fixed[:3])) if fixed else None,
                      record.title if record else "", record.description if record else "")
+    log.info("%s %s: stable head %s (%s), record status %s%s, %d fix commit(s)", cve, label, ref[:12], hv,
+             status, f" {res.fixed_in}" if res.fixed_in else "", len(fix_commits))
     if status == "unaffected":
         return res
     if status == "fixed-in" and parse_version(hv) >= fixed:
@@ -180,6 +186,8 @@ def resolve(
                 continue
             n += 1
             c.filename = f"{n:04d}-{c.upstream[:12]}-{_slug(c.subject)}.patch"
+    for c in res.candidates:
+        log.info("%s %s: %s %s: %s - %s", cve, label, c.upstream[:12], c.source, c.verdict, c.subject)
     return res
 
 
@@ -265,6 +273,7 @@ def prepare_work(repo: Path, res: Resolution, work_root: Path) -> Path:
         head12=res.head[:12], version=res.head_version, resolved=resolved,
         failing="\n\n".join(failing) or "(nothing)"))
     res.work_dir = str(wdir)
+    log.info("%s %s: work package %s", res.cve, res.series, wdir)
     return wdir
 
 
@@ -272,6 +281,14 @@ def run_claude(wdir: Path, cmd: Optional[list[str]] = None, timeout: int = 3600)
     """Run Claude Code headless in the work package. Output goes to claude.log."""
     cmd = list(cmd or DEFAULT_CLAUDE_CMD)
     prompt = (wdir / "BRIEF.md").read_text()
+    log.info("$ %s <BRIEF.md (log: %s)", " ".join(shlex.quote(a) for a in cmd), wdir / "claude.log")
+    t = time.monotonic()
+    rc = _claude(wdir, cmd, prompt, timeout)
+    log.info("claude exited %d after %.0fs", rc, time.monotonic() - t)
+    return rc
+
+
+def _claude(wdir: Path, cmd: list[str], prompt: str, timeout: int) -> int:
     with open(wdir / "claude.log", "w") as log:
         log.write("$ " + " ".join(shlex.quote(a) for a in cmd) + " <BRIEF.md\n\n")
         log.flush()
@@ -292,6 +309,7 @@ def collect_work(repo: Path, res: Resolution, wdir: Path) -> None:
     tree = wdir / "tree"
     start = (wdir / "start").read_text().strip()
     shas = gitutil.git(tree, "rev-list", "--reverse", f"{start}..HEAD", check=False).split()
+    log.info("%s %s: %d commit(s) from the work package", res.cve, res.series, len(shas))
     if not shas:
         res.note = (res.note + " " if res.note else "") + "no backport commits in work package; see RESULT.md"
         return
@@ -312,6 +330,7 @@ def collect_work(repo: Path, res: Resolution, wdir: Path) -> None:
             if broken or not wt.check(c.patch):
                 broken = True
                 c.verdict, c.reason = CONFLICT, "work-package series does not apply on a clean tree"
+                log.info("%s %s: %s does not apply on a clean tree", res.cve, res.series, c.subject)
                 continue
             wt.apply(c.patch)
     for c in res.candidates:
@@ -353,6 +372,7 @@ def prune(repo: Path, cve_root: Path, remote: str = "origin", branch_fmt: str = 
         try:
             ref = _stable_ref(repo, label, remote, branch_fmt)
         except gitutil.GitError:
+            log.info("prune %s %s: no stable branch, kept", cid, label)
             continue                                   # series no longer tracked/synced: leave it alone
         meta = sdir / "fasttrack.json"
         patches = [sdir / n for n in _series_names(sdir)]
@@ -368,6 +388,7 @@ def prune(repo: Path, cve_root: Path, remote: str = "origin", branch_fmt: str = 
                 # reverse the whole series, newest first: all present means absorbed
                 if all(wt.check(p.read_text(**gitutil.ENC), reverse=True) for p in reversed(patches)):
                     reason = "stable head already contains every patch"
+        log.info("prune %s %s: %s", cid, label, reason or "still needed")
         if reason:
             shutil.rmtree(sdir)
             removed.append(f"{cid} {label}: {reason}")

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 import sys
 from pathlib import Path
@@ -22,6 +23,17 @@ from pathlib import Path
 import yaml
 
 from . import emit, engine, feeds, gitutil, incident, sync, vulns
+
+log = logging.getLogger("fasttrack")
+
+
+def _logging(verbose: int) -> None:
+    """-v: progress per step and per patch. -vv: also every git command."""
+    log.setLevel((logging.WARNING, logging.INFO, logging.DEBUG)[min(verbose, 2)])
+    if not log.handlers:
+        h = logging.StreamHandler(sys.stdout)
+        h.setFormatter(logging.Formatter("%(asctime)s %(message)s", "%H:%M:%S"))
+        log.addHandler(h)
 
 
 def _series(text: str) -> tuple[int, int]:
@@ -53,6 +65,8 @@ def cmd_run(args) -> int:
     records = list(vulns.iter_records(data / "vulns", since_year=int(cfg.get("cve_since_year", 2024))))
     kev = feeds.load_kev(data / "kev.json")
     releases = feeds.load_releases(data / "releases.json")
+    log.info("%d CVE records since %s, %d KEV entries, latest releases %s", len(records),
+             cfg.get("cve_since_year", 2024), len(kev), releases or "unknown")
     queue_root = data / "stable-queue"
 
     results = []
@@ -116,6 +130,7 @@ def cmd_cve(args) -> int:
         print("give CVE ids, --commit, or --unpatched")
         return 2
 
+    log.info("%d incident(s) on %s", len(incidents), ", ".join(f"{a}.{b}" for a, b in series))
     claude_cmd = cfg.get("claude_cmd") or incident.DEFAULT_CLAUDE_CMD
     if args.claude_model:
         claude_cmd = list(claude_cmd) + ["--model", args.claude_model]
@@ -170,6 +185,8 @@ def main(argv=None) -> int:
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--config", default="fasttrack.yaml")
     p.add_argument("--out", help="output directory (default from config)")
+    p.add_argument("-v", "--verbose", action="count", default=0,
+                   help="-v: progress per step and per patch; -vv: also every git command")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("sync", help="pull upstream sources").set_defaults(fn=cmd_sync)
@@ -191,6 +208,7 @@ def main(argv=None) -> int:
     c.set_defaults(fn=cmd_cve)
 
     args = p.parse_args(argv)
+    _logging(args.verbose)
     return args.fn(args)
 
 

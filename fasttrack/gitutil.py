@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import re
 import subprocess
+import time
 from pathlib import Path
 from typing import Optional
+
+log = logging.getLogger(__name__)
 
 
 class GitError(RuntimeError):
@@ -25,36 +29,26 @@ for _k, _v in (("GIT_AUTHOR_NAME", "ksec-fasttrack"), ("GIT_AUTHOR_EMAIL", "fast
 ENC = {"encoding": "utf-8", "errors": "surrogateescape"}
 
 
+def _run(repo: Path, args: tuple, input: Optional[str] = None) -> subprocess.CompletedProcess:
+    t = time.monotonic()
+    proc = subprocess.run(["git", "-C", str(repo), *args], capture_output=True, input=input, env=_ENV, **ENC)
+    log.debug("git %s -> %d (%.2fs)", " ".join(args), proc.returncode, time.monotonic() - t)
+    return proc
+
+
 def git(repo: Path, *args: str, check: bool = True, input: Optional[str] = None) -> str:
-    proc = subprocess.run(
-        ["git", "-C", str(repo), *args],
-        capture_output=True,
-        input=input,
-        env=_ENV,
-        **ENC,
-    )
+    proc = _run(repo, args, input)
     if check and proc.returncode != 0:
         raise GitError(f"git {' '.join(args)}: {proc.stderr.strip()}")
     return proc.stdout
 
 
 def ok(repo: Path, *args: str, input: Optional[str] = None) -> bool:
-    return subprocess.run(
-        ["git", "-C", str(repo), *args],
-        capture_output=True,
-        input=input,
-        env=_ENV,
-        **ENC,
-    ).returncode == 0
+    return _run(repo, args, input).returncode == 0
 
 
 def rev(repo: Path, ref: str) -> Optional[str]:
-    out = subprocess.run(
-        ["git", "-C", str(repo), "rev-parse", "--verify", "--quiet", f"{ref}^{{commit}}"],
-        capture_output=True,
-        text=True,
-    )
-    return out.stdout.strip() or None
+    return _run(repo, ("rev-parse", "--verify", "--quiet", f"{ref}^{{commit}}")).stdout.strip() or None
 
 
 _MK = {k: re.compile(rf"^{k}\s*=\s*(\S*)", re.M) for k in ("VERSION", "PATCHLEVEL", "SUBLEVEL")}
@@ -127,14 +121,17 @@ def is_boundary(repo: Path, sha: str) -> bool:
 def _fetch_patch(sha: str) -> Optional[str]:
     import urllib.request
     for tmpl in PATCH_URLS:
+        url = tmpl.format(sha=sha)
+        log.info("download %s", url)
         try:
-            req = urllib.request.Request(tmpl.format(sha=sha), headers={"User-Agent": "ksec-fasttrack"})
+            req = urllib.request.Request(url, headers={"User-Agent": "ksec-fasttrack"})
             with urllib.request.urlopen(req, timeout=60) as r:
                 body = r.read().decode(**ENC)
             if "\ndiff --git " in body:
                 return body
-        except Exception:
-            continue
+            log.info("download %s: not a patch", url)
+        except Exception as e:
+            log.info("download %s: %s", url, e)
     return None
 
 
