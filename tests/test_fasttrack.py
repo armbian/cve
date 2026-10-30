@@ -300,6 +300,39 @@ echo ok > RESULT.md
         cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--claude", "--retry"])
         self.assertTrue((wdir / "RESULT.md").exists())
 
+    def _fake_claude(self, script):
+        fake = self.tmp / "fake-claude"
+        fake.write_text("#!/bin/sh\nset -e\n" + script)
+        fake.chmod(fake.stat().st_mode | stat.S_IEXEC)
+        with open(self.cfg, "a") as fh:
+            fh.write(f"claude_cmd: ['{fake}']\n")
+
+    def _cve_outcome(self):
+        return json.loads((self.out / "cve-result.json").read_text())[0]["outcome"]
+
+    def test_short_sha_supersedes(self):
+        # Claude cites the fix by a 12-character sha
+        self._fake_claude(f"""sed -i 's/baz line 6 REWORKED/baz line 6 REWORKED FIXED/' tree/baz.c
+git -C tree -c user.name=c -c user.email=c@c commit -qam "baz: fix race" -m "commit {self.C[:12]} upstream."
+""")
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--claude"])
+        self.assertEqual(self._cve_outcome(), "patched-needs-review")
+
+    def test_not_affected_by_work_package(self):
+        self._fake_claude("printf 'Not affected\\n\\nThe code is not here.\\n' > RESULT.md\n")
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--claude"])
+        self.assertEqual(self._cve_outcome(), "not-affected-needs-review")
+
+    def test_collect_existing_work_package(self):
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--package"])
+        tree = self.out / "work" / "CVE-2026-0003" / "6.18" / "tree"
+        sh(tree, "sed", "-i", "s/baz line 6 REWORKED/baz line 6 REWORKED FIXED/", "baz.c")
+        sh(tree, "git", "-c", "user.name=c", "-c", "user.email=c@c", "commit", "-qam", "baz: fix race",
+           "-m", f"commit {self.C} upstream.")
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--collect"])
+        self.assertEqual(self._cve_outcome(), "patched-needs-review")
+        self.assertTrue(tree.is_dir())
+
     def test_unpatched_round_trip(self):
         cli.main(["--config", str(self.cfg), "run"])
         rc = cli.main(["--config", str(self.cfg), "cve", "--unpatched", "--adapt"])

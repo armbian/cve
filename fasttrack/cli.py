@@ -163,7 +163,13 @@ def cmd_cve(args) -> int:
             except gitutil.GitError as e:
                 print(f"{cid} {s[0]}.{s[1]}: skipped ({e})")
                 continue
-            if res.outcome in ("unpatched", "partial") and (args.claude or args.package):
+            wdir = out / "work" / cid / res.series
+            if args.collect and res.outcome in ("unpatched", "partial") and (wdir / "start").exists():
+                # Commits made in an existing work package (by hand or an earlier run); no Claude.
+                incident.collect_work(data / "linux", res, wdir)
+                if cid in attempts and res.series in attempts[cid]:
+                    attempts[cid][res.series]["outcome"] = res.outcome
+            elif res.outcome in ("unpatched", "partial") and (args.claude or args.package):
                 wdir = incident.prepare_work(data / "linux", res, out / "work")
                 young = _days_in_mainline(data / "linux", fixes, newest_release)
                 if args.claude and cid in from_list and young < min_age:
@@ -247,6 +253,8 @@ def main(argv=None) -> int:
     c.add_argument("--claude-model", help="model alias passed to claude --model")
     c.add_argument("--claude-timeout", type=int, default=3600)
     c.add_argument("--retry", action="store_true", help="run Claude again where attempts.json has a result")
+    c.add_argument("--collect", action="store_true",
+                   help="take commits from existing work packages; runs no Claude and keeps the trees")
     c.set_defaults(fn=cmd_cve)
 
     args = p.parse_args(argv)

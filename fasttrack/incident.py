@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import shlex
 import subprocess
 import tempfile
@@ -40,6 +41,7 @@ log = logging.getLogger(__name__)
 
 ADAPTED = "adapted"
 CLAUDE = "claude-backport"
+NOT_HERE = "not-in-tree"        # work package found the vulnerable code absent
 PATCH_VERDICTS = (ACCEPTED, ADAPTED, CLAUDE)
 
 DEFAULT_CLAUDE_CMD = [
@@ -83,6 +85,8 @@ class Resolution:
             return "partial" if self.patches else "unpatched"
         if CLAUDE in v or ADAPTED in v:
             return "patched-needs-review"
+        if NOT_HERE in v:
+            return "not-affected-needs-review"
         if v == {PRESENT}:
             return "already-present"
         return "patched"
@@ -241,7 +245,7 @@ BRIEF = """\
 3. Commit in `./tree`, one commit per upstream commit, keeping the upstream subject
    and author (`git commit --author=...`). Put this at the top of the body:
 
-       commit <upstream sha> upstream.
+       commit <full 40-character upstream sha> upstream.
 
        [ Backport: <one line per difference from upstream, and why> ]
 
@@ -250,7 +254,8 @@ BRIEF = """\
 5. Touch nothing outside `./tree` except `RESULT.md` here. In RESULT.md write what
    you changed, why it is equivalent to upstream, and what you could not verify.
 
-If the vulnerable code does not exist in this tree, make no commit and say so in RESULT.md.
+If the vulnerable code does not exist in this tree, make no commit and start RESULT.md
+with the line `Not affected`, then explain why.
 """
 
 
@@ -351,14 +356,21 @@ def collect_work(repo: Path, res: Resolution, wdir: Path) -> None:
     shas = gitutil.git(tree, "rev-list", "--reverse", f"{start}..HEAD", check=False).split()
     log.info("%s %s: %d commit(s) from the work package", res.cve, res.series, len(shas))
     if not shas:
+        result = wdir / "RESULT.md"
+        head = result.read_text(**gitutil.ENC)[:300].lower() if result.exists() else ""
+        if "not affected" in head:
+            for c in res.candidates:
+                if c.verdict in (CONFLICT, MISSING):
+                    c.verdict, c.reason = NOT_HERE, "vulnerable code not in this tree (work package); see RESULT.md"
+            res.note = (res.note + " " if res.note else "") + "not affected per work package; review RESULT.md"
+            return
         res.note = (res.note + " " if res.note else "") + "no backport commits in work package; see RESULT.md"
         return
     new = []
     for sha in shas:
         subj = gitutil.git(tree, "log", "-1", "--format=%s", sha).strip()
         body = gitutil.git(tree, "log", "-1", "--format=%B", sha)
-        up = next((w for line in body.splitlines() for w in line.split()
-                   if len(w) == 40 and all(ch in "0123456789abcdef" for ch in w)), "")
+        up = _upstream_of(body, res.candidates)
         new.append(Candidate(res.series, up, subj, "claude", [res.cve], verdict=CLAUDE,
                              reason="backport made in work package; review before use",
                              patch=gitutil.format_patch(tree, sha)))
@@ -381,6 +393,19 @@ def collect_work(repo: Path, res: Resolution, wdir: Path) -> None:
     for c in res.patches:
         n += 1
         c.filename = f"{n:04d}-{(c.upstream or c.source)[:12]}-{_slug(c.subject)}.patch"
+
+
+_CITE = re.compile(r"^(?:commit ([0-9a-f]{7,40}) upstream|\[ Upstream commit ([0-9a-f]{7,40}) \])", re.M)
+
+
+def _upstream_of(body: str, candidates: list[Candidate]) -> str:
+    """Full upstream sha a work-package commit cites; short shas are matched
+    against the incident's fix commits."""
+    for a, b in _CITE.findall(body):
+        cited = a or b
+        full = next((c.upstream for c in candidates if c.upstream and c.upstream.startswith(cited)), "")
+        return full or (cited if len(cited) == 40 else "")
+    return ""
 
 
 def load_unpatched(path: Path) -> dict[str, list[str]]:
