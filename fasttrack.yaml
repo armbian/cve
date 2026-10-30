@@ -1,0 +1,48 @@
+# ksec-fasttrack configuration
+
+# Kernel series to track: LTS and trunk.
+series:
+  - "6.18"
+  - "7.3"
+
+# Persistent data directory filled by `fasttrack sync` (linux.git alone is ~5 GB).
+data: /srv/fasttrack
+
+# Patch sets, reports, unpatched list, incident results and work packages.
+out: out
+
+# Which stable-queue patches to take early:
+#   cve  - only queued patches whose upstream commit is a published CVE fix (default)
+#   all  - the whole queue, i.e. the next point release a few days early
+queue_mode: cve
+
+# Older CVE records cannot apply to 6.18/7.3 and slow the scan.
+cve_since_year: 2024
+
+# Command used by `fasttrack cve --claude`. The BRIEF.md text is appended as the
+# last argument and it runs inside the work package directory.
+claude_cmd:
+  - claude
+  - -p
+  - --permission-mode
+  - acceptEdits
+  - --allowedTools
+  - Read
+  - Edit
+  - Write
+  - Grep
+  - Glob
+  - Bash(git:*)
+  - Bash(make:*)
+  - Bash(grep:*)
+  - Bash(sed:*)
+  - Bash(ls:*)
+  - Bash(cat:*)
+  - --output-format
+  - text
+
+# Upstream URLs; override to use mirrors.
+# sources:
+#   vulns: https://git.kernel.org/pub/scm/linux/security/vulns.git
+#   stable_queue: https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+#   linux: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git

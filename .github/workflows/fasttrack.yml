@@ -1,0 +1,110 @@
+name: kernel-security-fasttrack
+
+# Hourly: pull sources, gather + verify patches, publish them on the `generated`
+# branch with the report and the unpatched list. On demand: resolve specific
+# incidents, optionally letting Claude Code make the missing backports; those
+# arrive as a PR into `generated` so a human reviews them.
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+    inputs:
+      incidents:
+        description: "CVE ids (space separated), or 'unpatched' for every open issue"
+        default: ""
+      commit:
+        description: "mainline fix SHA for an incident without a CVE record (optional)"
+        default: ""
+      claude:
+        description: "let Claude Code backport what does not apply"
+        type: boolean
+        default: false
+
+concurrency:
+  group: fasttrack
+  cancel-in-progress: false
+
+env:
+  DATA: /srv/fasttrack        # persistent disk on the runner; linux.git lives here
+  OUT: ${{ github.workspace }}/out
+
+jobs:
+  fasttrack:
+    runs-on: [self-hosted, Linux, fasttrack]
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore previous output (state, unpatched list)
+        run: |
+          if git fetch --quiet origin generated:generated 2>/dev/null; then
+            git worktree add --quiet "$OUT" generated
+          else
+            git worktree add --quiet --orphan -b generated "$OUT"
+          fi
+
+      - name: Sync
+        run: |
+          sed -i "s#^data:.*#data: $DATA#; s#^out:.*#out: $OUT#" fasttrack.yaml
+          python3 -m fasttrack.cli --config fasttrack.yaml sync
+
+      - name: Gather and verify
+        id: run
+        run: |
+          python3 -m fasttrack.cli --config fasttrack.yaml run
+          cat "$OUT/report.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Resolve incidents
+        if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '')
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          args=()
+          if [ "${{ inputs.incidents }}" = "unpatched" ]; then args+=(--unpatched); else args+=(${{ inputs.incidents }}); fi
+          [ -n "${{ inputs.commit }}" ] && args+=(--commit "${{ inputs.commit }}")
+          [ "${{ inputs.claude }}" = "true" ] && args+=(--claude) || args+=(--adapt --package)
+          python3 -m fasttrack.cli --config fasttrack.yaml cve "${args[@]}" || true
+          cat "$OUT/cve-report.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fasttrack-${{ github.run_id }}
+          path: |
+            out/
+            !out/work/*/*/tree
+
+      - name: Publish
+        working-directory: out
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name  "fasttrack[bot]"
+          git config user.email "fasttrack@users.noreply.github.com"
+          git add -A patches report.md unpatched.json state.json events.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -q -m "fasttrack: $(date -u '+%F %H:%M')"
+            git push -q origin HEAD:generated
+          fi
+          # Incident results go to a review branch + PR, never straight to `generated`.
+          if [ -d cve ]; then
+            br="incident/${{ github.run_id }}"
+            git checkout -q -b "$br"
+            git add -A cve cve-report.md cve-result.json
+            git commit -q -m "fasttrack: incident patches for review" && git push -q origin "$br" && \
+              gh pr create --base generated --head "$br" --title "Incident patches for review (run ${{ github.run_id }})" \
+                           --body-file cve-report.md --label security || true
+          fi
+
+      - name: Raise actively exploited CVEs
+        if: steps.run.outputs.kev == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --label security --title "Actively exploited kernel CVE pending" \
+            --body "$(grep -E '^- kev' "$OUT/report.md")
+
+          ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
