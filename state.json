@@ -1,0 +1,48 @@
+{
+  "series": {
+    "6.18": {
+      "head": "1253a6aa5d104312bf0992afacc15220ae35bdf9",
+      "version": "6.18.59",
+      "accepted": [
+        "006c8b834aed8b02bd8fb9fb05e9e7ead37d1763",
+        "184b5ddf82d45d6f75cc83719a2e453392512bd2",
+        "24b620729e53d978b3e425f55bc66efd3bab1f59",
+        "26300879cd8e4612dce66bb8f6ff7cd35fcf3e59",
+        "2842ce397dd09882530b42f7fdb0c855767eb24e",
+        "2b66c83ff1751d6bd3201b3017206262ab46dc05",
+        "34746b5a84ec37c0ea2bf6808c65c5ed8790eb51",
+        "3bac01168982ec3e3bf87efdc1807c7933590a85",
+        "44378d02c5aaae24b60a75fbbb539b4aa4db503d",
+        "46e8e31771f4f1c5e1cdec37a889a6730e42e9f1",
+        "4aa2c106aef4bf3dfd97c30842db0767b26e8428",
+        "593980175389a05793f6060aa20e626330960395",
+        "5d540e4508950c674d6feef1d95463d039bbf4f5",
+        "6bdcdb31318c10e6369cff8e5b32c37397e98091",
+        "6f0a100df8539ce90f37c14e1945f396ca2410bc",
+        "6f63e919fe1e335b8abcb3a28bfd4804a98d875a",
+        "828cd614e2af053ca5e1d6da767bbd8a1b5cabfb",
+        "84265cbd96b97058ef67e3f8be3933667a000835",
+        "87cd6b717e4069dca34e0866e57eaeb44d3b173e",
+        "8879e3e0a84a86954c855caceead4867e74a9a27",
+        "89c2c777df17eb0201c8e22afabbf3691f2a28fe",
+        "8ae3f4067ba4ae3a15581392f6dac422e3d3def0",
+        "8f6f8a48399f82f4a83f7b9f25b9707e0062a4f9",
+        "95e647d2a5304a8fd11f1ba3c8502de700650131",
+        "99c24a8968ebef0573825b5cb89d5985d51635b9",
+        "9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1",
+        "b62793a7baeea9cf20209c9fd2e333311aaf3b8d",
+        "cc3e12330599f097f0e1f792435686ddc276f26d",
+        "d15d51fb26e830af58f3f21964f1c09c239077ea"
+      ],
+      "kev": []
+    },
+    "7.3": {
+      "head": "c03c1a14507dfaf8b856c2608f9ac216021fc222",
+      "version": "7.3.0",
+      "accepted": [
+        "40554d1221e3d2ff2e0d192b74a05d89eb3620e7"
+      ],
+      "kev": []
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "series": "7.3",
+  "base": {
+    "commit": "c03c1a14507dfaf8b856c2608f9ac216021fc222",
+    "version": "7.3.0"
+  },
+  "patches": [
+    {
+      "series": "7.3",
+      "upstream": "40554d1221e3d2ff2e0d192b74a05d89eb3620e7",
+      "subject": "ext4: don't enable large folios on encrypted inodes",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98941"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0001-40554d1221e3-ext4-don-t-enable-large-folios-on-encrypted-inodes.patch",
+      "files": [],
+      "prerequisites": []
+    }
+  ]
+}
