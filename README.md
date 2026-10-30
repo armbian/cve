@@ -12,7 +12,7 @@ It is not tied to any build system. The output is plain patch sets that anything
 ## Quick start
 
 ```
-./fasttrack.sh sync                         # pull sources (first run: linux.git ~5 GB)
+./fasttrack.sh sync                         # pull sources; linux.git is shallow from v<oldest series>
 ./fasttrack.sh run                          # gather + verify; see out/report.md
 ./fasttrack.sh cve --unpatched --claude     # backport every unpatched issue with Claude
 ```
@@ -26,6 +26,13 @@ It is not tied to any build system. The output is plain patch sets that anything
 | `linux.git` `master` + `linux-X.Y.y` | the base to verify on; mainline commits to pick | — |
 | kernel.org `releases.json` | latest release per series | warns when the mirror is stale |
 | CISA KEV | actively exploited CVEs | urgency (issue in CI) |
+
+`linux.git` is fetched **shallow**, with history starting at the release tag of the oldest
+tracked series (`v6.18` today), plus that tag commit. This is sufficient by construction.
+A fix that reached mainline before vX.Y means X.Y is not affected, so every fix the tool
+can need is newer than the tag. The tag commit is the fork point that prerequisite hints
+use. A configured series with no stable branch yet (trunk before its first point release)
+is skipped with a warning. Set `shallow: false` for a full mirror.
 
 ## `run`: gather, verify, list
 

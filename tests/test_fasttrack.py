@@ -21,7 +21,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from fasttrack import cli, emit, engine, incident, vulns
+from fasttrack import cli, emit, engine, incident, sync, vulns
 from fasttrack.queue import load_queue
 
 
@@ -258,6 +258,31 @@ echo ok > RESULT.md
         self.assertEqual(rc, 1)  # CVE-3 still needs a backport
         rows = {r["cve"]: r["outcome"] for r in json.loads((self.out / "cve-result.json").read_text())}
         self.assertEqual(rows, {"CVE-2026-0003": "unpatched", "CVE-2026-0006": "patched-needs-review"})
+
+
+class TestShallow(Fixture):
+    def test_shallow_mirror_is_sufficient(self):
+        # history before the release tag must not be needed
+        sh(self.repo, "git", "checkout", "-q", "-b", "old", "master~5")
+        commit(self.repo, "pre-release noise", **{"foo.c": lines("foo") + "old\n"})
+        sh(self.repo, "git", "checkout", "-q", "master")
+        base = sh(self.repo, "git", "merge-base", "master", "linux-6.18.y").strip()
+        sh(self.repo, "git", "tag", "v6.18", base)
+        sh(self.repo, "git", "config", "uploadpack.allowFilter", "true")
+        mirror = self.tmp / "shallow"
+        sync.fetch_linux(mirror, f"file://{self.repo}", ["6.18", "7.3"], shallow=True)
+        self.assertTrue((mirror / "shallow").exists())
+        self.assertEqual(sync.oldest_tag(["7.3", "6.18"]), "v6.18")
+        self.assertTrue(sh(mirror, "git", "cat-file", "-t", base).strip() == "commit")  # fork point kept
+        res = engine.run_series(mirror, (6, 18), self.records, self.data / "stable-queue", {}, {})
+        v = {c.upstream: c.verdict for c in res.candidates}
+        self.assertEqual(v[self.A], engine.ACCEPTED)
+        self.assertEqual(v[self.C], engine.CONFLICT)
+        r = incident.resolve(mirror, (6, 18), "CVE-2026-0006", [self.E],
+                             vulns.find(self.data / "vulns", "CVE-2026-0006"), None, adapt=True)
+        self.assertEqual(r.outcome, "patched-needs-review")
+        # second sync is a plain incremental fetch
+        sync.fetch_linux(mirror, f"file://{self.repo}", ["6.18", "7.3"], shallow=True)
 
 
 if __name__ == "__main__":

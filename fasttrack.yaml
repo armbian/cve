@@ -5,8 +5,13 @@ series:
   - "6.18"
   - "7.3"
 
-# Persistent data directory filled by `fasttrack sync` (linux.git alone is ~5 GB).
+# Persistent data directory filled by `fasttrack sync`.
 data: /srv/fasttrack
+
+# Fetch linux.git with history starting at the oldest series' release tag
+# (v6.18 here) instead of a full ~5 GB mirror. Sufficient for verifying,
+# mainline picks, 3-way adapts and prerequisite hints.
+shallow: true
 
 # Patch sets, reports, unpatched list, incident results and work packages.
 out: out

@@ -6,8 +6,12 @@
     releases.json     kernel.org's latest release per series (staleness check)
     kev.json          CISA known-exploited catalogue (urgency only)
 
-linux.git is the big one (~5 GB on first fetch): keep the data directory on
-persistent disk.
+linux.git is fetched shallow by default: history starts at the release tag of
+the oldest tracked series (v6.18 for 6.18 + 7.3). That is enough for everything
+the tool does. A CVE fix that landed before vX.Y means X.Y is unaffected, so every
+fix it can need is newer than the tag, and the tag commit itself is the fork
+point used for prerequisite hints. Set ``shallow: false`` for a full mirror
+(~5 GB). Either way, keep the data directory on persistent disk.
 """
 
 from __future__ import annotations
@@ -53,7 +57,37 @@ def _download(url: str, dest: Path) -> bool:
         return False
 
 
-def sync(data: Path, series: list[str], urls: dict | None = None, log=print) -> None:
+def oldest_tag(series: list[str]) -> str:
+    major, minor = min(tuple(int(x) for x in str(s).split(".")[:2]) for s in series)
+    return f"v{major}.{minor}"
+
+
+def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True) -> None:
+    """Bare mirror with origin/master and origin/linux-X.Y.y. First fetch decides depth."""
+    fresh = not (linux / "objects").is_dir()
+    if fresh:
+        _git("init", "--quiet", "--bare", str(linux))
+        _git("-C", str(linux), "remote", "add", "origin", url)
+    heads = set(subprocess.run(["git", "ls-remote", "--heads", url], capture_output=True, text=True,
+                               check=True).stdout.split())
+    refspecs = ["+refs/heads/master:refs/remotes/origin/master"]
+    for s in series:
+        if f"refs/heads/linux-{s}.y" in heads:
+            refspecs.append(f"+refs/heads/linux-{s}.y:refs/remotes/origin/linux-{s}.y")
+        else:
+            # e.g. trunk before its first point release; run/cve skip it until it exists
+            print(f"warn: linux-{s}.y not on {url}; skipped")
+    if fresh and shallow:
+        _git("-C", str(linux), "fetch", "--quiet", "--no-tags",
+             f"--shallow-exclude={oldest_tag(series)}", "origin", *refspecs)
+        # one more commit on every boundary: the release tag commit, i.e. the fork point
+        _git("-C", str(linux), "fetch", "--quiet", "--no-tags", "--deepen=1", "origin", *refspecs)
+    else:
+        _git("-C", str(linux), "fetch", "--quiet", "--prune", "--no-tags", "origin", *refspecs)
+    _git("-C", str(linux), "worktree", "prune")
+
+
+def sync(data: Path, series: list[str], urls: dict | None = None, shallow: bool = True, log=print) -> None:
     u = {**DEFAULTS, **(urls or {})}
     data.mkdir(parents=True, exist_ok=True)
 
@@ -62,15 +96,8 @@ def sync(data: Path, series: list[str], urls: dict | None = None, log=print) -> 
     log("==> stable-queue.git")
     _shallow(u["stable_queue"], data / "stable-queue")
 
-    log(f"==> linux.git (master + {' '.join(series)})")
-    linux = data / "linux"
-    if not (linux / "objects").is_dir():
-        _git("init", "--quiet", "--bare", str(linux))
-        _git("-C", str(linux), "remote", "add", "origin", u["linux"])
-    refspecs = ["+refs/heads/master:refs/remotes/origin/master"]
-    refspecs += [f"+refs/heads/linux-{s}.y:refs/remotes/origin/linux-{s}.y" for s in series]
-    _git("-C", str(linux), "fetch", "--quiet", "--prune", "--no-tags", "origin", *refspecs)
-    _git("-C", str(linux), "worktree", "prune")
+    log(f"==> linux.git (master + {' '.join(series)}{', shallow' if shallow else ''})")
+    fetch_linux(data / "linux", u["linux"], series, shallow)
 
     log("==> feeds")
     _download(u["releases"], data / "releases.json")

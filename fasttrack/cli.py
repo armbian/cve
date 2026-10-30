@@ -20,7 +20,7 @@ from pathlib import Path
 
 import yaml
 
-from . import emit, engine, feeds, incident, sync, vulns
+from . import emit, engine, feeds, gitutil, incident, sync, vulns
 
 
 def _series(text: str) -> tuple[int, int]:
@@ -39,7 +39,8 @@ def _cfg(args) -> dict:
 
 def cmd_sync(args) -> int:
     cfg = _cfg(args)
-    sync.sync(Path(cfg["data"]), [str(s) for s in cfg["series"]], cfg.get("sources"))
+    sync.sync(Path(cfg["data"]), [str(s) for s in cfg["series"]], cfg.get("sources"),
+              shallow=bool(cfg.get("shallow", True)))
     return 0
 
 
@@ -53,10 +54,14 @@ def cmd_run(args) -> int:
     releases = feeds.load_releases(data / "releases.json")
     queue_root = data / "stable-queue"
 
-    results = [engine.run_series(data / "linux", _series(s), records,
-                                 queue_root if queue_root.is_dir() else None,
-                                 kev, releases, queue_mode=cfg.get("queue_mode", "cve"))
-               for s in cfg["series"]]
+    results = []
+    for s in cfg["series"]:
+        try:
+            results.append(engine.run_series(data / "linux", _series(s), records,
+                                             queue_root if queue_root.is_dir() else None,
+                                             kev, releases, queue_mode=cfg.get("queue_mode", "cve")))
+        except gitutil.GitError as e:
+            print(f"{s}: skipped ({e})")
 
     state_file = out / "state.json"
     prev = json.loads(state_file.read_text()) if state_file.exists() else {}
@@ -121,7 +126,12 @@ def cmd_cve(args) -> int:
         if not rec and not fixes:
             print(f"{cid}: not in vulns.git; pass --commit <mainline sha> to work from the fix directly")
         for s in series:
-            res = incident.resolve(data / "linux", s, cid, fixes, rec, queue_root, adapt=args.adapt or args.claude)
+            try:
+                res = incident.resolve(data / "linux", s, cid, fixes, rec, queue_root,
+                                       adapt=args.adapt or args.claude)
+            except gitutil.GitError as e:
+                print(f"{cid} {s[0]}.{s[1]}: skipped ({e})")
+                continue
             if res.outcome in ("unpatched", "partial") and (args.claude or args.package):
                 wdir = incident.prepare_work(data / "linux", res, out / "work")
                 if args.claude:
