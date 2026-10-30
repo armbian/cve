@@ -154,6 +154,9 @@ def resolve(
         n = 0
         for c in res.candidates:
             have = gitutil.present(repo, c.upstream)
+            if gitutil.in_history(repo, c.upstream, ref):
+                c.verdict, c.reason = PRESENT, "fix commit is in the stable history"
+                continue
             if c.source == "mainline":
                 try:
                     c.patch = gitutil.upstream_patch(repo, c.upstream)

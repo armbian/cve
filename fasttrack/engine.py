@@ -147,6 +147,9 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
 
 def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate) -> None:
     """Sets the verdict of one candidate; applies it to ``wt`` when accepted."""
+    if gitutil.in_history(repo, c.upstream, ref):
+        c.verdict, c.reason = PRESENT, "fix commit is in the stable history"
+        return
     if c.source == "mainline":
         if not c.patch:
             try:

@@ -56,13 +56,15 @@ class CveRecord:
 
 
 def _linux_entry(rec: dict) -> Optional[dict]:
-    for aff in rec.get("containers", {}).get("cna", {}).get("affected", []):
-        if aff.get("product") == "Linux" and any(
-            v.get("versionType") in ("semver", "original_commit_for_fix") or "lessThanOrEqual" in v
-            for v in aff.get("versions", [])
-        ):
-            return aff
-    return None
+    """All Linux entries, merged. Records put git ranges and version ranges in
+    separate entries; only the version entry has the mainline fix version."""
+    affs = [a for a in rec.get("containers", {}).get("cna", {}).get("affected", []) if a.get("product") == "Linux"]
+    versions = [v for a in affs for v in a.get("versions", [])]
+    if not any(v.get("versionType") in ("semver", "original_commit_for_fix") or "lessThanOrEqual" in v
+               for v in versions):
+        return None
+    files = list(dict.fromkeys(f for a in affs for f in a.get("programFiles", [])))
+    return {"programFiles": files, "versions": versions}
 
 
 def parse_record(path: Path) -> Optional[CveRecord]:

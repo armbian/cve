@@ -75,6 +75,11 @@ def present(repo: Path, sha: str) -> bool:
     return rev(repo, sha) is not None
 
 
+def in_history(repo: Path, sha: str, ref: str) -> bool:
+    """True when ``sha`` is an ancestor of ``ref``: the tree has that exact commit."""
+    return bool(sha) and present(repo, sha) and ok(repo, "merge-base", "--is-ancestor", sha, ref)
+
+
 _SUBJ = re.compile(r"^Subject:\s*(?:\[[^\]]*\]\s*)?(.+(?:\n[ \t].+)*)", re.M)
 _DATE = re.compile(r"^Date:\s*(.+)$", re.M)
 

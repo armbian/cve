@@ -145,6 +145,19 @@ class TestVulns(Fixture):
         self.assertEqual(by["CVE-2026-0001"].status((7, 3))[0], "unaffected")
         self.assertEqual(by["CVE-2026-0001"].description, "CVE-2026-0001 description")
 
+    def test_split_entries(self):
+        # Real records: git ranges first, the mainline fix version in a second entry.
+        p = self.tmp / "CVE-2024-26670.json"
+        p.write_text(json.dumps({"containers": {"cna": {"affected": [
+            {"product": "Linux", "versions": [
+                {"version": "a" * 40, "lessThan": "b" * 40, "status": "affected", "versionType": "git"},
+                {"version": "6.1.57", "lessThan": "6.2", "status": "affected", "versionType": "semver"}]},
+            {"product": "Linux", "versions": [
+                {"version": "6.6", "status": "affected"},
+                {"version": "6.8", "lessThanOrEqual": "*", "status": "unaffected",
+                 "versionType": "original_commit_for_fix"}]}]}}}))
+        self.assertEqual(vulns.parse_record(p).status((6, 18))[0], "unaffected")
+
     def test_find(self):
         self.assertEqual(vulns.find(self.data / "vulns", "cve-2026-0003").fix_commits, [self.C])
         self.assertIsNone(vulns.find(self.data / "vulns", "CVE-2026-9999"))
