@@ -109,19 +109,20 @@ def files_in(repo: Path, sha: str) -> list[str]:
 
 
 def prerequisite_hints(repo: Path, stable_ref: str, sha: str, files: list[str], limit: int = 15) -> list[str]:
-    """Mainline commits touching ``files`` between the series fork point and ``sha``
-    whose subject is not in the stable branch: the usual reason a fix will not apply."""
+    """Mainline commits touching ``files`` that precede ``sha`` and are not in the
+    stable branch, oldest first: the usual reason a fix will not apply.
+
+    ``sha^ ^stable`` needs no merge-base, so it works on a mirror cut at the
+    release tag. Stable carries backports under different SHAs, so subjects that
+    also appear on stable since the fork are filtered out as well."""
     if not files:
         return []
-    base = git(repo, "merge-base", stable_ref, sha, check=False).strip()
-    if not base:
-        return []
-    mainline = git(repo, "log", "--no-merges", "--format=%H%x09%s", f"{base}..{sha}^", "--", *files,
-                   check=False).splitlines()
-    in_stable = set(git(repo, "log", "--no-merges", "--format=%s", f"{base}..{stable_ref}", "--", *files,
-                        check=False).splitlines())
+    mainline = git(repo, "log", "--no-merges", "--format=%H%x09%s", f"{sha}^", f"^{stable_ref}",
+                   "--", *files, check=False).splitlines()
+    in_stable = set(git(repo, "log", "--no-merges", "--format=%s", stable_ref, f"^{sha}",
+                        "--", *files, check=False).splitlines())
     out = []
-    for line in reversed(mainline):              # oldest first: apply order
+    for line in reversed(mainline):
         h, _, subj = line.partition("\t")
         if subj not in in_stable:
             out.append(f"{h[:12]} {subj}")

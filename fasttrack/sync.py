@@ -6,11 +6,12 @@
     releases.json     kernel.org's latest release per series (staleness check)
     kev.json          CISA known-exploited catalogue (urgency only)
 
-linux.git is fetched shallow by default: history starts at the -rc1 tag of the
-oldest tracked series (v6.18-rc1 for 6.18 + 7.3). That is enough for everything
-the tool does. A CVE fix that landed before vX.Y means X.Y is unaffected, so every
-fix it can need is newer than that, and the vX.Y release commit (the fork point
-used for prerequisite hints) is inside the fetched history with real parents. Set ``shallow: false`` for a full mirror
+linux.git is fetched shallow by default: history starts right after the release
+tag of the oldest tracked series (v6.18 for 6.18 + 7.3). That is enough for
+everything the tool does. A CVE fix that landed before vX.Y means X.Y is
+unaffected, so every fix it can need is newer than the tag. Nothing needs the
+fork point itself: prerequisite hints are "mainline commits before the fix that
+the stable branch does not contain", which is a plain ``fix^ ^stable`` range. Set ``shallow: false`` for a full mirror
 (~5 GB). Either way, keep the data directory on persistent disk.
 """
 
@@ -63,12 +64,8 @@ def oldest_tag(series: list[str]) -> str:
 
 
 def shallow_boundary(series: list[str]) -> str:
-    """Exclude history before the oldest series' merge window closed.
-
-    Cutting at -rc1 (not at the release tag plus --deepen, which kernel.org
-    rejects on a shallow-exclude clone) keeps the release commit inside the
-    fetched history, so merge-base works without grafts."""
-    return f"{oldest_tag(series)}-rc1"
+    """Exclude the oldest series' release tag and everything before it."""
+    return oldest_tag(series)
 
 
 def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True) -> None:

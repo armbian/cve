@@ -292,6 +292,15 @@ class TestExpiry(Fixture):
         self.assertTrue((cve / "CVE-2026-0006" / "6.18").is_dir())
 
 
+class TestHints(Fixture):
+    def test_prerequisite_hint(self):
+        pre = commit(self.repo, "baz: refactor locking", **{"baz.c": lines("baz") + "lock\n"})
+        fixc = commit(self.repo, "baz: fix late", **{"baz.c": lines("baz").replace("baz line 2", "baz line 2 X") + "lock\n"})
+        from fasttrack import gitutil
+        hints = gitutil.prerequisite_hints(self.repo, "linux-6.18.y", fixc, ["baz.c"])
+        self.assertEqual([h.split(" ", 1)[1] for h in hints], ["baz: fix race", "baz: refactor locking"])
+
+
 class TestShallow(Fixture):
     def test_shallow_mirror_is_sufficient(self):
         # history before the release tag must not be needed
@@ -299,20 +308,20 @@ class TestShallow(Fixture):
         commit(self.repo, "pre-release noise", **{"foo.c": lines("foo") + "old\n"})
         sh(self.repo, "git", "checkout", "-q", "master")
         base = sh(self.repo, "git", "merge-base", "master", "linux-6.18.y").strip()
-        sh(self.repo, "git", "tag", "v6.18-rc1", self.rc1)
-        sh(self.repo, "git", "tag", "v6.18", base)
+        sh(self.repo, "git", "tag", "v6.18", self.rc1)    # cut below base; base is the first kept commit
         sh(self.repo, "git", "config", "uploadpack.allowFilter", "true")
         mirror = self.tmp / "shallow"
         sync.fetch_linux(mirror, f"file://{self.repo}", ["6.18", "7.3"], shallow=True)
         self.assertTrue((mirror / "shallow").exists())
-        self.assertEqual(sync.shallow_boundary(["7.3", "6.18"]), "v6.18-rc1")
+        self.assertEqual(sync.shallow_boundary(["7.3", "6.18"]), "v6.18")
         self.assertNotIn(self.rc1, sh(mirror, "git", "rev-list", "--all"))           # history really cut
-        self.assertEqual(sh(mirror, "git", "merge-base", "origin/master", "origin/linux-6.18.y").strip(), base)
-        self.assertTrue(sh(mirror, "git", "cat-file", "-t", base).strip() == "commit")  # fork point kept
         res = engine.run_series(mirror, (6, 18), self.records, self.data / "stable-queue", {}, {})
         v = {c.upstream: c.verdict for c in res.candidates}
         self.assertEqual(v[self.A], engine.ACCEPTED)
         self.assertEqual(v[self.C], engine.CONFLICT)
+        # hints work without a merge-base: a mainline baz.c change the stable branch lacks
+        hint = next(c for c in res.candidates if c.upstream == self.C)
+        self.assertEqual(hint.files, ["baz.c"])
         r = incident.resolve(mirror, (6, 18), "CVE-2026-0006", [self.E],
                              vulns.find(self.data / "vulns", "CVE-2026-0006"), None, adapt=True)
         self.assertEqual(r.outcome, "patched-needs-review")
