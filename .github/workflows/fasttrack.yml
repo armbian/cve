@@ -136,3 +136,16 @@ jobs:
             --body "$(grep -E '^- kev' report.md)
 
           ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  # Same as armbian/docker-armbian-build: stop GitHub from disabling the hourly
+  # schedule after 60 days without repository activity (quiet weeks commit nothing).
+  keepalive:
+    if: ${{ github.repository_owner == 'armbian' }}
+    name: Keep Alive
+    needs: fasttrack
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: liskin/gh-workflow-keepalive@v1
