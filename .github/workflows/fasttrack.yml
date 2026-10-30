@@ -35,12 +35,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
-      - uses: actions/checkout@v4
+      # Same as armbian/shallow: linux.git and its worktrees need the space.
+      - name: Free Github Runner
+        uses: descriptinc/free-disk-space@main # no tagged releases; pinned to default branch
+        with:
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
-      - name: Make room
-        run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
-          df -h . | tail -1
+      - uses: actions/checkout@v4
 
       - name: Tooling
         run: |
