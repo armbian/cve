@@ -66,6 +66,7 @@ class Fixture(unittest.TestCase):
         sh(r, "git", "init", "-q", "-b", "master")
         sh(r, "git", "config", "user.email", "t@t")
         sh(r, "git", "config", "user.name", "t")
+        self.rc1 = commit(r, "Linux 6.18-rc1", Makefile=makefile(0))
         base = commit(r, "base", Makefile=makefile(0), **{f"{t}.c": lines(t) for t in
                                                          ("foo", "bar", "baz", "qux", "adapt")})
         self.A = commit(r, "foo: fix overflow", **{"foo.c": fix("foo", ("foo line 6", "foo line 6 FIXED"))})
@@ -298,12 +299,15 @@ class TestShallow(Fixture):
         commit(self.repo, "pre-release noise", **{"foo.c": lines("foo") + "old\n"})
         sh(self.repo, "git", "checkout", "-q", "master")
         base = sh(self.repo, "git", "merge-base", "master", "linux-6.18.y").strip()
+        sh(self.repo, "git", "tag", "v6.18-rc1", self.rc1)
         sh(self.repo, "git", "tag", "v6.18", base)
         sh(self.repo, "git", "config", "uploadpack.allowFilter", "true")
         mirror = self.tmp / "shallow"
         sync.fetch_linux(mirror, f"file://{self.repo}", ["6.18", "7.3"], shallow=True)
         self.assertTrue((mirror / "shallow").exists())
-        self.assertEqual(sync.oldest_tag(["7.3", "6.18"]), "v6.18")
+        self.assertEqual(sync.shallow_boundary(["7.3", "6.18"]), "v6.18-rc1")
+        self.assertNotIn(self.rc1, sh(mirror, "git", "rev-list", "--all"))           # history really cut
+        self.assertEqual(sh(mirror, "git", "merge-base", "origin/master", "origin/linux-6.18.y").strip(), base)
         self.assertTrue(sh(mirror, "git", "cat-file", "-t", base).strip() == "commit")  # fork point kept
         res = engine.run_series(mirror, (6, 18), self.records, self.data / "stable-queue", {}, {})
         v = {c.upstream: c.verdict for c in res.candidates}

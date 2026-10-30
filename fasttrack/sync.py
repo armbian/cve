@@ -6,11 +6,11 @@
     releases.json     kernel.org's latest release per series (staleness check)
     kev.json          CISA known-exploited catalogue (urgency only)
 
-linux.git is fetched shallow by default: history starts at the release tag of
-the oldest tracked series (v6.18 for 6.18 + 7.3). That is enough for everything
+linux.git is fetched shallow by default: history starts at the -rc1 tag of the
+oldest tracked series (v6.18-rc1 for 6.18 + 7.3). That is enough for everything
 the tool does. A CVE fix that landed before vX.Y means X.Y is unaffected, so every
-fix it can need is newer than the tag, and the tag commit itself is the fork
-point used for prerequisite hints. Set ``shallow: false`` for a full mirror
+fix it can need is newer than that, and the vX.Y release commit (the fork point
+used for prerequisite hints) is inside the fetched history with real parents. Set ``shallow: false`` for a full mirror
 (~5 GB). Either way, keep the data directory on persistent disk.
 """
 
@@ -62,6 +62,15 @@ def oldest_tag(series: list[str]) -> str:
     return f"v{major}.{minor}"
 
 
+def shallow_boundary(series: list[str]) -> str:
+    """Exclude history before the oldest series' merge window closed.
+
+    Cutting at -rc1 (not at the release tag plus --deepen, which kernel.org
+    rejects on a shallow-exclude clone) keeps the release commit inside the
+    fetched history, so merge-base works without grafts."""
+    return f"{oldest_tag(series)}-rc1"
+
+
 def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True) -> None:
     """Bare mirror with origin/master and origin/linux-X.Y.y. First fetch decides depth."""
     fresh = not (linux / "objects").is_dir()
@@ -79,9 +88,7 @@ def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True) 
             print(f"warn: linux-{s}.y not on {url}; skipped")
     if fresh and shallow:
         _git("-C", str(linux), "fetch", "--quiet", "--no-tags",
-             f"--shallow-exclude={oldest_tag(series)}", "origin", *refspecs)
-        # one more commit on every boundary: the release tag commit, i.e. the fork point
-        _git("-C", str(linux), "fetch", "--quiet", "--no-tags", "--deepen=1", "origin", *refspecs)
+             f"--shallow-exclude={shallow_boundary(series)}", "origin", *refspecs)
     else:
         _git("-C", str(linux), "fetch", "--quiet", "--prune", "--no-tags", "origin", *refspecs)
     _git("-C", str(linux), "worktree", "prune")
