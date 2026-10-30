@@ -17,8 +17,10 @@ the stable branch does not contain", which is a plain ``fix^ ^stable`` range. Se
 
 from __future__ import annotations
 
+import logging
 import os
 import subprocess
+import time
 import urllib.request
 from pathlib import Path
 
@@ -32,8 +34,17 @@ DEFAULTS = {
 }
 
 
+log = logging.getLogger(__name__)
+
+
 def _git(*args: str, cwd: Path | None = None) -> None:
+    # Verbose: let git print its clone/fetch progress.
+    if log.isEnabledFor(logging.INFO):
+        args = tuple(a for a in args if a != "--quiet")
+    log.info("$ git %s", " ".join(args))
+    t = time.monotonic()
     subprocess.run(["git", *args], cwd=cwd, check=True)
+    log.info("git %s: %.1fs", args[2] if args[0] == "-C" else args[0], time.monotonic() - t)
 
 
 def _sparse_queue(url: str, dest: Path) -> None:
@@ -86,6 +97,7 @@ def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True,
     if fresh:
         _git("init", "--quiet", "--bare", str(linux))
         _git("-C", str(linux), "remote", "add", "origin", url)
+    log.info("list heads on %s", url)
     heads = set(subprocess.run(["git", "ls-remote", "--heads", url], capture_output=True, text=True,
                                check=True).stdout.split())
     refspecs = ["+refs/heads/master:refs/remotes/origin/master"] if mainline else []

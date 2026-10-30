@@ -77,22 +77,25 @@ jobs:
           restore-keys: data-${{ hashFiles('fasttrack.yaml') }}-
 
       - name: Sync
-        run: python3 -m fasttrack.cli sync
+        run: python3 -m fasttrack.cli -v sync
 
       - name: Gather and verify
         id: run
         run: |
-          python3 -m fasttrack.cli run
+          python3 -m fasttrack.cli -v run
           cat report.md >> "$GITHUB_STEP_SUMMARY"
 
       # patches/ is rebuilt from scratch by `run`, so fixes stable has absorbed are
       # already gone from it. prune does the same for incident results under cve/.
       - name: Drop incident patches stable has absorbed
-        run: python3 -m fasttrack.cli prune
+        run: python3 -m fasttrack.cli -v prune
 
       - name: Commit patches and reports
         run: |
-          git add -A patches cve report.md unpatched.json state.json events.json cve-report.md cve-result.json 2>/dev/null || true
+          # One path at a time: a path that does not exist fails the whole `git add`.
+          for p in patches cve report.md unpatched.json state.json events.json cve-report.md cve-result.json; do
+            git add -A -- "$p" 2>/dev/null || true
+          done
           if ! git diff --cached --quiet; then
             git commit -q -m "patches: $(date -u '+%F %H:%M')" \
               -m "$(grep -E '^- ' report.md | head -20)"
@@ -114,7 +117,7 @@ jobs:
           if [ "${{ inputs.incidents }}" = "unpatched" ]; then args+=(--unpatched); else args+=(${{ inputs.incidents }}); fi
           [ -n "${{ inputs.commit }}" ] && args+=(--commit "${{ inputs.commit }}")
           if [ "${{ inputs.claude }}" = "true" ]; then args+=(--claude); else args+=(--adapt --package); fi
-          python3 -m fasttrack.cli cve "${args[@]}" || true
+          python3 -m fasttrack.cli -v cve "${args[@]}" || true
           cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
           # Incident results always go through review, never straight to main.
           br="incident/${{ github.run_id }}"
