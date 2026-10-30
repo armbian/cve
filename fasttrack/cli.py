@@ -23,7 +23,7 @@ from pathlib import Path
 
 import yaml
 
-from . import emit, engine, feeds, gitutil, incident, sync, vulns
+from . import emit, engine, feeds, gitutil, incident, lore, sync, vulns
 
 log = logging.getLogger("fasttrack")
 
@@ -118,8 +118,10 @@ def cmd_cve(args) -> int:
     queue_root = queue_root if queue_root.is_dir() else None
 
     incidents: dict[str, list[str]] = {}
+    from_list: set[str] = set()                 # from unpatched.json, not named by the user
     if args.unpatched:
         incidents.update(incident.load_unpatched(out / "unpatched.json"))
+        from_list = set(incidents)
         if not incidents:
             print(f"nothing in {out / 'unpatched.json'}; run `fasttrack run` first")
     for cid in args.ids:
@@ -133,6 +135,7 @@ def cmd_cve(args) -> int:
         return 2
 
     log.info("%d incident(s) on %s", len(incidents), ", ".join(f"{a}.{b}" for a, b in series))
+    min_age = int(cfg.get("claude_min_age_days", 0))
     claude_cmd = cfg.get("claude_cmd") or incident.DEFAULT_CLAUDE_CMD
     if args.claude_model:
         claude_cmd = list(claude_cmd) + ["--model", args.claude_model]
@@ -154,13 +157,18 @@ def cmd_cve(args) -> int:
                 continue
             try:
                 res = incident.resolve(data / "linux", s, cid, fixes, rec, queue_root,
-                                       adapt=args.adapt or args.claude)
+                                       adapt=args.adapt or args.claude,
+                                       stable_list=lore.backports if cfg.get("stable_list") else None)
             except gitutil.GitError as e:
                 print(f"{cid} {s[0]}.{s[1]}: skipped ({e})")
                 continue
             if res.outcome in ("unpatched", "partial") and (args.claude or args.package):
                 wdir = incident.prepare_work(data / "linux", res, out / "work")
-                if args.claude:
+                young = _days_in_mainline(data / "linux", fixes)
+                if args.claude and cid in from_list and young < min_age:
+                    res.note = (res.note + " " if res.note else "") + \
+                        f"{young:.0f} days in mainline; Claude waits {min_age} days for stable"
+                elif args.claude:
                     print(f"{cid} {res.series}: running Claude in {wdir} ...", flush=True)
                     rc = incident.run_claude(wdir, claude_cmd, timeout=args.claude_timeout)
                     if rc != 0:
@@ -186,6 +194,18 @@ def cmd_cve(args) -> int:
     (out / "cve-result.json").write_text(json.dumps([r.public() for r in resolutions], indent=2) + "\n")
     print(f"report: {out / 'cve-report.md'}")
     return 1 if any(r.outcome in ("unpatched", "partial") for r in resolutions) else 0
+
+
+def _days_in_mainline(repo: Path, fixes: list[str]) -> float:
+    """Days since the newest fix commit landed (patch date when not in the mirror)."""
+    when = gitutil.commit_times(repo, fixes)
+    for sha in fixes:
+        if sha not in when:
+            try:
+                when[sha] = gitutil.patch_time(gitutil.upstream_patch(repo, sha))
+            except gitutil.GitError:
+                pass
+    return (time.time() - max(when.values())) / 86400 if when else float("inf")
 
 
 def cmd_prune(args) -> int:

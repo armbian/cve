@@ -307,6 +307,32 @@ echo ok > RESULT.md
         rows = {r["cve"]: r["outcome"] for r in json.loads((self.out / "cve-result.json").read_text())}
         self.assertEqual(rows, {"CVE-2026-0003": "unpatched", "CVE-2026-0006": "patched-needs-review"})
 
+    def test_stable_list_backport(self):
+        # the author's backport of C onto the reworked stable code, as posted to the list
+        sh(self.repo, "git", "checkout", "-q", "-b", "posted", "linux-6.18.y")
+        commit(self.repo, f"baz: fix race\n\ncommit {self.C} upstream.",
+               **{"baz.c": fix("baz", ("baz line 5", "baz line 5 REWORKED"), ("baz line 6", "baz line 6 REWORKED FIXED"))})
+        posted = sh(self.repo, "git", "format-patch", "-1", "--stdout", "HEAD")
+        sh(self.repo, "git", "checkout", "-q", "master")
+        seen = []
+        rec = vulns.find(self.data / "vulns", "CVE-2026-0003")
+        res = incident.resolve(self.data / "linux", (6, 18), "CVE-2026-0003", rec.fix_commits, rec,
+                               self.data / "stable-queue",
+                               stable_list=lambda sha, s: seen.append((sha, s)) or ["junk", posted])
+        self.assertEqual(seen, [(self.C, "6.18")])
+        self.assertEqual(res.outcome, "patched")
+        self.assertEqual(res.candidates[0].source, "stable-list")
+
+    def test_young_fix_waits_for_stable(self):
+        with open(self.cfg, "a") as fh:
+            fh.write(f"claude_min_age_days: 100000\nclaude_cmd: ['{self.tmp / 'no-such-claude'}']\n")
+        cli.main(["--config", str(self.cfg), "run"])
+        cli.main(["--config", str(self.cfg), "cve", "--unpatched", "--claude"])
+        self.assertFalse((self.out / "work" / "CVE-2026-0003" / "6.18" / "claude.log").exists())
+        self.assertFalse((self.out / "attempts.json").exists())
+        notes = {r["cve"]: r["note"] for r in json.loads((self.out / "cve-result.json").read_text())}
+        self.assertIn("waits", notes["CVE-2026-0003"])
+
 
 class TestExpiry(Fixture):
     def _land_in_stable(self, sha, sub):

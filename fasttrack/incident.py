@@ -6,10 +6,11 @@ vulns.git) and one series, the ladder is:
 1. not affected / already fixed in the stable head        → nothing to do
 2. stable-queue backport, applied unchanged               → ``accepted``
 3. mainline commit, applied unchanged                     → ``accepted``
-4. mainline commit, 3-way cherry-pick (``--adapt``)       → ``adapted``  (review)
-5. otherwise                                              → ``needs-backport``
+4. backport posted to the stable list, applied unchanged  → ``accepted``
+5. mainline commit, 3-way cherry-pick (``--adapt``)       → ``adapted``  (review)
+6. otherwise                                              → ``needs-backport``
 
-For step 5 a *work package* is written: a git worktree at the stable head
+For step 6 a *work package* is written: a git worktree at the stable head
 with every resolved part of the fix already committed, the upstream patch,
 the files that conflict, mainline commits the series lacks on those files,
 and BRIEF.md. You can ``cd`` there and run ``claude`` yourself, or pass
@@ -28,7 +29,7 @@ import tempfile
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Optional
+from typing import Callable, Optional
 
 from . import gitutil
 from .engine import ACCEPTED, CONFLICT, MISSING, PRESENT, Candidate, _slug
@@ -122,6 +123,7 @@ def resolve(
     adapt: bool = False,
     remote: str = "origin",
     branch_fmt: str = "linux-{s}.y",
+    stable_list: Optional[Callable[[str, str], list[str]]] = None,
 ) -> Resolution:
     label = f"{series[0]}.{series[1]}"
     ref = _stable_ref(repo, label, remote, branch_fmt)
@@ -175,6 +177,8 @@ def resolve(
             elif gitutil.stable_backports(repo, ref).get(c.upstream):
                 c.verdict, c.reason = PRESENT, f"stable backport {gitutil.stable_backports(repo, ref)[c.upstream][:12]}"
                 continue
+            elif stable_list and _take_posted(stable_list(c.upstream, label), wt, c):
+                pass
             elif adapt:
                 if not have or gitutil.is_boundary(repo, c.upstream):
                     ok, conflicts = wt.apply3(c.patch, f"{c.subject}\n\ncommit {c.upstream} upstream.")
@@ -196,6 +200,18 @@ def resolve(
     for c in res.candidates:
         log.info("%s %s: %s %s: %s - %s", cve, label, c.upstream[:12], c.source, c.verdict, c.subject)
     return res
+
+
+def _take_posted(posts: list[str], wt: gitutil.Worktree, c: Candidate) -> bool:
+    """Apply the newest posted backport that applies unchanged."""
+    for body in posts:
+        if wt.check(body):
+            wt.apply(body)
+            wt.commit(f"{c.subject}\n\ncommit {c.upstream} upstream.")
+            c.patch, c.source = body, "stable-list"
+            c.verdict, c.reason = ACCEPTED, "backport posted to stable@vger.kernel.org"
+            return True
+    return False
 
 
 # --------------------------------------------------------------------------- work packages

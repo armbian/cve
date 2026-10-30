@@ -95,8 +95,10 @@ Per series it goes down a ladder and stops at the first rung that works:
 1. Not affected, or already fixed at the stable head: nothing to do.
 2. Stable-queue backport, applied unchanged.
 3. Mainline commit, applied unchanged.
-4. 3-way cherry-pick (`--adapt`).
-5. A Claude backport in a work package (`--claude`).
+4. A backport the author posted to the stable mailing list, applied unchanged (`stable_list: true`).
+5. 3-way cherry-pick (`--adapt`).
+6. A Claude backport in a work package (`--claude`). With `--unpatched`, only for fixes
+   older than `claude_min_age_days` (default 21): stable usually takes newer ones itself.
 
 Results are written to `cve/<ID>/<series>/` (same layout as `patches/`), with a summary in `cve-report.md`.
 
