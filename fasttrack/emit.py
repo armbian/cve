@@ -19,7 +19,6 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
 from .engine import ACCEPTED, CONFLICT, MISSING, PRESENT, SeriesResult
@@ -119,7 +118,7 @@ def report(results: list[SeriesResult], events: list[str]) -> str:
 def diff_state(prev: dict, results: list[SeriesResult]) -> tuple[dict, list[str]]:
     """Compare with last run; return new state and human-readable events."""
     events: list[str] = []
-    state = {"updated": datetime.now(timezone.utc).isoformat(timespec="seconds"), "series": {}}
+    state = {"series": {}}
     for r in results:
         old = prev.get("series", {}).get(r.series, {})
         acc = sorted(c.upstream for c in r.accepted)

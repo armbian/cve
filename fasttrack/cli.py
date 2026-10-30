@@ -6,6 +6,7 @@ and build the missing ones (optionally with Claude).
     fasttrack cve CVE-2026-1234 [...]       one or more specific incidents
     fasttrack cve --commit <sha> --id NAME  incident with no CVE record yet
     fasttrack cve --unpatched               every issue the last run could not patch
+    fasttrack prune                         delete incident patches stable has absorbed
         --adapt     also try a 3-way cherry-pick (marked for review)
         --claude    build a work package and let Claude Code make the backport
 """
@@ -141,7 +142,8 @@ def cmd_cve(args) -> int:
                         res.note = (res.note + " " if res.note else "") + f"claude exited {rc}; see claude.log"
                     incident.collect_work(data / "linux", res, wdir)
             emit.write_patch_dir(out / "cve" / cid / res.series, res.series, res.head, res.head_version,
-                                 res.patches, {"incident": cid, "outcome": res.outcome})
+                                 res.patches, {"incident": cid, "outcome": res.outcome,
+                                               "fixed_in": res.fixed_in})
             resolutions.append(res)
             print(f"{cid} {res.series} @ {res.head_version}: {res.outcome}"
                   + (f" ({len(res.patches)} patch(es))" if res.patches else "")
@@ -153,6 +155,16 @@ def cmd_cve(args) -> int:
     return 1 if any(r.outcome in ("unpatched", "partial") for r in resolutions) else 0
 
 
+def cmd_prune(args) -> int:
+    cfg = _cfg(args)
+    removed = incident.prune(Path(cfg["data"]) / "linux", Path(cfg["out"]) / "cve")
+    for r in removed:
+        print(f"retired: {r}")
+    if not removed:
+        print("nothing to retire")
+    return 0
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="fasttrack", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -162,6 +174,8 @@ def main(argv=None) -> int:
 
     sub.add_parser("sync", help="pull upstream sources").set_defaults(fn=cmd_sync)
     sub.add_parser("run", help="gather and verify; write patches, report, unpatched list").set_defaults(fn=cmd_run)
+
+    sub.add_parser("prune", help="delete incident patches the stable head has absorbed").set_defaults(fn=cmd_prune)
 
     c = sub.add_parser("cve", help="resolve specific incidents")
     c.add_argument("ids", nargs="*", help="CVE ids")

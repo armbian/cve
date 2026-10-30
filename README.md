@@ -15,7 +15,7 @@ It is not tied to any build system. The output is plain patch sets that anything
 
 ```
 ./fasttrack.sh sync                         # pull sources; linux.git is shallow from v<oldest series>
-./fasttrack.sh run                          # gather + verify; see out/report.md
+./fasttrack.sh run                          # gather + verify; see report.md
 ./fasttrack.sh cve --unpatched --claude     # backport every unpatched issue with Claude
 ```
 
@@ -38,7 +38,7 @@ is skipped with a warning. Set `shallow: false` for a full mirror.
 
 ## `run`: gather, verify, list
 
-Writes to `out/`:
+Writes to the repository itself (`out: .`), and CI commits the result:
 
 ```
 patches/6.18/series.conf                  apply order
@@ -60,6 +60,22 @@ Each candidate gets one verdict:
 
 `run` never adapts anything. The patch set contains only upstream bytes.
 
+### Patches retire themselves
+
+Nothing accumulates. `patches/<series>/` is rebuilt from scratch on every run, so a
+fix drops out as soon as the stable head carries it, in either of two ways:
+
+- **The CVE record says so:** it lists a fixed-in version at or below the stable head.
+- **The stable tree shows it:** the patch reverse-applies on the stable head. This catches fixes
+  that shipped while the CVE record still lags.
+
+A series directory with nothing left is deleted. `report.md` records each drop as a
+`retired` event.
+
+`fasttrack prune` does the same for incident results under `cve/<ID>/<series>/`. It runs
+hourly in CI, and a set is deleted once every patch in it reverse-applies on the stable
+head, or once the head reaches the version that carries the fix.
+
 ## `cve`: specific incidents
 
 ```
@@ -80,13 +96,13 @@ Per series it goes down a ladder and stops at the first rung that works:
 4. 3-way cherry-pick (`--adapt`).
 5. A Claude backport in a work package (`--claude`).
 
-Results are written to `out/cve/<ID>/<series>/` (same layout as `patches/`), with a summary in `out/cve-report.md`.
+Results are written to `cve/<ID>/<series>/` (same layout as `patches/`), with a summary in `cve-report.md`.
 
 Each result has one outcome: `patched`, `patched-needs-review`, `partial`, `unpatched`, `fixed-in-tree`, `not-affected`, `already-present` or `no-fix-known`. The exit code is 1 while anything is still unpatched.
 
 ## Making missing patches with Claude
 
-`out/work/<ID>/<series>/` contains:
+`work/<ID>/<series>/` contains:
 
 - `tree/`: a worktree at the stable head, with every part of the fix that did apply already committed
 - `upstream-<sha12>.patch`: the fix that does not apply
@@ -94,17 +110,18 @@ Each result has one outcome: `patched`, `patched-needs-review`, `partial`, `unpa
 
 You can use it in two ways:
 
-- **Interactive.** `cd out/work/CVE-…/6.18 && claude`, then ask it to follow BRIEF.md. You stay in the loop.
+- **Interactive.** `cd work/CVE-…/6.18 && claude`, then ask it to follow BRIEF.md. You stay in the loop.
 - **Headless.** `--claude` runs `claude_cmd` from `fasttrack.yaml` (default: `claude -p`, edits allowed, shell limited to git/make/grep/sed/ls/cat). Set `--claude-model` to choose the model.
 
 Either way, the tool then takes Claude's commits and re-verifies the whole series, with no fuzz, on a fresh tree. It marks them `claude-backport` and the outcome `patched-needs-review`. A Claude backport is never mixed into `patches/`. It stays under `cve/` until a human reviews it. In CI it arrives as a PR.
 
 ## Automation
 
-`.github/workflows/fasttrack.yml` runs on a self-hosted runner, labelled `fasttrack`, that keeps `/srv/fasttrack` on persistent disk.
+`.github/workflows/fasttrack.yml` runs on a standard GitHub-hosted runner. No special runner or persistent disk is needed.
 
-- **Hourly:** sync, then `run`. Publishes `patches/`, the report and `unpatched.json` to the `generated` branch. Opens an issue when a pending CVE is actively exploited.
-- **Manual dispatch:** takes CVE ids, or `unpatched`, plus an optional fix commit and a Claude toggle. The results open a PR into `generated` for review. Claude in CI needs the `ANTHROPIC_API_KEY` secret.
+- **Cache:** `data/` (the shallow `linux.git`, `vulns.git`, `stable-queue.git`) lives in the Actions cache. A fresh cache entry is made each ISO week, and between those every run starts from the last entry and fetches only what is new. Changing `fasttrack.yaml` starts a new cache.
+- **Hourly:** sync, `run`, then `prune`. Commits `patches/`, `cve/` deletions, `report.md`, `unpatched.json`, `state.json` and `events.json` to `main` when they changed. A run with nothing new commits nothing. Opens an issue labelled `security` when a pending CVE is actively exploited.
+- **Manual dispatch:** takes CVE ids, or `unpatched`, plus an optional fix commit and a Claude toggle. Results go to `cve/` on a branch, with a PR into `main` for review. Claude in CI needs the `ANTHROPIC_API_KEY` secret.
 
 ## Tests
 

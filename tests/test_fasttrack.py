@@ -260,6 +260,37 @@ echo ok > RESULT.md
         self.assertEqual(rows, {"CVE-2026-0003": "unpatched", "CVE-2026-0006": "patched-needs-review"})
 
 
+class TestExpiry(Fixture):
+    def _land_in_stable(self, sha, sub):
+        sh(self.repo, "git", "checkout", "-q", "linux-6.18.y")
+        sh(self.repo, "git", "cherry-pick", sha)
+        commit(self.repo, f"Linux 6.18.{sub}", Makefile=makefile(sub))
+        sh(self.repo, "git", "checkout", "-q", "master")
+        sh(self.tmp, "git", "-C", str(self.data / "linux"), "fetch", "-q", str(self.repo),
+           "+refs/heads/linux-6.18.y:refs/remotes/origin/linux-6.18.y")
+
+    def test_run_drops_patches_stable_absorbed(self):
+        cli.main(["--config", str(self.cfg), "run"])
+        self.assertEqual(len(list((self.out / "patches" / "6.18").glob("*.patch"))), 2)
+        self._land_in_stable(self.A, 3)                       # CVE record still lags
+        cli.main(["--config", str(self.cfg), "run"])
+        names = [p.name for p in (self.out / "patches" / "6.18").glob("*.patch")]
+        self.assertEqual(len(names), 1)
+        self.assertNotIn(self.A[:12], " ".join(names))
+        self.assertIn("retired 6.18: 1", (self.out / "report.md").read_text())
+
+    def test_prune_retires_incidents(self):
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0001", "CVE-2026-0006", "--adapt"])
+        cve = self.out / "cve"
+        self.assertTrue((cve / "CVE-2026-0001" / "6.18").is_dir())
+        cli.main(["--config", str(self.cfg), "prune"])
+        self.assertTrue((cve / "CVE-2026-0001" / "6.18").is_dir())  # nothing landed yet
+        self._land_in_stable(self.A, 3)
+        cli.main(["--config", str(self.cfg), "prune"])
+        self.assertFalse((cve / "CVE-2026-0001").exists())
+        self.assertTrue((cve / "CVE-2026-0006" / "6.18").is_dir())
+
+
 class TestShallow(Fixture):
     def test_shallow_mirror_is_sufficient(self):
         # history before the release tag must not be needed

@@ -5,16 +5,17 @@ series:
   - "6.18"
   - "7.3"
 
-# Persistent data directory filled by `fasttrack sync`.
-data: /srv/fasttrack
+# Upstream sources filled by `fasttrack sync` (git-ignored; cached between CI runs).
+data: data
 
 # Fetch linux.git with history starting at the oldest series' release tag
 # (v6.18 here) instead of a full ~5 GB mirror. Sufficient for verifying,
 # mainline picks, 3-way adapts and prerequisite hints.
 shallow: true
 
-# Patch sets, reports, unpatched list, incident results and work packages.
-out: out
+# Where results go. "." is this repository: patches/, report.md, unpatched.json,
+# state.json are committed by CI. work/ (backport work packages) is git-ignored.
+out: .
 
 # Which stable-queue patches to take early:
 #   cve  - only queued patches whose upstream commit is a published CVE fix (default)
