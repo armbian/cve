@@ -18,11 +18,12 @@ import json
 import logging
 import os
 import sys
+import time
 from pathlib import Path
 
 import yaml
 
-from . import emit, engine, feeds, gitutil, incident, sync, vulns
+from . import emit, engine, feeds, gitutil, incident, lore, sync, vulns
 
 log = logging.getLogger("fasttrack")
 
@@ -74,7 +75,8 @@ def cmd_run(args) -> int:
         try:
             results.append(engine.run_series(data / "linux", _series(s), records,
                                              queue_root if queue_root.is_dir() else None,
-                                             kev, releases, queue_mode=cfg.get("queue_mode", "cve")))
+                                             kev, releases, queue_mode=cfg.get("queue_mode", "cve"),
+                                             arches=cfg.get("arches")))
         except gitutil.GitError as e:
             print(f"{s}: skipped ({e})")
 
@@ -116,8 +118,10 @@ def cmd_cve(args) -> int:
     queue_root = queue_root if queue_root.is_dir() else None
 
     incidents: dict[str, list[str]] = {}
+    from_list: set[str] = set()                 # from unpatched.json, not named by the user
     if args.unpatched:
         incidents.update(incident.load_unpatched(out / "unpatched.json"))
+        from_list = set(incidents)
         if not incidents:
             print(f"nothing in {out / 'unpatched.json'}; run `fasttrack run` first")
     for cid in args.ids:
@@ -131,9 +135,15 @@ def cmd_cve(args) -> int:
         return 2
 
     log.info("%d incident(s) on %s", len(incidents), ", ".join(f"{a}.{b}" for a, b in series))
+    min_age = int(cfg.get("claude_min_age_days", 0))
+    newest_release = max((gitutil.release_time(data / "linux", f"{a}.{b}") or 0 for a, b in series), default=0)
     claude_cmd = cfg.get("claude_cmd") or incident.DEFAULT_CLAUDE_CMD
     if args.claude_model:
         claude_cmd = list(claude_cmd) + ["--model", args.claude_model]
+
+    # Claude attempts already made, so a rerun does not pay for them again.
+    attempts_file = out / "attempts.json"
+    attempts = json.loads(attempts_file.read_text()) if attempts_file.exists() else {}
 
     resolutions = []
     for cid, extra in incidents.items():
@@ -142,20 +152,35 @@ def cmd_cve(args) -> int:
         if not rec and not fixes:
             print(f"{cid}: not in vulns.git; pass --commit <mainline sha> to work from the fix directly")
         for s in series:
+            done = attempts.get(cid, {}).get(f"{s[0]}.{s[1]}")
+            if args.claude and done and not args.retry:
+                print(f"{cid} {s[0]}.{s[1]}: Claude tried on {done['date']} ({done['outcome']}); --retry to run again")
+                continue
             try:
                 res = incident.resolve(data / "linux", s, cid, fixes, rec, queue_root,
-                                       adapt=args.adapt or args.claude)
+                                       adapt=args.adapt or args.claude,
+                                       stable_list=lore.backports if cfg.get("stable_list") else None)
             except gitutil.GitError as e:
                 print(f"{cid} {s[0]}.{s[1]}: skipped ({e})")
                 continue
             if res.outcome in ("unpatched", "partial") and (args.claude or args.package):
                 wdir = incident.prepare_work(data / "linux", res, out / "work")
-                if args.claude:
+                young = _days_in_mainline(data / "linux", fixes, newest_release)
+                if args.claude and cid in from_list and young < min_age:
+                    res.note = (res.note + " " if res.note else "") + \
+                        f"{young:.0f} days in mainline; Claude waits {min_age} days for stable"
+                elif args.claude:
                     print(f"{cid} {res.series}: running Claude in {wdir} ...", flush=True)
                     rc = incident.run_claude(wdir, claude_cmd, timeout=args.claude_timeout)
                     if rc != 0:
                         res.note = (res.note + " " if res.note else "") + f"claude exited {rc}; see claude.log"
+                    cost = incident.claude_cost(wdir)
+                    if cost is not None:
+                        res.note = (res.note + " " if res.note else "") + f"claude ${cost:.2f}"
                     incident.collect_work(data / "linux", res, wdir)
+                    attempts.setdefault(cid, {})[res.series] = {
+                        "date": time.strftime("%Y-%m-%d", time.gmtime()), "head": res.head_version,
+                        "outcome": res.outcome, "cost": cost, "run": os.environ.get("GITHUB_RUN_ID")}
             emit.write_patch_dir(out / "cve" / cid / res.series, res.series, res.head, res.head_version,
                                  res.patches, {"incident": cid, "outcome": res.outcome,
                                                "fixed_in": res.fixed_in})
@@ -164,10 +189,26 @@ def cmd_cve(args) -> int:
                   + (f" ({len(res.patches)} patch(es))" if res.patches else "")
                   + (f" — {res.note}" if res.note else ""))
 
+    if attempts:
+        attempts_file.write_text(json.dumps(attempts, indent=2, sort_keys=True) + "\n")
     (out / "cve-report.md").write_text(emit.cve_report(resolutions))
     (out / "cve-result.json").write_text(json.dumps([r.public() for r in resolutions], indent=2) + "\n")
     print(f"report: {out / 'cve-report.md'}")
     return 1 if any(r.outcome in ("unpatched", "partial") for r in resolutions) else 0
+
+
+def _days_in_mainline(repo: Path, fixes: list[str], not_before: int = 0) -> float:
+    """Days since the newest fix commit landed. A fix not in the mirror landed
+    after the newest tracked release (``not_before``); its patch has only the
+    author date, which can be weeks older."""
+    when = gitutil.commit_times(repo, fixes)
+    for sha in fixes:
+        if sha not in when:
+            try:
+                when[sha] = max(gitutil.patch_time(gitutil.upstream_patch(repo, sha)), not_before)
+            except gitutil.GitError:
+                pass
+    return (time.time() - max(when.values())) / 86400 if when else float("inf")
 
 
 def cmd_prune(args) -> int:
@@ -205,6 +246,7 @@ def main(argv=None) -> int:
     c.add_argument("--claude", action="store_true", help="work package + run Claude Code headless on it (implies --adapt)")
     c.add_argument("--claude-model", help="model alias passed to claude --model")
     c.add_argument("--claude-timeout", type=int, default=3600)
+    c.add_argument("--retry", action="store_true", help="run Claude again where attempts.json has a result")
     c.set_defaults(fn=cmd_cve)
 
     args = p.parse_args(argv)

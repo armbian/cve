@@ -158,6 +158,27 @@ class TestVulns(Fixture):
                  "versionType": "original_commit_for_fix"}]}]}}}))
         self.assertEqual(vulns.parse_record(p).status((6, 18))[0], "unaffected")
 
+    def test_stable_backport_by_reference(self):
+        # stable carries C under its own content; only the message names C
+        sh(self.repo, "git", "checkout", "-q", "linux-6.18.y")
+        commit(self.repo, f"baz: fix race\n\ncommit {self.C} upstream.",
+               **{"baz.c": fix("baz", ("baz line 5", "baz line 5 REWORKED"), ("baz line 6", "baz line 6 OWN FIX"))})
+        sh(self.repo, "git", "checkout", "-q", "master")
+        c = {c.upstream: c for c in self.run_618().candidates}[self.C]
+        self.assertEqual(c.verdict, engine.PRESENT)
+        self.assertIn("stable backport", c.reason)
+
+    def test_other_arch(self):
+        arches = ["arm", "arm64", "riscv", "x86"]
+        self.assertTrue(engine.other_arch(["arch/s390/kernel/a.c", "arch/parisc/b.c"], arches))
+        self.assertFalse(engine.other_arch(["arch/s390/a.c", "mm/b.c"], arches))
+        self.assertFalse(engine.other_arch(["arch/arm64/a.c"], arches))
+        self.assertFalse(engine.other_arch(["arch/s390/a.c"], None))
+
+    def test_claude_cost(self):
+        (self.tmp / "claude.log").write_text('$ claude -p\n\n{"type": "result", "total_cost_usd": 1.234}\n')
+        self.assertAlmostEqual(incident.claude_cost(self.tmp), 1.234)
+
     def test_find(self):
         self.assertEqual(vulns.find(self.data / "vulns", "cve-2026-0003").fix_commits, [self.C])
         self.assertIsNone(vulns.find(self.data / "vulns", "CVE-2026-9999"))
@@ -270,12 +291,47 @@ echo ok > RESULT.md
         self.assertIn("X-Fasttrack-Source: claude", patch)
         self.assertIn(f"commit {self.C} upstream.", patch)
 
+        # a second run does not pay again; --retry does
+        self.assertEqual(json.loads((self.out / "attempts.json").read_text())
+                         ["CVE-2026-0003"]["6.18"]["outcome"], "patched-needs-review")
+        (wdir / "RESULT.md").unlink()
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--claude"])
+        self.assertFalse((wdir / "RESULT.md").exists())
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--claude", "--retry"])
+        self.assertTrue((wdir / "RESULT.md").exists())
+
     def test_unpatched_round_trip(self):
         cli.main(["--config", str(self.cfg), "run"])
         rc = cli.main(["--config", str(self.cfg), "cve", "--unpatched", "--adapt"])
         self.assertEqual(rc, 1)  # CVE-3 still needs a backport
         rows = {r["cve"]: r["outcome"] for r in json.loads((self.out / "cve-result.json").read_text())}
         self.assertEqual(rows, {"CVE-2026-0003": "unpatched", "CVE-2026-0006": "patched-needs-review"})
+
+    def test_stable_list_backport(self):
+        # the author's backport of C onto the reworked stable code, as posted to the list
+        sh(self.repo, "git", "checkout", "-q", "-b", "posted", "linux-6.18.y")
+        commit(self.repo, f"baz: fix race\n\ncommit {self.C} upstream.",
+               **{"baz.c": fix("baz", ("baz line 5", "baz line 5 REWORKED"), ("baz line 6", "baz line 6 REWORKED FIXED"))})
+        posted = sh(self.repo, "git", "format-patch", "-1", "--stdout", "HEAD")
+        sh(self.repo, "git", "checkout", "-q", "master")
+        seen = []
+        rec = vulns.find(self.data / "vulns", "CVE-2026-0003")
+        res = incident.resolve(self.data / "linux", (6, 18), "CVE-2026-0003", rec.fix_commits, rec,
+                               self.data / "stable-queue",
+                               stable_list=lambda sha, s: seen.append((sha, s)) or ["junk", posted])
+        self.assertEqual(seen, [(self.C, "6.18")])
+        self.assertEqual(res.outcome, "patched")
+        self.assertEqual(res.candidates[0].source, "stable-list")
+
+    def test_young_fix_waits_for_stable(self):
+        with open(self.cfg, "a") as fh:
+            fh.write(f"claude_min_age_days: 100000\nclaude_cmd: ['{self.tmp / 'no-such-claude'}']\n")
+        cli.main(["--config", str(self.cfg), "run"])
+        cli.main(["--config", str(self.cfg), "cve", "--unpatched", "--claude"])
+        self.assertFalse((self.out / "work" / "CVE-2026-0003" / "6.18" / "claude.log").exists())
+        self.assertFalse((self.out / "attempts.json").exists())
+        notes = {r["cve"]: r["note"] for r in json.loads((self.out / "cve-result.json").read_text())}
+        self.assertIn("waits", notes["CVE-2026-0003"])
 
 
 class TestExpiry(Fixture):

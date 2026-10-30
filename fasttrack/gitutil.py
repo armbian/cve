@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import functools
 import logging
 import os
 import re
@@ -104,6 +105,15 @@ def commit_times(repo: Path, shas: list[str]) -> dict[str, int]:
     return out
 
 
+def release_time(repo: Path, label: str, remote: str = "origin") -> Optional[int]:
+    """Commit time of the "Linux X.Y" release that the stable branch starts from."""
+    ref = rev(repo, f"{remote}/linux-{label}.y") or rev(repo, f"linux-{label}.y")
+    if not ref:
+        return None
+    out = git(repo, "log", "-1", "--first-parent", "--format=%ct", f"--grep=^Linux {label}$", ref, check=False)
+    return int(out) if out.strip().isdigit() else None
+
+
 def patch_time(patch: str) -> int:
     import email.utils
     m = _DATE.search(patch)
@@ -204,6 +214,25 @@ class Worktree:
         files = git(self.path, "diff", "--name-only", "--diff-filter=U", check=False).split()
         git(self.path, "cherry-pick", "--abort", check=False)
         return False, files
+
+
+# How stable backports name their upstream commit.
+_UPSTREAM_REF = r"^(commit ([0-9a-f]{40}) upstream|\[ Upstream commit ([0-9a-f]{40}) \])"
+
+
+@functools.lru_cache(maxsize=None)
+def stable_backports(repo: Path, ref: str) -> dict[str, str]:
+    """Upstream sha → stable commit that backports it, from the messages in ``ref``.
+    Catches backports that differ from upstream, so neither apply check matches.
+    Scans the whole history (~20 s on linux.git); cached per ref."""
+    out = git(repo, "log", "--no-merges", "-E", f"--grep={_UPSTREAM_REF}", "--format=%x1e%H%n%B", ref)
+    found: dict[str, str] = {}
+    for rec in out.split("\x1e")[1:]:
+        sha, _, body = rec.partition("\n")
+        for _, a, b in re.findall(_UPSTREAM_REF, body, re.M):
+            found.setdefault(a or b, sha)
+    log.info("%s: %d stable backports cite an upstream commit", ref[:12], len(found))
+    return found
 
 
 _DIFF_FILE = re.compile(r"^diff --git a/(\S+) b/(\S+)$", re.M)

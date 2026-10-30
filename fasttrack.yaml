@@ -29,8 +29,20 @@ out: .
 #   all  - the whole queue, i.e. the next point release a few days early
 queue_mode: cve
 
+# Kernel arch/ trees Armbian builds (amd64 is x86). A fix that touches only
+# other arch/ trees is reported as other-arch and never backported.
+arches: [arm, arm64, riscv, x86]
+
 # Older CVE records cannot apply to 6.18/7.3 and slow the scan.
 cve_since_year: 2024
+
+# Before a Claude backport, look for one the author posted to stable@vger.kernel.org.
+stable_list: true
+
+# --unpatched sends a fix to Claude only after this many days in mainline.
+# Stable usually takes a fix within a few weeks; Claude is for the ones it does not.
+# CVE ids named on the command line are never held back.
+claude_min_age_days: 21
 
 # Command used by `fasttrack cve --claude`. The BRIEF.md text is appended as the
 # last argument and it runs inside the work package directory.
@@ -51,8 +63,12 @@ claude_cmd:
   - Bash(sed:*)
   - Bash(ls:*)
   - Bash(cat:*)
+  # Stop a session that cannot finish; it then writes RESULT.md.
+  - --max-turns
+  - "80"
+  # JSON carries total_cost_usd; the cost goes into cve-report.md.
   - --output-format
-  - text
+  - json
 
 # Upstream URLs (vulns and stable_queue default to git.kernel.org).
 sources:

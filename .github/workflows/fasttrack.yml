@@ -20,6 +20,10 @@ on:
         description: "let Claude Code backport what does not apply"
         type: boolean
         default: false
+      retry:
+        description: "run Claude again for CVEs it already tried (attempts.json)"
+        type: boolean
+        default: false
 
 concurrency:
   group: fasttrack
@@ -55,7 +59,10 @@ jobs:
           sudo apt-get clean
           df -h /
 
+      # No token in .git/config: Claude runs in this job. Push steps set it themselves.
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Tooling
         run: |
@@ -91,7 +98,10 @@ jobs:
         run: python3 -m fasttrack.cli -v prune
 
       - name: Commit patches and reports
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           # One path at a time: a path that does not exist fails the whole `git add`.
           for p in patches cve report.md unpatched.json state.json events.json cve-report.md cve-result.json; do
             git add -A -- "$p" 2>/dev/null || true
@@ -109,16 +119,33 @@ jobs:
 
       - name: Resolve incidents
         if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '')
+        # Claude runs here: no GitHub token in this step.
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GH_TOKEN: ${{ github.token }}
         run: |
           args=()
           if [ "${{ inputs.incidents }}" = "unpatched" ]; then args+=(--unpatched); else args+=(${{ inputs.incidents }}); fi
           [ -n "${{ inputs.commit }}" ] && args+=(--commit "${{ inputs.commit }}")
           if [ "${{ inputs.claude }}" = "true" ]; then args+=(--claude); else args+=(--adapt --package); fi
+          [ "${{ inputs.retry }}" = "true" ] && args+=(--retry)
           python3 -m fasttrack.cli -v cve "${args[@]}" || true
           cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish incident results
+        if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          # The attempt record goes to main, so no later run pays for the same CVE.
+          if [ -f attempts.json ]; then
+            git add attempts.json
+            if ! git diff --cached --quiet; then
+              git commit -q -m "attempts: Claude run ${{ github.run_id }}"
+              git pull -q --rebase --autostash origin "$GITHUB_REF_NAME"
+              git push -q origin "HEAD:$GITHUB_REF_NAME"
+            fi
+          fi
           # Incident results always go through review, never straight to main.
           br="incident/${{ github.run_id }}"
           git checkout -q -b "$br"
