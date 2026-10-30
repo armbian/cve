@@ -29,6 +29,10 @@ out: .
 #   all  - the whole queue, i.e. the next point release a few days early
 queue_mode: cve
 
+# Kernel arch/ trees Armbian builds (amd64 is x86). A fix that touches only
+# other arch/ trees is reported as other-arch and never backported.
+arches: [arm, arm64, riscv, x86]
+
 # Older CVE records cannot apply to 6.18/7.3 and slow the scan.
 cve_since_year: 2024
 
@@ -51,8 +55,12 @@ claude_cmd:
   - Bash(sed:*)
   - Bash(ls:*)
   - Bash(cat:*)
+  # Stop a session that cannot finish; it then writes RESULT.md.
+  - --max-turns
+  - "80"
+  # JSON carries total_cost_usd; the cost goes into cve-report.md.
   - --output-format
-  - text
+  - json
 
 # Upstream URLs (vulns and stable_queue default to git.kernel.org).
 sources:

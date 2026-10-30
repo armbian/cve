@@ -74,7 +74,8 @@ def cmd_run(args) -> int:
         try:
             results.append(engine.run_series(data / "linux", _series(s), records,
                                              queue_root if queue_root.is_dir() else None,
-                                             kev, releases, queue_mode=cfg.get("queue_mode", "cve")))
+                                             kev, releases, queue_mode=cfg.get("queue_mode", "cve"),
+                                             arches=cfg.get("arches")))
         except gitutil.GitError as e:
             print(f"{s}: skipped ({e})")
 
@@ -155,6 +156,9 @@ def cmd_cve(args) -> int:
                     rc = incident.run_claude(wdir, claude_cmd, timeout=args.claude_timeout)
                     if rc != 0:
                         res.note = (res.note + " " if res.note else "") + f"claude exited {rc}; see claude.log"
+                    cost = incident.claude_cost(wdir)
+                    if cost is not None:
+                        res.note = (res.note + " " if res.note else "") + f"claude ${cost:.2f}"
                     incident.collect_work(data / "linux", res, wdir)
             emit.write_patch_dir(out / "cve" / cid / res.series, res.series, res.head, res.head_version,
                                  res.patches, {"incident": cid, "outcome": res.outcome,

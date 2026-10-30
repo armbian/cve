@@ -46,7 +46,8 @@ DEFAULT_CLAUDE_CMD = [
     "--permission-mode", "acceptEdits",
     "--allowedTools", "Read", "Edit", "Write", "Grep", "Glob",
     "Bash(git:*)", "Bash(make:*)", "Bash(grep:*)", "Bash(sed:*)", "Bash(ls:*)", "Bash(cat:*)",
-    "--output-format", "text",
+    "--max-turns", "80",
+    "--output-format", "json",
 ]
 
 
@@ -305,6 +306,23 @@ def _claude(wdir: Path, cmd: list[str], prompt: str, timeout: int) -> int:
         except FileNotFoundError:
             log.write(f"\n[{cmd[0]} not found]\n")
             return 127
+
+
+def claude_cost(wdir: Path) -> Optional[float]:
+    """total_cost_usd from the JSON result in claude.log (--output-format json)."""
+    log_file = wdir / "claude.log"
+    if not log_file.exists():
+        return None
+    for line in reversed(log_file.read_text(**gitutil.ENC).splitlines()):
+        if line.startswith("{"):
+            try:
+                cost = json.loads(line).get("total_cost_usd")
+            except ValueError:
+                continue
+            if isinstance(cost, (int, float)):
+                log.info("%s: claude cost $%.2f", wdir, cost)
+                return float(cost)
+    return None
 
 
 def collect_work(repo: Path, res: Resolution, wdir: Path) -> None:

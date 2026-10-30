@@ -158,6 +158,17 @@ class TestVulns(Fixture):
                  "versionType": "original_commit_for_fix"}]}]}}}))
         self.assertEqual(vulns.parse_record(p).status((6, 18))[0], "unaffected")
 
+    def test_other_arch(self):
+        arches = ["arm", "arm64", "riscv", "x86"]
+        self.assertTrue(engine.other_arch(["arch/s390/kernel/a.c", "arch/parisc/b.c"], arches))
+        self.assertFalse(engine.other_arch(["arch/s390/a.c", "mm/b.c"], arches))
+        self.assertFalse(engine.other_arch(["arch/arm64/a.c"], arches))
+        self.assertFalse(engine.other_arch(["arch/s390/a.c"], None))
+
+    def test_claude_cost(self):
+        (self.tmp / "claude.log").write_text('$ claude -p\n\n{"type": "result", "total_cost_usd": 1.234}\n')
+        self.assertAlmostEqual(incident.claude_cost(self.tmp), 1.234)
+
     def test_find(self):
         self.assertEqual(vulns.find(self.data / "vulns", "cve-2026-0003").fix_commits, [self.C])
         self.assertIsNone(vulns.find(self.data / "vulns", "CVE-2026-9999"))

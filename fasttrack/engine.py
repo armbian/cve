@@ -34,6 +34,7 @@ ACCEPTED = "accepted"
 PRESENT = "already-present"     # reverse-applies: the tree has it
 CONFLICT = "needs-backport"     # does not apply unchanged
 MISSING = "commit-missing"      # neither in the mirror nor downloadable
+OTHER_ARCH = "other-arch"       # touches only arch/ trees we do not build
 
 
 @dataclass
@@ -68,6 +69,13 @@ class SeriesResult:
     @property
     def accepted(self) -> list[Candidate]:
         return [c for c in self.candidates if c.verdict == ACCEPTED]
+
+
+def other_arch(files: list[str], arches: Optional[list[str]]) -> bool:
+    """True when every file is under arch/<name>/ and no name is in ``arches``."""
+    if not arches or not files:
+        return False
+    return all(f.startswith("arch/") and f.split("/")[1] not in arches for f in files)
 
 
 def _slug(text: str, n: int = 52) -> str:
@@ -131,13 +139,14 @@ def collect(
     return out
 
 
-def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[Path] = None) -> None:
+def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[Path] = None,
+           arches: Optional[list[str]] = None) -> None:
     """Cumulative, no-fuzz replay on top of ``ref``. Sets verdict on each candidate."""
     with tempfile.TemporaryDirectory(prefix="fasttrack-") as tmpd, \
             gitutil.Worktree(repo, ref, Path(tmpd) / "wt") as wt:
         n = 0
         for i, c in enumerate(candidates, 1):
-            _verify_one(repo, ref, wt, c)
+            _verify_one(repo, ref, wt, c, arches)
             if c.verdict == ACCEPTED:
                 n += 1
                 c.filename = f"{n:04d}-{(c.upstream or 'q')[:12]}-{_slug(c.subject)}.patch"
@@ -145,7 +154,8 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
                      c.source, c.verdict, c.subject)
 
 
-def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate) -> None:
+def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate,
+                arches: Optional[list[str]] = None) -> None:
     """Sets the verdict of one candidate; applies it to ``wt`` when accepted."""
     if gitutil.in_history(repo, c.upstream, ref):
         c.verdict, c.reason = PRESENT, "fix commit is in the stable history"
@@ -158,6 +168,10 @@ def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate) -> Non
                 c.verdict, c.reason = MISSING, str(e)
                 return
         c.subject = gitutil.commit_subject(repo, c.upstream, c.patch) or c.subject
+    if other_arch(gitutil.patch_files(c.patch), arches):
+        c.verdict, c.reason = OTHER_ARCH, "touches only architectures we do not build"
+        c.files = gitutil.patch_files(c.patch)
+        return
     if wt.check(c.patch, reverse=True) and not wt.check(c.patch):
         c.verdict, c.reason = PRESENT, "change already in tree"
         return
@@ -196,6 +210,7 @@ def run_series(
     queue_mode: str = "cve",
     branch_fmt: str = "linux-{s}.y",
     remote: str = "origin",
+    arches: Optional[list[str]] = None,
 ) -> SeriesResult:
     label = f"{series[0]}.{series[1]}"
     branch = branch_fmt.format(s=label)
@@ -208,6 +223,6 @@ def run_series(
     cands = collect(series, records, queue_root, kev, queue_mode)
     _order_mainline(repo, cands)
     log.info("%s: verify %d candidates on %s", label, len(cands), ref[:12])
-    verify(repo, ref, cands)
+    verify(repo, ref, cands, arches=arches)
     log.info("%s: done in %.0fs", label, time.monotonic() - t)
     return SeriesResult(label, ref, hv, releases.get(label), cands)
