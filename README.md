@@ -1,4 +1,6 @@
-# ksec-fasttrack
+# armbian/cve
+
+Kernel security patches for Armbian: gathered, verified, and the missing ones backported.
 
 A standalone tool for Linux kernel security patches, tracking **6.18 LTS** and **7.3** (configurable).
 
