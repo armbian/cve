@@ -48,7 +48,7 @@ def load_queue(root: Path, series: tuple[int, int]) -> list[QueuedPatch]:
         p = qdir / name
         if not p.exists():
             continue
-        body = p.read_text(errors="replace")
+        body = p.read_text(encoding="utf-8", errors="surrogateescape")
         m = _UPSTREAM.search(body)
         up = (m.group(1) or m.group(2)) if m else None
         out.append(QueuedPatch(series, name, up, _subject(body), body))

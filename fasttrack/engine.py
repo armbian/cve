@@ -132,7 +132,11 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
                 if not gitutil.rev(repo, c.upstream):
                     c.verdict, c.reason = MISSING, "mainline commit not in mirror; run sync"
                     continue
-                c.patch = gitutil.format_patch(repo, c.upstream)
+                try:
+                    c.patch = gitutil.upstream_patch(repo, c.upstream)
+                except gitutil.GitError as e:
+                    c.verdict, c.reason = MISSING, str(e)
+                    continue
                 c.subject = gitutil.git(repo, "log", "-1", "--format=%s", c.upstream).strip()
             if wt.check(c.patch, reverse=True) and not wt.check(c.patch):
                 c.verdict, c.reason = PRESENT, "change already in tree"

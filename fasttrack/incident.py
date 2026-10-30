@@ -151,7 +151,11 @@ def resolve(
                 if not have:
                     c.verdict, c.reason = MISSING, "fix commit not in mirror; run sync or check the SHA"
                     continue
-                c.patch = gitutil.format_patch(repo, c.upstream)
+                try:
+                    c.patch = gitutil.upstream_patch(repo, c.upstream)
+                except gitutil.GitError as e:
+                    c.verdict, c.reason = MISSING, str(e)
+                    continue
                 c.subject = gitutil.git(repo, "log", "-1", "--format=%s", c.upstream).strip()
             if wt.check(c.patch, reverse=True) and not wt.check(c.patch):
                 c.verdict, c.reason = PRESENT, "change already in tree"
@@ -161,7 +165,10 @@ def resolve(
                 wt.commit(c.subject)
                 c.verdict = ACCEPTED
             elif adapt and have:
-                ok, conflicts = wt.cherry_pick(c.upstream)
+                if gitutil.is_boundary(repo, c.upstream):
+                    ok, conflicts = wt.apply3(c.patch, f"{c.subject}\n\ncommit {c.upstream} upstream.")
+                else:
+                    ok, conflicts = wt.cherry_pick(c.upstream)
                 if ok:
                     c.patch = gitutil.format_patch(wt.path, "HEAD")
                     c.verdict, c.reason = ADAPTED, "3-way merged against older context; review before use"
@@ -239,7 +246,10 @@ def prepare_work(repo: Path, res: Resolution, work_root: Path) -> Path:
         lines = [f"### `{c.upstream[:12]}` {c.subject}", "", f"Reason: {c.reason}."]
         if gitutil.rev(repo, c.upstream):
             up = wdir / f"upstream-{c.upstream[:12]}.patch"
-            up.write_text(gitutil.format_patch(repo, c.upstream))
+            try:
+                up.write_text(gitutil.upstream_patch(repo, c.upstream), **gitutil.ENC)
+            except gitutil.GitError:
+                pass
             lines.append(f"Upstream patch: `{up.name}`")
         if c.files:
             lines.append("Files: " + ", ".join(f"`{f}`" for f in c.files))
@@ -358,7 +368,7 @@ def prune(repo: Path, cve_root: Path, remote: str = "origin", branch_fmt: str = 
             tmp = Path(tempfile.mkdtemp(prefix="fasttrack-prune-"))
             with gitutil.Worktree(repo, ref, tmp / "wt") as wt:
                 # reverse the whole series, newest first: all present means absorbed
-                if all(wt.check(p.read_text(), reverse=True) for p in reversed(patches)):
+                if all(wt.check(p.read_text(**gitutil.ENC), reverse=True) for p in reversed(patches)):
                     reason = "stable head already contains every patch"
         if reason:
             shutil.rmtree(sdir)

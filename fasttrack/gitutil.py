@@ -20,13 +20,18 @@ for _k, _v in (("GIT_AUTHOR_NAME", "ksec-fasttrack"), ("GIT_AUTHOR_EMAIL", "fast
     _ENV.setdefault(_k, _v)
 
 
+# Patches may contain bytes that are not UTF-8 (old commit messages, binary diffs).
+# surrogateescape carries them through str unchanged; every file write uses it too.
+ENC = {"encoding": "utf-8", "errors": "surrogateescape"}
+
+
 def git(repo: Path, *args: str, check: bool = True, input: Optional[str] = None) -> str:
     proc = subprocess.run(
         ["git", "-C", str(repo), *args],
         capture_output=True,
-        text=True,
         input=input,
         env=_ENV,
+        **ENC,
     )
     if check and proc.returncode != 0:
         raise GitError(f"git {' '.join(args)}: {proc.stderr.strip()}")
@@ -37,9 +42,9 @@ def ok(repo: Path, *args: str, input: Optional[str] = None) -> bool:
     return subprocess.run(
         ["git", "-C", str(repo), *args],
         capture_output=True,
-        text=True,
         input=input,
         env=_ENV,
+        **ENC,
     ).returncode == 0
 
 
@@ -63,6 +68,53 @@ def makefile_version(repo: Path, ref: str) -> tuple[int, int, int]:
         m = _MK[key].search(body)
         vals.append(int(m.group(1)) if m and m.group(1).isdigit() else 0)
     return tuple(vals)  # type: ignore[return-value]
+
+
+# Where to get a commit's patch when its parent is not in the shallow mirror.
+PATCH_URLS = [
+    "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id={sha}",
+    "https://github.com/torvalds/linux/commit/{sha}.patch",
+]
+
+
+def is_boundary(repo: Path, sha: str) -> bool:
+    """True when ``sha`` sits on the shallow cut: its parent object is not here,
+    so a local diff would be against an empty tree (the whole kernel)."""
+    body = git(repo, "cat-file", "-p", sha, check=False)
+    parents = [l.split()[1] for l in body.splitlines() if l.startswith("parent ")]
+    if not parents:
+        return bool(body)                         # a true root commit: no useful diff either
+    return not ok(repo, "cat-file", "-e", f"{parents[0]}^{{commit}}")
+
+
+def _fetch_patch(sha: str) -> Optional[str]:
+    import urllib.request
+    for tmpl in PATCH_URLS:
+        try:
+            req = urllib.request.Request(tmpl.format(sha=sha), headers={"User-Agent": "ksec-fasttrack"})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                body = r.read().decode(**ENC)
+            if "\ndiff --git " in body:
+                return body
+        except Exception:
+            continue
+    return None
+
+
+def upstream_patch(repo: Path, sha: str) -> str:
+    """The upstream commit as an mbox patch, from the mirror when it can produce a
+    correct diff, otherwise downloaded (cached next to the mirror)."""
+    if not is_boundary(repo, sha):
+        return format_patch(repo, sha)
+    cache = Path(repo) / "fasttrack-patches" / f"{sha}.patch"
+    if cache.exists():
+        return cache.read_text(**ENC)
+    body = _fetch_patch(sha)
+    if body is None:
+        raise GitError(f"{sha[:12]} is on the shallow boundary and its patch could not be downloaded")
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_text(body, **ENC)
+    return body
 
 
 def format_patch(repo: Path, sha: str) -> str:
@@ -94,6 +146,15 @@ class Worktree:
 
     def commit(self, message: str) -> None:
         git(self.path, "commit", "--quiet", "--no-verify", "-m", message or "fasttrack")
+
+    def apply3(self, patch: str, message: str) -> tuple[bool, list[str]]:
+        """3-way apply of a patch (for commits whose parent is not in the mirror)."""
+        if ok(self.path, "apply", "-3", "--index", input=patch):
+            self.commit(message)
+            return True, []
+        files = git(self.path, "diff", "--name-only", "--diff-filter=U", check=False).split()
+        git(self.path, "reset", "--quiet", "--hard", check=False)
+        return False, files
 
     def cherry_pick(self, sha: str) -> tuple[bool, list[str]]:
         """3-way cherry-pick with full history. Returns (ok, conflicting files)."""

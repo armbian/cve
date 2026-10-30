@@ -39,7 +39,7 @@ def write_patch_dir(d: Path, series: str, head: str, version: str, patches, extr
     d.mkdir(parents=True)
     lines = [HEADER.format(s=series, head12=head[:12], ver=version)]
     for c in patches:
-        (d / c.filename).write_text(_with_provenance(c))
+        (d / c.filename).write_text(_with_provenance(c), encoding="utf-8", errors="surrogateescape")
         lines.append(c.filename)
     (d / "series.conf").write_text("\n".join(lines) + "\n")
     (d / "base").write_text(head + "\n")

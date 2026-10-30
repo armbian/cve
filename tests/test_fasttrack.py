@@ -29,6 +29,10 @@ def sh(cwd, *args, input=None):
     return subprocess.run(args, cwd=cwd, check=True, capture_output=True, text=True, input=input).stdout
 
 
+def sh_bytes(cwd, *args):
+    return subprocess.run(args, cwd=cwd, check=True, capture_output=True).stdout
+
+
 def commit(repo, msg, **files):
     for name, body in files.items():
         (repo / name).write_text(body)
@@ -299,6 +303,64 @@ class TestHints(Fixture):
         from fasttrack import gitutil
         hints = gitutil.prerequisite_hints(self.repo, "linux-6.18.y", fixc, ["baz.c"])
         self.assertEqual([h.split(" ", 1)[1] for h in hints], ["baz: fix race", "baz: refactor locking"])
+
+
+class TestShallowBoundary(Fixture):
+    """A fix merged from a topic branch that started before the cut: in the mirror
+    its parent is gone, so a local format-patch would emit the whole tree."""
+
+    def test_boundary_fix_uses_real_patch(self):
+        from fasttrack import gitutil
+        r = self.repo
+        sh(r, "git", "checkout", "-q", "-b", "topic", self.rc1)
+        (r / "newdrv.c").write_bytes(b"int x; /* caf\xc0 */\n")     # not UTF-8 on purpose
+        sh(r, "git", "add", "newdrv.c")
+        sh(r, "git", "commit", "-q", "-m", "newdrv: fix bounds")
+        F = sh(r, "git", "rev-parse", "HEAD").strip()
+        sh(r, "git", "checkout", "-q", "master")
+        sh(r, "git", "merge", "-q", "--no-ff", "-m", "Merge topic", "topic")
+        sh(r, "git", "tag", "v6.18", self.rc1)
+        pub = self.data / "vulns" / "cve" / "published" / "2026"
+        (pub / "CVE-2026-0007.json").write_text(json.dumps({"cveMetadata": {"cveId": "CVE-2026-0007"},
+            "containers": {"cna": {"title": "t", "affected": [{"product": "Linux", "versions": AFFECTED}]}}}))
+        (pub / "CVE-2026-0007.sha1").write_text(F + "\n")
+
+        mirror = self.tmp / "shallow"
+        sync.fetch_linux(mirror, f"file://{r}", ["6.18"], shallow=True)
+        self.assertTrue(gitutil.is_boundary(mirror, F))
+        self.assertIn("Makefile", gitutil.format_patch(mirror, F))       # the bug: whole tree
+        served = self.tmp / "served"
+        served.mkdir()
+        (served / f"{F}.patch").write_bytes(sh_bytes(r, "git", "format-patch", "-1", "--stdout", F))
+        old = gitutil.PATCH_URLS
+        gitutil.PATCH_URLS = [f"file://{served}/{{sha}}.patch"]
+        try:
+            records = list(vulns.iter_records(self.data / "vulns"))
+            res = engine.run_series(mirror, (6, 18), records, None, {}, {})
+            c = next(c for c in res.candidates if c.upstream == F)
+            self.assertEqual(c.verdict, engine.ACCEPTED)
+            self.assertNotIn("Makefile", c.patch)
+            d = emit.write_series_dir(self.out, res)
+            raw = next(d.glob(f"*{F[:12]}*")).read_bytes()
+            self.assertIn(b"caf\xc0", raw)                                   # bytes preserved
+            self.assertTrue((mirror / "fasttrack-patches" / f"{F}.patch").exists())  # cached
+        finally:
+            gitutil.PATCH_URLS = old
+
+    def test_boundary_without_download_is_reported_not_fatal(self):
+        from fasttrack import gitutil
+        old = gitutil.PATCH_URLS
+        gitutil.PATCH_URLS = ["file:///nonexistent/{sha}"]
+        try:
+            sh(self.repo, "git", "tag", "v6.18", self.rc1)
+            mirror = self.tmp / "shallow"
+            sync.fetch_linux(mirror, f"file://{self.repo}", ["6.18"], shallow=True)
+            base = sh(mirror, "git", "rev-list", "--max-parents=0", "origin/master").split()
+            self.assertTrue(base and gitutil.is_boundary(mirror, base[0]))
+            with self.assertRaises(gitutil.GitError):
+                gitutil.upstream_patch(mirror, base[0])
+        finally:
+            gitutil.PATCH_URLS = old
 
 
 class TestShallow(Fixture):
