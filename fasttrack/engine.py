@@ -29,7 +29,7 @@ from .vulns import CveRecord
 ACCEPTED = "accepted"
 PRESENT = "already-present"     # reverse-applies: the tree has it
 CONFLICT = "needs-backport"     # does not apply unchanged
-MISSING = "commit-missing"      # mainline SHA not in our mirror
+MISSING = "commit-missing"      # neither in the mirror nor downloadable
 
 
 @dataclass
@@ -124,27 +124,25 @@ def collect(
 
 def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[Path] = None) -> None:
     """Cumulative, no-fuzz replay on top of ``ref``. Sets verdict on each candidate."""
-    tmp = Path(tempfile.mkdtemp(prefix="fasttrack-", dir=workdir))
-    with gitutil.Worktree(repo, ref, tmp / "wt") as wt:
+    with tempfile.TemporaryDirectory(prefix="fasttrack-") as tmpd, \
+            gitutil.Worktree(repo, ref, Path(tmpd) / "wt") as wt:
         n = 0
         for c in candidates:
             if c.source == "mainline":
-                if not gitutil.rev(repo, c.upstream):
-                    c.verdict, c.reason = MISSING, "mainline commit not in mirror; run sync"
-                    continue
-                try:
-                    c.patch = gitutil.upstream_patch(repo, c.upstream)
-                except gitutil.GitError as e:
-                    c.verdict, c.reason = MISSING, str(e)
-                    continue
-                c.subject = gitutil.git(repo, "log", "-1", "--format=%s", c.upstream).strip()
+                if not c.patch:
+                    try:
+                        c.patch = gitutil.upstream_patch(repo, c.upstream)
+                    except gitutil.GitError as e:
+                        c.verdict, c.reason = MISSING, str(e)
+                        continue
+                c.subject = gitutil.commit_subject(repo, c.upstream, c.patch) or c.subject
             if wt.check(c.patch, reverse=True) and not wt.check(c.patch):
                 c.verdict, c.reason = PRESENT, "change already in tree"
                 continue
             if not wt.check(c.patch):
                 c.verdict, c.reason = CONFLICT, "does not apply unchanged; needs a manual backport or prerequisite"
-                if c.upstream and gitutil.rev(repo, c.upstream):
-                    c.files = gitutil.files_in(repo, c.upstream)
+                c.files = gitutil.patch_files(c.patch)
+                if c.upstream:
                     c.prerequisites = gitutil.prerequisite_hints(repo, ref, c.upstream, c.files)
                 continue
             wt.apply(c.patch)
@@ -154,14 +152,16 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
 
 
 def _order_mainline(repo: Path, cands: list[Candidate]) -> None:
-    """Mainline picks in commit order, so multi-commit fixes replay as upstream did."""
-    known = [c.upstream for c in cands if c.source == "mainline" and gitutil.rev(repo, c.upstream)]
-    when: dict[str, int] = {}
-    if known:
-        for line in gitutil.git(repo, "show", "-s", "--format=%H %ct", *known).splitlines():
-            sha, _, ts = line.partition(" ")
-            if ts.isdigit():
-                when[sha] = int(ts)
+    """Mainline picks in upstream order, so multi-commit fixes replay as upstream did.
+    Commits not in the mirror are downloaded here and ordered by their patch date."""
+    when = gitutil.commit_times(repo, [c.upstream for c in cands if c.source == "mainline"])
+    for c in cands:
+        if c.source == "mainline" and c.upstream not in when:
+            try:
+                c.patch = gitutil.upstream_patch(repo, c.upstream)
+                when[c.upstream] = gitutil.patch_time(c.patch)
+            except gitutil.GitError:
+                pass                                   # verify() reports it as commit-missing
     cands.sort(key=lambda c: (c.source != "stable-queue",
                               when.get(c.upstream, 1 << 62) if c.source == "mainline" else 0))
 

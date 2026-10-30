@@ -36,6 +36,16 @@ def _git(*args: str, cwd: Path | None = None) -> None:
     subprocess.run(["git", *args], cwd=cwd, check=True)
 
 
+def _sparse_queue(url: str, dest: Path) -> None:
+    """stable-queue, but only its queue-X.Y/ directories: the releases/ archive
+    of every past patch is ~3 GB and never read."""
+    if not (dest / ".git").is_dir():
+        _git("clone", "--quiet", "--depth", "1", "--no-checkout", url, str(dest))
+    _git("-C", str(dest), "sparse-checkout", "set", "--no-cone", "/queue-*/")
+    _git("-C", str(dest), "fetch", "--quiet", "--depth", "1", "origin", "HEAD")
+    _git("-C", str(dest), "reset", "--quiet", "--hard", "FETCH_HEAD")
+
+
 def _shallow(url: str, dest: Path) -> None:
     if (dest / ".git").is_dir():
         _git("-C", str(dest), "fetch", "--quiet", "--depth", "1", "origin", "HEAD")
@@ -68,15 +78,17 @@ def shallow_boundary(series: list[str]) -> str:
     return oldest_tag(series)
 
 
-def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True) -> None:
-    """Bare mirror with origin/master and origin/linux-X.Y.y. First fetch decides depth."""
+def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True,
+                mainline: bool = True) -> None:
+    """Bare mirror with origin/linux-X.Y.y (and origin/master when ``mainline``).
+    First fetch decides depth."""
     fresh = not (linux / "objects").is_dir()
     if fresh:
         _git("init", "--quiet", "--bare", str(linux))
         _git("-C", str(linux), "remote", "add", "origin", url)
     heads = set(subprocess.run(["git", "ls-remote", "--heads", url], capture_output=True, text=True,
                                check=True).stdout.split())
-    refspecs = ["+refs/heads/master:refs/remotes/origin/master"]
+    refspecs = ["+refs/heads/master:refs/remotes/origin/master"] if mainline else []
     for s in series:
         if f"refs/heads/linux-{s}.y" in heads:
             refspecs.append(f"+refs/heads/linux-{s}.y:refs/remotes/origin/linux-{s}.y")
@@ -91,17 +103,19 @@ def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True) 
     _git("-C", str(linux), "worktree", "prune")
 
 
-def sync(data: Path, series: list[str], urls: dict | None = None, shallow: bool = True, log=print) -> None:
+def sync(data: Path, series: list[str], urls: dict | None = None, shallow: bool = True,
+         mainline: bool = True, log=print) -> None:
     u = {**DEFAULTS, **(urls or {})}
     data.mkdir(parents=True, exist_ok=True)
 
     log("==> vulns.git")
     _shallow(u["vulns"], data / "vulns")
     log("==> stable-queue.git")
-    _shallow(u["stable_queue"], data / "stable-queue")
+    _sparse_queue(u["stable_queue"], data / "stable-queue")
 
-    log(f"==> linux.git (master + {' '.join(series)}{', shallow' if shallow else ''})")
-    fetch_linux(data / "linux", u["linux"], series, shallow)
+    what = (["master"] if mainline else []) + [f"linux-{s}.y" for s in series]
+    log(f"==> linux.git ({' + '.join(what)}{', shallow' if shallow else ''})")
+    fetch_linux(data / "linux", u["linux"], series, shallow, mainline)
 
     log("==> feeds")
     _download(u["releases"], data / "releases.json")

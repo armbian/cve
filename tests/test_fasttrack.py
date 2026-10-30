@@ -363,6 +363,36 @@ class TestShallowBoundary(Fixture):
             gitutil.PATCH_URLS = old
 
 
+class TestStableBranchesOnly(Fixture):
+    """mainline_branch: false — fixes not in any mirrored branch are downloaded."""
+
+    def test_same_verdicts_without_master(self):
+        from fasttrack import gitutil
+        mirror = self.tmp / "two-branches"
+        sync.fetch_linux(mirror, f"file://{self.repo}", ["6.18"], shallow=False, mainline=False)
+        self.assertFalse(gitutil.present(mirror, self.A))
+        served = self.tmp / "served"
+        served.mkdir()
+        for sha in (self.A, self.C, self.D, self.E):
+            (served / f"{sha}.patch").write_bytes(sh_bytes(self.repo, "git", "format-patch", "-1", "--stdout", sha))
+        old = gitutil.PATCH_URLS
+        gitutil.PATCH_URLS = [f"file://{served}/{{sha}}.patch"]
+        try:
+            res = engine.run_series(mirror, (6, 18), self.records, self.data / "stable-queue", {}, {})
+            v = {c.upstream: c.verdict for c in res.candidates}
+            self.assertEqual(v[self.A], engine.ACCEPTED)
+            self.assertEqual(v[self.C], engine.CONFLICT)
+            self.assertEqual(v[self.E], engine.CONFLICT)
+            self.assertEqual([c.upstream for c in res.accepted], [self.D, self.A])
+            self.assertEqual(next(c for c in res.candidates if c.upstream == self.A).subject, "foo: fix overflow")
+            self.assertEqual(next(c for c in res.candidates if c.upstream == self.C).files, ["baz.c"])
+            r = incident.resolve(mirror, (6, 18), "CVE-2026-0006", [self.E],
+                                 vulns.find(self.data / "vulns", "CVE-2026-0006"), None, adapt=True)
+            self.assertEqual(r.outcome, "patched-needs-review")       # 3-way apply, not cherry-pick
+        finally:
+            gitutil.PATCH_URLS = old
+
+
 class TestShallow(Fixture):
     def test_shallow_mirror_is_sufficient(self):
         # history before the release tag must not be needed

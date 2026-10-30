@@ -41,7 +41,7 @@ def _cfg(args) -> dict:
 def cmd_sync(args) -> int:
     cfg = _cfg(args)
     sync.sync(Path(cfg["data"]), [str(s) for s in cfg["series"]], cfg.get("sources"),
-              shallow=bool(cfg.get("shallow", True)))
+              shallow=bool(cfg.get("shallow", True)), mainline=bool(cfg.get("mainline_branch", True)))
     return 0
 
 

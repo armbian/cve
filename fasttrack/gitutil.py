@@ -77,6 +77,43 @@ PATCH_URLS = [
 ]
 
 
+def present(repo: Path, sha: str) -> bool:
+    return rev(repo, sha) is not None
+
+
+_SUBJ = re.compile(r"^Subject:\s*(?:\[[^\]]*\]\s*)?(.+(?:\n[ \t].+)*)", re.M)
+_DATE = re.compile(r"^Date:\s*(.+)$", re.M)
+
+
+def commit_subject(repo: Path, sha: str, patch: str = "") -> str:
+    if present(repo, sha):
+        return git(repo, "log", "-1", "--format=%s", sha).strip()
+    m = _SUBJ.search(patch)
+    return re.sub(r"\s+", " ", m.group(1)).strip() if m else ""
+
+
+def commit_times(repo: Path, shas: list[str]) -> dict[str, int]:
+    """Commit time for local commits (via stdin: thousands of SHAs are fine)."""
+    local = [s for s in shas if present(repo, s)]
+    out: dict[str, int] = {}
+    if local:
+        for line in git(repo, "log", "--no-walk=unsorted", "--stdin", "--format=%H %ct",
+                        input="\n".join(local) + "\n").splitlines():
+            h, _, t = line.partition(" ")
+            if t.isdigit():
+                out[h] = int(t)
+    return out
+
+
+def patch_time(patch: str) -> int:
+    import email.utils
+    m = _DATE.search(patch)
+    try:
+        return int(email.utils.parsedate_to_datetime(m.group(1)).timestamp()) if m else 1 << 62
+    except (TypeError, ValueError):
+        return 1 << 62
+
+
 def is_boundary(repo: Path, sha: str) -> bool:
     """True when ``sha`` sits on the shallow cut: its parent object is not here,
     so a local diff would be against an empty tree (the whole kernel)."""
@@ -102,9 +139,11 @@ def _fetch_patch(sha: str) -> Optional[str]:
 
 
 def upstream_patch(repo: Path, sha: str) -> str:
-    """The upstream commit as an mbox patch, from the mirror when it can produce a
-    correct diff, otherwise downloaded (cached next to the mirror)."""
-    if not is_boundary(repo, sha):
+    """The upstream commit as an mbox patch: from the mirror when it has the commit
+    and its parent, otherwise downloaded (cached next to the mirror). The second
+    case covers mainline fixes newer than every mirrored stable branch, and
+    commits on a shallow cut."""
+    if present(repo, sha) and not is_boundary(repo, sha):
         return format_patch(repo, sha)
     cache = Path(repo) / "fasttrack-patches" / f"{sha}.patch"
     if cache.exists():
@@ -165,8 +204,23 @@ class Worktree:
         return False, files
 
 
+_DIFF_FILE = re.compile(r"^diff --git a/(\S+) b/(\S+)$", re.M)
+
+
+def patch_files(patch: str) -> list[str]:
+    """Files a patch touches, in order, from its diff headers."""
+    out: list[str] = []
+    for a, b in _DIFF_FILE.findall(patch):
+        for f in (a, b):
+            if f not in out:
+                out.append(f)
+    return out
+
+
 def files_in(repo: Path, sha: str) -> list[str]:
-    return git(repo, "show", "--name-only", "--format=", sha).split()
+    """Files a commit touches. Read from its real patch, because on the shallow
+    boundary `git show --name-only` would list the entire tree."""
+    return patch_files(upstream_patch(repo, sha))
 
 
 def prerequisite_hints(repo: Path, stable_ref: str, sha: str, files: list[str], limit: int = 15) -> list[str]:
@@ -176,8 +230,8 @@ def prerequisite_hints(repo: Path, stable_ref: str, sha: str, files: list[str], 
     ``sha^ ^stable`` needs no merge-base, so it works on a mirror cut at the
     release tag. Stable carries backports under different SHAs, so subjects that
     also appear on stable since the fork are filtered out as well."""
-    if not files:
-        return []
+    if not files or not present(repo, sha) or is_boundary(repo, sha):
+        return []                                  # no parent here: nothing before it to list
     mainline = git(repo, "log", "--no-merges", "--format=%H%x09%s", f"{sha}^", f"^{stable_ref}",
                    "--", *files, check=False).splitlines()
     in_stable = set(git(repo, "log", "--no-merges", "--format=%s", stable_ref, f"^{sha}",

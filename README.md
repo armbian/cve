@@ -29,12 +29,13 @@ It is not tied to any build system. The output is plain patch sets that anything
 | kernel.org `releases.json` | latest release per series | warns when the mirror is stale |
 | CISA KEV | actively exploited CVEs | urgency (issue in CI) |
 
-`linux.git` is fetched **shallow**, with history starting right after the release tag
-of the oldest tracked series (`v6.18` today). This is sufficient by construction. A fix
-that reached mainline before vX.Y means X.Y is not affected, so every fix the tool can
-need is newer than the tag. Prerequisite hints don't need the fork point either: they
-are `git log <fix>^ ^<stable branch>`. A configured series with no stable branch yet
-(trunk before its first point release) is skipped with a warning. Set `shallow: false` for a full mirror.
+`linux.git` is a **full clone of [armbian/linux](https://github.com/armbian/linux)** (about
+4 GB). It mirrors linux-stable, with `master` and the `linux-X.Y.y` branches, and its heads
+match kernel.org. Full history means every fix commit has its parent, so patches come
+straight from git. `shallow: true` is still available; it cuts history at the oldest
+series' release tag. Fixes that sit on that cut are then downloaded as patches from
+git.kernel.org. A configured series with no stable branch yet
+(trunk before its first point release) is skipped with a warning.
 
 ## `run`: gather, verify, list
 
