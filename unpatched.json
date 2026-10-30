@@ -2,22 +2,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2025-71074"
-    ],
-    "kev": false,
-    "upstream": "e5bf5ee266633cb18fff6f98f0b7d59a62819eee",
-    "subject": "functionfs: fix the open/removal races",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/usb/gadget/function/f_fs.c"
-    ],
-    "prerequisites": [
-      "1544775687f0 functionfs: need to cancel ->reset_work in ->kill_sb()"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2025-68226"
     ],
     "kev": false,
@@ -26,112 +10,6 @@
     "verdict": "needs-backport",
     "files": [
       "fs/smb/client/cached_dir.c"
-    ],
-    "prerequisites": []
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2025-71146"
-    ],
-    "kev": false,
-    "upstream": "2e2a720766886190a6d35c116794693aabd332b6",
-    "subject": "netfilter: nf_conncount: fix leaked ct in error paths",
-    "verdict": "needs-backport",
-    "files": [
-      "net/netfilter/nf_conncount.c"
-    ],
-    "prerequisites": []
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-22983"
-    ],
-    "kev": false,
-    "upstream": "7d11e047eda5f98514ae62507065ac961981c025",
-    "subject": "net: do not write to msg_get_inq in callee",
-    "verdict": "needs-backport",
-    "files": [
-      "net/ipv4/tcp.c",
-      "net/unix/af_unix.c"
-    ],
-    "prerequisites": [
-      "7c268eaeec63 net: Allow opt-out from global protocol memory accounting.",
-      "37a183d3b7cd tcp: Convert tcp-md5 to use MD5 library instead of crypto_ahash",
-      "ec538867a376 net: unix: remove outdated BSD behavior comment in unix_release_sock()",
-      "05774d7e4201 tcp: Remove unnecessary null check in tcp_inbound_md5_hash()",
-      "0ae1ac7335ca tcp: remove one ktime_get() from recvmsg() fast path",
-      "1ad5b411afc3 unix: don't copy creds",
-      "85cb0757d7e1 net: Convert proto_ops connect() callbacks to use sockaddr_unsized",
-      "e8960c1b2ee9 vfs: make vfs_mknod break delegations on parent directory",
-      "da8fc7a39be8 af_unix: Don't trigger GC from close() if unnecessary.",
-      "384900542dc8 af_unix: Don't call wait_for_unix_gc() on every sendmsg().",
-      "24fa77dad25c af_unix: Consolidate unix_schedule_gc() and wait_for_unix_gc().",
-      "df59bb5b9af3 netmem, devmem, tcp: access pp fields through @desc in net_iov",
-      "7352c6fce34c af_unix: convert unix_file_open() to FD_ADD()"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-23082"
-    ],
-    "kev": false,
-    "upstream": "79a6d1bfe1148bc921b8d7f3371a7fbce44e30f7",
-    "subject": "can: gs_usb: gs_usb_receive_bulk_callback(): unanchor URL on usb_submit_urb() error",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/can/usb/gs_usb.c"
-    ],
-    "prerequisites": [
-      "f968a24cad3d can: treewide: remove can_change_mtu()",
-      "4f6b0435c613 can: convert generic HW timestamp ioctl to ndo_hwtstamp callbacks"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-43220"
-    ],
-    "kev": false,
-    "upstream": "9e249c48412828e807afddc21527eb734dc9bd3d",
-    "subject": "iommu/amd: serialize sequence allocation under concurrent TLB invalidations",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/iommu/amd/amd_iommu_types.h",
-      "drivers/iommu/amd/init.c",
-      "drivers/iommu/amd/iommu.c"
-    ],
-    "prerequisites": [
-      "c21b34762e2f iommu/amd: Set release_domain to blocked_domain",
-      "789a5913b29c iommu/amd: Use the generic iommu page table",
-      "2fdf6db436e3 iommu/amd: Remove AMD io_pgtable support",
-      "d1e281f832fc iommu/amd: Enhance \"Completion-wait Time-out\" error message",
-      "1eb0ae6fbd54 iommupt/vtd: Support mgaw's less than a 4 level walk for first stage",
-      "eeb934137deb iommu/amd: Report SEV-TIO support",
-      "c7fe9384c85d amd/iommu: Make protection domain ID functions non-static",
-      "2e666595651b iommu/amd: Drop incorrect NULL check for iommu in alloc_irq_table()",
-      "7d8b06ecc45b iommu/amd: Add support for hw_info for iommu capability query",
-      "5335fc165749 iommu/amd: Rename DEV_DOMID_MASK to DTE_DOMID_MASK",
-      "11cfa782f01b iommu/amd: Make amd_iommu_make_clear_dte() non-static inline",
-      "9b467a5af856 iommu/amd: Introduce helper function amd_iommu_update_dte()",
-      "b2bb0573ddb2 iommu/amd: Always enable GCR3TRPMode when supported.",
-      "b43a29def24f iommu/amd: Add support for nest parent domain allocation",
-      "e113a72576d6 iommu/amd: Introduce struct amd_iommu_viommu"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-23200"
-    ],
-    "kev": false,
-    "upstream": "bbf4a17ad9ffc4e3d7ec13d73ecd59dea149ed25",
-    "subject": "ipv6: Fix ECMP sibling count mismatch when clearing RTF_ADDRCONF",
-    "verdict": "needs-backport",
-    "files": [
-      "net/ipv6/ip6_fib.c"
     ],
     "prerequisites": []
   },
@@ -194,32 +72,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-23341"
-    ],
-    "kev": false,
-    "upstream": "8363c02863332992a1822688da41f881d88d1631",
-    "subject": "accel/amdxdna: Fix crash when destroying a suspended hardware context",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/accel/amdxdna/aie2_message.c"
-    ],
-    "prerequisites": [
-      "7ea046838021 accel/amdxdna: Support firmware debug buffer",
-      "71829d7f2f70 accel/amdxdna: Use MSG_OP_CHAIN_EXEC_NPU when supported",
-      "1556c170d2f7 accel/amdxdna: Add IOCTL parameter for resource data",
-      "e568dc3e625d accel/amdxdna: Add IOCTL parameter for telemetry data",
-      "3a0ff7b98af4 accel/amdxdna: Support preemption requests",
-      "3d3ac202c7df accel/amdxdna: Poll MPNPU_PWAITMODE after requesting firmware suspend",
-      "3d32eb7a5ecf accel/amdxdna: Fix cu_idx being cleared by memset() during command setup",
-      "7818618a09a0 accel/amdxdna: Enable temporal sharing only mode",
-      "332070795bd9 accel/amdxdna: Enable hardware context priority",
-      "1222e06934bd accel/amdxdna: Update message DMA buffer allocation",
-      "b853007fdcdd accel/amdxdna: Remove hardware context status"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-23288"
     ],
     "kev": false,
@@ -242,55 +94,6 @@
       "1222e06934bd accel/amdxdna: Update message DMA buffer allocation",
       "b853007fdcdd accel/amdxdna: Remove hardware context status",
       "57aa3917a3b3 accel/amdxdna: Reduce log noise during process termination"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-23355"
-    ],
-    "kev": false,
-    "upstream": "aac9b27f7c1f2b2cf7f50a9ca633ecbbcaf22af9",
-    "subject": "ata: libata: cancel pending work after clearing deferred_qc",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/ata/libata-eh.c",
-      "drivers/ata/libata-scsi.c"
-    ],
-    "prerequisites": [
-      "8c59fc1c90df scsi: ata: Stop disk on restart if ACPI power resources are found",
-      "e8fe09817014 ata: libata-scsi: Remove superfluous local_irq_save()",
-      "0db3f51839fe scsi: Change the return type of the .queuecommand() callback"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-43070"
-    ],
-    "kev": false,
-    "upstream": "a3125bc01884431d30d731461634c8295b6f0529",
-    "subject": "bpf: Reset register ID for BPF_END value tracking",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/bpf/verifier.c"
-    ],
-    "prerequisites": [
-      "f233d4855918 bpf: Refactor storage_get_func_atomic to generic non_sleepable flag",
-      "ec8e3e27a140 bpf: mark mm->owner as __safe_rcu_or_null",
-      "7484e7cd8ab1 bpf: mark vma->{vm_mm,vm_file} as __safe_trusted_or_null",
-      "f7d72d0b3f43 bpf: save the start of functions in bpf_prog_aux",
-      "2f69c5685427 bpf: make bpf_insn_successors to return a pointer",
-      "9cba966f1c55 bpf: verifier: centralize const dynptr check in unmark_stack_slots_dynptr()",
-      "8d8771dc03e4 bpf: add plumbing for file-backed dynptr",
-      "d869d56ca848 bpf: verifier: refactor kfunc specialization",
-      "2c52e8943a43 bpf: dispatch to sleepable file dynptr",
-      "d43ad9da8052 bpf: Skip bounds adjustment for conditional jumps on same scalar register",
-      "b4ce5923e780 bpf, x86: add new map type: instructions array",
-      "30ec0ec09bf5 bpf: support instructions arrays with constants blinding",
-      "493d9e0d6083 bpf, x86: add support for indirect jumps",
-      "e5d2e34e726b bpf: Add missing checks to avoid verbose verifier log",
-      "4f7bc83b9837 bpf: verifier: Move desc->imm setup to sort_kfunc_descs_by_imm_off()"
     ]
   },
   {
@@ -326,23 +129,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-31444"
-    ],
-    "kev": false,
-    "upstream": "48623ec358c1c600fa1e38368746f933e0f1a617",
-    "subject": "ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/oplock.c"
-    ],
-    "prerequisites": [
-      "96721fd29226 smb: move create_durable_rsp_v2 to common/smb2pdu.h",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-43042"
     ],
     "kev": false,
@@ -366,28 +152,6 @@
       "fb2b77b9b1db mpls: Convert RTM_GETNETCONF to RCU.",
       "e833eb25161a mpls: Protect net->mpls.platform_label with a per-netns mutex.",
       "7d99a7c6c6a3 mpls: Drop RTNL for RTM_NEWROUTE, RTM_DELROUTE, and RTM_GETROUTE.",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-31742"
-    ],
-    "kev": false,
-    "upstream": "40014493cece72a0be5672cd86763e53fb3ec613",
-    "subject": "vt: discard stale unicode buffer on alt screen exit after resize",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/tty/vt/vt.c"
-    ],
-    "prerequisites": [
-      "80a3471f59ef tty: vt: do not open code DIV_ROUND_UP()",
-      "353e72df138a vt: Remove trailing whitespace",
-      "c83e42990303 vt: Remove con_debug_enter/_leave from struct consw",
-      "24c776355f40 kernel.h: drop hex.h and update all hex.h users",
-      "8e9bf8b9e8c0 printk, vt, fbcon: Remove console_conditional_schedule()",
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
       "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument"
     ]
@@ -561,38 +325,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-46048"
-    ],
-    "kev": false,
-    "upstream": "7a5f1cd22d47f8ca4b760b6334378ae42c1bd24b",
-    "subject": "ALSA: caiaq: fix usb_dev refcount leak on probe failure",
-    "verdict": "needs-backport",
-    "files": [
-      "sound/usb/caiaq/device.c"
-    ],
-    "prerequisites": []
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-64092"
-    ],
-    "kev": false,
-    "upstream": "77098e4bea37af51d3962efa88a5af2ea5e1ac57",
-    "subject": "batman-adv: tp_meter: fix tp_vars reference leak in receiver shutdown",
-    "verdict": "needs-backport",
-    "files": [
-      "net/batman-adv/tp_meter.c",
-      "net/batman-adv/types.h"
-    ],
-    "prerequisites": [
-      "ed5730f3f733 batman-adv: use skb_crc32c() instead of skb_seq_read()",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-64160"
     ],
     "kev": false,
@@ -637,93 +369,6 @@
       "95e8c1bfa56e smb: do some cleanups",
       "5003ad718af7 smb: move create_durable_reconn to common/smb2pdu.h",
       "c4a2a49f7df4 smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-64139"
-    ],
-    "kev": false,
-    "upstream": "af92ee994cc7f7e83a41c2025f32257a2f82a7ef",
-    "subject": "ksmbd: fix SID memory leak in set_posix_acl_entries_dacl() on overflow",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/smbacl.c"
-    ],
-    "prerequisites": [
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-52966"
-    ],
-    "kev": false,
-    "upstream": "dc366607c41c45fd0ae6f3db090f31dd611b644a",
-    "subject": "drm: Replace old pointer to new idr",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/drm_gem.c"
-    ],
-    "prerequisites": [
-      "e5e0350d5d1a drm: Replace the deprecated DRM_* logging macros in gem helper files",
-      "cb77b79abf5f drm/gem: Use vmemdup_array_user in drm_gem_objects_lookup",
-      "922682d48d62 drm/gem: Correct error condition in drm_gem_objects_lookup",
-      "99bda20d6d4c drm/gem: Introduce drm_gem_get_unmapped_area() fop",
-      "6e0b1b82017b drm/gem: Add huge tmpfs mountpoint helpers",
-      "7cdf69d90375 drm/gem: Get rid of *_with_mnt helpers",
-      "ad9f266be8b2 drm/gem: Fix builds with CONFIG_MMU=n",
-      "0df70ce615c7 drm/gem: fix build for mm_get_unmapped_area() call after backmerge",
-      "5f8d6f29c51a drm/gem: Fix a GEM leak in drm_gem_get_unmapped_area()",
-      "dbce431756f8 drm/gem: Make drm_gem_objects_lookup() self-cleaning on failure v6",
-      "590d356aa433 mm: update shmem_[kernel]_file_*() functions to use vma_flags_t",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "78842c1e3b05 drm/gem: Improve drm_gem_objects_lookup() kerneldoc",
-      "4e1d77a8f382 folio_batch: rename pagevec.h to folio_batch.h"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-64028"
-    ],
-    "kev": false,
-    "upstream": "576ec047d20b368b43c4d5db98c4f2e0f3c101ec",
-    "subject": "tracing: Avoid NULL return from hist_field_name() on truncation",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/trace/trace_events_hist.c"
-    ],
-    "prerequisites": [
-      "c29e75532e98 tracing: Fix typo in trace_events_hist.c",
-      "a4e0ea0e10a2 tracing: Remove redundant call to event_trigger_reset_filter() in event_hist_trigger_parse()",
-      "45641096c9c3 tracing: Have hist_debug show what function a field uses",
-      "e62750b6ab4d tracing: Up the hist stacktrace size from 16 to 31",
-      "326669faf3cb tracing: Move tracing_set_filter_buffering() into trace_events_hist.c",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "32a92f8c8932 Convert more 'alloc_obj' cases to default GFP_KERNEL arguments",
-      "f54f08b1b8f0 tracing: Free up file->private_data for use by individual events",
-      "9236eebd138a tracing: Fix fully-qualified variable reference printing in histograms"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-63909"
-    ],
-    "kev": false,
-    "upstream": "0e60dafe97eca61721f3db456f97d97a80c6c8ae",
-    "subject": "ksmbd: OOB read regression in smb_check_perm_dacl() ACE-walk loops",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/smbacl.c"
-    ],
-    "prerequisites": [
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
     ]
   },
   {
@@ -781,36 +426,6 @@
       "91f4da826c08 accel/amdxdna: Add command doorbell and wait support",
       "dbc8fd7a03cb accel/amdxdna: Add expandable device heap support",
       "457b046b7dfc accel/amdxdna: Remove mmap and export support for ubuf"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-63885"
-    ],
-    "kev": false,
-    "upstream": "7164d78559b0ff29931a366a840a9e5dd53d4b7c",
-    "subject": "drm/gem: fix race between change_handle and handle_delete",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/drm_gem.c"
-    ],
-    "prerequisites": [
-      "e5e0350d5d1a drm: Replace the deprecated DRM_* logging macros in gem helper files",
-      "cb77b79abf5f drm/gem: Use vmemdup_array_user in drm_gem_objects_lookup",
-      "922682d48d62 drm/gem: Correct error condition in drm_gem_objects_lookup",
-      "99bda20d6d4c drm/gem: Introduce drm_gem_get_unmapped_area() fop",
-      "6e0b1b82017b drm/gem: Add huge tmpfs mountpoint helpers",
-      "7cdf69d90375 drm/gem: Get rid of *_with_mnt helpers",
-      "ad9f266be8b2 drm/gem: Fix builds with CONFIG_MMU=n",
-      "0df70ce615c7 drm/gem: fix build for mm_get_unmapped_area() call after backmerge",
-      "5f8d6f29c51a drm/gem: Fix a GEM leak in drm_gem_get_unmapped_area()",
-      "dbce431756f8 drm/gem: Make drm_gem_objects_lookup() self-cleaning on failure v6",
-      "590d356aa433 mm: update shmem_[kernel]_file_*() functions to use vma_flags_t",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "78842c1e3b05 drm/gem: Improve drm_gem_objects_lookup() kerneldoc",
-      "4e1d77a8f382 folio_batch: rename pagevec.h to folio_batch.h"
     ]
   },
   {
@@ -1424,24 +1039,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-80889"
-    ],
-    "kev": false,
-    "upstream": "050f010f920da17c1044a4f174766ad553e770b6",
-    "subject": "can: isotp: fix timer drain order, wakeup handling and tx_gen ordering",
-    "verdict": "needs-backport",
-    "files": [
-      "net/can/isotp.c"
-    ],
-    "prerequisites": [
-      "96ea3a1e2d31 can: add CAN skb extension infrastructure",
-      "5a9229dbb48d can: move ifindex to CAN skb extensions",
-      "9f10374bb024 can: remove private CAN skb headroom infrastructure"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-89584"
     ],
     "kev": false,
@@ -1533,37 +1130,6 @@
       "4523ba0ee2e9 ocfs2: validate inline xattr header before inline refcount attach",
       "bda614e6b4f2 ocfs2: validate inline xattr header before reflinking inline xattrs",
       "8914a3330b72 ocfs2: validate inline xattrs during inode block validation"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-80728"
-    ],
-    "kev": false,
-    "upstream": "b96c529cd2551b78316a4afa3237b2ed96ba03c8",
-    "subject": "Revert \"drm/amdgpu: fix aperture mapping leak\"",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_device.c",
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c"
-    ],
-    "prerequisites": [
-      "e095b55155ef drm/amdgpu: use user provided hmm_range buffer in amdgpu_ttm_tt_get_user_pages",
-      "b1dd0db1c668 drm/amdgpu: clean up amdgpu hmm range functions",
-      "0c1beb7cbf66 drm/amdgpu: make non-NULL out fence mandatory",
-      "1bea57ea7544 drm/amdgpu: reduce queue timeout to 2 seconds v2",
-      "6062ede68097 drm/amd: Stop exporting amdgpu_device_ip_suspend() outside amdgpu_device",
-      "f35f2541780b drm/amd: Remove comment about handling errors in amdgpu_device_ip_suspend_phase1()",
-      "b7ff2e79240a drm/amd: Don't always set IP block HW status to false",
-      "173360fe49c2 drm/amd: Pass IP suspend errors up to callers",
-      "1f3cca77943b drm/amd: Pass userq suspend failures up to caller",
-      "db36632ea51e drm/amdgpu: clean up and unify hw fence handling",
-      "aa6674f2da05 drm/amdgpu: Reorganize sysfs ini/fini calls",
-      "9e2096baab9a drm/amdgpu: Add amdgpu_discovery_info",
-      "1cbac73d1a15 drm/amdgpu: Move reset-on-init sequence earlier",
-      "071bba962456 drm/amdgpu: Reserve discovery TMR only if needed",
-      "737da5363cc0 drm/amdgpu: update the functions to use amdgpu version of hmm"
     ]
   },
   {
@@ -2032,29 +1598,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99125"
-    ],
-    "kev": false,
-    "upstream": "f3110e969ad226ffbb2d9b4bf5387e68d0d9ef40",
-    "subject": "s390/pai: Handle multiple PMU stop callback invocations",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/s390/kernel/perf_pai.c"
-    ],
-    "prerequisites": [
-      "492578d3a2bc s390/pai: Rename perf_pai_crypto.c to perf_pai.c",
-      "d17901e8e8dd s390/pai: Calculate size of reserved PAI extension control block area",
-      "c3d17464f026 s390: Remove KMSG_COMPONENT macro",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "189f164e573e Convert remaining multi-line kmalloc_obj/flex GFP_KERNEL uses",
-      "3fe7ecab1a08 s390/pai: Disable duplicate read of kernel PAI counter value",
-      "99269799bf24 s390/pai: Fix missing PAI counter increments under heavy load"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-98106"
     ],
     "kev": false,
@@ -2144,23 +1687,6 @@
       "168479c9bf07 thunderbolt: test: Release third DP tunnel",
       "5f40cba7d4fa thunderbolt: Assert downstream port reset on shutdown",
       "e8158c8a6a23 thunderbolt: Use min() for the DMA path credit cap"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-98652"
-    ],
-    "kev": false,
-    "upstream": "f3a557067d57ce6ae98d485c8009b223e16f5f36",
-    "subject": "KVM: s390: Add missing srcu in kvm_s390_set_irq_state()",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/s390/kvm/s390/interrupt.c"
-    ],
-    "prerequisites": [
-      "1b09c13c90cc KVM: s390: Move s390 kvm code into a subdirectory",
-      "d215f014b352 KVM: s390: Fix dirty marking in adapter_indicators_set*()"
     ]
   },
   {
@@ -2281,65 +1807,6 @@
       "afab3f61aeb1 smb: client: add tracepoint for local lock conflicts",
       "4c46b677f352 smb: client: add oplock level to smb3_open_done tracepoint",
       "abce65948c2c smb: client: add tracepoints for deferred handle caching"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-97526"
-    ],
-    "kev": false,
-    "upstream": "9ecc4d033879f7761f2df07e20cd2fbec00fd90b",
-    "subject": "s390/pai: Support CPU hotplug for PMU PAI",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/s390/include/asm/pai.h",
-      "arch/s390/kernel/perf_pai.c"
-    ],
-    "prerequisites": [
-      "413957980ac8 s390/pai_crypto: Introduce generic event init using pai_pmu[]",
-      "492578d3a2bc s390/pai: Rename perf_pai_crypto.c to perf_pai.c",
-      "d17901e8e8dd s390/pai: Calculate size of reserved PAI extension control block area",
-      "c3d17464f026 s390: Remove KMSG_COMPONENT macro",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "189f164e573e Convert remaining multi-line kmalloc_obj/flex GFP_KERNEL uses",
-      "3fe7ecab1a08 s390/pai: Disable duplicate read of kernel PAI counter value",
-      "99269799bf24 s390/pai: Fix missing PAI counter increments under heavy load",
-      "f3110e969ad2 s390/pai: Handle multiple PMU stop callback invocations",
-      "8cff0ac21658 s390/pai: Reduce excessive debug feature size",
-      "4eef4ab3aa3a s390/pai: Use PAI PMU index as parameter replacing event",
-      "e8df39dacb7d s390/pai: Move locking to event init and delete"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-98228"
-    ],
-    "kev": false,
-    "upstream": "bbc448c541ed90d52f9ec22f17394304e3bf170e",
-    "subject": "mips: select CONFIG_WEAK_REORDERING_BEYOND_LLSC from CONFIG_EYEQ",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/mips/Kconfig"
-    ],
-    "prerequisites": [
-      "c8610c021be3 MIPS: Fix HOTPLUG_PARALLEL dependency",
-      "6c8e95805dba mips: mm: enable MMU_GATHER_RCU_TABLE_FREE",
-      "0bce126ab7e5 MIPS: Implement ARCH_HAS_CC_CAN_LINK",
-      "ced7072a3ad6 MIPS: Don't select CLOCKSOURCE_WATCHDOG",
-      "1cb79c435a2f MIPS: mobileye: Remove duplicate FIT_IMAGE_FDT_EPM5 from main Kconfig",
-      "42d9c75e8b9c arch: select HAVE_ARCH_BITREVERSE conditionally on BITREVERSE",
-      "96942092d5e6 vdso/treewide: Drop GENERIC_TIME_VSYSCALL",
-      "60ad2f115857 MIPS: Introduce Kconfig MIPS_GENERIC_GETTIMEOFDAY",
-      "8ea920c48d82 MIPS: VDSO: Only map the data pages when the vDSO is used",
-      "51512c216e1d MIPS: VDSO: Fold MIPS_DISABLE_VDSO into MIPS_GENERIC_GETTIMEOFDAY",
-      "d051ede1adee MIPS: VDSO: Gate microMIPS restriction on GCC version",
-      "8d563bd79047 MIPS: VDSO: Fold MIPS_CLOCK_VSYSCALL into MIPS_GENERIC_GETTIMEOFDAY",
-      "6f25741b7565 mips: select legacy gpiolib interfaces where used",
-      "52447180f4fb vdso: Drop HAVE_GENERIC_VDSO from architecture kconfig files",
-      "09fbaddec89e mips: remove dead select"
     ]
   },
   {
@@ -3090,28 +2557,6 @@
       "f4a66cf1cb14 bpf: arm64: Add support for indirect jumps",
       "c3d17464f026 s390: Remove KMSG_COMPONENT macro",
       "47c9214dcbea bpf: fix the usage of BPF_TRAMP_F_SKIP_FRAME"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-99009"
-    ],
-    "kev": false,
-    "upstream": "ac022970e9fb0a5f7e7d1f6c8e104c1ed924dd1c",
-    "subject": "Bluetooth: RFCOMM: connect the session socket without rfcomm_mutex",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/bluetooth/rfcomm.h",
-      "net/bluetooth/rfcomm/core.c"
-    ],
-    "prerequisites": [
-      "85cb0757d7e1 net: Convert proto_ops connect() callbacks to use sockaddr_unsized",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "8f59d17b18a7 Bluetooth: RFCOMM: pull credit byte with skb_pull_data()",
-      "bea06c7c1b83 Bluetooth: Add SPDX id lines to some source files",
-      "ebe6674292fd Bluetooth: RFCOMM: serialize session teardown"
     ]
   },
   {
