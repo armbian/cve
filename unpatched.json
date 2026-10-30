@@ -2,26 +2,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-23377"
-    ],
-    "kev": false,
-    "upstream": "e142dc4ef0f451b7ef99d09aaa84e9389af629d7",
-    "subject": "ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/intel/ice/ice_base.c"
-    ],
-    "prerequisites": [
-      "8adfcfd6a2ee ice: implement configurable header split for regular Rx",
-      "b470944ee6e8 ice: remove ice_q_stats struct and use struct_group",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "02852b47c706 ice: fix rxq info registering in mbuf packets"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2025-71074"
     ],
     "kev": false,
@@ -1723,28 +1703,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-100072"
-    ],
-    "kev": false,
-    "upstream": "a9ba4dd2f18bf3f439d9ef0d8f375f90360ba1bd",
-    "subject": "ACPI: platform: Use acpi_bus_get_primary_device()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/acpi/acpi_platform.c"
-    ],
-    "prerequisites": [
-      "ab06eb920401 ACPI: scan: Register platform devices for fixed event buttons",
-      "336aae5c4e1a ACPI: scan: Register platform devices for backlight device objects",
-      "b862e66a9c2e ACPI: scan: Clean up after recent changes",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "6ab3532b4c98 ACPI: video: Switch over to auxiliary bus type",
-      "f234fdaae1ca ACPI: scan: Avoid registering platform devices with resource overlaps"
-    ]
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-98439"
     ],
     "kev": false,
@@ -2589,7 +2547,6 @@
       "include/net/codel_impl.h"
     ],
     "prerequisites": [
-      "815980fe6dbb net_sched: codel: fix stale state for empty flows in fq_codel",
       "ea25e03da7a7 codel: annotate data-races in codel_dump_stats()"
     ]
   },

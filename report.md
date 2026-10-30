@@ -2,16 +2,17 @@
 
 **Events this run**
 
-- added 6.18: 29 patch(es)
-- added 7.3: 1 patch(es)
+- new-stable 6.18: 6.18.59 → 6.18.60
+- added 6.18: 1 patch(es)
+- retired 6.18: 1 patch(es) (landed upstream or superseded)
+- new-stable 7.3: 7.3.0 → 7.3.1
 
-## 6.18 (base 6.18.59, `1253a6aa5d10`)
+## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 ### Included (applies unchanged) (29)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2026-98853 | `006c8b834aed` | stable-queue | net: gso: limit recursive IP-in-IP segmentation |
 |  | CVE-2026-43174 | `5d540e450895` | mainline | io_uring/zcrx: fix post open error handling |
 |  | CVE-2026-53024 | `84265cbd96b9` | mainline | greybus: raw: fix use-after-free if write is called after disconnect |
 |  | CVE-2026-46017 | `3bac01168982` | mainline | mm: fix deferred split queue races during migration |
@@ -23,6 +24,7 @@
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
 |  | CVE-2026-80580 | `d15d51fb26e8` | mainline | fbdev: bound mode sysfs output to the sysfs buffer |
 |  | CVE-2026-90211 | `cc3e12330599` | mainline | bpf, s390: Clear fetch destination on faulting arena atomic |
+|  | CVE-2026-100072 | `a9ba4dd2f18b` | mainline | ACPI: platform: Use acpi_bus_get_primary_device() |
 |  | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-99109 | `4aa2c106aef4` | mainline | smb: client: reject SetEA requests that do not fit the request buffer |
 |  | CVE-2026-98364 | `9fa903b24b1f` | mainline | xfrm: hold net_device reference under RCU in bundle creation |
@@ -41,11 +43,10 @@
 |  | CVE-2026-98954 | `44378d02c5aa` | mainline | net: always dissect GSO packets in __virtio_net_hdr_to_skb() |
 |  | CVE-2026-99183 | `89c2c777df17` | mainline | accel/rocket: search every core slot when looking up a scheduler |
 
-### Needs a manual backport (128)
+### Needs a manual backport (126)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2026-23377 | `e142dc4ef0f4` | stable-queue | ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz |
 |  | CVE-2025-71074 | `e5bf5ee26663` | mainline | functionfs: fix the open/removal races |
 |  | CVE-2025-68226 | `abd29b6e17a9` | mainline | smb: client: fix incomplete backport in cfids_invalidation_worker() |
 |  | CVE-2025-71146 | `2e2a72076688` | mainline | netfilter: nf_conncount: fix leaked ct in error paths |
@@ -111,7 +112,6 @@
 |  | CVE-2026-80785 | `061db6b7a910` | mainline | fbdev: serialize mode sysfs access with lock_fb_info() |
 |  | CVE-2026-98869 | `7ce090afbf72` | mainline | bpf: Infer zext_dst based on static register liveness analysis |
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
-|  | CVE-2026-100072 | `a9ba4dd2f18b` | mainline | ACPI: platform: Use acpi_bus_get_primary_device() |
 |  | CVE-2026-98439 | `4fd5bad647bf` | mainline | smb/server: cancel async requests when closing connection |
 |  | CVE-2026-99101 | `0ab6dc1ac460` | mainline | ntfs: move attribute payload before shrinking its record |
 |  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets |
@@ -307,7 +307,7 @@
 
 Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).
 
-## 7.3 (base 7.3.0, `c03c1a14507d`)
+## 7.3 (base 7.3.1, `79a907609d53`)
 
 ### Included (applies unchanged) (1)
 

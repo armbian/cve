@@ -1,25 +1,10 @@
 {
   "series": "6.18",
   "base": {
-    "commit": "1253a6aa5d104312bf0992afacc15220ae35bdf9",
-    "version": "6.18.59"
+    "commit": "f45ed76d6791cf72ff1265ee93511175bbbc2f18",
+    "version": "6.18.60"
   },
   "patches": [
-    {
-      "series": "6.18",
-      "upstream": "006c8b834aed8b02bd8fb9fb05e9e7ead37d1763",
-      "subject": "net: gso: limit recursive IP-in-IP segmentation",
-      "source": "stable-queue",
-      "cves": [
-        "CVE-2026-98853"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0001-006c8b834aed-net-gso-limit-recursive-ip-in-ip-segmentation.patch",
-      "files": [],
-      "prerequisites": []
-    },
     {
       "series": "6.18",
       "upstream": "5d540e4508950c674d6feef1d95463d039bbf4f5",
@@ -31,7 +16,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0002-5d540e450895-io-uring-zcrx-fix-post-open-error-handling.patch",
+      "filename": "0001-5d540e450895-io-uring-zcrx-fix-post-open-error-handling.patch",
       "files": [],
       "prerequisites": []
     },
@@ -46,7 +31,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0003-84265cbd96b9-greybus-raw-fix-use-after-free-if-write-is-called-af.patch",
+      "filename": "0002-84265cbd96b9-greybus-raw-fix-use-after-free-if-write-is-called-af.patch",
       "files": [],
       "prerequisites": []
     },
@@ -61,7 +46,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0004-3bac01168982-mm-fix-deferred-split-queue-races-during-migration.patch",
+      "filename": "0003-3bac01168982-mm-fix-deferred-split-queue-races-during-migration.patch",
       "files": [],
       "prerequisites": []
     },
@@ -76,7 +61,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0005-593980175389-bpf-use-array-map-meta-equal-for-percpu-array-inner.patch",
+      "filename": "0004-593980175389-bpf-use-array-map-meta-equal-for-percpu-array-inner.patch",
       "files": [],
       "prerequisites": []
     },
@@ -91,7 +76,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0006-828cd614e2af-hwmon-pmbus-core-honor-vrm-version-in-pmbus-data2reg.patch",
+      "filename": "0005-828cd614e2af-hwmon-pmbus-core-honor-vrm-version-in-pmbus-data2reg.patch",
       "files": [],
       "prerequisites": []
     },
@@ -106,7 +91,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0007-34746b5a84ec-bpf-disallow-interpreter-fallback-for-arena-related.patch",
+      "filename": "0006-34746b5a84ec-bpf-disallow-interpreter-fallback-for-arena-related.patch",
       "files": [],
       "prerequisites": []
     },
@@ -121,7 +106,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0008-46e8e31771f4-ext4-fix-transaction-overflow-during-writeback.patch",
+      "filename": "0007-46e8e31771f4-ext4-fix-transaction-overflow-during-writeback.patch",
       "files": [],
       "prerequisites": []
     },
@@ -136,7 +121,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0009-2b66c83ff175-bluetooth-l2cap-use-proto-lock-for-l2cap-data-to-fix.patch",
+      "filename": "0008-2b66c83ff175-bluetooth-l2cap-use-proto-lock-for-l2cap-data-to-fix.patch",
       "files": [],
       "prerequisites": []
     },
@@ -151,7 +136,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0010-95e647d2a530-fbdev-clear-fb-info-mode-before-deleting-a-videomode.patch",
+      "filename": "0009-95e647d2a530-fbdev-clear-fb-info-mode-before-deleting-a-videomode.patch",
       "files": [],
       "prerequisites": []
     },
@@ -166,7 +151,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0011-d15d51fb26e8-fbdev-bound-mode-sysfs-output-to-the-sysfs-buffer.patch",
+      "filename": "0010-d15d51fb26e8-fbdev-bound-mode-sysfs-output-to-the-sysfs-buffer.patch",
       "files": [],
       "prerequisites": []
     },
@@ -181,7 +166,22 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0012-cc3e12330599-bpf-s390-clear-fetch-destination-on-faulting-arena-a.patch",
+      "filename": "0011-cc3e12330599-bpf-s390-clear-fetch-destination-on-faulting-arena-a.patch",
+      "files": [],
+      "prerequisites": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "a9ba4dd2f18bf3f439d9ef0d8f375f90360ba1bd",
+      "subject": "ACPI: platform: Use acpi_bus_get_primary_device()",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-100072"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0012-a9ba4dd2f18b-acpi-platform-use-acpi-bus-get-primary-device.patch",
       "files": [],
       "prerequisites": []
     },
