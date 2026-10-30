@@ -105,6 +105,15 @@ def commit_times(repo: Path, shas: list[str]) -> dict[str, int]:
     return out
 
 
+def release_time(repo: Path, label: str, remote: str = "origin") -> Optional[int]:
+    """Commit time of the "Linux X.Y" release that the stable branch starts from."""
+    ref = rev(repo, f"{remote}/linux-{label}.y") or rev(repo, f"linux-{label}.y")
+    if not ref:
+        return None
+    out = git(repo, "log", "-1", "--first-parent", "--format=%ct", f"--grep=^Linux {label}$", ref, check=False)
+    return int(out) if out.strip().isdigit() else None
+
+
 def patch_time(patch: str) -> int:
     import email.utils
     m = _DATE.search(patch)

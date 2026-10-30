@@ -136,6 +136,7 @@ def cmd_cve(args) -> int:
 
     log.info("%d incident(s) on %s", len(incidents), ", ".join(f"{a}.{b}" for a, b in series))
     min_age = int(cfg.get("claude_min_age_days", 0))
+    newest_release = max((gitutil.release_time(data / "linux", f"{a}.{b}") or 0 for a, b in series), default=0)
     claude_cmd = cfg.get("claude_cmd") or incident.DEFAULT_CLAUDE_CMD
     if args.claude_model:
         claude_cmd = list(claude_cmd) + ["--model", args.claude_model]
@@ -164,7 +165,7 @@ def cmd_cve(args) -> int:
                 continue
             if res.outcome in ("unpatched", "partial") and (args.claude or args.package):
                 wdir = incident.prepare_work(data / "linux", res, out / "work")
-                young = _days_in_mainline(data / "linux", fixes)
+                young = _days_in_mainline(data / "linux", fixes, newest_release)
                 if args.claude and cid in from_list and young < min_age:
                     res.note = (res.note + " " if res.note else "") + \
                         f"{young:.0f} days in mainline; Claude waits {min_age} days for stable"
@@ -196,13 +197,15 @@ def cmd_cve(args) -> int:
     return 1 if any(r.outcome in ("unpatched", "partial") for r in resolutions) else 0
 
 
-def _days_in_mainline(repo: Path, fixes: list[str]) -> float:
-    """Days since the newest fix commit landed (patch date when not in the mirror)."""
+def _days_in_mainline(repo: Path, fixes: list[str], not_before: int = 0) -> float:
+    """Days since the newest fix commit landed. A fix not in the mirror landed
+    after the newest tracked release (``not_before``); its patch has only the
+    author date, which can be weeks older."""
     when = gitutil.commit_times(repo, fixes)
     for sha in fixes:
         if sha not in when:
             try:
-                when[sha] = gitutil.patch_time(gitutil.upstream_patch(repo, sha))
+                when[sha] = max(gitutil.patch_time(gitutil.upstream_patch(repo, sha)), not_before)
             except gitutil.GitError:
                 pass
     return (time.time() - max(when.values())) / 86400 if when else float("inf")
