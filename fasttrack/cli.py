@@ -18,6 +18,7 @@ import json
 import logging
 import os
 import sys
+import time
 from pathlib import Path
 
 import yaml
@@ -136,6 +137,10 @@ def cmd_cve(args) -> int:
     if args.claude_model:
         claude_cmd = list(claude_cmd) + ["--model", args.claude_model]
 
+    # Claude attempts already made, so a rerun does not pay for them again.
+    attempts_file = out / "attempts.json"
+    attempts = json.loads(attempts_file.read_text()) if attempts_file.exists() else {}
+
     resolutions = []
     for cid, extra in incidents.items():
         rec = vulns.find(data / "vulns", cid) if cid.startswith("CVE-") else None
@@ -143,6 +148,10 @@ def cmd_cve(args) -> int:
         if not rec and not fixes:
             print(f"{cid}: not in vulns.git; pass --commit <mainline sha> to work from the fix directly")
         for s in series:
+            done = attempts.get(cid, {}).get(f"{s[0]}.{s[1]}")
+            if args.claude and done and not args.retry:
+                print(f"{cid} {s[0]}.{s[1]}: Claude tried on {done['date']} ({done['outcome']}); --retry to run again")
+                continue
             try:
                 res = incident.resolve(data / "linux", s, cid, fixes, rec, queue_root,
                                        adapt=args.adapt or args.claude)
@@ -160,6 +169,9 @@ def cmd_cve(args) -> int:
                     if cost is not None:
                         res.note = (res.note + " " if res.note else "") + f"claude ${cost:.2f}"
                     incident.collect_work(data / "linux", res, wdir)
+                    attempts.setdefault(cid, {})[res.series] = {
+                        "date": time.strftime("%Y-%m-%d", time.gmtime()), "head": res.head_version,
+                        "outcome": res.outcome, "cost": cost, "run": os.environ.get("GITHUB_RUN_ID")}
             emit.write_patch_dir(out / "cve" / cid / res.series, res.series, res.head, res.head_version,
                                  res.patches, {"incident": cid, "outcome": res.outcome,
                                                "fixed_in": res.fixed_in})
@@ -168,6 +180,8 @@ def cmd_cve(args) -> int:
                   + (f" ({len(res.patches)} patch(es))" if res.patches else "")
                   + (f" — {res.note}" if res.note else ""))
 
+    if attempts:
+        attempts_file.write_text(json.dumps(attempts, indent=2, sort_keys=True) + "\n")
     (out / "cve-report.md").write_text(emit.cve_report(resolutions))
     (out / "cve-result.json").write_text(json.dumps([r.public() for r in resolutions], indent=2) + "\n")
     print(f"report: {out / 'cve-report.md'}")
@@ -209,6 +223,7 @@ def main(argv=None) -> int:
     c.add_argument("--claude", action="store_true", help="work package + run Claude Code headless on it (implies --adapt)")
     c.add_argument("--claude-model", help="model alias passed to claude --model")
     c.add_argument("--claude-timeout", type=int, default=3600)
+    c.add_argument("--retry", action="store_true", help="run Claude again where attempts.json has a result")
     c.set_defaults(fn=cmd_cve)
 
     args = p.parse_args(argv)

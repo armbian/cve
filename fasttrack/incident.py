@@ -172,6 +172,9 @@ def resolve(
                 wt.apply(c.patch)
                 wt.commit(c.subject)
                 c.verdict = ACCEPTED
+            elif gitutil.stable_backports(repo, ref).get(c.upstream):
+                c.verdict, c.reason = PRESENT, f"stable backport {gitutil.stable_backports(repo, ref)[c.upstream][:12]}"
+                continue
             elif adapt:
                 if not have or gitutil.is_boundary(repo, c.upstream):
                     ok, conflicts = wt.apply3(c.patch, f"{c.subject}\n\ncommit {c.upstream} upstream.")

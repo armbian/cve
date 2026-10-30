@@ -87,6 +87,7 @@ head, or once the head reaches the version that carries the fix.
      --adapt           also try a 3-way cherry-pick (marked "adapted", for review)
      --package         write a backport work package for what still does not apply
      --claude          work package + run Claude Code on it (implies --adapt)
+     --retry           run Claude again where attempts.json already has a result
 ```
 
 Per series it goes down a ladder and stops at the first rung that works:
@@ -113,6 +114,8 @@ You can use it in two ways:
 
 - **Interactive.** `cd work/CVE-…/6.18 && claude`, then ask it to follow BRIEF.md. You stay in the loop.
 - **Headless.** `--claude` runs `claude_cmd` from `fasttrack.yaml` (default: `claude -p`, edits allowed, shell limited to git/make/grep/sed/ls/cat). Set `--claude-model` to choose the model.
+
+`attempts.json` on `main` records every Claude run: date, outcome and cost. A CVE that Claude already tried is skipped, so a rerun of `--unpatched` pays only for new issues. Pass `--retry` to run it again.
 
 Either way, the tool then takes Claude's commits and re-verifies the whole series, with no fuzz, on a fresh tree. It marks them `claude-backport` and the outcome `patched-needs-review`. A Claude backport is never mixed into `patches/`. It stays under `cve/` until a human reviews it. In CI it arrives as a PR.
 

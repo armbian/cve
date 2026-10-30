@@ -176,6 +176,10 @@ def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate,
         c.verdict, c.reason = PRESENT, "change already in tree"
         return
     if not wt.check(c.patch):
+        backport = gitutil.stable_backports(repo, ref).get(c.upstream)
+        if backport:
+            c.verdict, c.reason = PRESENT, f"stable backport {backport[:12]}"
+            return
         c.verdict, c.reason = CONFLICT, "does not apply unchanged; needs a manual backport or prerequisite"
         c.files = gitutil.patch_files(c.patch)
         if c.upstream:

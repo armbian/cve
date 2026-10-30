@@ -158,6 +158,16 @@ class TestVulns(Fixture):
                  "versionType": "original_commit_for_fix"}]}]}}}))
         self.assertEqual(vulns.parse_record(p).status((6, 18))[0], "unaffected")
 
+    def test_stable_backport_by_reference(self):
+        # stable carries C under its own content; only the message names C
+        sh(self.repo, "git", "checkout", "-q", "linux-6.18.y")
+        commit(self.repo, f"baz: fix race\n\ncommit {self.C} upstream.",
+               **{"baz.c": fix("baz", ("baz line 5", "baz line 5 REWORKED"), ("baz line 6", "baz line 6 OWN FIX"))})
+        sh(self.repo, "git", "checkout", "-q", "master")
+        c = {c.upstream: c for c in self.run_618().candidates}[self.C]
+        self.assertEqual(c.verdict, engine.PRESENT)
+        self.assertIn("stable backport", c.reason)
+
     def test_other_arch(self):
         arches = ["arm", "arm64", "riscv", "x86"]
         self.assertTrue(engine.other_arch(["arch/s390/kernel/a.c", "arch/parisc/b.c"], arches))
@@ -280,6 +290,15 @@ echo ok > RESULT.md
         patch = next(pdir.glob("0001-*.patch")).read_text()
         self.assertIn("X-Fasttrack-Source: claude", patch)
         self.assertIn(f"commit {self.C} upstream.", patch)
+
+        # a second run does not pay again; --retry does
+        self.assertEqual(json.loads((self.out / "attempts.json").read_text())
+                         ["CVE-2026-0003"]["6.18"]["outcome"], "patched-needs-review")
+        (wdir / "RESULT.md").unlink()
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--claude"])
+        self.assertFalse((wdir / "RESULT.md").exists())
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--claude", "--retry"])
+        self.assertTrue((wdir / "RESULT.md").exists())
 
     def test_unpatched_round_trip(self):
         cli.main(["--config", str(self.cfg), "run"])
