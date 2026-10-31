@@ -39,6 +39,10 @@ cve_since_year: 2024
 # Before a Claude backport, look for one the author posted to stable@vger.kernel.org.
 stable_list: true
 
+# Compile check: build the .c files each patch changes, with allmodconfig for
+# this arch. A patch that applies but does not build counts as needs-backport.
+build_check: x86
+
 # --unpatched sends a fix to Claude only after this many days in mainline.
 # Stable usually takes a fix within a few weeks; Claude is for the ones it does not.
 # CVE ids named on the command line are never held back.

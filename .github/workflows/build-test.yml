@@ -1,0 +1,42 @@
+name: build-test
+
+# Compile-test every patch series per architecture: apply it on its stable base,
+# build the changed .c files with allmodconfig. Fails on build errors.
+# Pushes by the hourly fasttrack job do not start it (GITHUB_TOKEN); merges do.
+
+on:
+  pull_request:
+    paths: ["cve/**", "patches/**", "scripts/build-test.sh", ".github/workflows/build-test.yml"]
+  push:
+    branches: [main]
+    paths: ["cve/**", "patches/**", "scripts/build-test.sh", ".github/workflows/build-test.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [arm64, arm, riscv, x86]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev \
+            gcc-aarch64-linux-gnu gcc-arm-linux-gnueabihf gcc-riscv64-linux-gnu
+
+      - name: Build test
+        run: scripts/build-test.sh ${{ matrix.arch }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-test-${{ matrix.arch }}
+          path: build-test/logs
