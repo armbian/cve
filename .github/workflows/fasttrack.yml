@@ -109,8 +109,10 @@ jobs:
           df -h /
 
       # No token in .git/config: Claude runs in this job. Push steps set it themselves.
+      # The branch tip, not the triggering commit: an earlier run may have merged since.
       - uses: actions/checkout@v7
         with:
+          ref: ${{ github.ref_name }}
           persist-credentials: false
 
       # Kernel build tools for the compile check (build_check in fasttrack.yaml).
@@ -196,8 +198,10 @@ jobs:
           df -h /
 
       # No token in .git/config: Claude runs in this job. Push steps set it themselves.
+      # The branch tip, not the triggering commit: an earlier run may have merged since.
       - uses: actions/checkout@v7
         with:
+          ref: ${{ github.ref_name }}
           persist-credentials: false
 
       # Kernel build tools for the compile check (build_check in fasttrack.yaml).
