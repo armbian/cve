@@ -94,11 +94,15 @@ def report(results: list[SeriesResult], events: list[str]) -> str:
         if r.upstream_latest and r.upstream_latest != r.head_version:
             stale = f" — kernel.org says {r.upstream_latest}; mirror may be stale"
         out += [f"## {r.series} (base {r.head_version}, `{r.head[:12]}`){stale}", ""]
+        # Nothing to do for these: a count is enough; state.json has the list.
+        quiet = [f"{title}: {n}" for verdict, title in ((PRESENT, "Already in tree"),
+                                                        (OTHER_ARCH, "Other architectures (not built)"))
+                 if (n := sum(c.verdict == verdict for c in r.candidates))]
+        if quiet:
+            out += [" · ".join(quiet), ""]
         groups = [(ACCEPTED, "Included (applies unchanged)"),
                   (CONFLICT, "Needs a manual backport"),
-                  (MISSING, "Mainline commit not in mirror"),
-                  (PRESENT, "Already in tree"),
-                  (OTHER_ARCH, "Other architectures (not built)")]
+                  (MISSING, "Mainline commit not in mirror")]
         for verdict, title in groups:
             rows = [c for c in r.candidates if c.verdict == verdict]
             if not rows:
