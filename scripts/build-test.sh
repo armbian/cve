@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Compile-test patch series. Apply each series on its stable base, build the
 # changed .c files with allmodconfig, report errors and new warnings.
+# A cve/ series goes on top of the patches/<series>/ patches before it.
 # Usage: scripts/build-test.sh <arm64|arm|riscv|x86> [series dir ...]
 # Env: LINUX_URL (default armbian/linux), WORK (default ./build-test),
 #      SLOTS (series built in parallel, each in its own tree; default nproc/8),
@@ -81,7 +82,24 @@ worker() {
 			echo "$name: error (prepare failed)"; tail -3 "$log" | sed 's/^/    /'
 			echo "| $name | error | prepare failed |" >>"$rows"; fail=1; continue
 		fi
+		# A job cancelled in `git am` leaves its state behind.
+		git -C "$src" am --abort >/dev/null 2>&1
 		git -C "$src" checkout -qf --detach "$base" && git -C "$src" clean -qfd
+		# A cve/ backport goes on top of patches/<series>/: up to its own place
+		# in the set, or the whole set when it is not in it yet.
+		ver=${d%/}; ver=${ver##*/}
+		if [[ $d == cve/* ]] && [ "$(cat "patches/$ver/base" 2>/dev/null)" = "$base" ]; then
+			mapfile -t prefix < <(for p in $(grep -v -e '^#' -e '^$' "patches/$ver/series.conf"); do
+				grep -q "^X-Fasttrack-Backport: cve/${name%/}$" "patches/$ver/$p" && break
+				echo "$root/patches/$ver/$p"
+			done)
+			if [ ${#prefix[@]} -gt 0 ] &&
+				! git -C "$src" -c user.name=t -c user.email=t@t am -q "${prefix[@]}" >>"$log" 2>&1; then
+				git -C "$src" am --abort 2>/dev/null
+				echo "$name: error (patches/$ver does not apply)"
+				echo "| $name | error | patches/$ver does not apply |" >>"$rows"; fail=1; continue
+			fi
+		fi
 		mapfile -t series < <(grep -v -e '^#' -e '^$' "$d/series.conf")
 		patches=("${series[@]/#/$root/$d/}")
 		# Changed .c files, without arch/ trees of other architectures.
