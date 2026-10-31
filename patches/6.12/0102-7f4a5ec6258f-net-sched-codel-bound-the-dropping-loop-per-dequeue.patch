@@ -1,0 +1,108 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 7f4a5ec6258fd7c92633ec4b0493fc51166d9398
+X-Fasttrack-CVE: CVE-2026-98427
+X-Fasttrack-Backport: cve/CVE-2026-98427/6.12
+From: Jamal Hadi Salim <jhs@mojatatu.com>
+Date: Sat, 31 Oct 2026 23:56:43 +0100
+Subject: [PATCH] net/sched: codel: bound the dropping loop per dequeue call
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+commit 7f4a5ec6258fd7c92633ec4b0493fc51166d9398 upstream.
+
+[ Backport: plain store to vars->drop_next instead of WRITE_ONCE(); 6.12
+  lacks ea25e03da7a7 ("codel: annotate data-races in codel_dump_stats()"). ]
+
+The CoDel control law schedules the next drop one interval/sqrt(count)
+after the previous drop, using the configured interval
+(codel_params.interval). For very small intervals the scheduled step
+rounds down to zero, so the dropping loop in codel_dequeue() never
+advances and drains the entire backlog under the qdisc lock in one
+call - an unprivileged user can trigger a soft lockup this way.
+
+Fix in the shared codel code used by both codel and fq_codel:
+
+1. Make the control-law step at least 1 tick so the dropping loop
+   always moves forward.
+
+2. Cap the dropping loop at CODEL_MAX_DROPS_PER_DEQUEUE (256) drops
+   per codel_dequeue() call, resyncing drop_next to now when the cap
+   is hit.
+
+Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/QDISC-1L5H.v1.20260912080102@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ include/net/codel.h      |  5 +++++
+ include/net/codel_impl.h | 16 +++++++++++++++-
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/include/net/codel.h b/include/net/codel.h
+index aa80f744826c..183d43c2bd43 100644
+--- a/include/net/codel.h
++++ b/include/net/codel.h
+@@ -140,6 +140,11 @@ struct codel_vars {
+ /* needed shift to get a Q0.32 number from rec_inv_sqrt */
+ #define REC_INV_SQRT_SHIFT (32 - REC_INV_SQRT_BITS)
+ 
++/* Cap on drops per codel_dequeue() call: the loop's work depends on the
++ * idle gap and backlog, both outside our control; resync when exceeded.
++ */
++#define CODEL_MAX_DROPS_PER_DEQUEUE 256
++
+ /**
+  * struct codel_stats - contains codel shared variables and stats
+  * @maxpacket:	largest packet we've seen so far
+diff --git a/include/net/codel_impl.h b/include/net/codel_impl.h
+index b2c359c6dd1b..13d00326a99a 100644
+--- a/include/net/codel_impl.h
++++ b/include/net/codel_impl.h
+@@ -93,12 +93,17 @@ static void codel_Newton_step(struct codel_vars *vars)
+  * CoDel control_law is t + interval/sqrt(count)
+  * We maintain in rec_inv_sqrt the reciprocal value of sqrt(count) to avoid
+  * both sqrt() and divide operation.
++ *
++ * Clamp the increment to at least 1 tick: a very small interval (or a
++ * large count) can truncate it to zero, stalling the dropping loop.
+  */
+ static codel_time_t codel_control_law(codel_time_t t,
+ 				      codel_time_t interval,
+ 				      u32 rec_inv_sqrt)
+ {
+-	return t + reciprocal_scale(interval, rec_inv_sqrt << REC_INV_SQRT_SHIFT);
++	return t + max_t(u32, 1,
++			 reciprocal_scale(interval,
++					  rec_inv_sqrt << REC_INV_SQRT_SHIFT));
+ }
+ 
+ static bool codel_should_drop(const struct sk_buff *skb,
+@@ -154,6 +159,7 @@ static struct sk_buff *codel_dequeue(void *ctx,
+ 				     codel_skb_dequeue_t dequeue_func)
+ {
+ 	struct sk_buff *skb = dequeue_func(vars, ctx);
++	unsigned int drops = 0;
+ 	codel_time_t now;
+ 	bool drop;
+ 
+@@ -180,6 +186,14 @@ static struct sk_buff *codel_dequeue(void *ctx,
+ 			 */
+ 			while (vars->dropping &&
+ 			       codel_time_after_eq(now, vars->drop_next)) {
++				if (++drops > CODEL_MAX_DROPS_PER_DEQUEUE) {
++					/* fell far behind the schedule */
++					vars->drop_next =
++						codel_control_law(now,
++								  params->interval,
++								  vars->rec_inv_sqrt);
++					break;
++				}
+ 				vars->count++; /* dont care of possible wrap
+ 						* since there is no more divide
+ 						*/
