@@ -11,6 +11,8 @@ A standalone tool for Linux kernel security patches, tracking **6.18 LTS** and *
 
 It is not tied to any build system. The output is plain patch sets that anything can consume.
 
+To backport CVEs with your own Claude Code, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Quick start
 
 ```
