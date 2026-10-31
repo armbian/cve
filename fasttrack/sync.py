@@ -113,6 +113,9 @@ def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True,
     else:
         _git("-C", str(linux), "fetch", "--quiet", "--prune", "--no-tags", "origin", *refspecs)
     _git("-C", str(linux), "worktree", "prune")
+    # Without a commit graph, "is this commit in stable?" walks the whole history:
+    # about 3 s per mainline fix. --split adds only the new commits each time.
+    _git("-C", str(linux), "commit-graph", "write", "--reachable", "--split")
 
 
 def sync(data: Path, series: list[str], urls: dict | None = None, shallow: bool = True,
