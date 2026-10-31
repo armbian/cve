@@ -243,17 +243,26 @@ class TestRun(Fixture):
         self.assertTrue(any("CVE-2026-0004" in e for e in events))
         self.assertEqual(emit.diff_state(state, [res])[1], [])
 
-    def test_report_not_affected(self):
+    def test_report_groups(self):
         c = engine.Candidate("6.18", "a" * 40, "fix foo", "mainline", ["CVE-2026-0009"], verdict=engine.CONFLICT)
         res = engine.SeriesResult("6.18", "b" * 40, "6.18.2", None, [c])
-        self.assertIn("Needs a manual backport (1)", emit.report([res], []))
+        self.assertIn("Needs a backport (1)", emit.report([res], []))
         md = emit.report([res], [], {"CVE-2026-0009": {"6.18": {"outcome": "not-affected-needs-review"}}})
         self.assertIn("Not affected per work package (needs review) (1)", md)
-        self.assertNotIn("Needs a manual backport", md)
+        self.assertNotIn("Needs a backport", md)
         self.assertNotIn("fasttrack cve <ID>", md)
         # Another series keeps the row.
-        self.assertIn("Needs a manual backport (1)",
+        self.assertIn("Needs a backport (1)",
                       emit.report([res], [], {"CVE-2026-0009": {"7.3": {"outcome": "not-affected-needs-review"}}}))
+        md = emit.report([res], [], {}, {("6.18", "a" * 40)})
+        self.assertIn("Backport in cve/ (needs review) (1)", md)
+        self.assertNotIn("Needs a backport", md)
+
+    def test_backports_from_cve_dir(self):
+        d = self.tmp / "o" / "cve" / "CVE-2026-0009" / "6.18"
+        d.mkdir(parents=True)
+        (d / "fasttrack.json").write_text(json.dumps({"series": "6.18", "patches": [{"upstream": "a" * 40}]}))
+        self.assertEqual(emit.backports(self.tmp / "o"), {("6.18", "a" * 40)})
 
 
 class TestIncident(Fixture):

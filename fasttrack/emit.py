@@ -92,8 +92,18 @@ def not_affected(c, series: str, attempts: dict) -> bool:
         attempts.get(cve, {}).get(series, {}).get("outcome", "").startswith("not-affected") for cve in c.cves)
 
 
-def report(results: list[SeriesResult], events: list[str], attempts: Optional[dict] = None) -> str:
-    attempts = attempts or {}
+def backports(out: Path) -> set[tuple[str, str]]:
+    """(series, upstream sha) of every patch in cve/<incident>/<series>/."""
+    found = set()
+    for f in out.glob("cve/*/*/fasttrack.json"):
+        meta = json.loads(f.read_text())
+        found |= {(meta["series"], p["upstream"]) for p in meta.get("patches", []) if p.get("upstream")}
+    return found
+
+
+def report(results: list[SeriesResult], events: list[str], attempts: Optional[dict] = None,
+           backported: Optional[set[tuple[str, str]]] = None) -> str:
+    attempts, backported = attempts or {}, backported or set()
     out = ["# Kernel security fast-track", ""]
     if events:
         out += ["**Events this run**", ""] + [f"- {e}" for e in events] + [""]
@@ -108,10 +118,15 @@ def report(results: list[SeriesResult], events: list[str], attempts: Optional[di
                  if (n := sum(c.verdict == verdict for c in r.candidates))]
         if quiet:
             out += [" · ".join(quiet), ""]
-        done = {id(c) for c in r.candidates if c.verdict == CONFLICT and not_affected(c, r.series, attempts)}
+        # A fix that does not apply unchanged: a backport in cve/, a "not affected" result, or open.
+        conflicts = [c for c in r.candidates if c.verdict == CONFLICT]
+        made = {id(c) for c in conflicts if (r.series, c.upstream) in backported}
+        na = {id(c) for c in conflicts if id(c) not in made and not_affected(c, r.series, attempts)}
+        done = made | na
         groups = [(lambda c: c.verdict == ACCEPTED, "Included (applies unchanged)"),
-                  (lambda c: c.verdict == CONFLICT and id(c) not in done, "Needs a manual backport"),
-                  (lambda c: id(c) in done, "Not affected per work package (needs review)"),
+                  (lambda c: c.verdict == CONFLICT and id(c) not in done, "Needs a backport"),
+                  (lambda c: id(c) in made, "Backport in cve/ (needs review)"),
+                  (lambda c: id(c) in na, "Not affected per work package (needs review)"),
                   (lambda c: c.verdict == MISSING, "Mainline commit not in mirror")]
         for match, title in groups:
             rows = [c for c in r.candidates if match(c)]
