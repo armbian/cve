@@ -1,0 +1,144 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: fa98563ab00dbe62fcedfef6bdd34ded7a860d9f
+X-Fasttrack-CVE: CVE-2026-93047
+X-Fasttrack-Backport: cve/CVE-2026-93047/6.12
+From: =?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Date: Sat, 31 Oct 2026 22:50:28 +0100
+Subject: [PATCH] drm/v3d: Associate BOs with every job that accesses them
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+commit fa98563ab00dbe62fcedfef6bdd34ded7a860d9f upstream.
+
+[ Backport: 6.12 has no struct v3d_submit; it locks the BOs of one job. Look up the BOs on the RENDER/CSD job and lock that job, so only the consuming job takes implicit dependencies. ]
+[ Backport: drop the has_implicit_dep flag; the per-job lock in 6.12 makes it unnecessary. ]
+[ Backport: use kvmalloc_array(); 6.12 has no kvmalloc_objs(). ]
+[ Backport: v3d_submit_cpu_ioctl() already looks up and locks the BOs on the CPU job; no change there. ]
+
+A submission can expand into a chain of jobs (e.g. bin + render + cache
+clean). Implicit synchronization in v3d_submit_lock_reservations() is gated
+on each job's bo[], but the BO list was only ever attached to the last job
+of the chain. When that last job is a trailing CACHE_CLEAN job, the job
+that actually consumes the BOs (that is, a RENDER or CSD job) was left with
+bo_count == 0 and picked up no implicit dependencies. It could therefore
+be dispatched to the hardware and read a BO while another context was still
+writing it, leading to data corruption.
+
+Attach the BOs to the job that consumes them, so (1) it acquires the
+correct implicit dependencies during reservation locking and (2) they are
+kept mapped until the end of the submission. Give it references to all
+consuming job's BOs through v3d_job_reference_bos() instead of looking the
+handles up a second time; that avoids a redundant lookup and guarantees
+both jobs reference the exact same objects.
+
+As the CACHE_CLEAN job now carries a BO array as well, add a per-job
+`has_implicit_dep` flag so that only the consuming jobs take implicit
+dependencies. The CACHE_CLEAN job (a global flush) and the BIN job (binning
+waiting on another context is not a realistic scenario) are excluded.
+
+Fixes: dffa9b7a78c4 ("drm/v3d: Add missing implicit synchronization.")
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260710114734.2731000-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+---
+ drivers/gpu/drm/v3d/v3d_submit.c | 55 +++++++++++++++++++++++++++-----
+ 1 file changed, 47 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/gpu/drm/v3d/v3d_submit.c b/drivers/gpu/drm/v3d/v3d_submit.c
+index 41615f41ac0d..ece6208ce59f 100644
+--- a/drivers/gpu/drm/v3d/v3d_submit.c
++++ b/drivers/gpu/drm/v3d/v3d_submit.c
+@@ -83,6 +83,31 @@ v3d_lookup_bos(struct drm_device *dev,
+ 				      job->bo_count, &job->bo);
+ }
+ 
++/**
++ * v3d_job_reference_bos() - Share another job's BOs with @dst
++ * @dst: job that acquires references to the BOs
++ * @src: job whose already-resolved BO list is shared
++ *
++ * For submissions with multiple jobs that use the same BOs, a trailing job
++ * shouldn't look the handles up again, as it could cause inconsistencies.
++ * Instead, it should reference the previous job's BOs.
++ */
++static int
++v3d_job_reference_bos(struct v3d_job *dst, struct v3d_job *src)
++{
++	dst->bo = kvmalloc_array(src->bo_count, sizeof(*dst->bo), GFP_KERNEL);
++	if (!dst->bo)
++		return -ENOMEM;
++
++	dst->bo_count = src->bo_count;
++	for (int i = 0; i < dst->bo_count; i++) {
++		dst->bo[i] = src->bo[i];
++		drm_gem_object_get(dst->bo[i]);
++	}
++
++	return 0;
++}
++
+ static void
+ v3d_job_free(struct kref *ref)
+ {
+@@ -316,12 +341,16 @@ v3d_setup_csd_jobs_and_bos(struct drm_file *file_priv,
+ 
+ 	(*job)->args = *args;
+ 
+-	ret = v3d_lookup_bos(&v3d->drm, file_priv, *clean_job,
++	ret = v3d_lookup_bos(&v3d->drm, file_priv, &(*job)->base,
+ 			     args->bo_handles, args->bo_handle_count);
+ 	if (ret)
+ 		return ret;
+ 
+-	return v3d_lock_bo_reservations(*clean_job, acquire_ctx);
++	ret = v3d_job_reference_bos(*clean_job, &(*job)->base);
++	if (ret)
++		return ret;
++
++	return v3d_lock_bo_reservations(&(*job)->base, acquire_ctx);
+ }
+ 
+ static void
+@@ -979,6 +1008,17 @@ v3d_submit_cl_ioctl(struct drm_device *dev, void *data,
+ 		bin->render = render;
+ 	}
+ 
++	/*
++	 * We don't associate the BOs with the BIN job. Fences are only
++	 * attached to the last job in the submission chain, and BIN jobs
++	 * don't need implicit dependencies since depending on results from
++	 * another context is not a realistic scenario for binning.
++	 */
++	ret = v3d_lookup_bos(dev, file_priv, &render->base,
++			     args->bo_handles, args->bo_handle_count);
++	if (ret)
++		goto fail;
++
+ 	if (args->flags & DRM_V3D_SUBMIT_CL_FLUSH_CACHE) {
+ 		ret = v3d_job_allocate((void *)&clean_job, sizeof(*clean_job));
+ 		if (ret)
+@@ -991,17 +1031,16 @@ v3d_submit_cl_ioctl(struct drm_device *dev, void *data,
+ 			goto fail;
+ 		}
+ 
++		ret = v3d_job_reference_bos(clean_job, &render->base);
++		if (ret)
++			goto fail;
++
+ 		last_job = clean_job;
+ 	} else {
+ 		last_job = &render->base;
+ 	}
+ 
+-	ret = v3d_lookup_bos(dev, file_priv, last_job,
+-			     args->bo_handles, args->bo_handle_count);
+-	if (ret)
+-		goto fail;
+-
+-	ret = v3d_lock_bo_reservations(last_job, &acquire_ctx);
++	ret = v3d_lock_bo_reservations(&render->base, &acquire_ctx);
+ 	if (ret)
+ 		goto fail;
+ 

@@ -1,0 +1,90 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: d378fceaafd79e0dc59d3546bda251a3058062c0
+X-Fasttrack-CVE: CVE-2026-89935
+X-Fasttrack-Backport: cve/CVE-2026-89935/6.12
+From: Moksh Panicker <mokshpanicker.7@gmail.com>
+Date: Sun, 2 Aug 2026 19:07:01 +0000
+Subject: [PATCH] iio: light: apds9306: fix PM reference leak in
+ apds9306_read_data()
+
+commit d378fceaafd79e0dc59d3546bda251a3058062c0 upstream.
+
+[ Backport: release the PM reference with a goto label; 6.12 has no PM_RUNTIME_ACQUIRE_AUTOSUSPEND() ]
+[ Backport: keep pm_runtime_mark_last_busy(); 6.12 pm_runtime_put_autosuspend() does not mark the device busy ]
+
+apds9306_read_data() calls pm_runtime_resume_and_get() but several
+error paths return directly without calling pm_runtime_put_autosuspend(),
+leaking the runtime PM reference and preventing the device from
+autosuspending.
+
+Use PM_RUNTIME_ACQUIRE_AUTOSUSPEND() and PM_RUNTIME_ACQUIRE_ERR() to
+automatically handle runtime PM reference release on all return paths.
+
+Fixes: 620d1e6c7a3f ("iio: light: Add support for APDS9306 Light Sensor")
+Signed-off-by: Moksh Panicker <mokshpanicker.7@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+---
+ drivers/iio/light/apds9306.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/iio/light/apds9306.c b/drivers/iio/light/apds9306.c
+index 7f9d6cac8adb..1ab90be0a03e 100644
+--- a/drivers/iio/light/apds9306.c
++++ b/drivers/iio/light/apds9306.c
+@@ -477,19 +477,21 @@ static int apds9306_read_data(struct apds9306_data *data, int *val, int reg)
+ 
+ 	ret = regmap_field_read(rf->intg_time, &intg_time_idx);
+ 	if (ret)
+-		return ret;
++		goto out_put;
+ 
+ 	ret = regmap_field_read(rf->repeat_rate, &repeat_rate_idx);
+ 	if (ret)
+-		return ret;
++		goto out_put;
+ 
+ 	ret = regmap_field_read(rf->int_src, &int_src);
+ 	if (ret)
+-		return ret;
++		goto out_put;
+ 
+ 	intg_time = iio_gts_find_int_time_by_sel(&data->gts, intg_time_idx);
+-	if (intg_time < 0)
+-		return intg_time;
++	if (intg_time < 0) {
++		ret = intg_time;
++		goto out_put;
++	}
+ 
+ 	/* Whichever is greater - integration time period or sampling period. */
+ 	delay = max(intg_time, apds9306_repeat_rate_period[repeat_rate_idx]);
+@@ -512,7 +514,7 @@ static int apds9306_read_data(struct apds9306_data *data, int *val, int reg)
+ 						  APDS9306_ALS_INT_STAT_MASK)),
+ 				       APDS9306_ALS_READ_DATA_DELAY_US, delay * 2);
+ 	if (ret)
+-		return ret;
++		goto out_put;
+ 
+ 	/* If we reach here before the interrupt handler we push an event */
+ 	if ((status & APDS9306_ALS_INT_STAT_MASK)) {
+@@ -532,15 +534,16 @@ static int apds9306_read_data(struct apds9306_data *data, int *val, int reg)
+ 	ret = regmap_bulk_read(data->regmap, reg, buff, sizeof(buff));
+ 	if (ret) {
+ 		dev_err_ratelimited(dev, "read data failed\n");
+-		return ret;
++		goto out_put;
+ 	}
+ 
+ 	*val = get_unaligned_le24(&buff);
+ 
++out_put:
+ 	pm_runtime_mark_last_busy(data->dev);
+ 	pm_runtime_put_autosuspend(data->dev);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int apds9306_intg_time_get(struct apds9306_data *data, int *val2)

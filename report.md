@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 33 patch(es)
+- added 6.12: 22 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -160,7 +160,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (63)
+### Included (87)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -227,61 +227,55 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-63805 | `4e67f504ee9d` | claude | crypto: nx - fix nx_crypto_ctx_exit argument |
 |  | CVE-2026-74314 | `a3a81d247651` | claude | bpf: Cancel special fields on map value recycle |
 |  | CVE-2026-72454 | `650716f23eac` | claude | i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev() |
+|  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
+|  | CVE-2026-64066 | `8a8c0cfdf465` | claude | netfs: Fix netfs_read_to_pagecache() to pause on subreq failure |
+|  | CVE-2026-64067 | `b5782e2d462c` | claude | netfs: Fix missing barriers when accessing stream->subrequests locklessly |
+|  | CVE-2026-72355 | `5c6ce05e4065` | claude | netfs: Fix barriering when walking subrequest list |
+|  | CVE-2026-63819 | `8712353ed80f` | claude | f2fs: fix to do sanity check on f2fs_get_node_folio_ra() |
+|  | CVE-2026-93154 | `097f50384e18` | claude | RDMA/irdma: Deduplicate the irdma_del_memlist logic |
+|  | CVE-2026-93154 | `a7d0a6b58256` | claude | RDMA/irdma: Add a refcount to track user ring MR associations |
+|  | CVE-2026-93154 | `971e99623ed7` | claude | RDMA/irdma: Add irdma_cq fields to track pbl allocations |
+|  | CVE-2026-93154 | `f67d8a08f60c` | claude | RDMA/irdma: Add refcounting to user ring MRs |
+|  | CVE-2026-90040 | `d1a3c2162334` | claude | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
+|  | CVE-2026-93099 | `2566b5cd6a27` | claude | fs/resctrl: Fix UAF from worker threads when domains are removed |
+|  | CVE-2026-98926 | `8fa813b7fd1e` | claude | drm/amd/display: Remove sink usage from DPMS |
+|  | CVE-2026-68382 | `—` | claude | drm/xe/migrate: Switch from drm to dev managed actions |
+|  | CVE-2026-68382 | `9b7e60184f4b` | claude | drm/xe/guc: Hold device ref until queue teardown completes |
+|  | CVE-2026-98815 | `—` | claude | nvme: add nvme_get_ns_head() |
+|  | CVE-2026-98815 | `9952f3882ecb` | claude | nvme: fix cdev lifetime |
+|  | CVE-2026-93047 | `fa98563ab00d` | claude | drm/v3d: Associate BOs with every job that accesses them |
+|  | CVE-2026-92518 | `52fb1756ea1d` | claude | riscv, bpf: Fix kernel stack corruption in tailcall with CFI |
+|  | CVE-2026-92493 | `8d31bb145164` | claude | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
+|  | CVE-2026-90379 | `915672c5ae32` | claude | wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash |
+|  | CVE-2026-93276 | `49c9b71b4508` | claude | phy: renesas: phy-rcar-gen3-usb2: Fix devm action registration for disabled VBUS regulator |
+|  | CVE-2026-89935 | `d378fceaafd7` | claude | iio: light: apds9306: fix PM reference leak in apds9306_read_data() |
+|  | CVE-2026-80785 | `061db6b7a910` | claude | fbdev: serialize mode sysfs access with lock_fb_info() |
+|  | CVE-2026-98674 | `549b71ce0506` | claude | iio: adc: adi-axi-adc: Initialize state mutex |
 
-### Needs a backport (134)
+### Needs a backport (104)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2025-38311 | `120f28a6f314` | mainline | iavf: get rid of the crit lock |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
-|  | CVE-2026-64066 | `8a8c0cfdf465` | mainline | netfs: Fix netfs_read_to_pagecache() to pause on subreq failure |
-|  | CVE-2026-64067 | `b5782e2d462c` | mainline | netfs: Fix missing barriers when accessing stream->subrequests locklessly |
-|  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
-|  | CVE-2026-63819 | `8712353ed80f` | mainline | f2fs: fix to do sanity check on f2fs_get_node_folio_ra() |
-|  | CVE-2026-72355 | `5c6ce05e4065` | mainline | netfs: Fix barriering when walking subrequest list |
-|  | CVE-2026-93154 | `f67d8a08f60c` | mainline | RDMA/irdma: Add refcounting to user ring MRs |
 |  | CVE-2026-89722 | `dc76258d0132` | mainline | PCI/sysfs: Fix out-of-bounds read in pci_write_legacy_io() |
 |  | CVE-2026-93135 | `f1c27922576e` | mainline | bpf: Reject programs with inlined helpers if JIT is not available |
-|  | CVE-2026-90040 | `d1a3c2162334` | mainline | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
-|  | CVE-2026-93099 | `2566b5cd6a27` | mainline | fs/resctrl: Fix UAF from worker threads when domains are removed |
-|  | CVE-2026-98926 | `8fa813b7fd1e` | mainline | drm/amd/display: Remove sink usage from DPMS |
-|  | CVE-2026-68382 | `9b7e60184f4b` | mainline | drm/xe/guc: Hold device ref until queue teardown completes |
-|  | CVE-2026-98815 | `9952f3882ecb` | mainline | nvme: fix cdev lifetime |
-|  | CVE-2026-89866 | `a52e6f7923c1` | mainline | media: chips-media: wave5: Resume device before setting EOS flag |
-|  | CVE-2026-93047 | `fa98563ab00d` | mainline | drm/v3d: Associate BOs with every job that accesses them |
 |  | CVE-2026-93044 | `34746b5a84ec` | mainline | bpf: Disallow interpreter fallback for arena-related insns |
 |  | CVE-2026-93270 | `7a0855e73757` | mainline | bpf: Disallow interpreter fallback for BPF_ADDR_PERCPU insn |
-|  | CVE-2026-92518 | `52fb1756ea1d` | mainline | riscv, bpf: Fix kernel stack corruption in tailcall with CFI |
 |  | CVE-2026-92500 | `7edbb323bab2` | mainline | ext4: use fsdata to track inline data write state and fix race |
-|  | CVE-2026-92493 | `8d31bb145164` | mainline | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
 |  | CVE-2026-74560 | `a3c8382ebce4` | mainline | xsk: fix buffer leak in xsk_drop_skb() for AF_XDP multi-buffer Tx |
-|  | CVE-2026-89826 | `8321b093fa6c` | mainline | drm/panthor: harden firmware build-info bounds checks |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
-|  | CVE-2026-90379 | `915672c5ae32` | mainline | wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash |
 |  | CVE-2026-90317 | `180c7000712d` | mainline | bpf: Invalidate RCU pointers after final spin unlock |
-|  | CVE-2026-74639 | `2615f0fb90df` | mainline | ALSA: us144mkii: re-anchor capture URBs on resubmission |
 |  | CVE-2026-90315 | `747b9bbbbdfd` | mainline | PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers |
-|  | CVE-2026-93276 | `49c9b71b4508` | mainline | phy: renesas: phy-rcar-gen3-usb2: Fix devm action registration for disabled VBUS regulator |
 |  | CVE-2026-90261 | `ecc05eda9a34` | mainline | btrfs: zoned: flush active metadata block group at btree_writepages() start |
-|  | CVE-2026-89935 | `d378fceaafd7` | mainline | iio: light: apds9306: fix PM reference leak in apds9306_read_data() |
-|  | CVE-2026-80785 | `061db6b7a910` | mainline | fbdev: serialize mode sysfs access with lock_fb_info() |
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
-|  | CVE-2026-89675 | `62c0f6eaf050` | mainline | nfsd: fix UAF in async copy cancel and shutdown |
-|  | CVE-2026-98162 | `39f203209671` | mainline | smb/server: fix tree connection leak in smb2_tree_connect() |
-|  | CVE-2026-99101 | `0ab6dc1ac460` | mainline | ntfs: move attribute payload before shrinking its record |
-|  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets |
-|  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
-|  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() |
 |  | CVE-2026-89637 | `730d0bb19507` | mainline | smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2 |
 |  | CVE-2026-81010 | `14572de82e50` | mainline | io_uring/waitid: honor task_work cancellation |
 |  | CVE-2026-98125 | `01261a6fa48b` | mainline | smb/client: fix stale page cache in insert/collapse range |
-| does not build | CVE-2026-98674 | `549b71ce0506` | mainline | iio: adc: adi-axi-adc: Initialize state mutex |
-|  | CVE-2026-98119 | `8fb45a934661` | mainline | netfs: break unbuffered write when netfs_alloc_subrequest() fails |
-|  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
 |  | CVE-2026-98115 | `d12168084c8c` | mainline | ksmbd: safely drain sessions during logoff |
 | does not build | CVE-2026-99109 | `4aa2c106aef4` | mainline | smb: client: reject SetEA requests that do not fit the request buffer |
 |  | CVE-2026-99122 | `ad9a7da3fa39` | mainline | vsock/vmci: validate packet source for connected sockets |
@@ -367,7 +361,7 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-99189 | `38d44f78f041` | mainline | gpio: mxc: fix race between chained IRQ handler install and probe completion |
 |  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
 
-### Not affected per work package (needs review) (40)
+### Not affected per work package (needs review) (51)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -411,6 +405,17 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes |
 |  | CVE-2026-98897 | `27a9bc968d4a` | mainline | ksmbd: don't hold ci->m_lock while waiting for a lease break ack |
 | does not build | CVE-2026-72365 | `ba6a9f6533c7` | mainline | netfs: Fix writethrough to use collection offload |
+|  | CVE-2026-89866 | `a52e6f7923c1` | mainline | media: chips-media: wave5: Resume device before setting EOS flag |
+|  | CVE-2026-89826 | `8321b093fa6c` | mainline | drm/panthor: harden firmware build-info bounds checks |
+|  | CVE-2026-74639 | `2615f0fb90df` | mainline | ALSA: us144mkii: re-anchor capture URBs on resubmission |
+|  | CVE-2026-89675 | `62c0f6eaf050` | mainline | nfsd: fix UAF in async copy cancel and shutdown |
+|  | CVE-2026-98162 | `39f203209671` | mainline | smb/server: fix tree connection leak in smb2_tree_connect() |
+|  | CVE-2026-99101 | `0ab6dc1ac460` | mainline | ntfs: move attribute payload before shrinking its record |
+|  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets |
+|  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary |
+|  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() |
+|  | CVE-2026-98119 | `8fb45a934661` | mainline | netfs: break unbuffered write when netfs_alloc_subrequest() fails |
+|  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
 
 Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).
 
