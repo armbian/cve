@@ -2,7 +2,7 @@ name: build-test
 
 # Compile-test every patch series per architecture: apply it on its stable base,
 # build the changed .c files with allmodconfig. Fails on build errors.
-# Each arch is split over 16 shards; a PR tests only the series it changes.
+# Each arch is split over 32 shards; a PR tests only the series it changes.
 # Pushes by the hourly fasttrack job do not start it (GITHUB_TOKEN); merges do.
 
 on:
@@ -25,7 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         arch: [arm64, arm, riscv, x86]
-        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -46,7 +46,7 @@ jobs:
       # Self-hosted: kernel tree and prepared builds stay between runs, per runner.
       - name: Build test
         env:
-          SHARD: ${{ matrix.shard }}/16
+          SHARD: ${{ matrix.shard }}/32
         run: |
           [ "${{ runner.environment }}" = self-hosted ] && export WORK="$HOME/.cache/armbian-cve/$RUNNER_NAME/build-test-${{ matrix.arch }}"
           dirs=()
