@@ -8,6 +8,8 @@
 #      SHARD=i/n (test every n-th series from i, to split the work over n jobs)
 set -uo pipefail
 arch=${1:?arch}; shift
+# Named cve/ dirs not yet in patches/<series>/ are tested stacked, in "made" order.
+pending=("$@")
 [ $# -gt 0 ] || set -- patches/*/ cve/*/*/
 case $arch in
 	arm64) cross=aarch64-linux-gnu- host=aarch64 ;;
@@ -107,6 +109,18 @@ worker() {
 					echo "$name: skipped (patches/$ver has ${dup:0:12})"
 					echo "| $name | skipped | patches/$ver has ${dup:0:12} |" >>"$rows"; continue
 				fi
+				made=$(sed -n 's/^ *"made": "\(.*\)",*$/\1/p' "$d/fasttrack.json" 2>/dev/null)
+				for o in $(for o in "${pending[@]}"; do
+					o=${o%/}/ on=${o#cve/} on=${on%/}
+					[[ $o == cve/*/"$ver"/ ]] && [ "$o" != "${d%/}/" ] || continue
+					om=$(sed -n 's/^ *"made": "\(.*\)",*$/\1/p' "$o/fasttrack.json" 2>/dev/null)
+					[ -n "$made" ] && [ -n "$om" ] && [[ $om < $made ]] || continue
+					[ "$(cat "$o/base")" = "$base" ] || continue
+					grep -qs "^X-Fasttrack-Backport: cve/$on$" "patches/$ver"/*.patch && continue
+					echo "$om $o"
+				done | sort | cut -d' ' -f2); do
+					for p in $(grep -v -e '^#' -e '^$' "$o/series.conf"); do prefix+=("$root/$o$p"); done
+				done
 			fi
 			if [ ${#prefix[@]} -gt 0 ] &&
 				! git -C "$src" -c user.name=t -c user.email=t@t am -q "${prefix[@]}" >>"$log" 2>&1; then
