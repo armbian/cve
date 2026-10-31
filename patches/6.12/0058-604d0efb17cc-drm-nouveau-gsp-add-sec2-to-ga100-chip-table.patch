@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 604d0efb17cc0dd197e089134736ac2698d5fca7
+X-Fasttrack-CVE: CVE-2026-98875
+X-Fasttrack-Backport: cve/CVE-2026-98875/6.12
+From: Timur Tabi <ttabi@nvidia.com>
+Date: Sat, 31 Oct 2026 21:07:33 +0100
+Subject: [PATCH] drm/nouveau/gsp: add SEC2 to GA100 chip table
+
+commit 604d0efb17cc0dd197e089134736ac2698d5fca7 upstream.
+
+[ Backport: add the entry after .ofa; 6.12 GA100 table still lists nvdec, nvjpg and ofa. ]
+---
+ drivers/gpu/drm/nouveau/nvkm/engine/device/base.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c b/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
+index 9093d89b16f3..ee516ae1deea 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
+@@ -2532,6 +2532,7 @@ nv170_chipset = {
+ 	.nvdec    = { 0x0000001f, ga100_nvdec_new },
+ 	.nvjpg    = { 0x00000001, ga100_nvjpg_new },
+ 	.ofa      = { 0x00000001, ga100_ofa_new },
++	.sec2     = { 0x00000001, tu102_sec2_new },
+ };
+ 
+ static const struct nvkm_device_chip

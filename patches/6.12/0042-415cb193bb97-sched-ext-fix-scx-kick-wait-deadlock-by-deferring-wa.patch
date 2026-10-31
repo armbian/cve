@@ -1,0 +1,210 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 415cb193bb9736f0e830286c72a6fa8eb2a9cc5c
+X-Fasttrack-CVE: CVE-2026-43326
+X-Fasttrack-Backport: cve/CVE-2026-43326/6.12
+From: Tejun Heo <tj@kernel.org>
+Date: Sat, 31 Oct 2026 20:16:23 +0100
+Subject: [PATCH] sched_ext: Fix SCX_KICK_WAIT deadlock by deferring wait to
+ balance callback
+
+commit 415cb193bb9736f0e830286c72a6fa8eb2a9cc5c upstream.
+
+[ Backport: 6.12 has pnt_seq and scx_kick_cpus_pnt_seqs, not kick_sync and per-sched scx_kick_syncs. Use the 6.12 names. ]
+[ Backport: 6.12 has no do_pick_task_scx(). Queue the balance callback at the end of balance_scx(), under CONFIG_SMP. ]
+[ Backport: 6.12 lacks a379fa1e2cae. Drop the pnt_seq bump in the pick path and the ext_sched_class check in kick_one_cpu(). ]
+[ Backport: 6.12 kick_cpus_irq_work is not IRQ_WORK_INIT_HARD. Take this_rq lock with irqsave. ]
+[ Backport: update the comment in switch_class(), the 6.12 pnt_seq writer. ]
+
+SCX_KICK_WAIT busy-waits in kick_cpus_irq_workfn() using
+smp_cond_load_acquire() until the target CPU's kick_sync advances. Because
+the irq_work runs in hardirq context, the waiting CPU cannot reschedule and
+its own kick_sync never advances. If multiple CPUs form a wait cycle, all
+CPUs deadlock.
+
+Replace the busy-wait in kick_cpus_irq_workfn() with resched_curr() to
+force the CPU through do_pick_task_scx(), which queues a balance callback
+to perform the wait. The balance callback drops the rq lock and enables
+IRQs following the sched_core_balance() pattern, so the CPU can process
+IPIs while waiting. The local CPU's kick_sync is advanced on entry to
+do_pick_task_scx() and continuously during the wait, ensuring any CPU that
+starts waiting for us sees the advancement and cannot form cyclic
+dependencies.
+
+Fixes: 90e55164dad4 ("sched_ext: Implement SCX_KICK_WAIT")
+Cc: stable@vger.kernel.org # v6.12+
+Reported-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://lore.kernel.org/r/20260316100249.1651641-1-christian.loehle@arm.com
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ kernel/sched/ext.c   | 93 ++++++++++++++++++++++++++++++++++----------
+ kernel/sched/sched.h |  3 ++
+ 2 files changed, 76 insertions(+), 20 deletions(-)
+
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index ded7a0dd2e53..1313afd884df 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -2893,6 +2893,49 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
+ 	return true;
+ }
+ 
++#ifdef CONFIG_SMP
++static void kick_sync_wait_bal_cb(struct rq *rq)
++{
++	unsigned long *pseqs = this_cpu_ptr(scx_kick_cpus_pnt_seqs);
++	bool waited;
++	s32 cpu;
++
++	/*
++	 * Drop rq lock and enable IRQs while waiting. IRQs must be enabled
++	 * — a target CPU may be waiting for us to process an IPI (e.g. TLB
++	 * flush) while we wait for its pnt_seq to advance.
++	 *
++	 * Also, keep advancing our own pnt_seq so that new pnt_seq waits
++	 * targeting us, which can start after we drop the lock, cannot form
++	 * cyclic dependencies.
++	 */
++retry:
++	waited = false;
++	for_each_cpu(cpu, rq->scx.cpus_to_sync) {
++		/*
++		 * smp_load_acquire() pairs with smp_store_release() on
++		 * pnt_seq updates on the target CPUs.
++		 */
++		if (cpu == cpu_of(rq) ||
++		    smp_load_acquire(&cpu_rq(cpu)->scx.pnt_seq) != pseqs[cpu]) {
++			cpumask_clear_cpu(cpu, rq->scx.cpus_to_sync);
++			continue;
++		}
++
++		raw_spin_rq_unlock_irq(rq);
++		while (READ_ONCE(cpu_rq(cpu)->scx.pnt_seq) == pseqs[cpu]) {
++			smp_store_release(&rq->scx.pnt_seq, rq->scx.pnt_seq + 1);
++			cpu_relax();
++		}
++		raw_spin_rq_lock_irq(rq);
++		waited = true;
++	}
++
++	if (waited)
++		goto retry;
++}
++#endif
++
+ static int balance_scx(struct rq *rq, struct task_struct *prev,
+ 		       struct rq_flags *rf)
+ {
+@@ -2924,6 +2967,19 @@ static int balance_scx(struct rq *rq, struct task_struct *prev,
+ #endif
+ 	rq_repin_lock(rq, rf);
+ 
++#ifdef CONFIG_SMP
++	/*
++	 * Defer to a balance callback which can drop rq lock and enable
++	 * IRQs. Waiting directly in the pick path would deadlock against
++	 * CPUs sending us IPIs (e.g. TLB flushes) while we wait for them.
++	 */
++	if (unlikely(rq->scx.kick_sync_pending)) {
++		rq->scx.kick_sync_pending = false;
++		queue_balance_callback(rq, &rq->scx.kick_sync_bal_cb,
++				       kick_sync_wait_bal_cb);
++	}
++#endif
++
+ 	return ret;
+ }
+ 
+@@ -3018,7 +3074,7 @@ static void switch_class(struct rq *rq, struct task_struct *next)
+ #ifdef CONFIG_SMP
+ 	/*
+ 	 * Pairs with the smp_load_acquire() issued by a CPU in
+-	 * kick_cpus_irq_workfn() who is waiting for this CPU to perform a
++	 * kick_sync_wait_bal_cb() who is waiting for this CPU to perform a
+ 	 * resched.
+ 	 */
+ 	smp_store_release(&rq->scx.pnt_seq, rq->scx.pnt_seq + 1);
+@@ -5124,6 +5180,9 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
+ 		if (!cpumask_empty(rq->scx.cpus_to_wait))
+ 			dump_line(&ns, "  cpus_to_wait   : %*pb",
+ 				  cpumask_pr_args(rq->scx.cpus_to_wait));
++		if (!cpumask_empty(rq->scx.cpus_to_sync))
++			dump_line(&ns, "  cpus_to_sync   : %*pb",
++				  cpumask_pr_args(rq->scx.cpus_to_sync));
+ 
+ 		used = seq_buf_used(&ns);
+ 		if (SCX_HAS_OP(dump_cpu)) {
+@@ -6012,8 +6071,10 @@ static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *pseqs)
+ 		}
+ 
+ 		if (cpumask_test_cpu(cpu, this_scx->cpus_to_wait)) {
++			cpumask_set_cpu(cpu, this_scx->cpus_to_sync);
+ 			pseqs[cpu] = rq->scx.pnt_seq;
+ 			should_wait = true;
++			cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
+ 		}
+ 
+ 		resched_curr(rq);
+@@ -6060,26 +6121,17 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+ 		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick_if_idle);
+ 	}
+ 
+-	if (!should_wait)
+-		return;
+-
+-	for_each_cpu(cpu, this_scx->cpus_to_wait) {
+-		unsigned long *wait_pnt_seq = &cpu_rq(cpu)->scx.pnt_seq;
+-
+-		if (cpu != cpu_of(this_rq)) {
+-			/*
+-			 * Pairs with smp_store_release() issued by this CPU in
+-			 * scx_next_task_picked() on the resched path.
+-			 *
+-			 * We busy-wait here to guarantee that no other task can
+-			 * be scheduled on our core before the target CPU has
+-			 * entered the resched path.
+-			 */
+-			while (smp_load_acquire(wait_pnt_seq) == pseqs[cpu])
+-				cpu_relax();
+-		}
++	/*
++	 * Can't wait in hardirq — pnt_seq can't advance, deadlocking if
++	 * CPUs wait for each other. Defer to kick_sync_wait_bal_cb().
++	 */
++	if (should_wait) {
++		unsigned long flags;
+ 
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
++		raw_spin_rq_lock_irqsave(this_rq, flags);
++		this_scx->kick_sync_pending = true;
++		resched_curr(this_rq);
++		raw_spin_rq_unlock_irqrestore(this_rq, flags);
+ 	}
+ }
+ 
+@@ -6189,6 +6241,7 @@ void __init init_sched_ext_class(void)
+ 		BUG_ON(!zalloc_cpumask_var(&rq->scx.cpus_to_kick_if_idle, GFP_KERNEL));
+ 		BUG_ON(!zalloc_cpumask_var(&rq->scx.cpus_to_preempt, GFP_KERNEL));
+ 		BUG_ON(!zalloc_cpumask_var(&rq->scx.cpus_to_wait, GFP_KERNEL));
++		BUG_ON(!zalloc_cpumask_var(&rq->scx.cpus_to_sync, GFP_KERNEL));
+ 		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
+ 		init_irq_work(&rq->scx.kick_cpus_irq_work, kick_cpus_irq_workfn);
+ 
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 5e788dc39f63..5000b1a79742 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -805,8 +805,11 @@ struct scx_rq {
+ 	cpumask_var_t		cpus_to_kick_if_idle;
+ 	cpumask_var_t		cpus_to_preempt;
+ 	cpumask_var_t		cpus_to_wait;
++	cpumask_var_t		cpus_to_sync;
++	bool			kick_sync_pending;
+ 	unsigned long		pnt_seq;
+ 	struct balance_callback	deferred_bal_cb;
++	struct balance_callback	kick_sync_bal_cb;
+ 	struct irq_work		deferred_irq_work;
+ 	struct irq_work		kick_cpus_irq_work;
+ };
