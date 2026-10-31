@@ -43,7 +43,7 @@ jobs:
       due: ${{ steps.due.outputs.due }}
       fingerprint: ${{ steps.fp.outputs.fingerprint }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - id: fp
@@ -51,7 +51,7 @@ jobs:
           python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
           echo "fingerprint=$(python3 -m fasttrack.cli fingerprint)" >> "$GITHUB_OUTPUT"
       - id: seen
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: .fingerprint
           key: fingerprint-${{ steps.fp.outputs.fingerprint }}
@@ -98,7 +98,7 @@ jobs:
           df -h /
 
       # No token in .git/config: Claude runs in this job. Push steps set it themselves.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
@@ -131,7 +131,7 @@ jobs:
 
       - name: Upstream data cache
         if: runner.environment == 'github-hosted'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: data
           key: data-${{ hashFiles('fasttrack.yaml') }}-${{ steps.week.outputs.week }}
@@ -215,7 +215,7 @@ jobs:
 
       - name: Keep work packages (BRIEF.md, RESULT.md, claude.log)
         if: always() && hashFiles('work/**/BRIEF.md') != ''
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: work-${{ github.run_id }}
           path: |
@@ -226,7 +226,7 @@ jobs:
       - name: Record fingerprint
         run: echo "${{ needs.check.outputs.fingerprint }}" > .fingerprint
 
-      - uses: actions/cache/save@v4
+      - uses: actions/cache/save@v6
         with:
           path: .fingerprint
           key: fingerprint-${{ needs.check.outputs.fingerprint }}
@@ -251,5 +251,5 @@ jobs:
     permissions:
       actions: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: liskin/gh-workflow-keepalive@v1
