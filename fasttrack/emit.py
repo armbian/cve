@@ -64,7 +64,8 @@ def unpatched(results: list[SeriesResult]) -> list[dict]:
             if c.verdict in (CONFLICT, MISSING):
                 rows.append({"series": r.series, "cves": c.cves, "kev": c.kev, "upstream": c.upstream,
                              "subject": c.subject, "verdict": c.verdict, "files": c.files,
-                             "prerequisites": c.prerequisites})
+                             "prerequisites": c.prerequisites, "reason": c.reason,
+                             "build_log": c.build_log})
     return rows
 
 
@@ -105,7 +106,8 @@ def report(results: list[SeriesResult], events: list[str]) -> str:
             out += [f"### {title} ({len(rows)})", "",
                     "| | CVE | Upstream | Source | Subject |", "|---|---|---|---|---|"]
             for c in rows:
-                flag = "🔥 KEV" if c.kev else ""
+                flag = " ".join(f for f in ("🔥 KEV" if c.kev else "",
+                                            "does not build" if c.build_log else "") if f)
                 cves = ", ".join(c.cves) or "—"
                 out.append(f"| {flag} | {cves} | `{c.upstream[:12] or '—'}` | {c.source} | {c.subject.replace('|', '/')} |")
             out.append("")

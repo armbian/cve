@@ -21,7 +21,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from fasttrack import cli, emit, engine, incident, sync, vulns
+from fasttrack import build, cli, emit, engine, incident, sync, vulns
 from fasttrack.queue import load_queue
 
 
@@ -371,6 +371,76 @@ git -C tree -c user.name=c -c user.email=c@c commit -qam "baz: fix race" -m "com
         self.assertFalse((self.out / "attempts.json").exists())
         notes = {r["cve"]: r["note"] for r in json.loads((self.out / "cve-result.json").read_text())}
         self.assertIn("waits", notes["CVE-2026-0003"])
+
+
+class FakeBuilder(build.Builder):
+    """Compile check without make: a .c file "fails" when it contains ``broken``."""
+    broken = ""
+
+    def prepare(self):
+        self.ready = True
+
+    def _make(self, *targets, timeout=0):
+        src = (self.tree / (targets[0][:-2] + ".c")).read_text()
+        if self.broken and self.broken in src:
+            return False, f"{self.tree}/{targets[0][:-2]}.c:7:1: error: broken build"
+        return True, ""
+
+
+def fake_builder(broken):
+    return lambda tree, out: type("B", (FakeBuilder,), {"broken": broken})(tree, out)
+
+
+class TestBuildCheck(Fixture):
+    def test_run_rejects_patch_that_does_not_build(self):
+        res = engine.run_series(self.repo, (6, 18), self.records, self.data / "stable-queue", {},
+                                {"6.18": "6.18.2"}, remote="none", builder=fake_builder("foo line 6 FIXED"))
+        a = next(c for c in res.candidates if c.upstream == self.A)
+        self.assertEqual(a.verdict, engine.CONFLICT)
+        self.assertIn("foo.c:7:1: error: broken build", a.build_log)
+        self.assertNotIn(str(self.tmp), a.build_log)
+        self.assertEqual([c.upstream for c in res.accepted], [self.D])
+
+    def test_file_broken_at_base_is_not_an_error(self):
+        res = engine.run_series(self.repo, (6, 18), self.records, self.data / "stable-queue", {},
+                                {"6.18": "6.18.2"}, remote="none", builder=fake_builder("foo line 3"))
+        self.assertEqual([c.upstream for c in res.accepted], [self.D, self.A])
+
+    def test_claude_backport_that_does_not_build(self):
+        rec = vulns.find(self.data / "vulns", "CVE-2026-0001")
+        bld = fake_builder("foo line 6 FIXED")
+        res = incident.resolve(self.data / "linux", (6, 18), "CVE-2026-0001", rec.fix_commits, rec,
+                               self.data / "stable-queue", builder=bld)
+        self.assertEqual(res.outcome, "unpatched")
+        wdir = incident.prepare_work(self.data / "linux", res, self.out / "work")
+        self.assertIn("do not build", (wdir / "BRIEF.md").read_text())
+        # the backport keeps the broken line: rejected, and the next brief shows why
+        tree = wdir / "tree"
+        sh(tree, "sed", "-i", "s/foo line 6/foo line 6 FIXED/", "foo.c")
+        sh(tree, "git", "-c", "user.name=c", "-c", "user.email=c@c", "commit", "-qam", "foo: fix overflow",
+           "-m", f"commit {self.A} upstream.")
+        incident.collect_work(self.data / "linux", res, wdir, bld)
+        self.assertEqual(res.outcome, "unpatched")
+        self.assertTrue((wdir / "build-errors.log").exists())
+        incident.prepare_work(self.data / "linux", res, self.out / "work")
+        self.assertIn("earlier backport", (wdir / "BRIEF.md").read_text())
+        # a backport that builds clears the log
+        tree = wdir / "tree"
+        sh(tree, "sed", "-i", "s/foo line 6/foo line 6 FIX/", "foo.c")
+        sh(tree, "git", "-c", "user.name=c", "-c", "user.email=c@c", "commit", "-qam", "foo: fix overflow",
+           "-m", f"commit {self.A} upstream.")
+        incident.collect_work(self.data / "linux", res, wdir, bld)
+        self.assertEqual(res.outcome, "patched-needs-review")
+        self.assertFalse((wdir / "build-errors.log").exists())
+
+    def test_target_for_included_c(self):
+        t = self.tmp / "k"
+        (t / "kernel").mkdir(parents=True)
+        (t / "kernel" / "Makefile").write_text("obj-y += build_policy.o\n")
+        (t / "kernel" / "build_policy.c").write_text('# include "ext.c"\n')
+        b = build.Builder(t, t / "out")
+        self.assertEqual(b.target("kernel/ext.c"), "kernel/build_policy.o")
+        self.assertEqual(b.target("kernel/build_policy.c"), "kernel/build_policy.o")
 
 
 class TestExpiry(Fixture):

@@ -14,6 +14,7 @@ and build the missing ones (optionally with Claude).
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import logging
 import os
@@ -24,7 +25,7 @@ from pathlib import Path
 
 import yaml
 
-from . import emit, engine, feeds, gitutil, incident, lore, sync, vulns
+from . import build, emit, engine, feeds, gitutil, incident, lore, sync, vulns
 
 log = logging.getLogger("fasttrack")
 
@@ -77,7 +78,7 @@ def cmd_run(args) -> int:
             results.append(engine.run_series(data / "linux", _series(s), records,
                                              queue_root if queue_root.is_dir() else None,
                                              kev, releases, queue_mode=cfg.get("queue_mode", "cve"),
-                                             arches=cfg.get("arches")))
+                                             arches=cfg.get("arches"), builder=_builder(cfg, args)))
         except gitutil.GitError as e:
             print(f"{s}: skipped ({e})")
 
@@ -163,14 +164,15 @@ def cmd_cve(args) -> int:
             try:
                 res = incident.resolve(data / "linux", s, cid, fixes, rec, queue_root,
                                        adapt=args.adapt or args.claude,
-                                       stable_list=lore.backports if cfg.get("stable_list") else None)
+                                       stable_list=lore.backports if cfg.get("stable_list") else None,
+                                       builder=_builder(cfg, args))
             except gitutil.GitError as e:
                 print(f"{cid} {s[0]}.{s[1]}: skipped ({e})")
                 continue
             wdir = out / "work" / cid / res.series
             if args.collect and res.outcome in ("unpatched", "partial") and (wdir / "start").exists():
                 # Commits made in an existing work package (by hand or an earlier run); no Claude.
-                incident.collect_work(data / "linux", res, wdir)
+                incident.collect_work(data / "linux", res, wdir, _builder(cfg, args))
                 if cid in attempts and res.series in attempts[cid]:
                     attempts[cid][res.series]["outcome"] = res.outcome
             elif res.outcome in ("unpatched", "partial") and (args.claude or args.package):
@@ -187,7 +189,7 @@ def cmd_cve(args) -> int:
                     cost = incident.claude_cost(wdir)
                     if cost is not None:
                         res.note = (res.note + " " if res.note else "") + f"claude ${cost:.2f}"
-                    incident.collect_work(data / "linux", res, wdir)
+                    incident.collect_work(data / "linux", res, wdir, _builder(cfg, args))
                     if rc != 127:  # 127: Claude did not start; not an attempt
                         attempts.setdefault(cid, {})[res.series] = {
                             "date": time.strftime("%Y-%m-%d", time.gmtime()), "head": res.head_version,
@@ -206,6 +208,14 @@ def cmd_cve(args) -> int:
     (out / "cve-result.json").write_text(json.dumps([r.public() for r in resolutions], indent=2) + "\n")
     print(f"report: {out / 'cve-report.md'}")
     return 1 if any(r.outcome in ("unpatched", "partial") for r in resolutions) else 0
+
+
+def _builder(cfg: dict, args):
+    """Compile-check factory from ``build_check: <arch>``; --no-build turns it off."""
+    arch = cfg.get("build_check")
+    if not arch or getattr(args, "no_build", False):
+        return None
+    return functools.partial(build.Builder, arch=arch)
 
 
 def _days_in_mainline(repo: Path, fixes: list[str], not_before: int = 0) -> float:
@@ -239,6 +249,7 @@ def main(argv=None) -> int:
     p.add_argument("--out", help="output directory (default from config)")
     p.add_argument("-v", "--verbose", action="count", default=0,
                    help="-v: progress per step and per patch; -vv: also every git command")
+    p.add_argument("--no-build", action="store_true", help="skip the compile check (build_check)")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("sync", help="pull upstream sources").set_defaults(fn=cmd_sync)

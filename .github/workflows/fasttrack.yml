@@ -64,8 +64,11 @@ jobs:
         with:
           persist-credentials: false
 
+      # Kernel build tools for the compile check (build_check in fasttrack.yaml).
       - name: Tooling
         run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev
           pip install --quiet pyyaml
           git config --global user.name  "fasttrack[bot]"
           git config --global user.email "fasttrack@users.noreply.github.com"

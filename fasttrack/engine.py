@@ -18,13 +18,14 @@ from __future__ import annotations
 
 import logging
 import re
+import subprocess
 import tempfile
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Iterable, Optional
 
-from . import gitutil
+from . import build, gitutil
 from .queue import QueuedPatch, load_queue
 from .vulns import CveRecord
 
@@ -50,6 +51,7 @@ class Candidate:
     filename: str = ""
     files: list[str] = field(default_factory=list)          # touched or conflicting files
     prerequisites: list[str] = field(default_factory=list)  # "sha12 subject" hints
+    build_log: str = ""                                     # compiler errors the patch brings in
     patch: str = field(default="", repr=False)
 
     def public(self) -> dict:
@@ -140,13 +142,15 @@ def collect(
 
 
 def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[Path] = None,
-           arches: Optional[list[str]] = None) -> None:
-    """Cumulative, no-fuzz replay on top of ``ref``. Sets verdict on each candidate."""
+           arches: Optional[list[str]] = None, builder=None) -> None:
+    """Cumulative, no-fuzz replay on top of ``ref``. Sets verdict on each candidate.
+    ``builder(tree, out)`` makes a :class:`build.Builder` for the compile check."""
     with tempfile.TemporaryDirectory(prefix="fasttrack-") as tmpd, \
             gitutil.Worktree(repo, ref, Path(tmpd) / "wt") as wt:
+        b = start_builder(builder, wt.path, Path(tmpd) / "out")
         n = 0
         for i, c in enumerate(candidates, 1):
-            _verify_one(repo, ref, wt, c, arches)
+            _verify_one(repo, ref, wt, c, arches, b)
             if c.verdict == ACCEPTED:
                 n += 1
                 c.filename = f"{n:04d}-{(c.upstream or 'q')[:12]}-{_slug(c.subject)}.patch"
@@ -154,8 +158,21 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
                      c.source, c.verdict, c.subject)
 
 
+def start_builder(builder, tree: Path, out: Path):
+    """Prepared builder, or None when there is none or it cannot prepare."""
+    if not builder:
+        return None
+    b = builder(tree, out)
+    try:
+        b.prepare()
+    except (build.BuildError, OSError, subprocess.SubprocessError) as e:
+        log.warning("build check off: %s", e)
+        return None
+    return b
+
+
 def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate,
-                arches: Optional[list[str]] = None) -> None:
+                arches: Optional[list[str]] = None, b=None) -> None:
     """Sets the verdict of one candidate; applies it to ``wt`` when accepted."""
     if gitutil.in_history(repo, c.upstream, ref):
         c.verdict, c.reason = PRESENT, "fix commit is in the stable history"
@@ -186,6 +203,14 @@ def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate,
             c.prerequisites = gitutil.prerequisite_hints(repo, ref, c.upstream, c.files)
         return
     wt.apply(c.patch)
+    c.build_log = b.regressions([c.patch], build.worktree_flip(wt.path)) if b else ""
+    if c.build_log:
+        gitutil.git(wt.path, "apply", "-R", "--index", input=c.patch)
+        c.verdict, c.reason = CONFLICT, "applies unchanged but does not build; needs a backport or prerequisite"
+        c.files = gitutil.patch_files(c.patch)
+        if c.upstream:
+            c.prerequisites = gitutil.prerequisite_hints(repo, ref, c.upstream, c.files)
+        return
     c.verdict = ACCEPTED
 
 
@@ -215,6 +240,7 @@ def run_series(
     branch_fmt: str = "linux-{s}.y",
     remote: str = "origin",
     arches: Optional[list[str]] = None,
+    builder=None,
 ) -> SeriesResult:
     label = f"{series[0]}.{series[1]}"
     branch = branch_fmt.format(s=label)
@@ -227,6 +253,6 @@ def run_series(
     cands = collect(series, records, queue_root, kev, queue_mode)
     _order_mainline(repo, cands)
     log.info("%s: verify %d candidates on %s", label, len(cands), ref[:12])
-    verify(repo, ref, cands, arches=arches)
+    verify(repo, ref, cands, arches=arches, builder=builder)
     log.info("%s: done in %.0fs", label, time.monotonic() - t)
     return SeriesResult(label, ref, hv, releases.get(label), cands)

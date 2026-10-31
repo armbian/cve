@@ -32,8 +32,8 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Callable, Optional
 
-from . import gitutil
-from .engine import ACCEPTED, CONFLICT, MISSING, PRESENT, Candidate, _slug
+from . import build, gitutil
+from .engine import ACCEPTED, CONFLICT, MISSING, PRESENT, Candidate, _slug, start_builder
 from .queue import load_queue
 from .vulns import CveRecord, parse_version
 
@@ -128,6 +128,7 @@ def resolve(
     remote: str = "origin",
     branch_fmt: str = "linux-{s}.y",
     stable_list: Optional[Callable[[str, str], list[str]]] = None,
+    builder=None,
 ) -> Resolution:
     label = f"{series[0]}.{series[1]}"
     ref = _stable_ref(repo, label, remote, branch_fmt)
@@ -158,6 +159,7 @@ def resolve(
 
     with tempfile.TemporaryDirectory(prefix="fasttrack-cve-") as tmpd, \
             gitutil.Worktree(repo, ref, Path(tmpd) / "wt") as wt:
+        b = start_builder(builder, wt.path, Path(tmpd) / "out")
         n = 0
         for c in res.candidates:
             have = gitutil.present(repo, c.upstream)
@@ -195,6 +197,11 @@ def resolve(
                     c.verdict, c.reason, c.files = CONFLICT, "3-way merge conflicts", conflicts
             else:
                 c.verdict, c.reason = CONFLICT, "does not apply unchanged"
+            if b and c.verdict in (ACCEPTED, ADAPTED):
+                c.build_log = b.regressions([c.patch], build.worktree_flip(wt.path))
+                if c.build_log:
+                    gitutil.git(wt.path, "reset", "--quiet", "--hard", "HEAD~1")
+                    c.verdict, c.reason, c.files = CONFLICT, "applies but does not build", []
             if c.verdict == CONFLICT:
                 c.files = c.files or gitutil.patch_files(c.patch)
                 c.prerequisites = gitutil.prerequisite_hints(repo, ref, c.upstream, c.files)
@@ -249,8 +256,9 @@ BRIEF = """\
 
        [ Backport: <one line per difference from upstream, and why> ]
 
-4. Compile-check what you touched if a toolchain is present, from `./tree`:
-   `make defconfig && make <path>/<file>.o` for each changed `.c` file.
+4. Compile-check what you touched, from `./tree`: `make allmodconfig && make prepare`,
+   then `make <path>/<file>.o` for each changed `.c` file. The tool rejects a
+   backport whose changed `.c` files do not build with x86 allmodconfig.
 5. Touch nothing outside `./tree` except `RESULT.md` here. In RESULT.md write what
    you changed, why it is equivalent to upstream, and what you could not verify.
 
@@ -287,11 +295,17 @@ def prepare_work(repo: Path, res: Resolution, work_root: Path) -> Path:
             lines.append(f"Upstream patch: `{up.name}`")
         if c.files:
             lines.append("Files: " + ", ".join(f"`{f}`" for f in c.files))
+        if c.build_log:
+            lines += ["", "It applies, but these files do not build:", "", "```", c.build_log, "```"]
         if c.prerequisites:
             lines += ["", f"Mainline commits on these files that {res.series} does not have "
                           "(possible prerequisites, oldest first):", ""]
             lines += [f"- `{p}`" for p in c.prerequisites]
         failing.append("\n".join(lines))
+    errlog = wdir / "build-errors.log"
+    if errlog.exists():
+        failing.append("### An earlier backport in this package did not build\n\n"
+                       "```\n" + errlog.read_text(**gitutil.ENC).strip() + "\n```")
     resolved = ""
     if res.patches:
         resolved = "\nAlready committed on top (parts of this fix that applied):\n\n" + \
@@ -349,8 +363,10 @@ def claude_cost(wdir: Path) -> Optional[float]:
     return None
 
 
-def collect_work(repo: Path, res: Resolution, wdir: Path) -> None:
-    """Pick up commits made in the work package and re-verify the whole set."""
+def collect_work(repo: Path, res: Resolution, wdir: Path, builder=None) -> None:
+    """Pick up commits made in the work package and re-verify the whole set.
+    With ``builder``, a set that does not build is rejected; the errors go to
+    build-errors.log, which the next BRIEF.md shows."""
     tree = wdir / "tree"
     start = (wdir / "start").read_text().strip()
     shas = gitutil.git(tree, "rev-list", "--reverse", f"{start}..HEAD", check=False).split()
@@ -385,6 +401,16 @@ def collect_work(repo: Path, res: Resolution, wdir: Path) -> None:
                 log.info("%s %s: %s does not apply on a clean tree", res.cve, res.series, c.subject)
                 continue
             wt.apply(c.patch)
+        b = None if broken else start_builder(builder, wt.path, Path(tmpd) / "out")
+        err = b.regressions([c.patch for c in new], build.worktree_flip(wt.path)) if b else ""
+    errlog = wdir / "build-errors.log"
+    if err:
+        errlog.write_text(err, **gitutil.ENC)
+        for c in new:
+            c.verdict, c.reason, c.build_log = CONFLICT, "work-package backport does not build", err
+        log.info("%s %s: work-package backport does not build", res.cve, res.series)
+    elif b:
+        errlog.unlink(missing_ok=True)
     for c in res.candidates:
         if c.verdict in (CONFLICT, MISSING) and any(n.upstream == c.upstream for n in new if n.verdict == CLAUDE):
             c.verdict, c.reason = "superseded", "replaced by work-package backport"

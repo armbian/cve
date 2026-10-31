@@ -131,6 +131,8 @@ Either way, the tool then takes Claude's commits and re-verifies the whole serie
 
 ## Build test
 
+With `build_check: x86` in `fasttrack.yaml`, `run` and `cve` build the `.c` files each patch changes, with `allmodconfig`. A file that does not build even without the patch is not counted. A patch that applies but does not build is `needs-backport`, and its compiler errors go into BRIEF.md. A Claude backport that does not build is rejected. Its errors go to `build-errors.log` in the work package, and the next BRIEF.md shows them. Pass `--no-build` to skip the check.
+
 `scripts/build-test.sh <arm64|arm|riscv|x86> [series dir ...]` applies each series on its stable base. It builds the changed `.c` files with `allmodconfig` and reports errors and new warnings. The `build-test` workflow runs it for each architecture on PRs and merges that change `cve/` or `patches/`. Logs are in the job artifacts.
 
 ## Tests
