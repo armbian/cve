@@ -102,10 +102,10 @@ def cmd_run(args) -> int:
 
     for r in results:
         emit.write_series_dir(out, r)
-    # Work-package results (attempts.json): a "not affected" leaves the manual backport list.
+    # Backports in cve/ and "not affected" results (attempts.json) leave the open list.
     attempts_file = out / "attempts.json"
     attempts = json.loads(attempts_file.read_text()) if attempts_file.exists() else {}
-    (out / "report.md").write_text(emit.report(results, events, attempts))
+    (out / "report.md").write_text(emit.report(results, events, attempts, emit.backports(out)))
     (out / "unpatched.json").write_text(json.dumps(emit.unpatched(results), indent=2) + "\n")
     (out / "events.json").write_text(json.dumps(events, indent=2) + "\n")
     state_file.write_text(json.dumps(state, indent=2) + "\n")
