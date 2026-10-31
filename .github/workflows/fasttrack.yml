@@ -48,6 +48,7 @@ jobs:
     outputs:
       due: ${{ steps.due.outputs.due }}
       fingerprint: ${{ steps.fp.outputs.fingerprint }}
+      series: ${{ steps.fp.outputs.series }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -56,6 +57,7 @@ jobs:
         run: |
           python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
           echo "fingerprint=$(python3 -m fasttrack.cli fingerprint)" >> "$GITHUB_OUTPUT"
+          echo "series=$(python3 -c 'import json, yaml; print(json.dumps([str(s) for s in yaml.safe_load(open("fasttrack.yaml"))["series"]]))')" >> "$GITHUB_OUTPUT"
       - id: seen
         uses: actions/cache/restore@v6
         with:
@@ -68,8 +70,98 @@ jobs:
           echo "due=$due" >> "$GITHUB_OUTPUT"
           [ "$due" = true ] && echo "Upstream changed: full run." || echo "No upstream change: nothing to do."
 
-  fasttrack:
+  # One job per series: each gets the full runner for its compile check.
+  verify:
     needs: check
+    if: needs.check.outputs.due == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        series: ${{ fromJSON(needs.check.outputs.series) }}
+    runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 180
+    steps:
+      # data/ and one worktree plus build dir per series: about 20 GB for four series.
+      - name: Free space
+        id: space
+        run: echo "low=$([ "$(df --output=avail -BG / | tail -1 | tr -dc 0-9)" -lt 40 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      # Same as armbian/shallow: linux.git and its worktrees need the space.
+      - name: Free Github Runner
+        if: runner.environment == 'github-hosted' && steps.space.outputs.low == 'true'
+        uses: descriptinc/free-disk-space@main # no tagged releases; pinned to default branch
+        with:
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false # fixed list fails when a package is missing (e.g. powershell on 26.04)
+          docker-images: true
+          swap-storage: true
+
+      # Same as armbian/shallow#16: remove the large packages that are actually installed.
+      - name: Remove large packages
+        if: runner.environment == 'github-hosted' && steps.space.outputs.low == 'true'
+        run: |
+          pkgs=$(dpkg-query -W -f '${Package}\n' | grep -E '^(aspnetcore-|dotnet-|llvm-|php|mongodb-|mysql-)|^(azure-cli|google-chrome-stable|firefox|powershell|mono-devel|libgl1-mesa-dri|google-cloud-sdk|google-cloud-cli)$' || true)
+          [[ -n "$pkgs" ]] && sudo apt-get remove -y $pkgs
+          sudo apt-get autoremove -y
+          sudo apt-get clean
+          df -h /
+
+      # No token in .git/config: Claude runs in this job. Push steps set it themselves.
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      # Kernel build tools for the compile check (build_check in fasttrack.yaml).
+      - name: Tooling
+        run: |
+          # build_check is x86: other hosts need the x86_64 cross compiler.
+          need=""
+          [ "$(uname -m)" = x86_64 ] || command -v x86_64-linux-gnu-gcc >/dev/null || need=gcc-x86-64-linux-gnu
+          if ! command -v bc bison flex pahole >/dev/null || ! [ -e /usr/include/libelf.h ] || [ -n "$need" ]; then
+            sudo apt-get update -q
+            sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
+          fi
+          python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
+          git config --global user.name  "armbianworker"
+          git config --global user.email "78210198+armbianworker@users.noreply.github.com"
+
+      - id: week
+        run: echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      # data/ = shallow linux.git + vulns.git + stable-queue.git. A new entry is
+      # saved once per ISO week; runs in between restore the latest one and only
+      # fetch what is new. Editing fasttrack.yaml (e.g. the series) starts fresh.
+      # Self-hosted: data/ lives outside the workspace and stays between runs.
+      - name: Persistent data
+        if: runner.environment == 'self-hosted'
+        run: |
+          mkdir -p "$HOME/.cache/armbian-cve/data"
+          ln -sfn "$HOME/.cache/armbian-cve/data" data
+
+      - name: Upstream data cache
+        if: runner.environment == 'github-hosted'
+        uses: actions/cache@v6
+        with:
+          path: data
+          key: data-${{ hashFiles('fasttrack.yaml') }}-${{ steps.week.outputs.week }}
+          restore-keys: data-${{ hashFiles('fasttrack.yaml') }}-
+
+      - name: Sync
+        run: python3 -m fasttrack.cli -v sync
+
+      - name: Gather and verify ${{ matrix.series }}
+        run: python3 -m fasttrack.cli -v run --series ${{ matrix.series }} --results results-${{ matrix.series }}.json
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: results-${{ matrix.series }}
+          path: results-${{ matrix.series }}.json
+          retention-days: 3
+
+  fasttrack:
+    needs: [check, verify]
     if: needs.check.outputs.due == 'true'
     # Repo variable FASTTRACK_RUNNER picks a self-hosted runner (label); default GitHub-hosted.
     # Use a fixed runner: data/ (5 GB) then stays on disk. A random one downloads it again.
@@ -146,10 +238,16 @@ jobs:
       - name: Sync
         run: python3 -m fasttrack.cli -v sync
 
-      - name: Gather and verify
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: results-*
+          merge-multiple: true
+
+      - name: Report
         id: run
         run: |
-          python3 -m fasttrack.cli -v run
+          python3 -m fasttrack.cli -v report results-*.json
+          rm -f results-*.json
           cat report.md >> "$GITHUB_STEP_SUMMARY"
 
       # patches/ is rebuilt from scratch by `run`, so fixes stable has absorbed are
