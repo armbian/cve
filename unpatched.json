@@ -1332,125 +1332,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-64066"
-    ],
-    "kev": false,
-    "upstream": "8a8c0cfdf4658fc5b295b7fc87be56e0d76741f4",
-    "subject": "netfs: Fix netfs_read_to_pagecache() to pause on subreq failure",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/netfs/buffered_read.c"
-    ],
-    "prerequisites": [
-      "627cf645277b netfs: Don't use bh spinlock",
-      "49866ce7ea8d netfs: Add support for caching single monolithic objects such as AFS dirs",
-      "e2d46f2ec332 netfs: Change the read result collector to only use one work item",
-      "6698c02d64b2 afs: Locally initialise the contents of a new symlink on creation",
-      "5de0219a9bb9 netfs: Fix setting NETFS_RREQ_ALL_QUEUED to be after all subreqs queued",
-      "3dc00bca8dc8 fs/netfs: remove `netfs_io_request.ractl`",
-      "20d72b00ca81 netfs: Fix the request's work item to not require a ref",
-      "2b1424cd131c netfs: Fix wait/wake to be consistent about the waitqueue used",
-      "4d428dca252c netfs: fix reference leak",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "0e764b9d4607 netfs: Fix the handling of stream->front by removing it",
-      "6f0f7ac1915a netfs: Fix cancellation of a DIO and single read subrequests",
-      "b5782e2d462c netfs: Fix missing barriers when accessing stream->subrequests locklessly"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-64067"
-    ],
-    "kev": false,
-    "upstream": "b5782e2d462c028096f922abca46318cec890670",
-    "subject": "netfs: Fix missing barriers when accessing stream->subrequests locklessly",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/netfs/buffered_read.c",
-      "fs/netfs/misc.c",
-      "fs/netfs/read_collect.c",
-      "fs/netfs/write_collect.c",
-      "fs/netfs/write_issue.c",
-      "include/linux/list.h"
-    ],
-    "prerequisites": [
-      "cec78a59abc9 list: Remove duplicated and unused macro list_for_each_reverse",
-      "4acb665cf4f3 netfs: Work around recursion by abandoning retry if nothing read",
-      "d606c36294f4 netfs: Make netfs_advance_write() return size_t",
-      "751e213f9f8a netfs: Split retry code out of fs/netfs/write_collect.c",
-      "627cf645277b netfs: Don't use bh spinlock",
-      "e61bfaad8fd8 netfs: Add functions to build/clean a buffer in a folio_queue",
-      "49866ce7ea8d netfs: Add support for caching single monolithic objects such as AFS dirs",
-      "e2d46f2ec332 netfs: Change the read result collector to only use one work item",
-      "6698c02d64b2 afs: Locally initialise the contents of a new symlink on creation",
-      "794d8cf3a87a netfs: Report on NULL folioq in netfs_writeback_unlock_folios()",
-      "1d0013962d22 netfs: Fix a number of read-retry hangs",
-      "d01c495f432c netfs: Add retry stat counters",
-      "5de0219a9bb9 netfs: Fix setting NETFS_RREQ_ALL_QUEUED to be after all subreqs queued",
-      "f298e3765528 netfs: Fix collection of results during pause when collection offloaded",
-      "cf80fdbc0a55 list: remove redundant 'extern' for function prototypes"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-64160"
-    ],
-    "kev": false,
-    "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
-    "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/9p/v9fs_vfs.h",
-      "fs/9p/vfs_inode.c",
-      "fs/9p/vfs_inode_dotl.c",
-      "fs/afs/file.c",
-      "fs/afs/inode.c",
-      "fs/afs/internal.h",
-      "fs/afs/write.c",
-      "fs/netfs/buffered_read.c",
-      "fs/netfs/buffered_write.c",
-      "fs/netfs/direct_write.c",
-      "fs/netfs/misc.c",
-      "fs/netfs/write_collect.c",
-      "fs/smb/client/cifsfs.c",
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/file.c",
-      "fs/smb/client/inode.c",
-      "fs/smb/client/readdir.c",
-      "fs/smb/client/smb2ops.c",
-      "fs/smb/client/smb2pdu.c",
-      "include/linux/netfs.h"
-    ],
-    "prerequisites": [
-      "6c9903c330ab cifs: Remove pre-historic unused CIFSSMBCopy",
-      "0d6b0d2e3816 cifs: Recognize SFU char/block devices created by Windows NFS server on Windows Server <<2012",
-      "b2fe4a8fa0f6 smb: client: get rid of @nlsc param in cifs_tree_connect()",
-      "e1481075981d smb: client: allow reconnect when sending ioctl",
-      "796733054e4a smb: client: fix noisy message when mounting shares",
-      "a769bee5f9fb smb: use macros instead of constants for leasekey size and default cifsattrs value",
-      "f4d3cde410cc netfs: Remove redundant use of smp_rmb()",
-      "4acb665cf4f3 netfs: Work around recursion by abandoning retry if nothing read",
-      "751e213f9f8a netfs: Split retry code out of fs/netfs/write_collect.c",
-      "627cf645277b netfs: Don't use bh spinlock",
-      "6e0b503dc65c afs: Don't use mutex for I/O operation lock",
-      "9e705016eb8f afs: Add more tracepoints to do with tracking validity",
-      "e61bfaad8fd8 netfs: Add functions to build/clean a buffer in a folio_queue",
-      "49866ce7ea8d netfs: Add support for caching single monolithic objects such as AFS dirs",
-      "b2604315e87a afs: Make afs_init_request() get a key if not given a file"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-52966"
     ],
     "kev": false,
@@ -1888,39 +1769,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-63819"
-    ],
-    "kev": false,
-    "upstream": "8712353ed80f87271d732297567dcdbe4b84e8c7",
-    "subject": "f2fs: fix to do sanity check on f2fs_get_node_folio_ra()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/f2fs/f2fs.h",
-      "fs/f2fs/node.c"
-    ],
-    "prerequisites": [
-      "b19ee7272208 f2fs: introduce f2fs_get_section_mtime",
-      "2d56b4e39192 f2fs: multidevice: add stats in debugfs",
-      "128d333f0dff f2fs: introduce device aliasing file",
-      "cffaa0976fcc f2fs: clean up opened code w/ {get,set}_nid()",
-      "1df2bc3c8252 f2fs: clean up the unused variable additional_reserved_segments",
-      "1015035609e4 f2fs: fix changing cursegs if recovery fails on zoned device",
-      "3ca4bec40ee2 f2fs: switch to using the crc32 library",
-      "1cf746007005 f2fs: Add F2FS_F_SB()",
-      "76f01376df39 f2fs: ensure that node info flags are always initialized",
-      "3d56fbb1f03f f2fs: expand f2fs_invalidate_compress_page() to f2fs_invalidate_compress_pages_range()",
-      "d217b5cea488 f2fs: add parameter @len to f2fs_invalidate_internal_cache()",
-      "cf5817ce66f6 f2fs: don't call block truncation for aliased file",
-      "e53c568f4603 f2fs: add parameter @len to f2fs_invalidate_blocks()",
-      "5f95c1812a65 f2fs: add ioctl to get IO priority hint",
-      "17683927d078 f2fs: Add f2fs_folio_wait_writeback()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98897"
     ],
     "kev": false,
@@ -1980,40 +1828,7 @@
       "41376400c471 netfs: Replace wb_lock with a bit lock for asynchronicity"
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/netfs/write_issue.c\nfs/netfs/write_issue.c:633:19: error: \u2018NETFS_RREQ_OFFLOAD_COLLECTION\u2019 undeclared (first use in this function)"
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-72355"
-    ],
-    "kev": false,
-    "upstream": "5c6ce05e406520290c1d89da97fb3cd70c09137d",
-    "subject": "netfs: Fix barriering when walking subrequest list",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/netfs/read_retry.c",
-      "fs/netfs/write_retry.c"
-    ],
-    "prerequisites": [
-      "4acb665cf4f3 netfs: Work around recursion by abandoning retry if nothing read",
-      "751e213f9f8a netfs: Split retry code out of fs/netfs/write_collect.c",
-      "627cf645277b netfs: Don't use bh spinlock",
-      "e2d46f2ec332 netfs: Change the read result collector to only use one work item",
-      "1d0013962d22 netfs: Fix a number of read-retry hangs",
-      "d01c495f432c netfs: Add retry stat counters",
-      "4481f7f2b3df netfs: Fix oops in write-retry from mis-resetting the subreq iterator",
-      "20d72b00ca81 netfs: Fix the request's work item to not require a ref",
-      "2b1424cd131c netfs: Fix wait/wake to be consistent about the waitqueue used",
-      "97d8e8e52cb8 netfs: Fix ref leak on inserted extra subreq in write retry",
-      "90b3ccf51457 netfs: Update tracepoints in a number of ways",
-      "82e8885bd763 netfs: when subreq is marked for retry, do not check if it faced an error",
-      "a5ca32d031bb netfs: avoid double increment of retry_count in subreq",
-      "7e57523490cd netfs: Fix read abandonment during retry",
-      "cce18c263e96 netfs: Fix missing locking around retry adding new subreqs"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
+    "build_log": "## fs/netfs/write_issue.c\nfs/netfs/write_issue.c:635:19: error: \u2018NETFS_RREQ_OFFLOAD_COLLECTION\u2019 undeclared (first use in this function)"
   },
   {
     "series": "6.12",
@@ -3361,7 +3176,7 @@
       "b62a206bfbf3 cifs: Optimize CIFSFindFirst() response when not searching"
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1476:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1476:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)\nfs/smb/client/cifssmb.c:5997:32: error: \u2018in_len\u2019 undeclared (first use in this function)"
+    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1477:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1477:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)\nfs/smb/client/cifssmb.c:5998:32: error: \u2018in_len\u2019 undeclared (first use in this function)"
   },
   {
     "series": "6.12",
@@ -3514,7 +3329,7 @@
       "b62a206bfbf3 cifs: Optimize CIFSFindFirst() response when not searching"
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1476:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1476:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)"
+    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1477:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1477:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)"
   },
   {
     "series": "6.12",

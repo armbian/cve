@@ -1075,6 +1075,91 @@
       "prerequisites": [],
       "build_log": "",
       "backport": "CVE-2026-72454/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
+      "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64160"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0064-2c8f4742bb76-netfs-fix-potential-for-tearing-in-remote-i-size-and.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64160/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "8a8c0cfdf4658fc5b295b7fc87be56e0d76741f4",
+      "subject": "netfs: Fix netfs_read_to_pagecache() to pause on subreq failure",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64066"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0065-8a8c0cfdf465-netfs-fix-netfs-read-to-pagecache-to-pause-on-subreq.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64066/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "b5782e2d462c028096f922abca46318cec890670",
+      "subject": "netfs: Fix missing barriers when accessing stream->subrequests locklessly",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64067"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0066-b5782e2d462c-netfs-fix-missing-barriers-when-accessing-stream-sub.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64067/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "5c6ce05e406520290c1d89da97fb3cd70c09137d",
+      "subject": "netfs: Fix barriering when walking subrequest list",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-72355"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0067-5c6ce05e4065-netfs-fix-barriering-when-walking-subrequest-list.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-72355/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "8712353ed80f87271d732297567dcdbe4b84e8c7",
+      "subject": "f2fs: fix to do sanity check on f2fs_get_node_folio_ra()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-63819"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0068-8712353ed80f-f2fs-fix-to-do-sanity-check-on-f2fs-get-node-folio-r.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-63819/6.12"
     }
   ]
 }
