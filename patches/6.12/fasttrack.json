@@ -1075,6 +1075,414 @@
       "prerequisites": [],
       "build_log": "",
       "backport": "CVE-2026-72454/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
+      "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64160"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0064-2c8f4742bb76-netfs-fix-potential-for-tearing-in-remote-i-size-and.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64160/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "8a8c0cfdf4658fc5b295b7fc87be56e0d76741f4",
+      "subject": "netfs: Fix netfs_read_to_pagecache() to pause on subreq failure",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64066"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0065-8a8c0cfdf465-netfs-fix-netfs-read-to-pagecache-to-pause-on-subreq.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64066/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "b5782e2d462c028096f922abca46318cec890670",
+      "subject": "netfs: Fix missing barriers when accessing stream->subrequests locklessly",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64067"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0066-b5782e2d462c-netfs-fix-missing-barriers-when-accessing-stream-sub.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64067/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "5c6ce05e406520290c1d89da97fb3cd70c09137d",
+      "subject": "netfs: Fix barriering when walking subrequest list",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-72355"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0067-5c6ce05e4065-netfs-fix-barriering-when-walking-subrequest-list.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-72355/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "8712353ed80f87271d732297567dcdbe4b84e8c7",
+      "subject": "f2fs: fix to do sanity check on f2fs_get_node_folio_ra()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-63819"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0068-8712353ed80f-f2fs-fix-to-do-sanity-check-on-f2fs-get-node-folio-r.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-63819/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "097f50384e1877b7cf3ace12ff0d1beed19f2088",
+      "subject": "RDMA/irdma: Deduplicate the irdma_del_memlist logic",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93154"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0069-097f50384e18-rdma-irdma-deduplicate-the-irdma-del-memlist-logic.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93154/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "a7d0a6b58256a77566e9088a99e1594bf35821ec",
+      "subject": "RDMA/irdma: Add a refcount to track user ring MR associations",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93154"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0070-a7d0a6b58256-rdma-irdma-add-a-refcount-to-track-user-ring-mr-asso.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93154/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "971e99623ed7a0d75a719021cf4fd64e5f9e44e5",
+      "subject": "RDMA/irdma: Add irdma_cq fields to track pbl allocations",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93154"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0071-971e99623ed7-rdma-irdma-add-irdma-cq-fields-to-track-pbl-allocati.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93154/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "f67d8a08f60c9217df6d40da56422d2049f5e334",
+      "subject": "RDMA/irdma: Add refcounting to user ring MRs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93154"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0072-f67d8a08f60c-rdma-irdma-add-refcounting-to-user-ring-mrs.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93154/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "d1a3c216233413f57f5341a9b878b7e2dde7e785",
+      "subject": "KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90040"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0073-d1a3c2162334-kvm-sev-forcefully-invalidate-snp-vmsa-if-its-backin.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90040/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "2566b5cd6a275c124e8f154fef6e815f92ec8d5c",
+      "subject": "fs/resctrl: Fix UAF from worker threads when domains are removed",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93099"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0074-2566b5cd6a27-fs-resctrl-fix-uaf-from-worker-threads-when-domains.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93099/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "8fa813b7fd1eccbed13e126166cf764f1f11a7d3",
+      "subject": "drm/amd/display: Remove sink usage from DPMS",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98926"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0075-8fa813b7fd1e-drm-amd-display-remove-sink-usage-from-dpms.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98926/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "",
+      "subject": "drm/xe/migrate: Switch from drm to dev managed actions",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-68382"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0076-q-drm-xe-migrate-switch-from-drm-to-dev-managed-action.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-68382/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "9b7e60184f4b22e893d4ae95234d5f26261a430c",
+      "subject": "drm/xe/guc: Hold device ref until queue teardown completes",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-68382"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0077-9b7e60184f4b-drm-xe-guc-hold-device-ref-until-queue-teardown-comp.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-68382/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "",
+      "subject": "nvme: add nvme_get_ns_head()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98815"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0078-q-nvme-add-nvme-get-ns-head.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98815/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "9952f3882ecba709092379b71e02b09762b26f96",
+      "subject": "nvme: fix cdev lifetime",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98815"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0079-9952f3882ecb-nvme-fix-cdev-lifetime.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98815/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "fa98563ab00dbe62fcedfef6bdd34ded7a860d9f",
+      "subject": "drm/v3d: Associate BOs with every job that accesses them",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93047"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0080-fa98563ab00d-drm-v3d-associate-bos-with-every-job-that-accesses-t.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93047/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "52fb1756ea1d2759dfef2d86245be00b05dac3a2",
+      "subject": "riscv, bpf: Fix kernel stack corruption in tailcall with CFI",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-92518"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0081-52fb1756ea1d-riscv-bpf-fix-kernel-stack-corruption-in-tailcall-wi.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-92518/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "8d31bb1451643f328db0cea0e21e63ef54b4faf2",
+      "subject": "cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-92493"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0082-8d31bb145164-cpufreq-amd-pstate-ut-skip-tests-when-amd-pstate-dri.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-92493/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "915672c5ae32deeb72f4572856d123f314791136",
+      "subject": "wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90379"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0083-915672c5ae32-wifi-mt76-mt7921-add-pcie-aer-handler-support-to-pre.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90379/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "49c9b71b45081e5e5eeb507a2d6edb80d332dc59",
+      "subject": "phy: renesas: phy-rcar-gen3-usb2: Fix devm action registration for disabled VBUS regulator",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93276"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0084-49c9b71b4508-phy-renesas-phy-rcar-gen3-usb2-fix-devm-action-regis.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93276/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "d378fceaafd79e0dc59d3546bda251a3058062c0",
+      "subject": "iio: light: apds9306: fix PM reference leak in apds9306_read_data()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-89935"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0085-d378fceaafd7-iio-light-apds9306-fix-pm-reference-leak-in-apds9306.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-89935/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "061db6b7a910b8378f3b2df64f8c0a3ddc6e85f2",
+      "subject": "fbdev: serialize mode sysfs access with lock_fb_info()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-80785"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0086-061db6b7a910-fbdev-serialize-mode-sysfs-access-with-lock-fb-info.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-80785/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "549b71ce050637dd32678371ad76c445a2f8c9aa",
+      "subject": "iio: adc: adi-axi-adc: Initialize state mutex",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98674"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0087-549b71ce0506-iio-adc-adi-axi-adc-initialize-state-mutex.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98674/6.12"
     }
   ]
 }

@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 549b71ce050637dd32678371ad76c445a2f8c9aa
+X-Fasttrack-CVE: CVE-2026-98674
+X-Fasttrack-Backport: cve/CVE-2026-98674/6.12
+From: Janani Sunil <janani.sunil@analog.com>
+Date: Sat, 31 Oct 2026 22:58:18 +0100
+Subject: [PATCH] iio: adc: adi-axi-adc: Initialize state mutex
+
+commit 549b71ce050637dd32678371ad76c445a2f8c9aa upstream.
+
+[ Backport: use &pdev->dev; 6.12 probe has no local dev variable. ]
+
+The AXI ADC register access paths serialize transactions with st->lock,
+but probe does not initialize it. Initialize the mutex before registering
+the backend.
+
+Fixes: 7ecb8ee5c93b ("iio: adc: adi-axi-adc: support digital interface calibration")
+Signed-off-by: Janani Sunil <janani.sunil@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+---
+ drivers/iio/adc/adi-axi-adc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/iio/adc/adi-axi-adc.c b/drivers/iio/adc/adi-axi-adc.c
+index 5c8c87eb36d1..4fd4a8d75925 100644
+--- a/drivers/iio/adc/adi-axi-adc.c
++++ b/drivers/iio/adc/adi-axi-adc.c
+@@ -359,6 +359,10 @@ static int adi_axi_adc_probe(struct platform_device *pdev)
+ 	if (!st)
+ 		return -ENOMEM;
+ 
++	ret = devm_mutex_init(&pdev->dev, &st->lock);
++	if (ret)
++		return ret;
++
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
