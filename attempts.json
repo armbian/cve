@@ -325,12 +325,42 @@
       "run": null
     }
   },
+  "CVE-2026-46147": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "index checked before pinning; vcpus[] only under vm_table_lock",
+      "run": null
+    }
+  },
   "CVE-2026-46153": {
     "6.18": {
       "cost": 0.8377902000000002,
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-46314": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "fixed in 6.12.91 by stable 2270513b5d47",
+      "run": null
+    }
+  },
+  "CVE-2026-46317": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.12 has fixed-size nested_mmus array (ea242bdc29e8)",
       "run": null
     }
   },
@@ -354,6 +384,26 @@
       "run": null
     }
   },
+  "CVE-2026-52966": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "no drm_gem_change_handle_ioctl() in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-52994": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "fixed by stable 293fe8f2d1b5; zerocopy sized from pkt_len",
+      "run": null
+    }
+  },
   "CVE-2026-53091": {
     "6.18": {
       "cost": 0.5907997000000001,
@@ -372,7 +422,25 @@
       "run": null
     }
   },
+  "CVE-2026-53145": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "no drm_gem_change_handle_ioctl() in 6.12",
+      "run": null
+    }
+  },
   "CVE-2026-53243": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "rseq_entry.h and 82f572449cfe not in 6.12",
+      "run": null
+    },
     "6.18": {
       "cost": 0.20186530000000003,
       "date": "2026-10-30",
@@ -380,6 +448,26 @@
       "outcome": "not-affected-needs-review",
       "reason": "rseq_entry.h and the Fixes: commit 82f572449cfe not in 6.18",
       "reviewed": "2026-10-31",
+      "run": null
+    }
+  },
+  "CVE-2026-53246": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "fixed in 6.12.114 by stable 29ab56e7660b",
+      "run": null
+    }
+  },
+  "CVE-2026-63885": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "no GEM_CHANGE_HANDLE ioctl in 6.12",
       "run": null
     }
   },
@@ -398,6 +486,26 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-64212": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "iwlwifi mld sub-driver not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-64255": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "iwlwifi mld sub-driver not in 6.12",
       "run": null
     }
   },
@@ -431,6 +539,14 @@
     }
   },
   "CVE-2026-72198": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "classic fs/ntfs not in 6.12; removed in 6.9",
+      "run": null
+    },
     "6.18": {
       "cost": 0.20741040000000002,
       "date": "2026-10-30",
@@ -442,6 +558,14 @@
     }
   },
   "CVE-2026-72200": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "classic fs/ntfs not in 6.12; removed in 6.9",
+      "run": null
+    },
     "6.18": {
       "cost": 0.2189298,
       "date": "2026-10-30",
@@ -453,6 +577,14 @@
     }
   },
   "CVE-2026-72203": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "classic fs/ntfs not in 6.12; removed in 6.9",
+      "run": null
+    },
     "6.18": {
       "cost": 0.2671438,
       "date": "2026-10-30",
@@ -460,6 +592,16 @@
       "outcome": "not-affected-needs-review",
       "reason": "fs/ntfs (classic) not in 6.18; removed in 6.9",
       "reviewed": "2026-10-31",
+      "run": null
+    }
+  },
+  "CVE-2026-72365": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.12 always queues write collection; no such flag",
       "run": null
     }
   },
@@ -499,7 +641,35 @@
       "run": null
     }
   },
+  "CVE-2026-74324": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "mt7925 testmode (0a41b6751e4f) not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-74337": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "unpatched",
+      "reason": "needs rqspinlock (6.15, about 25 commits)",
+      "run": null
+    }
+  },
   "CVE-2026-74342": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "12e9e3cd03b5 missing; kernfs_xattr_set() never calls kernfs_root()",
+      "run": null
+    },
     "6.18": {
       "cost": 0.32488220000000007,
       "date": "2026-10-30",
@@ -567,6 +737,14 @@
     }
   },
   "CVE-2026-80899": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "unpatched",
+      "reason": "backport removes erofs fscache (fsid=); left out of stable",
+      "run": null
+    },
     "6.18": {
       "cost": 1.3977481999999999,
       "date": "2026-10-31",
@@ -1145,6 +1323,16 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98897": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "fixed in 6.12.111 by stable 5de0527f7824",
       "run": null
     }
   },
