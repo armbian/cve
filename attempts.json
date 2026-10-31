@@ -707,6 +707,16 @@
       "run": null
     }
   },
+  "CVE-2026-74639": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "us144mkii driver not in 6.12",
+      "run": null
+    }
+  },
   "CVE-2026-74752": {
     "6.18": {
       "cost": 0.6084113,
@@ -763,6 +773,14 @@
     }
   },
   "CVE-2026-89610": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "classic fs/ntfs not in 6.12; removed in 6.9",
+      "run": null
+    },
     "6.18": {
       "cost": 0.19854230000000003,
       "date": "2026-10-31",
@@ -774,6 +792,14 @@
     }
   },
   "CVE-2026-89611": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "classic fs/ntfs not in 6.12; only ntfs3",
+      "run": null
+    },
     "6.18": {
       "cost": 0.20720280000000002,
       "date": "2026-10-31",
@@ -785,6 +811,14 @@
     }
   },
   "CVE-2026-89632": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "reparse_buf_ptr() || stops before reading ReparseDataLength",
+      "run": null
+    },
     "6.18": {
       "cost": 0.21174279999999998,
       "date": "2026-10-30",
@@ -792,6 +826,16 @@
       "outcome": "not-affected-needs-review",
       "reason": "6.18 checks the length before it reads it",
       "reviewed": "2026-10-31",
+      "run": null
+    }
+  },
+  "CVE-2026-89675": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "nfsd4_copy() forces sync copies (stable 8d915bbf3926)",
       "run": null
     }
   },
@@ -831,7 +875,35 @@
       "run": null
     }
   },
+  "CVE-2026-89826": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "panthor_fw_read_build_info() from 9d443deb0441 not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-89866": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "wave5 has no runtime PM in 6.12 (2092b3833487 missing)",
+      "run": null
+    }
+  },
   "CVE-2026-90098": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "unpatched",
+      "reason": "needs ndo_set_rx_mode_async (db9e726525e4, 3554b4345d85)",
+      "run": null
+    },
     "6.18": {
       "cost": 1.0246891,
       "date": "2026-10-31",
@@ -841,6 +913,14 @@
     }
   },
   "CVE-2026-90237": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "unpatched",
+      "reason": "needs refcounted conntrack helpers (6031487d4e27, ac46f3f35b6e)",
+      "run": null
+    },
     "6.18": {
       "cost": 1.8561176,
       "date": "2026-10-31",
@@ -873,6 +953,16 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-90401": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "unpatched",
+      "reason": "fix removes REQ_NOWAIT support from raid1/10/456",
       "run": null
     }
   },
@@ -967,11 +1057,29 @@
     }
   },
   "CVE-2026-98118": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "single-thread read collector from e2d46f2ec332 (6.14) not in 6.12",
+      "run": null
+    },
     "6.18": {
       "cost": 0.7669991000000002,
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98119": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "write-side netfs_alloc_subrequest() uses mempool; never NULL",
       "run": null
     }
   },
@@ -999,6 +1107,16 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98162": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "fixed in 6.12.114 by stable bd58a52738f7",
       "run": null
     }
   },
@@ -1411,6 +1529,14 @@
     }
   },
   "CVE-2026-99101": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "no fs/ntfs/ea.c; new ntfs driver is mainline only",
+      "run": null
+    },
     "6.18": {
       "cost": 0.23154260000000002,
       "date": "2026-10-31",
