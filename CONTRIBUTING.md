@@ -2,6 +2,21 @@
 
 Some kernel security fixes do not apply to our stable kernels. Claude Code can backport them. You can help by running Claude Code on your own subscription. Each backport arrives as a pull request for review.
 
+## The short way: let Claude Code do it
+
+Clone the repository, then open Claude Code in it and type `/contribute`:
+
+```
+git clone https://github.com/armbian/cve.git
+cd cve
+claude
+> /contribute
+```
+
+Claude Code checks your setup, lists the open CVEs and asks which ones to do. It then runs the backports, reviews them with you, and opens the pull request. It asks before it pushes, and it submits only the CVEs you approve. You still review each backport.
+
+The steps below are the same work by hand.
+
 ## What you need
 
 - Linux, about 10 GB of free disk space.
