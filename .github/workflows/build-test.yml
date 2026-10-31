@@ -3,7 +3,7 @@ name: build-test
 # Compile-test every patch series per architecture: apply it on its stable base,
 # build the changed .c files with allmodconfig. Fails on build errors.
 # Each arch is split over 32 shards; a PR tests only the series it changes.
-# Pushes by the hourly fasttrack job do not start it (GITHUB_TOKEN); merges do.
+# Bot merges start it when they use the armbianworker token, not GITHUB_TOKEN.
 
 on:
   pull_request:

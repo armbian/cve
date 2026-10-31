@@ -113,8 +113,8 @@ jobs:
             sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
           fi
           python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
-          git config --global user.name  "fasttrack[bot]"
-          git config --global user.email "fasttrack@users.noreply.github.com"
+          git config --global user.name  "armbianworker"
+          git config --global user.email "78210198+armbianworker@users.noreply.github.com"
 
       - id: week
         run: echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
@@ -153,7 +153,8 @@ jobs:
 
       - name: Commit patches and reports
         env:
-          GH_TOKEN: ${{ github.token }}
+          # PRs, pushes and issues as armbianworker; built-in token when the secret is absent.
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
         run: |
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           # One path at a time: a path that does not exist fails the whole `git add`.
@@ -196,7 +197,7 @@ jobs:
       - name: Publish incident results
         if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '')
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
         run: |
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           # Incident results always go through review, never straight to main.
@@ -233,7 +234,7 @@ jobs:
       - name: Raise actively exploited CVEs
         if: steps.run.outputs.kev == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
         run: |
           gh issue create --label security --title "Actively exploited kernel CVE pending" \
             --body "$(grep -E '^- kev' report.md)
