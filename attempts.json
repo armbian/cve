@@ -5,6 +5,8 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "stable-only fix; no cfids_invalidation_worker(), laundromat worker drops the ref",
+      "reviewed": "2026-10-31",
       "run": null
     },
     "7.3": {
@@ -12,6 +14,8 @@
       "date": "2026-10-31",
       "head": "7.3.1",
       "outcome": "not-affected-needs-review",
+      "reason": "stable-only fix; no cfids_invalidation_worker(), laundromat worker drops the ref",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -30,6 +34,8 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "memset from 3d32eb7a5ecf not in 6.18; slot space checked first",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -48,6 +54,8 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "6.18 has no caller of sdca_irq_populate()",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -84,6 +92,8 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "reverts a stable-only backport; mainline keeps threaded NAPI",
+      "reviewed": "2026-10-31",
       "run": null
     },
     "7.3": {
@@ -91,6 +101,8 @@
       "date": "2026-10-31",
       "head": "7.3.1",
       "outcome": "not-affected-needs-review",
+      "reason": "reverts a stable-only backport; mainline keeps threaded NAPI",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -118,6 +130,8 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "rseq_entry.h and the Fixes: commit 82f572449cfe not in 6.18",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -145,6 +159,8 @@
       "date": "2026-10-31",
       "head": "7.3.1",
       "outcome": "not-affected-needs-review",
+      "reason": "044925f9b565 removed the nr_thps code",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -172,6 +188,8 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "fs/ntfs (classic) not in 6.18; removed in 6.9",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -181,6 +199,8 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "fs/ntfs (classic) not in 6.18; removed in 6.9",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -190,6 +210,8 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "fs/ntfs (classic) not in 6.18; removed in 6.9",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -235,6 +257,8 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "needs the per-sb xattr cache 12e9e3cd03b5, not in 6.18",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -280,6 +304,8 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "6.18 frees the channel through the NULL-safe aie2_destroy_mgmt_chann()",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -316,6 +342,8 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "fs/ntfs (classic) not in 6.18; removed in 6.9",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -325,6 +353,8 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "fs/ntfs (classic) not in 6.18; removed in 6.9",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -334,6 +364,8 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "6.18 checks the length before it reads it",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -883,6 +915,8 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "fix already in 6.18.y as 8f317daa50fe",
+      "reviewed": "2026-10-31",
       "run": null
     },
     "7.3": {
@@ -890,6 +924,8 @@
       "date": "2026-10-31",
       "head": "7.3.1",
       "outcome": "not-affected-needs-review",
+      "reason": "98c63ce4d760 removed RegistrationInner",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -944,6 +980,8 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "fs/ntfs (classic) not in 6.18; removed in 6.9",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },
@@ -962,6 +1000,8 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "not-affected-needs-review",
+      "reason": "bug comes from 8fa813b7fd1e, not in 6.18",
+      "reviewed": "2026-10-31",
       "run": null
     }
   },

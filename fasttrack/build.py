@@ -48,7 +48,8 @@ class Builder:
         cmd = ["make", "-s", "-C", str(self.tree), f"O={self.out}", f"ARCH={self.arch}",
                f"CROSS_COMPILE={cross_compile(self.arch)}", f"-j{self.jobs}", *targets]
         try:
-            p = subprocess.run(cmd, capture_output=True, text=True, errors="replace", timeout=timeout)
+            p = subprocess.run(cmd, capture_output=True, text=True, errors="replace", timeout=timeout,
+                               stdin=subprocess.DEVNULL)  # a new Kconfig option must not wait for input
         except subprocess.TimeoutExpired:
             return False, f"make {' '.join(targets)}: timed out after {timeout}s"
         return p.returncode == 0, p.stdout + p.stderr

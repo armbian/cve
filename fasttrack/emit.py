@@ -94,6 +94,12 @@ def not_affected(c, series: str, attempts: dict) -> bool:
         attempts.get(cve, {}).get(series, {}).get("outcome", "").startswith("not-affected") for cve in c.cves)
 
 
+def review(c, series: str, attempts: dict) -> str:
+    """The reason a person recorded when they checked a "not affected" result; empty if none."""
+    notes = [attempts.get(cve, {}).get(series, {}) for cve in c.cves]
+    return "; ".join(dict.fromkeys(n["reason"] for n in notes if n.get("reviewed") and n.get("reason")))
+
+
 def report(results: list[SeriesResult], events: list[str], attempts: Optional[dict] = None) -> str:
     attempts = attempts or {}
     out = ["# Kernel security fast-track", ""]
@@ -115,11 +121,13 @@ def report(results: list[SeriesResult], events: list[str], attempts: Optional[di
         # A fix that does not apply unchanged is open, or "not affected" per attempts.json.
         na = {id(c) for c in r.candidates
               if c.verdict == CONFLICT and not c.backport and not_affected(c, r.series, attempts)}
+        checked = {i for i in na for c in r.candidates if id(c) == i and review(c, r.series, attempts)}
         open_ = lambda c: c.verdict == CONFLICT and not c.backport and id(c) not in na
         groups = [(lambda c: c.verdict == ACCEPTED, "Included"),
                   (open_, "Needs a backport"),
                   (lambda c: c.verdict == CONFLICT and c.backport, "cve/ backport does not apply on this base"),
-                  (lambda c: id(c) in na, "Not affected per work package (needs review)"),
+                  (lambda c: id(c) in na - checked, "Not affected per work package (needs review)"),
+                  (lambda c: id(c) in checked, "Not affected (reviewed)"),
                   (lambda c: c.verdict == MISSING, "Mainline commit not in mirror")]
         for match, title in groups:
             rows = [c for c in r.candidates if match(c)]
@@ -131,7 +139,8 @@ def report(results: list[SeriesResult], events: list[str], attempts: Optional[di
                 flag = " ".join(f for f in ("🔥 KEV" if c.kev else "",
                                             "does not build" if c.build_log else "") if f)
                 cves = ", ".join(c.cves) or "—"
-                out.append(f"| {flag} | {cves} | `{c.upstream[:12] or '—'}` | {c.source} | {c.subject.replace('|', '/')} |")
+                subject = c.subject + (f" — {why}" if (why := review(c, r.series, attempts)) else "")
+                out.append(f"| {flag} | {cves} | `{c.upstream[:12] or '—'}` | {c.source} | {subject.replace('|', '/')} |")
             out.append("")
         if any(open_(c) for c in r.candidates):
             out += ["Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).", ""]
