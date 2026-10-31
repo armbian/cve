@@ -1,4 +1,104 @@
 {
+  "CVE-2024-58015": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "selfgen stats code from 44cfb7c58eb8 not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2025-21752": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "btrfs_partially_delete_raid_extent() from 6aea95ee3188 not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2025-38017": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "0a65bc27bd64 missing; no ep_schedule_timeout() in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2025-38036": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "58548b91101f missing; tile mmio set before read_gmdid()",
+      "run": null
+    }
+  },
+  "CVE-2025-38311": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "unpatched",
+      "reason": "needs the 6.13/6.14 netdev instance lock series",
+      "run": null
+    }
+  },
+  "CVE-2025-38411": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "netfs_collect_in_app() from 2b1424cd131c not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2025-39762": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "no dc_get_host_router_index() or lowest_dpia_link_index in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2025-40146": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "unpatched",
+      "reason": "needs the 6.15-6.17 elevator rework",
+      "run": null
+    }
+  },
+  "CVE-2025-40217": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "no pidfs_ioctl_valid() or PIDFD_GET_INFO in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2025-40247": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "msm VM_BIND pgtable prealloc (e601ea31d66b) not in 6.12",
+      "run": null
+    }
+  },
   "CVE-2025-68226": {
     "6.18": {
       "cost": null,
@@ -19,6 +119,26 @@
       "run": null
     }
   },
+  "CVE-2025-71202": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "SVA is off on x86 in 6.12 (c2c3f1a3fd74)",
+      "run": null
+    }
+  },
+  "CVE-2025-71315": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "unpatched",
+      "reason": "needs DRM vblank timer (74afeb812850, d54dbb5963bd)",
+      "run": null
+    }
+  },
   "CVE-2026-100073": {
     "6.18": {
       "cost": 0.49747659999999994,
@@ -28,7 +148,55 @@
       "run": null
     }
   },
+  "CVE-2026-22983": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "af_unix SO_INQ not in 6.12; io_uring sets msg_get_inq itself",
+      "run": null
+    }
+  },
+  "CVE-2026-22995": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "ublk_partition_scan_work() from 7fc4da6a304b not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-23117": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "1390b8b3d2be missing; ice_deinit_dev() still calls ice_deinit_hw()",
+      "run": null
+    }
+  },
+  "CVE-2026-23152": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.12 returns early on DEF_LINK_MAP before the bad read",
+      "run": null
+    }
+  },
   "CVE-2026-23288": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "drivers/accel/amdxdna not in 6.12",
+      "run": null
+    },
     "6.18": {
       "cost": 0.2593927,
       "date": "2026-10-30",
@@ -39,12 +207,72 @@
       "run": null
     }
   },
+  "CVE-2026-23341": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "amdxdna driver not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-31435": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.12 abandon path walks a local list; no stale subreq",
+      "run": null
+    }
+  },
+  "CVE-2026-31437": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "no netfs_unbuffered_write() (a0b4c7a49137) in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-31536": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "batched sends have wr_cqe NULL; send_done() runs only for the last",
+      "run": null
+    }
+  },
+  "CVE-2026-31742": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "alt-screen unicode save from 5eb608319bb5 not in 6.12",
+      "run": null
+    }
+  },
   "CVE-2026-43042": {
     "6.18": {
       "cost": 0.6829311000000001,
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-43070": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "scalar_byte_swap() from 9d2119984224 not in 6.12",
       "run": null
     }
   },
@@ -68,12 +296,32 @@
       "run": null
     }
   },
+  "CVE-2026-43301": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "wave5 has no runtime PM in 6.12 (2092b3833487 missing)",
+      "run": null
+    }
+  },
   "CVE-2026-43326": {
     "6.18": {
       "cost": 0.9392932,
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-43440": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-10-31",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "no service_wq in mana_gd_setup() in 6.12",
       "run": null
     }
   },
