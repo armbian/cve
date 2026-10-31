@@ -1,31 +1,27 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- retired 6.18: 8 patch(es) (landed upstream or superseded)
+
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
-### Included (applies unchanged) (28)
+### Included (applies unchanged) (20)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2026-43174 | `5d540e450895` | mainline | io_uring/zcrx: fix post open error handling |
 |  | CVE-2026-53024 | `84265cbd96b9` | mainline | greybus: raw: fix use-after-free if write is called after disconnect |
 |  | CVE-2026-46017 | `3bac01168982` | mainline | mm: fix deferred split queue races during migration |
 |  | CVE-2026-98376 | `593980175389` | mainline | bpf: Use array_map_meta_equal for percpu array inner map replacement |
-|  | CVE-2026-72397 | `828cd614e2af` | mainline | hwmon: (pmbus/core) honor vrm_version in pmbus_data2reg_vid() |
-|  | CVE-2026-93044 | `34746b5a84ec` | mainline | bpf: Disallow interpreter fallback for arena-related insns |
-|  | CVE-2026-100073 | `46e8e31771f4` | mainline | ext4: fix transaction overflow during writeback |
-|  | CVE-2026-90256 | `2b66c83ff175` | mainline | Bluetooth: L2CAP: use proto_lock for l2cap_data to fix l2cap_disconn_ind |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
 |  | CVE-2026-80580 | `d15d51fb26e8` | mainline | fbdev: bound mode sysfs output to the sysfs buffer |
 |  | CVE-2026-100072 | `a9ba4dd2f18b` | mainline | ACPI: platform: Use acpi_bus_get_primary_device() |
-|  | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
-|  | CVE-2026-99109 | `4aa2c106aef4` | mainline | smb: client: reject SetEA requests that do not fit the request buffer |
 |  | CVE-2026-98364 | `9fa903b24b1f` | mainline | xfrm: hold net_device reference under RCU in bundle creation |
 |  | CVE-2026-98355 | `99c24a8968eb` | mainline | RDMA/rtrs: guard against null kobj name |
 |  | CVE-2026-98834 | `26300879cd8e` | mainline | mtd: core: avoid double-free of OTP NVMEM device |
 |  | CVE-2026-98332 | `6f0a100df853` | mainline | wifi: mac80211: only operate on TDLS peers in the TDLS code |
 |  | CVE-2026-98292 | `8879e3e0a84a` | mainline | Bluetooth: btmtksdio, btmtkuart: validate WMT event length before struct access |
 |  | CVE-2026-98285 | `2842ce397dd0` | mainline | net: bridge: vlan: fix bugs caused by switchdev deletion errors |
-|  | CVE-2026-98449 | `8f6f8a48399f` | mainline | smb: client: delete compound mids on send failure before unlock |
 |  | CVE-2026-98824 | `6bdcdb31318c` | mainline | wifi: mac80211: validate TX status rate metadata |
 |  | CVE-2026-98551 | `24b620729e53` | mainline | perf/core: Fill branch entries with a single assignment |
 |  | CVE-2026-98570 | `87cd6b717e40` | mainline | net: ipv6: keep room for the mac header in dst_dev_overhead() |
@@ -35,11 +31,12 @@
 |  | CVE-2026-98954 | `44378d02c5aa` | mainline | net: always dissect GSO packets in __virtio_net_hdr_to_skb() |
 |  | CVE-2026-99183 | `89c2c777df17` | mainline | accel/rocket: search every core slot when looking up a scheduler |
 
-### Needs a manual backport (101)
+### Needs a manual backport (109)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2025-68226 | `abd29b6e17a9` | mainline | smb: client: fix incomplete backport in cfids_invalidation_worker() |
+| does not build | CVE-2026-43174 | `5d540e450895` | mainline | io_uring/zcrx: fix post open error handling |
 |  | CVE-2026-52945 | `168ee1549fa2` | mainline | Revert "wireguard: device: enable threaded NAPI" |
 |  | CVE-2026-52945 | `42bc3f45425b` | mainline | Revert "wireguard: device: enable threaded NAPI" |
 |  | CVE-2026-52945 | `cfdb22762f90` | mainline | Revert "wireguard: device: enable threaded NAPI" |
@@ -65,6 +62,7 @@
 |  | CVE-2026-74314 | `a3a81d247651` | mainline | bpf: Cancel special fields on map value recycle |
 |  | CVE-2026-74272 | `4dd86ca99ffc` | mainline | cxl/region: Resolve region deletion races |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
+| does not build | CVE-2026-72397 | `828cd614e2af` | mainline | hwmon: (pmbus/core) honor vrm_version in pmbus_data2reg_vid() |
 |  | CVE-2026-93181 | `174f0582e38a` | mainline | perf/x86/intel/uncore: Fix uncore_box ref/unref ordering |
 |  | CVE-2026-72377 | `81e985b4c3a6` | mainline | afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints |
 |  | CVE-2026-68447 | `426ffae6ecc7` | mainline | drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size |
@@ -73,13 +71,16 @@
 |  | CVE-2026-98926 | `8fa813b7fd1e` | mainline | drm/amd/display: Remove sink usage from DPMS |
 |  | CVE-2026-98815 | `9952f3882ecb` | mainline | nvme: fix cdev lifetime |
 |  | CVE-2026-93047 | `fa98563ab00d` | mainline | drm/v3d: Associate BOs with every job that accesses them |
+| does not build | CVE-2026-93044 | `34746b5a84ec` | mainline | bpf: Disallow interpreter fallback for arena-related insns |
 |  | CVE-2026-93270 | `7a0855e73757` | mainline | bpf: Disallow interpreter fallback for BPF_ADDR_PERCPU insn |
 |  | CVE-2026-74533 | `af24e338bf5d` | mainline | Bluetooth: ISO: fix race of kfree vs kref_get_unless_zero |
 |  | CVE-2026-93216 | `90f095b816e2` | mainline | mm/page_owner: use memcg_data snapshot to avoid TOCTOU in print_page_owner_memcg() |
 |  | CVE-2026-89584 | `14b007e17881` | mainline | block: validate user space vectors during extraction |
 |  | CVE-2026-90321 | `8914a3330b72` | mainline | ocfs2: validate inline xattrs during inode block validation |
 |  | CVE-2026-90320 | `2cf82b46d5e4` | mainline | ocfs2: validate external xattr entries when reading metadata |
+| does not build | CVE-2026-100073 | `46e8e31771f4` | mainline | ext4: fix transaction overflow during writeback |
 |  | CVE-2026-89772 | `5376c9db4536` | mainline | btrfs: write-protect folios during data writeback |
+| does not build | CVE-2026-90256 | `2b66c83ff175` | mainline | Bluetooth: L2CAP: use proto_lock for l2cap_data to fix l2cap_disconn_ind |
 |  | CVE-2026-74752 | `3dbb44d88b1e` | mainline | sctp: validate cookie AUTH state before use |
 |  | CVE-2026-80785 | `061db6b7a910` | mainline | fbdev: serialize mode sysfs access with lock_fb_info() |
 |  | CVE-2026-98869 | `7ce090afbf72` | mainline | bpf: Infer zext_dst based on static register liveness analysis |
@@ -89,12 +90,14 @@
 |  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets |
 |  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary |
 |  | CVE-2026-98153 | `56e1c6bbe4bb` | mainline | nvme: fix racy access to FDP placement id array |
+| does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() |
 |  | CVE-2026-89755 | `34a00895d032` | mainline | mm/migrate_device: clear stale mapping after freeing swapcache |
 |  | CVE-2026-98125 | `01261a6fa48b` | mainline | smb/client: fix stale page cache in insert/collapse range |
 |  | CVE-2026-98124 | `448ba0ae65ca` | mainline | smb/client: invalidate fscache for fallocate range operations |
 |  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
 |  | CVE-2026-98115 | `d12168084c8c` | mainline | ksmbd: safely drain sessions during logoff |
+| does not build | CVE-2026-99109 | `4aa2c106aef4` | mainline | smb: client: reject SetEA requests that do not fit the request buffer |
 |  | CVE-2026-98106 | `c4126f1db36e` | mainline | drm/pagemap: Prevent double migration of device pages |
 |  | CVE-2026-99076 | `ac76cab50e89` | mainline | ipv6: udp: Create exceptions before socket matching |
 |  | CVE-2026-98692 | `12f5d8b85a66` | mainline | thunderbolt: Make the DP tunnel activation callback mandatory |
@@ -115,6 +118,7 @@
 |  | CVE-2026-98177 | `8ee521b8b189` | mainline | drm/amdkfd: Avoid integer underflow in EOP ring size calculation. |
 |  | CVE-2026-98628 | `261b61d3735b` | mainline | bpf: Make post-verification instruction rewrites killable |
 |  | CVE-2026-98617 | `b5d9e9d4d0c1` | mainline | eth: fbnic: use the Rx queue napi pointer to find the napi vector |
+| does not build | CVE-2026-98449 | `8f6f8a48399f` | mainline | smb: client: delete compound mids on send failure before unlock |
 |  | CVE-2026-98599 | `79a9172f3ab4` | mainline | bpf: Reject non-negative offsets in stack_slot_obj_get_spi() |
 |  | CVE-2026-98589 | `a6c1edfbe240` | mainline | bpf: Reject pkt arguments in mutating subprogs |
 |  | CVE-2026-98747 | `499485a67fba` | mainline | serial: core: fix NULL pointer dereference in serial_core_unregister_port() |

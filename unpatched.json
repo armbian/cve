@@ -11,7 +11,41 @@
     "files": [
       "fs/smb/client/cached_dir.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-43174"
+    ],
+    "kev": false,
+    "upstream": "5d540e4508950c674d6feef1d95463d039bbf4f5",
+    "subject": "io_uring/zcrx: fix post open error handling",
+    "verdict": "needs-backport",
+    "files": [
+      "io_uring/zcrx.c"
+    ],
+    "prerequisites": [
+      "1fa7a3413111 io_uring/memmap: refactor io_free_region() to take user_struct param",
+      "6ab39b392e79 io_uring/rsrc: refactor io_{un}account_mem() to take {user,mm}_struct param",
+      "edd706ede85f io_uring/zcrx: add io_zcrx_ifq arg to io_zcrx_free_area()",
+      "5c686456a4e8 io_uring/zcrx: add user_struct and mm_struct to io_zcrx_ifq",
+      "1bd95163dae8 io_uring/zcrx: move io_unregister_zcrx_ifqs() down",
+      "75c299a917e4 io_uring/zcrx: reverse ifq refcount",
+      "f0243d2b86b9 io_uring/zcrx: convert to use netmem_desc",
+      "a0169c3a6287 io_uring/zcrx: use folio_nr_pages() instead of shift operation",
+      "d663976dad68 io_uring/zcrx: introduce IORING_REGISTER_ZCRX_CTRL",
+      "475eb39b0047 io_uring/zcrx: add sync refill queue flushing",
+      "39c9676f789e io_uring/zcrx: count zcrx users",
+      "742cb2e14ecb io_uring/zcrx: move io_zcrx_scrub() and dependencies up",
+      "d7af80b213e5 io_uring/zcrx: export zcrx via a file",
+      "0926f94ab36a io_uring/zcrx: add io_fill_zcrx_offsets()",
+      "00d91481279f io_uring/zcrx: share an ifq between rings"
+    ],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## io_uring/zcrx.c\nio_uring/zcrx.c:657:9: error: implicit declaration of function \u2018zcrx_unregister\u2019; did you mean \u2018sock_unregister\u2019? [-Wimplicit-function-declaration]"
   },
   {
     "series": "6.18",
@@ -25,7 +59,9 @@
     "files": [
       "drivers/net/wireguard/device.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -39,7 +75,9 @@
     "files": [
       "drivers/net/wireguard/device.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -53,7 +91,9 @@
     "files": [
       "drivers/net/wireguard/device.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -67,7 +107,9 @@
     "files": [
       "drivers/net/wireguard/device.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -94,7 +136,9 @@
       "1222e06934bd accel/amdxdna: Update message DMA buffer allocation",
       "b853007fdcdd accel/amdxdna: Remove hardware context status",
       "57aa3917a3b3 accel/amdxdna: Reduce log noise during process termination"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -124,7 +168,9 @@
       "0be08389c7f2 bpf: Switch to bpf_selem_unlink_nofail in bpf_local_storage_{map_free, destroy}",
       "ae51772b1e94 bpf: Lose const-ness of map in map_check_btf()",
       "f41deee082dc bpf: Delay freeing fields in local storage"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -154,7 +200,9 @@
       "7d99a7c6c6a3 mpls: Drop RTNL for RTM_NEWROUTE, RTM_DELROUTE, and RTM_GETROUTE.",
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
       "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -185,7 +233,9 @@
       "5892cbd85dbf sched: Match __task_rq_{,un}lock()",
       "d4c64207b88a sched: Cleanup the sched_change NOCLOCK usage",
       "1e900f415c60 sched: Detect per-class runqueue changes"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -217,7 +267,9 @@
       "b853007fdcdd accel/amdxdna: Remove hardware context status",
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
       "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -249,7 +301,9 @@
       "3addd63d1fba ASoC: SDCA: Factor out jack handling into new c file",
       "99a3ef1e81cd ASoC: SDCA: Add ASoC jack hookup in class driver",
       "9e3d4f794cbe ASoC: SDCA: Add SDCA IRQ enable/disable helpers"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -280,7 +334,9 @@
       "f9e00e51e391 net: use qdisc_pkt_len_segs_init() in sch_handle_ingress()",
       "b2e9821cff6c net: prefech skb->priority in __dev_xmit_skb()",
       "4792c3a4c147 net: annotate a data-race in __dev_xmit_skb()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -301,7 +357,9 @@
       "d1c73884858c accel/amdxdna: fix missing newline in pr_err message",
       "c02697cb9388 accel/amdxdna: Add basic support for AIE4 devices",
       "c83ad8ea6b0a accel/amdxdna: Fix order of canceled mailbox messages"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -320,7 +378,9 @@
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
       "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
       "fc69decc811b 8021q: use RCU for egress QoS mappings"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -369,7 +429,9 @@
       "95e8c1bfa56e smb: do some cleanups",
       "5003ad718af7 smb: move create_durable_reconn to common/smb2pdu.h",
       "c4a2a49f7df4 smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -400,7 +462,9 @@
       "bfc923b64287 dpll: zl3073x: implement frequency monitoring",
       "3c8c39768b10 dpll: zl3073x: clean up esync get/set and use zl3073x_out_is_ndiv()",
       "63009eb92b0f dpll: zl3073x: add ref sync and output clock type helpers"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -426,7 +490,9 @@
       "91f4da826c08 accel/amdxdna: Add command doorbell and wait support",
       "dbc8fd7a03cb accel/amdxdna: Add expandable device heap support",
       "457b046b7dfc accel/amdxdna: Remove mmap and export support for ubuf"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -456,7 +522,9 @@
       "bdae29d6512d rseq: Always inline rseq_debug_syscall_return()",
       "f8380f976804 rseq: Provide static branch for time slice extensions",
       "b5b8282441bc rseq: Add statistics for time slice extensions"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -486,7 +554,9 @@
       "dc11a4dba246 bpf: Recover arena kernel faults with scratch page",
       "f211c81ddc36 bpf: Add sleepable variant of bpf_arena_alloc_pages for kernel callers",
       "53cc12a2dc88 bpf/arena: Add bpf_arena_map_kern_vm_start() and bpf_prog_arena()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -516,7 +586,9 @@
       "563d0d4c2c1d ntfs: wait for sync mft writes to complete",
       "6098790c403d ntfs: validate MFT attrs_offset against bytes_in_use",
       "679ee5afd5b4 ntfs: fix MFT bitmap scan 2^32 boundary check"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -540,7 +612,9 @@
       "11816f7131c8 ntfs: fix out-of-bounds write in ntfs_rl_collapse_range() merge path",
       "949ba99cfe92 ntfs: remove unnecessary ternary boolean conversion",
       "18760a74ef7c ntfs: fix off-by-one in mapping pairs decoding bounds checks"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -568,7 +642,9 @@
       "cb76a81c7cec kernfs: make directory seek namespace-aware",
       "076e5cef28e2 simple_xattr: change interface to pass struct simple_xattrs **",
       "1e7cd8a53b72 simpe_xattr: use per-sb cache"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -598,7 +674,9 @@
       "dacc18029ef6 ntfs: fix uninitialized variable in ntfs_map_runlist_nolock",
       "de08874bae7d ntfs: match ntfs_resident_attr_min_value_length with $AttrDef",
       "c37d9e68b676 ntfs: fix variable dereferenced before check ni in ntfs_attr_open()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -638,7 +716,9 @@
       "9ac09bb9feac mm: consistently use current->mm in mm_get_unmapped_area()",
       "e0940c672ab4 bpf: Document cfi_stubs and owner fields in struct bpf_struct_ops",
       "373f2f44c300 bpf,x86: adjust the \"jmp\" mode for bpf trampoline"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -671,7 +751,9 @@
       "8441c7d3bd6c cxl: Check for invalid addresses returned from translation functions on errors",
       "f953b7d5e19a cxl/mem: Clarify @host for devm_cxl_add_nvdimm()",
       "9a8920ca8ebf cxl: Update RAS handler interfaces to also support CXL Ports"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -710,7 +792,28 @@
       "e0bf7d1c074d erofs: support user-defined fingerprint name",
       "78331814a502 erofs: add erofs_inode_set_aops helper to set the aops",
       "e77762e8966c erofs: using domain_id in the safer way"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-72397"
+    ],
+    "kev": false,
+    "upstream": "828cd614e2af053ca5e1d6da767bbd8a1b5cabfb",
+    "subject": "hwmon: (pmbus/core) honor vrm_version in pmbus_data2reg_vid()",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/hwmon/pmbus/pmbus_core.c"
+    ],
+    "prerequisites": [
+      "969a4ec86ca5 hwmon: (pmbus/core) Add support for NVIDIA nvidia195mv mode",
+      "dc4acb718ed9 hwmon: (pmbus) export pmbus_wait and pmbus_update_ts"
+    ],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## drivers/hwmon/pmbus/pmbus_core.c\ndrivers/hwmon/pmbus/pmbus_core.c:1106:14: error: \u2018nvidia195mv\u2019 undeclared (first use in this function)"
   },
   {
     "series": "6.18",
@@ -740,7 +843,9 @@
       "ce044cfb7a36 perf/x86/intel/uncore: Move die_to_cpu() to uncore.c",
       "2aa7dacf8a3d perf/x86/intel/uncore: Fix uncore_die_to_cpu() for offline dies",
       "1a308a168c92 perf/x86/intel/uncore: Implement global init callback for GNR uncore"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -761,7 +866,9 @@
       "0b2600f81cef treewide: change inode->i_ino from unsigned long to u64",
       "cbf56f998101 mm: remove stray references to struct pagevec",
       "2c8f4742bb76 netfs: Fix potential for tearing in ->remote_i_size and ->zero_point"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -789,7 +896,9 @@
       "421c0f190433 drm/amdgpu: Check for multiplication overflow in checkpoint stack size",
       "998d6781410d drm/amd: Fix MQD and control stack alignment for non-4K",
       "a789761de305 amd/amdkfd: Add kfd_ioctl_profiler to contain profiler kernel driver changes"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -819,7 +928,9 @@
       "3b832487a9e5 drm/amdgpu/userqueue: Remove duplicate amdgpu_reset.h header",
       "cf856ca9b999 drm/amdgpu: Update vm start, end, hole to support 57bit address",
       "473f12f82095 drm/amdgpu: Change user queue interface signatures"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -849,7 +960,9 @@
       "d14e6b4346bf bpf: Add multi tracing attach types",
       "ba042ed6446f bpf: Add support for tracing_multi link session",
       "475b59db3bd5 bpf: Use BPF_CALL_IMM macro consistently in bpf_do_misc_fixups"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -879,7 +992,9 @@
       "4bd8b5f8bcb5 drm/amd/display: Enable DAC in DCE link encoder",
       "a4f01bf729b2 drm/amd/display: Refactor and fix link_dpms I2C",
       "40989bf0e7d1 drm/amd/display: Refactor and fix link_dpms info"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -910,7 +1025,9 @@
       "1029298da365 nvme: set discard_granularity from NPDG/NPDA",
       "7d435caacd91 nvme-multipath: drop head pointer check in nvme_mpath_clear_current_path()",
       "e80e39f25567 nvme-core: fix parameter name in comment"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -941,7 +1058,41 @@
       "7315728ab538 drm/v3d: Remove dedicated fence_lock",
       "ffd7371ed417 drm/v3d: Allocate all resources before enabling the clock",
       "458f2a712ab4 drm/v3d: Introduce Runtime Power Management"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-93044"
+    ],
+    "kev": false,
+    "upstream": "34746b5a84ec37c0ea2bf6808c65c5ed8790eb51",
+    "subject": "bpf: Disallow interpreter fallback for arena-related insns",
+    "verdict": "needs-backport",
+    "files": [
+      "kernel/bpf/verifier.c"
+    ],
+    "prerequisites": [
+      "f233d4855918 bpf: Refactor storage_get_func_atomic to generic non_sleepable flag",
+      "ec8e3e27a140 bpf: mark mm->owner as __safe_rcu_or_null",
+      "7484e7cd8ab1 bpf: mark vma->{vm_mm,vm_file} as __safe_trusted_or_null",
+      "f7d72d0b3f43 bpf: save the start of functions in bpf_prog_aux",
+      "2f69c5685427 bpf: make bpf_insn_successors to return a pointer",
+      "9cba966f1c55 bpf: verifier: centralize const dynptr check in unmark_stack_slots_dynptr()",
+      "8d8771dc03e4 bpf: add plumbing for file-backed dynptr",
+      "d869d56ca848 bpf: verifier: refactor kfunc specialization",
+      "2c52e8943a43 bpf: dispatch to sleepable file dynptr",
+      "d43ad9da8052 bpf: Skip bounds adjustment for conditional jumps on same scalar register",
+      "b4ce5923e780 bpf, x86: add new map type: instructions array",
+      "30ec0ec09bf5 bpf: support instructions arrays with constants blinding",
+      "493d9e0d6083 bpf, x86: add support for indirect jumps",
+      "e5d2e34e726b bpf: Add missing checks to avoid verbose verifier log",
+      "4f7bc83b9837 bpf: verifier: Move desc->imm setup to sort_kfunc_descs_by_imm_off()"
+    ],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## kernel/bpf/verifier.c\nkernel/bpf/verifier.c:21112:28: error: \u2018struct bpf_prog\u2019 has no member named \u2018jit_required\u2019; did you mean \u2018jit_requested\u2019?"
   },
   {
     "series": "6.18",
@@ -972,7 +1123,9 @@
       "b5709f6d26d6 bpf: Support associating BPF program with struct_ops",
       "ca45c84afb8c bpf: Add bpf_has_frame_pointer()",
       "93f0d0969761 bpf: move recursion detection logic to helpers"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1004,7 +1157,9 @@
       "91b5a598b528 Bluetooth: l2cap: defer conn param update to avoid conn->lock/hdev->lock inversion",
       "ca40d481079c Bluetooth: ISO: Fix data-race on dst in iso_sock_connect()",
       "f50331f2a144 Bluetooth: ISO: Fix a use-after-free of the hci_conn pointer"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1034,7 +1189,9 @@
       "e90ed519087d mm/page_owner: hoist CONFIG_MEMCG to function level for print_page_owner_memcg()",
       "c1c94cf65863 mm/page_owner: add missing newline to count_threshold format string",
       "1f5af031ffb7 mm/page_owner: move free_ts_nsec output to free section in __dump_page_owner()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1070,7 +1227,9 @@
       "cfdeb588ae1d block: prohibit calls to bio_chain_endio",
       "d9f514d3e6ee block: move around bio flagging helpers",
       "ee623c892aa5 block: use bvec iterator helper for bio_may_need_split()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1102,7 +1261,9 @@
       "688dab01c3bb ocfs2: validate i_refcount_loc when refcount flag is set",
       "d3cd8de2e17e ocfs2: adjust ocfs2_xa_remove_entry() to match UBSAN boundary checks",
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1130,7 +1291,41 @@
       "4523ba0ee2e9 ocfs2: validate inline xattr header before inline refcount attach",
       "bda614e6b4f2 ocfs2: validate inline xattr header before reflinking inline xattrs",
       "8914a3330b72 ocfs2: validate inline xattrs during inode block validation"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-100073"
+    ],
+    "kev": false,
+    "upstream": "46e8e31771f4f1c5e1cdec37a889a6730e42e9f1",
+    "subject": "ext4: fix transaction overflow during writeback",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/ext4/inode.c"
+    ],
+    "prerequisites": [
+      "f5aa78e2be06 Manual conversion to use ->i_state accessors of all places not covered by coccinelle",
+      "4952f35f0545 fs: Make wbc_to_tag() inline and use it in fs.",
+      "4db47b252190 ext4: Use folio_next_pos()",
+      "6640d552185f fs: ext4: fix uninitialized symbols",
+      "7da5565cab40 ext4: make ext4_es_lookup_extent() pass out the extent seq counter",
+      "07c440e8da8f ext4: pass out extent seq counter when mapping blocks",
+      "003a6607304d fs: push list presence check into inode_io_list_del()",
+      "dac092195b6a ext4: rename EXT4_GET_BLOCKS_PRE_IO",
+      "a9272422316f ext4: cleanup for ext4_map_blocks",
+      "5835b1339e33 ext4: remove page offset calculation in ext4_block_zero_page_range()",
+      "b73f45a32420 ext4: remove page offset calculation in ext4_block_truncate_page()",
+      "d37a7ddd3a38 ext4: make ext4_punch_hole() support large block size",
+      "8611e608a8fa ext4: introduce s_min_folio_order for future BS > PS support",
+      "125d1f6a5a77 ext4: add EXT4_LBLK_TO_B macro for logical block to bytes conversion",
+      "bff6235d623a ext4: support large block size in ext4_block_write_begin()"
+    ],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## fs/ext4/inode.c\nfs/ext4/inode.c:2866:30: error: too many arguments to function \u2018ext4_meta_trans_blocks\u2019; expected 3, have 4"
   },
   {
     "series": "6.18",
@@ -1162,7 +1357,32 @@
       "28fe58ce6a20 btrfs: add unlikely to unexpected error case in extent_writepages()",
       "b917a94a4c08 btrfs: consistently round up or down i_size in btrfs_truncate()",
       "3b7c0c20b720 btrfs: avoid multiple i_size rounding in btrfs_truncate()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-90256"
+    ],
+    "kev": false,
+    "upstream": "2b66c83ff1751d6bd3201b3017206262ab46dc05",
+    "subject": "Bluetooth: L2CAP: use proto_lock for l2cap_data to fix l2cap_disconn_ind",
+    "verdict": "needs-backport",
+    "files": [
+      "net/bluetooth/l2cap_core.c"
+    ],
+    "prerequisites": [
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
+      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
+      "728a3d128325 Bluetooth: L2CAP: CoC: Disconnect if received packet size exceeds MPS",
+      "4f42363c814f Bluetooth: l2cap: fix MPS check in l2cap_ecred_reconf_req",
+      "91b5a598b528 Bluetooth: l2cap: defer conn param update to avoid conn->lock/hdev->lock inversion",
+      "bea06c7c1b83 Bluetooth: Add SPDX id lines to some source files"
+    ],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## net/bluetooth/l2cap_core.c\nnet/bluetooth/l2cap_core.c:1850:24: error: \u2018struct hci_conn\u2019 has no member named \u2018proto_lock\u2019\nnet/bluetooth/l2cap_core.c:1852:26: error: \u2018struct hci_conn\u2019 has no member named \u2018proto_lock\u2019\nnet/bluetooth/l2cap_core.c:7233:24: error: \u2018struct hci_conn\u2019 has no member named \u2018proto_lock\u2019\nnet/bluetooth/l2cap_core.c:7236:26: error: \u2018struct hci_conn\u2019 has no member named \u2018proto_lock\u2019\nnet/bluetooth/l2cap_core.c:7632:24: error: \u2018struct hci_conn\u2019 has no member named \u2018proto_lock\u2019\nnet/bluetooth/l2cap_core.c:7636:26: error: \u2018struct hci_conn\u2019 has no member named \u2018proto_lock\u2019"
   },
   {
     "series": "6.18",
@@ -1182,7 +1402,9 @@
       "06ac47065819 sctp: Remove unused declaration sctp_auth_init_hmacs()",
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
       "9addea5d44b6 net: use get_random_u{16,32,64}() where appropriate"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1199,7 +1421,9 @@
     "prerequisites": [
       "8ef78cae98b5 fbdev: Wrap user-invoked calls to fb_blank() in helper",
       "d15d51fb26e8 fbdev: bound mode sysfs output to the sysfs buffer"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1232,7 +1456,9 @@
       "30ec0ec09bf5 bpf: support instructions arrays with constants blinding",
       "493d9e0d6083 bpf, x86: add support for indirect jumps",
       "e5d2e34e726b bpf: Add missing checks to avoid verbose verifier log"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1264,7 +1490,9 @@
       "6fb421bd07f1 netfilter: nft_ct: expectation timeouts are passed in milliseconds",
       "397c8300972f netfilter: nf_conntrack_helper: cap maximum number of expectation at helper registration",
       "26fb502773bc netfilter: nf_conntrack_helper: do not hash by tuple"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1292,7 +1520,9 @@
       "1f7dd03a88a8 ksmbd: fix malformed procfs status output",
       "fe4dc5987d7d ksmbd: expose connection runtime state in procfs",
       "fd8c97d7c1cc ksmbd: implement the command sequence window"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1321,7 +1551,9 @@
       "772e4c8f2555 ntfs: remove empty EA attribute pair",
       "41e1cf4ec10d ntfs: rewrite EA stream before updating metadata",
       "7ed0028126b5 ntfs: fix resident conversion in ntfs_new_attr_flags"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1351,7 +1583,9 @@
       "dacc18029ef6 ntfs: fix uninitialized variable in ntfs_map_runlist_nolock",
       "de08874bae7d ntfs: match ntfs_resident_attr_min_value_length with $AttrDef",
       "c37d9e68b676 ntfs: fix variable dereferenced before check ni in ntfs_attr_open()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1378,7 +1612,9 @@
       "ec4f061f2219 ntfs: detect mapping-pairs LCN accumulator overflow",
       "8bed376124ab ntfs: harden runlist realloc size calculations",
       "19cac7902a8a ntfs: bound the free-cluster bitmap scan to the volume"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1409,7 +1645,25 @@
       "e80e39f25567 nvme-core: fix parameter name in comment",
       "3f150f0f010f nvme-multipath: put module reference when delayed removal work is canceled",
       "bddb911d28d4 nvme: skip trace completion for host path errors"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-90098"
+    ],
+    "kev": false,
+    "upstream": "b62793a7baeea9cf20209c9fd2e333311aaf3b8d",
+    "subject": "net: sparx5: fix sleep in atomic context in MAC table access",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c"
+    ],
+    "prerequisites": [],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c\ndrivers/net/ethernet/microchip/sparx5/sparx5_netdev.c:257:10: error: \u2018const struct net_device_ops\u2019 has no member named \u2018ndo_set_rx_mode_async\u2019; did you mean \u2018ndo_set_rx_mode\u2019?\ndrivers/net/ethernet/microchip/sparx5/sparx5_netdev.c:257:35: error: initialization of \u2018netdev_features_t (*)(struct sk_buff *, struct net_device *, netdev_features_t)\u2019 {aka \u2018long long unsigned int (*)(struct sk_buff *, struct net_device *, long long unsigned int)\u2019} from incompatible pointer type \u2018int (*)(struct net_device *, struct netdev_hw_addr_list *, struct netdev_hw_addr_list *)\u2019 [-Wincompatible-pointer-types]"
   },
   {
     "series": "6.18",
@@ -1436,7 +1690,9 @@
       "ebdc1afb1e26 smb/client: mark missing nlink values as unknown",
       "9437f2113b60 smb/client: preserve open info type across compound queries",
       "43549eb84266 smb/client: decode reparse metadata using its payload type"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1466,7 +1722,9 @@
       "2c6f81d58741 mm/migrate_device: fix pgtable leak in migrate_vma_insert_huge_pmd_page",
       "13fe5736560d mm/migrate_device: cleanup up PMD Checks and warnings",
       "9bde2240ec35 mm: migrate_device: use walk_page_range_vma() in migrate_vma_collect()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1496,7 +1754,9 @@
       "6b83b03c07fb smb: client: fix integer underflow in receive_encrypted_read()",
       "2c8f4742bb76 netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
       "81a874233c30 smb: client: avoid integer overflow in SMB2 READ length check"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1526,7 +1786,9 @@
       "6b83b03c07fb smb: client: fix integer underflow in receive_encrypted_read()",
       "2c8f4742bb76 netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
       "81a874233c30 smb: client: avoid integer overflow in SMB2 READ length check"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1558,7 +1820,9 @@
       "fa746e23d109 netfs: Fix kdoc warning",
       "41376400c471 netfs: Replace wb_lock with a bit lock for asynchronicity",
       "949eb95d5bcc cachefiles,netfs: sunset ondemand mode"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1593,7 +1857,37 @@
       "464b913993a1 smb: move FILE_SYSTEM_SIZE_INFO to common/fscc.h",
       "5003ad718af7 smb: move create_durable_reconn to common/smb2pdu.h",
       "e4442b2e95ba ksmbd: implement error handling for STATUS_INFO_LENGTH_MISMATCH in smb server"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99109"
+    ],
+    "kev": false,
+    "upstream": "4aa2c106aef4bf3dfd97c30842db0767b26e8428",
+    "subject": "smb: client: reject SetEA requests that do not fit the request buffer",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/cifssmb.c"
+    ],
+    "prerequisites": [
+      "d8ac9879182a smb: move SMB_NEGOTIATE_REQ to common/smb2pdu.h",
+      "464b913993a1 smb: move FILE_SYSTEM_SIZE_INFO to common/fscc.h",
+      "83bfbd0bb902 cifs: Remove the RFC1002 header from smb_hdr",
+      "28405cb5b2fd cifs: Replace SendReceiveBlockingLock() with SendReceive() plus flags",
+      "87fba18abbb8 cifs: Remove the server pointer from smb_message",
+      "f80ac7eda1cf cifs: Add a tracepoint to log EIO errors",
+      "ed1e53796f51 cifs: SMB1 split: Split SMB1 protocol defs into smb1pdu.h",
+      "88f7d7e32d9e cifs: SMB1 split: connect.c",
+      "2c8f4742bb76 netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+      "3ecad5de621e smb/client: allow FS_IOC_SETFLAGS to clear compression",
+      "d2c46c9f7a9b cifs: Remove CIFSSMBSetPathInfoFB() fallback function"
+    ],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:6302:32: error: \u2018in_len\u2019 undeclared (first use in this function)"
   },
   {
     "series": "6.18",
@@ -1624,7 +1918,9 @@
       "10dd1eaa80a5 drm/pagemap: Disable device-to-device migration",
       "12b2285bf3d1 mm/zone_device: reinitialize large zone device private folios",
       "1a3c0049b3f5 Revert \"drm/pagemap: Disable device-to-device migration\""
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1654,7 +1950,9 @@
       "deffb85478a4 udp: Don't pass udptable to IPv6 socket lookup functions.",
       "14ce9a47c5b7 udp: Don't pass proto to __udp4_lib_rcv() and __udp6_lib_rcv().",
       "fb37aea2a00e net: change sk_filter_trim_cap() to return a drop_reason by value"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1687,7 +1985,9 @@
       "168479c9bf07 thunderbolt: test: Release third DP tunnel",
       "5f40cba7d4fa thunderbolt: Assert downstream port reset on shutdown",
       "e8158c8a6a23 thunderbolt: Use min() for the DMA path credit cap"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1715,7 +2015,9 @@
       "2274d8cb4912 RDMA/core: Make a new module for the uverbs components needed by drivers",
       "1a76adc9b38c RDMA/core: Move ucaps into ib_uverbs_support.ko",
       "60a42d510113 RDMA/uverbs: Guard legacy bundles without method_elm"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1746,7 +2048,9 @@
       "464b913993a1 smb: move FILE_SYSTEM_SIZE_INFO to common/fscc.h",
       "5003ad718af7 smb: move create_durable_reconn to common/smb2pdu.h",
       "e4442b2e95ba ksmbd: implement error handling for STATUS_INFO_LENGTH_MISMATCH in smb server"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1776,7 +2080,9 @@
       "10dd1eaa80a5 drm/pagemap: Disable device-to-device migration",
       "12b2285bf3d1 mm/zone_device: reinitialize large zone device private folios",
       "1a3c0049b3f5 Revert \"drm/pagemap: Disable device-to-device migration\""
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1807,7 +2113,9 @@
       "afab3f61aeb1 smb: client: add tracepoint for local lock conflicts",
       "4c46b677f352 smb: client: add oplock level to smb3_open_done tracepoint",
       "abce65948c2c smb: client: add tracepoints for deferred handle caching"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1839,7 +2147,9 @@
       "b47a6e4d6629 wifi: cfg80211: add start/stop proximity detection commands",
       "4bb6e58bc29a wifi: cfg80211: add LTF keyseed support for secure ranging",
       "1a15bf9708ba wifi: cfg80211: remove 5/10 MHz channel support"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1869,7 +2179,9 @@
       "27e9b326b674 wifi: mac80211: support NAN stations",
       "915c1d23e2e3 wifi: mac80211: enable MLO support for 4-address mode interfaces",
       "4bcf276e4a50 wifi: mac80211: Allow setting MAC address on interface creation"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1888,7 +2200,9 @@
       "b20ee9aee877 hwmon: (asus_rog_ryujin) Add per-device configuration",
       "cd258aca0dc4 hwmon: (asus_rog_ryujin) Add ROG Ryujin III support",
       "21b21a8c202a hwmon: (asus_rog_ryujin) Add ROG Ryujin III White Edition"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1906,7 +2220,9 @@
       "f80ac7eda1cf cifs: Add a tracepoint to log EIO errors",
       "dce002f685e0 smb: client: preserve leading slash for POSIX absolute symlink targets",
       "cd2b2b57921d smb: client: fix WSL reparse point uid/gid override"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1944,7 +2260,9 @@
       "d7edd3892d97 smb: move some duplicate struct definitions to common/fscc.h",
       "464b913993a1 smb: move FILE_SYSTEM_SIZE_INFO to common/fscc.h",
       "5003ad718af7 smb: move create_durable_reconn to common/smb2pdu.h"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1974,7 +2292,9 @@
       "6911308d7d11 net: stmmac: convert to phylink-managed Wake-on-Lan",
       "d65cb2e27e6e net: stmmac: convert to phylink managed WoL PHY speed",
       "792000fbcd0c net: stmmac: Move subsecond increment configuration in dedicated helper"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -1998,7 +2318,9 @@
       "8f921f610054 netlink: update outdated comment",
       "390bf43b7788 netlink: convert to getsockopt_iter",
       "ced18ba79509 netlink: drop unneeded semicolon"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2015,7 +2337,9 @@
     ],
     "prerequisites": [
       "ea25e03da7a7 codel: annotate data-races in codel_dump_stats()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2041,7 +2365,9 @@
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
       "1113a6d6d5d1 xfs: remove the i_ino field in struct xfs_inode",
       "91e27ed8a387 lockref: tidy up dead count handling"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2074,7 +2400,9 @@
       "9315a1e2bdf1 drm/amdkfd: fix redundant MQD iterations in GFX v12.1",
       "a789761de305 amd/amdkfd: Add kfd_ioctl_profiler to contain profiler kernel driver changes",
       "8cd2ea7bab77 drm/amdkfd: Guard m->cp_hqd_eop_control setting by q->eop_ring_buffer_size"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2105,7 +2433,9 @@
       "698684953ef5 drm/amdkfd: Move mqd_on_vram out of v9 mqd manager",
       "c0cae3566186 drm/amdkfd: Guard m->cp_hqd_eop_control setting by q->eop_ring_buffer_size",
       "6c2abd0ec09e drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2136,7 +2466,9 @@
       "a02327413acc bpf: Remove inclusions of crypto/sha1.h",
       "18474aed5d0d bpf: Avoid -Wflex-array-members-not-at-end warnings",
       "57b23c0f612d bpf: Retire rcu_trace_implies_rcu_gp()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2157,7 +2489,33 @@
       "df04373b0dab eth fbnic: Add debugfs hooks for tx/rx rings",
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
       "323bbfcf1ef8 Convert 'alloc_flex' family to use the new default GFP_KERNEL argument"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-98449"
+    ],
+    "kev": false,
+    "upstream": "8f6f8a48399f82f4a83f7b9f25b9707e0062a4f9",
+    "subject": "smb: client: delete compound mids on send failure before unlock",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/transport.c"
+    ],
+    "prerequisites": [
+      "62432a3f5145 cifs: Clean up some places where an extra kvec[] was required for rfc1002",
+      "28405cb5b2fd cifs: Replace SendReceiveBlockingLock() with SendReceive() plus flags",
+      "6a86a4cc281a cifs: Fix specification of function pointers",
+      "87fba18abbb8 cifs: Remove the server pointer from smb_message",
+      "f80ac7eda1cf cifs: Add a tracepoint to log EIO errors",
+      "8a848efd482b cifs: SMB1 split: Adjust #includes",
+      "81a874233c30 smb: client: avoid integer overflow in SMB2 READ length check"
+    ],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## fs/smb/client/transport.c\nfs/smb/client/transport.c:980:36: error: passing argument 1 of \u2018delete_mid\u2019 from incompatible pointer type [-Wincompatible-pointer-types]\nfs/smb/client/transport.c:980:25: error: too many arguments to function \u2018delete_mid\u2019; expected 1, have 2"
   },
   {
     "series": "6.18",
@@ -2187,7 +2545,9 @@
       "493d9e0d6083 bpf, x86: add support for indirect jumps",
       "e5d2e34e726b bpf: Add missing checks to avoid verbose verifier log",
       "4f7bc83b9837 bpf: verifier: Move desc->imm setup to sort_kfunc_descs_by_imm_off()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2217,7 +2577,9 @@
       "493d9e0d6083 bpf, x86: add support for indirect jumps",
       "e5d2e34e726b bpf: Add missing checks to avoid verbose verifier log",
       "4f7bc83b9837 bpf: verifier: Move desc->imm setup to sort_kfunc_descs_by_imm_off()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2247,7 +2609,9 @@
       "11f1d49122ec serial: core: use uart_iotype_*() to simplify uart_match_port()",
       "86305190f307 serial: uniformize serial port I/O infos display",
       "44b374622a3f serial: core: add new I/O type for SPI and I2C bus devices"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2277,7 +2641,9 @@
       "ea4702b1708e slab: Remove folio references in memcg_slab_post_charge()",
       "09fa19e2f3a5 slab: Remove folio references in slab alloc/free",
       "f9395bf5db45 slab: Remove folio references from ___kmalloc_large_node()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2309,7 +2675,9 @@
       "c656a3b75c31 net: wangxun: add reinit parameter to wx->do_reset callback",
       "c023e9769de9 net: wangxun: implement soft quiesce for PCIe error recovery",
       "e73e4d187a1f net: wangxun: add pcie error handler"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2341,7 +2709,9 @@
       "e20dfbad8aab net: fix napi_consume_skb() with alien skbs",
       "290fc0be09e2 net: Preserve metadata on pskb_expand_head",
       "8da7bea7db69 xsk: add indirect call for xsk_destruct_skb"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2371,7 +2741,9 @@
       "a02327413acc bpf: Remove inclusions of crypto/sha1.h",
       "18474aed5d0d bpf: Avoid -Wflex-array-members-not-at-end warnings",
       "57b23c0f612d bpf: Retire rcu_trace_implies_rcu_gp()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2402,7 +2774,9 @@
       "e80e39f25567 nvme-core: fix parameter name in comment",
       "3f150f0f010f nvme-multipath: put module reference when delayed removal work is canceled",
       "bddb911d28d4 nvme: skip trace completion for host path errors"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2433,7 +2807,9 @@
       "1d1722e52fcd KVM: SVM: Don't allow L1 intercepts for instructions not advertised",
       "db5e82496492 KVM: SVM: Virtualize and advertise support for ERAPS",
       "8312f1b9dd71 KVM: SVM: Don't set GIF when clearing EFER.SVME"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2463,7 +2839,9 @@
       "8312f1b9dd71 KVM: SVM: Don't set GIF when clearing EFER.SVME",
       "217463aa329e KVM: SVM: Add a helper to detect VMRUN failures",
       "2450c9774510 KVM: SVM: Open code handling of unexpected exits in svm_invoke_exit_handler()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2488,7 +2866,9 @@
       "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
       "0d12d26701b0 octeontx2-pf: cn20k: Add TC rules support",
       "49c5ad3cd518 octeontx2-pf: link RQ page pools to netdev for Netlink stats"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2520,7 +2900,9 @@
       "e0940c672ab4 bpf: Document cfi_stubs and owner fields in struct bpf_struct_ops",
       "373f2f44c300 bpf,x86: adjust the \"jmp\" mode for bpf trampoline",
       "ae4a3160d19c bpf: specify the old and new poke_type for bpf_arch_text_poke"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2557,7 +2939,9 @@
       "f4a66cf1cb14 bpf: arm64: Add support for indirect jumps",
       "c3d17464f026 s390: Remove KMSG_COMPONENT macro",
       "47c9214dcbea bpf: fix the usage of BPF_TRAMP_F_SKIP_FRAME"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2587,7 +2971,9 @@
       "314ef7f7249b smb: client: Remove unnecessary selection of CRYPTO_ECB",
       "3e7d63037a2b smb: client: add support for O_TMPFILE",
       "17d912d54f23 smb: client: fix (remove) drop_dir_cache module parameter"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2617,7 +3003,9 @@
       "314ef7f7249b smb: client: Remove unnecessary selection of CRYPTO_ECB",
       "3e7d63037a2b smb: client: add support for O_TMPFILE",
       "17d912d54f23 smb: client: fix (remove) drop_dir_cache module parameter"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2647,7 +3035,9 @@
       "cb33f8814c4a cpuset: move update_domain_attr_tree to cpuset_v1.c",
       "6e1d31ce495c cpuset: separate generate_sched_domains for v1 and v2",
       "7cc1720589d8 cpuset: remove v1-specific code from generate_sched_domains"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2664,7 +3054,9 @@
     "prerequisites": [
       "57b23c0f612d bpf: Retire rcu_trace_implies_rcu_gp()",
       "47f4f695cec1 bpf: Factor out __do_call_rcu_ttrace()"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2693,7 +3085,9 @@
       "9a77c86ec8f5 drm/amd/display: Test MST coverage gaps",
       "4d6eabd9bf7c drm/amd/display: Replace amdgpu_dm_kunit_helpers.h with dm_helpers.h",
       "7cc88c0d5679 drm/amd/display: Bounds-check connector->index in dm_dp_mst_get_modes"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2723,7 +3117,9 @@
       "fcb8ada12872 futex: Tell kmemleak we're not leaking __futex_queues",
       "221b62e97811 futex: Clean up the redundant exit/exec functions",
       "3a2c4d55e32a treewide: refresh kmalloc_obj() conversions"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2753,7 +3149,9 @@
       "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
       "32a92f8c8932 Convert more 'alloc_obj' cases to default GFP_KERNEL arguments",
       "8dd0e6807b54 btrfs: remove unnecessary transaction abort in the received subvol ioctl"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2767,7 +3165,9 @@
     "files": [
       "rust/kernel/irq/request.rs"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2791,7 +3191,9 @@
       "e5342fe2c1bb riscv: ptrace: cfi: expand \"SS\" references to \"shadow stack\" in uapi headers",
       "e3573f739e3d riscv/ptrace: Use USER_REGSET_NOTE_TYPE for REGSET_CFI",
       "adadf6df0bd5 riscv: ptrace: reject CFI regset access when extensions are absent"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2809,7 +3211,9 @@
     "prerequisites": [
       "f6e8dc9edf96 drm: include drm_print.h where needed",
       "19e2815babd4 drm/vc4: Use devm_request_irq() for automatic cleanup"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2827,7 +3231,9 @@
       "3826d5dd0699 ipc: enable is_ns_init_id() assertions",
       "7229d74e5e8c ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure",
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.18",
@@ -2857,7 +3263,9 @@
       "4bd8b5f8bcb5 drm/amd/display: Enable DAC in DCE link encoder",
       "a4f01bf729b2 drm/amd/display: Refactor and fix link_dpms I2C",
       "40989bf0e7d1 drm/amd/display: Refactor and fix link_dpms info"
-    ]
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "7.3",
@@ -2871,7 +3279,9 @@
     "files": [
       "fs/smb/client/cached_dir.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "7.3",
@@ -2885,7 +3295,9 @@
     "files": [
       "drivers/net/wireguard/device.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "7.3",
@@ -2899,7 +3311,9 @@
     "files": [
       "drivers/net/wireguard/device.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "7.3",
@@ -2913,7 +3327,9 @@
     "files": [
       "drivers/net/wireguard/device.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "7.3",
@@ -2927,7 +3343,9 @@
     "files": [
       "drivers/net/wireguard/device.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "7.3",
@@ -2941,7 +3359,9 @@
     "files": [
       "mm/khugepaged.c"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "7.3",
@@ -2955,6 +3375,8 @@
     "files": [
       "rust/kernel/irq/request.rs"
     ],
-    "prerequisites": []
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   }
 ]
