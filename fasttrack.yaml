@@ -1,8 +1,10 @@
 # ksec-fasttrack configuration
 
-# Kernel series to track: LTS and trunk.
+# Kernel series to track: the older LTS kernels, and the newest stable.
 series:
   - "6.18"
+  - "6.12"
+  - "6.1"
   - "7.3"
 
 # Upstream sources filled by `fasttrack sync` (git-ignored; cached between CI runs).
@@ -33,7 +35,7 @@ queue_mode: cve
 # other arch/ trees is reported as other-arch and never backported.
 arches: [arm, arm64, riscv, x86]
 
-# Older CVE records cannot apply to 6.18/7.3 and slow the scan.
+# Older CVE records slow the scan; stable has carried those fixes for years.
 cve_since_year: 2024
 
 # Before a Claude backport, look for one the author posted to stable@vger.kernel.org.
