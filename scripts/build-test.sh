@@ -82,17 +82,32 @@ worker() {
 			echo "$name: error (prepare failed)"; tail -3 "$log" | sed 's/^/    /'
 			echo "| $name | error | prepare failed |" >>"$rows"; fail=1; continue
 		fi
-		# A job cancelled in `git am` leaves its state behind.
-		git -C "$src" am --abort >/dev/null 2>&1
+		# A job killed in `git am` leaves its state behind; `am --abort` does not always clear it.
+		rm -rf "$(git -C "$src" rev-parse --git-path rebase-apply)"
 		git -C "$src" checkout -qf --detach "$base" && git -C "$src" clean -qfd
-		# A cve/ backport goes on top of patches/<series>/: up to its own place
-		# in the set, or the whole set when it is not in it yet.
-		ver=${d%/}; ver=${ver##*/}
+		mapfile -t series < <(grep -v -e '^#' -e '^$' "$d/series.conf")
+		patches=("${series[@]/#/$root/$d/}")
+		# A cve/ backport is tested as patches/<series>/ uses it: the set up to its
+		# place, then the set's copy of it (a duplicate prerequisite is dropped there).
+		# Not in the set: on top of the whole set, or skipped when the set has the fix.
+		ver=${d%/}; ver=${ver##*/} prefix=() own=()
 		if [[ $d == cve/* ]] && [ "$(cat "patches/$ver/base" 2>/dev/null)" = "$base" ]; then
-			mapfile -t prefix < <(for p in $(grep -v -e '^#' -e '^$' "patches/$ver/series.conf"); do
-				grep -q "^X-Fasttrack-Backport: cve/${name%/}$" "patches/$ver/$p" && break
-				echo "$root/patches/$ver/$p"
-			done)
+			for p in $(grep -v -e '^#' -e '^$' "patches/$ver/series.conf"); do
+				if grep -q "^X-Fasttrack-Backport: cve/${name%/}$" "patches/$ver/$p"; then
+					own+=("$root/patches/$ver/$p")
+				elif [ ${#own[@]} -eq 0 ]; then
+					prefix+=("$root/patches/$ver/$p")
+				fi
+			done
+			if [ ${#own[@]} -gt 0 ]; then
+				patches=("${own[@]}")
+			else
+				dup=$(sed -n 's/^X-Fasttrack-Upstream: //p' "${patches[@]}" | grep -xFf - <(sed -n 's/^X-Fasttrack-Upstream: //p' "${prefix[@]}") | head -1)
+				if [ -n "$dup" ]; then
+					echo "$name: skipped (patches/$ver has ${dup:0:12})"
+					echo "| $name | skipped | patches/$ver has ${dup:0:12} |" >>"$rows"; continue
+				fi
+			fi
 			if [ ${#prefix[@]} -gt 0 ] &&
 				! git -C "$src" -c user.name=t -c user.email=t@t am -q "${prefix[@]}" >>"$log" 2>&1; then
 				git -C "$src" am --abort 2>/dev/null
@@ -100,8 +115,6 @@ worker() {
 				echo "| $name | error | patches/$ver does not apply |" >>"$rows"; fail=1; continue
 			fi
 		fi
-		mapfile -t series < <(grep -v -e '^#' -e '^$' "$d/series.conf")
-		patches=("${series[@]/#/$root/$d/}")
 		# Changed .c files, without arch/ trees of other architectures.
 		mapfile -t files < <(sed -n 's|^+++ b/\(.*\.c\)$|\1|p' "${patches[@]}" | sort -u |
 			grep -E -v "^(arch|tools)/" ; sed -n 's|^+++ b/\(arch/'"$arch"'/.*\.c\)$|\1|p' "${patches[@]}" | sort -u)
