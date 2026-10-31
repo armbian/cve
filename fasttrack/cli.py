@@ -220,9 +220,11 @@ def cmd_cve(args) -> int:
             # "made" orders backports in patches/<series>/: a later one is built on the earlier ones.
             made = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()) \
                 if any(c.verdict == incident.CLAUDE for c in res.patches) else None
-            emit.write_patch_dir(out / "cve" / cid / res.series, res.series, res.head, res.head_version,
-                                 res.patches, {"incident": cid, "outcome": res.outcome,
-                                               "fixed_in": res.fixed_in, "made": made})
+            # An open result keeps an earlier backport: retired only by prune or a new one.
+            if res.patches or res.outcome not in ("unpatched", "partial"):
+                emit.write_patch_dir(out / "cve" / cid / res.series, res.series, res.head, res.head_version,
+                                     res.patches, {"incident": cid, "outcome": res.outcome,
+                                                   "fixed_in": res.fixed_in, "made": made})
             resolutions.append(res)
             print(f"{cid} {res.series} @ {res.head_version}: {res.outcome}"
                   + (f" ({len(res.patches)} patch(es))" if res.patches else "")

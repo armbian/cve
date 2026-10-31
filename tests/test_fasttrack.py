@@ -396,6 +396,13 @@ git -C tree -c user.name=c -c user.email=c@c commit -qam "baz: fix race" -m "com
         self.assertEqual(self._cve_outcome(), "patched-needs-review")
         self.assertTrue(tree.is_dir())
 
+    def test_open_result_keeps_backport(self):
+        d = self.out / "cve" / "CVE-2026-0003" / "6.18"
+        d.mkdir(parents=True)
+        (d / "fasttrack.json").write_text("{}")
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--package"])
+        self.assertTrue((d / "fasttrack.json").exists())
+
     def test_work_package_on_patch_set(self):
         cli.main(["--config", str(self.cfg), "run"])
         cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--package"])
