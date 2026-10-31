@@ -23,6 +23,17 @@ mkdir -p "$work/logs"
 kmake() { make -s -C "$src" O="$out" ARCH="$arch" CROSS_COMPILE="$cross" -j"$(nproc)" "$@"; }
 warnings() { grep -c ': warning:' "$1" || true; }
 
+# Object that compiles $1: the file itself, or the .c in its directory that
+# includes it (e.g. kernel/sched/ext.c in build_policy.c).
+target() {
+	local dir=${1%/*} name=${1##*/} inc
+	if ! grep -qsw "${name%.c}.o" "$src/$dir/Makefile" "$src/$dir/Kbuild"; then
+		inc=$(grep -lsE "^#[[:space:]]*include \"$name\"" "$src/$dir"/*.c | head -1)
+		[ -n "$inc" ] && { echo "$dir/${inc##*/}" | sed 's/\.c$/.o/'; return; }
+	fi
+	echo "${1%.c}.o"
+}
+
 prepare() { # $1 = base commit
 	out=$work/out-$arch-${1:0:12}
 	[ -f "$out/.prepared" ] && return 0
@@ -52,11 +63,13 @@ for d in $(for d in "$@"; do [ -f "$d/base" ] && echo "$(cat "$d/base") ${d%/}";
 	patches=("${series[@]/#/$root/$d/}")
 	# Changed .c files, without arch/ trees of other architectures.
 	mapfile -t files < <(sed -n 's|^+++ b/\(.*\.c\)$|\1|p' "${patches[@]}" | sort -u |
-		grep -E -v "^arch/" ; sed -n 's|^+++ b/\(arch/'"$arch"'/.*\.c\)$|\1|p' "${patches[@]}" | sort -u)
-	declare -A before=()
+		grep -E -v "^(arch|tools)/" ; sed -n 's|^+++ b/\(arch/'"$arch"'/.*\.c\)$|\1|p' "${patches[@]}" | sort -u)
+	declare -A before=() obj=() broken=()
 	for f in "${files[@]}"; do
+		obj[$f]=$(target "$f")
 		[ -f "$src/$f" ] || continue
-		kmake "${f%.c}.o" >"$log.base" 2>&1
+		# A file that does not build alone at base cannot be tested.
+		kmake "${obj[$f]}" >"$log.base" 2>&1 || broken[$f]=1
 		before[$f]=$(warnings "$log.base")
 	done
 	if ! git -C "$src" -c user.name=t -c user.email=t@t am -q "${patches[@]}" >>"$log" 2>&1; then
@@ -65,7 +78,8 @@ for d in $(for d in "$@"; do [ -f "$d/base" ] && echo "$(cat "$d/base") ${d%/}";
 	fi
 	result=ok notes=() built=0
 	for f in "${files[@]}"; do
-		o=${f%.c}.o
+		o=${obj[$f]}
+		[ -n "${broken[$f]:-}" ] && { notes+=("$f: does not build alone at base"); continue; }
 		rm -f "$out/$o"
 		if ! kmake "$o" >"$log.one" 2>&1; then
 			result=error notes+=("$f: error")
@@ -76,7 +90,7 @@ for d in $(for d in "$@"; do [ -f "$d/base" ] && echo "$(cat "$d/base") ${d%/}";
 		fi
 		{ echo "## $f"; cat "$log.one"; } >>"$log"
 	done
-	unset before
+	unset before obj broken
 	[ "$built" -eq 0 ] && [ $result = ok ] && result=skipped notes+=("no .c file built for $arch")
 	[ $result = error ] && fail=1
 	echo "$name: $result ${notes[*]}"
