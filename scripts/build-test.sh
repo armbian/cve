@@ -37,7 +37,7 @@ target() {
 prepare() { # $1 = base commit
 	out=$work/out-$arch-${1:0:12}
 	[ -f "$out/.prepared" ] && return 0
-	echo "== prepare $arch at ${1:0:12}"
+	echo "== prepare $arch at ${1:0:12}" >&3
 	git -C "$src" fetch -q --depth 1 "${LINUX_URL:-https://github.com/armbian/linux.git}" "$1" &&
 		git -C "$src" checkout -qf --detach "$1" &&
 		kmake allmodconfig &&
@@ -45,13 +45,17 @@ prepare() { # $1 = base commit
 		kmake olddefconfig && kmake prepare && touch "$out/.prepared"
 }
 
+exec 3>&1	# progress to the job log; build output goes to logs/
 fail=0
+n=0 total=$#
 echo "| Series | $arch | Notes |" >>"$summary"
 echo "|---|---|---|" >>"$summary"
 # Group by base so each tree is prepared once.
 for d in $(for d in "$@"; do [ -f "$d/base" ] && echo "$(cat "$d/base") ${d%/}"; done | sort | cut -d' ' -f2); do
 	base=$(cat "$d/base")
 	name=${d#cve/}
+	n=$((n + 1))
+	echo "[$n/$total] $name ..."
 	log=$work/logs/${name//\//_}.log
 	: >"$log"
 	if ! prepare "$base" >>"$log" 2>&1; then
