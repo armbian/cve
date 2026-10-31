@@ -133,3 +133,31 @@ def sync(data: Path, series: list[str], urls: dict | None = None, shallow: bool 
     _download(u["releases"], data / "releases.json")
     _download(u["kev"], data / "kev.json")
     log(f"==> done: {data}")
+
+
+def fingerprint(series: list[str], urls: dict | None = None, extra: list[Path] = ()) -> str:
+    """Hash of every input that can change a run's result, without cloning:
+    vulns and stable-queue heads, the stable branch heads, the KEV and release
+    feeds, and the tool's own files (``extra``). Mainline master is left out:
+    it moves all the time, and a run reads it only for commits CVE records name."""
+    import hashlib
+
+    u = {**DEFAULTS, **(urls or {})}
+    h = hashlib.sha256()
+    heads = [(u["vulns"], "HEAD"), (u["stable_queue"], "HEAD")] + \
+            [(u["linux"], f"refs/heads/linux-{s}.y") for s in series]
+    for url, ref in heads:
+        out = subprocess.run(["git", "ls-remote", url, ref], capture_output=True, text=True, timeout=120)
+        if out.returncode != 0:
+            raise RuntimeError(f"git ls-remote {url} {ref}: {out.stderr.strip()}")
+        h.update(f"{url} {out.stdout.split()[0] if out.stdout else '-'}\n".encode())
+    for url in (u["kev"], u["releases"]):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "ksec-fasttrack"})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                h.update(hashlib.sha256(r.read()).digest())
+        except Exception as e:  # a feed that is down does not block the check
+            log.warning("%s: %s", url, e)
+    for f in sorted(Path(p) for p in extra):
+        h.update(f.as_posix().encode() + f.read_bytes())
+    return h.hexdigest()

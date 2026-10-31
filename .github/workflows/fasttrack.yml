@@ -1,13 +1,14 @@
 name: kernel-security-fasttrack
 
-# Hourly on a GitHub-hosted runner: pull sources (cached), gather + verify patches,
+# Every 15 minutes a small check hashes the upstream heads and feeds. Only a new
+# hash starts the full run: pull sources (cached), gather + verify patches,
 # drop what stable has absorbed, commit patches/ and the reports to main.
 # On demand: resolve specific incidents, optionally letting Claude Code backport
 # what does not apply; those arrive as a PR for review.
 
 on:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "*/15 * * * *"
   workflow_dispatch:
     inputs:
       incidents:
@@ -35,7 +36,35 @@ permissions:
   issues: write
 
 jobs:
+  # A run is due when the fingerprint is new (no cache entry for it yet), or on demand.
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      due: ${{ steps.due.outputs.due }}
+      fingerprint: ${{ steps.fp.outputs.fingerprint }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: fp
+        run: |
+          python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
+          echo "fingerprint=$(python3 -m fasttrack.cli fingerprint)" >> "$GITHUB_OUTPUT"
+      - id: seen
+        uses: actions/cache/restore@v4
+        with:
+          path: .fingerprint
+          key: fingerprint-${{ steps.fp.outputs.fingerprint }}
+          lookup-only: true
+      - id: due
+        run: |
+          due=${{ github.event_name != 'schedule' || steps.seen.outputs.cache-hit != 'true' }}
+          echo "due=$due" >> "$GITHUB_OUTPUT"
+          [ "$due" = true ] && echo "Upstream changed: full run." || echo "No upstream change: nothing to do."
+
   fasttrack:
+    needs: check
+    if: needs.check.outputs.due == 'true'
     # Repo variable FASTTRACK_RUNNER picks a self-hosted runner (label); default GitHub-hosted.
     # Use a fixed runner: data/ (5 GB) then stays on disk. A random one downloads it again.
     runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
@@ -192,6 +221,15 @@ jobs:
             work/
             !work/*/*/tree
 
+      # Mark this fingerprint as done, so the next check skips until upstream moves.
+      - name: Record fingerprint
+        run: echo "${{ needs.check.outputs.fingerprint }}" > .fingerprint
+
+      - uses: actions/cache/save@v4
+        with:
+          path: .fingerprint
+          key: fingerprint-${{ needs.check.outputs.fingerprint }}
+
       - name: Raise actively exploited CVEs
         if: steps.run.outputs.kev == 'true'
         env:
@@ -205,9 +243,9 @@ jobs:
   # Same as armbian/docker-armbian-build: stop GitHub from disabling the hourly
   # schedule after 60 days without repository activity (quiet weeks commit nothing).
   keepalive:
-    if: ${{ github.repository_owner == 'armbian' }}
+    if: ${{ always() && github.repository_owner == 'armbian' && needs.check.outputs.due == 'true' }}
     name: Keep Alive
-    needs: fasttrack
+    needs: [check, fasttrack]
     runs-on: ubuntu-latest
     permissions:
       actions: write

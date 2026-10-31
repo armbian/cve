@@ -443,6 +443,17 @@ class TestBuildCheck(Fixture):
         self.assertEqual(b.target("kernel/build_policy.c"), "kernel/build_policy.o")
 
 
+class TestFingerprint(Fixture):
+    def test_changes_with_upstream_heads(self):
+        urls = {"vulns": str(self.data / "linux"), "stable_queue": str(self.data / "linux"),
+                "linux": str(self.data / "linux"), "kev": "file:///nonexistent", "releases": "file:///nonexistent"}
+        fp = lambda: sync.fingerprint(["6.18"], urls, [self.cfg])
+        first = fp()
+        self.assertEqual(fp(), first)
+        sh(self.data / "linux", "git", "update-ref", "refs/heads/linux-6.18.y", self.A)
+        self.assertNotEqual(fp(), first)
+
+
 class TestExpiry(Fixture):
     def _land_in_stable(self, sha, sub):
         sh(self.repo, "git", "checkout", "-q", "linux-6.18.y")
