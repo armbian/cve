@@ -17,6 +17,7 @@ import argparse
 import json
 import logging
 import os
+import shutil
 import sys
 import time
 from pathlib import Path
@@ -140,6 +141,9 @@ def cmd_cve(args) -> int:
     claude_cmd = cfg.get("claude_cmd") or incident.DEFAULT_CLAUDE_CMD
     if args.claude_model:
         claude_cmd = list(claude_cmd) + ["--model", args.claude_model]
+    if args.claude and not args.collect and not shutil.which(claude_cmd[0]):
+        print(f"{claude_cmd[0]}: not found; add it to PATH or set claude_cmd", file=sys.stderr)
+        return 2
 
     # Claude attempts already made, so a rerun does not pay for them again.
     attempts_file = out / "attempts.json"
@@ -184,9 +188,10 @@ def cmd_cve(args) -> int:
                     if cost is not None:
                         res.note = (res.note + " " if res.note else "") + f"claude ${cost:.2f}"
                     incident.collect_work(data / "linux", res, wdir)
-                    attempts.setdefault(cid, {})[res.series] = {
-                        "date": time.strftime("%Y-%m-%d", time.gmtime()), "head": res.head_version,
-                        "outcome": res.outcome, "cost": cost, "run": os.environ.get("GITHUB_RUN_ID")}
+                    if rc != 127:  # 127: Claude did not start; not an attempt
+                        attempts.setdefault(cid, {})[res.series] = {
+                            "date": time.strftime("%Y-%m-%d", time.gmtime()), "head": res.head_version,
+                            "outcome": res.outcome, "cost": cost, "run": os.environ.get("GITHUB_RUN_ID")}
             emit.write_patch_dir(out / "cve" / cid / res.series, res.series, res.head, res.head_version,
                                  res.patches, {"incident": cid, "outcome": res.outcome,
                                                "fixed_in": res.fixed_in})
