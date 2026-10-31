@@ -43,12 +43,16 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
 
-      # Self-hosted: kernel tree and prepared builds stay between runs, per runner.
+      # Self-hosted: kernel tree and prepared builds stay between runs, one cache per runner.
       - name: Build test
         env:
           SHARD: ${{ matrix.shard }}/32
         run: |
-          [ "${{ runner.environment }}" = self-hosted ] && export WORK="$HOME/.cache/armbian-cve/$RUNNER_NAME/build-test-${{ matrix.arch }}"
+          if [ "${{ runner.environment }}" = self-hosted ]; then
+            # One cache per runner for all arches; the old per-arch caches go.
+            rm -rf "$HOME/.cache/armbian-cve/$RUNNER_NAME"/build-test-*
+            export WORK="$HOME/.cache/armbian-cve/$RUNNER_NAME/build-test"
+          fi
           dirs=()
           if [ "${{ github.event_name }}" = pull_request ]; then
             changed=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")

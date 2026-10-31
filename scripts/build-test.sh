@@ -23,6 +23,15 @@ summary=${GITHUB_STEP_SUMMARY:-/dev/null}
 cpus=$(nproc)
 slots=${SLOTS:-$((cpus / 8))}
 [ "$slots" -ge 1 ] || slots=1
+mkdir -p "$work"
+# A persistent WORK must not fill the disk: start clean below 30 GB free,
+# and build one series at a time below 15 GB.
+free_gb() { df --output=avail -BG "$work" | tail -1 | tr -dc 0-9; }
+if [ "$(free_gb)" -lt 30 ]; then
+	echo "$(free_gb) GB free: clearing $work"
+	rm -rf "${work:?}"/* && mkdir -p "$work"
+fi
+[ "$(free_gb)" -ge 15 ] || slots=1
 rm -rf "$work/logs" "$work"/rows-* && mkdir -p "$work/logs"
 [ -d "$repo/.git" ] || git init -q "$repo"
 # WORK belongs to one runner, which runs one job at a time: a lock left by a
@@ -128,7 +137,15 @@ for b in $(cat "${units[@]/%//base}" | sort -u); do
 	git -C "$repo" cat-file -e "$b^{commit}" 2>/dev/null ||
 		git -C "$repo" fetch -q --depth 1 "${LINUX_URL:-https://github.com/armbian/linux.git}" "$b" || exit 1
 done
-echo "${#units[@]} series, $slots slot(s), make -j$jobs"
+# Drop build dirs of bases no longer tested, and trees of slots not used.
+bases=" $(cat "${units[@]/%//base}" | cut -c1-12 | sort -u | tr '\n' ' ')"
+for o in "$work"/out-*; do
+	[ -d "$o" ] && [[ "$bases" != *" ${o##*-} "* ]] && rm -rf "$o"
+done
+for t in "$work"/tree-*; do
+	[ -d "$t" ] && [ "${t##*-}" -ge "$slots" ] && { git -C "$repo" worktree remove --force "$t" 2>/dev/null || rm -rf "$t"; }
+done
+echo "${#units[@]} series, $slots slot(s), make -j$jobs, $(free_gb) GB free"
 pids=()
 for ((i = 0; i < slots; i++)); do
 	mine=()
