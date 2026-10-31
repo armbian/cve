@@ -1,9 +1,5 @@
 # Kernel security fast-track
 
-**Events this run**
-
-- added 6.18: 97 patch(es)
-
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no longer needed: 3
@@ -132,29 +128,29 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-98125 | `01261a6fa48b` | claude | smb/client: fix stale page cache in insert/collapse range |
 |  | CVE-2026-98682 | `c9b1194e8ec9` | claude | smb: client: drain and invalidate before server-side copy/clone |
 
-### Not affected per work package (needs review) (19)
+### Not affected (reviewed) (19)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2025-68226 | `abd29b6e17a9` | mainline | smb: client: fix incomplete backport in cfids_invalidation_worker() |
-|  | CVE-2026-52945 | `168ee1549fa2` | mainline | Revert "wireguard: device: enable threaded NAPI" |
-|  | CVE-2026-52945 | `42bc3f45425b` | mainline | Revert "wireguard: device: enable threaded NAPI" |
-|  | CVE-2026-52945 | `cfdb22762f90` | mainline | Revert "wireguard: device: enable threaded NAPI" |
-|  | CVE-2026-52945 | `e94b369ff82f` | mainline | Revert "wireguard: device: enable threaded NAPI" |
-|  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling |
-|  | CVE-2026-43095 | `4e53116437e9` | mainline | ASoC: SDCA: Fix errors in IRQ cleanup |
-|  | CVE-2026-80657 | `506255d46bdb` | mainline | accel/amdxdna: Guard management mailbox channel cleanup against NULL pointer |
-|  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() |
-|  | CVE-2026-72203 | `76bc14c7097f` | mainline | ntfs: skip extent mft records in writeback to prevent deadlock |
-|  | CVE-2026-72200 | `ec4f061f2219` | mainline | ntfs: detect mapping-pairs LCN accumulator overflow |
-|  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook |
-|  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes |
-|  | CVE-2026-99101 | `0ab6dc1ac460` | mainline | ntfs: move attribute payload before shrinking its record |
-|  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets |
-|  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary |
-|  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() |
-|  | CVE-2026-98938 | `9a7931e847f3` | mainline | rust: irq: pass RegistrationInner as cookie to request_irq |
-|  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
+|  | CVE-2025-68226 | `abd29b6e17a9` | mainline | smb: client: fix incomplete backport in cfids_invalidation_worker() — stable-only fix; no cfids_invalidation_worker(), laundromat worker drops the ref |
+|  | CVE-2026-52945 | `168ee1549fa2` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
+|  | CVE-2026-52945 | `42bc3f45425b` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
+|  | CVE-2026-52945 | `cfdb22762f90` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
+|  | CVE-2026-52945 | `e94b369ff82f` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
+|  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling — memset from 3d32eb7a5ecf not in 6.18; slot space checked first |
+|  | CVE-2026-43095 | `4e53116437e9` | mainline | ASoC: SDCA: Fix errors in IRQ cleanup — 6.18 has no caller of sdca_irq_populate() |
+|  | CVE-2026-80657 | `506255d46bdb` | mainline | accel/amdxdna: Guard management mailbox channel cleanup against NULL pointer — 6.18 frees the channel through the NULL-safe aie2_destroy_mgmt_chann() |
+|  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() — rseq_entry.h and the Fixes: commit 82f572449cfe not in 6.18 |
+|  | CVE-2026-72203 | `76bc14c7097f` | mainline | ntfs: skip extent mft records in writeback to prevent deadlock — fs/ntfs (classic) not in 6.18; removed in 6.9 |
+|  | CVE-2026-72200 | `ec4f061f2219` | mainline | ntfs: detect mapping-pairs LCN accumulator overflow — fs/ntfs (classic) not in 6.18; removed in 6.9 |
+|  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook — needs the per-sb xattr cache 12e9e3cd03b5, not in 6.18 |
+|  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes — fs/ntfs (classic) not in 6.18; removed in 6.9 |
+|  | CVE-2026-99101 | `0ab6dc1ac460` | mainline | ntfs: move attribute payload before shrinking its record — fs/ntfs (classic) not in 6.18; removed in 6.9 |
+|  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets — fs/ntfs (classic) not in 6.18; removed in 6.9 |
+|  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary — fs/ntfs (classic) not in 6.18; removed in 6.9 |
+|  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() — 6.18 checks the length before it reads it |
+|  | CVE-2026-98938 | `9a7931e847f3` | mainline | rust: irq: pass RegistrationInner as cookie to request_irq — fix already in 6.18.y as 8f317daa50fe |
+|  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions — bug comes from 8fa813b7fd1e, not in 6.18 |
 
 ## 7.3 (base 7.3.1, `79a907609d53`)
 
@@ -166,14 +162,14 @@ Already in tree: 147
 |---|---|---|---|---|
 |  | CVE-2026-98941 | `40554d1221e3` | mainline | ext4: don't enable large folios on encrypted inodes |
 
-### Not affected per work package (needs review) (7)
+### Not affected (reviewed) (7)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2025-68226 | `abd29b6e17a9` | mainline | smb: client: fix incomplete backport in cfids_invalidation_worker() |
-|  | CVE-2026-52945 | `168ee1549fa2` | mainline | Revert "wireguard: device: enable threaded NAPI" |
-|  | CVE-2026-52945 | `42bc3f45425b` | mainline | Revert "wireguard: device: enable threaded NAPI" |
-|  | CVE-2026-52945 | `cfdb22762f90` | mainline | Revert "wireguard: device: enable threaded NAPI" |
-|  | CVE-2026-52945 | `e94b369ff82f` | mainline | Revert "wireguard: device: enable threaded NAPI" |
-|  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing |
-|  | CVE-2026-98938 | `9a7931e847f3` | mainline | rust: irq: pass RegistrationInner as cookie to request_irq |
+|  | CVE-2025-68226 | `abd29b6e17a9` | mainline | smb: client: fix incomplete backport in cfids_invalidation_worker() — stable-only fix; no cfids_invalidation_worker(), laundromat worker drops the ref |
+|  | CVE-2026-52945 | `168ee1549fa2` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
+|  | CVE-2026-52945 | `42bc3f45425b` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
+|  | CVE-2026-52945 | `cfdb22762f90` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
+|  | CVE-2026-52945 | `e94b369ff82f` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
+|  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing — 044925f9b565 removed the nr_thps code |
+|  | CVE-2026-98938 | `9a7931e847f3` | mainline | rust: irq: pass RegistrationInner as cookie to request_irq — 98c63ce4d760 removed RegistrationInner |
