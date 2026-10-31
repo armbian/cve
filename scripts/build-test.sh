@@ -7,12 +7,13 @@ set -uo pipefail
 arch=${1:?arch}; shift
 [ $# -gt 0 ] || set -- patches/*/ cve/*/*/
 case $arch in
-	arm64) cross=aarch64-linux-gnu- ;;
-	arm) cross=arm-linux-gnueabihf- ;;
-	riscv) cross=riscv64-linux-gnu- ;;
-	x86) cross= ;;
+	arm64) cross=aarch64-linux-gnu- host=aarch64 ;;
+	arm) cross=arm-linux-gnueabihf- host=armv7l ;;
+	riscv) cross=riscv64-linux-gnu- host=riscv64 ;;
+	x86) cross=x86_64-linux-gnu- host=x86_64 ;;
 	*) echo "unknown arch: $arch" >&2; exit 2 ;;
 esac
+[ "$(uname -m)" = "$host" ] && cross=	# native build on a matching host
 root=$PWD
 work=${WORK:-$root/build-test}
 src=$work/linux

@@ -27,12 +27,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Cross compilers for the other three arches; the host arch builds natively.
       - name: Toolchain
         run: |
-          command -v aarch64-linux-gnu-gcc arm-linux-gnueabihf-gcc riscv64-linux-gnu-gcc bison flex bc >/dev/null && exit 0
+          need=""
+          for t in aarch64-linux-gnu arm-linux-gnueabihf riscv64-linux-gnu x86_64-linux-gnu; do
+            [ "$t" = "$(uname -m)-linux-gnu" ] && continue
+            command -v "$t-gcc" >/dev/null || need="$need gcc-${t//_/-}"
+          done
+          command -v bison flex bc pahole >/dev/null && [ -e /usr/include/libelf.h ] && [ -z "$need" ] && exit 0
           sudo apt-get update -q
-          sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev \
-            gcc-aarch64-linux-gnu gcc-arm-linux-gnueabihf gcc-riscv64-linux-gnu
+          sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
 
       # Self-hosted: kernel tree and prepared builds stay between runs.
       - name: Build test

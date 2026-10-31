@@ -70,9 +70,12 @@ jobs:
       # Kernel build tools for the compile check (build_check in fasttrack.yaml).
       - name: Tooling
         run: |
-          if ! command -v bc bison flex pahole >/dev/null || ! [ -e /usr/include/libelf.h ]; then
+          # build_check is x86: other hosts need the x86_64 cross compiler.
+          need=""
+          [ "$(uname -m)" = x86_64 ] || command -v x86_64-linux-gnu-gcc >/dev/null || need=gcc-x86-64-linux-gnu
+          if ! command -v bc bison flex pahole >/dev/null || ! [ -e /usr/include/libelf.h ] || [ -n "$need" ]; then
             sudo apt-get update -q
-            sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev
+            sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
           fi
           python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
           git config --global user.name  "fasttrack[bot]"
