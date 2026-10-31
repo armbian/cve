@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 33 patch(es)
+- added 6.12: 5 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -160,7 +160,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (63)
+### Included (68)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -227,21 +227,21 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-63805 | `4e67f504ee9d` | claude | crypto: nx - fix nx_crypto_ctx_exit argument |
 |  | CVE-2026-74314 | `a3a81d247651` | claude | bpf: Cancel special fields on map value recycle |
 |  | CVE-2026-72454 | `650716f23eac` | claude | i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev() |
+|  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
+|  | CVE-2026-64066 | `8a8c0cfdf465` | claude | netfs: Fix netfs_read_to_pagecache() to pause on subreq failure |
+|  | CVE-2026-64067 | `b5782e2d462c` | claude | netfs: Fix missing barriers when accessing stream->subrequests locklessly |
+|  | CVE-2026-72355 | `5c6ce05e4065` | claude | netfs: Fix barriering when walking subrequest list |
+|  | CVE-2026-63819 | `8712353ed80f` | claude | f2fs: fix to do sanity check on f2fs_get_node_folio_ra() |
 
-### Needs a backport (134)
+### Needs a backport (129)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2025-38311 | `120f28a6f314` | mainline | iavf: get rid of the crit lock |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
-|  | CVE-2026-64066 | `8a8c0cfdf465` | mainline | netfs: Fix netfs_read_to_pagecache() to pause on subreq failure |
-|  | CVE-2026-64067 | `b5782e2d462c` | mainline | netfs: Fix missing barriers when accessing stream->subrequests locklessly |
-|  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
-|  | CVE-2026-63819 | `8712353ed80f` | mainline | f2fs: fix to do sanity check on f2fs_get_node_folio_ra() |
-|  | CVE-2026-72355 | `5c6ce05e4065` | mainline | netfs: Fix barriering when walking subrequest list |
 |  | CVE-2026-93154 | `f67d8a08f60c` | mainline | RDMA/irdma: Add refcounting to user ring MRs |
 |  | CVE-2026-89722 | `dc76258d0132` | mainline | PCI/sysfs: Fix out-of-bounds read in pci_write_legacy_io() |
 |  | CVE-2026-93135 | `f1c27922576e` | mainline | bpf: Reject programs with inlined helpers if JIT is not available |
