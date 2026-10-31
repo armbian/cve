@@ -1,0 +1,85 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 8fa813b7fd1eccbed13e126166cf764f1f11a7d3
+X-Fasttrack-CVE: CVE-2026-98926
+X-Fasttrack-Backport: cve/CVE-2026-98926/6.12
+From: Dominik Kaszewski <dominik.kaszewski@amd.com>
+Date: Sat, 31 Oct 2026 22:49:18 +0100
+Subject: [PATCH] drm/amd/display: Remove sink usage from DPMS
+
+commit 8fa813b7fd1eccbed13e126166cf764f1f11a7d3 upstream.
+
+[ Backport: take only the NULL sink fixes: stream->link in DPMS on/off, sink check before skip_avmute, ASSERTs in USB4 BW allocation. ]
+[ Backport: drop the cosmetic stream/link renames and the get_vpg() helper; 6.12 has no HDMI FRL VPG. ]
+
+[Why]
+stream->sink is optional and can be null, so should always be checked
+before dereference. Additionally, most of its usage in DPMS sequences
+is for stream->sink->link, which can be replaced with stream->link,
+as the two should always be the same.
+
+[How]
+* Replace stream->sink->link in DPMS on/off
+* Add assert to USB4 BW allocation where sink is required
+* Avoid inconsistencies in resource access, e.g. don't repeat
+stream->link after it was already saved to a local variable
+* Pull out effective VPG calculation to helper getter
+* Formatting fixes
+
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Dominik Kaszewski <dominik.kaszewski@amd.com>
+Signed-off-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+---
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index 9d740659521a..a367872e31f4 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -2245,6 +2245,8 @@ static enum dc_status enable_link(
+ 
+ static bool allocate_usb4_bandwidth_for_stream(struct dc_stream_state *stream, int bw)
+ {
++	ASSERT(stream->sink);
++
+ 	struct dc_link *link = stream->sink->link;
+ 	int req_bw = bw;
+ 
+@@ -2308,6 +2310,8 @@ static bool allocate_usb4_bandwidth_for_stream(struct dc_stream_state *stream, i
+ 
+ static bool allocate_usb4_bandwidth(struct dc_stream_state *stream)
+ {
++	ASSERT(stream->sink);
++
+ 	bool ret;
+ 
+ 	int bw = dc_bandwidth_in_kbps_from_timing(&stream->timing,
+@@ -2331,7 +2335,7 @@ void link_set_dpms_off(struct pipe_ctx *pipe_ctx)
+ {
+ 	struct dc  *dc = pipe_ctx->stream->ctx->dc;
+ 	struct dc_stream_state *stream = pipe_ctx->stream;
+-	struct dc_link *link = stream->sink->link;
++	struct dc_link *link = stream->link;
+ 	struct vpg *vpg = pipe_ctx->stream_res.stream_enc->vpg;
+ 	enum dp_panel_mode panel_mode_dp = dp_get_panel_mode(link);
+ 
+@@ -2353,7 +2357,7 @@ void link_set_dpms_off(struct pipe_ctx *pipe_ctx)
+ 		}
+ 	}
+ 
+-	if (!pipe_ctx->stream->sink->edid_caps.panel_patch.skip_avmute) {
++	if (stream->sink && !stream->sink->edid_caps.panel_patch.skip_avmute) {
+ 		if (dc_is_hdmi_signal(pipe_ctx->stream->signal))
+ 			set_avmute(pipe_ctx, true);
+ 	}
+@@ -2442,7 +2446,7 @@ void link_set_dpms_on(
+ {
+ 	struct dc *dc = pipe_ctx->stream->ctx->dc;
+ 	struct dc_stream_state *stream = pipe_ctx->stream;
+-	struct dc_link *link = stream->sink->link;
++	struct dc_link *link = stream->link;
+ 	enum dc_status status;
+ 	struct link_encoder *link_enc;
+ 	enum otg_out_mux_dest otg_out_dest = OUT_MUX_DIO;

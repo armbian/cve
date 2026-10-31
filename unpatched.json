@@ -1332,125 +1332,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-64066"
-    ],
-    "kev": false,
-    "upstream": "8a8c0cfdf4658fc5b295b7fc87be56e0d76741f4",
-    "subject": "netfs: Fix netfs_read_to_pagecache() to pause on subreq failure",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/netfs/buffered_read.c"
-    ],
-    "prerequisites": [
-      "627cf645277b netfs: Don't use bh spinlock",
-      "49866ce7ea8d netfs: Add support for caching single monolithic objects such as AFS dirs",
-      "e2d46f2ec332 netfs: Change the read result collector to only use one work item",
-      "6698c02d64b2 afs: Locally initialise the contents of a new symlink on creation",
-      "5de0219a9bb9 netfs: Fix setting NETFS_RREQ_ALL_QUEUED to be after all subreqs queued",
-      "3dc00bca8dc8 fs/netfs: remove `netfs_io_request.ractl`",
-      "20d72b00ca81 netfs: Fix the request's work item to not require a ref",
-      "2b1424cd131c netfs: Fix wait/wake to be consistent about the waitqueue used",
-      "4d428dca252c netfs: fix reference leak",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "0e764b9d4607 netfs: Fix the handling of stream->front by removing it",
-      "6f0f7ac1915a netfs: Fix cancellation of a DIO and single read subrequests",
-      "b5782e2d462c netfs: Fix missing barriers when accessing stream->subrequests locklessly"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-64067"
-    ],
-    "kev": false,
-    "upstream": "b5782e2d462c028096f922abca46318cec890670",
-    "subject": "netfs: Fix missing barriers when accessing stream->subrequests locklessly",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/netfs/buffered_read.c",
-      "fs/netfs/misc.c",
-      "fs/netfs/read_collect.c",
-      "fs/netfs/write_collect.c",
-      "fs/netfs/write_issue.c",
-      "include/linux/list.h"
-    ],
-    "prerequisites": [
-      "cec78a59abc9 list: Remove duplicated and unused macro list_for_each_reverse",
-      "4acb665cf4f3 netfs: Work around recursion by abandoning retry if nothing read",
-      "d606c36294f4 netfs: Make netfs_advance_write() return size_t",
-      "751e213f9f8a netfs: Split retry code out of fs/netfs/write_collect.c",
-      "627cf645277b netfs: Don't use bh spinlock",
-      "e61bfaad8fd8 netfs: Add functions to build/clean a buffer in a folio_queue",
-      "49866ce7ea8d netfs: Add support for caching single monolithic objects such as AFS dirs",
-      "e2d46f2ec332 netfs: Change the read result collector to only use one work item",
-      "6698c02d64b2 afs: Locally initialise the contents of a new symlink on creation",
-      "794d8cf3a87a netfs: Report on NULL folioq in netfs_writeback_unlock_folios()",
-      "1d0013962d22 netfs: Fix a number of read-retry hangs",
-      "d01c495f432c netfs: Add retry stat counters",
-      "5de0219a9bb9 netfs: Fix setting NETFS_RREQ_ALL_QUEUED to be after all subreqs queued",
-      "f298e3765528 netfs: Fix collection of results during pause when collection offloaded",
-      "cf80fdbc0a55 list: remove redundant 'extern' for function prototypes"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-64160"
-    ],
-    "kev": false,
-    "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
-    "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/9p/v9fs_vfs.h",
-      "fs/9p/vfs_inode.c",
-      "fs/9p/vfs_inode_dotl.c",
-      "fs/afs/file.c",
-      "fs/afs/inode.c",
-      "fs/afs/internal.h",
-      "fs/afs/write.c",
-      "fs/netfs/buffered_read.c",
-      "fs/netfs/buffered_write.c",
-      "fs/netfs/direct_write.c",
-      "fs/netfs/misc.c",
-      "fs/netfs/write_collect.c",
-      "fs/smb/client/cifsfs.c",
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/file.c",
-      "fs/smb/client/inode.c",
-      "fs/smb/client/readdir.c",
-      "fs/smb/client/smb2ops.c",
-      "fs/smb/client/smb2pdu.c",
-      "include/linux/netfs.h"
-    ],
-    "prerequisites": [
-      "6c9903c330ab cifs: Remove pre-historic unused CIFSSMBCopy",
-      "0d6b0d2e3816 cifs: Recognize SFU char/block devices created by Windows NFS server on Windows Server <<2012",
-      "b2fe4a8fa0f6 smb: client: get rid of @nlsc param in cifs_tree_connect()",
-      "e1481075981d smb: client: allow reconnect when sending ioctl",
-      "796733054e4a smb: client: fix noisy message when mounting shares",
-      "a769bee5f9fb smb: use macros instead of constants for leasekey size and default cifsattrs value",
-      "f4d3cde410cc netfs: Remove redundant use of smp_rmb()",
-      "4acb665cf4f3 netfs: Work around recursion by abandoning retry if nothing read",
-      "751e213f9f8a netfs: Split retry code out of fs/netfs/write_collect.c",
-      "627cf645277b netfs: Don't use bh spinlock",
-      "6e0b503dc65c afs: Don't use mutex for I/O operation lock",
-      "9e705016eb8f afs: Add more tracepoints to do with tracking validity",
-      "e61bfaad8fd8 netfs: Add functions to build/clean a buffer in a folio_queue",
-      "49866ce7ea8d netfs: Add support for caching single monolithic objects such as AFS dirs",
-      "b2604315e87a afs: Make afs_init_request() get a key if not given a file"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-52966"
     ],
     "kev": false,
@@ -1888,39 +1769,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-63819"
-    ],
-    "kev": false,
-    "upstream": "8712353ed80f87271d732297567dcdbe4b84e8c7",
-    "subject": "f2fs: fix to do sanity check on f2fs_get_node_folio_ra()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/f2fs/f2fs.h",
-      "fs/f2fs/node.c"
-    ],
-    "prerequisites": [
-      "b19ee7272208 f2fs: introduce f2fs_get_section_mtime",
-      "2d56b4e39192 f2fs: multidevice: add stats in debugfs",
-      "128d333f0dff f2fs: introduce device aliasing file",
-      "cffaa0976fcc f2fs: clean up opened code w/ {get,set}_nid()",
-      "1df2bc3c8252 f2fs: clean up the unused variable additional_reserved_segments",
-      "1015035609e4 f2fs: fix changing cursegs if recovery fails on zoned device",
-      "3ca4bec40ee2 f2fs: switch to using the crc32 library",
-      "1cf746007005 f2fs: Add F2FS_F_SB()",
-      "76f01376df39 f2fs: ensure that node info flags are always initialized",
-      "3d56fbb1f03f f2fs: expand f2fs_invalidate_compress_page() to f2fs_invalidate_compress_pages_range()",
-      "d217b5cea488 f2fs: add parameter @len to f2fs_invalidate_internal_cache()",
-      "cf5817ce66f6 f2fs: don't call block truncation for aliased file",
-      "e53c568f4603 f2fs: add parameter @len to f2fs_invalidate_blocks()",
-      "5f95c1812a65 f2fs: add ioctl to get IO priority hint",
-      "17683927d078 f2fs: Add f2fs_folio_wait_writeback()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98897"
     ],
     "kev": false,
@@ -1980,73 +1828,7 @@
       "41376400c471 netfs: Replace wb_lock with a bit lock for asynchronicity"
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/netfs/write_issue.c\nfs/netfs/write_issue.c:633:19: error: \u2018NETFS_RREQ_OFFLOAD_COLLECTION\u2019 undeclared (first use in this function)"
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-72355"
-    ],
-    "kev": false,
-    "upstream": "5c6ce05e406520290c1d89da97fb3cd70c09137d",
-    "subject": "netfs: Fix barriering when walking subrequest list",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/netfs/read_retry.c",
-      "fs/netfs/write_retry.c"
-    ],
-    "prerequisites": [
-      "4acb665cf4f3 netfs: Work around recursion by abandoning retry if nothing read",
-      "751e213f9f8a netfs: Split retry code out of fs/netfs/write_collect.c",
-      "627cf645277b netfs: Don't use bh spinlock",
-      "e2d46f2ec332 netfs: Change the read result collector to only use one work item",
-      "1d0013962d22 netfs: Fix a number of read-retry hangs",
-      "d01c495f432c netfs: Add retry stat counters",
-      "4481f7f2b3df netfs: Fix oops in write-retry from mis-resetting the subreq iterator",
-      "20d72b00ca81 netfs: Fix the request's work item to not require a ref",
-      "2b1424cd131c netfs: Fix wait/wake to be consistent about the waitqueue used",
-      "97d8e8e52cb8 netfs: Fix ref leak on inserted extra subreq in write retry",
-      "90b3ccf51457 netfs: Update tracepoints in a number of ways",
-      "82e8885bd763 netfs: when subreq is marked for retry, do not check if it faced an error",
-      "a5ca32d031bb netfs: avoid double increment of retry_count in subreq",
-      "7e57523490cd netfs: Fix read abandonment during retry",
-      "cce18c263e96 netfs: Fix missing locking around retry adding new subreqs"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-93154"
-    ],
-    "kev": false,
-    "upstream": "f67d8a08f60c9217df6d40da56422d2049f5e334",
-    "subject": "RDMA/irdma: Add refcounting to user ring MRs",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/infiniband/hw/irdma/utils.c",
-      "drivers/infiniband/hw/irdma/verbs.c"
-    ],
-    "prerequisites": [
-      "695df3e833c0 RDMA/irdma: Remove unused irdma_cqp_*_fpm_val_cmd functions",
-      "4c354c02d5e3 RDMA/irdma: Remove deliver net device event",
-      "161072d43a8c RDMA/irdma: Switch to using the crc32c library",
-      "8fa7292fee5c treewide: Switch/rename to timer_delete[_sync]()",
-      "80f2ab46c2ee irdma: free iwdev->rf after removing MSI-X",
-      "41cb08555c41 treewide, timers: Rename from_timer() to timer_container_of()",
-      "a272019a46c9 IB: Extend UVERBS_METHOD_REG_MR to get DMAH",
-      "0c2b80cac96e RDMA/irdma: Refactor GEN2 auxiliary driver",
-      "c7db0abe5f2b RDMA/irdma: Add GEN3 CQP support with deferred completions",
-      "da278cb29c41 RDMA/irdma: Add GEN3 HW statistics support",
-      "2ad49ae7330b RDMA/irdma: Introduce GEN3 vPort driver support",
-      "d6ed4b69b8ea RDMA/irdma: Add GEN3 virtual QP1 support",
-      "87f413b6c930 RDMA/irdma: Extend QP context programming for GEN3",
-      "9a1d68786393 RDMA/irdma: Support 64-byte CQEs and GEN3 CQE opcode decoding",
-      "563e1feb5f6e RDMA/irdma: Add SRQ support"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
+    "build_log": "## fs/netfs/write_issue.c\nfs/netfs/write_issue.c:635:19: error: \u2018NETFS_RREQ_OFFLOAD_COLLECTION\u2019 undeclared (first use in this function)"
   },
   {
     "series": "6.12",
@@ -2116,182 +1898,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-90040"
-    ],
-    "kev": false,
-    "upstream": "d1a3c216233413f57f5341a9b878b7e2dde7e785",
-    "subject": "KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/x86/include/asm/kvm-x86-ops.h",
-      "arch/x86/include/asm/kvm_host.h",
-      "arch/x86/kvm/mmu/mmu.c",
-      "arch/x86/kvm/svm/sev.c",
-      "arch/x86/kvm/svm/svm.c",
-      "arch/x86/kvm/svm/svm.h",
-      "arch/x86/kvm/x86.c",
-      "include/linux/kvm_host.h",
-      "virt/kvm/guest_memfd.c"
-    ],
-    "prerequisites": [
-      "037bc38b298c KVM: Drop KVM_ERR_PTR_BAD_PAGE and instead return NULL to indicate an error",
-      "3af91068b7e1 KVM: Add kvm_release_page_unused() API to put pages that KVM never consumes",
-      "6385d01eec16 KVM: x86/mmu: Don't overwrite shadow-present MMU SPTEs when prefaulting",
-      "63c5754472e6 KVM: x86/mmu: Invert @can_unsync and renamed to @synchronizing",
-      "aa85986e7150 KVM: x86/mmu: Mark folio dirty when creating SPTE, not when zapping/modifying",
-      "5f6a3badbb74 KVM: x86/mmu: Mark page/folio accessed only when zapping leaf SPTEs",
-      "6419bc52072b KVM: Rename gfn_to_page_many_atomic() to kvm_prefetch_pages()",
-      "e2d2ca71ac03 KVM: Drop @atomic param from gfn=>pfn and hva=>pfn APIs",
-      "6769d1bcd350 KVM: Replace \"async\" pointer in gfn=>pfn with \"no_wait\" and error code",
-      "084ecf95a086 KVM: x86/mmu: Drop kvm_page_fault.hva, i.e. don't track intermediate hva",
-      "cccefb0a0d3b KVM: Drop unused \"hva\" pointer from __gfn_to_pfn_memslot()",
-      "ef7db98e477f KVM: Use NULL for struct page pointer to indicate mremapped memory",
-      "2ff072ba7ad2 KVM: Migrate kvm_vcpu_map() to kvm_follow_pfn()",
-      "2bcb52a3602b KVM: Pin (as in FOLL_PIN) pages during kvm_vcpu_map()",
-      "365e31920844 KVM: Pass in write/dirty to kvm_vcpu_map(), not kvm_vcpu_unmap()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-93099"
-    ],
-    "kev": false,
-    "upstream": "2566b5cd6a275c124e8f154fef6e815f92ec8d5c",
-    "subject": "fs/resctrl: Fix UAF from worker threads when domains are removed",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/resctrl/monitor.c",
-      "fs/resctrl/rdtgroup.c"
-    ],
-    "prerequisites": [
-      "bff70402d6d6 fs/resctrl: Add boiler plate for external resctrl code",
-      "7168ae330e81 x86,fs/resctrl: Move the resctrl filesystem code to live in /fs/resctrl",
-      "dd2922dcfaa3 fs/resctrl: Restore the rdt_last_cmd_clear() calls after acquiring rdtgroup_mutex",
-      "594902c986e2 x86,fs/resctrl: Remove inappropriate references to cacheinfo in the resctrl subsystem",
-      "d2e1b84c5141 fs/resctrl: Eliminate false positive lockdep warning when reading SNC counters",
-      "0e58f6a7dd68 fs/resctrl: Optimize code in rdt_get_tree()",
-      "09f37134464c x86,fs/resctrl: Consolidate monitor event descriptions",
-      "d257cc2e5c8b x86,fs/resctrl: Replace architecture event enabled checks",
-      "83b039877310 x86,fs/resctrl: Prepare for more monitor events",
-      "5ad68c8f965f x86,fs/resctrl: Consolidate monitoring related data from rdt_resource",
-      "13390861b426 x86,fs/resctrl: Detect Assignable Bandwidth Monitoring feature details",
-      "3b497c3f4f04 fs/resctrl: Introduce the interface to display monitoring modes",
-      "8c793336eaf8 fs/resctrl: Add resctrl file to display number of assignable counters",
-      "4d32c24a74f2 fs/resctrl: Introduce mbm_cntr_cfg to track assignable counters per domain",
-      "16ff6b038fb3 fs/resctrl: Introduce interface to display number of free MBM counters"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98926"
-    ],
-    "kev": false,
-    "upstream": "8fa813b7fd1eccbed13e126166cf764f1f11a7d3",
-    "subject": "drm/amd/display: Remove sink usage from DPMS",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/display/dc/link/link_dpms.c"
-    ],
-    "prerequisites": [
-      "7a65e88f13b1 drm/amd/display: Optimize power up sequence for specific OLED",
-      "0c0a19430bfd drm/amd/display: Add hblank borrowing support",
-      "95265e4b2b3a drm/amd/display: Block Invalid TMDS operation",
-      "44063dbcdbd8 drm/amd/display: have pretrain for dpia",
-      "1619d4168b97 drm/amd/display: Add HBlank reduction DPCD write to DPMS sequence",
-      "00d53a0d8aa8 drm/amd/display: Update chip_cap defines and usage",
-      "230dced3e2b7 drm/amd/display: improve dpia pre-train",
-      "d29578684016 drm/amd/display: replace dio encoder access",
-      "52af17eabb10 drm/amd/display: Change notification of link BW allocation",
-      "17accf4f228c drm/amd/display: Support external tunneling feature",
-      "7beee6e91c20 drm/amd/display: Add new DP tunnel bandwidth validation",
-      "c233ec190243 drm/amd/display: Add num_slices_h to set_dto_dscclk signature",
-      "156374b2a6ce drm/amd/display: Remove unused tunnel BW validation",
-      "18f0817d2e9a drm/amd/display: Initial support for SmartMux",
-      "c2223b26869d drm/amd/display: Add link index in AUX and dpms"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-68382"
-    ],
-    "kev": false,
-    "upstream": "9b7e60184f4b22e893d4ae95234d5f26261a430c",
-    "subject": "drm/xe/guc: Hold device ref until queue teardown completes",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/xe/xe_device.c",
-      "drivers/gpu/drm/xe/xe_device_types.h",
-      "drivers/gpu/drm/xe/xe_guc_submit.c",
-      "drivers/gpu/drm/xe/xe_guc_types.h",
-      "drivers/gpu/drm/xe/xe_module.c",
-      "drivers/gpu/drm/xe/xe_module.h",
-      "drivers/gpu/drm/xe/xe_pci.c"
-    ],
-    "prerequisites": [
-      "b43723f86461 drm/xe: Cleanup has_flat_ccs handling",
-      "0c841e47d8d9 drm/xe: Update runtime detection of has_flat_ccs",
-      "10a0575c2ff6 drm/xe/device: Convert register access to use xe_mmio",
-      "0afda5d7bba4 drm/xe/pci: Convert register access to use xe_mmio",
-      "ec2d1539e159 drm/xe: Restore pci state upon resume",
-      "1378c633a3fb drm/xe: Convert to USM lock to rwsem",
-      "58548b91101f drm/xe: Defer gt->mmio initialization until after multi-tile setup",
-      "6fa86e7ad46e drm/xe: Introduce xe_device_uses_memirq()",
-      "4157849ca3ca drm/xe: move memirq out of VF",
-      "fe4f5d4b6616 drm/xe: Clean up VM / exec queue file lock usage.",
-      "d28af0b6b958 drm/xe/guc_submit: add missing locking in wedged_fini",
-      "861108666cc0 drm/xe: fix UAF around queue destruction",
-      "8ec5a4e5ce97 drm/xe: Resume TDR after GT reset",
-      "f040327238b1 drm/xe/guc_submit: fix xa_store() error checking",
-      "91b2c42c214f drm/xe: Use fault injection infrastructure to find issues at probe time"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98815"
-    ],
-    "kev": false,
-    "upstream": "9952f3882ecba709092379b71e02b09762b26f96",
-    "subject": "nvme: fix cdev lifetime",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/nvme/host/core.c",
-      "drivers/nvme/host/multipath.c"
-    ],
-    "prerequisites": [
-      "6b6f6c41c8ac nvme: core: switch to non_owner variant of start_freeze/unfreeze queue",
-      "2a8f6153e1c2 block: pre-calculate max_zone_append_sectors",
-      "43d5d3b41741 nvme-core: remove repeated wq flags",
-      "ab9bc81c1cf0 Revert \"block: pre-calculate max_zone_append_sectors\"",
-      "559218d43ec9 block: pre-calculate max_zone_append_sectors",
-      "0b4ace9da58d nvme-multipath: don't bother clearing max_hw_zone_append_sectors",
-      "266b652c65b4 nvmet: implement endurance groups",
-      "5fd075cdaf36 nvmet: implement rotational media information log",
-      "ee9f36db1f2f nvme: use command set independent id ns if available",
-      "1d811438851b nvme: add rotational support",
-      "8a825d22a709 nvme: check ns's volatile write cache not present",
-      "cdd30ebb1b9f module: Convert symbol namespace to string literal",
-      "51588b1b77b6 nvme: use blk_validate_block_size() for max LBA check",
-      "2c0487d8b1f1 block: introduce BIP_CHECK_GUARD/REFTAG/APPTAG bip_flags",
-      "472292cd8cfc nvme: add support for passing on the application tag"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-89866"
     ],
     "kev": false,
@@ -2316,39 +1922,6 @@
       "8c5a74a24cbb media: chips-media: wave5: avoid skipping device_run while VPU has work",
       "b694ba0a5526 media: chips-media: wave5: Defer job_finish() only when a DEC_PIC was queued",
       "e3a80073d99c media: chips-media: wave5: Fix pipeline stall when queuing fails"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-93047"
-    ],
-    "kev": false,
-    "upstream": "fa98563ab00dbe62fcedfef6bdd34ded7a860d9f",
-    "subject": "drm/v3d: Associate BOs with every job that accesses them",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/v3d/v3d_drv.h",
-      "drivers/gpu/drm/v3d/v3d_submit.c"
-    ],
-    "prerequisites": [
-      "eb8d395f6842 drm/v3d: Introduce gemfs",
-      "8dd6074d4719 drm/v3d: Reduce the alignment of the node allocation",
-      "e4c17720262f drm/v3d: Support Big/Super Pages when writing out PTEs",
-      "0df4a13ca8be drm/v3d: Add modparam for turning off Big/Super Pages",
-      "c6eabbab359c drm/v3d: Add DRM_IOCTL_V3D_PERFMON_SET_GLOBAL",
-      "4ee06e3b6120 drm/v3d: Fix miscellaneous documentation errors",
-      "dc4afc0de965 drm/v3d: Remove `v3d->cpu_job`",
-      "76dbd0973c55 drm/v3d: Associate a V3D tech revision to all supported devices",
-      "1bdf2ccc351c drm/v3d: Use V3D_SMS registers for power on/off and reset on V3D 7.x",
-      "5774b3cfdedb drm/v3d: Add parameter to retrieve the global number of GPU resets",
-      "769c153cfc3c drm/v3d: Add parameter to retrieve the number of GPU resets per-fd",
-      "e5e3d7bff764 drm/v3d: Store a pointer to `struct v3d_file_priv` inside each job",
-      "fa6a20c87470 drm/v3d: Address race-condition between per-fd GPU stats and fd release",
-      "adefb2ccea1e drm/v3d: create a dedicated lock for dma fence",
-      "f6e8dc9edf96 drm: include drm_print.h where needed"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -2421,38 +1994,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-92518"
-    ],
-    "kev": false,
-    "upstream": "52fb1756ea1d2759dfef2d86245be00b05dac3a2",
-    "subject": "riscv, bpf: Fix kernel stack corruption in tailcall with CFI",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/riscv/net/bpf_jit_comp64.c"
-    ],
-    "prerequisites": [
-      "0c3beacf681e asm-generic: introduce text-patching.h",
-      "118ae46b7942 bpf, riscv64: Introduce emit_load_*() and emit_store_*()",
-      "8afd3170d511 bpf, riscv64: Support load-acquire and store-release instructions",
-      "db7a3822b5f4 bpf, riscv64: Skip redundant zext instruction after load-acquire",
-      "02fc01adec1c riscv, bpf: Extract emit_stx() helper",
-      "d92c11a6b55b riscv, bpf: Extract emit_st() helper",
-      "01422a4f2c78 riscv, bpf: Extract emit_ldx() helper",
-      "1c0196b878a6 riscv, bpf: Optimize cmpxchg insn with Zacas support",
-      "b18f4aae6a5d riscv, bpf: Add ex_insn_off and ex_jmp_off for exception table handling",
-      "fb7cefabae81 riscv, bpf: Add support arena atomics for RV64",
-      "6798668ab195 riscv, bpf: Remove duplicated bpf_flush_icache()",
-      "a91ae3c89311 bpf, x86: Add support for signed arena loads",
-      "23ef9d439769 kcfi: Rename CONFIG_CFI_CLANG to CONFIG_CFI",
-      "47c9214dcbea bpf: fix the usage of BPF_TRAMP_F_SKIP_FRAME",
-      "ae4a3160d19c bpf: specify the old and new poke_type for bpf_arch_text_poke"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-92500"
     ],
     "kev": false,
@@ -2480,38 +2021,6 @@
       "bd29881aff6d ext4: pack holes in ext4_inode_info",
       "99708f8a9d30 ext4: convert EXT4_FLAGS_* defines to enum",
       "f3054e53c2f3 ext4: add EXT4_FLAGS_EMERGENCY_RO bit"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-92493"
-    ],
-    "kev": false,
-    "upstream": "8d31bb1451643f328db0cea0e21e63ef54b4faf2",
-    "subject": "cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/cpufreq/amd-pstate-ut.c"
-    ],
-    "prerequisites": [
-      "31f9056ed243 cpufreq/amd-pstate-ut: Add fix for min freq unit test",
-      "68cb0e77b643 cpufreq/amd-pstate: store all values in cpudata struct in khz",
-      "a9b9b4c2a4cd cpufreq/amd-pstate: Drop min and max cached frequencies",
-      "009d1c29a451 cpufreq/amd-pstate: Move perf values into a union",
-      "93984d3cea8a cpufreq/amd-pstate-ut: Use _free macro to free put policy",
-      "66030cc1c533 cpufreq/amd-pstate-ut: Allow lowest nonlinear and lowest to be the same",
-      "a7875346c689 cpufreq/amd-pstate-ut: Drop SUCCESS and FAIL enums",
-      "2aac38ac06cb cpufreq/amd-pstate-ut: Run on all of the correct CPUs",
-      "c630458c7a4b cpufreq/amd-pstate-ut: Adjust variable scope",
-      "b4cc466b9735 cpufreq/amd-pstate: Replace all AMD_CPPC_* macros with masks",
-      "6fe22abacd40 x86/msr: Rename 'rdmsrl_safe()' to 'rdmsrq_safe()'",
-      "5e404cb7ac4c x86/msr: Rename 'rdmsrl_safe_on_cpu()' to 'rdmsrq_safe_on_cpu()'",
-      "efef7f184f2e x86/msr: Add explicit includes of <asm/msr.h>",
-      "d26d16438bc5 amd-pstate-ut: Reset amd-pstate driver mode after running selftests",
-      "f6b1eebbdbc7 cpufreq/amd-pstate: Avoid shadowing ret in amd_pstate_ut_check_driver()"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -2624,42 +2133,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-90379"
-    ],
-    "kev": false,
-    "upstream": "915672c5ae32deeb72f4572856d123f314791136",
-    "subject": "wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/wireless/mediatek/mt76/dma.c",
-      "drivers/net/wireless/mediatek/mt76/mcu.c",
-      "drivers/net/wireless/mediatek/mt76/mt76_connac.h",
-      "drivers/net/wireless/mediatek/mt76/mt7921/mac.c",
-      "drivers/net/wireless/mediatek/mt76/mt7921/pci.c"
-    ],
-    "prerequisites": [
-      "50f64e4253c5 wifi: mt76: do not hold queue lock during initial rx buffer alloc",
-      "5190594bcec2 wifi: mt76: mt7921: add rfkill_poll for hardware rfkill",
-      "387ab042ace8 wifi: mt76: do not add wcid entries to sta poll list during MCU reset",
-      "a0facfc80ec1 wifi: mt76: connac: rework connac helpers",
-      "5b20557593d4 wifi: mt76: connac: adjust phy capabilities based on band constraints",
-      "a60558644e20 wifi: mt76: move napi_enable() from under BH",
-      "a4e32b306a30 wifi: mt76: connac: add support to load firmware for mt7990",
-      "dc66a129adf1 wifi: mt76: add a wrapper for wcid access with validation",
-      "1298de13d128 wifi: mt76: Get rid of dma_sync_single_for_device() for MMIO devices",
-      "e553ac0d7616 wifi: mt76: mt7921s: Introduce SDIO WiFi/BT combo module card reset",
-      "f6b29367b042 wifi: mt76: Add reset_idx to reset_q mt76_queue_ops signature.",
-      "2182974e9fd0 wifi: mt76: Remove q->ndesc check in mt76_dma_rx_fill()",
-      "ba9f68bb77f8 wifi: mt76: Differentiate between RRO data and RRO MSDU queues",
-      "d77f77ff4544 wifi: mt76: Do not always enable NAPIs for WED RRO queues",
-      "b1e58e137b61 wifi: mt76: mt7996: Introduce RRO MSDU callbacks"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-90317"
     ],
     "kev": false,
@@ -2746,38 +2219,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-93276"
-    ],
-    "kev": false,
-    "upstream": "49c9b71b45081e5e5eeb507a2d6edb80d332dc59",
-    "subject": "phy: renesas: phy-rcar-gen3-usb2: Fix devm action registration for disabled VBUS regulator",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/phy/renesas/phy-rcar-gen3-usb2.c"
-    ],
-    "prerequisites": [
-      "54234e3a6932 phy: Switch back to struct platform_driver::remove()",
-      "9414ceb38a74 phy: renesas: phy-rcar-gen3-usb2: Sort compatible entries by SoC part number",
-      "3767474d7497 phy: renesas: phy-rcar-gen3-usb2: Add USB2.0 PHY support for RZ/V2H(P)",
-      "f75806d26318 phy: renesas: rcar-gen3-usb2: store drvdata pointer in channel",
-      "4b7aa47e4c2c phy: renesas: rcar-gen3-usb2: Allow SoC-specific OBINT bits via phy_data",
-      "b725741f1c21 phy: renesas: rcar-gen3-usb2: Add support for RZ/T2H SoC",
-      "5f54134428b4 phy: renesas: rcar-gen3-usb2: Move debug print after register value is updated",
-      "e7ec351347b6 phy: renesas: rcar-gen3-usb2: Remove redundant ternary operators",
-      "356590cd61cf phy: renesas: rcar-gen3-usb2: Fix ID check logic with VBUS valid",
-      "79d9db7f7a0c phy: renesas: rcar-gen3-usb2: Move phy_data->init_bus check",
-      "942a7a6bf4c6 phy: renesas: rcar-gen3-usb2: Add suspend/resume support",
-      "ec5814578e3c phy: renesas: Remove unneeded semicolons",
-      "d6db3b3af74a phy: renesas: rcar-gen3-usb2: Factor out VBUS control logic",
-      "230c817a1601 phy: renesas: rcar-gen3-usb2: Use devm_pm_runtime_enable()",
-      "b6d7dd157763 phy: renesas: rcar-gen3-usb2: Add regulator for OTG VBUS control"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-90261"
     ],
     "kev": false,
@@ -2803,55 +2244,6 @@
       "a722c72bef93 btrfs: open code __free_extent_buffer()",
       "cc8f51a3550a btrfs: rename btrfs_release_extent_buffer_pages() to mention folios",
       "a43caf82a103 btrfs: switch grab_extent_buffer() to folios"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-89935"
-    ],
-    "kev": false,
-    "upstream": "d378fceaafd79e0dc59d3546bda251a3058062c0",
-    "subject": "iio: light: apds9306: fix PM reference leak in apds9306_read_data()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/iio/light/apds9306.c"
-    ],
-    "prerequisites": [
-      "b4b42f28a0df iio: fix write_event_config signature",
-      "86b8843ee2bb iio: light: apds9306: simplifies if branch in apds9306_write_event_config",
-      "cdd30ebb1b9f module: Convert symbol namespace to string literal",
-      "354eedf0083f iio: light: apds9306: Switch to sparse friendly iio_device_claim/release_direct()",
-      "6f6bf9782345 iio: light: apds9306: Refactor threshold get/set functions to use helper",
-      "65e8202f0322 iio: Remove error prints for devm_add_action_or_reset()",
-      "e15f23dd5305 iio: light: Remove redundant pm_runtime_mark_last_busy() calls",
-      "52d182b2ff99 iio: light: apds9306: convert to use maple tree register cache",
-      "1bceffda64ee iio: light: apds9306: remove redundant explicit pointer cast",
-      "9c21a850f0c7 iio: light: apds9306: remove unused nlux_per_count"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-80785"
-    ],
-    "kev": false,
-    "upstream": "061db6b7a910b8378f3b2df64f8c0a3ddc6e85f2",
-    "subject": "fbdev: serialize mode sysfs access with lock_fb_info()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/video/fbdev/core/fbsysfs.c"
-    ],
-    "prerequisites": [
-      "5fc830d6aca1 fbdev: Register sysfs groups through device_add_group",
-      "7e3711eb87c5 fbdev: Track display blanking state",
-      "68eeb0871e98 fbdev: Use device_create_with_groups() to fix sysfs groups registration race",
-      "8ef78cae98b5 fbdev: Wrap user-invoked calls to fb_blank() in helper",
-      "d15d51fb26e8 fbdev: bound mode sysfs output to the sysfs buffer"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -3192,38 +2584,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-98674"
-    ],
-    "kev": false,
-    "upstream": "549b71ce050637dd32678371ad76c445a2f8c9aa",
-    "subject": "iio: adc: adi-axi-adc: Initialize state mutex",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/iio/adc/adi-axi-adc.c"
-    ],
-    "prerequisites": [
-      "cdd30ebb1b9f module: Convert symbol namespace to string literal",
-      "4fe7fd17fe66 iio: buffer-dmaengine: split requesting DMA channel from allocating buffer",
-      "c4330d081775 iio: adc: adi-axi-adc: add struct axi_adc_info",
-      "a4ab57debde2 iio: adc: adi-axi-adc: add platform children support",
-      "79c47485e438 iio: adc: adi-axi-adc: add support for AD7606 register writing",
-      "fc9156c04566 iio: adc: adi-axi-adc: add interface type",
-      "7a794e3a0dc5 iio: adc: adi-axi-adc: set data format",
-      "208a94c8884d iio: adc: adi-axi-adc: add oversampling",
-      "d477cda71a3a iio: adc: adi-axi-adc: replace of.h with mod_devicetable.h",
-      "70788d26ae1c iio: normalize array sentinel style",
-      "8ee8009420e7 iio: adc: adi-axi-adc: add filter type config",
-      "d2ca659c3d15 iio: adc: adi-axi-adc: add data align process",
-      "569ddc41165e iio: adc: adi-axi-adc: add num lanes support",
-      "97e6882ed1a1 iio: backend: update iio_backend_oversampling_ratio_set",
-      "dced5bda1411 iio: adc: adi-axi-adc: add axi_adc_oversampling_ratio_set"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## drivers/iio/adc/adi-axi-adc.c\ndrivers/iio/adc/adi-axi-adc.c:362:31: error: \u2018dev\u2019 undeclared (first use in this function); did you mean \u2018pdev\u2019?"
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98119"
     ],
     "kev": false,
@@ -3361,7 +2721,7 @@
       "b62a206bfbf3 cifs: Optimize CIFSFindFirst() response when not searching"
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1476:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1476:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)\nfs/smb/client/cifssmb.c:5997:32: error: \u2018in_len\u2019 undeclared (first use in this function)"
+    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1477:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1477:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)\nfs/smb/client/cifssmb.c:5998:32: error: \u2018in_len\u2019 undeclared (first use in this function)"
   },
   {
     "series": "6.12",
@@ -3514,7 +2874,7 @@
       "b62a206bfbf3 cifs: Optimize CIFSFindFirst() response when not searching"
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1476:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1476:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)"
+    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1477:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1477:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)"
   },
   {
     "series": "6.12",
