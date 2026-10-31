@@ -1,9 +1,5 @@
 # Kernel security fast-track
 
-**Events this run**
-
-- retired 6.18: 8 patch(es) (landed upstream or superseded)
-
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 ### Included (applies unchanged) (20)
