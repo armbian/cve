@@ -69,7 +69,8 @@ worker() {
 	slot=$1; shift
 	src=$work/tree-$slot rows=$work/rows-$slot fail=0
 	: >"$rows"
-	[ -e "$src/.git" ] || git -C "$repo" worktree add -q --detach "$src" "$(cat "$1/base")" || return 1
+	# -f -f: a cancelled job can leave the worktree missing but locked.
+	[ -e "$src/.git" ] || git -C "$repo" worktree add -q -f -f --detach "$src" "$(cat "$1/base")" || return 1
 	for d in "$@"; do
 		base=$(cat "$d/base")
 		name=${d#cve/}
