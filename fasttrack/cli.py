@@ -14,6 +14,7 @@ and build the missing ones (optionally with Claude).
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import functools
 import json
 import logging
@@ -80,15 +81,20 @@ def cmd_run(args) -> int:
              cfg.get("cve_since_year", 2024), len(kev), releases or "unknown")
     queue_root = data / "stable-queue"
 
+    def one(s):
+        return engine.run_series(data / "linux", _series(s), records,
+                                 queue_root if queue_root.is_dir() else None,
+                                 kev, releases, queue_mode=cfg.get("queue_mode", "cve"),
+                                 arches=cfg.get("arches"), builder=_builder(cfg, args))
+
+    # Series are independent (own worktree and build dir): verify them in parallel.
     results = []
-    for s in cfg["series"]:
-        try:
-            results.append(engine.run_series(data / "linux", _series(s), records,
-                                             queue_root if queue_root.is_dir() else None,
-                                             kev, releases, queue_mode=cfg.get("queue_mode", "cve"),
-                                             arches=cfg.get("arches"), builder=_builder(cfg, args)))
-        except gitutil.GitError as e:
-            print(f"{s}: skipped ({e})")
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(cfg["series"]) or 1) as pool:
+        for s, fut in [(s, pool.submit(one, s)) for s in cfg["series"]]:
+            try:
+                results.append(fut.result())
+            except gitutil.GitError as e:
+                print(f"{s}: skipped ({e})")
 
     state_file = out / "state.json"
     prev = json.loads(state_file.read_text()) if state_file.exists() else {}

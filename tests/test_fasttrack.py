@@ -381,10 +381,12 @@ class FakeBuilder(build.Builder):
         self.ready = True
 
     def _make(self, *targets, timeout=0):
-        src = (self.tree / (targets[0][:-2] + ".c")).read_text()
-        if self.broken and self.broken in src:
-            return False, f"{self.tree}/{targets[0][:-2]}.c:7:1: error: broken build"
-        return True, ""
+        out = []
+        for t in (t for t in targets if not t.startswith("-")):
+            if self.broken and self.broken in (self.tree / (t[:-2] + ".c")).read_text():
+                out += [f"{self.tree}/{t[:-2]}.c:7:1: error: broken build",
+                        f"make[2]: *** [scripts/Makefile.build:287: {t}] Error 1"]
+        return not out, "\n".join(out)
 
 
 def fake_builder(broken):

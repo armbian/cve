@@ -16,6 +16,7 @@ that needs adaptation is reported, never edited.
 
 from __future__ import annotations
 
+import concurrent.futures
 import logging
 import re
 import subprocess
@@ -144,13 +145,38 @@ def collect(
 def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[Path] = None,
            arches: Optional[list[str]] = None, builder=None) -> None:
     """Cumulative, no-fuzz replay on top of ``ref``. Sets verdict on each candidate.
-    ``builder(tree, out)`` makes a :class:`build.Builder` for the compile check."""
+    ``builder(tree, out)`` makes a :class:`build.Builder` for the compile check:
+    one parallel build of the accepted series. A patch that breaks the build is
+    rejected and the series replayed without it."""
     with tempfile.TemporaryDirectory(prefix="fasttrack-") as tmpd, \
-            gitutil.Worktree(repo, ref, Path(tmpd) / "wt") as wt:
+            gitutil.Worktree(repo, ref, Path(tmpd) / "wt") as wt, \
+            concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+        warm = pool.submit(gitutil.stable_backports, repo, ref)   # history grep, while make prepares
         b = start_builder(builder, wt.path, Path(tmpd) / "out")
+        warm.result()
+        rejected: dict[int, str] = {}                              # id(candidate) → build errors
+        while True:
+            for c in candidates:
+                if id(c) in rejected:
+                    c.verdict, c.reason = CONFLICT, "applies unchanged but does not build; needs a backport or prerequisite"
+                    c.build_log, c.files = rejected[id(c)], gitutil.patch_files(c.patch)
+                else:
+                    _verify_one(repo, ref, wt, c, arches)
+            accepted = [c for c in candidates if c.verdict == ACCEPTED]
+            bad = b.batch_regressions([c.patch for c in accepted], build.worktree_flip(wt.path)) if b else {}
+            if not bad:
+                break
+            for i, err in bad.items():
+                rejected[id(accepted[i])] = err
+                log.info("%s %s: applies but does not build", accepted[i].series, accepted[i].upstream[:12])
+            gitutil.git(wt.path, "reset", "--quiet", "--hard", ref)
+        # Hints read only history, not the tree: in parallel.
+        conflicts = [c for c in candidates if c.verdict == CONFLICT and c.upstream]
+        for c, hints in zip(conflicts, pool.map(
+                lambda c: gitutil.prerequisite_hints(repo, ref, c.upstream, c.files), conflicts)):
+            c.prerequisites = hints
         n = 0
         for i, c in enumerate(candidates, 1):
-            _verify_one(repo, ref, wt, c, arches, b)
             if c.verdict == ACCEPTED:
                 n += 1
                 c.filename = f"{n:04d}-{(c.upstream or 'q')[:12]}-{_slug(c.subject)}.patch"
@@ -172,8 +198,10 @@ def start_builder(builder, tree: Path, out: Path):
 
 
 def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate,
-                arches: Optional[list[str]] = None, b=None) -> None:
-    """Sets the verdict of one candidate; applies it to ``wt`` when accepted."""
+                arches: Optional[list[str]] = None) -> None:
+    """Sets the verdict of one candidate; applies it to ``wt`` when accepted.
+    Prerequisite hints and the build check are left to :func:`verify`."""
+    c.reason, c.build_log, c.files, c.prerequisites = "", "", [], []
     if gitutil.in_history(repo, c.upstream, ref):
         c.verdict, c.reason = PRESENT, "fix commit is in the stable history"
         return
@@ -199,18 +227,8 @@ def _verify_one(repo: Path, ref: str, wt: gitutil.Worktree, c: Candidate,
             return
         c.verdict, c.reason = CONFLICT, "does not apply unchanged; needs a manual backport or prerequisite"
         c.files = gitutil.patch_files(c.patch)
-        if c.upstream:
-            c.prerequisites = gitutil.prerequisite_hints(repo, ref, c.upstream, c.files)
         return
     wt.apply(c.patch)
-    c.build_log = b.regressions([c.patch], build.worktree_flip(wt.path)) if b else ""
-    if c.build_log:
-        gitutil.git(wt.path, "apply", "-R", "--index", input=c.patch)
-        c.verdict, c.reason = CONFLICT, "applies unchanged but does not build; needs a backport or prerequisite"
-        c.files = gitutil.patch_files(c.patch)
-        if c.upstream:
-            c.prerequisites = gitutil.prerequisite_hints(repo, ref, c.upstream, c.files)
-        return
     c.verdict = ACCEPTED
 
 

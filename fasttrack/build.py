@@ -103,6 +103,54 @@ class Builder:
                 bad[f] = text
         return bad
 
+    def failing(self, files: list[str]) -> set[str]:
+        """Files whose object does not build, from one parallel ``make -k``."""
+        if not files:
+            return set()
+        objs = {f: self.target(f) for f in files}
+        ok, text = self._make("-k", *sorted(set(objs.values())))
+        if ok:
+            return set()
+        bad = set(re.findall(r"\*\*\* \[[^\]]*?: ([^\]\s]+\.o)\] Error", text))
+        if not bad:                            # failed outside any object: count all
+            return set(files)
+        return {f for f, o in objs.items() if o in bad}
+
+    def batch_regressions(self, patches: list[str], apply: Callable[[str, bool], None]) -> dict[int, str]:
+        """Like :meth:`regressions` for a whole applied series, with one parallel
+        build. Returns index of the patch to blame → compiler errors."""
+        files = [set(self.files(p)) for p in patches]
+        bad = self.failing(sorted(set().union(*files)))
+        if not bad:
+            return {}
+        for p in reversed(patches):
+            apply(p, True)
+        try:
+            base = self.failing(sorted(bad))
+        finally:
+            for p in patches:
+                apply(p, False)
+        out: dict[int, str] = {}
+        for f in sorted(bad - base):
+            ok, text = self._make(self.target(f))
+            if ok:
+                continue
+            touching = [i for i, fs in enumerate(files) if f in fs]
+            culprit = touching[-1] if touching else len(patches) - 1
+            if len(touching) > 1:              # the last patch whose removal fixes the build
+                undone = []
+                for i in reversed(range(len(patches))):
+                    apply(patches[i], True)
+                    undone.append(i)
+                    if i in touching and self._make(self.target(f))[0]:
+                        culprit = i
+                        break
+                for i in reversed(undone):
+                    apply(patches[i], False)
+            log_text = f"## {f}\n{summary(text.replace(f'{self.tree}/', ''))}"
+            out[culprit] = (out[culprit] + "\n" + log_text) if culprit in out else log_text
+        return out
+
     def regressions(self, patches: list[str], apply: Callable[[str, bool], None]) -> str:
         """Compiler errors the patches bring in. The patches are applied to the
         tree; ``apply(patch, reverse)`` flips one in the working tree."""
