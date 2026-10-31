@@ -70,10 +70,10 @@ jobs:
     runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 180
     steps:
-      # data/, two worktrees and the build check need about 12 GB.
+      # data/ and one worktree plus build dir per series: about 20 GB for four series.
       - name: Free space
         id: space
-        run: echo "low=$([ "$(df --output=avail -BG / | tail -1 | tr -dc 0-9)" -lt 20 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+        run: echo "low=$([ "$(df --output=avail -BG / | tail -1 | tr -dc 0-9)" -lt 40 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
 
       # Same as armbian/shallow: linux.git and its worktrees need the space.
       - name: Free Github Runner
