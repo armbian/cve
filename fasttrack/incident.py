@@ -270,7 +270,8 @@ with the line `Not affected`, then explain why.
 
 def prepare_work(repo: Path, res: Resolution, work_root: Path) -> Path:
     """Persistent work package for a resolution that has unpatched parts."""
-    wdir = work_root / res.cve / res.series
+    # Absolute: git -C <repo> resolves a relative worktree path against the repo.
+    wdir = (work_root / res.cve / res.series).resolve()
     tree = wdir / "tree"
     if tree.exists():
         gitutil.git(repo, "worktree", "remove", "--force", str(tree), check=False)
