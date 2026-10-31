@@ -1,0 +1,67 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 27ef1795bc4e47cae838e0a3ced531c549f9b23d
+X-Fasttrack-CVE: CVE-2026-98914
+X-Fasttrack-Backport: cve/CVE-2026-98914/6.12
+From: Candice Li <candice.li@amd.com>
+Date: Sat, 31 Oct 2026 20:59:41 +0100
+Subject: [PATCH] drm/amdgpu: cap ATOM command table nesting depth
+
+commit 27ef1795bc4e47cae838e0a3ced531c549f9b23d upstream.
+
+[ Backport: atom.h context differs. 6.12 struct atom_context has no build_num field. ]
+---
+ drivers/gpu/drm/amd/amdgpu/atom.c | 11 +++++++++++
+ drivers/gpu/drm/amd/amdgpu/atom.h |  3 +++
+ 2 files changed, 14 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/atom.c b/drivers/gpu/drm/amd/amdgpu/atom.c
+index bed3083f317b..31b1ca4ae315 100644
+--- a/drivers/gpu/drm/amd/amdgpu/atom.c
++++ b/drivers/gpu/drm/amd/amdgpu/atom.c
+@@ -59,6 +59,9 @@
+ 
+ #define ATOM_CMD_TIMEOUT_SEC	20
+ 
++/* Limit ATOM command table recursion (calltable) to avoid kernel stack overflow. */
++#define ATOM_EXECUTE_MAX_DEPTH	32
++
+ typedef struct {
+ 	struct atom_context *ctx;
+ 	uint32_t *ps, *ws;
+@@ -1229,6 +1232,13 @@ static int amdgpu_atom_execute_table_locked(struct atom_context *ctx, int index,
+ 	if (!base)
+ 		return -EINVAL;
+ 
++	if (ctx->execute_depth >= ATOM_EXECUTE_MAX_DEPTH) {
++		DRM_ERROR("atombios command table nesting exceeded limit (%u)\n",
++			  ATOM_EXECUTE_MAX_DEPTH);
++		return -ELOOP;
++	}
++	ctx->execute_depth++;
++
+ 	len = CU16(base + ATOM_CT_SIZE_PTR);
+ 	ws = CU8(base + ATOM_CT_WS_PTR);
+ 	ps = CU8(base + ATOM_CT_PS_PTR) & ATOM_CT_PS_MASK;
+@@ -1285,6 +1295,7 @@ static int amdgpu_atom_execute_table_locked(struct atom_context *ctx, int index,
+ free:
+ 	if (ws)
+ 		kfree(ectx.ws);
++	ctx->execute_depth--;
+ 	return ret;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/atom.h b/drivers/gpu/drm/amd/amdgpu/atom.h
+index b807f6639a4c..5ecdb578aeee 100644
+--- a/drivers/gpu/drm/amd/amdgpu/atom.h
++++ b/drivers/gpu/drm/amd/amdgpu/atom.h
+@@ -151,6 +151,9 @@ struct atom_context {
+ 	uint32_t version;
+ 	uint8_t vbios_ver_str[STRLEN_NORMAL];
+ 	uint8_t date[STRLEN_NORMAL];
++
++	/* Nesting depth for ATOM_OP_CALLTABLE */
++	unsigned int execute_depth;
+ };
+ 
+ extern int amdgpu_atom_debug;

@@ -2,8 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 26 patch(es)
-- added 6.1: 23 patch(es)
+- added 6.12: 33 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -161,7 +160,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (26)
+### Included (63)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -191,90 +190,57 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-98802 | `8ae3f4067ba4` | mainline | seg6: ensure packet data is writable before modifying SRH and IPv6 DA |
 |  | CVE-2026-98966 | `184b5ddf82d4` | mainline | bonding: fix the program leak when XDP is replaced |
 |  | CVE-2026-99026 | `489114c9ecae` | mainline | net: team: free skb when broadcast has no txable port |
+|  | CVE-2026-46279 | `6b1842775a46` | stable-list | mm/alloc_tag: clear codetag for pages allocated before page_ext initialization |
+|  | CVE-2026-52953 | `a6dea58d8625` | stable-list | iommu/vt-d: Fix oops due to out of scope access |
+|  | CVE-2026-80670 | `5484b43a0ec8` | stable-list | perf tools: Use perf_env__get_cpu_topology() in machine__resolve() |
+|  | CVE-2025-40025 | `c18ecd99e0c7` | claude | f2fs: fix to do sanity check on node footer for non inode dnode |
+|  | CVE-2025-71117 | `935a20d1bebf` | claude | block: Remove queue freezing from several sysfs store callbacks |
+|  | CVE-2025-68304 | `79a2d4678ba9` | claude | Bluetooth: hci_core: lookup hci_conn on RX path on protocol side |
+|  | CVE-2026-23102 | `d2907cbe9ea0` | claude | arm64/fpsimd: signal: Fix restoration of SVE context |
+|  | CVE-2026-31537 | `34abd408c8ba` | claude | smb: server: make use of smbdirect_socket.send_io.bcredits |
+|  | CVE-2026-23348 | `—` | claude | cxl: Move devm_cxl_add_nvdimm_bridge() to cxl_pmem.ko |
+|  | CVE-2026-23348 | `96a1fd0d84b1` | claude | cxl: Fix race of nvdimm_bus object when creating nvdimm objects |
+|  | CVE-2026-23348 | `—` | claude | cxl/acpi: Fix CXL_ACPI and CXL_PMEM Kconfig tristate mismatch |
+|  | CVE-2026-23348 | `—` | claude | cxl: Adjust the startup priority of cxl_pmem to be higher than that of cxl_acpi |
+|  | CVE-2026-43367 | `72ecb1dae727` | claude | drm/amd: Fix a few more NULL pointer dereference in device cleanup |
+|  | CVE-2026-53106 | `350de5b8a9be` | claude | bpf: Do not allow deleting local storage in NMI |
+|  | CVE-2026-31777 | `277c6960d4dd` | claude | ALSA: ctxfi: Check the error for index mapping |
+|  | CVE-2026-43326 | `415cb193bb97` | claude | sched_ext: Fix SCX_KICK_WAIT deadlock by deferring wait to balance callback |
+|  | CVE-2026-31692 | `7b735ef81286` | claude | rtnetlink: add missing netlink_ns_capable() check for peer netns |
+|  | CVE-2026-46017 | `3bac01168982` | claude | mm: fix deferred split queue races during migration |
+|  | CVE-2026-31591 | `cb923ee6a80f` | claude | KVM: SEV: Lock all vCPUs when synchronzing VMSAs for SNP launch finish |
+|  | CVE-2026-23265 | `50ac3ecd8e05` | claude | f2fs: fix to do sanity check on node footer in {read,write}_end_io |
+|  | CVE-2026-63858 | `10f79dbd7719` | claude | netfilter: nf_tables: add hook transactions for device deletions |
+|  | CVE-2026-46153 | `fc69decc811b` | claude | 8021q: use RCU for egress QoS mappings |
+|  | CVE-2026-46153 | `7dddc74af369` | claude | 8021q: delete cleared egress QoS mappings |
+|  | CVE-2026-64520 | `—` | claude | firmware: arm_ffa: Fix big-endian support in __ffa_partition_info_regs_get() |
+|  | CVE-2026-64520 | `3974ea193840` | claude | firmware: arm_ffa: Bound PARTITION_INFO_GET_REGS copies |
+|  | CVE-2026-80872 | `—` | claude | firmware_loader: Add cancel helper for async requests |
+|  | CVE-2026-80872 | `5367e2ad14f0` | claude | ALSA: hda/tas2781: Cancel async firmware request at unbind |
+|  | CVE-2026-64078 | `527d6931473b` | claude | netfilter: x_tables: add and use xt_unregister_table_pre_exit |
+|  | CVE-2026-64078 | `b4597d5fd7d2` | claude | netfilter: x_tables: add and use xtables_unregister_table_exit |
+|  | CVE-2026-97499 | `f37bc31447c0` | claude | coresight: perf: Retrieve path and source from event data |
+|  | CVE-2026-98914 | `27ef1795bc4e` | claude | drm/amdgpu: cap ATOM command table nesting depth |
+|  | CVE-2026-98875 | `604d0efb17cc` | claude | drm/nouveau/gsp: add SEC2 to GA100 chip table |
+|  | CVE-2026-63941 | `837263307489` | claude | KVM: arm64: Correctly cap ZCR_EL2 provided by a guest hypervisor |
+|  | CVE-2026-74354 | `80b89d0226a0` | claude | bpf: Take mmap_lock in zap_pages() |
+|  | CVE-2026-63805 | `4e67f504ee9d` | claude | crypto: nx - fix nx_crypto_ctx_exit argument |
+|  | CVE-2026-74314 | `a3a81d247651` | claude | bpf: Cancel special fields on map value recycle |
+|  | CVE-2026-72454 | `650716f23eac` | claude | i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev() |
 
-### Needs a backport (204)
+### Needs a backport (134)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2024-58015 | `eb8c05347138` | mainline | wifi: ath12k: Fix for out-of bound access error |
-|  | CVE-2025-21752 | `dc14ba10781b` | mainline | btrfs: don't use btrfs_set_item_key_safe on RAID stripe-extents |
-| does not build | CVE-2025-38036 | `13265fe7426e` | mainline | drm/xe/vf: Perform early GT MMIO initialization to read GMDID |
-|  | CVE-2025-38017 | `d9ec73301099` | mainline | fs/eventpoll: fix endless busy loop after timeout has expired |
 |  | CVE-2025-38311 | `120f28a6f314` | mainline | iavf: get rid of the crit lock |
-|  | CVE-2025-39762 | `158b9201c17f` | mainline | drm/amd/display: add null check |
-|  | CVE-2025-38411 | `9df7b5ebead6` | mainline | netfs: Fix double put of request |
-|  | CVE-2025-40025 | `c18ecd99e0c7` | mainline | f2fs: fix to do sanity check on node footer for non inode dnode |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
-|  | CVE-2025-40217 | `3c17001b21b9` | mainline | pidfs: validate extensible ioctls |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
-|  | CVE-2025-40247 | `830d68f2cb8a` | mainline | drm/msm: Fix pgtable prealloc error path |
-|  | CVE-2025-71202 | `e37d5a2d60a3` | mainline | iommu/sva: invalidate stale IOTLB entries for kernel address space |
-|  | CVE-2025-71117 | `935a20d1bebf` | mainline | block: Remove queue freezing from several sysfs store callbacks |
-|  | CVE-2025-68304 | `79a2d4678ba9` | mainline | Bluetooth: hci_core: lookup hci_conn on RX path on protocol side |
-|  | CVE-2026-43301 | `9cf4452e824c` | mainline | media: chips-media: wave5: Fix PM runtime usage count underflow |
-|  | CVE-2026-22983 | `7d11e047eda5` | mainline | net: do not write to msg_get_inq in callee |
-|  | CVE-2026-22995 | `f0d385f6689f` | mainline | ublk: fix use-after-free in ublk_partition_scan_work |
-|  | CVE-2026-23265 | `50ac3ecd8e05` | mainline | f2fs: fix to do sanity check on node footer in {read,write}_end_io |
-|  | CVE-2026-23117 | `42fb5f3deb58` | mainline | ice: add missing ice_deinit_hw() in devlink reinit path |
-|  | CVE-2026-23102 | `d2907cbe9ea0` | mainline | arm64/fpsimd: signal: Fix restoration of SVE context |
-|  | CVE-2026-23152 | `1eab33aa63c9` | mainline | wifi: mac80211: correctly decode TTLM with default link map |
-|  | CVE-2026-31537 | `34abd408c8ba` | mainline | smb: server: make use of smbdirect_socket.send_io.bcredits |
-|  | CVE-2026-31536 | `9da82dc73cb0` | mainline | smb: server: let send_done handle a completion without IB_SEND_SIGNALED |
-|  | CVE-2026-23341 | `8363c0286333` | mainline | accel/amdxdna: Fix crash when destroying a suspended hardware context |
-|  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling |
-|  | CVE-2026-23348 | `96a1fd0d84b1` | mainline | cxl: Fix race of nvdimm_bus object when creating nvdimm objects |
-|  | CVE-2026-43367 | `72ecb1dae727` | mainline | drm/amd: Fix a few more NULL pointer dereference in device cleanup |
-|  | CVE-2026-31437 | `e9075e420a1e` | mainline | netfs: Fix NULL pointer dereference in netfs_unbuffered_write() on retry |
-|  | CVE-2026-43070 | `a3125bc01884` | mainline | bpf: Reset register ID for BPF_END value tracking |
-|  | CVE-2026-43440 | `87c2302813ab` | mainline | net/mana: Null service_wq on setup error to prevent double destroy |
-|  | CVE-2026-31435 | `7e57523490cd` | mainline | netfs: Fix read abandonment during retry |
-|  | CVE-2026-53106 | `350de5b8a9be` | mainline | bpf: Do not allow deleting local storage in NMI |
-|  | CVE-2026-31777 | `277c6960d4dd` | mainline | ALSA: ctxfi: Check the error for index mapping |
-|  | CVE-2026-31742 | `40014493cece` | mainline | vt: discard stale unicode buffer on alt screen exit after resize |
-|  | CVE-2026-43326 | `415cb193bb97` | mainline | sched_ext: Fix SCX_KICK_WAIT deadlock by deferring wait to balance callback |
-|  | CVE-2026-31692 | `7b735ef81286` | mainline | rtnetlink: add missing netlink_ns_capable() check for peer netns |
-|  | CVE-2026-46017 | `3bac01168982` | mainline | mm: fix deferred split queue races during migration |
-| does not build | CVE-2026-31591 | `cb923ee6a80f` | mainline | KVM: SEV: Lock all vCPUs when synchronzing VMSAs for SNP launch finish |
-|  | CVE-2026-46279 | `6b1842775a46` | mainline | mm/alloc_tag: clear codetag for pages allocated before page_ext initialization |
-|  | CVE-2026-46314 | `fb44d589bf31` | mainline | drm/v3d: Reject empty multisync extension to prevent infinite loop |
-|  | CVE-2026-63858 | `10f79dbd7719` | mainline | netfilter: nf_tables: add hook transactions for device deletions |
-|  | CVE-2026-46153 | `7dddc74af369` | mainline | 8021q: delete cleared egress QoS mappings |
-|  | CVE-2026-52994 | `1cb36e252211` | mainline | vsock/virtio: fix MSG_ZEROCOPY pinned-pages accounting |
-|  | CVE-2026-46147 | `73b9c1e5da84` | mainline | KVM: arm64: Fix pin leak and publication ordering in __pkvm_init_vcpu() |
-|  | CVE-2026-64520 | `3974ea193840` | mainline | firmware: arm_ffa: Bound PARTITION_INFO_GET_REGS copies |
-|  | CVE-2026-80872 | `5367e2ad14f0` | mainline | ALSA: hda/tas2781: Cancel async firmware request at unbind |
-|  | CVE-2026-64078 | `b4597d5fd7d2` | mainline | netfilter: x_tables: add and use xtables_unregister_table_exit |
-|  | CVE-2026-52953 | `a6dea58d8625` | mainline | iommu/vt-d: Fix oops due to out of scope access |
 |  | CVE-2026-64066 | `8a8c0cfdf465` | mainline | netfs: Fix netfs_read_to_pagecache() to pause on subreq failure |
 |  | CVE-2026-64067 | `b5782e2d462c` | mainline | netfs: Fix missing barriers when accessing stream->subrequests locklessly |
 |  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
-|  | CVE-2026-52966 | `dc366607c41c` | mainline | drm: Replace old pointer to new idr |
-|  | CVE-2026-64212 | `d733ed481fd2` | mainline | wifi: iwlwifi: mld: don't dereference a pointer before NULL checking it |
-|  | CVE-2026-97499 | `f37bc31447c0` | mainline | coresight: perf: Retrieve path and source from event data |
-|  | CVE-2026-98914 | `27ef1795bc4e` | mainline | drm/amdgpu: cap ATOM command table nesting depth |
-|  | CVE-2026-64255 | `f056fc2b9274` | mainline | wifi: iwlwifi: mld: validate sta_mask before ffs() in BA session handlers |
-|  | CVE-2026-98875 | `604d0efb17cc` | mainline | drm/nouveau/gsp: add SEC2 to GA100 chip table |
-|  | CVE-2026-63941 | `837263307489` | mainline | KVM: arm64: Correctly cap ZCR_EL2 provided by a guest hypervisor |
-|  | CVE-2026-63885 | `7164d78559b0` | mainline | drm/gem: fix race between change_handle and handle_delete |
-|  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() |
-|  | CVE-2026-53246 | `0861615c28de` | mainline | sctp: validate cached peer INIT chunk length in COOKIE_ECHO processing |
-|  | CVE-2026-74354 | `80b89d0226a0` | mainline | bpf: Take mmap_lock in zap_pages() |
-|  | CVE-2026-46317 | `70543358fa08` | mainline | KVM: arm64: Reassign nested_mmus array behind mmu_lock |
-|  | CVE-2026-63805 | `4e67f504ee9d` | mainline | crypto: nx - fix nx_crypto_ctx_exit argument |
-|  | CVE-2026-72203 | `76bc14c7097f` | mainline | ntfs: skip extent mft records in writeback to prevent deadlock |
-|  | CVE-2026-72200 | `ec4f061f2219` | mainline | ntfs: detect mapping-pairs LCN accumulator overflow |
-|  | CVE-2026-53145 | `1a4f03d22fb6` | mainline | drm/gem: Try to fix change_handle ioctl, attempt 4 |
-|  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
-|  | CVE-2026-74324 | `c7369a00860a` | mainline | wifi: mt76: mt7925: validate skb length in testmode query |
-|  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes |
-|  | CVE-2026-74314 | `a3a81d247651` | mainline | bpf: Cancel special fields on map value recycle |
-|  | CVE-2026-80670 | `5484b43a0ec8` | mainline | perf tools: Use perf_env__get_cpu_topology() in machine__resolve() |
-|  | CVE-2026-72454 | `650716f23eac` | mainline | i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev() |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
 |  | CVE-2026-63819 | `8712353ed80f` | mainline | f2fs: fix to do sanity check on f2fs_get_node_folio_ra() |
-|  | CVE-2026-98897 | `27a9bc968d4a` | mainline | ksmbd: don't hold ci->m_lock while waiting for a lease break ack |
-| does not build | CVE-2026-72365 | `ba6a9f6533c7` | mainline | netfs: Fix writethrough to use collection offload |
 |  | CVE-2026-72355 | `5c6ce05e4065` | mainline | netfs: Fix barriering when walking subrequest list |
 |  | CVE-2026-93154 | `f67d8a08f60c` | mainline | RDMA/irdma: Add refcounting to user ring MRs |
 |  | CVE-2026-89722 | `dc76258d0132` | mainline | PCI/sysfs: Fix out-of-bounds read in pci_write_legacy_io() |
@@ -400,6 +366,51 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-99172 | `f0e48172a59e` | mainline | ipc: drop the mqueue mount with kern_unmount() on setup failure |
 |  | CVE-2026-99189 | `38d44f78f041` | mainline | gpio: mxc: fix race between chained IRQ handler install and probe completion |
 |  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
+
+### Not affected per work package (needs review) (40)
+
+| | CVE | Upstream | Source | Subject |
+|---|---|---|---|---|
+|  | CVE-2024-58015 | `eb8c05347138` | mainline | wifi: ath12k: Fix for out-of bound access error |
+|  | CVE-2025-21752 | `dc14ba10781b` | mainline | btrfs: don't use btrfs_set_item_key_safe on RAID stripe-extents |
+| does not build | CVE-2025-38036 | `13265fe7426e` | mainline | drm/xe/vf: Perform early GT MMIO initialization to read GMDID |
+|  | CVE-2025-38017 | `d9ec73301099` | mainline | fs/eventpoll: fix endless busy loop after timeout has expired |
+|  | CVE-2025-39762 | `158b9201c17f` | mainline | drm/amd/display: add null check |
+|  | CVE-2025-38411 | `9df7b5ebead6` | mainline | netfs: Fix double put of request |
+|  | CVE-2025-40217 | `3c17001b21b9` | mainline | pidfs: validate extensible ioctls |
+|  | CVE-2025-40247 | `830d68f2cb8a` | mainline | drm/msm: Fix pgtable prealloc error path |
+|  | CVE-2025-71202 | `e37d5a2d60a3` | mainline | iommu/sva: invalidate stale IOTLB entries for kernel address space |
+|  | CVE-2026-43301 | `9cf4452e824c` | mainline | media: chips-media: wave5: Fix PM runtime usage count underflow |
+|  | CVE-2026-22983 | `7d11e047eda5` | mainline | net: do not write to msg_get_inq in callee |
+|  | CVE-2026-22995 | `f0d385f6689f` | mainline | ublk: fix use-after-free in ublk_partition_scan_work |
+|  | CVE-2026-23117 | `42fb5f3deb58` | mainline | ice: add missing ice_deinit_hw() in devlink reinit path |
+|  | CVE-2026-23152 | `1eab33aa63c9` | mainline | wifi: mac80211: correctly decode TTLM with default link map |
+|  | CVE-2026-31536 | `9da82dc73cb0` | mainline | smb: server: let send_done handle a completion without IB_SEND_SIGNALED |
+|  | CVE-2026-23341 | `8363c0286333` | mainline | accel/amdxdna: Fix crash when destroying a suspended hardware context |
+|  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling |
+|  | CVE-2026-31437 | `e9075e420a1e` | mainline | netfs: Fix NULL pointer dereference in netfs_unbuffered_write() on retry |
+|  | CVE-2026-43070 | `a3125bc01884` | mainline | bpf: Reset register ID for BPF_END value tracking |
+|  | CVE-2026-43440 | `87c2302813ab` | mainline | net/mana: Null service_wq on setup error to prevent double destroy |
+|  | CVE-2026-31435 | `7e57523490cd` | mainline | netfs: Fix read abandonment during retry |
+|  | CVE-2026-31742 | `40014493cece` | mainline | vt: discard stale unicode buffer on alt screen exit after resize |
+|  | CVE-2026-46314 | `fb44d589bf31` | mainline | drm/v3d: Reject empty multisync extension to prevent infinite loop |
+|  | CVE-2026-52994 | `1cb36e252211` | mainline | vsock/virtio: fix MSG_ZEROCOPY pinned-pages accounting |
+|  | CVE-2026-46147 | `73b9c1e5da84` | mainline | KVM: arm64: Fix pin leak and publication ordering in __pkvm_init_vcpu() |
+|  | CVE-2026-52966 | `dc366607c41c` | mainline | drm: Replace old pointer to new idr |
+|  | CVE-2026-64212 | `d733ed481fd2` | mainline | wifi: iwlwifi: mld: don't dereference a pointer before NULL checking it |
+|  | CVE-2026-64255 | `f056fc2b9274` | mainline | wifi: iwlwifi: mld: validate sta_mask before ffs() in BA session handlers |
+|  | CVE-2026-63885 | `7164d78559b0` | mainline | drm/gem: fix race between change_handle and handle_delete |
+|  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() |
+|  | CVE-2026-53246 | `0861615c28de` | mainline | sctp: validate cached peer INIT chunk length in COOKIE_ECHO processing |
+|  | CVE-2026-46317 | `70543358fa08` | mainline | KVM: arm64: Reassign nested_mmus array behind mmu_lock |
+|  | CVE-2026-72203 | `76bc14c7097f` | mainline | ntfs: skip extent mft records in writeback to prevent deadlock |
+|  | CVE-2026-72200 | `ec4f061f2219` | mainline | ntfs: detect mapping-pairs LCN accumulator overflow |
+|  | CVE-2026-53145 | `1a4f03d22fb6` | mainline | drm/gem: Try to fix change_handle ioctl, attempt 4 |
+|  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook |
+|  | CVE-2026-74324 | `c7369a00860a` | mainline | wifi: mt76: mt7925: validate skb length in testmode query |
+|  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes |
+|  | CVE-2026-98897 | `27a9bc968d4a` | mainline | ksmbd: don't hold ci->m_lock while waiting for a lease break ack |
+| does not build | CVE-2026-72365 | `ba6a9f6533c7` | mainline | netfs: Fix writethrough to use collection offload |
 
 Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).
 

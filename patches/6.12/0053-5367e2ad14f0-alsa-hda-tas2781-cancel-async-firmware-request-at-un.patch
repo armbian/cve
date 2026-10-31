@@ -1,0 +1,31 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 5367e2ad14f0ae9350a7aaf2e77c87de39a43ae9
+X-Fasttrack-CVE: CVE-2026-80872
+X-Fasttrack-Backport: cve/CVE-2026-80872/6.12
+From: =?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>
+Date: Sat, 31 Oct 2026 21:06:28 +0100
+Subject: [PATCH] ALSA: hda/tas2781: Cancel async firmware request at unbind
+
+commit 5367e2ad14f0ae9350a7aaf2e77c87de39a43ae9 upstream.
+
+[ Backport: 6.12 has the I2C driver at sound/pci/hda/tas2781_hda_i2c.c. ]
+[ Backport: drop the SPI hunk; 6.12 has no tas2781_hda_spi.c. ]
+---
+ sound/pci/hda/tas2781_hda_i2c.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/sound/pci/hda/tas2781_hda_i2c.c b/sound/pci/hda/tas2781_hda_i2c.c
+index 370d847517f9..d714f9288ca3 100644
+--- a/sound/pci/hda/tas2781_hda_i2c.c
++++ b/sound/pci/hda/tas2781_hda_i2c.c
+@@ -760,6 +760,9 @@ static void tas2781_hda_unbind(struct device *dev,
+ 		comp->playback_hook = NULL;
+ 	}
+ 
++	request_firmware_nowait_cancel(tas_hda->priv->dev, tas_hda->priv,
++				       tasdev_fw_ready);
++
+ 	tas2781_hda_remove_controls(tas_hda);
+ 
+ 	tasdevice_config_info_remove(tas_hda->priv);

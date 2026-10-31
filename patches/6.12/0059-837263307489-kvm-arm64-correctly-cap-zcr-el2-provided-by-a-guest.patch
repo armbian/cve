@@ -1,0 +1,136 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 83726330748981372bde86ed5411d7b306612991
+X-Fasttrack-CVE: CVE-2026-63941
+X-Fasttrack-Backport: cve/CVE-2026-63941/6.12
+From: Mark Brown <broonie@kernel.org>
+Date: Sat, 31 Oct 2026 21:01:25 +0100
+Subject: [PATCH] KVM: arm64: Correctly cap ZCR_EL2 provided by a guest
+ hypervisor
+
+commit 83726330748981372bde86ed5411d7b306612991 upstream.
+
+[ Backport: keep the 6.12 nested check (vcpu_has_nv() && !is_hyp_ctxt()); 6.12 has no is_nested_ctxt() ]
+[ Backport: 6.12 sanitises only VNCR registers (no a0162020095e); mask LEN in access_zcr_el2() instead of a ZCR_EL2 RES0 mask in kvm_init_nv_sysregs(); ZCR_EL2 stays in place in enum vcpu_sysreg ]
+[ Backport: keep vcpu_read/write_sys_reg() and "return true" after the nested SVE trap, as in 6.12 ]
+
+ZCR_EL2 can be updated by a VHE guest hypervisor either using ZCR_EL2
+(which traps) or ZCR_EL1 (which does not trap). KVM handles both in
+different way:
+
+- on ZCR_EL2 trap, ZCR_EL2.LEN is immediately capped at the VM's own
+  VL limit. This has the potential to break existing SW that relies
+  on the full LEN field to be stateful.
+
+- on ZCR_EL1 access, we do absolutely nothing.
+
+On restoring the SVE context for an L2 guest, we directly restore the
+guest hypervisor's view of ZCR_EL2 into the physical ZCR_EL2. If the
+guest's view of the register was updated using the ZCR_EL2 accessor,
+the value has already been sanitised (with the caveat mentioned above).
+
+But if the guest used ZCR_EL1, the raw value is written into the HW,
+and the L2 guest can now access VLs that it shouldn't.
+
+Fix all the above by moving the VL capping to the restore points,
+ensuring that:
+
+- the HW is always programmed with a capped value, irrespective of
+  the accessor being used,
+
+- the ZCR_EL2.LEN field is always completely stateful, irrespective
+  of the accessor being used.
+
+Additionally, move ZCR_EL2 to be a sanitised register, ensuring that
+only the LEN field is actually stateful. This requires some creative
+construction of the RES0 mask, as the sysreg generation script does
+not yet generate RAZ/WI fields.
+
+Fixes: b3d29a823099 ("KVM: arm64: nv: Handle ZCR_EL2 traps")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260529-kvm-arm64-fix-zcr-len-nv-v2-1-86cad51992bd@kernel.org
+[maz: rewrote commit message, tidy up access_zcr_el2()]
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ arch/arm64/kvm/hyp/include/hyp/switch.h | 16 ++++++++++------
+ arch/arm64/kvm/sys_regs.c               | 12 ++++--------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
+index 9b387b56189f..817c5aa136e0 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -316,11 +316,13 @@ static inline bool kvm_hyp_handle_mops(struct kvm_vcpu *vcpu, u64 *exit_code)
+ 
+ static inline void __hyp_sve_restore_guest(struct kvm_vcpu *vcpu)
+ {
++	u64 zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
++
+ 	/*
+ 	 * The vCPU's saved SVE state layout always matches the max VL of the
+ 	 * vCPU. Start off with the max VL so we can load the SVE state.
+ 	 */
+-	sve_cond_update_zcr_vq(vcpu_sve_max_vq(vcpu) - 1, SYS_ZCR_EL2);
++	sve_cond_update_zcr_vq(zcr_el2, SYS_ZCR_EL2);
+ 	__sve_restore_state(vcpu_sve_pffr(vcpu),
+ 			    &vcpu->arch.ctxt.fp_regs.fpsr,
+ 			    true);
+@@ -330,8 +332,10 @@ static inline void __hyp_sve_restore_guest(struct kvm_vcpu *vcpu)
+ 	 * nested guest, as the guest hypervisor could select a smaller VL. Slap
+ 	 * that into hardware before wrapping up.
+ 	 */
+-	if (vcpu_has_nv(vcpu) && !is_hyp_ctxt(vcpu))
+-		sve_cond_update_zcr_vq(__vcpu_sys_reg(vcpu, ZCR_EL2), SYS_ZCR_EL2);
++	if (vcpu_has_nv(vcpu) && !is_hyp_ctxt(vcpu)) {
++		zcr_el2 = min(zcr_el2, __vcpu_sys_reg(vcpu, ZCR_EL2));
++		sve_cond_update_zcr_vq(zcr_el2, SYS_ZCR_EL2);
++	}
+ 
+ 	write_sysreg_el1(__vcpu_sys_reg(vcpu, vcpu_sve_zcr_elx(vcpu)), SYS_ZCR);
+ }
+@@ -355,11 +359,11 @@ static inline void fpsimd_lazy_switch_to_guest(struct kvm_vcpu *vcpu)
+ 		return;
+ 
+ 	if (vcpu_has_sve(vcpu)) {
++		zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
++
+ 		/* A guest hypervisor may restrict the effective max VL. */
+ 		if (vcpu_has_nv(vcpu) && !is_hyp_ctxt(vcpu))
+-			zcr_el2 = __vcpu_sys_reg(vcpu, ZCR_EL2);
+-		else
+-			zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
++			zcr_el2 = min(zcr_el2, __vcpu_sys_reg(vcpu, ZCR_EL2));
+ 
+ 		write_sysreg_el2(zcr_el2, SYS_ZCR);
+ 
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 94ba3bfca2ba..82f3cff9a4c8 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -2303,21 +2303,17 @@ static bool access_zcr_el2(struct kvm_vcpu *vcpu,
+ 			   struct sys_reg_params *p,
+ 			   const struct sys_reg_desc *r)
+ {
+-	unsigned int vq;
+-
+ 	if (guest_hyp_sve_traps_enabled(vcpu)) {
+ 		kvm_inject_nested_sve_trap(vcpu);
+ 		return true;
+ 	}
+ 
+-	if (!p->is_write) {
++	/* Bits 8:4 are RAZ/WI and 63:9 are RES0: only LEN is stateful */
++	if (!p->is_write)
+ 		p->regval = vcpu_read_sys_reg(vcpu, ZCR_EL2);
+-		return true;
+-	}
++	else
++		vcpu_write_sys_reg(vcpu, p->regval & ZCR_ELx_LEN_MASK, ZCR_EL2);
+ 
+-	vq = SYS_FIELD_GET(ZCR_ELx, LEN, p->regval) + 1;
+-	vq = min(vq, vcpu_sve_max_vq(vcpu));
+-	vcpu_write_sys_reg(vcpu, vq - 1, ZCR_EL2);
+ 	return true;
+ }
+ 
