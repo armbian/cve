@@ -268,8 +268,39 @@ with the line `Not affected`, then explain why.
 """
 
 
-def prepare_work(repo: Path, res: Resolution, work_root: Path) -> Path:
-    """Persistent work package for a resolution that has unpatched parts."""
+def series_stack(out: Path, series: str, head: str, own: str) -> list[str]:
+    """The patch set a new backport goes on top of: patches/<series>/ from the last
+    run, then cve/ backports made since, oldest first. ``own`` (<ID>/<series>) is left
+    out. Empty when patches/<series>/ was verified on another stable head."""
+    d = out / "patches" / series
+    if not (d / "base").exists() or (d / "base").read_text().strip() != head:
+        return []
+    tag = f"X-Fasttrack-Backport: cve/{own}\n"
+    texts = []
+    for name in (d / "series.conf").read_text().split("\n"):
+        if name and not name.startswith("#") and (d / name).exists():
+            texts.append((d / name).read_text(**gitutil.ENC))
+    have = "".join(t for t in texts if "X-Fasttrack-Backport:" in t)
+    newer = []
+    for meta_file in out.glob(f"cve/*/{series}/fasttrack.json"):
+        meta, cdir = json.loads(meta_file.read_text()), meta_file.parent
+        name = f"{cdir.parent.name}/{series}"
+        if meta.get("made") and name != own and f"X-Fasttrack-Backport: cve/{name}\n" not in have:
+            newer.append((meta["made"], [(cdir / p["filename"]).read_text(**gitutil.ENC)
+                                         for p in meta.get("patches", []) if (cdir / p["filename"]).exists()]))
+    for _, more in sorted(newer, key=lambda m: m[0]):
+        texts += more
+    return [t for t in texts if tag not in t]
+
+
+def _apply_stack(tree: Path, stack: list[str]) -> int:
+    """Apply what applies of ``stack`` to the index; returns how many applied."""
+    return sum(gitutil.ok(tree, "apply", "--index", input=t) for t in stack)
+
+
+def prepare_work(repo: Path, res: Resolution, work_root: Path, stack: list[str] = ()) -> Path:
+    """Persistent work package for a resolution that has unpatched parts.
+    ``stack`` (see :func:`series_stack`) is committed first, so the backport fits the set."""
     # Absolute: git -C <repo> resolves a relative worktree path against the repo.
     wdir = (work_root / res.cve / res.series).resolve()
     tree = wdir / "tree"
@@ -277,6 +308,9 @@ def prepare_work(repo: Path, res: Resolution, work_root: Path) -> Path:
         gitutil.git(repo, "worktree", "remove", "--force", str(tree), check=False)
     wdir.mkdir(parents=True, exist_ok=True)
     gitutil.git(repo, "worktree", "add", "--detach", "--quiet", str(tree), res.head)
+    n_stack = _apply_stack(tree, list(stack))
+    if n_stack:
+        gitutil.git(tree, "commit", "--quiet", "--no-verify", "-m", f"fasttrack: patches/{res.series} set")
     for c in res.patches:
         gitutil.git(tree, "apply", "--index", input=c.patch)
         gitutil.git(tree, "commit", "--quiet", "--no-verify", "-m", c.subject or c.upstream)
@@ -309,8 +343,11 @@ def prepare_work(repo: Path, res: Resolution, work_root: Path) -> Path:
         failing.append("### An earlier backport in this package did not build\n\n"
                        "```\n" + errlog.read_text(**gitutil.ENC).strip() + "\n```")
     resolved = ""
+    if n_stack:
+        resolved += f"\nThe first commit on top is the current patch set (`patches/{res.series}/`, " \
+                    f"{n_stack} patches). Your backport goes on top of it.\n"
     if res.patches:
-        resolved = "\nAlready committed on top (parts of this fix that applied):\n\n" + \
+        resolved += "\nAlready committed on top (parts of this fix that applied):\n\n" + \
                    "\n".join(f"- `{c.upstream[:12]}` {c.subject} ({c.verdict})" for c in res.patches) + "\n"
     (wdir / "BRIEF.md").write_text(BRIEF.format(
         cve=res.cve, series=res.series, title=res.title, description=res.description or "",
@@ -365,7 +402,7 @@ def claude_cost(wdir: Path) -> Optional[float]:
     return None
 
 
-def collect_work(repo: Path, res: Resolution, wdir: Path, builder=None) -> None:
+def collect_work(repo: Path, res: Resolution, wdir: Path, builder=None, stack: list[str] = ()) -> None:
     """Pick up commits made in the work package and re-verify the whole set.
     With ``builder``, a set that does not build is rejected; the errors go to
     build-errors.log, which the next BRIEF.md shows."""
@@ -395,6 +432,7 @@ def collect_work(repo: Path, res: Resolution, wdir: Path, builder=None) -> None:
     # Fresh tree, whole series, no fuzz: the same bar as everything else.
     with tempfile.TemporaryDirectory(prefix="fasttrack-recheck-") as tmpd, \
             gitutil.Worktree(repo, res.head, Path(tmpd) / "wt") as wt:
+        _apply_stack(wt.path, list(stack))
         broken = False
         for c in res.patches + new:
             if broken or not wt.check(c.patch):

@@ -213,11 +213,11 @@ def _superseded(c: Candidate, candidates: list[Candidate]) -> bool:
 
 
 def load_backports(cve_root: Path, series: str) -> list[Candidate]:
-    """Reviewed backports in cve/<ID>/<series>/, in series.conf order. On main they passed review."""
+    """Reviewed backports in cve/<ID>/<series>/. On main they passed review."""
     out = []
-    for meta_file in sorted(cve_root.glob(f"*/{series}/fasttrack.json")):
-        d = meta_file.parent
-        meta = json.loads(meta_file.read_text())
+    # Oldest first: a backport made later was built on top of the earlier ones.
+    metas = [(json.loads(f.read_text()), f.parent) for f in cve_root.glob(f"*/{series}/fasttrack.json")]
+    for meta, d in sorted(metas, key=lambda m: (m[0].get("made") or "", m[1].parent.name)):
         for p in meta.get("patches", []):
             f = d / p["filename"]
             if not f.exists():

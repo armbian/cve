@@ -396,6 +396,26 @@ git -C tree -c user.name=c -c user.email=c@c commit -qam "baz: fix race" -m "com
         self.assertEqual(self._cve_outcome(), "patched-needs-review")
         self.assertTrue(tree.is_dir())
 
+    def test_work_package_on_patch_set(self):
+        cli.main(["--config", str(self.cfg), "run"])
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--package"])
+        wdir = self.out / "work" / "CVE-2026-0003" / "6.18"
+        tree = wdir / "tree"
+        self.assertIn("fasttrack: patches/6.18 set", sh(tree, "git", "log", "--format=%s"))
+        self.assertIn("FIXED", (tree / "foo.c").read_text())          # A from the set
+        self.assertIn("current patch set", (wdir / "BRIEF.md").read_text())
+        sh(tree, "sed", "-i", "s/baz line 6 REWORKED/baz line 6 REWORKED FIXED/", "baz.c")
+        sh(tree, "git", "-c", "user.name=c", "-c", "user.email=c@c", "commit", "-qam", "baz: fix race",
+           "-m", f"commit {self.C} upstream.")
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--collect"])
+        self.assertEqual(self._cve_outcome(), "patched-needs-review")
+        meta = json.loads((self.out / "cve" / "CVE-2026-0003" / "6.18" / "fasttrack.json").read_text())
+        self.assertTrue(meta["made"])
+        # The next run carries the backport in the one patch set.
+        cli.main(["--config", str(self.cfg), "run"])
+        self.assertIn("X-Fasttrack-Backport: cve/CVE-2026-0003/6.18",
+                      "".join(p.read_text() for p in (self.out / "patches" / "6.18").glob("*.patch")))
+
     def test_unpatched_round_trip(self):
         cli.main(["--config", str(self.cfg), "run"])
         rc = cli.main(["--config", str(self.cfg), "cve", "--unpatched", "--adapt"])
