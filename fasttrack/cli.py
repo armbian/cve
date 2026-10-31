@@ -260,6 +260,15 @@ def _days_in_mainline(repo: Path, fixes: list[str], not_before: int = 0) -> floa
     return (time.time() - max(when.values())) / 86400 if when else float("inf")
 
 
+def cmd_release_notes(args) -> int:
+    cfg = _cfg(args)
+    out = Path(cfg["out"])
+    events_file = out / "events.json"
+    events = json.loads(events_file.read_text()) if events_file.exists() else []
+    print(emit.release_notes(out, events, args.title))
+    return 0
+
+
 def cmd_prune(args) -> int:
     cfg = _cfg(args)
     removed = incident.prune(Path(cfg["data"]) / "linux", Path(cfg["out"]) / "cve")
@@ -286,6 +295,9 @@ def main(argv=None) -> int:
     sub.add_parser("run", help="gather and verify; write patches, report, unpatched list").set_defaults(fn=cmd_run)
 
     sub.add_parser("prune", help="delete incident patches the stable head has absorbed").set_defaults(fn=cmd_prune)
+    r = sub.add_parser("release-notes", help="print release notes: the fixes in each patches/<series>/")
+    r.add_argument("--title", default="Kernel security fixes")
+    r.set_defaults(fn=cmd_release_notes)
 
     c = sub.add_parser("cve", help="resolve specific incidents")
     c.add_argument("ids", nargs="*", help="CVE ids")

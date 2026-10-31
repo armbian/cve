@@ -236,6 +236,16 @@ class TestRun(Fixture):
         cli.main(["--config", str(self.cfg), "run"])
         self.assertEqual(first, {p.name: p.read_text() for p in d.iterdir()})
 
+    def test_release_notes(self):
+        res = self.run_618(kev={"CVE-2026-0004": "x"})
+        emit.write_series_dir(self.out, res)
+        md = emit.release_notes(self.out, ["added 6.18: 2 patch(es)"], "Patches 2026-10-31")
+        self.assertIn("# Patches 2026-10-31", md)
+        self.assertIn("- added 6.18: 2 patch(es)", md)
+        self.assertIn(f"## 6.18 (base 6.18.2, {len(res.accepted)} fixes)", md)
+        self.assertIn("CVE-2026-0004 🔥 KEV", md)
+        self.assertIn(f"`{self.A[:12]}`", md)
+
     def test_events(self):
         res = self.run_618(kev={"CVE-2026-0004": "x"})
         state, events = emit.diff_state({"series": {"6.18": {"version": "6.18.1", "accepted": [self.A]}}}, [res])
