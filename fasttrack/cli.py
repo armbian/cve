@@ -53,6 +53,14 @@ def _cfg(args) -> dict:
     return cfg
 
 
+def cmd_fingerprint(args) -> int:
+    """Print a hash that changes when a run could give a different result."""
+    cfg = _cfg(args)
+    code = sorted(Path(__file__).parent.glob("*.py")) + [Path(args.config)]
+    print(sync.fingerprint([str(s) for s in cfg["series"]], cfg.get("sources"), code))
+    return 0
+
+
 def cmd_sync(args) -> int:
     cfg = _cfg(args)
     sync.sync(Path(cfg["data"]), [str(s) for s in cfg["series"]], cfg.get("sources"),
@@ -253,6 +261,8 @@ def main(argv=None) -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("sync", help="pull upstream sources").set_defaults(fn=cmd_sync)
+    sub.add_parser("fingerprint", help="print a hash of the upstream heads and feeds; "
+                   "a new hash means a run is due").set_defaults(fn=cmd_fingerprint)
     sub.add_parser("run", help="gather and verify; write patches, report, unpatched list").set_defaults(fn=cmd_run)
 
     sub.add_parser("prune", help="delete incident patches the stable head has absorbed").set_defaults(fn=cmd_prune)

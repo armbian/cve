@@ -125,10 +125,12 @@ Either way, the tool then takes Claude's commits and re-verifies the whole serie
 
 ## Automation
 
-`.github/workflows/fasttrack.yml` runs on a standard GitHub-hosted runner. No special runner or persistent disk is needed.
+`.github/workflows/fasttrack.yml` runs on a standard GitHub-hosted runner by default. No special runner or persistent disk is needed.
 
 - **Cache:** `data/` (the shallow `linux.git`, `vulns.git`, `stable-queue.git`) lives in the Actions cache. A fresh cache entry is made each ISO week, and between those every run starts from the last entry and fetches only what is new. Changing `fasttrack.yaml` starts a new cache.
-- **Hourly:** sync, `run`, then `prune`. Commits `patches/`, `cve/` deletions, `report.md`, `unpatched.json`, `state.json` and `events.json` to `main` when they changed. A run with nothing new commits nothing. Opens an issue labelled `security` when a pending CVE is actively exploited.
+- **Change check, every 15 minutes:** `fasttrack fingerprint` hashes the heads of `vulns.git`, `stable-queue.git` and the stable branches, the KEV and release feeds, and the tool's own files. It takes a few seconds. A full run starts only for a new hash.
+- **Full run:** sync, `run`, then `prune`. Changes to `patches/`, `cve/` deletions, `report.md`, `unpatched.json`, `state.json` and `events.json` go to `main` through a PR that the bot merges itself. A run with nothing new commits nothing. Opens an issue labelled `security` when a pending CVE is actively exploited.
+- **Runners:** repo variable `FASTTRACK_RUNNER` moves the full run to a self-hosted runner label, `BUILDTEST_RUNNER` the build test. Use a fixed runner for the full run, so `data/` stays on disk.
 - **Manual dispatch:** takes CVE ids, or `unpatched`, plus an optional fix commit and a Claude toggle. Results go to `cve/` on a branch, with a PR into `main` for review. Claude in CI needs the `ANTHROPIC_API_KEY` secret.
 
 ## Build test
