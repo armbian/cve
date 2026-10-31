@@ -20,6 +20,7 @@ from __future__ import annotations
 import json
 import shutil
 from pathlib import Path
+from typing import Optional
 
 from .engine import ACCEPTED, CONFLICT, MISSING, OTHER_ARCH, PRESENT, SeriesResult
 
@@ -85,7 +86,14 @@ def _with_provenance(c) -> str:
     return "\n".join(tags) + "\n" + body
 
 
-def report(results: list[SeriesResult], events: list[str]) -> str:
+def not_affected(c, series: str, attempts: dict) -> bool:
+    """True when a work package found every CVE of ``c`` not in this series."""
+    return bool(c.cves) and all(
+        attempts.get(cve, {}).get(series, {}).get("outcome", "").startswith("not-affected") for cve in c.cves)
+
+
+def report(results: list[SeriesResult], events: list[str], attempts: Optional[dict] = None) -> str:
+    attempts = attempts or {}
     out = ["# Kernel security fast-track", ""]
     if events:
         out += ["**Events this run**", ""] + [f"- {e}" for e in events] + [""]
@@ -100,11 +108,13 @@ def report(results: list[SeriesResult], events: list[str]) -> str:
                  if (n := sum(c.verdict == verdict for c in r.candidates))]
         if quiet:
             out += [" · ".join(quiet), ""]
-        groups = [(ACCEPTED, "Included (applies unchanged)"),
-                  (CONFLICT, "Needs a manual backport"),
-                  (MISSING, "Mainline commit not in mirror")]
-        for verdict, title in groups:
-            rows = [c for c in r.candidates if c.verdict == verdict]
+        done = {id(c) for c in r.candidates if c.verdict == CONFLICT and not_affected(c, r.series, attempts)}
+        groups = [(lambda c: c.verdict == ACCEPTED, "Included (applies unchanged)"),
+                  (lambda c: c.verdict == CONFLICT and id(c) not in done, "Needs a manual backport"),
+                  (lambda c: id(c) in done, "Not affected per work package (needs review)"),
+                  (lambda c: c.verdict == MISSING, "Mainline commit not in mirror")]
+        for match, title in groups:
+            rows = [c for c in r.candidates if match(c)]
             if not rows:
                 continue
             out += [f"### {title} ({len(rows)})", "",
@@ -115,7 +125,7 @@ def report(results: list[SeriesResult], events: list[str]) -> str:
                 cves = ", ".join(c.cves) or "—"
                 out.append(f"| {flag} | {cves} | `{c.upstream[:12] or '—'}` | {c.source} | {c.subject.replace('|', '/')} |")
             out.append("")
-        if any(c.verdict == CONFLICT for c in r.candidates):
+        if any(c.verdict == CONFLICT and id(c) not in done for c in r.candidates):
             out += ["Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).", ""]
         if not r.candidates:
             out += ["Nothing pending. The stable branch carries every known fix.", ""]
