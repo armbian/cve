@@ -4,13 +4,14 @@ name: build-test
 # build the changed .c files with allmodconfig. Fails on build errors.
 # Each arch is split over 32 shards; a PR tests only the series it changes.
 # Bot merges start it when they use the armbianworker token, not GITHUB_TOKEN.
+# A change to this file starts no run; use workflow_dispatch to test it.
 
 on:
   pull_request:
-    paths: ["cve/**", "patches/**", "scripts/build-test.sh", ".github/workflows/build-test.yml"]
+    paths: ["cve/**", "patches/**", "scripts/build-test.sh"]
   push:
     branches: [main]
-    paths: ["cve/**", "patches/**", "scripts/build-test.sh", ".github/workflows/build-test.yml"]
+    paths: ["cve/**", "patches/**", "scripts/build-test.sh"]
   workflow_dispatch:
 
 permissions:
@@ -56,7 +57,7 @@ jobs:
           dirs=()
           if [ "${{ github.event_name }}" = pull_request ]; then
             changed=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")
-            if ! grep -qE '^(scripts/build-test.sh|\.github/workflows/build-test.yml)$' <<<"$changed"; then
+            if ! grep -qx 'scripts/build-test.sh' <<<"$changed"; then
               for d in $(grep -oE '^(cve/[^/]+/[^/]+|patches/[^/]+)/' <<<"$changed" | sort -u); do
                 [ -f "$d/base" ] && dirs+=("$d")
               done
