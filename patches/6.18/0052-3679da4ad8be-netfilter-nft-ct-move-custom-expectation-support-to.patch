@@ -1,0 +1,346 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 3679da4ad8be84cddaf40bc307fef1fe13e051ff
+X-Fasttrack-CVE: CVE-2026-90237
+X-Fasttrack-Backport: cve/CVE-2026-90237/6.18
+From: Pablo Neira Ayuso <pablo@netfilter.org>
+Date: Sat, 31 Oct 2026 02:03:32 +0100
+Subject: [PATCH] netfilter: nft_ct: move custom expectation support to helper
+
+commit 3679da4ad8be84cddaf40bc307fef1fe13e051ff upstream.
+
+[ Backport: 6.18 has no helper ct_refcnt/rcu head (ac46f3f35b6e), so
+  nf_conntrack_helper_release() instead detaches the helper from all
+  conntracks via nf_ct_iterate_destroy(unhelp), removes its expectations
+  and waits for an rcu grace period; nft_ct frees the helper afterwards. ]
+[ Backport: nf_ct_iterate_destroy() takes pernet_ops_rwsem through
+  net_ns_barrier(), which deadlocks from the netns exit path, so
+  nft_ct_expect_obj_destroy() defers release to a work item that is
+  flushed on module removal. ]
+[ Backport: nf_conntrack_helper_unregister() is left as is, its ordering
+  and freeing differ from the new release function in 6.18. ]
+[ Backport: helper->help is not __rcu and is called unconditionally in
+  6.18, so it is not set to NULL on destroy; unhelp clears ct references
+  instead. ]
+[ Backport: expect_policy is a pointer in 6.18 (6031487d4e27 absent), the
+  policy is allocated together with the helper in struct
+  nft_ct_expect_helper; kzalloc() replaces kzalloc_obj(). ]
+[ Backport: 6.18 timeout is in seconds and nf_ct_expect_insert() takes it
+  from the helper policy, so policy.timeout = priv->timeout replaces
+  "exp->timeout += timeout" (6fb421bd07f1, b8b09dc2bf35 absent). ]
+[ Backport: no NAT follow-master block, 6.18 nft_ct has no such support. ]
+[ Backport: nfct_help_data() NULL checks dropped, 6.18 version cannot
+  return NULL; refcount_inc_not_zero() on the helper dropped. ]
+
+Originally, the ct expectation support called nf_ct_helper_ext_add() for
+confirmed conntracks, which is invalid, triggering a splat. This was
+fixed by commit 1710eb913bdc ("netfilter: nft_ct: skip expectations for
+confirmed conntrack") which restricted it to unconfirmed conntracks.
+
+However, early insertion of expectations into the expectations list when
+the conntrack is unconfirmed leads to stale entries pointing to the
+wrong hlist_head through .pprev due to ct extension reallocation.
+
+Commit 7c9664351980 ("netfilter: move nat hlist_head to nf_conn") moved
+the nat hlist_head to nf_conn for this reason:
+
+     1. ...
+     2. When reallocation of extension area occurs we need to fixup the
+        bysource hash head via hlist_replace_rcu.
+
+I'd rather not increase the size of the struct nf_conn for this feature
+has very limited scope: only one expectation can be created at a time
+given expect_clash() will make nf_ct_expect_related() reports EBUSY.
+For this reason, relax nf_ct_expect_related() not to drop packets in
+case expectation creation fails, therefore, expectation creation becomes
+best effort.
+
+To address this issue, add an internal ct helper and attach it to the
+conntrack entry to streamline the custom ct expectation support with
+existing ct helpers.
+
+Expose a new nf_conntrack_helper_release() function to release the
+internal helper that is allocated and attached to the conntrack entry to
+create the custom expectations. The nft_ct module removal always waits
+for rcu grace period, then the NULL helper callback is observed after
+this.
+
+This patch also restricts the creation of expectations to different
+helpers other than this custom helper that is created for this type of
+expectations.
+
+Fixes: 857b46027d6f ("netfilter: nft_ct: add ct expectations support")
+Reported-by: Jaeyeong Lee <iostreampy@proton.me>
+Link: https://patch.msgid.link/20260715144755.00ea7dfcd9f@proton.me
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ include/net/netfilter/nf_conntrack_helper.h |   1 +
+ net/netfilter/nf_conntrack_helper.c         |  16 ++
+ net/netfilter/nft_ct.c                      | 161 ++++++++++++++++----
+ 3 files changed, 152 insertions(+), 26 deletions(-)
+
+diff --git a/include/net/netfilter/nf_conntrack_helper.h b/include/net/netfilter/nf_conntrack_helper.h
+index 24cf3d2d9745..5b76fa57fd76 100644
+--- a/include/net/netfilter/nf_conntrack_helper.h
++++ b/include/net/netfilter/nf_conntrack_helper.h
+@@ -105,6 +105,7 @@ void nf_ct_helper_init(struct nf_conntrack_helper *helper,
+ 
+ int nf_conntrack_helper_register(struct nf_conntrack_helper *);
+ void nf_conntrack_helper_unregister(struct nf_conntrack_helper *);
++void nf_conntrack_helper_release(struct nf_conntrack_helper *);
+ 
+ int nf_conntrack_helpers_register(struct nf_conntrack_helper *, unsigned int);
+ void nf_conntrack_helpers_unregister(struct nf_conntrack_helper *,
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index ea0cdb7ec915..4c62dbad8e17 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -427,6 +427,22 @@ static bool expect_iter_me(struct nf_conntrack_expect *exp, void *data)
+ 	return this == me;
+ }
+ 
++/* Detach a helper that is not registered from all conntrack entries and
++ * remove its expectations, the caller can release @me after this.
++ */
++void nf_conntrack_helper_release(struct nf_conntrack_helper *me)
++{
++	/* nf_ct_iterate_destroy() does an unconditional synchronize_rcu() as
++	 * last step, no conntrack can create expectations via @me after this.
++	 */
++	nf_ct_iterate_destroy(unhelp, me);
++	nf_ct_expect_iterate_destroy(expect_iter_me, me);
++
++	/* Wait for rcu readers of exp->helper. */
++	synchronize_rcu();
++}
++EXPORT_SYMBOL_GPL(nf_conntrack_helper_release);
++
+ void nf_conntrack_helper_unregister(struct nf_conntrack_helper *me)
+ {
+ 	mutex_lock(&nf_ct_helper_mutex);
+diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
+index fa32bbb31306..74c1692f6f75 100644
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -1216,13 +1216,111 @@ struct nft_ct_expect_obj {
+ 	u8		l4proto;
+ 	u8		size;
+ 	u32		timeout;
++
++	struct nf_conntrack_helper *helper;
++};
++
++struct nft_ct_expect_helper {
++	struct nf_conntrack_helper		helper;
++	struct nf_conntrack_expect_policy	policy;
++	struct list_head			list;
++};
++
++static LIST_HEAD(nft_ct_expect_helper_list);
++static DEFINE_SPINLOCK(nft_ct_expect_helper_lock);
++
++static void nft_ct_expect_helper_gc(struct work_struct *work)
++{
++	struct nft_ct_expect_helper *expect_helper, *next;
++	LIST_HEAD(list);
++
++	spin_lock(&nft_ct_expect_helper_lock);
++	list_splice_init(&nft_ct_expect_helper_list, &list);
++	spin_unlock(&nft_ct_expect_helper_lock);
++
++	list_for_each_entry_safe(expect_helper, next, &list, list) {
++		nf_conntrack_helper_release(&expect_helper->helper);
++		kfree(expect_helper);
++	}
++}
++
++static DECLARE_WORK(nft_ct_expect_helper_work, nft_ct_expect_helper_gc);
++
++struct nft_ct_expect_data {
++	struct nft_ct_expect_obj	obj;
++	enum ip_conntrack_dir		dir;
+ };
+ 
++static int ct_expect_help(struct sk_buff *skb, unsigned int protoff,
++			  struct nf_conn *ct, enum ip_conntrack_info ctinfo)
++{
++	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
++	struct nft_ct_expect_data *expect_data;
++	struct nf_conntrack_expect *exp;
++	int ret = NF_ACCEPT;
++	u16 l3num;
++
++	if (nf_ct_is_confirmed(ct))
++		return NF_ACCEPT;
++
++	expect_data = nfct_help_data(ct);
++	if (expect_data->dir != dir)
++		return NF_ACCEPT;
++
++	exp = nf_ct_expect_alloc(ct);
++	if (!exp)
++		return NF_DROP;
++
++	if (expect_data->obj.l3num == NFPROTO_INET)
++		l3num = nf_ct_l3num(ct);
++	else
++		l3num = expect_data->obj.l3num;
++
++	/* Expectation timeout is set from helper policy on insertion. */
++	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, l3num,
++			  &ct->tuplehash[!dir].tuple.src.u3,
++			  &ct->tuplehash[!dir].tuple.dst.u3,
++			  expect_data->obj.l4proto, NULL, &expect_data->obj.dport);
++
++	if (nf_ct_expect_related(exp, 0) != 0)
++		ret = NF_ACCEPT;
++
++	nf_ct_expect_put(exp);
++
++	return ret;
++}
++
++static int nft_ct_expect_helper_alloc(struct nft_ct_expect_obj *priv)
++{
++	struct nft_ct_expect_helper *ct_expect_helper;
++
++	ct_expect_helper = kzalloc(sizeof(*ct_expect_helper),
++				   GFP_KERNEL_ACCOUNT);
++	if (!ct_expect_helper)
++		return -ENOMEM;
++
++	snprintf(ct_expect_helper->helper.name,
++		 sizeof(ct_expect_helper->helper.name), "%s", "nft_ct_expect");
++	ct_expect_helper->helper.me = THIS_MODULE;
++	ct_expect_helper->policy.max_expected = priv->size;
++	ct_expect_helper->policy.timeout = priv->timeout;
++	ct_expect_helper->helper.expect_policy = &ct_expect_helper->policy;
++	ct_expect_helper->helper.help = ct_expect_help;
++
++	/* No need to register this helper, this is internal. */
++	priv->helper = &ct_expect_helper->helper;
++
++	return 0;
++}
++
+ static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
+ 				  const struct nlattr * const tb[],
+ 				  struct nft_object *obj)
+ {
+ 	struct nft_ct_expect_obj *priv = nft_obj_data(obj);
++	int err;
++
++	NF_CT_HELPER_BUILD_BUG_ON(sizeof(struct nft_ct_expect_data));
+ 
+ 	if (!tb[NFTA_CT_EXPECT_L4PROTO] ||
+ 	    !tb[NFTA_CT_EXPECT_DPORT] ||
+@@ -1261,13 +1359,38 @@ static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
+ 	priv->dport = nla_get_be16(tb[NFTA_CT_EXPECT_DPORT]);
+ 	priv->timeout = nla_get_u32(tb[NFTA_CT_EXPECT_TIMEOUT]);
+ 	priv->size = nla_get_u8(tb[NFTA_CT_EXPECT_SIZE]);
++	if (!priv->size)
++		priv->size = NF_CT_EXPECT_MAX_CNT;
++
++	err = nf_ct_netns_get(ctx->net, ctx->family);
++	if (err < 0)
++		return err;
+ 
+-	return nf_ct_netns_get(ctx->net, ctx->family);
++	err = nft_ct_expect_helper_alloc(priv);
++	if (err < 0) {
++		nf_ct_netns_put(ctx->net, ctx->family);
++		return err;
++	}
++
++	return err;
+ }
+ 
+ static void nft_ct_expect_obj_destroy(const struct nft_ctx *ctx,
+-				       struct nft_object *obj)
++				      struct nft_object *obj)
+ {
++	const struct nft_ct_expect_obj *priv = nft_obj_data(obj);
++	struct nft_ct_expect_helper *expect_helper;
++
++	/* This helper is going away, detach it from conntracks. This might
++	 * be called from netns exit path, defer it to workqueue.
++	 */
++	expect_helper = container_of(priv->helper, struct nft_ct_expect_helper,
++				     helper);
++	spin_lock(&nft_ct_expect_helper_lock);
++	list_add_tail(&expect_helper->list, &nft_ct_expect_helper_list);
++	spin_unlock(&nft_ct_expect_helper_lock);
++	schedule_work(&nft_ct_expect_helper_work);
++
+ 	nf_ct_netns_put(ctx->net, ctx->family);
+ }
+ 
+@@ -1291,11 +1414,9 @@ static void nft_ct_expect_obj_eval(struct nft_object *obj,
+ 				   const struct nft_pktinfo *pkt)
+ {
+ 	const struct nft_ct_expect_obj *priv = nft_obj_data(obj);
+-	struct nf_conntrack_expect *exp;
++	struct nft_ct_expect_data *expect_data;
+ 	enum ip_conntrack_info ctinfo;
+ 	struct nf_conn_help *help;
+-	enum ip_conntrack_dir dir;
+-	u16 l3num = priv->l3num;
+ 	struct nf_conn *ct;
+ 
+ 	ct = nf_ct_get(pkt->skb, &ctinfo);
+@@ -1303,38 +1424,25 @@ static void nft_ct_expect_obj_eval(struct nft_object *obj,
+ 		regs->verdict.code = NFT_BREAK;
+ 		return;
+ 	}
+-	dir = CTINFO2DIR(ctinfo);
+ 
+ 	help = nfct_help(ct);
+-	if (!help)
+-		help = nf_ct_helper_ext_add(ct, GFP_ATOMIC);
+-	if (!help) {
+-		regs->verdict.code = NF_DROP;
+-		return;
+-	}
+-
+-	if (help->expecting[NF_CT_EXPECT_CLASS_DEFAULT] >= priv->size) {
++	if (help) {
+ 		regs->verdict.code = NFT_BREAK;
+ 		return;
+ 	}
+-	if (l3num == NFPROTO_INET)
+-		l3num = nf_ct_l3num(ct);
+ 
+-	exp = nf_ct_expect_alloc(ct);
+-	if (exp == NULL) {
++	help = nf_ct_helper_ext_add(ct, GFP_ATOMIC);
++	if (!help) {
+ 		regs->verdict.code = NF_DROP;
+ 		return;
+ 	}
+-	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, l3num,
+-		          &ct->tuplehash[!dir].tuple.src.u3,
+-		          &ct->tuplehash[!dir].tuple.dst.u3,
+-		          priv->l4proto, NULL, &priv->dport);
+-	exp->timeout.expires = jiffies + priv->timeout * HZ;
+ 
+-	if (nf_ct_expect_related(exp, 0) != 0)
+-		regs->verdict.code = NF_DROP;
++	expect_data = nfct_help_data(ct);
++	expect_data->obj = *priv;
++	expect_data->obj.helper = NULL;
++	expect_data->dir = CTINFO2DIR(ctinfo);
+ 
+-	nf_ct_expect_put(exp);
++	rcu_assign_pointer(help->helper, priv->helper);
+ }
+ 
+ static const struct nla_policy nft_ct_expect_policy[NFTA_CT_EXPECT_MAX + 1] = {
+@@ -1414,6 +1522,7 @@ static void __exit nft_ct_module_exit(void)
+ 	nft_unregister_obj(&nft_ct_helper_obj_type);
+ 	nft_unregister_expr(&nft_notrack_type);
+ 	nft_unregister_expr(&nft_ct_type);
++	flush_work(&nft_ct_expect_helper_work);
+ }
+ 
+ module_init(nft_ct_module_init);

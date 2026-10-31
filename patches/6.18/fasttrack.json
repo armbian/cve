@@ -7,6 +7,23 @@
   "patches": [
     {
       "series": "6.18",
+      "upstream": "4fd5bad647bfa45eb86bfd2f03ba1bef3fcd5851",
+      "subject": "smb/server: cancel async requests when closing connection",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-98439"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0001-4fd5bad647bf-smb-server-cancel-async-requests-when-closing-connec.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.18",
       "upstream": "84265cbd96b97058ef67e3f8be3933667a000835",
       "subject": "greybus: raw: fix use-after-free if write is called after disconnect",
       "source": "mainline",
@@ -16,10 +33,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0001-84265cbd96b9-greybus-raw-fix-use-after-free-if-write-is-called-af.patch",
+      "filename": "0002-84265cbd96b9-greybus-raw-fix-use-after-free-if-write-is-called-af.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -32,10 +50,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0002-3bac01168982-mm-fix-deferred-split-queue-races-during-migration.patch",
+      "filename": "0003-3bac01168982-mm-fix-deferred-split-queue-races-during-migration.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -48,10 +67,45 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0003-593980175389-bpf-use-array-map-meta-equal-for-percpu-array-inner.patch",
+      "filename": "0004-593980175389-bpf-use-array-map-meta-equal-for-percpu-array-inner.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.18",
+      "upstream": "34746b5a84ec37c0ea2bf6808c65c5ed8790eb51",
+      "subject": "bpf: Disallow interpreter fallback for arena-related insns",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-93044"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0005-34746b5a84ec-bpf-disallow-interpreter-fallback-for-arena-related.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.18",
+      "upstream": "2b66c83ff1751d6bd3201b3017206262ab46dc05",
+      "subject": "Bluetooth: L2CAP: use proto_lock for l2cap_data to fix l2cap_disconn_ind",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-90256"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0006-2b66c83ff175-bluetooth-l2cap-use-proto-lock-for-l2cap-data-to-fix.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -64,10 +118,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0004-95e647d2a530-fbdev-clear-fb-info-mode-before-deleting-a-videomode.patch",
+      "filename": "0007-95e647d2a530-fbdev-clear-fb-info-mode-before-deleting-a-videomode.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -80,10 +135,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0005-d15d51fb26e8-fbdev-bound-mode-sysfs-output-to-the-sysfs-buffer.patch",
+      "filename": "0008-d15d51fb26e8-fbdev-bound-mode-sysfs-output-to-the-sysfs-buffer.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -96,10 +152,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0006-a9ba4dd2f18b-acpi-platform-use-acpi-bus-get-primary-device.patch",
+      "filename": "0009-a9ba4dd2f18b-acpi-platform-use-acpi-bus-get-primary-device.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -112,10 +169,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0007-9fa903b24b1f-xfrm-hold-net-device-reference-under-rcu-in-bundle-c.patch",
+      "filename": "0010-9fa903b24b1f-xfrm-hold-net-device-reference-under-rcu-in-bundle-c.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -128,10 +186,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0008-99c24a8968eb-rdma-rtrs-guard-against-null-kobj-name.patch",
+      "filename": "0011-99c24a8968eb-rdma-rtrs-guard-against-null-kobj-name.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -144,10 +203,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0009-26300879cd8e-mtd-core-avoid-double-free-of-otp-nvmem-device.patch",
+      "filename": "0012-26300879cd8e-mtd-core-avoid-double-free-of-otp-nvmem-device.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -160,10 +220,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0010-6f0a100df853-wifi-mac80211-only-operate-on-tdls-peers-in-the-tdls.patch",
+      "filename": "0013-6f0a100df853-wifi-mac80211-only-operate-on-tdls-peers-in-the-tdls.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -176,10 +237,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0011-8879e3e0a84a-bluetooth-btmtksdio-btmtkuart-validate-wmt-event-len.patch",
+      "filename": "0014-8879e3e0a84a-bluetooth-btmtksdio-btmtkuart-validate-wmt-event-len.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -192,10 +254,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0012-2842ce397dd0-net-bridge-vlan-fix-bugs-caused-by-switchdev-deletio.patch",
+      "filename": "0015-2842ce397dd0-net-bridge-vlan-fix-bugs-caused-by-switchdev-deletio.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -208,10 +271,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0013-6bdcdb31318c-wifi-mac80211-validate-tx-status-rate-metadata.patch",
+      "filename": "0016-6bdcdb31318c-wifi-mac80211-validate-tx-status-rate-metadata.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -224,10 +288,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0014-24b620729e53-perf-core-fill-branch-entries-with-a-single-assignme.patch",
+      "filename": "0017-24b620729e53-perf-core-fill-branch-entries-with-a-single-assignme.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -240,10 +305,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0015-87cd6b717e40-net-ipv6-keep-room-for-the-mac-header-in-dst-dev-ove.patch",
+      "filename": "0018-87cd6b717e40-net-ipv6-keep-room-for-the-mac-header-in-dst-dev-ove.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -256,10 +322,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0016-6f63e919fe1e-wifi-mac80211-fix-slab-out-of-bounds-read-in-ieee802.patch",
+      "filename": "0019-6f63e919fe1e-wifi-mac80211-fix-slab-out-of-bounds-read-in-ieee802.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -272,10 +339,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0017-8ae3f4067ba4-seg6-ensure-packet-data-is-writable-before-modifying.patch",
+      "filename": "0020-8ae3f4067ba4-seg6-ensure-packet-data-is-writable-before-modifying.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -288,10 +356,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0018-184b5ddf82d4-bonding-fix-the-program-leak-when-xdp-is-replaced.patch",
+      "filename": "0021-184b5ddf82d4-bonding-fix-the-program-leak-when-xdp-is-replaced.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -304,10 +373,11 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0019-44378d02c5aa-net-always-dissect-gso-packets-in-virtio-net-hdr-to.patch",
+      "filename": "0022-44378d02c5aa-net-always-dissect-gso-packets-in-virtio-net-hdr-to.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
     },
     {
       "series": "6.18",
@@ -320,10 +390,1643 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0020-89c2c777df17-accel-rocket-search-every-core-slot-when-looking-up.patch",
+      "filename": "0023-89c2c777df17-accel-rocket-search-every-core-slot-when-looking-up.patch",
       "files": [],
       "prerequisites": [],
-      "build_log": ""
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.18",
+      "upstream": "46e8e31771f4f1c5e1cdec37a889a6730e42e9f1",
+      "subject": "ext4: fix transaction overflow during writeback",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-100073"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0024-46e8e31771f4-ext4-fix-transaction-overflow-during-writeback.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-100073/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "629ec78ef8608d955ce217880cdc3e1873af3a15",
+      "subject": "mpls: add seqcount to protect the platform_label{,s} pair",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-43042"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0025-629ec78ef860-mpls-add-seqcount-to-protect-the-platform-label-s-pa.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-43042/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "5d540e4508950c674d6feef1d95463d039bbf4f5",
+      "subject": "io_uring/zcrx: fix post open error handling",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-43174"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0026-5d540e450895-io-uring-zcrx-fix-post-open-error-handling.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-43174/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "415cb193bb9736f0e830286c72a6fa8eb2a9cc5c",
+      "subject": "sched_ext: Fix SCX_KICK_WAIT deadlock by deferring wait to balance callback",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-43326"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0027-415cb193bb97-sched-ext-fix-scx-kick-wait-deadlock-by-deferring-wa.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-43326/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "fc69decc811b155a0ed8eef17ee940f28c4f6dbc",
+      "subject": "8021q: use RCU for egress QoS mappings",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-46153"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0028-fc69decc811b-8021q-use-rcu-for-egress-qos-mappings.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-46153/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "7dddc74af369478ba7f9bc136d0fc1dc4570cb66",
+      "subject": "8021q: delete cleared egress QoS mappings",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-46153"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0029-7dddc74af369-8021q-delete-cleared-egress-qos-mappings.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-46153/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "7fb4c19670110f052c04e1ec1d2b953b9f4f57e4",
+      "subject": "net: pull headers in qdisc_pkt_len_segs_init()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-53091"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0030-7fb4c1967011-net-pull-headers-in-qdisc-pkt-len-segs-init.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-53091/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "350de5b8a9befaa2a68861c51f671d4f5f751ca5",
+      "subject": "bpf: Do not allow deleting local storage in NMI",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-53106"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0031-350de5b8a9be-bpf-do-not-allow-deleting-local-storage-in-nmi.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-53106/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "",
+      "subject": "dpll: export __dpll_device_change_ntf() for use under dpll_lock",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-63977"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0032-q-dpll-export-dpll-device-change-ntf-for-use-under-dpl.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-63977/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "d733f519f6443540f8359461a34e3b0042099bbe",
+      "subject": "dpll: zl3073x: use __dpll_device_change_ntf() and remove change_work",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-63977"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0033-d733f519f644-dpll-zl3073x-use-dpll-device-change-ntf-and-remove-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-63977/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
+      "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64160"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0034-2c8f4742bb76-netfs-fix-potential-for-tearing-in-remote-i-size-and.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64160/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "a609b6278bf3cde17eeee6620091465521e4b02c",
+      "subject": "drm/amdgpu: reject mapping a reserved doorbell to a new queue",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-68103"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0035-a609b6278bf3-drm-amdgpu-reject-mapping-a-reserved-doorbell-to-a-n.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-68103/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "426ffae6ecc7ec77d32bf8be065c21a1b881b084",
+      "subject": "drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-68447"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0036-426ffae6ecc7-drm-amdkfd-clamp-v9-criu-control-stack-checkpoint-co.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-68447/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "828cd614e2af053ca5e1d6da767bbd8a1b5cabfb",
+      "subject": "hwmon: (pmbus/core) honor vrm_version in pmbus_data2reg_vid()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-72397"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0037-828cd614e2af-hwmon-pmbus-core-honor-vrm-version-in-pmbus-data2reg.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-72397/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "4dd86ca99ffcc413cbf79063fd9956ef54e0ca91",
+      "subject": "cxl/region: Resolve region deletion races",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-74272"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0038-4dd86ca99ffc-cxl-region-resolve-region-deletion-races.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-74272/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "a3a81d247651218e47153f2d2afd7aee236726fd",
+      "subject": "bpf: Cancel special fields on map value recycle",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-74314"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0039-a3a81d247651-bpf-cancel-special-fields-on-map-value-recycle.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-74314/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "80b89d0226a05e8b67969de99c31b51fcd54f76a",
+      "subject": "bpf: Take mmap_lock in zap_pages()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-74354"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0040-80b89d0226a0-bpf-take-mmap-lock-in-zap-pages.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-74354/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "6e87001fe19f251e2ae14373bc76554358a13df2",
+      "subject": "accel/amdxdna: Adjust size for copy_to_user()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-74419"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0041-6e87001fe19f-accel-amdxdna-adjust-size-for-copy-to-user.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-74419/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "af24e338bf5dafb80f42baa9a0b9e9b57b1c5d9c",
+      "subject": "Bluetooth: ISO: fix race of kfree vs kref_get_unless_zero",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-74533"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0042-af24e338bf5d-bluetooth-iso-fix-race-of-kfree-vs-kref-get-unless-z.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-74533/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "3dbb44d88b1e94dd31fe43588af7437b34b44d56",
+      "subject": "sctp: validate cookie AUTH state before use",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-74752"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0043-3dbb44d88b1e-sctp-validate-cookie-auth-state-before-use.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-74752/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "c37460cd9b2fcb61ec66b7eb4fde737e65ec2a56",
+      "subject": "erofs: remove fscache backend entirely",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-80899"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0044-c37460cd9b2f-erofs-remove-fscache-backend-entirely.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-80899/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "14b007e178811db72fbb1ebb3535160db6ec1e6a",
+      "subject": "block: validate user space vectors during extraction",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-89584"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0045-14b007e17881-block-validate-user-space-vectors-during-extraction.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-89584/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "34a00895d032a414830d41106a09329ae6c251b6",
+      "subject": "mm/migrate_device: clear stale mapping after freeing swapcache",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-89755"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0046-34a00895d032-mm-migrate-device-clear-stale-mapping-after-freeing.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-89755/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "5376c9db45368eb210b4d71104ac00a59dc8b6e0",
+      "subject": "btrfs: write-protect folios during data writeback",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-89772"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0047-5376c9db4536-btrfs-write-protect-folios-during-data-writeback.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-89772/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "5258572aa5fd5a7ed01b123b28241e0281b6fb9b",
+      "subject": "ksmbd: fix share_conf UAF in tree_conn disconnect",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-89788"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0048-5258572aa5fd-ksmbd-fix-share-conf-uaf-in-tree-conn-disconnect.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-89788/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "b5ec6c462aab1062cf5d1e667ba7c6442f737055",
+      "subject": "ksmbd: fix tree connection use-after-free in smb2_tree_connect()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-89788"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0049-b5ec6c462aab-ksmbd-fix-tree-connection-use-after-free-in-smb2-tre.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-89788/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "df72e55e754c8d449321ddddad19a8bd3cb8d032",
+      "subject": "drm/pagemap: Fix folio allocation fallback and use-after-put",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-89805"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0050-df72e55e754c-drm-pagemap-fix-folio-allocation-fallback-and-use-af.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-89805/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "b62793a7baeea9cf20209c9fd2e333311aaf3b8d",
+      "subject": "net: sparx5: fix sleep in atomic context in MAC table access",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90098"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0051-b62793a7baee-net-sparx5-fix-sleep-in-atomic-context-in-mac-table.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90098/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "3679da4ad8be84cddaf40bc307fef1fe13e051ff",
+      "subject": "netfilter: nft_ct: move custom expectation support to helper",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90237"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0052-3679da4ad8be-netfilter-nft-ct-move-custom-expectation-support-to.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90237/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "2cf82b46d5e43be0dfbaac7fa1073cec2fc1f5e6",
+      "subject": "ocfs2: validate external xattr entries when reading metadata",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90320"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0053-2cf82b46d5e4-ocfs2-validate-external-xattr-entries-when-reading-m.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90320/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "fa98563ab00dbe62fcedfef6bdd34ded7a860d9f",
+      "subject": "drm/v3d: Associate BOs with every job that accesses them",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93047"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0054-fa98563ab00d-drm-v3d-associate-bos-with-every-job-that-accesses-t.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93047/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "9a6df65d5c6a9947ddab4e563e329720f44b8747",
+      "subject": "bpf: Introduce jit_required flag and remove bpf_prog_has_kfunc_call()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93135"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0055-9a6df65d5c6a-bpf-introduce-jit-required-flag-and-remove-bpf-prog.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93135/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "f1c27922576edccb99d0257827d09bd05c0304a6",
+      "subject": "bpf: Reject programs with inlined helpers if JIT is not available",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93135"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0056-f1c27922576e-bpf-reject-programs-with-inlined-helpers-if-jit-is-n.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93135/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "174f0582e38abe03b88e15f04bfe58490f88cb19",
+      "subject": "perf/x86/intel/uncore: Fix uncore_box ref/unref ordering",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93181"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0057-174f0582e38a-perf-x86-intel-uncore-fix-uncore-box-ref-unref-order.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93181/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "90f095b816e25c6a9e4446d299bac5007fdcb3df",
+      "subject": "mm/page_owner: use memcg_data snapshot to avoid TOCTOU in print_page_owner_memcg()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93216"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0058-90f095b816e2-mm-page-owner-use-memcg-data-snapshot-to-avoid-tocto.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93216/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "7a0855e73757ee9cf25ba635a1c735018ecba742",
+      "subject": "bpf: Disallow interpreter fallback for BPF_ADDR_PERCPU insn",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93270"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0059-7a0855e73757-bpf-disallow-interpreter-fallback-for-bpf-addr-percp.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93270/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "8042312e73c50de82634ce63eae7cf219464b481",
+      "subject": "hwmon: (asus_rog_ryujin) Validate HID report lengths",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-97538"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0060-8042312e73c5-hwmon-asus-rog-ryujin-validate-hid-report-lengths.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-97538/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "5be5bdda5863eacc964b609ba927764f253431b3",
+      "subject": "smb: client: reject out-of-bounds DataOffset in CIFSSMBRead()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-97563"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0061-5be5bdda5863-smb-client-reject-out-of-bounds-dataoffset-in-cifssm.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-97563/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "c4126f1db36e6b2e1c79b0e30a8a2de91c568f4c",
+      "subject": "drm/pagemap: Prevent double migration of device pages",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98106"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0062-c4126f1db36e-drm-pagemap-prevent-double-migration-of-device-pages.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98106/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "d12168084c8c1b6d883c8eca5853929ac5136a9e",
+      "subject": "ksmbd: safely drain sessions during logoff",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98115"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0063-d12168084c8c-ksmbd-safely-drain-sessions-during-logoff.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98115/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "",
+      "subject": "nvme: set ns->head in nvme_alloc_ns_head",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98153"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0064-q-nvme-set-ns-head-in-nvme-alloc-ns-head.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98153/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "56e1c6bbe4bb084d7ecf61698afdf70be23dd35f",
+      "subject": "nvme: fix racy access to FDP placement id array",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98153"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0065-56e1c6bbe4bb-nvme-fix-racy-access-to-fdp-placement-id-array.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98153/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "c883d0a132d430ef7ebb23fd94323be94d0fbdb8",
+      "subject": "drm/amdkfd: Avoid integer underflow with ffs in EOP ring size calc",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98176"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0066-c883d0a132d4-drm-amdkfd-avoid-integer-underflow-with-ffs-in-eop-r.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98176/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "8ee521b8b189799e361d4233c5180ba56656d4d4",
+      "subject": "drm/amdkfd: Avoid integer underflow in EOP ring size calculation.",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98177"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0067-8ee521b8b189-drm-amdkfd-avoid-integer-underflow-in-eop-ring-size.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98177/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "ceac0de741bfb47ca255eee075257b3bb31f0651",
+      "subject": "netlink: do not free nlk->groups while lockless readers can use it",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98284"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0068-ceac0de741bf-netlink-do-not-free-nlk-groups-while-lockless-reader.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98284/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "15989abd74f16f44bf953d056b95f1d2fda9b0cd",
+      "subject": "net: stmmac: fix TSO header length truncation",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98288"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0069-15989abd74f1-net-stmmac-fix-tso-header-length-truncation.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98288/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "23c240d9509e15f72e4112fc95f0160ab32ec430",
+      "subject": "smb: client: validate absolute native symlink targets before NT fixups",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98318"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0070-23c240d9509e-smb-client-validate-absolute-native-symlink-targets.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98318/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "78183e8331958fda11cd2b6850bb424a9747c4b2",
+      "subject": "wifi: mac80211: reset the LED state when ifup fails",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98333"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0071-78183e833195-wifi-mac80211-reset-the-led-state-when-ifup-fails.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98333/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "708f9d43d6a2eb9c6b83fe62af628de9dffd9314",
+      "subject": "wifi: cfg80211: ibss: ref BSS entry for joined event",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98338"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0072-708f9d43d6a2-wifi-cfg80211-ibss-ref-bss-entry-for-joined-event.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98338/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "d7fd1f98607f2cd358e583f9548bdf0173090a86",
+      "subject": "ksmbd: follow SMB2 session expiration semantics",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98420"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0073-d7fd1f98607f-ksmbd-follow-smb2-session-expiration-semantics.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98420/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "7f4a5ec6258fd7c92633ec4b0493fc51166d9398",
+      "subject": "net/sched: codel: bound the dropping loop per dequeue call",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98427"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0074-7f4a5ec6258f-net-sched-codel-bound-the-dropping-loop-per-dequeue.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98427/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "a44a3f175eaee7e5aeb6a8fed381c4a0d5f49236",
+      "subject": "RDMA/uverbs: Fix mmap_lock/disassociation_lock circular dependency",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98431"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0075-a44a3f175eae-rdma-uverbs-fix-mmap-lock-disassociation-lock-circul.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98431/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "9480dd7ec3fcadd4217503e4bb32c16e19e4b21f",
+      "subject": "accel/amdxdna: Disable device buffer exporting",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98436"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0076-9480dd7ec3fc-accel-amdxdna-disable-device-buffer-exporting.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98436/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "ffb48dccce1960a9ea24463a2f3c21d124d6b672",
+      "subject": "xfs: drop dquot flush lock when we can't find a buffer to flush",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98444"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0077-ffb48dccce19-xfs-drop-dquot-flush-lock-when-we-can-t-find-a-buffe.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98444/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "8f6f8a48399f82f4a83f7b9f25b9707e0062a4f9",
+      "subject": "smb: client: delete compound mids on send failure before unlock",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98449"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0078-8f6f8a48399f-smb-client-delete-compound-mids-on-send-failure-befo.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98449/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "06e3f54e8b22040ada01a28343badf1990b4dd7d",
+      "subject": "net: flush skb_defer_nodes in dev_cpu_dead()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98558"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0079-06e3f54e8b22-net-flush-skb-defer-nodes-in-dev-cpu-dead.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98558/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "3173cba1170131816972ed2b6185cb970ba8b747",
+      "subject": "net: libwx: fix races in Tx timestamp handling",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98562"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0080-3173cba11701-net-libwx-fix-races-in-tx-timestamp-handling.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98562/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "a6c1edfbe240e4377038a0e1d233ad81fde9a21b",
+      "subject": "bpf: Reject pkt arguments in mutating subprogs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98589"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0081-a6c1edfbe240-bpf-reject-pkt-arguments-in-mutating-subprogs.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98589/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "79a9172f3ab4ad8392c5e5c8944b9b7710ade620",
+      "subject": "bpf: Reject non-negative offsets in stack_slot_obj_get_spi()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98599"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0082-79a9172f3ab4-bpf-reject-non-negative-offsets-in-stack-slot-obj-ge.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98599/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "b5d9e9d4d0c13bc8b60d8d97e7a07fb25fea639e",
+      "subject": "eth: fbnic: use the Rx queue napi pointer to find the napi vector",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98617"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0083-b5d9e9d4d0c1-eth-fbnic-use-the-rx-queue-napi-pointer-to-find-the.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98617/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "261b61d3735b042ae25634f795c4540be0fc140c",
+      "subject": "bpf: Make post-verification instruction rewrites killable",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98628"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0084-261b61d3735b-bpf-make-post-verification-instruction-rewrites-kill.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98628/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "12f5d8b85a66a0ac08d082517d92ce136f8c0d42",
+      "subject": "thunderbolt: Make the DP tunnel activation callback mandatory",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98692"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0085-12f5d8b85a66-thunderbolt-make-the-dp-tunnel-activation-callback-m.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98692/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "e27fc915c8f575ab5630e27d97465c2077d4b9d1",
+      "subject": "KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98714"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0086-e27fc915c8f5-kvm-svm-update-control-fields-on-vmexit-if-and-only.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98714/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "499485a67fbacf4d9afbdb43522388c64f853428",
+      "subject": "serial: core: fix NULL pointer dereference in serial_core_unregister_port()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98747"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0087-499485a67fba-serial-core-fix-null-pointer-dereference-in-serial-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98747/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "217f64f348c90cba62164e7ff38e0ccf78a5ca09",
+      "subject": "drm/amd/display: guard dc_sink dereferences in MST mode validation",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98786"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0088-217f64f348c9-drm-amd-display-guard-dc-sink-dereferences-in-mst-mo.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98786/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "f35e3b5784221654f9cdbd6222275a7fa203f6c3",
+      "subject": "futex: Fix private hash use-after-free on resize",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98788"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0089-f35e3b578422-futex-fix-private-hash-use-after-free-on-resize.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98788/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "fbd97dd1d3ce32d32fb7be86acc3fdb7c04fa043",
+      "subject": "bpf: Fix objects stuck in free_by_rcu_ttrace",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98789"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0090-fbd97dd1d3ce-bpf-fix-objects-stuck-in-free-by-rcu-ttrace.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98789/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "17637e1a581a22466ac3620a91e099683ff9cc6f",
+      "subject": "bpf: Skip detached progs in trampoline images that are still in use",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98799"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0091-17637e1a581a-bpf-skip-detached-progs-in-trampoline-images-that-ar.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98799/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "0fb5751a6e411b1b466c06e50021818d9391df98",
+      "subject": "bpf: Wait for an RCU tasks grace period before freeing trampoline progs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98800"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0092-0fb5751a6e41-bpf-wait-for-an-rcu-tasks-grace-period-before-freein.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98800/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "056994563935e049093f100efaad7e63ad113814",
+      "subject": "octeontx2-pf: Fix aura BPID assignment when CONFIG_DCB is enabled",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98806"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0093-056994563935-octeontx2-pf-fix-aura-bpid-assignment-when-config-dc.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98806/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "72ece656abd4de8645a421fb482d7a11e6533a45",
+      "subject": "nvme: fix command effects log lifetime for multipath heads",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98814"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0094-72ece656abd4-nvme-fix-command-effects-log-lifetime-for-multipath.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98814/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "ad139384ecddb6f3e7e3c3c12765aafae0e39670",
+      "subject": "bpf: Fix overflow of jump offset in constant blinding",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98816"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0095-ad139384ecdd-bpf-fix-overflow-of-jump-offset-in-constant-blinding.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98816/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "af2fb3ee6679b517e2fdbd3ba16ec276a8b74312",
+      "subject": "mm/slab: do not wake up kswapd in __kfree_rcu_sheaf()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98818"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0096-af2fb3ee6679-mm-slab-do-not-wake-up-kswapd-in-kfree-rcu-sheaf.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98818/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "d977dca7d0736dc7d68d9ad1434961da3b42de35",
+      "subject": "bpf: Extract is_addr_space_cast32() utility function",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98869"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0097-d977dca7d073-bpf-extract-is-addr-space-cast32-utility-function.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98869/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "ef1ddbfcfaef3194453c66255781e38eecd1f7de",
+      "subject": "bpf: Track upper 32-bit register halves' liveness in compute_live_registers()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98869"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0098-ef1ddbfcfaef-bpf-track-upper-32-bit-register-halves-liveness-in-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98869/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "7ce090afbf725e25fff29caacce1eaf8459b1117",
+      "subject": "bpf: Infer zext_dst based on static register liveness analysis",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98869"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0099-7ce090afbf72-bpf-infer-zext-dst-based-on-static-register-liveness.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98869/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "8fa813b7fd1eccbed13e126166cf764f1f11a7d3",
+      "subject": "drm/amd/display: Remove sink usage from DPMS",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98926"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0100-8fa813b7fd1e-drm-amd-display-remove-sink-usage-from-dpms.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98926/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "6abc8e4dcfbc1d26a94c0ac037dfb3716f686b1f",
+      "subject": "drm/vc4: Disable the V3D interrupt across runtime suspend",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98946"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0101-6abc8e4dcfbc-drm-vc4-disable-the-v3d-interrupt-across-runtime-sus.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98946/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "59052a88ba5fe4a7bb34b3a0a42aa5d453d3bb97",
+      "subject": "riscv: ptrace: Zero-initialize regset buffers before copyin",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98951"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0102-59052a88ba5f-riscv-ptrace-zero-initialize-regset-buffers-before-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98951/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "51562a8cb11628d3a5e105b4c347ec5473e5745f",
+      "subject": "btrfs: don't stash io_uring encoded data across -EAGAIN",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98960"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0103-51562a8cb116-btrfs-don-t-stash-io-uring-encoded-data-across-eagai.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98960/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "e06b678e3b4e12fdaa0b51a7a5a54abc5dbd6469",
+      "subject": "cgroup/cpuset: Don't access cpuset_cgrp_subsys.root in is_in_v2_mode()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98972"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0104-e06b678e3b4e-cgroup-cpuset-don-t-access-cpuset-cgrp-subsys-root-i.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98972/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "ac76cab50e899a7346408b8d3c3a4192c2eefb9f",
+      "subject": "ipv6: udp: Create exceptions before socket matching",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99076"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0105-ac76cab50e89-ipv6-udp-create-exceptions-before-socket-matching.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99076/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "4aa2c106aef4bf3dfd97c30842db0767b26e8428",
+      "subject": "smb: client: reject SetEA requests that do not fit the request buffer",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99109"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0106-4aa2c106aef4-smb-client-reject-setea-requests-that-do-not-fit-the.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99109/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "7229d74e5e8c1f140529d405c88d4493e37ce4e3",
+      "subject": "ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99172"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0107-7229d74e5e8c-ipc-create-ipc-ns-drop-mqueue-mount-on-sysctl-setup.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99172/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "f0e48172a59e517e613b73f73cc35f24fd123aeb",
+      "subject": "ipc: drop the mqueue mount with kern_unmount() on setup failure",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99172"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0108-f0e48172a59e-ipc-drop-the-mqueue-mount-with-kern-unmount-on-setup.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99172/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "fed0b33e6c584986ba70018ec9f9787a98216e64",
+      "subject": "netfs: Fix readahead synchronisation issues by loading all folios upfront",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98118"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0109-fed0b33e6c58-netfs-fix-readahead-synchronisation-issues-by-loadin.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98118/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "448ba0ae65ca61064183564d2983c9aa59bd6ba7",
+      "subject": "smb/client: invalidate fscache for fallocate range operations",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98124"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0110-448ba0ae65ca-smb-client-invalidate-fscache-for-fallocate-range-op.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98124/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "4721587f96cb8de8164f3fd203093a0875560999",
+      "subject": "smb: client: discard post-EOF pagecache when extending a file via clone range",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98685"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0111-4721587f96cb-smb-client-discard-post-eof-pagecache-when-extending.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98685/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "81e985b4c3a6cbcc443fcdcd3ebda7fcc845d459",
+      "subject": "afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-72377"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0112-81e985b4c3a6-afs-remove-setting-of-as-release-always-for-symlinks.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-72377/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "061db6b7a910b8378f3b2df64f8c0a3ddc6e85f2",
+      "subject": "fbdev: serialize mode sysfs access with lock_fb_info()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-80785"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0113-061db6b7a910-fbdev-serialize-mode-sysfs-access-with-lock-fb-info.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-80785/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "8914a3330b72378136c2c02d6328a826f6abdad7",
+      "subject": "ocfs2: validate inline xattrs during inode block validation",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90321"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0114-8914a3330b72-ocfs2-validate-inline-xattrs-during-inode-block-vali.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90321/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "60d93c27859fb3ec5b5a689e24de303f166477d0",
+      "subject": "KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98715"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0115-60d93c27859f-kvm-svm-preserve-tlb-control-i-e-pending-tlb-flush-o.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98715/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "",
+      "subject": "nvme: add nvme_get_ns_head()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98815"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0116-q-nvme-add-nvme-get-ns-head.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98815/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "9952f3882ecba709092379b71e02b09762b26f96",
+      "subject": "nvme: fix cdev lifetime",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98815"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0117-9952f3882ecb-nvme-fix-cdev-lifetime.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98815/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "01261a6fa48b62f5ead8e88aaca1e27cb9ab9032",
+      "subject": "smb/client: fix stale page cache in insert/collapse range",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98125"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0118-01261a6fa48b-smb-client-fix-stale-page-cache-in-insert-collapse-r.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98125/6.18"
+    },
+    {
+      "series": "6.18",
+      "upstream": "c9b1194e8ec99d95db25db45edd2fbf690f043ab",
+      "subject": "smb: client: drain and invalidate before server-side copy/clone",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98682"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0119-c9b1194e8ec9-smb-client-drain-and-invalidate-before-server-side-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98682/6.18"
     }
   ]
 }

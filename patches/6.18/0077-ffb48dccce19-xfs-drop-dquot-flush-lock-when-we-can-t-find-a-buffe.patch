@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: ffb48dccce1960a9ea24463a2f3c21d124d6b672
+X-Fasttrack-CVE: CVE-2026-98444
+X-Fasttrack-Backport: cve/CVE-2026-98444/6.18
+From: "Darrick J. Wong" <djwong@kernel.org>
+Date: Mon, 14 Sep 2026 22:38:54 -0700
+Subject: [PATCH] xfs: drop dquot flush lock when we can't find a buffer to
+ flush
+
+commit ffb48dccce1960a9ea24463a2f3c21d124d6b672 upstream.
+
+[ Backport: 6.18 has no lockref dquot refcount (0c5e80bd579f, 6b6e6e752116): unlock with xfs_dqunlock() and no xfs_qm_dqrele(), like the existing out_unlock path ]
+
+LOLLM noticed that xfs_qm_flush_one fails to drop the dquot flush lock
+if it can't grab the buffer associated with the dquot.  Since there's no
+buffer, nobody else is going to drop the dqflock, so we need to do it
+ourselves.
+
+Cc: stable@vger.kernel.org # v6.13
+Fixes: ca378189fdfa89 ("xfs: convert quotacheck to attach dquot buffers")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+---
+ fs/xfs/xfs_qm.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/fs/xfs/xfs_qm.c b/fs/xfs/xfs_qm.c
+index 48a5a294f0a1..b5bc483e0907 100644
+--- a/fs/xfs/xfs_qm.c
++++ b/fs/xfs/xfs_qm.c
+@@ -1477,16 +1477,21 @@ xfs_qm_flush_one(
+ 
+ 	error = xfs_dquot_use_attached_buf(dqp, &bp);
+ 	if (error)
+-		goto out_unlock;
++		goto out_dqflock;
+ 	if (!bp) {
+ 		error = -EFSCORRUPTED;
+-		goto out_unlock;
++		goto out_dqflock;
+ 	}
+ 
+ 	error = xfs_qm_dqflush(dqp, bp);
+ 	if (!error)
+ 		xfs_buf_delwri_queue(bp, buffer_list);
+ 	xfs_buf_relse(bp);
++	xfs_dqunlock(dqp);
++	return error;
++
++out_dqflock:
++	xfs_dqfunlock(dqp);
+ out_unlock:
+ 	xfs_dqunlock(dqp);
+ 	return error;

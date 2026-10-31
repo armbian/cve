@@ -1,0 +1,62 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: a609b6278bf3cde17eeee6620091465521e4b02c
+X-Fasttrack-CVE: CVE-2026-68103
+X-Fasttrack-Backport: cve/CVE-2026-68103/6.18
+From: Zhu Lingshan <lingshan.zhu@amd.com>
+Date: Sat, 31 Oct 2026 01:11:23 +0100
+Subject: [PATCH] drm/amdgpu: reject mapping a reserved doorbell to a new queue
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+commit a609b6278bf3cde17eeee6620091465521e4b02c upstream.
+
+[ Backport: 6.18 has no adev->userq_doorbell_xa; the doorbell index ->
+  queue mapping used for fence IRQ routing is adev->userq_xa (doorbell
+  index -> fence_drv), filled with __xa_store() under xa_lock_irqsave()
+  in amdgpu_userq_fence_driver_alloc(). Replace that __xa_store() with
+  __xa_insert() instead of changing xa_store_irq() in amdgpu_userq.c. ]
+
+When creating an user-queue, the user space
+provides a doorbell BO handle and an offset within
+the bo to obtain a doorbell.
+
+However current implementation using xa_store_irq()
+to store a doorbell, which allows a later queue created
+with the same BO and offset parameters to overwrite an
+existing queue and doorbell mapping.
+
+This can cause problems like misrouting fence IRQ
+processing to a wrong queue, and mislead the cleanup
+process of one queue erasing the mapping of another queue.
+
+This commit fixes this issue by replacing xa_store_irq with
+xa_insert_irq, which rejects mapping a reserved
+doorbell to a newly created queue
+
+Signed-off-by: Zhu Lingshan <lingshan.zhu@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6244eae22966350db52faf9c1369d3b2ffc5de4e)
+Cc: stable@vger.kernel.org
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
+index 73e1827816a0..f4372b62a507 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
+@@ -105,8 +105,8 @@ int amdgpu_userq_fence_driver_alloc(struct amdgpu_device *adev,
+ 	get_task_comm(fence_drv->timeline_name, current);
+ 
+ 	xa_lock_irqsave(&adev->userq_xa, flags);
+-	r = xa_err(__xa_store(&adev->userq_xa, userq->doorbell_index,
+-			      fence_drv, GFP_KERNEL));
++	r = __xa_insert(&adev->userq_xa, userq->doorbell_index,
++			fence_drv, GFP_KERNEL);
+ 	xa_unlock_irqrestore(&adev->userq_xa, flags);
+ 	if (r)
+ 		goto free_seq64;

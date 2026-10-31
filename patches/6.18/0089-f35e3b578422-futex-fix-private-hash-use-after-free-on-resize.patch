@@ -1,0 +1,66 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: f35e3b5784221654f9cdbd6222275a7fa203f6c3
+X-Fasttrack-CVE: CVE-2026-98788
+X-Fasttrack-Backport: cve/CVE-2026-98788/6.18
+From: Chris Mason <mason@kernel.org>
+Date: Sat, 31 Oct 2026 03:51:42 +0100
+Subject: [PATCH] futex: Fix private hash use-after-free on resize
+
+commit f35e3b5784221654f9cdbd6222275a7fa203f6c3 upstream.
+
+[ Backport: 6.18 lacks 1f7f4816b9b0 ("futex: Move futex related mm_struct
+  data into a struct"), so use mm->futex_phash/mm->futex_batches instead of
+  mmph->hash/mmph->batches, in the code and in the added comment. ]
+
+poll_state_synchronize_rcu(mm->futex.phash.batches) is used by
+futex_ref_drop() to check that a grace period has passed since the
+current hash was published. This relies on batches referencing a grace
+period which started after the hash pointer was assigned.
+
+__futex_pivot_hash() sets mmph->batches before it replaces mmph->hash:
+
+    scoped_guard(rcu) {
+            mmph->batches = get_state_synchronize_rcu();
+            rcu_assign_pointer(mmph->hash, new);
+    }
+
+The scoped_guard(rcu) doesn't stop new grace periods from starting, and
+if one starts between those two assignments, futex_ref_drop() can move
+forward while a reader still holds a pointer to the old hash.
+
+Fix things by setting mmph->batches after assigning mmph->hash.  The
+scoped_guard(rcu) isn't needed, so let's drop that as well.
+
+Fixes: 56180dd20c19 ("futex: Use RCU-based per-CPU reference counting instead of rcuref_t")
+Assisted-by: kres
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://patch.msgid.link/20261001135022.2220288-1-mason@kernel.org
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ kernel/futex/core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/kernel/futex/core.c b/kernel/futex/core.c
+index e6fbeb2ac190..cb8cfa81d71a 100644
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -214,10 +214,12 @@ static bool __futex_pivot_hash(struct mm_struct *mm,
+ 		futex_rehash_private(fph, new);
+ 	}
+ 	new->state = FR_PERCPU;
+-	scoped_guard(rcu) {
+-		mm->futex_batches = get_state_synchronize_rcu();
+-		rcu_assign_pointer(mm->futex_phash, new);
+-	}
++	rcu_assign_pointer(mm->futex_phash, new);
++	/*
++	 * mm->futex_batches must reference a grace period which started after
++	 * mm->futex_phash was assigned. See futex_ref_drop().
++	 */
++	mm->futex_batches = get_state_synchronize_rcu();
+ 	kvfree_rcu(fph, rcu);
+ 	return true;
+ }

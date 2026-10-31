@@ -1,0 +1,99 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: af2fb3ee6679b517e2fdbd3ba16ec276a8b74312
+X-Fasttrack-CVE: CVE-2026-98818
+X-Fasttrack-Backport: cve/CVE-2026-98818/6.18
+From: "Harry Yoo (Meta)" <harry@kernel.org>
+Date: Sat, 31 Oct 2026 03:12:12 +0100
+Subject: [PATCH] mm/slab: do not wake up kswapd in __kfree_rcu_sheaf()
+
+commit af2fb3ee6679b517e2fdbd3ba16ec276a8b74312 upstream.
+
+[ Backport: 6.18 alloc_empty_sheaf() takes no alloc_flags argument, so
+  only the gfp argument is changed.
+  6.18 __kfree_rcu_sheaf() has no allow_spin/gfp local; it passed
+  GFP_NOWAIT directly, which is replaced by __GFP_NOWARN in place.
+  6.18 __pcs_replace_full_main() has no allow_spin check before the
+  allocation; only the gfp change is applied there. ]
+
+Since kfree_rcu() can be called under pi_lock (a raw spinlock in the
+scheduler), kfree_rcu() itself should never allocate memory with
+__GFP_KSWAPD_RECLAIM as waking up kswapd ends up acquiring pi_lock,
+which leads to a deadlock.
+
+Reproducing the issue even intentionally was not straightforward.
+The set_cpus_allowed_force() path that is called under pi_lock is
+exercised very rarely, and competing tasks that allocate memory will
+most likely wake kswapd up.
+
+Therefore the existence of the deadlock was verified with a modified
+kernel that has a lockdep map for waking up kswapd (see upstream commit
+for the full lockdep splat):
+
+  Chain exists of:
+    &p->pi_lock --> kswapd_wakeup --> &pgdat->kswapd_wait
+
+Fix this by always avoiding waking up kswapd in __kfree_rcu_sheaf().
+Note that there are two paths that might wake up kswapd:
+
+  1) __kfree_rcu_sheaf()
+     // __GFP_KSWAPD_RECLAIM might wake up kswapd
+     -> alloc_empty_sheaf(GFP_NOWAIT)
+
+  2) __kfree_rcu_sheaf()
+     // Let's say __kfree_rcu_sheaf() doesn't pass GFP_NOWAIT
+     -> alloc_empty_sheaf(__GFP_NOWARN)
+     -> kmalloc_flags()
+     -> slab_alloc_node()
+     -> alloc_from_pcs()
+     -> __pcs_replace_empty_main()
+     // Free a sheaf in an allocation path when the sheaf becomes empty
+     // and refilling the sheaf fails
+     -> free_empty_sheaf()
+     -> slab_free()
+     -> free_to_pcs()
+     -> __pcs_replace_full_main()
+     // However free path always assumes it's safe to wake up kswapd
+     -> alloc_empty_sheaf(GFP_NOWAIT)
+
+Drop __GFP_KSWAPD_RECLAIM in both cases. Note that the kfree_rcu() is
+not the only user of free_to_pcs() path, but it should be fixed as it
+can be invoked under pi_lock.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260831-b4-kfree_rcu_hotfix-v1-1-4f0fb882638b%40kernel.org
+Fixes: ec66e0d59952 ("slab: add sheaf support for batching kfree_rcu() operations")
+Link: https://lore.kernel.org/linux-mm/20260831143500.x-saxdAs@linutronix.de
+Assisted-by: LLM # dicovery and verification
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
+Link: https://patch.msgid.link/20260922-kfree-rcu-dont-wakeup-kswapd-v1-1-42d7e2636f9e@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ mm/slub.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/mm/slub.c b/mm/slub.c
+index 8fdbe531a0cb..95acbdb1c682 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -6143,7 +6143,8 @@ __pcs_replace_full_main(struct kmem_cache *s, struct slub_percpu_sheaves *pcs)
+ alloc_empty:
+ 	local_unlock(&s->cpu_sheaves->lock);
+ 
+-	empty = alloc_empty_sheaf(s, GFP_NOWAIT);
++	/* Don't wake up kswapd, it will cause deadlock under pi_lock */
++	empty = alloc_empty_sheaf(s, __GFP_NOWARN);
+ 	if (empty)
+ 		goto got_empty;
+ 
+@@ -6320,7 +6321,8 @@ bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj)
+ 
+ 		local_unlock(&s->cpu_sheaves->lock);
+ 
+-		empty = alloc_empty_sheaf(s, GFP_NOWAIT);
++		/* Don't wake up kswapd, it will cause deadlock under pi_lock */
++		empty = alloc_empty_sheaf(s, __GFP_NOWARN);
+ 
+ 		if (!empty)
+ 			goto fail;

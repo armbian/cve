@@ -1,0 +1,101 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 261b61d3735b042ae25634f795c4540be0fc140c
+X-Fasttrack-CVE: CVE-2026-98628
+X-Fasttrack-Backport: cve/CVE-2026-98628/6.18
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Date: Sat, 31 Oct 2026 03:02:46 +0100
+Subject: [PATCH] bpf: Make post-verification instruction rewrites killable
+
+commit 261b61d3735b042ae25634f795c4540be0fc140c upstream.
+
+[ Backport: bpf_patch_insn_data()/verifier_remove_insns() live in kernel/bpf/verifier.c in 6.18 (kernel/bpf/fixups.c does not exist), so the helper, checks and sched/signal.h include go there. ]
+[ Backport: the kernel/bpf/core.c and bpf_jit_subprogs()/bpf_fixup_call_args() -EINTR propagation hunks are dropped: in 6.18 bpf_jit_blind_constants() takes no env, is called from the arch JITs and patches via bpf_patch_insn_single(), which this change does not make killable, so blinding cannot fail with -EINTR. ]
+
+After do_check() returns, the verifier runs several instruction rewrite
+passes. Some of them patch or remove one instruction at a time. Each
+operation moves the remaining instruction and auxiliary-data arrays and
+adjusts all branch offsets, making the overall work quadratic in the
+program length.
+
+A privileged loader can submit 131072 unconditional jumps by zero followed
+by a valid return. Verification finishes quickly, but bpf_opt_remove_nops()
+then spends a long time removing each jump separately. Since this
+post-verification work neither checks for signals nor reschedules, a pending
+SIGKILL cannot terminate the task until the rewrite finishes.
+
+Make bpf_patch_insn_data() and verifier_remove_insns() common cancellation
+and rescheduling points. These helpers run from BPF_PROG_LOAD process
+context, and bpf_patch_insn_data() can already sleep while reallocating
+auxiliary data.
+
+Report interrupted constant blinding as -EINTR and propagate it through
+both JIT paths, including kernels that permit interpreter fallback.
+Other blinding failures retain the existing fallback behavior.
+
+This does not reduce the quadratic cost of the rewrite passes, but it makes
+the work preemptible and allows a killed loader to be torn down promptly.
+
+Fixes: 52875a04f4b2 ("bpf: verifier: remove dead code")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/20260917233222.2542500-2-memxor@gmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ kernel/bpf/verifier.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index b89a5d717e42..b112e1c7b34e 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -19,6 +19,7 @@
+ #include <linux/bsearch.h>
+ #include <linux/sort.h>
+ #include <linux/perf_event.h>
++#include <linux/sched/signal.h>
+ #include <linux/ctype.h>
+ #include <linux/error-injection.h>
+ #include <linux/bpf_lsm.h>
+@@ -21409,12 +21410,28 @@ static void adjust_poke_descs(struct bpf_prog *prog, u32 off, u32 len)
+ 	}
+ }
+ 
++/*
++ * Some post-verification instruction rewriting passes require an
++ * O(prog->len) operation per instruction. Keep their shared primitives
++ * killable and preemptible.
++ */
++static bool bpf_rewrite_must_abort(void)
++{
++	if (fatal_signal_pending(current))
++		return true;
++	cond_resched();
++	return false;
++}
++
+ static struct bpf_prog *bpf_patch_insn_data(struct bpf_verifier_env *env, u32 off,
+ 					    const struct bpf_insn *patch, u32 len)
+ {
+ 	struct bpf_prog *new_prog;
+ 	struct bpf_insn_aux_data *new_data = NULL;
+ 
++	if (bpf_rewrite_must_abort())
++		return NULL;
++
+ 	if (len > 1) {
+ 		new_data = vrealloc(env->insn_aux_data,
+ 				    array_size(env->prog->len + len - 1,
+@@ -21604,6 +21621,9 @@ static int verifier_remove_insns(struct bpf_verifier_env *env, u32 off, u32 cnt)
+ 	unsigned int orig_prog_len = env->prog->len;
+ 	int err;
+ 
++	if (bpf_rewrite_must_abort())
++		return -EINTR;
++
+ 	if (bpf_prog_is_offloaded(env->prog->aux))
+ 		bpf_prog_offload_remove_insns(env, off, cnt);
+ 
