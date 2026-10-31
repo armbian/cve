@@ -1,0 +1,400 @@
+{
+  "series": "6.1",
+  "base": {
+    "commit": "08889840163ebcdb7e24bf7ec311bc2e6fc3aaea",
+    "version": "6.1.191"
+  },
+  "patches": [
+    {
+      "series": "6.1",
+      "upstream": "3a8c562892b96f35bba1e00d5e455a15963bbb92",
+      "subject": "KVM: arm64: Transfer the hyp stack pages out of the host stage-2",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-98466"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0001-3a8c562892b9-kvm-arm64-transfer-the-hyp-stack-pages-out-of-the-ho.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "4fd5bad647bfa45eb86bfd2f03ba1bef3fcd5851",
+      "subject": "smb/server: cancel async requests when closing connection",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-98439"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0002-4fd5bad647bf-smb-server-cancel-async-requests-when-closing-connec.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "855678ed8534518e2b428bcbcec695de9ba248e8",
+      "subject": "md: Fix missing release of 'active_io' for flush",
+      "source": "mainline",
+      "cves": [
+        "CVE-2024-27023"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0003-855678ed8534-md-fix-missing-release-of-active-io-for-flush.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "85672ca9ceeaa1dcf2777a7048af5f4aee3fd02b",
+      "subject": "block: avoid to reuse `hctx` not removed from cpuhp callback list",
+      "source": "mainline",
+      "cves": [
+        "CVE-2024-41149"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0004-85672ca9ceea-block-avoid-to-reuse-hctx-not-removed-from-cpuhp-cal.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "b7405dcf7385445e10821777143f18c3ce20fa04",
+      "subject": "bonding: prevent potential infinite loop in bond_header_parse()",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-23451"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0005-b7405dcf7385-bonding-prevent-potential-infinite-loop-in-bond-head.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "4a597a87e2e2f608edb6be2c510dc826b4fdfb53",
+      "subject": "netfilter: ipset: make sure gc is properly stopped",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-72434"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0006-4a597a87e2e2-netfilter-ipset-make-sure-gc-is-properly-stopped.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "3359ba93d01a23b2e4249e9e44ccfe48eb9c5d71",
+      "subject": "ASoC: fsl_audmix: rework runtime PM handling in probe",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-93184"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0007-3359ba93d01a-asoc-fsl-audmix-rework-runtime-pm-handling-in-probe.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "95e647d2a5304a8fd11f1ba3c8502de700650131",
+      "subject": "fbdev: clear fb_info->mode before deleting a videomode",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-80579"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0008-95e647d2a530-fbdev-clear-fb-info-mode-before-deleting-a-videomode.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "c644a2f8fef5618fcf453c591177700fd07dd024",
+      "subject": "nvdimm: pmem: keep PREFLUSH before data writes",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98161"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0009-c644a2f8fef5-nvdimm-pmem-keep-preflush-before-data-writes.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1",
+      "subject": "xfrm: hold net_device reference under RCU in bundle creation",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98364"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0010-9fa903b24b1f-xfrm-hold-net-device-reference-under-rcu-in-bundle-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "99c24a8968ebef0573825b5cb89d5985d51635b9",
+      "subject": "RDMA/rtrs: guard against null kobj name",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98355"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0011-99c24a8968eb-rdma-rtrs-guard-against-null-kobj-name.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "7d4d4f3b668d708d94f62ecdd33ac330a6fd8a84",
+      "subject": "dm-integrity: fix NULL pointer dereference when the 'R' flag is used",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-99087"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0012-7d4d4f3b668d-dm-integrity-fix-null-pointer-dereference-when-the-r.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "d05524794240b52fdc3b6c1220dd05505715824d",
+      "subject": "bpf: Mark syscall helpers as sleepable",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98058"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0013-d05524794240-bpf-mark-syscall-helpers-as-sleepable.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "cbdd39ce42530a193c56beb206a3356cb6d01016",
+      "subject": "netfilter: nf_nat: unregister and release hooks on error",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98321"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0014-cbdd39ce4253-netfilter-nf-nat-unregister-and-release-hooks-on-err.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "c65eae6f61d1778ff7a82e4aae4080e26f486af1",
+      "subject": "smb: client: cancel reconnect work in clean_demultiplex_info()",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98175"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0015-c65eae6f61d1-smb-client-cancel-reconnect-work-in-clean-demultiple.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "8879e3e0a84a86954c855caceead4867e74a9a27",
+      "subject": "Bluetooth: btmtksdio, btmtkuart: validate WMT event length before struct access",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98292"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0016-8879e3e0a84a-bluetooth-btmtksdio-btmtkuart-validate-wmt-event-len.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "2842ce397dd09882530b42f7fdb0c855767eb24e",
+      "subject": "net: bridge: vlan: fix bugs caused by switchdev deletion errors",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98285"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0017-2842ce397dd0-net-bridge-vlan-fix-bugs-caused-by-switchdev-deletio.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "93ce8ea70451e800601bc9444aa33043de15d67b",
+      "subject": "wifi: ath9k: reject short WMI command responses",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98828"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0018-93ce8ea70451-wifi-ath9k-reject-short-wmi-command-responses.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "b62a264163ca51bee04785c581344751812395df",
+      "subject": "EDAC/altera: Drop __init from ECC setup paths for re-probe safety",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98740"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0019-b62a264163ca-edac-altera-drop-init-from-ecc-setup-paths-for-re-pr.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "6f63e919fe1e335b8abcb3a28bfd4804a98d875a",
+      "subject": "wifi: mac80211: fix slab-out-of-bounds read in ieee80211_monitor_select_queue()",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98810"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0020-6f63e919fe1e-wifi-mac80211-fix-slab-out-of-bounds-read-in-ieee802.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "184b5ddf82d45d6f75cc83719a2e453392512bd2",
+      "subject": "bonding: fix the program leak when XDP is replaced",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98966"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0021-184b5ddf82d4-bonding-fix-the-program-leak-when-xdp-is-replaced.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "8189ab688f5a2c745dc90b63374da02f213d6994",
+      "subject": "namei: don't reveal overmounted entries in refwalk",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98980"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0022-8189ab688f5a-namei-don-t-reveal-overmounted-entries-in-refwalk.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "489114c9ecae44e523361a4b3e610ee5ebd9189c",
+      "subject": "net: team: free skb when broadcast has no txable port",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-99026"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0023-489114c9ecae-net-team-free-skb-when-broadcast-has-no-txable-port.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    }
+  ]
+}
