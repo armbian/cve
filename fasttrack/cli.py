@@ -22,6 +22,7 @@ import os
 import shutil
 import sys
 import time
+from dataclasses import asdict
 from pathlib import Path
 
 import yaml
@@ -91,14 +92,37 @@ def cmd_run(args) -> int:
                                  cve_root=out / "cve")
 
     # Series are independent (own worktree and build dir): verify them in parallel.
+    series = args.series or [str(s) for s in cfg["series"]]
     results = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=len(cfg["series"]) or 1) as pool:
-        for s, fut in [(s, pool.submit(one, s)) for s in cfg["series"]]:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(series) or 1) as pool:
+        for s, fut in [(s, pool.submit(one, s)) for s in series]:
             try:
                 results.append(fut.result())
             except gitutil.GitError as e:
                 print(f"{s}: skipped ({e})")
 
+    # CI verifies each series in its own job; one report job joins the results.
+    if args.results:
+        Path(args.results).write_text(json.dumps([asdict(r) for r in results]) + "\n")
+        return 0
+    return _publish(cfg, results)
+
+
+def cmd_report(args) -> int:
+    results = []
+    for f in args.results:
+        for r in json.loads(Path(f).read_text()):
+            r["candidates"] = [engine.Candidate(**c) for c in r["candidates"]]
+            results.append(engine.SeriesResult(**r))
+    cfg = _cfg(args)
+    order = [str(s) for s in cfg["series"]]
+    results.sort(key=lambda r: order.index(r.series) if r.series in order else len(order))
+    return _publish(cfg, results)
+
+
+def _publish(cfg, results) -> int:
+    """patches/<series>/, the report, unpatched.json, events and state from verified series."""
+    out = Path(cfg["out"])
     state_file = out / "state.json"
     prev = json.loads(state_file.read_text()) if state_file.exists() else {}
     state, events = emit.diff_state(prev, results)
@@ -292,7 +316,13 @@ def main(argv=None) -> int:
     sub.add_parser("sync", help="pull upstream sources").set_defaults(fn=cmd_sync)
     sub.add_parser("fingerprint", help="print a hash of the upstream heads and feeds; "
                    "a new hash means a run is due").set_defaults(fn=cmd_fingerprint)
-    sub.add_parser("run", help="gather and verify; write patches, report, unpatched list").set_defaults(fn=cmd_run)
+    r = sub.add_parser("run", help="gather and verify; write patches, report, unpatched list")
+    r.add_argument("--series", nargs="+", help="only these series, e.g. 6.18")
+    r.add_argument("--results", help="write the verified series to this JSON file, not patches/ and reports")
+    r.set_defaults(fn=cmd_run)
+    r = sub.add_parser("report", help="write patches/, report and state from `run --results` files")
+    r.add_argument("results", nargs="+")
+    r.set_defaults(fn=cmd_report)
 
     sub.add_parser("prune", help="delete incident patches the stable head has absorbed").set_defaults(fn=cmd_prune)
     r = sub.add_parser("release-notes", help="print release notes: the fixes in each patches/<series>/")
