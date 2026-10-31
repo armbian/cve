@@ -1,0 +1,90 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 180c7000712db77063b3a26f4c97e7dd9038f449
+X-Fasttrack-CVE: CVE-2026-90317
+X-Fasttrack-Backport: cve/CVE-2026-90317/6.12
+From: Ning Ding <dingning04@gmail.com>
+Date: Sat, 31 Oct 2026 22:57:18 +0100
+Subject: [PATCH] bpf: Invalidate RCU pointers after final spin unlock
+
+commit 180c7000712db77063b3a26f4c97e7dd9038f449 upstream.
+
+[ Backport: 6.12 has no invalidate_rcu_protected_refs() (added by bcfcb15fde94); add it with the loop from the 6.12 bpf_rcu_read_unlock path. ]
+[ Backport: 6.12 tracks the lock in cur->active_lock, not release_lock_state(). Sample in_rcu_cs() before the lock is cleared, and check it after. ]
+
+In a sleepable BPF program, a spin lock can provide the only RCU protection
+for a kptr. The final bpf_spin_unlock() ends that protection, but the
+verifier leaves the pointer valid. Another CPU can then free the object
+before the pointer is used. A capability-limited runtime PoC triggered a
+task_struct use-after-free in __bpf_get_task_stack().
+
+Record whether the program is in an RCU-protected context before releasing
+the lock. Invalidate RCU-protected pointers only when the unlock leaves the
+final such context. This preserves valid pointers in non-sleepable programs
+and inside an explicit RCU read-side section.
+
+Fixes: 5861d1e8dbc4 ("bpf: Allow bpf_spin_{lock,unlock} in sleepable progs")
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: ChatGPT:GPT-5.6-Pro
+Signed-off-by: Ning Ding <dingning04@gmail.com>
+Link: https://lore.kernel.org/bpf/20260803112615.3362122-2-dingning04@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+---
+ kernel/bpf/verifier.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index ecd8595bd545..daf16ea0d1f3 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -199,6 +199,7 @@ struct bpf_verifier_stack_elem {
+ static int acquire_reference_state(struct bpf_verifier_env *env, int insn_idx);
+ static int release_reference(struct bpf_verifier_env *env, int ref_obj_id);
+ static void invalidate_non_owning_refs(struct bpf_verifier_env *env);
++static void invalidate_rcu_protected_refs(struct bpf_verifier_env *env);
+ static bool in_rbtree_lock_required_cb(struct bpf_verifier_env *env);
+ static int ref_set_non_owning(struct bpf_verifier_env *env,
+ 			      struct bpf_reg_state *reg);
+@@ -8090,6 +8091,7 @@ static int process_spin_lock(struct bpf_verifier_env *env, int regno,
+ 			cur->active_lock.ptr = btf;
+ 		cur->active_lock.id = reg->id;
+ 	} else {
++		bool was_in_rcu_cs;
+ 		void *ptr;
+ 
+ 		if (map)
+@@ -8107,10 +8109,13 @@ static int process_spin_lock(struct bpf_verifier_env *env, int regno,
+ 			return -EINVAL;
+ 		}
+ 
++		was_in_rcu_cs = in_rcu_cs(env);
+ 		invalidate_non_owning_refs(env);
+ 
+ 		cur->active_lock.ptr = NULL;
+ 		cur->active_lock.id = 0;
++		if (was_in_rcu_cs && !in_rcu_cs(env))
++			invalidate_rcu_protected_refs(env);
+ 	}
+ 	return 0;
+ }
+@@ -9897,6 +9902,20 @@ static void invalidate_non_owning_refs(struct bpf_verifier_env *env)
+ 	}));
+ }
+ 
++static void invalidate_rcu_protected_refs(struct bpf_verifier_env *env)
++{
++	struct bpf_func_state *state;
++	struct bpf_reg_state *reg;
++	u32 clear_mask = (1 << STACK_SPILL) | (1 << STACK_ITER);
++
++	bpf_for_each_reg_in_vstate_mask(env->cur_state, state, reg, clear_mask, ({
++		if (reg->type & MEM_RCU) {
++			reg->type &= ~(MEM_RCU | PTR_MAYBE_NULL);
++			reg->type |= PTR_UNTRUSTED;
++		}
++	}));
++}
++
+ static void clear_caller_saved_regs(struct bpf_verifier_env *env,
+ 				    struct bpf_reg_state *regs)
+ {

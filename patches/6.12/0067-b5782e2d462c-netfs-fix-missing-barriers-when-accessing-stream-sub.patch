@@ -13,6 +13,16 @@ commit b5782e2d462c028096f922abca46318cec890670 upstream.
 [ Backport: 6.12 write collector reads stream->front locklessly, not the list head. Use smp_store_release()/smp_load_acquire() on stream->front. ]
 [ Backport: drop list.h helpers. 6.12 does not use them. ]
 [ Backport: drop read and misc.c hunks. 6.12 read collector accesses rreq->subrequests under rreq->lock. ]
+
+Fixes: e2d46f2ec332 ("netfs: Change the read result collector to only use one work item")
+Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
+Link: https://sashiko.dev/#/patchset/20260326104544.509518-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260512123404.719402-4-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 ---
  fs/netfs/write_collect.c | 4 +++-
  fs/netfs/write_issue.c   | 3 ++-

@@ -10,6 +10,10 @@ Subject: [PATCH] drm/amdgpu: cap ATOM command table nesting depth
 commit 27ef1795bc4e47cae838e0a3ced531c549f9b23d upstream.
 
 [ Backport: atom.h context differs. 6.12 struct atom_context has no build_num field. ]
+
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 ---
  drivers/gpu/drm/amd/amdgpu/atom.c | 11 +++++++++++
  drivers/gpu/drm/amd/amdgpu/atom.h |  3 +++

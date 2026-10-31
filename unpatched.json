@@ -1833,71 +1833,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-89722"
-    ],
-    "kev": false,
-    "upstream": "dc76258d0132df1d831a5a29758bd448ca9c566e",
-    "subject": "PCI/sysfs: Fix out-of-bounds read in pci_write_legacy_io()",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/powerpc/kernel/pci-common.c",
-      "drivers/pci/pci-sysfs.c"
-    ],
-    "prerequisites": [
-      "a1ab720ee506 PCI/sysfs: Calculate bin_attribute size through bin_size()",
-      "b626816fdd7f sysfs: treewide: constify attribute callback of bin_is_visible()",
-      "94a20fb9af16 sysfs: treewide: constify attribute callback of bin_attribute::mmap()",
-      "699e7b85afb5 sysfs: treewide: constify attribute callback of bin_attribute::llseek()",
-      "0530ad489d15 PCI/sysfs: Constify 'struct bin_attribute'",
-      "10269d578133 PCI/sysfs: Move reset related sysfs code to correct file",
-      "b6e5c46d8330 PCI/sysfs: Use __free() in reset_method_store()",
-      "2d54d23c604d PCI/sysfs: Remove unnecessary zero in initializer",
-      "888bd8322dfc s390/pci: Introduce pdev->non_mappable_bars and replace VFIO_PCI_MMAP",
-      "2311ab1820fe PCI/DOE: Expose DOE features via sysfs",
-      "0a0829b1fd76 PCI: Increment PM usage counter when probing reset methods",
-      "b4fe7398def6 PCI/AER: Add sysfs attributes for log ratelimits",
-      "2fbe82037ab2 sysfs: treewide: switch back to bin_attribute::read()/write()",
-      "fb506e31b3d5 sysfs: treewide: switch back to attribute_group::bin_attrs",
-      "8278c6914306 PCI: Preserve bridge window resource type flags"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-93135"
-    ],
-    "kev": false,
-    "upstream": "f1c27922576edccb99d0257827d09bd05c0304a6",
-    "subject": "bpf: Reject programs with inlined helpers if JIT is not available",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/bpf/fixups.c"
-    ],
-    "prerequisites": [
-      "449f08fa59dd bpf: Move fixup/post-processing logic from verifier.c into fixups.c",
-      "0251e40c4829 bpf: copy BPF token from main program to subprograms",
-      "d3e945223e01 bpf: Move constants blinding out of arch-specific JITs",
-      "d9ef13f72711 bpf: Pass bpf_verifier_env to JIT",
-      "07ae6c130b46 bpf: Add helper to detect indirect jump targets",
-      "4314a44564eb bpf: Fix out-of-bounds read in bpf_patch_call_args()",
-      "58a8f3e2501d bpf: Fix s16 truncation for large bpf-to-bpf call offsets",
-      "0f6bd5e7a804 bpf: Support stack arguments for bpf functions",
-      "dc8f1cf6787c bpf: Reject stack arguments in non-JITed programs",
-      "98540a12823a bpf: Clean up redundant stack arg checks for non-JITed programs",
-      "18a37465b0ab bpf,x86: Fix exception unwinding with outgoing stack arguments",
-      "308c7a0ae885 bpf: Refactor object relationship tracking and fix dynptr UAF bug",
-      "d14e6b4346bf bpf: Add multi tracing attach types",
-      "ba042ed6446f bpf: Add support for tracing_multi link session",
-      "475b59db3bd5 bpf: Use BPF_CALL_IMM macro consistently in bpf_do_misc_fixups"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-89866"
     ],
     "kev": false,
@@ -1922,71 +1857,6 @@
       "8c5a74a24cbb media: chips-media: wave5: avoid skipping device_run while VPU has work",
       "b694ba0a5526 media: chips-media: wave5: Defer job_finish() only when a DEC_PIC was queued",
       "e3a80073d99c media: chips-media: wave5: Fix pipeline stall when queuing fails"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-93044"
-    ],
-    "kev": false,
-    "upstream": "34746b5a84ec37c0ea2bf6808c65c5ed8790eb51",
-    "subject": "bpf: Disallow interpreter fallback for arena-related insns",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/bpf/verifier.c"
-    ],
-    "prerequisites": [
-      "da7d71bcb063 bpf: Use KF_FASTCALL to mark kfuncs supporting fastcall contract",
-      "5bd48a3a14df bpf: fix argument type in bpf_loop documentation",
-      "a992d7a39791 mm/bpf: Add bpf_get_kmem_cache() kfunc",
-      "99dde42e3749 bpf: Handle BPF_UPTR in verifier",
-      "d402755ced2e bpf: Unify resource leak checks",
-      "d920179b3d48 bpf: Add support for uprobe multi session attach",
-      "f6b9a69a9e56 bpf: Refactor active lock management",
-      "ae6e3a273f59 bpf: Drop special callback reference handling",
-      "e00931c02568 bpf: Enable private stack for eligible subprogs",
-      "5bd36da1e37e bpf: Support private stack for struct_ops progs",
-      "1995edc5f908 bpf: Consolidate locks and reference state in verifier state",
-      "769b0f1c8214 bpf: Refactor {acquire,release}_reference_state",
-      "b79f5f54e1dc bpf: Refactor mark_{dynptr,iter}_read",
-      "c8e2ee1f3df0 bpf: Introduce support for bpf_local_irq_{save,restore}",
-      "cbd8730aea8d bpf: Improve verifier log for resource leak on exit"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-93270"
-    ],
-    "kev": false,
-    "upstream": "7a0855e73757ee9cf25ba635a1c735018ecba742",
-    "subject": "bpf: Disallow interpreter fallback for BPF_ADDR_PERCPU insn",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/bpf.h",
-      "kernel/bpf/fixups.c"
-    ],
-    "prerequisites": [
-      "1cb80d9e93f8 bpf: Support __uptr type tag in BTF",
-      "ba512b00e5ef bpf: Add uptr support in the map_value of the task local storage.",
-      "61c6fefa92bb bpf: decouple BPF link/attach hook and BPF program sleepable semantics",
-      "213a695297e1 bpf: Replace the document for PTR_TO_BTF_ID_OR_NULL",
-      "e00931c02568 bpf: Enable private stack for eligible subprogs",
-      "7d1cd70d4b16 bpf, x86: Support private stack in jit",
-      "5bd36da1e37e bpf: Support private stack for struct_ops progs",
-      "7cd1107f48e2 bpf, xdp: constify some bpf_prog * function arguments",
-      "4e885fab7164 bpf: Add a __btf_get_by_fd helper",
-      "432051806f61 bpf: Make every prog keep a copy of ctx_arg_info",
-      "a687df2008f6 bpf: Support getting referenced kptr from struct_ops argument",
-      "c9eb8102e21e bpf: Use try_alloc_pages() to allocate pages for bpf needs.",
-      "e2d8f560d178 bpf: Summarize sleepable global subprogs",
-      "e723608bf428 bpf: Add verifier support for timed may_goto",
-      "880442305a39 bpf: Introduce load-acquire and store-release instructions"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -2133,38 +2003,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-90317"
-    ],
-    "kev": false,
-    "upstream": "180c7000712db77063b3a26f4c97e7dd9038f449",
-    "subject": "bpf: Invalidate RCU pointers after final spin unlock",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/bpf/verifier.c"
-    ],
-    "prerequisites": [
-      "da7d71bcb063 bpf: Use KF_FASTCALL to mark kfuncs supporting fastcall contract",
-      "5bd48a3a14df bpf: fix argument type in bpf_loop documentation",
-      "a992d7a39791 mm/bpf: Add bpf_get_kmem_cache() kfunc",
-      "99dde42e3749 bpf: Handle BPF_UPTR in verifier",
-      "d402755ced2e bpf: Unify resource leak checks",
-      "d920179b3d48 bpf: Add support for uprobe multi session attach",
-      "f6b9a69a9e56 bpf: Refactor active lock management",
-      "ae6e3a273f59 bpf: Drop special callback reference handling",
-      "e00931c02568 bpf: Enable private stack for eligible subprogs",
-      "5bd36da1e37e bpf: Support private stack for struct_ops progs",
-      "1995edc5f908 bpf: Consolidate locks and reference state in verifier state",
-      "769b0f1c8214 bpf: Refactor {acquire,release}_reference_state",
-      "b79f5f54e1dc bpf: Refactor mark_{dynptr,iter}_read",
-      "c8e2ee1f3df0 bpf: Introduce support for bpf_local_irq_{save,restore}",
-      "cbd8730aea8d bpf: Improve verifier log for resource leak on exit"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-74639"
     ],
     "kev": false,
@@ -2180,38 +2018,6 @@
       "c1bb0c13e430 ALSA: usb-audio: us144mkii: Implement audio capture and decoding",
       "dc9786a06d53 ALSA: us144mkii: Drop kernel-doc markers",
       "5cff1529a2f9 ALSA: us144mkii: capture_urb_complete: redundant usb_anchor_urb corrupts anchor list on each resubmission"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-90315"
-    ],
-    "kev": false,
-    "upstream": "747b9bbbbdfdee51aee2456388f9b94b5086de4d",
-    "subject": "PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/pci/pci-sysfs.c"
-    ],
-    "prerequisites": [
-      "a1ab720ee506 PCI/sysfs: Calculate bin_attribute size through bin_size()",
-      "b626816fdd7f sysfs: treewide: constify attribute callback of bin_is_visible()",
-      "94a20fb9af16 sysfs: treewide: constify attribute callback of bin_attribute::mmap()",
-      "699e7b85afb5 sysfs: treewide: constify attribute callback of bin_attribute::llseek()",
-      "0530ad489d15 PCI/sysfs: Constify 'struct bin_attribute'",
-      "10269d578133 PCI/sysfs: Move reset related sysfs code to correct file",
-      "b6e5c46d8330 PCI/sysfs: Use __free() in reset_method_store()",
-      "2d54d23c604d PCI/sysfs: Remove unnecessary zero in initializer",
-      "888bd8322dfc s390/pci: Introduce pdev->non_mappable_bars and replace VFIO_PCI_MMAP",
-      "2311ab1820fe PCI/DOE: Expose DOE features via sysfs",
-      "0a0829b1fd76 PCI: Increment PM usage counter when probing reset methods",
-      "b4fe7398def6 PCI/AER: Add sysfs attributes for log ratelimits",
-      "2fbe82037ab2 sysfs: treewide: switch back to bin_attribute::read()/write()",
-      "fb506e31b3d5 sysfs: treewide: switch back to attribute_group::bin_attrs",
-      "8278c6914306 PCI: Preserve bridge window resource type flags"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -2657,43 +2463,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-98115"
-    ],
-    "kev": false,
-    "upstream": "d12168084c8c1b6d883c8eca5853929ac5136a9e",
-    "subject": "ksmbd: safely drain sessions during logoff",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/connection.c",
-      "fs/smb/server/mgmt/user_session.c",
-      "fs/smb/server/mgmt/user_session.h",
-      "fs/smb/server/smb2pdu.c",
-      "fs/smb/server/vfs_cache.c",
-      "fs/smb/server/vfs_cache.h"
-    ],
-    "prerequisites": [
-      "e333e77638b3 ksmbd: add debug prints to know what smb2 requests were received",
-      "db5f8243067f ksmbd: add debug print for pending request during server shutdown",
-      "06a025448b57 ksmbd: align aux_payload_buf to avoid OOB reads in cryptographic operations",
-      "5741909697a3 VFS: improve interface for lookup_one functions",
-      "4ea0bb8aaedf ksmbd: handle set/get info file for streamed file",
-      "93893a57efd4 net: s/dev_get_flags/netif_get_flags/",
-      "09f124b2871b smb/server: use lookup_one_unlocked()",
-      "4e45cca31d4e smb/server: add ksmbd_vfs_kern_path()",
-      "b5ee94ac651a ksmbd: allow a filename to contain colons on SMB3.1.1 posix extensions",
-      "e7de2c4521ce smb: server: make use of common smbdirect.h",
-      "03a38d846750 smb: server: pass ksmbd_transport to get_smbd_max_read_write_size()",
-      "e28c5bc45640 ksmbd: increase session and share hash table bits",
-      "1ead2213dd7d smb/server: use end_removing_noperm for for target of smb2_create_link()",
-      "924067ef183b ksmbd: Use HMAC-SHA256 library for message signing and key generation",
-      "c5b462e35373 smb/server: fix return value of smb2_read()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-99109"
     ],
     "kev": false,
@@ -2722,61 +2491,6 @@
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
     "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1477:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1477:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)\nfs/smb/client/cifssmb.c:5998:32: error: \u2018in_len\u2019 undeclared (first use in this function)"
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99122"
-    ],
-    "kev": false,
-    "upstream": "ad9a7da3fa39c2d616ec0dd3cf6e30531d032fe7",
-    "subject": "vsock/vmci: validate packet source for connected sockets",
-    "verdict": "needs-backport",
-    "files": [
-      "net/vmw_vsock/vmci_transport.c"
-    ],
-    "prerequisites": [
-      "eafb64f40ca4 vsock: add netns to vsock core",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "77eee189397d vsock: introduce vsock_pending_to_accept() helper",
-      "a6fd2cfdcdf5 vsock: fold sk_acceptq_added() into vsock_add_pending()",
-      "27fc25bb82e6 vsock: fold sk_acceptq_removed() into vsock_remove_pending()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99076"
-    ],
-    "kev": false,
-    "upstream": "ac76cab50e899a7346408b8d3c3a4192c2eefb9f",
-    "subject": "ipv6: udp: Create exceptions before socket matching",
-    "verdict": "needs-backport",
-    "files": [
-      "net/ipv6/udp.c"
-    ],
-    "prerequisites": [
-      "accdd51dc74f net/udp: Add a new struct for hash2 slot",
-      "78c91ae2c6de ipv4/udp: Add 4-tuple hash for connected socket",
-      "1b29a730ef8b ipv6/udp: Add 4-tuple hash for connected socket",
-      "a32f3e9d1ed1 sock: support SO_PRIORITY cmsg",
-      "5cd2f78886dd ipv6: initialize inet socket cookies with sockcm_init",
-      "b3aaf3c13baa udp: expand SKB_DROP_REASON_UDP_CSUM use",
-      "8d4880db3783 udp_tunnel: create a fastpath GRO lookup.",
-      "1f6154227b49 Revert \"udp_tunnel: GRO optimizations\"",
-      "a36283e2b683 udp_tunnel: create a fastpath GRO lookup.",
-      "e84a4927a404 net: annotate races around sk->sk_uid",
-      "e3d4825124bc udp: move udp_memory_allocated into net_aligned_data",
-      "a6f190630d07 net: track pfmemalloc drops via SKB_DROP_REASON_PFMEMALLOC",
-      "f86f42ed2c47 net: add sk_drops_read(), sk_drops_inc() and sk_drops_reset() helpers",
-      "9db27c80622b udp: add udp_drops_inc() helper",
-      "b650bf0977d3 udp: remove busylock and add per NUMA queues"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
   },
   {
     "series": "6.12",
@@ -3112,40 +2826,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-98317"
-    ],
-    "kev": false,
-    "upstream": "6d79b223ec44ada58ad37db42f539b60985a7722",
-    "subject": "neighbour: Enforce min/max to NDTPA_INTERVAL_PROBE_TIME_MS.",
-    "verdict": "needs-backport",
-    "files": [
-      "Documentation/netlink/specs/rt-neigh.yaml",
-      "Documentation/networking/ip-sysctl.rst",
-      "net/core/neighbour.c"
-    ],
-    "prerequisites": [
-      "d0d14aef50a6 neighbour: Use rtnl_register_many().",
-      "ab101c553bc1 neighbour: use kvzalloc()/kvfree()",
-      "41b3caa7c076 neighbour: Add hlist_node to struct neighbour",
-      "00df5e1a3fdf neighbour: Convert seq_file functions to use hlist",
-      "0e3bcb0f78a0 neighbour: Convert iteration to use hlist+macro",
-      "a01a67ab2fff neighbour: Remove bare neighbour::next pointer",
-      "f7f52738637f neighbour: Create netdev->neighbour association",
-      "ca6a6f93867a tcp: Add sysctl to configure TIME-WAIT reuse delay",
-      "a064068bb6be neighbour: remove neigh_parms_destroy()",
-      "1280c26228bd tcp: add tcp_rto_max_ms sysctl",
-      "ef75d8343bc1 neighbour: Replace kvzalloc() with kzalloc() when GFP_ATOMIC is specified",
-      "f38805c5d26f tcp: support TCP_RTO_MIN_US for set/getsockopt use",
-      "8fa7292fee5c treewide: Switch/rename to timer_delete[_sync]()",
-      "cd5e64fb959a netlink: specs: rename rtnetlink specs in accordance with family name",
-      "2a63dd0edf38 net: Retire DCCP socket."
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98313"
     ],
     "kev": false,
@@ -3171,46 +2851,6 @@
       "98a8920e7b07 drm/msm/dp: reuse generic HDMI codec implementation",
       "9351d3d30206 drm/msm/dp: Fix support of LTTPR initialization",
       "c156fe2dd467 drm/msm/dp: Account for LTTPRs capabilities"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98420"
-    ],
-    "kev": false,
-    "upstream": "d7fd1f98607f2cd358e583f9548bdf0173090a86",
-    "subject": "ksmbd: follow SMB2 session expiration semantics",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/connection.c",
-      "fs/smb/server/connection.h",
-      "fs/smb/server/mgmt/user_session.c",
-      "fs/smb/server/mgmt/user_session.h",
-      "fs/smb/server/proc.c",
-      "fs/smb/server/server.c",
-      "fs/smb/server/smb2pdu.c",
-      "fs/smb/server/smb2pdu.h",
-      "fs/smb/server/stats.h"
-    ],
-    "prerequisites": [
-      "e333e77638b3 ksmbd: add debug prints to know what smb2 requests were received",
-      "db5f8243067f ksmbd: add debug print for pending request during server shutdown",
-      "06a025448b57 ksmbd: align aux_payload_buf to avoid OOB reads in cryptographic operations",
-      "5741909697a3 VFS: improve interface for lookup_one functions",
-      "d91c0751d0a6 ksmbd: remove unnecessary softdep on crc32",
-      "4ea0bb8aaedf ksmbd: handle set/get info file for streamed file",
-      "93893a57efd4 net: s/dev_get_flags/netif_get_flags/",
-      "09f124b2871b smb/server: use lookup_one_unlocked()",
-      "4e45cca31d4e smb/server: add ksmbd_vfs_kern_path()",
-      "b5ee94ac651a ksmbd: allow a filename to contain colons on SMB3.1.1 posix extensions",
-      "e7de2c4521ce smb: server: make use of common smbdirect.h",
-      "d4b86b49093c smb: server: add a pr_info() when the server starts running",
-      "03a38d846750 smb: server: pass ksmbd_transport to get_smbd_max_read_write_size()",
-      "e28c5bc45640 ksmbd: increase session and share hash table bits",
-      "1ead2213dd7d smb/server: use end_removing_noperm for for target of smb2_create_link()"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -3314,38 +2954,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-98289"
-    ],
-    "kev": false,
-    "upstream": "4a4263dfeabad72f95e8ab6e15146861fa4144dd",
-    "subject": "af_unix: Unify scc_index when finalising SCC in __unix_walk_scc().",
-    "verdict": "needs-backport",
-    "files": [
-      "net/unix/garbage.c"
-    ],
-    "prerequisites": [
-      "c49a157c33c4 af_unix: Set drop reason in __unix_gc().",
-      "f9af583a2c76 af_unix: Sort headers.",
-      "84960bf24031 af_unix: Move internal definitions to net/unix/.",
-      "3056172a261c af_unix: Explicitly include headers for non-pointer struct fields.",
-      "0083e3e37e07 af_unix: Clean up #include under net/unix/.",
-      "9870d350e45a net: replace use of system_unbound_wq with system_dfl_wq",
-      "58b47c713711 af_unix: Count cyclic SCC.",
-      "6b6f3c71fe56 af_unix: Simplify GC state.",
-      "da8fc7a39be8 af_unix: Don't trigger GC from close() if unnecessary.",
-      "384900542dc8 af_unix: Don't call wait_for_unix_gc() on every sendmsg().",
-      "e29c7a4cec86 af_unix: Refine wait_for_unix_gc().",
-      "ab8b23150abc af_unix: Remove unix_tot_inflight.",
-      "24fa77dad25c af_unix: Consolidate unix_schedule_gc() and wait_for_unix_gc().",
-      "2183a5c8a04f af_unix: annotate unix_gc_lock with __cacheline_aligned_in_smp",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98288"
     ],
     "kev": false,
@@ -3371,62 +2979,6 @@
       "beb1e0148e6d net: stmmac: make EEE depend on phy->enable_tx_lpi",
       "80fada6c0d3e net: stmmac: remove redundant code from ethtool EEE ops",
       "e40dd46d2fc5 net: stmmac: clean up stmmac_disable_eee_mode()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98286"
-    ],
-    "kev": false,
-    "upstream": "c391a40f71886b28c082b47270f0e856fa3e1150",
-    "subject": "drop_monitor: use timer_shutdown_sync() to prevent timer rearming during teardown",
-    "verdict": "needs-backport",
-    "files": [
-      "net/core/drop_monitor.c"
-    ],
-    "prerequisites": [
-      "8fa7292fee5c treewide: Switch/rename to timer_delete[_sync]()",
-      "41cb08555c41 treewide, timers: Rename from_timer() to timer_container_of()",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "32a92f8c8932 Convert more 'alloc_obj' cases to default GFP_KERNEL arguments",
-      "5c4b709b5fc1 net: constify sk_skb_reason_drop() sock parameter"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98284"
-    ],
-    "kev": false,
-    "upstream": "ceac0de741bfb47ca255eee075257b3bb31f0651",
-    "subject": "netlink: do not free nlk->groups while lockless readers can use it",
-    "verdict": "needs-backport",
-    "files": [
-      "net/netlink/af_netlink.c",
-      "net/netlink/diag.c"
-    ],
-    "prerequisites": [
-      "bc74d329ceba netlink: Remove the dead code in netlink_proto_init()",
-      "f302edb9d822 switch netlink_getsockbyfilp() to taking descriptor",
-      "e51edeaf3506 net/netlink: Correct the comment on netlink message max cap",
-      "75e2c86c7b18 net: netlink: catch attempts to send empty messages",
-      "438989137acd netlink: Unset cb_running when terminating dump on release",
-      "effdbb29fdd2 netlink: spelling: fix appened -> appended in a comment",
-      "62ef449b8d8e bpf: Clean up individual BTF_ID code",
-      "f86f42ed2c47 net: add sk_drops_read(), sk_drops_inc() and sk_drops_reset() helpers",
-      "5d6b58c932ec net: lockless sock_i_ino()",
-      "e5b670e5439b net: remove obsolete WARN_ON(refcount_read(&sk->sk_refcnt) == 1)",
-      "0e50474fa514 net: Convert proto_ops bind() callbacks to use sockaddr_unsized",
-      "85cb0757d7e1 net: Convert proto_ops connect() callbacks to use sockaddr_unsized",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "0fe27e598592 net: change sock.sk_ino and sock_i_ino() to u64"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -3460,25 +3012,6 @@
       "973a432637ed btrfs: don't sleep in btrfs_encoded_read() if IOCB_NOWAIT is set",
       "34310c442e17 btrfs: add io_uring command for encoded reads (ENCODED_READ ioctl)",
       "69673992b1ae btrfs: push cleanup into btrfs_read_locked_inode()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98427"
-    ],
-    "kev": false,
-    "upstream": "7f4a5ec6258fd7c92633ec4b0493fc51166d9398",
-    "subject": "net/sched: codel: bound the dropping loop per dequeue call",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/codel.h",
-      "include/net/codel_impl.h"
-    ],
-    "prerequisites": [
-      "ea25e03da7a7 codel: annotate data-races in codel_dump_stats()"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -3833,39 +3366,6 @@
       "b79f5f54e1dc bpf: Refactor mark_{dynptr,iter}_read",
       "c8e2ee1f3df0 bpf: Introduce support for bpf_local_irq_{save,restore}",
       "cbd8730aea8d bpf: Improve verifier log for resource leak on exit"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98598"
-    ],
-    "kev": false,
-    "upstream": "0346ec2f080b40d95ed05b853bb9226289e75212",
-    "subject": "ipv6: Prevent rt6_insert_exception() for dying fib6_info.",
-    "verdict": "needs-backport",
-    "files": [
-      "net/ipv6/ip6_fib.c",
-      "net/ipv6/route.c"
-    ],
-    "prerequisites": [
-      "e60ea4544776 ipv6: use READ_ONCE()/WRITE_ONCE() on fib6_table->fib_seq",
-      "85e48bcf294c ipv6: replace call_rcu by kfree_rcu for simple kmem_cache_free callback",
-      "a37b0e4eca04 ipv6: Use rtnl_register_many().",
-      "ba4138032ae3 ipv6: Add flow label to route get requests",
-      "f130a0cc1b4f inet: fix lwtunnel_valid_encap_type() lock imbalance",
-      "8fa7292fee5c treewide: Switch/rename to timer_delete[_sync]()",
-      "bc05add844fc ipv6: Use nlmsg_payload in route file",
-      "4cb4861d8c3b ipv6: Validate RTA_GATEWAY of RTA_MULTIPATH in rtm_to_fib6_config().",
-      "bd11ff421d36 ipv6: Get rid of RTNL for SIOCDELRT and RTM_DELROUTE.",
-      "fa76c1674f2e ipv6: Move some validation from ip6_route_info_create() to rtm_to_fib6_config().",
-      "e6f497955fb6 ipv6: Check GATEWAY in rtm_to_fib6_multipath_config().",
-      "c9cabe05e450 ipv6: Move nexthop_find_by_id() after fib6_info_alloc().",
-      "c4837b9853e5 ipv6: Split ip6_route_info_create().",
-      "5720a328c3e9 ipv6: Preallocate rt->fib6_nh->rt6i_pcpu in ip6_route_info_create().",
-      "d27b9c40dbd6 ipv6: Preallocate nhc_pcpu_rth_output in ip6_route_info_create()."
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
