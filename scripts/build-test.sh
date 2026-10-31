@@ -17,7 +17,7 @@ root=$PWD
 work=${WORK:-$root/build-test}
 src=$work/linux
 summary=${GITHUB_STEP_SUMMARY:-/dev/null}
-mkdir -p "$work/logs"
+rm -rf "$work/logs" && mkdir -p "$work/logs"
 [ -d "$src/.git" ] || git init -q "$src"
 
 kmake() { make -s -C "$src" O="$out" ARCH="$arch" CROSS_COMPILE="$cross" -j"$(nproc)" "$@"; }

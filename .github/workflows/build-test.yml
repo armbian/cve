@@ -17,7 +17,8 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Repo variable FASTTRACK_RUNNER picks a self-hosted runner (label); default GitHub-hosted.
+    runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 120
     strategy:
       fail-fast: false
@@ -28,12 +29,19 @@ jobs:
 
       - name: Toolchain
         run: |
+          command -v aarch64-linux-gnu-gcc arm-linux-gnueabihf-gcc riscv64-linux-gnu-gcc bison flex bc >/dev/null && exit 0
           sudo apt-get update -q
           sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev \
             gcc-aarch64-linux-gnu gcc-arm-linux-gnueabihf gcc-riscv64-linux-gnu
 
+      # Self-hosted: kernel tree and prepared builds stay between runs.
       - name: Build test
-        run: scripts/build-test.sh ${{ matrix.arch }}
+        run: |
+          [ "${{ runner.environment }}" = self-hosted ] && export WORK="$HOME/.cache/armbian-cve/build-test-${{ matrix.arch }}"
+          ret=0
+          scripts/build-test.sh ${{ matrix.arch }} || ret=$?
+          mkdir -p build-test && cp -r "${WORK:-build-test}/logs" build-test/ 2>/dev/null || true
+          exit $ret
 
       - uses: actions/upload-artifact@v4
         if: always()
