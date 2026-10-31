@@ -1,0 +1,451 @@
+{
+  "series": "6.12",
+  "base": {
+    "commit": "03bae623ec326c2738198739625832aab0eb120a",
+    "version": "6.12.115"
+  },
+  "patches": [
+    {
+      "series": "6.12",
+      "upstream": "3a8c562892b96f35bba1e00d5e455a15963bbb92",
+      "subject": "KVM: arm64: Transfer the hyp stack pages out of the host stage-2",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-98466"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0001-3a8c562892b9-kvm-arm64-transfer-the-hyp-stack-pages-out-of-the-ho.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "006c8b834aed8b02bd8fb9fb05e9e7ead37d1763",
+      "subject": "net: gso: limit recursive IP-in-IP segmentation",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-98853"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0002-006c8b834aed-net-gso-limit-recursive-ip-in-ip-segmentation.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "bc4b7b0414c33b2c8898eb04386df0d21a13dad8",
+      "subject": "ext4: validate readdir offset before accessing dirent",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-92499"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0003-bc4b7b0414c3-ext4-validate-readdir-offset-before-accessing-dirent.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "4fd5bad647bfa45eb86bfd2f03ba1bef3fcd5851",
+      "subject": "smb/server: cancel async requests when closing connection",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-98439"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0004-4fd5bad647bf-smb-server-cancel-async-requests-when-closing-connec.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "efe24898485c5c831e629d9c6fb9350c35cb576f",
+      "subject": "drm/panthor: fix for dma-fence safe access rules",
+      "source": "mainline",
+      "cves": [
+        "CVE-2025-71302"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0005-efe24898485c-drm-panthor-fix-for-dma-fence-safe-access-rules.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "062ea905fff7756b2e87143ffccaece5cdb44267",
+      "subject": "drm/amd: Fix NULL pointer dereference in device cleanup",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-43369"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0006-062ea905fff7-drm-amd-fix-null-pointer-dereference-in-device-clean.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "593980175389a05793f6060aa20e626330960395",
+      "subject": "bpf: Use array_map_meta_equal for percpu array inner map replacement",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98376"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0007-593980175389-bpf-use-array-map-meta-equal-for-percpu-array-inner.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "8ed9bff906cf8036531d1559f10e82733a52b41f",
+      "subject": "ARM: 9481/2: breakpoint: CFI breakpoints only on demand",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-90306"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0008-8ed9bff906cf-arm-9481-2-breakpoint-cfi-breakpoints-only-on-demand.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "95e647d2a5304a8fd11f1ba3c8502de700650131",
+      "subject": "fbdev: clear fb_info->mode before deleting a videomode",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-80579"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0009-95e647d2a530-fbdev-clear-fb-info-mode-before-deleting-a-videomode.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "d15d51fb26e830af58f3f21964f1c09c239077ea",
+      "subject": "fbdev: bound mode sysfs output to the sysfs buffer",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-80580"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0010-d15d51fb26e8-fbdev-bound-mode-sysfs-output-to-the-sysfs-buffer.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1",
+      "subject": "xfrm: hold net_device reference under RCU in bundle creation",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98364"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0011-9fa903b24b1f-xfrm-hold-net-device-reference-under-rcu-in-bundle-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "99c24a8968ebef0573825b5cb89d5985d51635b9",
+      "subject": "RDMA/rtrs: guard against null kobj name",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98355"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0012-99c24a8968eb-rdma-rtrs-guard-against-null-kobj-name.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "7d4d4f3b668d708d94f62ecdd33ac330a6fd8a84",
+      "subject": "dm-integrity: fix NULL pointer dereference when the 'R' flag is used",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-99087"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0013-7d4d4f3b668d-dm-integrity-fix-null-pointer-dereference-when-the-r.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "26300879cd8e4612dce66bb8f6ff7cd35fcf3e59",
+      "subject": "mtd: core: avoid double-free of OTP NVMEM device",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98834"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0014-26300879cd8e-mtd-core-avoid-double-free-of-otp-nvmem-device.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "b83641e0ab8b20eefcc4cdc5a059f897375291a2",
+      "subject": "net: ipv4: Fix UDP length overflow with PMTU discover and big MTU",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98393"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0015-b83641e0ab8b-net-ipv4-fix-udp-length-overflow-with-pmtu-discover.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "6f0a100df8539ce90f37c14e1945f396ca2410bc",
+      "subject": "wifi: mac80211: only operate on TDLS peers in the TDLS code",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98332"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0016-6f0a100df853-wifi-mac80211-only-operate-on-tdls-peers-in-the-tdls.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "cbdd39ce42530a193c56beb206a3356cb6d01016",
+      "subject": "netfilter: nf_nat: unregister and release hooks on error",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98321"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0017-cbdd39ce4253-netfilter-nf-nat-unregister-and-release-hooks-on-err.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "8879e3e0a84a86954c855caceead4867e74a9a27",
+      "subject": "Bluetooth: btmtksdio, btmtkuart: validate WMT event length before struct access",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98292"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0018-8879e3e0a84a-bluetooth-btmtksdio-btmtkuart-validate-wmt-event-len.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "2842ce397dd09882530b42f7fdb0c855767eb24e",
+      "subject": "net: bridge: vlan: fix bugs caused by switchdev deletion errors",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98285"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0019-2842ce397dd0-net-bridge-vlan-fix-bugs-caused-by-switchdev-deletio.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "6bdcdb31318c10e6369cff8e5b32c37397e98091",
+      "subject": "wifi: mac80211: validate TX status rate metadata",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98824"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0020-6bdcdb31318c-wifi-mac80211-validate-tx-status-rate-metadata.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "b62a264163ca51bee04785c581344751812395df",
+      "subject": "EDAC/altera: Drop __init from ECC setup paths for re-probe safety",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98740"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0021-b62a264163ca-edac-altera-drop-init-from-ecc-setup-paths-for-re-pr.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "eef3b67f9c6782127163b631c9043011a68016e2",
+      "subject": "EDAC/altera: Fix use-after-free in error paths",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98932"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0022-eef3b67f9c67-edac-altera-fix-use-after-free-in-error-paths.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "6f63e919fe1e335b8abcb3a28bfd4804a98d875a",
+      "subject": "wifi: mac80211: fix slab-out-of-bounds read in ieee80211_monitor_select_queue()",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98810"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0023-6f63e919fe1e-wifi-mac80211-fix-slab-out-of-bounds-read-in-ieee802.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "8ae3f4067ba4ae3a15581392f6dac422e3d3def0",
+      "subject": "seg6: ensure packet data is writable before modifying SRH and IPv6 DA",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98802"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0024-8ae3f4067ba4-seg6-ensure-packet-data-is-writable-before-modifying.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "184b5ddf82d45d6f75cc83719a2e453392512bd2",
+      "subject": "bonding: fix the program leak when XDP is replaced",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-98966"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0025-184b5ddf82d4-bonding-fix-the-program-leak-when-xdp-is-replaced.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    },
+    {
+      "series": "6.12",
+      "upstream": "489114c9ecae44e523361a4b3e610ee5ebd9189c",
+      "subject": "net: team: free skb when broadcast has no txable port",
+      "source": "mainline",
+      "cves": [
+        "CVE-2026-99026"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0026-489114c9ecae-net-team-free-skb-when-broadcast-has-no-txable-port.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": ""
+    }
+  ]
+}
