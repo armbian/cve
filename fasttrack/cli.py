@@ -170,6 +170,9 @@ def cmd_cve(args) -> int:
     attempts_file = out / "attempts.json"
     attempts = json.loads(attempts_file.read_text()) if attempts_file.exists() else {}
 
+    def stack(res):
+        return incident.series_stack(out, res.series, res.head, f"{res.cve}/{res.series}")
+
     resolutions = []
     for cid, extra in incidents.items():
         rec = vulns.find(data / "vulns", cid) if cid.startswith("CVE-") else None
@@ -192,11 +195,11 @@ def cmd_cve(args) -> int:
             wdir = out / "work" / cid / res.series
             if args.collect and res.outcome in ("unpatched", "partial") and (wdir / "start").exists():
                 # Commits made in an existing work package (by hand or an earlier run); no Claude.
-                incident.collect_work(data / "linux", res, wdir, _builder(cfg, args))
+                incident.collect_work(data / "linux", res, wdir, _builder(cfg, args), stack(res))
                 if cid in attempts and res.series in attempts[cid]:
                     attempts[cid][res.series]["outcome"] = res.outcome
             elif res.outcome in ("unpatched", "partial") and (args.claude or args.package):
-                wdir = incident.prepare_work(data / "linux", res, out / "work")
+                wdir = incident.prepare_work(data / "linux", res, out / "work", stack(res))
                 young = _days_in_mainline(data / "linux", fixes, newest_release)
                 if args.claude and cid in from_list and young < min_age:
                     res.note = (res.note + " " if res.note else "") + \
@@ -209,14 +212,17 @@ def cmd_cve(args) -> int:
                     cost = incident.claude_cost(wdir)
                     if cost is not None:
                         res.note = (res.note + " " if res.note else "") + f"claude ${cost:.2f}"
-                    incident.collect_work(data / "linux", res, wdir, _builder(cfg, args))
+                    incident.collect_work(data / "linux", res, wdir, _builder(cfg, args), stack(res))
                     if rc != 127:  # 127: Claude did not start; not an attempt
                         attempts.setdefault(cid, {})[res.series] = {
                             "date": time.strftime("%Y-%m-%d", time.gmtime()), "head": res.head_version,
                             "outcome": res.outcome, "cost": cost, "run": os.environ.get("GITHUB_RUN_ID")}
+            # "made" orders backports in patches/<series>/: a later one is built on the earlier ones.
+            made = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()) \
+                if any(c.verdict == incident.CLAUDE for c in res.patches) else None
             emit.write_patch_dir(out / "cve" / cid / res.series, res.series, res.head, res.head_version,
                                  res.patches, {"incident": cid, "outcome": res.outcome,
-                                               "fixed_in": res.fixed_in})
+                                               "fixed_in": res.fixed_in, "made": made})
             resolutions.append(res)
             print(f"{cid} {res.series} @ {res.head_version}: {res.outcome}"
                   + (f" ({len(res.patches)} patch(es))" if res.patches else "")
