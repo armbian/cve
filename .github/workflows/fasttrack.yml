@@ -36,11 +36,19 @@ permissions:
 
 jobs:
   fasttrack:
-    runs-on: ubuntu-latest
+    # Repo variable FASTTRACK_RUNNER picks a self-hosted runner (label); default GitHub-hosted.
+    # Use a fixed runner: data/ (5 GB) then stays on disk. A random one downloads it again.
+    runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 180
     steps:
+      # data/, two worktrees and the build check need about 12 GB.
+      - name: Free space
+        id: space
+        run: echo "low=$([ "$(df --output=avail -BG / | tail -1 | tr -dc 0-9)" -lt 20 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
       # Same as armbian/shallow: linux.git and its worktrees need the space.
       - name: Free Github Runner
+        if: runner.environment == 'github-hosted' && steps.space.outputs.low == 'true'
         uses: descriptinc/free-disk-space@main # no tagged releases; pinned to default branch
         with:
           android: true
@@ -52,6 +60,7 @@ jobs:
 
       # Same as armbian/shallow#16: remove the large packages that are actually installed.
       - name: Remove large packages
+        if: runner.environment == 'github-hosted' && steps.space.outputs.low == 'true'
         run: |
           pkgs=$(dpkg-query -W -f '${Package}\n' | grep -E '^(aspnetcore-|dotnet-|llvm-|php|mongodb-|mysql-)|^(azure-cli|google-chrome-stable|firefox|powershell|mono-devel|libgl1-mesa-dri|google-cloud-sdk|google-cloud-cli)$' || true)
           [[ -n "$pkgs" ]] && sudo apt-get remove -y $pkgs
@@ -67,9 +76,14 @@ jobs:
       # Kernel build tools for the compile check (build_check in fasttrack.yaml).
       - name: Tooling
         run: |
-          sudo apt-get update -q
-          sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev
-          pip install --quiet pyyaml
+          # build_check is x86: other hosts need the x86_64 cross compiler.
+          need=""
+          [ "$(uname -m)" = x86_64 ] || command -v x86_64-linux-gnu-gcc >/dev/null || need=gcc-x86-64-linux-gnu
+          if ! command -v bc bison flex pahole >/dev/null || ! [ -e /usr/include/libelf.h ] || [ -n "$need" ]; then
+            sudo apt-get update -q
+            sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
+          fi
+          python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
           git config --global user.name  "fasttrack[bot]"
           git config --global user.email "fasttrack@users.noreply.github.com"
 
@@ -79,7 +93,15 @@ jobs:
       # data/ = shallow linux.git + vulns.git + stable-queue.git. A new entry is
       # saved once per ISO week; runs in between restore the latest one and only
       # fetch what is new. Editing fasttrack.yaml (e.g. the series) starts fresh.
+      # Self-hosted: data/ lives outside the workspace and stays between runs.
+      - name: Persistent data
+        if: runner.environment == 'self-hosted'
+        run: |
+          mkdir -p "$HOME/.cache/armbian-cve/data"
+          ln -sfn "$HOME/.cache/armbian-cve/data" data
+
       - name: Upstream data cache
+        if: runner.environment == 'github-hosted'
         uses: actions/cache@v4
         with:
           path: data

@@ -21,6 +21,7 @@ never treated like an upstream patch.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import logging
 import re
@@ -458,33 +459,35 @@ def prune(repo: Path, cve_root: Path, remote: str = "origin", branch_fmt: str = 
     removed: list[str] = []
     if not cve_root.is_dir():
         return removed
-    for sdir in sorted(p for p in cve_root.glob("*/*") if p.is_dir()):
-        cid, label = sdir.parent.name, sdir.name
-        try:
-            ref = _stable_ref(repo, label, remote, branch_fmt)
-        except gitutil.GitError:
-            log.info("prune %s %s: no stable branch, kept", cid, label)
-            continue                                   # series no longer tracked/synced: leave it alone
-        meta = sdir / "fasttrack.json"
-        patches = [sdir / n for n in _series_names(sdir)]
-        reason = ""
-        if meta.exists():
-            fixed = json.loads(meta.read_text()).get("fixed_in")
-            hv = ".".join(map(str, gitutil.makefile_version(repo, ref)))
-            if fixed and parse_version(hv) >= parse_version(fixed):
-                reason = f"stable {hv} carries the fix (fixed in {fixed})"
-        if not reason and patches:
-            with tempfile.TemporaryDirectory(prefix="fasttrack-prune-") as tmpd, \
-                    gitutil.Worktree(repo, ref, Path(tmpd) / "wt") as wt:
+    with tempfile.TemporaryDirectory(prefix="fasttrack-prune-") as tmpd, contextlib.ExitStack() as stack:
+        trees: dict[str, gitutil.Worktree] = {}       # checks only: one tree per stable head
+        for sdir in sorted(p for p in cve_root.glob("*/*") if p.is_dir()):
+            cid, label = sdir.parent.name, sdir.name
+            try:
+                ref = _stable_ref(repo, label, remote, branch_fmt)
+            except gitutil.GitError:
+                log.info("prune %s %s: no stable branch, kept", cid, label)
+                continue                                   # series no longer tracked/synced: leave it alone
+            meta = sdir / "fasttrack.json"
+            patches = [sdir / n for n in _series_names(sdir)]
+            reason = ""
+            if meta.exists():
+                fixed = json.loads(meta.read_text()).get("fixed_in")
+                hv = ".".join(map(str, gitutil.makefile_version(repo, ref)))
+                if fixed and parse_version(hv) >= parse_version(fixed):
+                    reason = f"stable {hv} carries the fix (fixed in {fixed})"
+            if not reason and patches:
+                if ref not in trees:
+                    trees[ref] = stack.enter_context(gitutil.Worktree(repo, ref, Path(tmpd) / ref[:12]))
                 # reverse the whole series, newest first: all present means absorbed
-                if all(wt.check(p.read_text(**gitutil.ENC), reverse=True) for p in reversed(patches)):
+                if all(trees[ref].check(p.read_text(**gitutil.ENC), reverse=True) for p in reversed(patches)):
                     reason = "stable head already contains every patch"
-        log.info("prune %s %s: %s", cid, label, reason or "still needed")
-        if reason:
-            shutil.rmtree(sdir)
-            removed.append(f"{cid} {label}: {reason}")
-        if sdir.parent.is_dir() and not any(sdir.parent.iterdir()):
-            sdir.parent.rmdir()
+            log.info("prune %s %s: %s", cid, label, reason or "still needed")
+            if reason:
+                shutil.rmtree(sdir)
+                removed.append(f"{cid} {label}: {reason}")
+            if sdir.parent.is_dir() and not any(sdir.parent.iterdir()):
+                sdir.parent.rmdir()
     return removed
 
 

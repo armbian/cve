@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import logging
 import os
+import platform
 import re
 import subprocess
 import time
@@ -20,7 +21,13 @@ from . import gitutil
 log = logging.getLogger(__name__)
 
 CROSS = {"arm64": "aarch64-linux-gnu-", "arm": "arm-linux-gnueabihf-",
-         "riscv": "riscv64-linux-gnu-", "x86": ""}
+         "riscv": "riscv64-linux-gnu-", "x86": "x86_64-linux-gnu-"}
+HOST = {"arm64": "aarch64", "arm": "armv7l", "riscv": "riscv64", "x86": "x86_64"}
+
+
+def cross_compile(arch: str) -> str:
+    """CROSS_COMPILE prefix for ``arch``; empty on a matching host."""
+    return "" if platform.machine() == HOST[arch] else CROSS[arch]
 
 
 class BuildError(Exception):
@@ -39,7 +46,7 @@ class Builder:
 
     def _make(self, *targets: str, timeout: int = 1800) -> tuple[bool, str]:
         cmd = ["make", "-s", "-C", str(self.tree), f"O={self.out}", f"ARCH={self.arch}",
-               f"CROSS_COMPILE={CROSS[self.arch]}", f"-j{self.jobs}", *targets]
+               f"CROSS_COMPILE={cross_compile(self.arch)}", f"-j{self.jobs}", *targets]
         try:
             p = subprocess.run(cmd, capture_output=True, text=True, errors="replace", timeout=timeout)
         except subprocess.TimeoutExpired:
