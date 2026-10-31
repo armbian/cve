@@ -123,5 +123,5 @@ The `build-test` workflow builds each patch on arm64, arm, riscv and x86. A main
 ## Help
 
 - `./fasttrack.sh cve --help` lists all options.
-- `README.md` explains how the tool works.
+- `DEVELOPMENT.md` explains how the tool works.
 - `claude: not found` means `claude` is not on your `PATH`. Claude Code installs it in `~/.local/bin`.
