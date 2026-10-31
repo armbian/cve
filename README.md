@@ -129,6 +129,10 @@ Either way, the tool then takes Claude's commits and re-verifies the whole serie
 - **Hourly:** sync, `run`, then `prune`. Commits `patches/`, `cve/` deletions, `report.md`, `unpatched.json`, `state.json` and `events.json` to `main` when they changed. A run with nothing new commits nothing. Opens an issue labelled `security` when a pending CVE is actively exploited.
 - **Manual dispatch:** takes CVE ids, or `unpatched`, plus an optional fix commit and a Claude toggle. Results go to `cve/` on a branch, with a PR into `main` for review. Claude in CI needs the `ANTHROPIC_API_KEY` secret.
 
+## Build test
+
+`scripts/build-test.sh <arm64|arm|riscv|x86> [series dir ...]` applies each series on its stable base. It builds the changed `.c` files with `allmodconfig` and reports errors and new warnings. The `build-test` workflow runs it for each architecture on PRs and merges that change `cve/` or `patches/`. Logs are in the job artifacts.
+
 ## Tests
 
 ```
