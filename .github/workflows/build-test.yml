@@ -14,6 +14,12 @@ on:
     paths: ["cve/**", "patches/**", "scripts/build-test.sh"]
   workflow_dispatch:
 
+# A new push to a pull request cancels its older run. Runs on main test
+# only their own changes, so they queue and are never cancelled.
+concurrency:
+  group: build-test-${{ github.ref }}-${{ github.event_name == 'push' && github.run_id || '' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 

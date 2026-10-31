@@ -9,6 +9,10 @@ name: kernel-security-fasttrack
 on:
   schedule:
     - cron: "*/15 * * * *"
+  # GitHub drops many scheduled runs: a merged backport starts its own run.
+  push:
+    branches: [main]
+    paths: ["cve/**", "attempts.json"]
   workflow_dispatch:
     inputs:
       incidents:
@@ -26,8 +30,10 @@ on:
         type: boolean
         default: false
 
+# One run on main at a time; a newer pending run replaces an older pending one.
+# A run for named incidents has its own group, so it is never replaced.
 concurrency:
-  group: fasttrack
+  group: fasttrack-${{ (inputs.incidents || inputs.commit) && github.run_id || 'main' }}
   cancel-in-progress: false
 
 permissions:
