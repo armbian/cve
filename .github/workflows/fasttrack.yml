@@ -37,6 +37,7 @@ permissions:
 jobs:
   fasttrack:
     # Repo variable FASTTRACK_RUNNER picks a self-hosted runner (label); default GitHub-hosted.
+    # Use a fixed runner: data/ (5 GB) then stays on disk. A random one downloads it again.
     runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 180
     steps:

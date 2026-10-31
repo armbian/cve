@@ -18,8 +18,8 @@ permissions:
 
 jobs:
   build:
-    # Repo variable FASTTRACK_RUNNER picks a self-hosted runner (label); default GitHub-hosted.
-    runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
+    # Repo variable BUILDTEST_RUNNER picks a self-hosted runner (label); default GitHub-hosted.
+    runs-on: ${{ vars.BUILDTEST_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 120
     strategy:
       fail-fast: false
