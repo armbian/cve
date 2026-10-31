@@ -17,6 +17,7 @@ that needs adaptation is reported, never edited.
 from __future__ import annotations
 
 import concurrent.futures
+import json
 import logging
 import re
 import subprocess
@@ -37,6 +38,8 @@ PRESENT = "already-present"     # reverse-applies: the tree has it
 CONFLICT = "needs-backport"     # does not apply unchanged
 MISSING = "commit-missing"      # neither in the mirror nor downloadable
 OTHER_ARCH = "other-arch"       # touches only arch/ trees we do not build
+BACKPORTED = "backported"       # a reviewed backport from cve/ carries it
+SUPERSEDED = "superseded"       # cve/ backport not needed: the fix applies or is in tree
 
 
 @dataclass
@@ -53,6 +56,7 @@ class Candidate:
     files: list[str] = field(default_factory=list)          # touched or conflicting files
     prerequisites: list[str] = field(default_factory=list)  # "sha12 subject" hints
     build_log: str = ""                                     # compiler errors the patch brings in
+    backport: str = ""                                      # cve/<ID>/<series> this patch comes from
     patch: str = field(default="", repr=False)
 
     def public(self) -> dict:
@@ -155,13 +159,25 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
         b = start_builder(builder, wt.path, Path(tmpd) / "out")
         warm.result()
         rejected: dict[int, str] = {}                              # id(candidate) → build errors
+        broken: set[str] = set()                                   # backport sets that do not apply whole
         while True:
             for c in candidates:
                 if id(c) in rejected:
                     c.verdict, c.reason = CONFLICT, "applies unchanged but does not build; needs a backport or prerequisite"
                     c.build_log, c.files = rejected[id(c)], gitutil.patch_files(c.patch)
+                elif c.backport in broken:
+                    c.verdict, c.reason = CONFLICT, f"another patch of {c.backport} does not apply or build"
+                elif c.backport and _superseded(c, candidates):
+                    c.verdict, c.reason = SUPERSEDED, "the mainline fix applies unchanged or is in tree"
                 else:
                     _verify_one(repo, ref, wt, c, arches)
+            # A backport set goes in whole or not at all.
+            sets = {c.backport for c in candidates
+                    if c.backport and (c.verdict == CONFLICT or id(c) in rejected)} - broken
+            if sets:
+                broken |= sets
+                gitutil.git(wt.path, "reset", "--quiet", "--hard", ref)
+                continue
             accepted = [c for c in candidates if c.verdict == ACCEPTED]
             bad = b.batch_regressions([c.patch for c in accepted], build.worktree_flip(wt.path)) if b else {}
             if not bad:
@@ -170,8 +186,13 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
                 rejected[id(accepted[i])] = err
                 log.info("%s %s: applies but does not build", accepted[i].series, accepted[i].upstream[:12])
             gitutil.git(wt.path, "reset", "--quiet", "--hard", ref)
+        # A mainline fix that a backport carries is not pending.
+        carried = {c.upstream for c in candidates if c.backport and c.verdict == ACCEPTED}
+        for c in candidates:
+            if not c.backport and c.verdict == CONFLICT and c.upstream in carried:
+                c.verdict, c.reason = BACKPORTED, "carried by a reviewed backport from cve/"
         # Hints read only history, not the tree: in parallel.
-        conflicts = [c for c in candidates if c.verdict == CONFLICT and c.upstream]
+        conflicts = [c for c in candidates if c.verdict == CONFLICT and c.upstream and not c.backport]
         for c, hints in zip(conflicts, pool.map(
                 lambda c: gitutil.prerequisite_hints(repo, ref, c.upstream, c.files), conflicts)):
             c.prerequisites = hints
@@ -182,6 +203,32 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
                 c.filename = f"{n:04d}-{(c.upstream or 'q')[:12]}-{_slug(c.subject)}.patch"
             log.info("%s [%d/%d] %s %s: %s - %s", c.series, i, len(candidates), (c.upstream or "-")[:12],
                      c.source, c.verdict, c.subject)
+
+
+def _superseded(c: Candidate, candidates: list[Candidate]) -> bool:
+    """True when every mainline fix that ``c``'s backport set carries applies or is in tree."""
+    ups = {x.upstream for x in candidates if x.backport == c.backport}
+    fixes = [x for x in candidates if not x.backport and x.upstream in ups]
+    return bool(fixes) and all(x.verdict in (ACCEPTED, PRESENT, OTHER_ARCH) for x in fixes)
+
+
+def load_backports(cve_root: Path, series: str) -> list[Candidate]:
+    """Reviewed backports in cve/<ID>/<series>/, in series.conf order. On main they passed review."""
+    out = []
+    for meta_file in sorted(cve_root.glob(f"*/{series}/fasttrack.json")):
+        d = meta_file.parent
+        meta = json.loads(meta_file.read_text())
+        for p in meta.get("patches", []):
+            f = d / p["filename"]
+            if not f.exists():
+                continue
+            # Drop the provenance header that emit wrote; emit writes it again.
+            body = re.sub(r"^X-Fasttrack-[^\n]*\n", "", f.read_text(encoding="utf-8", errors="surrogateescape"),
+                          count=8, flags=re.M)
+            out.append(Candidate(series, p.get("upstream", ""), p.get("subject", ""), p.get("source", "backport"),
+                                 cves=p.get("cves", []), kev=p.get("kev", False),
+                                 backport=f"{d.parent.name}/{series}", patch=body))
+    return out
 
 
 def start_builder(builder, tree: Path, out: Path):
@@ -259,6 +306,7 @@ def run_series(
     remote: str = "origin",
     arches: Optional[list[str]] = None,
     builder=None,
+    cve_root: Optional[Path] = None,
 ) -> SeriesResult:
     label = f"{series[0]}.{series[1]}"
     branch = branch_fmt.format(s=label)
@@ -270,6 +318,9 @@ def run_series(
     t = time.monotonic()
     cands = collect(series, records, queue_root, kev, queue_mode)
     _order_mainline(repo, cands)
+    # Reviewed backports go after the clean picks: one patch set per series.
+    if cve_root and cve_root.is_dir():
+        cands += load_backports(cve_root, label)
     log.info("%s: verify %d candidates on %s", label, len(cands), ref[:12])
     verify(repo, ref, cands, arches=arches, builder=builder)
     log.info("%s: done in %.0fs", label, time.monotonic() - t)

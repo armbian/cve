@@ -57,7 +57,9 @@ def _cfg(args) -> dict:
 def cmd_fingerprint(args) -> int:
     """Print a hash that changes when a run could give a different result."""
     cfg = _cfg(args)
-    code = sorted(Path(__file__).parent.glob("*.py")) + [Path(args.config)]
+    # cve/ backports join the patch set, so a merged one is a new input too.
+    code = sorted(Path(__file__).parent.glob("*.py")) + [Path(args.config)] + \
+        sorted(Path(cfg["out"]).glob("cve/*/*/*"))
     print(sync.fingerprint([str(s) for s in cfg["series"]], cfg.get("sources"), code))
     return 0
 
@@ -85,7 +87,8 @@ def cmd_run(args) -> int:
         return engine.run_series(data / "linux", _series(s), records,
                                  queue_root if queue_root.is_dir() else None,
                                  kev, releases, queue_mode=cfg.get("queue_mode", "cve"),
-                                 arches=cfg.get("arches"), builder=_builder(cfg, args))
+                                 arches=cfg.get("arches"), builder=_builder(cfg, args),
+                                 cve_root=out / "cve")
 
     # Series are independent (own worktree and build dir): verify them in parallel.
     results = []
@@ -102,10 +105,10 @@ def cmd_run(args) -> int:
 
     for r in results:
         emit.write_series_dir(out, r)
-    # Backports in cve/ and "not affected" results (attempts.json) leave the open list.
+    # Work-package results (attempts.json): a "not affected" leaves the open list.
     attempts_file = out / "attempts.json"
     attempts = json.loads(attempts_file.read_text()) if attempts_file.exists() else {}
-    (out / "report.md").write_text(emit.report(results, events, attempts, emit.backports(out)))
+    (out / "report.md").write_text(emit.report(results, events, attempts))
     (out / "unpatched.json").write_text(json.dumps(emit.unpatched(results), indent=2) + "\n")
     (out / "events.json").write_text(json.dumps(events, indent=2) + "\n")
     state_file.write_text(json.dumps(state, indent=2) + "\n")

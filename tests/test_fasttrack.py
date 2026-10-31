@@ -254,15 +254,51 @@ class TestRun(Fixture):
         # Another series keeps the row.
         self.assertIn("Needs a backport (1)",
                       emit.report([res], [], {"CVE-2026-0009": {"7.3": {"outcome": "not-affected-needs-review"}}}))
-        md = emit.report([res], [], {}, {("6.18", "a" * 40)})
-        self.assertIn("Backport in cve/ (needs review) (1)", md)
-        self.assertNotIn("Needs a backport", md)
 
-    def test_backports_from_cve_dir(self):
-        d = self.tmp / "o" / "cve" / "CVE-2026-0009" / "6.18"
-        d.mkdir(parents=True)
-        (d / "fasttrack.json").write_text(json.dumps({"series": "6.18", "patches": [{"upstream": "a" * 40}]}))
-        self.assertEqual(emit.backports(self.tmp / "o"), {("6.18", "a" * 40)})
+    def cve_backport(self, cve, upstream, old, new):
+        """A cve/<cve>/6.18 set made on the stable head, as `fasttrack cve --collect` writes it."""
+        wt = self.tmp / f"bp-{cve}"
+        sh(self.repo, "git", "worktree", "add", "-q", "--detach", str(wt), "linux-6.18.y")
+        f = wt / f"{old.split()[0]}.c"
+        f.write_text(f.read_text().replace(old, new))
+        sh(wt, "git", "commit", "-qam", "backport")
+        c = engine.Candidate("6.18", upstream, "backport", "claude", [cve], verdict=engine.ACCEPTED,
+                             filename=f"0001-{upstream[:12]}-backport.patch",
+                             patch=sh(wt, "git", "format-patch", "-1", "--stdout"))
+        emit.write_patch_dir(self.tmp / "cve" / cve / "6.18", "6.18", "h", "6.18.2", [c])
+
+    def run_with_cve(self):
+        return engine.run_series(self.repo, (6, 18), self.records, self.data / "stable-queue", {},
+                                 {"6.18": "6.18.2"}, remote="none", cve_root=self.tmp / "cve")
+
+    def test_cve_backport_joins_patch_set(self):
+        self.cve_backport("CVE-2026-0003", self.C, "baz line 6 REWORKED", "baz line 6 FIXED")
+        res = self.run_with_cve()
+        v = {(c.upstream, c.backport): c.verdict for c in res.candidates}
+        self.assertEqual(v[(self.C, "")], engine.BACKPORTED)
+        self.assertEqual(v[(self.C, "CVE-2026-0003/6.18")], engine.ACCEPTED)
+        self.assertNotIn(self.C, [r["upstream"] for r in emit.unpatched([res])])
+        d = emit.write_series_dir(self.out, res)
+        body = next(d.glob(f"*-{self.C[:12]}-*.patch")).read_text()
+        self.assertEqual(body.count("X-Fasttrack-Source: claude"), 1)
+        self.assertIn("X-Fasttrack-Backport: cve/CVE-2026-0003/6.18", body)
+        self.assertIn("### Included (3)", emit.report([res], []))
+
+    def test_cve_backport_stale_or_superseded(self):
+        self.cve_backport("CVE-2026-0003", self.C, "baz line 6 REWORKED", "baz line 6 FIXED")
+        self.cve_backport("CVE-2026-0001", self.A, "foo line 6", "foo line 6 FIXED")
+        # The stable head moves under the baz backport.
+        sh(self.repo, "git", "checkout", "-q", "linux-6.18.y")
+        commit(self.repo, "baz rework 2", **{"baz.c": fix("baz", ("baz line 5", "baz line 5 REWORKED"),
+                                                          ("baz line 6", "baz line 6 AGAIN"))})
+        sh(self.repo, "git", "checkout", "-q", "master")
+        res = self.run_with_cve()
+        v = {(c.upstream, c.backport): c.verdict for c in res.candidates}
+        self.assertEqual(v[(self.C, "CVE-2026-0003/6.18")], engine.CONFLICT)
+        self.assertEqual(v[(self.C, "")], engine.CONFLICT)
+        self.assertEqual(v[(self.A, "CVE-2026-0001/6.18")], engine.SUPERSEDED)
+        self.assertEqual([r["upstream"] for r in emit.unpatched([res])].count(self.C), 1)
+        self.assertIn("cve/ backport does not apply on this base (1)", emit.report([res], []))
 
 
 class TestIncident(Fixture):
