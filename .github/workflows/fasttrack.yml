@@ -1,0 +1,255 @@
+name: kernel-security-fasttrack
+
+# Every 15 minutes a small check hashes the upstream heads and feeds. Only a new
+# hash starts the full run: pull sources (cached), gather + verify patches,
+# drop what stable has absorbed, commit patches/ and the reports to main.
+# On demand: resolve specific incidents, optionally letting Claude Code backport
+# what does not apply; those arrive as a PR for review.
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      incidents:
+        description: "CVE ids (space separated), or 'unpatched' for every open issue"
+        default: ""
+      commit:
+        description: "mainline fix SHA for an incident without a CVE record (optional)"
+        default: ""
+      claude:
+        description: "let Claude Code backport what does not apply"
+        type: boolean
+        default: false
+      retry:
+        description: "run Claude again for CVEs it already tried (attempts.json)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: fasttrack
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  # A run is due when the fingerprint is new (no cache entry for it yet), or on demand.
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      due: ${{ steps.due.outputs.due }}
+      fingerprint: ${{ steps.fp.outputs.fingerprint }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: fp
+        run: |
+          python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
+          echo "fingerprint=$(python3 -m fasttrack.cli fingerprint)" >> "$GITHUB_OUTPUT"
+      - id: seen
+        uses: actions/cache/restore@v4
+        with:
+          path: .fingerprint
+          key: fingerprint-${{ steps.fp.outputs.fingerprint }}
+          lookup-only: true
+      - id: due
+        run: |
+          due=${{ github.event_name != 'schedule' || steps.seen.outputs.cache-hit != 'true' }}
+          echo "due=$due" >> "$GITHUB_OUTPUT"
+          [ "$due" = true ] && echo "Upstream changed: full run." || echo "No upstream change: nothing to do."
+
+  fasttrack:
+    needs: check
+    if: needs.check.outputs.due == 'true'
+    # Repo variable FASTTRACK_RUNNER picks a self-hosted runner (label); default GitHub-hosted.
+    # Use a fixed runner: data/ (5 GB) then stays on disk. A random one downloads it again.
+    runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 180
+    steps:
+      # data/, two worktrees and the build check need about 12 GB.
+      - name: Free space
+        id: space
+        run: echo "low=$([ "$(df --output=avail -BG / | tail -1 | tr -dc 0-9)" -lt 20 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      # Same as armbian/shallow: linux.git and its worktrees need the space.
+      - name: Free Github Runner
+        if: runner.environment == 'github-hosted' && steps.space.outputs.low == 'true'
+        uses: descriptinc/free-disk-space@main # no tagged releases; pinned to default branch
+        with:
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false # fixed list fails when a package is missing (e.g. powershell on 26.04)
+          docker-images: true
+          swap-storage: true
+
+      # Same as armbian/shallow#16: remove the large packages that are actually installed.
+      - name: Remove large packages
+        if: runner.environment == 'github-hosted' && steps.space.outputs.low == 'true'
+        run: |
+          pkgs=$(dpkg-query -W -f '${Package}\n' | grep -E '^(aspnetcore-|dotnet-|llvm-|php|mongodb-|mysql-)|^(azure-cli|google-chrome-stable|firefox|powershell|mono-devel|libgl1-mesa-dri|google-cloud-sdk|google-cloud-cli)$' || true)
+          [[ -n "$pkgs" ]] && sudo apt-get remove -y $pkgs
+          sudo apt-get autoremove -y
+          sudo apt-get clean
+          df -h /
+
+      # No token in .git/config: Claude runs in this job. Push steps set it themselves.
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      # Kernel build tools for the compile check (build_check in fasttrack.yaml).
+      - name: Tooling
+        run: |
+          # build_check is x86: other hosts need the x86_64 cross compiler.
+          need=""
+          [ "$(uname -m)" = x86_64 ] || command -v x86_64-linux-gnu-gcc >/dev/null || need=gcc-x86-64-linux-gnu
+          if ! command -v bc bison flex pahole >/dev/null || ! [ -e /usr/include/libelf.h ] || [ -n "$need" ]; then
+            sudo apt-get update -q
+            sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
+          fi
+          python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
+          git config --global user.name  "armbianworker"
+          git config --global user.email "78210198+armbianworker@users.noreply.github.com"
+
+      - id: week
+        run: echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      # data/ = shallow linux.git + vulns.git + stable-queue.git. A new entry is
+      # saved once per ISO week; runs in between restore the latest one and only
+      # fetch what is new. Editing fasttrack.yaml (e.g. the series) starts fresh.
+      # Self-hosted: data/ lives outside the workspace and stays between runs.
+      - name: Persistent data
+        if: runner.environment == 'self-hosted'
+        run: |
+          mkdir -p "$HOME/.cache/armbian-cve/data"
+          ln -sfn "$HOME/.cache/armbian-cve/data" data
+
+      - name: Upstream data cache
+        if: runner.environment == 'github-hosted'
+        uses: actions/cache@v4
+        with:
+          path: data
+          key: data-${{ hashFiles('fasttrack.yaml') }}-${{ steps.week.outputs.week }}
+          restore-keys: data-${{ hashFiles('fasttrack.yaml') }}-
+
+      - name: Sync
+        run: python3 -m fasttrack.cli -v sync
+
+      - name: Gather and verify
+        id: run
+        run: |
+          python3 -m fasttrack.cli -v run
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
+
+      # patches/ is rebuilt from scratch by `run`, so fixes stable has absorbed are
+      # already gone from it. prune does the same for incident results under cve/.
+      - name: Drop incident patches stable has absorbed
+        run: python3 -m fasttrack.cli -v prune
+
+      - name: Commit patches and reports
+        env:
+          # PRs, pushes and issues as armbianworker; built-in token when the secret is absent.
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
+        run: |
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          # One path at a time: a path that does not exist fails the whole `git add`.
+          for p in patches cve report.md unpatched.json state.json events.json cve-report.md cve-result.json; do
+            git add -A -- "$p" 2>/dev/null || true
+          done
+          # main needs a PR (ruleset), and GitHub Actions cannot bypass it.
+          # The bot opens one and merges it at once; it needs no approval.
+          if ! git diff --cached --quiet; then
+            br="fasttrack/patches-${GITHUB_RUN_ID}"
+            msg="patches: $(date -u '+%F %H:%M')"
+            git checkout -q -b "$br"
+            git commit -q -m "$msg" -m "$(grep -E '^- ' report.md | head -20)"
+            git push -q origin "$br"
+            url=$(gh pr create --head "$br" --base "$GITHUB_REF_NAME" --title "$msg" \
+              --body "Hourly fasttrack run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
+            gh pr merge "$url" --squash --delete-branch
+            git checkout -q "$GITHUB_REF_NAME"
+            git pull -q origin "$GITHUB_REF_NAME"
+          fi
+
+      - name: Install Claude Code
+        if: github.event_name == 'workflow_dispatch' && inputs.claude
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Resolve incidents
+        if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '')
+        # Claude runs here: no GitHub token in this step.
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          args=()
+          if [ "${{ inputs.incidents }}" = "unpatched" ]; then args+=(--unpatched); else args+=(${{ inputs.incidents }}); fi
+          [ -n "${{ inputs.commit }}" ] && args+=(--commit "${{ inputs.commit }}")
+          if [ "${{ inputs.claude }}" = "true" ]; then args+=(--claude); else args+=(--adapt --package); fi
+          [ "${{ inputs.retry }}" = "true" ] && args+=(--retry)
+          python3 -m fasttrack.cli -v cve "${args[@]}" || true
+          cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish incident results
+        if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '')
+        env:
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
+        run: |
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          # Incident results always go through review, never straight to main.
+          br="incident/${{ github.run_id }}"
+          git checkout -q -b "$br"
+          # attempts.json rides along: once merged, no later run pays for the same CVE.
+          git add -A cve cve-report.md cve-result.json
+          [ -f attempts.json ] && git add attempts.json
+          if ! git diff --cached --quiet; then
+            git commit -q -m "cve: incident patches for review (run ${{ github.run_id }})"
+            git push -q origin "$br"
+            gh pr create --head "$br" --base "$GITHUB_REF_NAME" --label security \
+              --title "Incident patches for review (run ${{ github.run_id }})" --body-file cve-report.md
+          fi
+
+      - name: Keep work packages (BRIEF.md, RESULT.md, claude.log)
+        if: always() && hashFiles('work/**/BRIEF.md') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: work-${{ github.run_id }}
+          path: |
+            work/
+            !work/*/*/tree
+
+      # Mark this fingerprint as done, so the next check skips until upstream moves.
+      - name: Record fingerprint
+        run: echo "${{ needs.check.outputs.fingerprint }}" > .fingerprint
+
+      - uses: actions/cache/save@v4
+        with:
+          path: .fingerprint
+          key: fingerprint-${{ needs.check.outputs.fingerprint }}
+
+      - name: Raise actively exploited CVEs
+        if: steps.run.outputs.kev == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
+        run: |
+          gh issue create --label security --title "Actively exploited kernel CVE pending" \
+            --body "$(grep -E '^- kev' report.md)
+
+          ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  # Same as armbian/docker-armbian-build: stop GitHub from disabling the hourly
+  # schedule after 60 days without repository activity (quiet weeks commit nothing).
+  keepalive:
+    if: ${{ always() && github.repository_owner == 'armbian' && needs.check.outputs.due == 'true' }}
+    name: Keep Alive
+    needs: [check, fasttrack]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: liskin/gh-workflow-keepalive@v1

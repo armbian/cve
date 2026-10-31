@@ -1,0 +1,39 @@
+{
+  "series": {
+    "6.18": {
+      "head": "f45ed76d6791cf72ff1265ee93511175bbbc2f18",
+      "version": "6.18.60",
+      "accepted": [
+        "184b5ddf82d45d6f75cc83719a2e453392512bd2",
+        "24b620729e53d978b3e425f55bc66efd3bab1f59",
+        "26300879cd8e4612dce66bb8f6ff7cd35fcf3e59",
+        "2842ce397dd09882530b42f7fdb0c855767eb24e",
+        "3bac01168982ec3e3bf87efdc1807c7933590a85",
+        "44378d02c5aaae24b60a75fbbb539b4aa4db503d",
+        "593980175389a05793f6060aa20e626330960395",
+        "6bdcdb31318c10e6369cff8e5b32c37397e98091",
+        "6f0a100df8539ce90f37c14e1945f396ca2410bc",
+        "6f63e919fe1e335b8abcb3a28bfd4804a98d875a",
+        "84265cbd96b97058ef67e3f8be3933667a000835",
+        "87cd6b717e4069dca34e0866e57eaeb44d3b173e",
+        "8879e3e0a84a86954c855caceead4867e74a9a27",
+        "89c2c777df17eb0201c8e22afabbf3691f2a28fe",
+        "8ae3f4067ba4ae3a15581392f6dac422e3d3def0",
+        "95e647d2a5304a8fd11f1ba3c8502de700650131",
+        "99c24a8968ebef0573825b5cb89d5985d51635b9",
+        "9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1",
+        "a9ba4dd2f18bf3f439d9ef0d8f375f90360ba1bd",
+        "d15d51fb26e830af58f3f21964f1c09c239077ea"
+      ],
+      "kev": []
+    },
+    "7.3": {
+      "head": "79a907609d53d5cd645b42c11550d295d43abf99",
+      "version": "7.3.1",
+      "accepted": [
+        "40554d1221e3d2ff2e0d192b74a05d89eb3620e7"
+      ],
+      "kev": []
+    }
+  }
+}

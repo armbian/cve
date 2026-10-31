@@ -1,0 +1,75 @@
+name: build-test
+
+# Compile-test every patch series per architecture: apply it on its stable base,
+# build the changed .c files with allmodconfig. Fails on build errors.
+# Each arch is split over 32 shards; a PR tests only the series it changes.
+# Bot merges start it when they use the armbianworker token, not GITHUB_TOKEN.
+
+on:
+  pull_request:
+    paths: ["cve/**", "patches/**", "scripts/build-test.sh", ".github/workflows/build-test.yml"]
+  push:
+    branches: [main]
+    paths: ["cve/**", "patches/**", "scripts/build-test.sh", ".github/workflows/build-test.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    # Repo variable BUILDTEST_RUNNER picks a self-hosted runner (label); default GitHub-hosted.
+    runs-on: ${{ vars.BUILDTEST_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [arm64, arm, riscv, x86]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Cross compilers for the other three arches; the host arch builds natively.
+      - name: Toolchain
+        run: |
+          need=""
+          for t in aarch64-linux-gnu arm-linux-gnueabihf riscv64-linux-gnu x86_64-linux-gnu; do
+            [ "$t" = "$(uname -m)-linux-gnu" ] && continue
+            command -v "$t-gcc" >/dev/null || need="$need gcc-${t//_/-}"
+          done
+          command -v bison flex bc pahole >/dev/null && [ -e /usr/include/libelf.h ] && [ -z "$need" ] && exit 0
+          sudo apt-get update -q
+          sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
+
+      # Self-hosted: kernel tree and prepared builds stay between runs, one cache per runner.
+      - name: Build test
+        env:
+          SHARD: ${{ matrix.shard }}/32
+        run: |
+          if [ "${{ runner.environment }}" = self-hosted ]; then
+            # One cache per runner for all arches; the old per-arch caches go.
+            rm -rf "$HOME/.cache/armbian-cve/$RUNNER_NAME"/build-test-*
+            export WORK="$HOME/.cache/armbian-cve/$RUNNER_NAME/build-test"
+          fi
+          dirs=()
+          if [ "${{ github.event_name }}" = pull_request ]; then
+            changed=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")
+            if ! grep -qE '^(scripts/build-test.sh|\.github/workflows/build-test.yml)$' <<<"$changed"; then
+              for d in $(grep -oE '^(cve/[^/]+/[^/]+|patches/[^/]+)/' <<<"$changed" | sort -u); do
+                [ -f "$d/base" ] && dirs+=("$d")
+              done
+              [ ${#dirs[@]} -gt 0 ] || { echo "no series changed"; exit 0; }
+            fi
+          fi
+          ret=0
+          scripts/build-test.sh ${{ matrix.arch }} "${dirs[@]}" || ret=$?
+          mkdir -p build-test && cp -r "${WORK:-build-test}/logs" build-test/ 2>/dev/null || true
+          exit $ret
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-test-${{ matrix.arch }}-${{ matrix.shard }}
+          path: build-test/logs

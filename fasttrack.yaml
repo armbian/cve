@@ -1,0 +1,79 @@
+# ksec-fasttrack configuration
+
+# Kernel series to track: LTS and trunk.
+series:
+  - "6.18"
+  - "7.3"
+
+# Upstream sources filled by `fasttrack sync` (git-ignored; cached between CI runs).
+data: data
+
+# Full-history clone of Armbian's linux-stable mirror,
+# kept in step with kernel.org. Full history means every fix has its parent, so
+# patches come straight from git. shallow: true cuts at the oldest series' tag
+# instead; commits on that cut then need their patch downloaded.
+shallow: false
+
+# Only the tracked stable branches are cloned, not master. Mainline fixes older
+# than the newest series are already in its history; newer ones (landed after
+# v7.3) are downloaded from git.kernel.org as patches and cached. Those get no
+# prerequisite hints, and --adapt uses a 3-way `git apply` for them.
+mainline_branch: false
+
+# Where results go. "." is this repository: patches/, report.md, unpatched.json,
+# state.json are committed by CI. work/ (backport work packages) is git-ignored.
+out: .
+
+# Which stable-queue patches to take early:
+#   cve  - only queued patches whose upstream commit is a published CVE fix (default)
+#   all  - the whole queue, i.e. the next point release a few days early
+queue_mode: cve
+
+# Kernel arch/ trees Armbian builds (amd64 is x86). A fix that touches only
+# other arch/ trees is reported as other-arch and never backported.
+arches: [arm, arm64, riscv, x86]
+
+# Older CVE records cannot apply to 6.18/7.3 and slow the scan.
+cve_since_year: 2024
+
+# Before a Claude backport, look for one the author posted to stable@vger.kernel.org.
+stable_list: true
+
+# Compile check: build the .c files each patch changes, with allmodconfig for
+# this arch. A patch that applies but does not build counts as needs-backport.
+build_check: x86
+
+# --unpatched sends a fix to Claude only after this many days in mainline.
+# Stable usually takes a fix within a few weeks; Claude is for the ones it does not.
+# CVE ids named on the command line are never held back.
+claude_min_age_days: 21
+
+# Command used by `fasttrack cve --claude`. The BRIEF.md text is appended as the
+# last argument and it runs inside the work package directory.
+claude_cmd:
+  - claude
+  - -p
+  - --permission-mode
+  - acceptEdits
+  - --allowedTools
+  - Read
+  - Edit
+  - Write
+  - Grep
+  - Glob
+  - Bash(git:*)
+  - Bash(make:*)
+  - Bash(grep:*)
+  - Bash(sed:*)
+  - Bash(ls:*)
+  - Bash(cat:*)
+  # Stop a session that cannot finish; it then writes RESULT.md.
+  - --max-turns
+  - "80"
+  # JSON carries total_cost_usd; the cost goes into cve-report.md.
+  - --output-format
+  - json
+
+# Upstream URLs (vulns and stable_queue default to git.kernel.org).
+sources:
+  linux: https://github.com/armbian/linux.git
