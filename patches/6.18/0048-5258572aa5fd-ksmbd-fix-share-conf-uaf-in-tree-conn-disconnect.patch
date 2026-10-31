@@ -1,0 +1,68 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 5258572aa5fd5a7ed01b123b28241e0281b6fb9b
+X-Fasttrack-CVE: CVE-2026-89788
+X-Fasttrack-Backport: cve/CVE-2026-89788/6.18
+From: Nicholas Carlini <nicholas@carlini.com>
+Date: Mon, 9 Mar 2026 08:29:49 +0900
+Subject: [PATCH] ksmbd: fix share_conf UAF in tree_conn disconnect
+
+commit 5258572aa5fd5a7ed01b123b28241e0281b6fb9b upstream.
+
+[ Backport: resolved context conflict; 6.18 lacks the procfs
+  ksmbd_counter_dec(KSMBD_COUNTER_TREE_CONNS) call next to the moved
+  ksmbd_share_config_put(), so only the put is moved. Needed so that the
+  creator reference added by the following CVE-2026-89788 fix also keeps
+  share_conf alive. ]
+
+__ksmbd_tree_conn_disconnect() drops the share_conf reference before
+checking tree_conn->refcount. When someone uses SMB3 multichannel and
+binds two connections to one session, a SESSION_LOGOFF on connection A
+calls ksmbd_conn_wait_idle(conn) which only drains connection A's
+request counter, not connection B's. This means there's a race condition:
+requests already dispatched on connection B hold tree_conn references via
+work->tcon. The disconnect path frees share_conf while those requests
+are still walking work->tcon->share_conf, causing a use-after-free.
+
+This fix combines the share_conf put with the tree_conn free so it
+only happens when the last reference is dropped.
+
+Fixes: b39a1833cc4a ("ksmbd: fix use-after-free in ksmbd_tree_connect_put under concurrency")
+Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+(cherry picked from commit 5258572aa5fd5a7ed01b123b28241e0281b6fb9b)
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ fs/smb/server/mgmt/tree_connect.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
+index c7a89eddcda7..b4e93828eed4 100644
+--- a/fs/smb/server/mgmt/tree_connect.c
++++ b/fs/smb/server/mgmt/tree_connect.c
+@@ -101,8 +101,10 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
+ 
+ void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon)
+ {
+-	if (atomic_dec_and_test(&tcon->refcount))
++	if (atomic_dec_and_test(&tcon->refcount)) {
++		ksmbd_share_config_put(tcon->share_conf);
+ 		kfree(tcon);
++	}
+ }
+ 
+ static int __ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+@@ -112,9 +114,10 @@ static int __ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+ 
+ 	ret = ksmbd_ipc_tree_disconnect_request(sess->id, tree_conn->id);
+ 	ksmbd_release_tree_conn_id(sess, tree_conn->id);
+-	ksmbd_share_config_put(tree_conn->share_conf);
+-	if (atomic_dec_and_test(&tree_conn->refcount))
++	if (atomic_dec_and_test(&tree_conn->refcount)) {
++		ksmbd_share_config_put(tree_conn->share_conf);
+ 		kfree(tree_conn);
++	}
+ 	return ret;
+ }
+ 

@@ -1,0 +1,132 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 174f0582e38abe03b88e15f04bfe58490f88cb19
+X-Fasttrack-CVE: CVE-2026-93181
+X-Fasttrack-Backport: cve/CVE-2026-93181/6.18
+From: Zide Chen <zide.chen@intel.com>
+Date: Sat, 31 Oct 2026 01:03:34 +0100
+Subject: [PATCH] perf/x86/intel/uncore: Fix uncore_box ref/unref ordering
+
+commit 174f0582e38abe03b88e15f04bfe58490f88cb19 upstream.
+
+[ Backport: 6.18 lacks uncore_pmu_broken()/uncore_pmu_set_broken(), so
+  allocate_boxes() keeps returning -ENOMEM and uncore_event_cpu_online()
+  keeps the msr_ret/mmio_ret checks, now also guarding uncore_box_ref();
+  the ref/unref reordering is the same as upstream. ]
+
+In uncore_event_cpu_online(), uncore_box_ref() was called before
+uncore_change_context().  uncore_box_ref() gates on box->cpu >= 0,
+but box->cpu is still -1 at that point because uncore_change_context()
+has not run yet.  As a result, the box is never initialized on the
+first CPU to come online in a die, leaving it permanently
+uninitialized in the single-CPU-per-die case.
+
+Thus, box->refcnt is one count below the true value, and in the CPU
+offline path, the box will be torn down on the second-to-last CPU.
+
+In uncore_event_cpu_offline(), uncore_box_unref() was called after
+uncore_change_context(), so box->cpu is already -1 when the collector
+CPU goes offline, which prevents it from tearing down the box.
+
+Fix by swapping the call order in both paths so that
+uncore_box_{ref,unref}() runs at the point where box->cpu reflects
+the correct context.
+
+Move allocate_boxes() out of uncore_box_ref() to enable this
+reordering.
+
+Fixes: c74443d92f68 ("perf/x86/uncore: Support per PMU cpumask")
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://patch.msgid.link/20260611160033.66760-8-zide.chen@intel.com
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ arch/x86/events/intel/uncore.c | 41 +++++++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 21 deletions(-)
+
+diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+index a5793847ed5a..2edb2bb867c9 100644
+--- a/arch/x86/events/intel/uncore.c
++++ b/arch/x86/events/intel/uncore.c
+@@ -1519,9 +1519,15 @@ static int uncore_event_cpu_offline(unsigned int cpu)
+ {
+ 	int die, target;
+ 
++	/* Clear the references */
++	die = topology_logical_die_id(cpu);
++	uncore_box_unref(uncore_msr_uncores, die);
++	uncore_box_unref(uncore_mmio_uncores, die);
++
+ 	/* Check if exiting cpu is used for collecting uncore events */
+ 	if (!cpumask_test_and_clear_cpu(cpu, &uncore_cpu_mask))
+-		goto unref;
++		return 0;
++
+ 	/* Find a new cpu to collect uncore events */
+ 	target = cpumask_any_but(topology_die_cpumask(cpu), cpu);
+ 
+@@ -1534,12 +1540,6 @@ static int uncore_event_cpu_offline(unsigned int cpu)
+ 	uncore_change_context(uncore_msr_uncores, cpu, target);
+ 	uncore_change_context(uncore_mmio_uncores, cpu, target);
+ 	uncore_change_context(uncore_pci_uncores, cpu, target);
+-
+-unref:
+-	/* Clear the references */
+-	die = topology_logical_die_id(cpu);
+-	uncore_box_unref(uncore_msr_uncores, die);
+-	uncore_box_unref(uncore_mmio_uncores, die);
+ 	return 0;
+ }
+ 
+@@ -1588,11 +1588,7 @@ static int uncore_box_ref(struct intel_uncore_type **types,
+ 	struct intel_uncore_type *type;
+ 	struct intel_uncore_pmu *pmu;
+ 	struct intel_uncore_box *box;
+-	int i, ret;
+-
+-	ret = allocate_boxes(types, id, cpu);
+-	if (ret)
+-		return ret;
++	int i;
+ 
+ 	for (; *types; types++) {
+ 		type = *types;
+@@ -1611,24 +1607,27 @@ static int uncore_event_cpu_online(unsigned int cpu)
+ 	int die, target, msr_ret, mmio_ret;
+ 
+ 	die = topology_logical_die_id(cpu);
+-	msr_ret = uncore_box_ref(uncore_msr_uncores, die, cpu);
+-	mmio_ret = uncore_box_ref(uncore_mmio_uncores, die, cpu);
++	msr_ret = allocate_boxes(uncore_msr_uncores, die, cpu);
++	mmio_ret = allocate_boxes(uncore_mmio_uncores, die, cpu);
+ 
+ 	/*
+ 	 * Check if there is an online cpu in the package
+ 	 * which collects uncore events already.
+ 	 */
+ 	target = cpumask_any_and(&uncore_cpu_mask, topology_die_cpumask(cpu));
+-	if (target < nr_cpu_ids)
+-		return 0;
+-
+-	cpumask_set_cpu(cpu, &uncore_cpu_mask);
++	if (target >= nr_cpu_ids) {
++		cpumask_set_cpu(cpu, &uncore_cpu_mask);
++		if (!msr_ret)
++			uncore_change_context(uncore_msr_uncores, -1, cpu);
++		if (!mmio_ret)
++			uncore_change_context(uncore_mmio_uncores, -1, cpu);
++		uncore_change_context(uncore_pci_uncores, -1, cpu);
++	}
+ 
+ 	if (!msr_ret)
+-		uncore_change_context(uncore_msr_uncores, -1, cpu);
++		uncore_box_ref(uncore_msr_uncores, die, cpu);
+ 	if (!mmio_ret)
+-		uncore_change_context(uncore_mmio_uncores, -1, cpu);
+-	uncore_change_context(uncore_pci_uncores, -1, cpu);
++		uncore_box_ref(uncore_mmio_uncores, die, cpu);
+ 	return 0;
+ }
+ 

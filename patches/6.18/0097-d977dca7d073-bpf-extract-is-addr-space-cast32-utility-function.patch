@@ -1,0 +1,87 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: d977dca7d0736dc7d68d9ad1434961da3b42de35
+X-Fasttrack-CVE: CVE-2026-98869
+X-Fasttrack-Backport: cve/CVE-2026-98869/6.18
+From: Eduard Zingerman <eddyz87@gmail.com>
+Date: Sat, 31 Oct 2026 01:51:17 +0100
+Subject: [PATCH] bpf: Extract is_addr_space_cast32() utility function
+
+commit d977dca7d0736dc7d68d9ad1434961da3b42de35 upstream.
+
+[ Backport: placed in kernel/bpf/verifier.c, 6.18 has no kernel/bpf/fixups.c
+  (do_misc_fixups() still lives in verifier.c) ]
+
+bpf_do_misc_fixups() converts the following address space cast
+instructions to 32-bit moves:
+
+- cast from address space 1 (user) to address space 0 (kernel)
+- cast from address space 0 (kernel) to address space 1 (user)
+  iff associated arena map has a BPF_F_NO_USER_CONV flag.
+
+Extract a predicate detecting such instructions for use in the
+following patches.
+
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260807-static-zext-v4-2-b6c270013c77@gmail.com
+(cherry picked from commit d977dca7d0736dc7d68d9ad1434961da3b42de35)
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ kernel/bpf/verifier.c | 35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
+
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index b89a5d717e42..16a242ab9aac 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -618,6 +618,26 @@ static bool is_cmpxchg_insn(const struct bpf_insn *insn)
+ 	       insn->imm == BPF_CMPXCHG;
+ }
+ 
++/* Returns true if 'insn' is an address space cast instruction translated as BPF_ALU op */
++static bool is_addr_space_cast32(struct bpf_prog *prog, const struct bpf_insn *insn)
++{
++	struct bpf_map *arena = (struct bpf_map *)prog->aux->arena;
++
++	if (insn->code != (BPF_ALU64 | BPF_MOV | BPF_X) || insn->off != BPF_ADDR_SPACE_CAST)
++		return false;
++
++	/* cast from as(1) to as(0) */
++	if (insn->imm == 1)
++		return true;
++
++	/* cast from as(0) to as(1) */
++	if (insn->imm == 1 << 16)
++		return arena && arena->map_flags & BPF_F_NO_USER_CONV;
++
++	/* non-BPF_F_NO_USER_CONV cast from as(0) to as(1) should be handled by JIT */
++	return false;
++}
++
+ static bool is_atomic_load_insn(const struct bpf_insn *insn)
+ {
+ 	return BPF_CLASS(insn->code) == BPF_STX &&
+@@ -22699,15 +22719,12 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
+ 	}
+ 
+ 	for (i = 0; i < insn_cnt;) {
+-		if (insn->code == (BPF_ALU64 | BPF_MOV | BPF_X) && insn->imm) {
+-			if ((insn->off == BPF_ADDR_SPACE_CAST && insn->imm == 1) ||
+-			    (((struct bpf_map *)env->prog->aux->arena)->map_flags & BPF_F_NO_USER_CONV)) {
+-				/* convert to 32-bit mov that clears upper 32-bit */
+-				insn->code = BPF_ALU | BPF_MOV | BPF_X;
+-				/* clear off and imm, so it's a normal 'wX = wY' from JIT pov */
+-				insn->off = 0;
+-				insn->imm = 0;
+-			} /* cast from as(0) to as(1) should be handled by JIT */
++		if (is_addr_space_cast32(env->prog, insn)) {
++			/* convert to 32-bit mov that clears upper 32-bit */
++			insn->code = BPF_ALU | BPF_MOV | BPF_X;
++			/* clear off and imm, so it's a normal 'wX = wY' from JIT pov */
++			insn->off = 0;
++			insn->imm = 0;
+ 			goto next_insn;
+ 		}
+ 

@@ -1,0 +1,214 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 6e87001fe19f251e2ae14373bc76554358a13df2
+X-Fasttrack-CVE: CVE-2026-74419
+X-Fasttrack-Backport: cve/CVE-2026-74419/6.18
+From: Lizhi Hou <lizhi.hou@amd.com>
+Date: Sat, 31 Oct 2026 00:30:51 +0100
+Subject: [PATCH] accel/amdxdna: Adjust size for copy_to_user()
+
+commit 6e87001fe19f251e2ae14373bc76554358a13df2 upstream.
+
+[ Backport: drop aie2_error.c hunk; aie2_get_array_async_error() (b291e4f1a495) is not in 6.18 ]
+[ Backport: drop aie2_query_telemetry()/aie2_get_telemetry(), aie2_get_sensors(), aie2_query_resource_info() and aie2_get_preempt_state() hunks; those functions do not exist in 6.18 ]
+[ Backport: aie2_query_status() in 6.18 uses dma_alloc_noncoherent() rather than aie2_alloc_msg_buffer() (1222e06934bd); use buf_sz for the alloc, clflush, request size and free ]
+
+The amount of data returned to user space should be limited by the buffer
+size provided by the application. If the buffer is smaller than the data
+size, return only the portion that fits instead of failing.
+
+Fixes: 850d71f6bf4c ("accel/amdxdna: Add query functions")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260402174148.3527757-1-lizhi.hou@amd.com
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ drivers/accel/amdxdna/aie2_message.c | 18 ++++++++-------
+ drivers/accel/amdxdna/aie2_pci.c     | 34 ++++++++++++++++------------
+ 2 files changed, 30 insertions(+), 22 deletions(-)
+
+diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
+index 9b3a0706a786..916de47bb561 100644
+--- a/drivers/accel/amdxdna/aie2_message.c
++++ b/drivers/accel/amdxdna/aie2_message.c
+@@ -321,11 +321,12 @@ int aie2_query_status(struct amdxdna_dev_hdl *ndev, char __user *buf,
+ 	struct amdxdna_dev *xdna = ndev->xdna;
+ 	struct amdxdna_client *client;
+ 	dma_addr_t dma_addr;
+-	u32 aie_bitmap = 0;
++	u32 buf_sz, aie_bitmap = 0;
+ 	u8 *buff_addr;
+ 	int ret;
+ 
+-	buff_addr = dma_alloc_noncoherent(xdna->ddev.dev, size, &dma_addr,
++	buf_sz = ndev->metadata.cols * ndev->metadata.size;
++	buff_addr = dma_alloc_noncoherent(xdna->ddev.dev, buf_sz, &dma_addr,
+ 					  DMA_FROM_DEVICE, GFP_KERNEL);
+ 	if (!buff_addr)
+ 		return -ENOMEM;
+@@ -336,11 +337,11 @@ int aie2_query_status(struct amdxdna_dev_hdl *ndev, char __user *buf,
+ 
+ 	*cols_filled = 0;
+ 	req.dump_buff_addr = dma_addr;
+-	req.dump_buff_size = size;
++	req.dump_buff_size = buf_sz;
+ 	req.num_cols = hweight32(aie_bitmap);
+ 	req.aie_bitmap = aie_bitmap;
+ 
+-	drm_clflush_virt_range(buff_addr, size); /* device can access */
++	drm_clflush_virt_range(buff_addr, buf_sz); /* device can access */
+ 	ret = aie2_send_mgmt_msg_wait(ndev, &msg);
+ 	if (ret) {
+ 		XDNA_ERR(xdna, "Error during NPU query, status %d", ret);
+@@ -354,13 +355,14 @@ int aie2_query_status(struct amdxdna_dev_hdl *ndev, char __user *buf,
+ 	}
+ 	XDNA_DBG(xdna, "Query NPU status completed");
+ 
+-	if (size < resp.size) {
++	if (buf_sz < resp.size) {
+ 		ret = -EINVAL;
+-		XDNA_ERR(xdna, "Bad buffer size. Available: %u. Needs: %u", size, resp.size);
++		XDNA_ERR(xdna, "Bad buffer size. Available: %u. Needs: %u", buf_sz, resp.size);
+ 		goto fail;
+ 	}
+ 
+-	if (copy_to_user(buf, buff_addr, resp.size)) {
++	size = min(size, resp.size);
++	if (copy_to_user(buf, buff_addr, size)) {
+ 		ret = -EFAULT;
+ 		XDNA_ERR(xdna, "Failed to copy NPU status to user space");
+ 		goto fail;
+@@ -369,7 +371,7 @@ int aie2_query_status(struct amdxdna_dev_hdl *ndev, char __user *buf,
+ 	*cols_filled = aie_bitmap;
+ 
+ fail:
+-	dma_free_noncoherent(xdna->ddev.dev, size, buff_addr, dma_addr, DMA_FROM_DEVICE);
++	dma_free_noncoherent(xdna->ddev.dev, buf_sz, buff_addr, dma_addr, DMA_FROM_DEVICE);
+ 	return ret;
+ }
+ 
+diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
+index 4a7d1feac6a5..e99455a1b3f8 100644
+--- a/drivers/accel/amdxdna/aie2_pci.c
++++ b/drivers/accel/amdxdna/aie2_pci.c
+@@ -610,23 +610,19 @@ static void aie2_fini(struct amdxdna_dev *xdna)
+ static int aie2_get_aie_status(struct amdxdna_client *client,
+ 			       struct amdxdna_drm_get_info *args)
+ {
+-	struct amdxdna_drm_query_aie_status status;
++	struct amdxdna_drm_query_aie_status status = {};
+ 	struct amdxdna_dev *xdna = client->xdna;
+ 	struct amdxdna_dev_hdl *ndev;
++	u32 buf_sz;
+ 	int ret;
+ 
+ 	ndev = xdna->dev_handle;
+-	if (copy_from_user(&status, u64_to_user_ptr(args->buffer), sizeof(status))) {
++	buf_sz = min(args->buffer_size, sizeof(status));
++	if (copy_from_user(&status, u64_to_user_ptr(args->buffer), buf_sz)) {
+ 		XDNA_ERR(xdna, "Failed to copy AIE request into kernel");
+ 		return -EFAULT;
+ 	}
+ 
+-	if (ndev->metadata.cols * ndev->metadata.size < status.buffer_size) {
+-		XDNA_ERR(xdna, "Invalid buffer size. Given Size: %u. Need Size: %u.",
+-			 status.buffer_size, ndev->metadata.cols * ndev->metadata.size);
+-		return -EINVAL;
+-	}
+-
+ 	ret = aie2_query_status(ndev, u64_to_user_ptr(status.buffer),
+ 				status.buffer_size, &status.cols_filled);
+ 	if (ret) {
+@@ -634,7 +630,7 @@ static int aie2_get_aie_status(struct amdxdna_client *client,
+ 		return ret;
+ 	}
+ 
+-	if (copy_to_user(u64_to_user_ptr(args->buffer), &status, sizeof(status))) {
++	if (copy_to_user(u64_to_user_ptr(args->buffer), &status, buf_sz)) {
+ 		XDNA_ERR(xdna, "Failed to copy AIE request info to user space");
+ 		return -EFAULT;
+ 	}
+@@ -649,6 +645,7 @@ static int aie2_get_aie_metadata(struct amdxdna_client *client,
+ 	struct amdxdna_dev *xdna = client->xdna;
+ 	struct amdxdna_dev_hdl *ndev;
+ 	int ret = 0;
++	u32 buf_sz;
+ 
+ 	ndev = xdna->dev_handle;
+ 	meta = kzalloc(sizeof(*meta), GFP_KERNEL);
+@@ -680,7 +677,8 @@ static int aie2_get_aie_metadata(struct amdxdna_client *client,
+ 	meta->shim.lock_count = ndev->metadata.shim.lock_count;
+ 	meta->shim.event_reg_count = ndev->metadata.shim.event_reg_count;
+ 
+-	if (copy_to_user(u64_to_user_ptr(args->buffer), meta, sizeof(*meta)))
++	buf_sz = min(args->buffer_size, sizeof(*meta));
++	if (copy_to_user(u64_to_user_ptr(args->buffer), meta, buf_sz))
+ 		ret = -EFAULT;
+ 
+ 	kfree(meta);
+@@ -693,12 +691,14 @@ static int aie2_get_aie_version(struct amdxdna_client *client,
+ 	struct amdxdna_drm_query_aie_version version;
+ 	struct amdxdna_dev *xdna = client->xdna;
+ 	struct amdxdna_dev_hdl *ndev;
++	u32 buf_sz;
+ 
+ 	ndev = xdna->dev_handle;
+ 	version.major = ndev->version.major;
+ 	version.minor = ndev->version.minor;
+ 
+-	if (copy_to_user(u64_to_user_ptr(args->buffer), &version, sizeof(version)))
++	buf_sz = min(args->buffer_size, sizeof(version));
++	if (copy_to_user(u64_to_user_ptr(args->buffer), &version, buf_sz))
+ 		return -EFAULT;
+ 
+ 	return 0;
+@@ -709,13 +709,15 @@ static int aie2_get_firmware_version(struct amdxdna_client *client,
+ {
+ 	struct amdxdna_drm_query_firmware_version version;
+ 	struct amdxdna_dev *xdna = client->xdna;
++	u32 buf_sz;
+ 
+ 	version.major = xdna->fw_ver.major;
+ 	version.minor = xdna->fw_ver.minor;
+ 	version.patch = xdna->fw_ver.sub;
+ 	version.build = xdna->fw_ver.build;
+ 
+-	if (copy_to_user(u64_to_user_ptr(args->buffer), &version, sizeof(version)))
++	buf_sz = min(args->buffer_size, sizeof(version));
++	if (copy_to_user(u64_to_user_ptr(args->buffer), &version, buf_sz))
+ 		return -EFAULT;
+ 
+ 	return 0;
+@@ -727,11 +729,13 @@ static int aie2_get_power_mode(struct amdxdna_client *client,
+ 	struct amdxdna_drm_get_power_mode mode = {};
+ 	struct amdxdna_dev *xdna = client->xdna;
+ 	struct amdxdna_dev_hdl *ndev;
++	u32 buf_sz;
+ 
+ 	ndev = xdna->dev_handle;
+ 	mode.power_mode = ndev->pw_mode;
+ 
+-	if (copy_to_user(u64_to_user_ptr(args->buffer), &mode, sizeof(mode)))
++	buf_sz = min(args->buffer_size, sizeof(mode));
++	if (copy_to_user(u64_to_user_ptr(args->buffer), &mode, buf_sz))
+ 		return -EFAULT;
+ 
+ 	return 0;
+@@ -744,6 +748,7 @@ static int aie2_get_clock_metadata(struct amdxdna_client *client,
+ 	struct amdxdna_dev *xdna = client->xdna;
+ 	struct amdxdna_dev_hdl *ndev;
+ 	int ret = 0;
++	u32 buf_sz;
+ 
+ 	ndev = xdna->dev_handle;
+ 	clock = kzalloc(sizeof(*clock), GFP_KERNEL);
+@@ -756,7 +761,8 @@ static int aie2_get_clock_metadata(struct amdxdna_client *client,
+ 	snprintf(clock->h_clock.name, sizeof(clock->h_clock.name), "H Clock");
+ 	clock->h_clock.freq_mhz = ndev->hclk_freq;
+ 
+-	if (copy_to_user(u64_to_user_ptr(args->buffer), clock, sizeof(*clock)))
++	buf_sz = min(args->buffer_size, sizeof(*clock));
++	if (copy_to_user(u64_to_user_ptr(args->buffer), clock, buf_sz))
+ 		ret = -EFAULT;
+ 
+ 	kfree(clock);

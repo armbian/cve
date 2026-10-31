@@ -1,0 +1,43 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 59052a88ba5fe4a7bb34b3a0a42aa5d453d3bb97
+X-Fasttrack-CVE: CVE-2026-98951
+X-Fasttrack-Backport: cve/CVE-2026-98951/6.18
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Date: Fri, 30 Oct 2026 21:56:23 +0100
+Subject: [PATCH] riscv: ptrace: Zero-initialize regset buffers before copyin
+
+commit 59052a88ba5f upstream.
+
+[ Backport: drop the riscv_cfi_set() hunk; the CFI regset (2af7c9cf021c)
+  does not exist in 6.18. Only the riscv_vr_set() hunk applies. ]
+
+user_regset_copyin() only copies `count` bytes, so a PTRACE_SETREGSET
+request with a short iov_len leaves the rest of the stack buffer
+uninitialized. In riscv_vr_set() that garbage is validated and copied
+into the target's vstate, and in riscv_cfi_set() it can be stored as
+the target's shadow stack pointer. Zero both buffers, as the get path
+already does.
+
+Fixes: 9300f0043974 ("RISC-V: Add ptrace support for vectors")
+Fixes: 2af7c9cf021c ("riscv/ptrace: expose riscv CFI status and state via ptrace and in core files")
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Link: https://patch.msgid.link/20260826115711.86861-1-min_halo@163.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ arch/riscv/kernel/ptrace.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/riscv/kernel/ptrace.c b/arch/riscv/kernel/ptrace.c
+index 32cd48a4cebb..bfb50d5d25b9 100644
+--- a/arch/riscv/kernel/ptrace.c
++++ b/arch/riscv/kernel/ptrace.c
+@@ -134,6 +134,7 @@ static int riscv_vr_set(struct task_struct *target,
+ 		return -EINVAL;
+ 
+ 	/* Copy rest of the vstate except datap */
++	memset(&ptrace_vstate, 0, sizeof(ptrace_vstate));
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ptrace_vstate, 0,
+ 				 sizeof(struct __riscv_v_regset_state));
+ 	if (unlikely(ret))

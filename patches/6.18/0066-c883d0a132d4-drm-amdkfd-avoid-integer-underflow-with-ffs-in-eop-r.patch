@@ -1,0 +1,83 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: c883d0a132d430ef7ebb23fd94323be94d0fbdb8
+X-Fasttrack-CVE: CVE-2026-98176
+X-Fasttrack-Backport: cve/CVE-2026-98176/6.18
+From: David Francis <David.Francis@amd.com>
+Date: Sat, 31 Oct 2026 02:56:51 +0100
+Subject: [PATCH] drm/amdkfd: Avoid integer underflow with ffs in EOP ring size
+ calc
+
+commit c883d0a132d430ef7ebb23fd94323be94d0fbdb8 upstream.
+
+[ Backport: drop the kfd_mqd_manager_v12_1.c hunk, the GFX 12.1 MQD
+  manager (01bbc4a4b947) does not exist in 6.18.
+  Context differs: 6.18 lacks 8cd2ea7bab77 ("Guard m->cp_hqd_eop_control
+  setting by q->eop_ring_buffer_size"), so the ffs() expression is
+  replaced inside the unguarded min() without pulling that change. ]
+
+The low 6 bits of cp_hqd_eop_control store the base-2 logarithm
+of the EOP ring size. This was calculated as
+
+ffs(q->eop_ring_buffer_size / sizeof(unsigned int)) - 1 - 1
+
+But ffs can in theory return 1 or 0, so this could underflow
+(although in practice the ring buffer size cannot be less than 4096).
+
+Change this to
+
+ffs(q->eop_ring_buffer_size / sizeof(unsigned int) / 4)
+
+using properties of logarithms.
+
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: David Francis <David.Francis@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 4f18c56630383c14bfc6b2d65f88f2f895d2121a)
+Cc: stable@vger.kernel.org
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c | 2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c | 2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+index 1695dd78ede8..ad38868ceb45 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+@@ -199,7 +199,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
+ 	 * is safe, giving a maximum field value of 0xA.
+ 	 */
+ 	m->cp_hqd_eop_control = min(0xA,
+-		ffs(q->eop_ring_buffer_size / sizeof(unsigned int)) - 1 - 1);
++		ffs(q->eop_ring_buffer_size / sizeof(unsigned int) / 4));
+ 	m->cp_hqd_eop_base_addr_lo =
+ 			lower_32_bits(q->eop_ring_buffer_address >> 8);
+ 	m->cp_hqd_eop_base_addr_hi =
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+index bb439f385fc3..c8b75d2ad2e9 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+@@ -252,7 +252,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
+ 	 * is safe, giving a maximum field value of 0xA.
+ 	 */
+ 	m->cp_hqd_eop_control = min(0xA,
+-		ffs(q->eop_ring_buffer_size / sizeof(unsigned int)) - 1 - 1);
++		ffs(q->eop_ring_buffer_size / sizeof(unsigned int) / 4));
+ 	m->cp_hqd_eop_base_addr_lo =
+ 			lower_32_bits(q->eop_ring_buffer_address >> 8);
+ 	m->cp_hqd_eop_base_addr_hi =
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
+index 565858b9044d..424e4e574331 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
+@@ -215,7 +215,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
+ 	 * is safe, giving a maximum field value of 0xA.
+ 	 */
+ 	m->cp_hqd_eop_control = min(0xA,
+-		ffs(q->eop_ring_buffer_size / sizeof(unsigned int)) - 1 - 1);
++		ffs(q->eop_ring_buffer_size / sizeof(unsigned int) / 4));
+ 	m->cp_hqd_eop_base_addr_lo =
+ 			lower_32_bits(q->eop_ring_buffer_address >> 8);
+ 	m->cp_hqd_eop_base_addr_hi =
