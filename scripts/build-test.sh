@@ -25,6 +25,9 @@ slots=${SLOTS:-$((cpus / 8))}
 [ "$slots" -ge 1 ] || slots=1
 rm -rf "$work/logs" "$work"/rows-* && mkdir -p "$work/logs"
 [ -d "$repo/.git" ] || git init -q "$repo"
+# WORK belongs to one runner, which runs one job at a time: a lock left by a
+# cancelled job is stale.
+find "$repo/.git" -maxdepth 3 -name '*.lock' -delete 2>/dev/null
 
 kmake() { make -s -C "$src" O="$out" ARCH="$arch" CROSS_COMPILE="$cross" -j"$jobs" "$@"; }
 warnings() { grep -c ': warning:' "$1" || true; }
@@ -65,6 +68,7 @@ worker() {
 		log=$work/logs/${name//\//_}.log
 		: >"$log"
 		if ! prepare "$base" >>"$log" 2>&1; then
+			echo "$name: error (prepare failed)"; tail -3 "$log" | sed 's/^/    /'
 			echo "| $name | error | prepare failed |" >>"$rows"; fail=1; continue
 		fi
 		git -C "$src" checkout -qf --detach "$base" && git -C "$src" clean -qfd
@@ -83,6 +87,7 @@ worker() {
 		done
 		if ! git -C "$src" -c user.name=t -c user.email=t@t am -q "${patches[@]}" >>"$log" 2>&1; then
 			git -C "$src" am --abort 2>/dev/null
+			echo "$name: error (does not apply)"
 			echo "| $name | error | does not apply |" >>"$rows"; fail=1; continue
 		fi
 		result=ok notes=() built=0
