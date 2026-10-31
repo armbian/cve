@@ -195,3 +195,26 @@ def cve_report(resolutions) -> str:
             out += ["", f"Work package: `{r.work_dir}` (BRIEF.md; run `claude` there, or rerun with `--claude`)"]
         out.append("")
     return "\n".join(out)
+
+
+def release_notes(out: Path, events: list[str], title: str) -> str:
+    """Release text: the fixes in each patches/<series>/, from its fasttrack.json."""
+    lines = [f"# {title}", ""]
+    if events:
+        lines += ["**Changes**", ""] + [f"- {e}" for e in events] + [""]
+    for f in sorted(out.glob("patches/*/fasttrack.json"), key=lambda f: [int(x) for x in f.parent.name.split(".")]):
+        meta = json.loads(f.read_text())
+        rows = meta.get("patches", [])
+        lines += [f"## {meta['series']} (base {meta['base']['version']}, {len(rows)} fixes)", "",
+                  "| CVE | Upstream | Source | Subject |", "|---|---|---|---|"]
+        for p in rows:
+            cves = ", ".join(p.get("cves") or []) or "—"
+            kev = " 🔥 KEV" if p.get("kev") else ""
+            lines.append(f"| {cves}{kev} | `{(p.get('upstream') or '—')[:12]}` | {p.get('source', '')} "
+                         f"| {p.get('subject', '').replace('|', '/')} |")
+        lines += ["", f"Apply on `{meta['base']['commit'][:12]}` in `series.conf` order: "
+                      f"`armbian-cve-{meta['series']}-*.tar.gz`.", ""]
+    text = "\n".join(lines)
+    # GitHub limits a release body to 125000 characters.
+    return text if len(text) < 120000 else text[:120000] + "\n\n(cut: see fasttrack.json in each tarball)\n"
+

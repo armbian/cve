@@ -164,6 +164,7 @@ jobs:
           # main needs a PR (ruleset), and GitHub Actions cannot bypass it.
           # The bot opens one and merges it at once; it needs no approval.
           if ! git diff --cached --quiet; then
+            git diff --cached --quiet -- patches || echo "PATCHES_CHANGED=1" >> "$GITHUB_ENV"
             br="fasttrack/patches-${GITHUB_RUN_ID}"
             msg="patches: $(date -u '+%F %H:%M')"
             git checkout -q -b "$br"
@@ -175,6 +176,24 @@ jobs:
             git checkout -q "$GITHUB_REF_NAME"
             git pull -q origin "$GITHUB_REF_NAME"
           fi
+
+      # A release per patch-set change: the fixes in the notes, one tarball per series.
+      - name: Release patch set
+        if: env.PATCHES_CHANGED == '1'
+        env:
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
+        run: |
+          tag="patches-$(date -u '+%Y%m%d-%H%M')"
+          python3 -m fasttrack.cli release-notes --title "Kernel security fixes $(date -u '+%F %H:%M')" > "$RUNNER_TEMP/notes.md"
+          files=()
+          for d in patches/*/; do
+            s=$(basename "$d")
+            tar -C patches -czf "$RUNNER_TEMP/armbian-cve-$s-$tag.tar.gz" "$s"
+            files+=("$RUNNER_TEMP/armbian-cve-$s-$tag.tar.gz")
+          done
+          [ ${#files[@]} -gt 0 ] || exit 0
+          gh release create "$tag" "${files[@]}" --target "$(git rev-parse HEAD)" \
+            --title "Kernel security fixes $(date -u '+%F %H:%M')" --notes-file "$RUNNER_TEMP/notes.md"
 
       - name: Install Claude Code
         if: github.event_name == 'workflow_dispatch' && inputs.claude
