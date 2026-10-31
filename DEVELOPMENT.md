@@ -49,8 +49,10 @@ Each candidate gets one verdict:
 | `needs-backport` | does not apply unchanged; goes to `unpatched.json` |
 | `already-present` | reverse-applies: stable has it even if the CVE record lags |
 | `commit-missing` | fix commit not in the mirror yet |
+| `backported` | does not apply unchanged; a reviewed backport from `cve/` in the set carries it |
+| `superseded` | a `cve/` backport that is not needed: the fix applies unchanged or is in tree |
 
-`run` never adapts anything. The patch set contains only upstream bytes.
+`run` adapts nothing itself. The patch set holds upstream patches unchanged, then the reviewed backports from `cve/`.
 
 ### Patches retire themselves
 
@@ -110,7 +112,12 @@ You can use it in two ways:
 
 `attempts.json` on `main` records every Claude run: date, outcome and cost. A CVE that Claude already tried is skipped, so a rerun of `--unpatched` pays only for new issues. Pass `--retry` to run it again.
 
-Either way, the tool then takes Claude's commits and re-verifies the whole series, with no fuzz, on a fresh tree. It marks them `claude-backport` and the outcome `patched-needs-review`. A Claude backport is never mixed into `patches/`. It stays under `cve/` until a human reviews it. In CI it arrives as a PR.
+Either way, the tool then takes Claude's commits and re-verifies the whole series, with no fuzz, on a fresh tree. It marks them `claude-backport` and the outcome `patched-needs-review`. A Claude backport arrives as a PR into `cve/`. A human reviews it there.
+
+Once merged, the next `run` adds it to `patches/<series>/`, after the clean mainline picks. It is verified with the whole set, and it is all-or-nothing per `cve/` directory. `X-Fasttrack-Backport` names its source directory. A backport is left out when:
+
+- the mainline fix now applies unchanged or is in tree. `report.md` counts it as no longer needed, and `prune` deletes it.
+- it does not apply or build on top of the set. `report.md` lists it, and the fix shows as open again. Make it again with `--retry`.
 
 ## Automation
 
