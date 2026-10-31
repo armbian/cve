@@ -255,6 +255,15 @@ class TestRun(Fixture):
         self.assertIn("Needs a backport (1)",
                       emit.report([res], [], {"CVE-2026-0009": {"7.3": {"outcome": "not-affected-needs-review"}}}))
 
+    def test_report_reviewed(self):
+        c = engine.Candidate("6.18", "a" * 40, "fix foo", "mainline", ["CVE-2026-0009"], verdict=engine.CONFLICT)
+        res = engine.SeriesResult("6.18", "b" * 40, "6.18.2", None, [c])
+        md = emit.report([res], [], {"CVE-2026-0009": {"6.18": {
+            "outcome": "not-affected-needs-review", "reviewed": "2026-10-31", "reason": "no foo driver"}}})
+        self.assertIn("Not affected (reviewed) (1)", md)
+        self.assertIn("fix foo — no foo driver", md)
+        self.assertNotIn("needs review", md)
+
     def cve_backport(self, cve, upstream, old, new):
         """A cve/<cve>/6.18 set made on the stable head, as `fasttrack cve --collect` writes it."""
         wt = self.tmp / f"bp-{cve}"
