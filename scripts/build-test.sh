@@ -117,6 +117,8 @@ worker() {
 					[ -n "$made" ] && [ -n "$om" ] && [[ $om < $made ]] || continue
 					[ "$(cat "$o/base")" = "$base" ] || continue
 					grep -qs "^X-Fasttrack-Backport: cve/$on$" "patches/$ver"/*.patch && continue
+					# Superseded: the set has its upstream commit.
+					sed -n 's/^X-Fasttrack-Upstream: //p' "$o"/*.patch | grep -qxFf - <(sed -n 's/^X-Fasttrack-Upstream: //p' "patches/$ver"/*.patch) && continue
 					echo "$om $o"
 				done | sort | cut -d' ' -f2); do
 					for p in $(grep -v -e '^#' -e '^$' "$o/series.conf"); do prefix+=("$root/$o$p"); done
