@@ -41,9 +41,14 @@ jobs:
     runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 180
     steps:
+      # data/, two worktrees and the build check need about 12 GB.
+      - name: Free space
+        id: space
+        run: echo "low=$([ "$(df --output=avail -BG / | tail -1 | tr -dc 0-9)" -lt 20 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
       # Same as armbian/shallow: linux.git and its worktrees need the space.
       - name: Free Github Runner
-        if: runner.environment == 'github-hosted'
+        if: runner.environment == 'github-hosted' && steps.space.outputs.low == 'true'
         uses: descriptinc/free-disk-space@main # no tagged releases; pinned to default branch
         with:
           android: true
@@ -55,7 +60,7 @@ jobs:
 
       # Same as armbian/shallow#16: remove the large packages that are actually installed.
       - name: Remove large packages
-        if: runner.environment == 'github-hosted'
+        if: runner.environment == 'github-hosted' && steps.space.outputs.low == 'true'
         run: |
           pkgs=$(dpkg-query -W -f '${Package}\n' | grep -E '^(aspnetcore-|dotnet-|llvm-|php|mongodb-|mysql-)|^(azure-cli|google-chrome-stable|firefox|powershell|mono-devel|libgl1-mesa-dri|google-cloud-sdk|google-cloud-cli)$' || true)
           [[ -n "$pkgs" ]] && sudo apt-get remove -y $pkgs
