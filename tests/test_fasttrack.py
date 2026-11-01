@@ -511,6 +511,27 @@ class TestBuildCheck(Fixture):
                                 {"6.18": "6.18.2"}, remote="none", builder=fake_builder("foo line 3"))
         self.assertEqual([c.upstream for c in res.accepted], [self.D, self.A])
 
+    def test_backport_on_top_of_backport_for_pick_that_does_not_build(self):
+        # Mainline A applies but does not build. cve/0001 backports A; cve/0011 is made on top of it.
+        wt = self.tmp / "bp"
+        sh(self.repo, "git", "worktree", "add", "-q", "--detach", str(wt), "linux-6.18.y")
+        for cve, upstream, old, new in (("CVE-2026-0001", self.A, "foo line 6", "foo line 6 FIX"),
+                                        ("CVE-2026-0011", "f" * 40, "foo line 6 FIX", "foo line 6 FIX MORE")):
+            f = wt / "foo.c"
+            f.write_text(f.read_text().replace(old, new))
+            sh(wt, "git", "commit", "-qam", "backport")
+            c = engine.Candidate("6.18", upstream, "backport", "claude", [cve], verdict=engine.ACCEPTED,
+                                 filename=f"0001-{upstream[:12]}-backport.patch",
+                                 patch=sh(wt, "git", "format-patch", "-1", "--stdout"))
+            emit.write_patch_dir(self.tmp / "cve" / cve / "6.18", "6.18", "h", "6.18.2", [c])
+        res = engine.run_series(self.repo, (6, 18), self.records, self.data / "stable-queue", {},
+                                {"6.18": "6.18.2"}, remote="none", builder=fake_builder("foo line 6 FIXED"),
+                                cve_root=self.tmp / "cve")
+        v = {(c.upstream, c.backport): c.verdict for c in res.candidates}
+        self.assertEqual(v[(self.A, "")], engine.BACKPORTED)
+        self.assertEqual(v[(self.A, "CVE-2026-0001/6.18")], engine.ACCEPTED)
+        self.assertEqual(v[("f" * 40, "CVE-2026-0011/6.18")], engine.ACCEPTED)
+
     def test_claude_backport_that_does_not_build(self):
         rec = vulns.find(self.data / "vulns", "CVE-2026-0001")
         bld = fake_builder("foo line 6 FIXED")
