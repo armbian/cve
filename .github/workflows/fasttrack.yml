@@ -282,11 +282,14 @@ jobs:
             br="fasttrack/patches-${GITHUB_RUN_ID}"
             msg="patches: $(date -u '+%F %H:%M')"
             git checkout -q -b "$br"
-            git commit -q -m "$msg" -m "$(grep -E '^- ' report.md | head -20)"
+            body="$(grep -E '^- ' report.md | head -20)"
+            # [skip ci]: the PR is merged at once, so its own build-test run only fails.
+            # The squash commit has no [skip ci], so build-test still runs on main.
+            git commit -q -m "$msg" -m "$body" -m "[skip ci]"
             git push -q origin "$br"
             url=$(gh pr create --head "$br" --base "$GITHUB_REF_NAME" --title "$msg" \
               --body "Hourly fasttrack run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
-            gh pr merge "$url" --squash --delete-branch
+            gh pr merge "$url" --squash --delete-branch --subject "$msg" --body "$body"
             git checkout -q "$GITHUB_REF_NAME"
             git pull -q origin "$GITHUB_REF_NAME"
           fi
