@@ -6992,33 +6992,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-64001"
-    ],
-    "kev": false,
-    "upstream": "4cc54bdd54b337e77115be5b55577d1c58608eae",
-    "subject": "ALSA: pcm: oss: Fix setup list UAF on proc write error",
-    "verdict": "needs-backport",
-    "files": [
-      "sound/core/oss/pcm_oss.c"
-    ],
-    "prerequisites": [
-      "1c71222e5f23 mm: replace vma->vm_flags direct modifications with modifier calls",
-      "a55bc334d3df ALSA: pcm_oss: ump: Use automatic cleanup of kfree()",
-      "650224fe8d5f ALSA: pcm: Use guard() for PCM stream locks",
-      "3923de04c817 ALSA: pcm: oss: Use guard() for setup",
-      "cb787f4ac0c2 [tree-wide] finally take no_llseek out",
-      "d2de0f8b5a82 ALSA: pcm: oss: Use guard() for spin locks",
-      "55f98ece9939 ALSA: oss: Relax __free() variable declarations",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "032322b44c02 ALSA: pcm: oss: use proper stream lock for runtime->state access"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-63983"
     ],
     "kev": false,
@@ -7141,42 +7114,6 @@
       "bdae29d6512d rseq: Always inline rseq_debug_syscall_return()",
       "f8380f976804 rseq: Provide static branch for time slice extensions",
       "b5b8282441bc rseq: Add statistics for time slice extensions"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-97424"
-    ],
-    "kev": false,
-    "upstream": "e3829992dd9fa0a82511af4f01733fc854cd15a5",
-    "subject": "drm/amdgpu/ras: add ras_suspend callback and use it for cp_ecc_error_irq",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c",
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h",
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c",
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h",
-      "drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c"
-    ],
-    "prerequisites": [
-      "b98a1648d661 Revert \"drm/amdgpu: let mode2 reset fallback to default when failure\"",
-      "073285efde22 drm/amdgpu: Enable ras support for mp0 v13_0_0 and v13_0_10",
-      "82835055c62f drm/amdgpu: Add sriov vf ras support in amdgpu_ras_asic_supported",
-      "6c0ca748205d drm/amdgpu: move convert_error_address out of umc_ras",
-      "24b822928b51 drm/amdgpu: use page retirement API in MCA notifier",
-      "1ed0e1769024 drm/amdgpu: remove ras_error_status parameter for UMC poison handler",
-      "33034c5c2efa drm/amdgpu/gfx9: set gfx.funcs in early init",
-      "cfa61b8f9e9e drm/amdgpu: switch to select_se_sh wrapper for gfx v9_0",
-      "ec4927d463cb drm/amdgpu: fix for suspend/resume sequence under sriov",
-      "1a11a65d5395 drm/amdgpu: Enable mode-1 reset for RAS recovery in fatal error mode",
-      "07615da1bf8e drm/amdgpu: enable RAS for VCN/JPEG v4.0",
-      "2cffcb667921 drm/amdgpu: use sysfs_emit() to instead of scnprintf()",
-      "ded946f3f639 drm/amdgpu: Introduce gfx software ring (v9)",
-      "0c97a19aa994 drm/amdgpu: Add software ring callbacks for gfx9 (v8)",
-      "be2545506476 drm/amdgpu: Modify unmap_queue format for gfx9 (v6)"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -7652,39 +7589,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-63819"
-    ],
-    "kev": false,
-    "upstream": "8712353ed80f87271d732297567dcdbe4b84e8c7",
-    "subject": "f2fs: fix to do sanity check on f2fs_get_node_folio_ra()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/f2fs/f2fs.h",
-      "fs/f2fs/node.c"
-    ],
-    "prerequisites": [
-      "18792e64c86d f2fs: support fault injection for f2fs_is_valid_blkaddr()",
-      "3688cbe39b7a f2fs: remove batched_trim_sections node",
-      "c46867e9b9b8 f2fs: introduce max_ordered_discard sysfs node",
-      "a3951cd199a5 f2fs: introduce gc_mode sysfs node",
-      "e5a0db6a9e2e f2fs: replace gc_urgent_high_remaining with gc_remaining_trials",
-      "41e8f85a75fc f2fs: introduce F2FS_IOC_START_ATOMIC_REPLACE",
-      "66aee5aaa237 f2fs: change type for 'sbi->readdir_ra'",
-      "1cd2e6d54435 f2fs: define MIN_DISCARD_GRANULARITY macro",
-      "8a47d228de6a f2fs: introduce discard_urgent_util sysfs node",
-      "e480751970e8 f2fs: remove F2FS_SET_FEATURE() and F2FS_CLEAR_FEATURE() macro",
-      "71644dff4811 f2fs: add block_age-based extent cache",
-      "b3107b3854c9 f2fs: remove unused PAGE_PRIVATE_ATOMIC_WRITE",
-      "62a134bd8941 f2fs: decouple F2FS_MAP_ from buffer head flags",
-      "da8c7fecc9c7 f2fs: rename F2FS_MAP_UNWRITTEN to F2FS_MAP_DELALLOC",
-      "bc29835a9d48 f2fs: split __submit_bio"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-89899"
     ],
     "kev": false,
@@ -7913,38 +7817,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-98926"
-    ],
-    "kev": false,
-    "upstream": "8fa813b7fd1eccbed13e126166cf764f1f11a7d3",
-    "subject": "drm/amd/display: Remove sink usage from DPMS",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/display/dc/link/link_dpms.c"
-    ],
-    "prerequisites": [
-      "54618888d1ea drm/amd/display: break down dc_link.c",
-      "e1ebbf5dbf16 drm/amd/display: remove duplicate include header",
-      "fbc0c790b1e2 drm/amd/display: do not set RX back to SST mode for non 0 mst stream count",
-      "3d8fcc6740c9 drm/amd/display: Extract temp drm mst deallocation wa into its own function",
-      "ed6941b63210 drm/amd/display: on dp link lost event toggle dpms for master pipe only",
-      "5ca38a18b5a4 drm/amd/display: move public dc link function implementation to dc_link_exports",
-      "c69fc3d0de6c drm/amd/display: Reduce CPU busy-waiting for long delays",
-      "a06d565b4a1c drm/amd/display: Allocation at stream Enable",
-      "1e88eb1b2c25 drm/amd/display: Drop CONFIG_DRM_AMD_DC_HDCP",
-      "76f5dc40ebb1 drm/amd/display: move dc_link functions in link root folder to dc_link_exports",
-      "788c6e2ce5c7 drm/amd/display: replace all dc_link function call in link with link functions",
-      "98ce7d32e215 drm/amd/display: convert link.h functions to function pointer style",
-      "7b1b3f5818c3 drm/amd/display: update dig enable sequence",
-      "a1c9a1e27022 drm/amd/display: skip CLEAR_PAYLOAD_ID_TABLE if device mst_en is 0",
-      "7727e7b60f82 drm/amd/display: Improve robustness of FIXED_VS link training at DP1 rates"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-93072"
     ],
     "kev": false,
@@ -7964,39 +7836,6 @@
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
     "build_log": "## drivers/irqchip/irq-renesas-irqc.c\ndrivers/irqchip/irq-renesas-irqc.c:179:33: error: \u2018IRQ_DOMAIN_FLAG_DESTROY_GC\u2019 undeclared (first use in this function); did you mean \u2018IRQ_DOMAIN_FLAG_NONCORE\u2019?"
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-93047"
-    ],
-    "kev": false,
-    "upstream": "fa98563ab00dbe62fcedfef6bdd34ded7a860d9f",
-    "subject": "drm/v3d: Associate BOs with every job that accesses them",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/v3d/v3d_drv.h",
-      "drivers/gpu/drm/v3d/v3d_submit.c"
-    ],
-    "prerequisites": [
-      "b27211db61ae drm/v3d: Avoid -Wconstant-logical-operand in nsecs_to_jiffies_timeout()",
-      "9586e2401700 drm/v3d: Annotate struct v3d_perfmon with __counted_by",
-      "09a93cc4f7d1 drm/v3d: Implement show_fdinfo() callback for GPU usage stats",
-      "509433d8146c drm/v3d: Expose the total GPU usage stats on sysfs",
-      "780b9463ce66 drm/v3d: Remove unused function header",
-      "a8ad9d63a160 drm/v3d: Move wait BO ioctl to the v3d_bo file",
-      "9032d5f633ed drm/v3d: Detach job submissions IOCTLs to a new specific file",
-      "8288faaa8b38 drm/v3d: Simplify job refcount handling",
-      "6893deb881ab drm/v3d: Don't allow two multisync extensions in the same job",
-      "464c61e76de8 drm/v3d: Decouple job allocation from job initiation",
-      "aafc1a2bea67 drm/v3d: Add a CPU job submission",
-      "c5195d001f4c drm/v3d: Use v3d_get_extensions() to parse CPU job data",
-      "1fe0879efc8f drm/v3d: Create tracepoints to track the CPU job",
-      "369b05961731 drm/v3d: Detach the CSD job BO setup",
-      "7c13132c4073 drm/v3d: Enable BO mapping"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
   },
   {
     "series": "6.1",
@@ -8027,68 +7866,6 @@
       "68e5b6aa2795 xdp: document xdp_do_flush() before napi_complete_done()",
       "9d03ebc71a02 bpf: Rename bpf_{prog,map}_is_dev_bound to is_offloaded",
       "2ab42c7b871f bpf: Check the protocol of a sock to agree the calls to bpf_setsockopt()."
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-92500"
-    ],
-    "kev": false,
-    "upstream": "7edbb323bab2b2a609016014caafdb651c898249",
-    "subject": "ext4: use fsdata to track inline data write state and fix race",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/ext4/ext4.h",
-      "fs/ext4/inline.c",
-      "fs/ext4/inode.c"
-    ],
-    "prerequisites": [
-      "138060ba92b3 fs: pass dentry to set acl method",
-      "66267814ba0e fs/ext4: replace ternary operator with min()/max() and min_t()",
-      "dff4ac75eeee ext4: move keep_towrite handling to ext4_bio_write_page()",
-      "de0039f69c95 ext4: add support for writepages calls that cannot map blocks",
-      "15648d599cd1 ext4: provide ext4_do_writepages()",
-      "29bc9cea0e13 ext4: move percpu_rwsem protection into ext4_writepages()",
-      "59205c8d4eae ext4: switch to using ext4_do_writepages() for ordered data writeout",
-      "49977f9762fe ext4: switch to using write_cache_pages() for data=journal writeout",
-      "dae999602eeb ext4: stop providing .writepage hook",
-      "c1632a0f1120 fs: port ->setattr() to pass mnt_idmap",
-      "b74d24f7a74f fs: port ->getattr() to pass mnt_idmap",
-      "13e83a4923be fs: port ->set_acl() to pass mnt_idmap",
-      "8782a9aea3ab fs: port ->fileattr_set() to pass mnt_idmap",
-      "f2d40141d5d9 fs: port inode_init_owner() to mnt_idmap",
-      "f861646a6562 quota: port to mnt_idmap"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-92499"
-    ],
-    "kev": false,
-    "upstream": "bc4b7b0414c33b2c8898eb04386df0d21a13dad8",
-    "subject": "ext4: validate readdir offset before accessing dirent",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/ext4/dir.c"
-    ],
-    "prerequisites": [
-      "224941e8379a use ->bd_mapping instead of ->bd_inode->i_mapping",
-      "4f05ee2f82b4 ext4: store cookie in private data",
-      "de183b2baf90 ext4: annotate struct fname with __counted_by()",
-      "d5e9836e13a5 ext4: use struct_size() to improve ext4_htree_store_dirent()",
-      "e224fa3b8a03 ext4: remove redundant function ext4_has_metadata_csum",
-      "609c5e0081b4 ext4: support large block size in ext4_readdir()",
-      "20747a2a29c6 ext4: add setlease file operation",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "323bbfcf1ef8 Convert 'alloc_flex' family to use the new default GFP_KERNEL argument",
-      "0b2600f81cef treewide: change inode->i_ino from unsigned long to u64"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8421,72 +8198,6 @@
       "1f4971fd33b1 power: supply: ab8500: use dev_to_psy()",
       "15384402c94a power: supply: ab8500_fg: Fix typos in comments",
       "aa5f4decedfb power: supply: ab8500_fg: Remove redundant dev_err()/dev_err_probe()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-90321"
-    ],
-    "kev": false,
-    "upstream": "8914a3330b72378136c2c02d6328a826f6abdad7",
-    "subject": "ocfs2: validate inline xattrs during inode block validation",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/ocfs2/inode.c",
-      "fs/ocfs2/xattr.c",
-      "fs/ocfs2/xattr.h"
-    ],
-    "prerequisites": [
-      "39f60c1ccee7 fs: port xattr to mnt_idmap",
-      "0c95c025a02e fs: drop unused posix acl handlers",
-      "d549b741740e fs: rename generic posix acl handlers",
-      "6861de979fa0 ocfs2: convert to ctime accessor functions",
-      "2cba9af99b3f ocfs2: move ocfs2_xattr_handlers and ocfs2_xattr_handler_map to .rodata",
-      "fd6acbbc4d1e ocfs2: convert to new timestamp accessors",
-      "fc07d2a2118a ocfs2: fix sparse warnings",
-      "e60255f07c6a ocfs2: remove custom swap functions in favor of built-in sort swap",
-      "a0f8a9a9636e ocfs2: miscellaneous spelling fixes",
-      "0c954c57f9e1 ocfs2: embed actual values into ocfs2_sysfile_lock_key names",
-      "0f607a89afe6 ocfs2: retire ocfs2_drop_inode() and I_WILL_FREE usage",
-      "b4dbfd8653b3 Coccinelle-based conversion to use ->i_state accessors",
-      "6e89373cec09 ocfs2: convert to host endian in ocfs2_validate_inode_block",
-      "93ce0ff117b0 ocfs2: validate cl_bpc in allocator inodes to prevent divide-by-zero",
-      "4022ba20050e ocfs2: replace deprecated strcpy in ocfs2_create_xattr_block"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-90320"
-    ],
-    "kev": false,
-    "upstream": "2cf82b46d5e43be0dfbaac7fa1073cec2fc1f5e6",
-    "subject": "ocfs2: validate external xattr entries when reading metadata",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/ocfs2/xattr.c"
-    ],
-    "prerequisites": [
-      "39f60c1ccee7 fs: port xattr to mnt_idmap",
-      "0c95c025a02e fs: drop unused posix acl handlers",
-      "d549b741740e fs: rename generic posix acl handlers",
-      "6861de979fa0 ocfs2: convert to ctime accessor functions",
-      "2cba9af99b3f ocfs2: move ocfs2_xattr_handlers and ocfs2_xattr_handler_map to .rodata",
-      "fd6acbbc4d1e ocfs2: convert to new timestamp accessors",
-      "e60255f07c6a ocfs2: remove custom swap functions in favor of built-in sort swap",
-      "a0f8a9a9636e ocfs2: miscellaneous spelling fixes",
-      "4022ba20050e ocfs2: replace deprecated strcpy in ocfs2_create_xattr_block",
-      "c06c303832ec ocfs2: fix xattr array entry __counted_by error",
-      "2a4f33430e96 ocfs2: validate inline xattr size and entry count in ocfs2_xattr_ibody_list",
-      "76b9701a54a2 ocfs2: avoid -Wflex-array-member-not-at-end warning",
-      "d3cd8de2e17e ocfs2: adjust ocfs2_xa_remove_entry() to match UBSAN boundary checks",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "0b2600f81cef treewide: change inode->i_ino from unsigned long to u64"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
