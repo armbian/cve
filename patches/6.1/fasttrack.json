@@ -6192,6 +6192,516 @@
       "prerequisites": [],
       "build_log": "",
       "backport": "CVE-2026-98424/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "eef3b67f9c6782127163b631c9043011a68016e2",
+      "subject": "EDAC/altera: Fix use-after-free in error paths",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98932"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0365-eef3b67f9c67-edac-altera-fix-use-after-free-in-error-paths.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98932/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "e27fc915c8f575ab5630e27d97465c2077d4b9d1",
+      "subject": "KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98714"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0366-e27fc915c8f5-kvm-svm-update-control-fields-on-vmexit-if-and-only.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98714/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "2abb25273c82061dd4670690c81c319c03740bf6",
+      "subject": "KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98720"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0367-2abb25273c82-kvm-nvmx-force-msr-bitmap-refresh-if-runtime-evmcs-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98720/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "848a7a91c7f03675d3bd8db6f7721cbf9cb50e21",
+      "subject": "Bluetooth: hci_core: Serialize SCO and ISO scheduling with teardown",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98734"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0368-848a7a91c7f0-bluetooth-hci-core-serialize-sco-and-iso-scheduling.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98734/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "8ed67535fdff40ca652bcd4ac7da68d11d01bd34",
+      "subject": "Bluetooth: hci_sync: Fix inquiry cache use-after-free",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98737"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0369-8ed67535fdff-bluetooth-hci-sync-fix-inquiry-cache-use-after-free.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98737/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "81a2345f1984f0b36d3226571bc196316a01b648",
+      "subject": "Bluetooth: Serialize SMP remote OOB data access",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98738"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0370-81a2345f1984-bluetooth-serialize-smp-remote-oob-data-access.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98738/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "8ae3f4067ba4ae3a15581392f6dac422e3d3def0",
+      "subject": "seg6: ensure packet data is writable before modifying SRH and IPv6 DA",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98802"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0371-8ae3f4067ba4-seg6-ensure-packet-data-is-writable-before-modifying.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98802/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "37e02c42a00be692c06343e11779aadc45f45971",
+      "subject": "net: restrict SO_RESERVE_MEM to TCP sockets and cap max value",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98801"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0372-37e02c42a00b-net-restrict-so-reserve-mem-to-tcp-sockets-and-cap-m.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98801/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "0fb5751a6e411b1b466c06e50021818d9391df98",
+      "subject": "bpf: Wait for an RCU tasks grace period before freeing trampoline progs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98800"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0373-0fb5751a6e41-bpf-wait-for-an-rcu-tasks-grace-period-before-freein.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98800/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "006c8b834aed8b02bd8fb9fb05e9e7ead37d1763",
+      "subject": "net: gso: limit recursive IP-in-IP segmentation",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98853"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0374-006c8b834aed-net-gso-limit-recursive-ip-in-ip-segmentation.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98853/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "ea4d4b5dddb5121e64f56fd8e0720bd8b447b63d",
+      "subject": "net: cap skb->queue_mapping when the tx queue is picked",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98797"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0375-ea4d4b5dddb5-net-cap-skb-queue-mapping-when-the-tx-queue-is-picke.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98797/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "7c549fb7eecd01fdba7c0d12c01da876ef8a3214",
+      "subject": "netfilter: flowtable: generalize pending status bit",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98792"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0376-7c549fb7eecd-netfilter-flowtable-generalize-pending-status-bit.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98792/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "e06b678e3b4e12fdaa0b51a7a5a54abc5dbd6469",
+      "subject": "cgroup/cpuset: Don't access cpuset_cgrp_subsys.root in is_in_v2_mode()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98972"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0377-e06b678e3b4e-cgroup-cpuset-don-t-access-cpuset-cgrp-subsys-root-i.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98972/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "c640a01a78e42302879006ed7b7d5a9a943ba815",
+      "subject": "namespace: check a recursive bind mount for mount namespace loops",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98989"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0378-c640a01a78e4-namespace-check-a-recursive-bind-mount-for-mount-nam.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98989/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "217f64f348c90cba62164e7ff38e0ccf78a5ca09",
+      "subject": "drm/amd/display: guard dc_sink dereferences in MST mode validation",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98786"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0379-217f64f348c9-drm-amd-display-guard-dc-sink-dereferences-in-mst-mo.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98786/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "f78ddcc872248c7aa1d7e904928441a0be4c6d5d",
+      "subject": "namespace: never expire a locked mount",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98978"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0380-f78ddcc87224-namespace-never-expire-a-locked-mount.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98978/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "power: supply: Use power_supply_external_power_changed() in __power_supply_changed_work()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99215"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0381-q-power-supply-use-power-supply-external-power-changed.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99215/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "5b4bd13e0552926648a46c2c9a12a24dfaee3715",
+      "subject": "power: supply: core: prevent unregistering a power supply while a callback runs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99215"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0382-5b4bd13e0552-power-supply-core-prevent-unregistering-a-power-supp.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99215/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "858bee1c77857aabcc2327cd32dd8266332de332",
+      "subject": "btrfs: fix xattr replace when multiple xattrs are packed in the same item",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98959"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0383-858bee1c7785-btrfs-fix-xattr-replace-when-multiple-xattrs-are-pac.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98959/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "44378d02c5aaae24b60a75fbbb539b4aa4db503d",
+      "subject": "net: always dissect GSO packets in __virtio_net_hdr_to_skb()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98954"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0384-44378d02c5aa-net-always-dissect-gso-packets-in-virtio-net-hdr-to.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98954/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "1a6023edfbb5673f55fab6348f135fb3b1428ea5",
+      "subject": "drm/amdgpu: serialize vblank counter reads against GPU reset",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99090"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0385-1a6023edfbb5-drm-amdgpu-serialize-vblank-counter-reads-against-gp.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99090/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "93de2a6a4b91b72607136dd656edf03fb399d27f",
+      "subject": "KVM: SEV: Do cache maintenance on the source VM during intra-host migration",
+      "source": "stable-list",
+      "cves": [
+        "CVE-2026-98471"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0386-93de2a6a4b91-kvm-sev-do-cache-maintenance-on-the-source-vm-during.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98471/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "7c24a4e87e219072e5e106f6791146cbf3b056b3",
+      "subject": "vsock: Fix memory leak in vmci_transport_recv_dgram_cb()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98947"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0387-7c24a4e87e21-vsock-fix-memory-leak-in-vmci-transport-recv-dgram-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98947/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "drm/vc4: Use devm_request_irq() for automatic cleanup",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98946"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0388-q-drm-vc4-use-devm-request-irq-for-automatic-cleanup.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98946/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "6abc8e4dcfbc1d26a94c0ac037dfb3716f686b1f",
+      "subject": "drm/vc4: Disable the V3D interrupt across runtime suspend",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98946"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0389-6abc8e4dcfbc-drm-vc4-disable-the-v3d-interrupt-across-runtime-sus.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98946/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "d84d6c1a7f1e2de9e601703a326a4c1b7b421943",
+      "subject": "xfs: stop exchanging reflink flags when exchanging mappings",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98975"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0390-d84d6c1a7f1e-xfs-stop-exchanging-reflink-flags-when-exchanging-ma.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98975/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "81d99abe2bd81379abfb595e403bbbee6fbfc624",
+      "subject": "x86/kvm: Don't consume async #PF flags on a kernel #PF in NMI context",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99178"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0391-81d99abe2bd8-x86-kvm-don-t-consume-async-pf-flags-on-a-kernel-pf.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99178/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "7dedc5bb11f95e96fe80757c924d8d9aa7327759",
+      "subject": "drm/i915/dmc: Add sanity check for DMC load address",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99146"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0392-7dedc5bb11f9-drm-i915-dmc-add-sanity-check-for-dmc-load-address.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99146/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "60d93c27859fb3ec5b5a689e24de303f166477d0",
+      "subject": "KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98715"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0393-60d93c27859f-kvm-svm-preserve-tlb-control-i-e-pending-tlb-flush-o.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98715/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "973ea70393e885e540f714904e51bc6cac80e3d7",
+      "subject": "KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98718"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0394-973ea70393e8-kvm-sev-do-cache-maintenance-on-the-source-vm-before.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98718/6.1"
     }
   ]
 }
