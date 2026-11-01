@@ -5090,33 +5090,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2025-39789"
-    ],
-    "kev": false,
-    "upstream": "3d9eb180fbe8828cce43bce4c370124685b205c3",
-    "subject": "crypto: x86/aegis - Add missing error checks",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/x86/crypto/aegis128-aesni-glue.c"
-    ],
-    "prerequisites": [
-      "ebb445f5e795 crypto: x86/aegis128 - remove no-op init and exit functions",
-      "b8d2e7bac3f7 crypto: x86/aegis128 - eliminate some indirect calls",
-      "af2aff7caf8a crypto: x86/aegis128 - optimize length block preparation using SSE4.1",
-      "8da94b300f67 crypto: x86/aegis128 - improve assembly function prototypes",
-      "a0927a03e7be crypto: x86/aegis128 - take advantage of block-aligned len",
-      "a6185842d1b8 crypto: x86 - remove assignments of 0 to cra_alignmask",
-      "fd7cbef67f97 crypto: x86/aegis - use the new scatterwalk functions",
-      "65775cf31398 crypto: scatterwalk - Change scatterwalk_next calling convention",
-      "3a7dfdbbe333 crypto: x86/aegis - stop using the SIMD helper",
-      "c7f49dadfcdf crypto: x86/aegis - Fix sleeping when disallowed on PREEMPT_RT"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2025-39707"
     ],
     "kev": false,
@@ -5142,38 +5115,6 @@
       "22f1482aff4a drm/amd/display: add sysfs entry to read PSR residency from firmware",
       "98ce7d32e215 drm/amd/display: convert link.h functions to function pointer style",
       "200c7c813231 drm/amd: Drop debugfs access to the DPCD"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2025-38585"
-    ],
-    "kev": false,
-    "upstream": "ee4cf798202d285dcbe85e4467a094c44f5ed8e6",
-    "subject": "staging: media: atomisp: Fix stack buffer overflow in gmin_get_var_int()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c"
-    ],
-    "prerequisites": [
-      "0c144c9308a6 media: atomisp: Fix regulator registers on BYT devices with CRC PMIC",
-      "ba49e91e0187 media: atomisp: Remove atomisp_gmin_find_subdev()",
-      "f05cf2545ba8 media: atomisp: Add atomisp_register_sensor_no_gmin() helper",
-      "cb90b1966472 media: atomisp: Put sensor ACPI devices in D3 before disable ACPI power-resources",
-      "d1229eb04e45 media: atomisp: Add v4l2_get_acpi_sensor_info() helper",
-      "bd8856c65dbc media: atomisp: gmin_platform: Make DMI quirks take precedence over the _DSM table",
-      "671397d7c6a5 media: atomisp: gmin_platform: Add Lenovo Ideapad Miix 310 gmin_vars",
-      "5b9ca47a2588 media: atomisp: Store number of sensor lanes per port in struct atomisp_device",
-      "66c1dfad0012 media: atomisp: initialize settings to 0",
-      "d80be6a10cd3 media: atomisp: Drop v4l2_get_acpi_sensor_info() function",
-      "fadac6afccf7 media: atomisp: Fix buffer overrun in gmin_get_var_int()",
-      "a5aa36b0d506 media: staging: media: atomisp: Fix formatting issues and minor code issue",
-      "c780a2c6ae62 media: atomisp: Put PMIC device after getting its I\u00b2C address",
-      "ca88632506f4 media: atomisp: Replace open-coded i2c_find_device_by_fwnode()",
-      "e838b8c69e45 media: atomisp: Drop intel_v4l2_subdev_type"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -5245,42 +5186,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2025-40025"
-    ],
-    "kev": false,
-    "upstream": "c18ecd99e0c707ef8f83cace861cbc3162f4fdf1",
-    "subject": "f2fs: fix to do sanity check on node footer for non inode dnode",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/f2fs/f2fs.h",
-      "fs/f2fs/gc.c",
-      "fs/f2fs/node.c",
-      "fs/f2fs/node.h",
-      "fs/f2fs/recovery.c"
-    ],
-    "prerequisites": [
-      "18792e64c86d f2fs: support fault injection for f2fs_is_valid_blkaddr()",
-      "3688cbe39b7a f2fs: remove batched_trim_sections node",
-      "c46867e9b9b8 f2fs: introduce max_ordered_discard sysfs node",
-      "146dbcbf17a6 f2fs: fix return val in f2fs_start_ckpt_thread()",
-      "a3951cd199a5 f2fs: introduce gc_mode sysfs node",
-      "e5a0db6a9e2e f2fs: replace gc_urgent_high_remaining with gc_remaining_trials",
-      "8032bf1233a7 treewide: use get_random_u32_below() instead of deprecated function",
-      "41e8f85a75fc f2fs: introduce F2FS_IOC_START_ATOMIC_REPLACE",
-      "66aee5aaa237 f2fs: change type for 'sbi->readdir_ra'",
-      "1cd2e6d54435 f2fs: define MIN_DISCARD_GRANULARITY macro",
-      "8a47d228de6a f2fs: introduce discard_urgent_util sysfs node",
-      "870af777da22 f2fs: do some cleanup for f2fs module init",
-      "e480751970e8 f2fs: remove F2FS_SET_FEATURE() and F2FS_CLEAR_FEATURE() macro",
-      "71644dff4811 f2fs: add block_age-based extent cache",
-      "26a8057a1ada f2fs: reset wait_ms to default if any of the victims have been selected"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2025-40146"
     ],
     "kev": false,
@@ -5340,74 +5245,6 @@
       "71e801b9b44f drm: Clear fd/handle callbacks in struct drm_driver",
       "722d4f06e560 drm: Explicitly include correct DT includes",
       "b3af12a0b468 drm/mediatek: Convert to platform remove callback returning void"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2025-39947"
-    ],
-    "kev": false,
-    "upstream": "6b4be64fd9fec16418f365c2d8e47a7566e9eba5",
-    "subject": "net/mlx5e: Harden uplink netdev access against device unbind",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/mellanox/mlx5/core/en_rep.c",
-      "drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c",
-      "drivers/net/ethernet/mellanox/mlx5/core/lib/mlx5.h",
-      "include/linux/mlx5/driver.h"
-    ],
-    "prerequisites": [
-      "ac73d4bf2cda net: make drivers to use SET_NETDEV_DEVLINK_PORT to set devlink_port",
-      "77df1db80da3 net: remove unused ndo_get_devlink_port",
-      "12eb0f84a601 net/mlx5: Remove unused ctx variables",
-      "953d771587e2 net/mlx5e: Support devlink reload of IPsec core",
-      "64b68e369649 net/mlx5: Refactor and expand rep vport stat group",
-      "3099d2e62f90 net/mlx5e: Fix memory leak on updating vport counters",
-      "3a3da78dd258 net/mlx5e: Add flow steering debugfs directory",
-      "fe998a3c77b9 net/mlx5: Enable management PF initialization",
-      "65a20c2eb96d net/mlx5: Remove MLX5E_LOCKED_FLOW flag",
-      "c673b6772abc net/mlx5: Header file for crypto",
-      "fe298bdf6f65 net/mlx5: Prepare for fast crypto key update if hardware supports it",
-      "67257cba905d net/mlx5: Remove redundant health work lock",
-      "c7d4e6ab3165 net/mlx5e: Propagate an internal event in case uplink netdev changes",
-      "73af3711c702 net/mlx5: Lag, set different uplink vport metadata in multiport eswitch mode",
-      "27f9e0ccb6da net/mlx5: Lag, Add single RDMA device in multiport mode"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2025-39961"
-    ],
-    "kev": false,
-    "upstream": "1e56310b40fd2e7e0b9493da9ff488af145bdd0c",
-    "subject": "iommu/amd/pgtbl: Fix possible race while increase page table level",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/iommu/amd/amd_iommu_types.h",
-      "drivers/iommu/amd/io_pgtable.c"
-    ],
-    "prerequisites": [
-      "cc7594ffadde iommu/amd: Switch to MSI base domains",
-      "0d571dcbe7c6 iommu/amd: Allocate page table using numa locality info",
-      "f594496403fa iommu/amd: Add 5 level guest page table support",
-      "354440a76187 iommu/amd: Use page mode macros in fetch_pte()",
-      "0a0a6800b024 x86,amd_iommu: Replace cmpxchg_double()",
-      "74a37817bd15 iommu/amd: Remove the unused struct amd_ir_data.ref",
-      "bccc37a8a2fb iommu/amd: Improving Interrupt Remapping Table Invalidation",
-      "85751a8af5c9 iommu/amd: Fix DTE_IRQ_PHYS_ADDR_MASK macro",
-      "d18f4ee21982 iommu/amd: Use BIT/BIT_ULL macro to define bit fields",
-      "78db2985c2f6 iommu/amd: Remove extern from function prototypes",
-      "386ae59bd7db iommu/amd: Generalize log overflow handling",
-      "274c2218b8b2 iommu/amd: Handle PPR log overflow",
-      "e5ebd90d1b5c iommu/amd: Enable separate interrupt for PPR and GA log",
-      "8e11876a1127 iommu/amd: Rearrange DTE bit definations",
-      "ade4bec9e182 iommu/amd: Remove unused amd_io_pgtable.pt_root variable"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -5611,39 +5448,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2025-68334"
-    ],
-    "kev": false,
-    "upstream": "db4a3f0fbedb0398f77b9047e8b8bb2b49f355bb",
-    "subject": "platform/x86/amd/pmc: Add support for Van Gogh SoC",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/platform/x86/amd/pmc/pmc.c",
-      "drivers/platform/x86/amd/pmc/pmc.h"
-    ],
-    "prerequisites": [
-      "92c2fb8fa56c platform/x86/amd/pmc: Move PMC driver to separate directory",
-      "cdb1013808be platform/x86/amd/pmc: Add PMFW command id to support S2D force flush",
-      "d9f421da6b92 platform/x86/amd/pmc: Use flex array when calling amd_pmc_stb_debugfs_open_v2()",
-      "b136225746a9 platform/x86/amd/pmc: Handle overflow cases where the num_samples range is higher",
-      "3f720b21ec5a platform/x86/amd/pmc: Add dump_custom_stb module parameter",
-      "c6ea14d55734 platform/x86/amd/pmc: adjust getting DRAM size behavior",
-      "85980669a863 platform/x86/amd/pmc: Move platform defines to header",
-      "2d53c0ab61e6 platform/x86/amd/pmc: Only run IRQ1 firmware version check on Cezanne",
-      "b614a4bd73ef platform/x86/amd/pmc: Move keyboard wakeup disablement detection to pmc-quirks",
-      "9efa2a04ce7c platform/x86/amd/pmc: Send OS_HINT command for AMDI000A platform",
-      "d8fb50fe6c5c platform/x86/amd/pmc: Add VPE information for AMDI000A platform",
-      "13313c135266 platform/x86/amd/pmc: call amd_pmc_get_ip_info() during driver probe",
-      "9ae57d88609d platform/x86/amd/pmc: Add idlemask support for 1Ah family",
-      "d33e992ec87a platform/x86/amd/pmc: Add 1Ah family series to STB support list",
-      "236f7d8034ff platform/x86/amd/pmc: Modify SMU message port for latest AMD platform"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2025-71202"
     ],
     "kev": false,
@@ -5672,39 +5476,6 @@
       "16603704559c iommu: Add attach/detach_dev_pasid iommu interfaces",
       "136467962e49 iommu: Add IOMMU SVA domain support",
       "be51b1d6bbff iommu/sva: Refactoring iommu_sva_bind/unbind_device()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2025-68296"
-    ],
-    "kev": false,
-    "upstream": "eb76d0f5553575599561010f24c277cc5b31d003",
-    "subject": "drm, fbcon, vga_switcheroo: Avoid race condition in fbcon setup",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/drm_fb_helper.c",
-      "drivers/video/fbdev/core/fbcon.c"
-    ],
-    "prerequisites": [
-      "9877d8f6bc37 drm/fb_helper: Rename field fbdev to info in struct drm_fb_helper",
-      "7fd50bc39d12 drm/fb-helper: Rename drm_fb_helper_alloc_fbi() to use _info postfix",
-      "afb0ff78c13c drm/fb-helper: Rename drm_fb_helper_unregister_fbi() to use _info postfix",
-      "f231af498c29 drm/fb-helper: Disconnect damage worker from update logic",
-      "3add5f97734d drm/fb-helper: Call fb_sync in I/O functions",
-      "983780918c75 drm/fb-helper: Perform all fbdev I/O with the same implementation",
-      "93e81e38e197 drm/fb_helper: Minimize damage-helper overhead",
-      "7ce19535e9b4 drm/fb-helper: Always initialize generic fbdev emulation",
-      "e7c5c29a9eb1 drm/fb-helper: Set flag in struct drm_fb_helper for leaking physical addresses",
-      "8ab59da26bc0 drm/fb-helper: Move generic fbdev emulation into separate source file",
-      "78a77c9f4948 drm/fb-helper: Clarify use of last_close and output_poll_changed",
-      "b1be5ba29374 drm/fb-helper: Set damage-clip area in helper",
-      "17d64f157067 drm/fb-helper: Move dirty-fb update into helper function",
-      "9b7232400d4e drm/fb-helper: Remove test for fb_dirty callback from deferred-I/O helper",
-      "5fc586a058ba drm/fb-helper: Perform damage handling in deferred-I/O helper"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -5861,48 +5632,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2025-68781"
-    ],
-    "kev": false,
-    "upstream": "41ca62e3e21e48c2903b3b45e232cf4f2ff7434f",
-    "subject": "usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/usb/phy/phy-fsl-usb.c"
-    ],
-    "prerequisites": [
-      "ba1e43522f32 usb: phy: fsl: Convert to platform remove callback returning void",
-      "6f729457a8ee usb: phy: fsl-usb: drop driver owner assignment",
-      "5f60d5f6bbc1 move asm/unaligned.h to linux/unaligned.h",
-      "9a0749d61a9a usb: Switch back to struct platform_driver::remove()",
-      "2d913c1b0cac USB: phy: Use str_enable_disable-like helpers"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## drivers/usb/phy/phy-fsl-usb.c\ndrivers/usb/phy/phy-fsl-usb.c:990:9: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]"
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2025-71272"
-    ],
-    "kev": false,
-    "upstream": "1f4c9d8a1021281750c6cda126d6f8a40cc24e71",
-    "subject": "most: core: fix resource leak in most_register_interface error paths",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/most/core.c"
-    ],
-    "prerequisites": [
-      "408b18b1aa1f most: core: make mostbus const",
-      "b737a221702c most: remove usage of the deprecated ida_simple_xx() API",
-      "d69d80484598 driver core: have match() callback in struct bus_type take a const *"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2025-71225"
     ],
     "kev": false,
@@ -6000,142 +5729,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-23000"
-    ],
-    "kev": false,
-    "upstream": "4dadc4077e3f77d6d31e199a925fc7a705e7adeb",
-    "subject": "net/mlx5e: Fix crash on profile change rollback failure",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/mellanox/mlx5/core/en.h",
-      "drivers/net/ethernet/mellanox/mlx5/core/en_main.c",
-      "drivers/net/ethernet/mellanox/mlx5/core/en_rep.c"
-    ],
-    "prerequisites": [
-      "ac73d4bf2cda net: make drivers to use SET_NETDEV_DEVLINK_PORT to set devlink_port",
-      "77df1db80da3 net: remove unused ndo_get_devlink_port",
-      "2c925db0a7d6 net/mlx5e: Support enhanced CQE compression",
-      "38438d39a9a0 net/mlx5e: Move params kernel log print to probe function",
-      "e74ae1faeb71 net/mlx5e: Add error flow when failing update_rx",
-      "02648b4b09d5 net/mlx5: Generalize name of UMR alignment definition",
-      "daab2e9c54a5 net/mlx5: Use generic definition for UMR KLM alignment",
-      "953d771587e2 net/mlx5e: Support devlink reload of IPsec core",
-      "8518d05b8f9a net/mlx5e: Create Advanced Steering Operation object for IPsec",
-      "64b68e369649 net/mlx5: Refactor and expand rep vport stat group",
-      "3099d2e62f90 net/mlx5e: Fix memory leak on updating vport counters",
-      "288eca60cc31 net/mlx5e: Add Ethernet driver debugfs",
-      "3a3da78dd258 net/mlx5e: Add flow steering debugfs directory",
-      "7bd1099c7ede net/mlx5e: Replace 0-length array with flexible array",
-      "ee75f1fc44dd net/mlx5e: Create separate devlink instance for ethernet auxiliary device"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-22996"
-    ],
-    "kev": false,
-    "upstream": "123eda2e5b1638e298e3a66bb1e64a8da92de5e1",
-    "subject": "net/mlx5e: Don't store mlx5e_priv in mlx5e_dev devlink priv",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/mellanox/mlx5/core/en.h",
-      "drivers/net/ethernet/mellanox/mlx5/core/en_main.c"
-    ],
-    "prerequisites": [
-      "ac73d4bf2cda net: make drivers to use SET_NETDEV_DEVLINK_PORT to set devlink_port",
-      "77df1db80da3 net: remove unused ndo_get_devlink_port",
-      "2c925db0a7d6 net/mlx5e: Support enhanced CQE compression",
-      "38438d39a9a0 net/mlx5e: Move params kernel log print to probe function",
-      "e74ae1faeb71 net/mlx5e: Add error flow when failing update_rx",
-      "02648b4b09d5 net/mlx5: Generalize name of UMR alignment definition",
-      "daab2e9c54a5 net/mlx5: Use generic definition for UMR KLM alignment",
-      "953d771587e2 net/mlx5e: Support devlink reload of IPsec core",
-      "8518d05b8f9a net/mlx5e: Create Advanced Steering Operation object for IPsec",
-      "288eca60cc31 net/mlx5e: Add Ethernet driver debugfs",
-      "3a3da78dd258 net/mlx5e: Add flow steering debugfs directory",
-      "7bd1099c7ede net/mlx5e: Replace 0-length array with flexible array",
-      "ee75f1fc44dd net/mlx5e: Create separate devlink instance for ethernet auxiliary device",
-      "bc8d405b1ba9 net/mlx5e: Support RX XDP metadata",
-      "66c0e13ad236 drivers: net: turn on XDP features"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-23035"
-    ],
-    "kev": false,
-    "upstream": "4ef8512e1427111f7ba92b4a847d181ff0aeec42",
-    "subject": "net/mlx5e: Pass netdev to mlx5e_destroy_netdev instead of priv",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/mellanox/mlx5/core/en.h",
-      "drivers/net/ethernet/mellanox/mlx5/core/en_main.c",
-      "drivers/net/ethernet/mellanox/mlx5/core/en_rep.c"
-    ],
-    "prerequisites": [
-      "ac73d4bf2cda net: make drivers to use SET_NETDEV_DEVLINK_PORT to set devlink_port",
-      "77df1db80da3 net: remove unused ndo_get_devlink_port",
-      "2c925db0a7d6 net/mlx5e: Support enhanced CQE compression",
-      "38438d39a9a0 net/mlx5e: Move params kernel log print to probe function",
-      "e74ae1faeb71 net/mlx5e: Add error flow when failing update_rx",
-      "02648b4b09d5 net/mlx5: Generalize name of UMR alignment definition",
-      "daab2e9c54a5 net/mlx5: Use generic definition for UMR KLM alignment",
-      "953d771587e2 net/mlx5e: Support devlink reload of IPsec core",
-      "8518d05b8f9a net/mlx5e: Create Advanced Steering Operation object for IPsec",
-      "64b68e369649 net/mlx5: Refactor and expand rep vport stat group",
-      "3099d2e62f90 net/mlx5e: Fix memory leak on updating vport counters",
-      "288eca60cc31 net/mlx5e: Add Ethernet driver debugfs",
-      "3a3da78dd258 net/mlx5e: Add flow steering debugfs directory",
-      "7bd1099c7ede net/mlx5e: Replace 0-length array with flexible array",
-      "ee75f1fc44dd net/mlx5e: Create separate devlink instance for ethernet auxiliary device"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-23265"
-    ],
-    "kev": false,
-    "upstream": "50ac3ecd8e05b6bcc350c71a4307d40c030ec7e4",
-    "subject": "f2fs: fix to do sanity check on node footer in {read,write}_end_io",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/f2fs/data.c",
-      "fs/f2fs/f2fs.h",
-      "fs/f2fs/node.c",
-      "fs/f2fs/node.h"
-    ],
-    "prerequisites": [
-      "18792e64c86d f2fs: support fault injection for f2fs_is_valid_blkaddr()",
-      "3688cbe39b7a f2fs: remove batched_trim_sections node",
-      "c46867e9b9b8 f2fs: introduce max_ordered_discard sysfs node",
-      "a3951cd199a5 f2fs: introduce gc_mode sysfs node",
-      "e5a0db6a9e2e f2fs: replace gc_urgent_high_remaining with gc_remaining_trials",
-      "41e8f85a75fc f2fs: introduce F2FS_IOC_START_ATOMIC_REPLACE",
-      "66aee5aaa237 f2fs: change type for 'sbi->readdir_ra'",
-      "1cd2e6d54435 f2fs: define MIN_DISCARD_GRANULARITY macro",
-      "8a47d228de6a f2fs: introduce discard_urgent_util sysfs node",
-      "98dc08bae678 fsverity: stop using PG_error to track error status",
-      "870af777da22 f2fs: do some cleanup for f2fs module init",
-      "e480751970e8 f2fs: remove F2FS_SET_FEATURE() and F2FS_CLEAR_FEATURE() macro",
-      "71644dff4811 f2fs: add block_age-based extent cache",
-      "fe59109ae5c0 f2fs: initialize extent_cache parameter",
-      "b3107b3854c9 f2fs: remove unused PAGE_PRIVATE_ATOMIC_WRITE"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-23117"
     ],
     "kev": false,
@@ -6193,27 +5786,6 @@
       "301f1a80487f iommu/vt-d: Setup scalable mode context entry in probe path",
       "06c375053cef iommu/vt-d: add wrapper functions for page allocations",
       "5c555f1f1c31 iommu/vt-d: Use try_cmpxchg64() in intel_pasid_get_entry()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-43317"
-    ],
-    "kev": false,
-    "upstream": "2c198c272f9c9213b0fdf6b4a879f445c574f416",
-    "subject": "most: core: fix leak on early registration failure",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/most/core.c"
-    ],
-    "prerequisites": [
-      "408b18b1aa1f most: core: make mostbus const",
-      "b737a221702c most: remove usage of the deprecated ida_simple_xx() API",
-      "d69d80484598 driver core: have match() callback in struct bus_type take a const *",
-      "1f4c9d8a1021 most: core: fix resource leak in most_register_interface error paths"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -6569,73 +6141,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-23355"
-    ],
-    "kev": false,
-    "upstream": "aac9b27f7c1f2b2cf7f50a9ca633ecbbcaf22af9",
-    "subject": "ata: libata: cancel pending work after clearing deferred_qc",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/ata/libata-eh.c",
-      "drivers/ata/libata-scsi.c"
-    ],
-    "prerequisites": [
-      "461ec0406771 ata: libata: clarify when ata_eh_request_sense() will be called",
-      "4b89ad8e5e12 ata: libata: only set sense valid flag if sense data is valid",
-      "013115d90e00 ata: libata: fetch sense data for ATA devices supporting sense reporting",
-      "4cb7c6f1ef96 ata: make use of ata_port_is_frozen() helper",
-      "3d8a3ae3d966 ata: libata: fix commands incorrectly not getting retried during NCQ error",
-      "b83ad9eec316 ata: libata-eh: Cleanup ata_scsi_cmd_error_handler()",
-      "876293121f24 ata: scsi: rename flag ATA_QCFLAG_FAILED to ATA_QCFLAG_EH",
-      "7574a8377c7a ata: libata-scsi: do not overwrite SCSI ML and status bytes",
-      "002c487119f2 ata: libata-scsi: improve ata_scsiop_maint_in()",
-      "5fa7b0726775 scsi: ata: libata-scsi: Convert to scsi_execute_cmd()",
-      "25df73d93323 scsi: ata: Declare SCSI host templates const",
-      "91a8967ca7f4 scsi: ata: libata-scsi: Remove unnecessary !cmd checks",
-      "24aeebbf8ea9 scsi: ata: libata: Change ata_eh_request_sense() to not set CHECK_CONDITION",
-      "62e4a60e0cdb scsi: ata: libata: Detect support for command duration limits",
-      "0de558015286 scsi: ata: libata-scsi: Handle CDL bits in ata_scsiop_maint_in()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-46014"
-    ],
-    "kev": false,
-    "upstream": "3700f0788da6acf73b2df56690f4b201aa4aefd2",
-    "subject": "KVM: SVM: Add missing save/restore handling of LBR MSRs",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/x86/kvm/svm/nested.c",
-      "arch/x86/kvm/svm/svm.c",
-      "arch/x86/kvm/x86.c"
-    ],
-    "prerequisites": [
-      "6c6f82bea96f KVM: x86: Init vcpu->arch.perf_capabilities in common x86 code",
-      "5fe9805dc2f5 KVM: x86: Handle PERF_CAPABILITIES in common x86's kvm_get_msr_feature()",
-      "686e0f0324f0 KVM: x86: Directly query supported PERF_CAPABILITIES for WRMSR checks",
-      "0f9edb8cab29 KVM: x86: remove obsolete kvm_mmu_gva_to_gpa_fetch()",
-      "b0b42197b5c6 KVM: x86: start moving SMM-related functions to new files",
-      "c53da4f3af6e KVM: x86: move SMM entry to a new file",
-      "f1554150d3c6 KVM: x86: move SMM exit to a new file",
-      "1d0da94cdafe KVM: x86: do not go through ctxt->ops when emulating rsm",
-      "4b8e1b32013d KVM: allow compiling out SMM support",
-      "31e83e21cf00 KVM: x86: compile out vendor-specific code if SMM is disabled",
-      "cf7316d0361c KVM: x86: do not define KVM_REQ_SMI if SMM disabled",
-      "85672346a707 KVM: zero output of KVM_GET_VCPU_EVENTS before filling in the struct",
-      "a7662aa5e56f KVM: x86: do not define SMM-related constants if SMM disabled",
-      "58c1d206d545 KVM: x86: smm: use smram structs in the common code",
-      "e6a82199b610 KVM: svm: drop explicit return value of kvm_vcpu_map"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-43369"
     ],
     "kev": false,
@@ -6700,27 +6205,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-31493"
-    ],
-    "kev": false,
-    "upstream": "ef3b06742c8a201d0e83edc9a33a89a4fe3009f8",
-    "subject": "RDMA/efa: Fix use of completion ctx after free",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/infiniband/hw/efa/efa_com.c"
-    ],
-    "prerequisites": [
-      "8e5442f3935d RDMA/efa: Extend admin timeout error print",
-      "4b6b6233f50f RDMA: Use %pe format specifier for error pointers",
-      "4b01ec0f133b RDMA/efa: Check stored completion CTX command ID with received one",
-      "dab5825491f7 RDMA/efa: Improve admin completion context state machine"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-31437"
     ],
     "kev": false,
@@ -6746,42 +6230,6 @@
       "a9d47a50cf25 netfs: Revert \"netfs: Switch debug logging to pr_debug()\"",
       "f4d3cde410cc netfs: Remove redundant use of smp_rmb()",
       "06fa229ceb36 netfs: Abstract out a rolling folio buffer implementation"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-23276"
-    ],
-    "kev": false,
-    "upstream": "6f1a9140ecda3baba3d945b9a6155af4268aafc4",
-    "subject": "net: add xmit recursion limit to tunnel xmit functions",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/netdevice.h",
-      "include/net/ip6_tunnel.h",
-      "include/net/ip_tunnels.h",
-      "net/core/dev.h",
-      "net/ipv4/ip_tunnel_core.c"
-    ],
-    "prerequisites": [
-      "f3fb589aeb88 net: remove unused netdev_unregistering()",
-      "02a68a47eade net: devlink: track netdev with devlink_port assigned",
-      "77df1db80da3 net: remove unused ndo_get_devlink_port",
-      "bd039b5ea2a9 net/core: Allow live renaming when an interface is up",
-      "3e52fba03a20 net: introduce a helper to move notifier block to different namespace",
-      "14d898f3c1b3 dev: Move received_rps counter next to RPS members in softnet data",
-      "d93607082e98 net: add netdev_sw_irq_coalesce_default_on()",
-      "919e43fad516 xfrm: add an interface to offload policy",
-      "f3da86dc2c8c xfrm: add support to HW update soft and hard limits",
-      "8a321cf7becc net: add IFF_NO_ADDRCONF and use it in bonding to prevent ipv6 addrconf",
-      "3d76a4d3d4e5 bpf: XDP metadata RX kfuncs",
-      "3089386db090 xfrm: extend add policy callback to set failure reason",
-      "7681a4f58fb9 xfrm: extend add state callback to set failure reason",
-      "9eefedd58ae1 net: add gso_ipv4_max_size and gro_ipv4_max_size per device",
-      "d3d854fd6a1d netdev-genl: create a simple family for netdev stuff"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -6878,83 +6326,6 @@
       "a7f0636d223c RDMA/mana_ib: register RDMA device with GDMA",
       "91bfe210e196 net: mana: add a function to spread IRQs per CPUs",
       "8afefc361209 net: mana: Assigning IRQ affinity on HT cores"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-23393"
-    ],
-    "kev": false,
-    "upstream": "3715a00855316066cdda69d43648336367422127",
-    "subject": "bridge: cfm: Fix race condition in peer_mep deletion",
-    "verdict": "needs-backport",
-    "files": [
-      "net/bridge/br_cfm.c"
-    ],
-    "prerequisites": [
-      "5fd8bb982e10 net: replace use of system_wq with system_percpu_wq",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## net/bridge/br_cfm.c\nnet/bridge/br_cfm.c:574:17: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]"
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-43409"
-    ],
-    "kev": false,
-    "upstream": "e113f0b46d19626ec15388bcb91432c9a4fd6261",
-    "subject": "kprobes: avoid crash when rmmod/insmod after ftrace killed",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/kprobes.c"
-    ],
-    "prerequisites": [
-      "cb16330d1274 fprobe: Pass return address to the handlers",
-      "e1164787f22b kprobes: Remove unnecessary \u2018NULL\u2019 values from correct_ret_addr",
-      "ed9492dfef87 kernel: kprobes: Remove unnecessary \u20180\u2019 values",
-      "8865aea0471c kernel: kprobes: Use struct_size()",
-      "4bbd93455659 kprobes: kretprobe scalability improvement",
-      "9efd24ec5599 kprobes: Remove unnecessary initial values of variables",
-      "f884cd38625c kprobes: Remove the now superfluous sentinel elements from ctl_table array",
-      "12af2b83d0b1 mm: introduce execmem_alloc() and execmem_free()",
-      "7582b7be16d0 kprobes: remove dependency on CONFIG_MODULES",
-      "1a7d0890dd4a kprobe/ftrace: bail out if ftrace was killed",
-      "4b377b4868ef kprobe/ftrace: fix build error due to bad function definition",
-      "78eb4ea25cd5 sysctl: treewide: constify the ctl_table argument of proc_handlers",
-      "ce7f27dcd7e7 kprobes: Cleanup the config comment",
-      "da93dd931baa kprobes: Cleanup collect_one_slot() and __disable_kprobe()",
-      "3fbff9888929 kprobes: Use struct_size() in __get_insn_slot()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-46282"
-    ],
-    "kev": false,
-    "upstream": "aac0a51b16700b403a55b67ba495de021db78763",
-    "subject": "iio: frequency: admv1013: fix NULL pointer dereference on str",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/iio/frequency/admv1013.c"
-    ],
-    "prerequisites": [
-      "76f2c491a0ca iio: frequency: admv1013: Benefit from devm_clk_get_enabled() to simplify",
-      "320b92a4c182 drivers: iio: admv1013: add vcc regulators",
-      "2f4bb1fa758a iio: frequency: admv1013: Use devm_regulator_get_enable_read_voltage()",
-      "5f60d5f6bbc1 move asm/unaligned.h to linux/unaligned.h",
-      "70788d26ae1c iio: normalize array sentinel style",
-      "6cdb4009c201 iio: admv1013: replace redundant ternary operator with just len",
-      "e61b5bb0e913 iio: frequency: admv1013: add dev variable",
-      "9e9f38c44b2e iio: frequency: admv1013: use dev_err_probe()"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -7063,38 +6434,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-53106"
-    ],
-    "kev": false,
-    "upstream": "350de5b8a9befaa2a68861c51f671d4f5f751ca5",
-    "subject": "bpf: Do not allow deleting local storage in NMI",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/bpf/bpf_local_storage.c"
-    ],
-    "prerequisites": [
-      "d39d1445d377 bpf: Use rcu_trace_implies_rcu_gp() in local storage map",
-      "e8b02296a6b8 bpf: Avoid taking spinlock in bpf_task_storage_get if potential deadlock is detected",
-      "db559117828d bpf: Consolidate spin_lock, timer management into btf_record",
-      "9db44fdd8105 bpf: Support kptrs in local storage maps",
-      "e768e3c5aab4 bpf: Use separate RCU callbacks for freeing selem",
-      "7490b7f1c02e bpf, net: bpf_local_storage memory usage",
-      "4cbd23cc92c4 bpf: Move a few bpf_local_storage functions to static scope",
-      "2ffcb6fc5017 bpf: Refactor codes into bpf_local_storage_destroy",
-      "121f31f3e00d bpf: Remove the preceding __ from __bpf_selem_unlink_storage",
-      "fc6652aab6ad bpf: Remember smap in bpf_local_storage",
-      "a47eabf216f7 bpf: Repurpose use_trace_rcu to reuse_now in bpf_local_storage",
-      "c609981342dc bpf: Remove bpf_selem_free_fields*_rcu",
-      "f8ccf30c179e bpf: Add bpf_selem_free_rcu callback",
-      "c0d63f309186 bpf: Add bpf_selem_free()",
-      "1288aaa2786b bpf: Add bpf_local_storage_rcu callback"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-31513"
     ],
     "kev": false,
@@ -7152,79 +6491,6 @@
       "befae75856ab bpf: propagate nullness information for reg to reg comparisons",
       "282de143ead9 bpf: Introduce allocated objects support",
       "4e814da0d599 bpf: Allow locking bpf_spin_lock in allocated objects"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-46068"
-    ],
-    "kev": false,
-    "upstream": "adb3faf2db1a66d0f015b44ac909a32dfc7f2f9c",
-    "subject": "crypto: nx - fix bounce buffer leaks in nx842_crypto_{alloc,free}_ctx",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/crypto/nx/nx-842.c"
-    ],
-    "prerequisites": [
-      "1e6b251ce175 crypto: nx - Avoid -Wflex-array-member-not-at-end warning",
-      "980b5705f4e7 crypto: nx - Migrate to scomp API",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-31444"
-    ],
-    "kev": false,
-    "upstream": "48623ec358c1c600fa1e38368746f933e0f1a617",
-    "subject": "ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/oplock.c"
-    ],
-    "prerequisites": [
-      "36322523dddb ksmbd: fix UAF issue from opinfo->conn",
-      "fc6c6a3c324c ksmbd: fix out-of-bound read in parse_lease_state()",
-      "c8efcc786146 ksmbd: add support for durable handles v1/v2",
-      "5fb282ba4fef ksmbd: fix possible null-deref in smb_lazy_parent_lease_break_close",
-      "e758fa6956cb ksmbd: Fix spelling mistake \"connction\" -> \"connection\"",
-      "d1c189c6cb8b ksmbd: use rwsem instead of rwlock for lease break",
-      "ee426bfb9d09 ksmbd: add refcnt to ksmbd_conn struct",
-      "78181a5504a4 smb: move SMB2 Status code to common header file",
-      "9e676e571d39 ksmbd: Correct typos in multiple comments across various files",
-      "0066f623bce8 ksmbd: use __GFP_RETRY_MAYFAIL",
-      "18b4fac5ef17 ksmbd: fix use-after-free in smb_break_all_levII_oplock()",
-      "10379171f346 ksmbd: use list_first_entry_or_null for opinfo_get_list()",
-      "96721fd29226 smb: move create_durable_rsp_v2 to common/smb2pdu.h",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "1dfd062caa16 ksmbd: fix use-after-free by using call_rcu() for oplock_info"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-43053"
-    ],
-    "kev": false,
-    "upstream": "b854e1c4eff3473b6d3a9ae74129ac5c48bc0b61",
-    "subject": "xfs: close crash window in attr dabtree inactivation",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/xfs/xfs_attr_inactive.c"
-    ],
-    "prerequisites": [
-      "ca14c0968c1f xfs: report dir/attr block corruption errors to the health system",
-      "09f7680dea87 xfs: remove bp->b_error check in xfs_attr3_root_inactive",
-      "cf9b52fa7d65 xfs: directly include xfs_platform.h"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -7323,32 +6589,6 @@
       "b8ee5575f763 mm/damon/sysfs-test: add a unit test for damon_sysfs_set_targets()",
       "d91beaa505a0 mm/damon/sysfs-schemes: implement a command for scheme quota goals only commit",
       "6a080670d688 mm/damon/sysfs: handle 'state' file inputs for every sampling interval if possible"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-31777"
-    ],
-    "kev": false,
-    "upstream": "277c6960d4ddb94d16198afd70c92c3d4593d131",
-    "subject": "ALSA: ctxfi: Check the error for index mapping",
-    "verdict": "needs-backport",
-    "files": [
-      "sound/pci/ctxfi/ctdaio.c"
-    ],
-    "prerequisites": [
-      "aabdedf4d2fe ALSA: ctxfi: avoid casting function pointers",
-      "e576e7843c0d ALSA: ctxfi: Simplify dao_clear_{left,right}_input() functions",
-      "520a563b9a16 ALSA: ctxfi: change dao_set_input functions from kzalloc to kcalloc",
-      "be9478bd3afc ALSA: ctxfi: Use guard() for spin locks",
-      "5ebd05427271 ALSA: ctxfi: Add hw parameter to daio_mgr_dao_init()",
-      "9bb003a1f98b ALSA: ctxfi: Use explicit output flag for DAIO resources",
-      "9b4a22733c15 ALSA: ctxfi: Add support for dedicated RCA switching",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -7483,38 +6723,6 @@
       "cec5fe700799 selinux: make labeled NFS work when mounted before policy load",
       "6bcdfd2cac55 security: Allow all LSMs to provide xattrs for inode_init_security hook",
       "5b0eea835d4e selinux: introduce an initial SID for early boot processes"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-31692"
-    ],
-    "kev": false,
-    "upstream": "7b735ef81286007794a227ce2539419479c02a5f",
-    "subject": "rtnetlink: add missing netlink_ns_capable() check for peer netns",
-    "verdict": "needs-backport",
-    "files": [
-      "net/core/rtnetlink.c"
-    ],
-    "prerequisites": [
-      "d88e136cab37 rtnetlink: Honour NLM_F_ECHO flag in rtnl_newlink_create",
-      "a35ec8e38cdd bridge: Add MAC Authentication Bypass (MAB) support",
-      "dca56c3038c3 net: expose devlink port over rtnetlink",
-      "9eefedd58ae1 net: add gso_ipv4_max_size and gro_ipv4_max_size per device",
-      "a1aee20d5db2 net: bridge: Add netlink knobs for number / maximum MDB entries",
-      "cc7f5022f810 rtnetlink: bridge: mcast: Move MDB handlers out of bridge driver",
-      "da654c80a0eb rtnetlink: bridge: mcast: Relax group address validation in common code",
-      "bc9d3a9f2afc net: dst: Switch to rcuref_t reference counting",
-      "59d3efd27c11 rtnetlink: Restore RTM_NEW/DELLINK notification behavior",
-      "160656d7201d bridge: Allow setting per-{Port, VLAN} neighbor suppression state",
-      "fef5b228dd38 rtnetlink: move IFLA_GSO_ tb check to validate_linkmsg",
-      "65d6914e253f rtnetlink: add the missing IFLA_GRO_ tb check in validate_linkmsg",
-      "89da780aa4c7 rtnetlink: move validate_linkmsg out of do_setlink",
-      "4a59cdfd6699 rtnetlink: Move nesting cancellation rollback to proper function",
-      "29cfb2aaa442 bridge: Add backup nexthop ID support"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -7691,39 +6899,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-53091"
-    ],
-    "kev": false,
-    "upstream": "7fb4c19670110f052c04e1ec1d2b953b9f4f57e4",
-    "subject": "net: pull headers in qdisc_pkt_len_segs_init()",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/dropreason-core.h",
-      "net/core/dev.c"
-    ],
-    "prerequisites": [
-      "d120d1a63b2c net: Remove the obsolte u64_stats_fetch_*_irq() users (net).",
-      "02a68a47eade net: devlink: track netdev with devlink_port assigned",
-      "bd039b5ea2a9 net/core: Allow live renaming when an interface is up",
-      "3e52fba03a20 net: introduce a helper to move notifier block to different namespace",
-      "6af645a5b2da net: net_{enable|disable}_timestamp() optimizations",
-      "1462160c7455 net: adopt try_cmpxchg() in napi_schedule_prep() and napi_complete_done()",
-      "4ffa1d1c6842 net: adopt try_cmpxchg() in napi_{enable|disable}()",
-      "fd896e38e5df net: fix napi_disable() logic error",
-      "d93607082e98 net: add netdev_sw_irq_coalesce_default_on()",
-      "9054b41c4e1b net: Fix documentation for unregister_netdevice_notifier_net",
-      "9d03ebc71a02 bpf: Rename bpf_{prog,map}_is_dev_bound to is_offloaded",
-      "2b3486bc2d23 bpf: Introduce device-bound XDP programs",
-      "3176eb82681e net: avoid irqsave in skb_defer_free_flush",
-      "9eefedd58ae1 net: add gso_ipv4_max_size and gro_ipv4_max_size per device",
-      "d3d854fd6a1d netdev-genl: create a simple family for netdev stuff"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-43084"
     ],
     "kev": false,
@@ -7747,101 +6922,6 @@
       "778b09d91baa netfilter: nfnetlink_queue: Initialize ctx to avoid memory allocation error",
       "e19079adcd26 netfilter: nfnetlink_queue: optimize verdict lookup with hash table",
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-31579"
-    ],
-    "kev": false,
-    "upstream": "60a25ef8dacb3566b1a8c4de00572a498e2a3bf9",
-    "subject": "wireguard: device: use exit_rtnl callback instead of manual rtnl_lock in pre_exit",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/wireguard/device.c"
-    ],
-    "prerequisites": [
-      "d457a0e329b0 net: move gso declarations and functions to their own files",
-      "db2952dfbdf1 wireguard: device: leverage core stats allocator",
-      "df9bbb5e776a wireguard: device: remove generic .ndo_get_stats64",
-      "00d066a4d4ed netdev_features: convert NETIF_F_LLTX to dev->lltx",
-      "2c862914fbcf wireguard: device: omit unnecessary memset of netdev private data",
-      "06a34f7db773 wireguard: device: support big tcp GSO",
-      "69c7be1b903f rtnetlink: Pack newlink() params into struct",
-      "cf517ac16ad9 net: Use link/peer netns in newlink() of rtnl_link_ops",
-      "8fa7292fee5c treewide: Switch/rename to timer_delete[_sync]()",
-      "5d4d84618e1a net: s/dev_set_threaded/netif_set_threaded/",
-      "78afdadafe6f net: Use netif_threaded_enable instead of netif_set_threaded in drivers",
-      "27ce71e1ce81 net: WQ_PERCPU added to alloc_workqueue users"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## drivers/net/wireguard/device.c\ndrivers/net/wireguard/device.c:435:10: error: \u2018struct pernet_operations\u2019 has no member named \u2018exit_rtnl\u2019\ndrivers/net/wireguard/device.c:435:22: error: initialization of \u2018struct list_head *\u2019 from incompatible pointer type \u2018void (*)(struct net *, struct list_head *)\u2019 [-Wincompatible-pointer-types]"
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-63858"
-    ],
-    "kev": false,
-    "upstream": "10f79dbd7719d1da9f5884d13060322d8729f091",
-    "subject": "netfilter: nf_tables: add hook transactions for device deletions",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/netfilter/nf_tables.h",
-      "net/netfilter/nf_tables_api.c"
-    ],
-    "prerequisites": [
-      "e7a1caa67ce6 netfilter: nf_tables: reduce nft_pktinfo by 8 bytes",
-      "3a07327d10a0 netfilter: nft_inner: support for inner tunnel header matching",
-      "0e795b37ba04 netfilter: nft_inner: add percpu inner context",
-      "d120d1a63b2c net: Remove the obsolte u64_stats_fetch_*_irq() users (net).",
-      "8daa8fde3fc3 netfilter: nf_tables: Introduce NFT_MSG_GETRULE_RESET",
-      "98cbc40e4f7d netfilter: nft_inner: fix IS_ERR() vs NULL check",
-      "f80a612dd77c netfilter: nf_tables: add support to destroy operation",
-      "1fb7696ac6c3 netfilter: nf_tables: fix wrong pointer passed to PTR_ERR()",
-      "e38fbfa972eb netfilter: nf_tables: merge nft_rules_old structure and end of ruleblob marker",
-      "63e9bbbcca60 netfilter: nf_tables: don't store chain address on jump",
-      "00c320f9b755 netfilter: nf_tables: make validation state per table",
-      "698bb828a6c2 netfilter: nf_tables: do not store pktinfo in traceinfo structure",
-      "0a202145d5f9 netfilter: nf_tables: do not store verdict in traceinfo structure",
-      "46df417544f4 netfilter: nf_tables: do not store rule in traceinfo structure",
-      "c3c060adc024 netfilter: nf_tables: extended netlink error reporting for netdevice"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-46153"
-    ],
-    "kev": false,
-    "upstream": "7dddc74af369478ba7f9bc136d0fc1dc4570cb66",
-    "subject": "8021q: delete cleared egress QoS mappings",
-    "verdict": "needs-backport",
-    "files": [
-      "net/8021q/vlan_dev.c",
-      "net/8021q/vlan_netlink.c"
-    ],
-    "prerequisites": [
-      "d120d1a63b2c net: Remove the obsolte u64_stats_fetch_*_irq() users (net).",
-      "abff3e5e2935 vlan: Add MACsec offload operations for VLAN interface",
-      "65c9fde15a65 net: vlan: convert to ndo_hwtstamp_get() / ndo_hwtstamp_set()",
-      "b8768dc40777 net: ethtool: Refactor identical get_ts_info implementations.",
-      "9a3c93af5491 vlan: use netdev_lockdep_set_classes()",
-      "7ae9d3423f1d net: vlan: constify the struct device_type usage",
-      "e353ea9ce471 rtnetlink: prepare nla_put_iflink() to run under RCU",
-      "e8058a49e67f netlink: introduce type-checking attribute iteration",
-      "1eb2cded45b3 net: annotate writes on dev->mtu from ndo_change_mtu()",
-      "2111375b85ad net: Add struct kernel_ethtool_ts_info",
-      "00d066a4d4ed netdev_features: convert NETIF_F_LLTX to dev->lltx",
-      "782dbbf589cd netdev_features: convert NETIF_F_FCOE_MTU to dev->fcoe_mtu",
-      "a61fec1c87be netdev_features: remove NETIF_F_ALL_FCOE",
-      "e44ef3f66c54 netpoll: remove ndo_netpoll_setup() second argument",
-      "a885a6b2d37e net: convert to nla_get_*_default()"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -7907,38 +6987,6 @@
       "cb16301626c3 KVM: arm64: Issue CMOs when tearing down guest s2 pages",
       "40458a66afde KVM: arm64: Fix comment for __pkvm_vcpu_init_traps()",
       "66d5b53e20a6 KVM: arm64: Allocate memory mapped at hyp for host sve state in pKVM"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98916"
-    ],
-    "kev": false,
-    "upstream": "55308cee9c2196f39cd1ce8ee6c1fed9e12a00d4",
-    "subject": "wifi: nl80211: check link is beaconing for color change",
-    "verdict": "needs-backport",
-    "files": [
-      "net/wireless/nl80211.c"
-    ],
-    "prerequisites": [
-      "53ad07e9823b wifi: cfg80211: support reporting failed links",
-      "1e0f8cc96b71 wifi: nl80211: use link ID in NL80211_CMD_SET_BSS",
-      "20b0b53aca43 genetlink: introduce split op representation",
-      "648fba791cb0 wifi: cfg80211: Support 32 bytes KCK key in GTK rekey offload",
-      "9a47c1ef5a95 wifi: cfg80211: Authentication offload to user space for MLO connection in STA mode",
-      "a42e59eb9689 wifi: cfg80211: Extend cfg80211_new_sta() for MLD AP",
-      "8bb588d97501 wifi: cfg80211: Extend cfg80211_update_owe_info_event() for MLD AP",
-      "77669c151f1d wifi: nl80211: emit CMD_START_AP on multicast group when an AP is started",
-      "cba7217a9269 wifi: nl80211: add MLO_LINK_ID to CMD_STOP_AP event",
-      "90b2c3cc4b71 wifi: nl80211: return error message for malformed chandef",
-      "b345f0637c00 wifi: cfg80211: include puncturing bitmap in channel switch events",
-      "9b89495e479c wifi: nl80211: Allow authentication frames and set keys on NAN interface",
-      "935ef47b16cc wifi: cfg80211: get rid of gfp in cfg80211_bss_color_notify",
-      "4c532321bf90 wifi: cfg80211/mac80211: report link ID on control port RX",
-      "14e05beb1032 wifi: nl80211: convert cfg80211_scan_request allocation to *_size macros"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8019,71 +7067,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-43500"
-    ],
-    "kev": false,
-    "upstream": "aa54b1d27fe0c2b78e664a34fd0fdf7cd1960d71",
-    "subject": "rxrpc: Also unshare DATA/RESPONSE packets when paged frags are present",
-    "verdict": "needs-backport",
-    "files": [
-      "net/rxrpc/call_event.c",
-      "net/rxrpc/conn_event.c"
-    ],
-    "prerequisites": [
-      "b015424695f0 rxrpc: Add stats procfile and DATA packet stats",
-      "f2a676d10038 rxrpc: Record statistics about ACK types",
-      "72f0c6fb0579 rxrpc: Allocate ACK records at proposal and queue for transmission",
-      "530403d9ba1c rxrpc: Clean up ACK handling",
-      "a4ea4c477619 rxrpc: Don't use a ring buffer for call Tx queue",
-      "4e76bd406d6e rxrpc: Remove call->lock",
-      "d57a3a151660 rxrpc: Save last ACK's SACK table rather than marking txbufs",
-      "49df54a6b295 rxrpc: Fix call leak",
-      "2ebdb26e6abd rxrpc: Remove the [k_]proto() debugging macros",
-      "2cc800863c49 rxrpc: Drop rxrpc_conn_parameters from rxrpc_connection and rxrpc_bundle",
-      "f14febd8df5a rxrpc: Extract the code from a received ABORT packet much earlier",
-      "0fde882fc9ee rxrpc: trace: Don't use __builtin_return_address for rxrpc_local tracing",
-      "7fa25105b2d3 rxrpc: trace: Don't use __builtin_return_address for rxrpc_conn tracing",
-      "cb0fc0c9722c rxrpc: trace: Don't use __builtin_return_address for rxrpc_call tracing",
-      "9a36a6bc22ca rxrpc: trace: Don't use __builtin_return_address for sk_buff tracing"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-53179"
-    ],
-    "kev": false,
-    "upstream": "514ab98364595007d4557ecc85d7e5f012c504d3",
-    "subject": "staging: rtl8723bs: fix buffer over-read in rtw_update_protection",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/staging/rtl8723bs/core/rtw_mlme.c"
-    ],
-    "prerequisites": [
-      "6e006508f6e2 staging: rtl8723bs: Fix indentation in conditional statements",
-      "5a50c621a451 drivers: staging: rtl8723bs: Remove pmlmepriv->num_of_scanned",
-      "af01991005ff staging: rtl8723bs: use is_zero_ether_addr() instead of memcmp()",
-      "be6cded374cc staging: rtl8723bs: Use helpers to check broadcast and multicast Ether addresses",
-      "fee3297b9f6d Staging: rtl8723bs: Remove unnecessary braces in rtw_update_ht_cap",
-      "6fd529666b9c Staging: rtl8723bs: Remove dead code from _rtw_free_network()",
-      "e945c43df60b Staging: rtl8723bs: Delete dead code from update_current_network()",
-      "211b4ed0572c staging: rtl8723bs: Remove unused files rtw_debug.c and rtw_debug.h",
-      "862f4fb8269f staging: rtl8723bs: Remove constant result macro is_primary_adapter",
-      "8fa7292fee5c treewide: Switch/rename to timer_delete[_sync]()",
-      "f6d1d0ac1735 staging: rtl8723bs: remove unnecessary else block after return",
-      "41cb08555c41 treewide, timers: Rename from_timer() to timer_container_of()",
-      "349f6bef1205 staging: rtl8723bs: remove some 5 GHz code",
-      "400a23b2e0ca staging: rtl8723bs: clean up redundant & parentheses",
-      "907b863508bf staging: rtl8723bs: rtw_get_encrypt_decrypt_from_registrypriv is empty"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-53285"
     ],
     "kev": false,
@@ -8109,57 +7092,6 @@
       "40a2a2b257db drm/amd/display: Add the MALL size in the fallback function",
       "8cffa89bd5e2 drm/amd/display: Expand DML2 callbacks",
       "7ae0caf34883 drm/amd/display: fix underflow in some two display subvp/non-subvp configs"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-64160"
-    ],
-    "kev": false,
-    "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
-    "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/9p/v9fs_vfs.h",
-      "fs/9p/vfs_inode.c",
-      "fs/9p/vfs_inode_dotl.c",
-      "fs/afs/file.c",
-      "fs/afs/inode.c",
-      "fs/afs/internal.h",
-      "fs/afs/write.c",
-      "fs/netfs/buffered_read.c",
-      "fs/netfs/buffered_write.c",
-      "fs/netfs/direct_write.c",
-      "fs/netfs/misc.c",
-      "fs/netfs/write_collect.c",
-      "fs/smb/client/cifsfs.c",
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/file.c",
-      "fs/smb/client/inode.c",
-      "fs/smb/client/readdir.c",
-      "fs/smb/client/smb2ops.c",
-      "fs/smb/client/smb2pdu.c",
-      "include/linux/netfs.h"
-    ],
-    "prerequisites": [
-      "cac2f8b8d8b5 fs: rename current get acl method",
-      "6cd4d4e8b6e1 9p: implement get acl method",
-      "079da629383e 9p: implement set acl method",
-      "6e0149a55379 9p/fs: Remove unneeded idr.h #include",
-      "8669247524c7 fscache,cachefiles: add prepare_ondemand_read() callback",
-      "b3d3ca556757 afs: remove afs_cache_netfs and afs_zap_permits() declarations",
-      "a9eb558a5bea afs: Stop implementing ->writepage()",
-      "5970e15dbcfe filelock: move file locking definitions to separate header file",
-      "c1632a0f1120 fs: port ->setattr() to pass mnt_idmap",
-      "b74d24f7a74f fs: port ->getattr() to pass mnt_idmap",
-      "6c960e68aaed fs: port ->create() to pass mnt_idmap",
-      "7a77db95511c fs: port ->symlink() to pass mnt_idmap",
-      "c54bd91e9eab fs: port ->mkdir() to pass mnt_idmap",
-      "5ebb29bee8d5 fs: port ->mknod() to pass mnt_idmap",
-      "e18275ae55e0 fs: port ->rename() to pass mnt_idmap"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8288,105 +7220,6 @@
       "b089c415e0a9 wifi: iwlwifi: stop supporting iwl_omi_send_status_notif ver 1",
       "4b0dccdd8150 wifi: iwlwifi: Remove support for rx OMI bandwidth reduction",
       "170db5f87385 wifi: iwlwifi: mld: use spec link id and not FW link id"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-97499"
-    ],
-    "kev": false,
-    "upstream": "f37bc31447c0ddafedb25e3c4a4f4e2284034247",
-    "subject": "coresight: perf: Retrieve path and source from event data",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/hwtracing/coresight/coresight-core.c",
-      "drivers/hwtracing/coresight/coresight-etm-perf.c",
-      "drivers/hwtracing/coresight/coresight-priv.h"
-    ],
-    "prerequisites": [
-      "bdeb62a386be coresight: Remove obsolete Trace ID unniqueness checks",
-      "4ff1fdb4125c coresight: perf: traceid: Add perf ID allocation and notifiers",
-      "aa19bb4c3583 coresight: events: PERF_RECORD_AUX_OUTPUT_HW_ID used for Trace ID",
-      "5c0016d7b343 coresight: core: Use IDR for non-cpu bound sources' paths.",
-      "b3c71626a933 Coresight: Add coresight TPDM source driver",
-      "0c507af711df coresight: Fix uninitialised variable use in coresight_disable",
-      "a646ca099b18 coresight: perf: Output trace id only once",
-      "04ac7f98b921 coresight: perf: Release Coresight path when alloc trace id failed",
-      "9fa3682869d4 coresight: Use enum type for cs_mode wherever possible",
-      "704faaf4e33c coresight: Change name of pdata->conns",
-      "81d0ea763d8a coresight: Rename nr_outports to nr_outconns",
-      "d49c9cf15f89 coresight: Rename connection members to make the direction explicit",
-      "3d4ff657e454 coresight: Dynamically add connections",
-      "4e8fe7e5c3a5 coresight: Store pointers to connections rather than an array of them",
-      "102162dbac89 coresight: Simplify connection fixup mechanism"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-97496"
-    ],
-    "kev": false,
-    "upstream": "7ef144458f48d5589e36f1b3d83e83db2e5c5ba5",
-    "subject": "drm/amdkfd: Fix OOB memory exposure in get_wave_state()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c"
-    ],
-    "prerequisites": [
-      "e5a6702e5136 drm/amdkfd: Set TG_CHUNK_SIZE for GC 9.4.3",
-      "836887714008 drm/amdkfd: Enable HW_UPDATE_RPTR on GC 9.4.3",
-      "8dc1db3172ae drm/amdkfd: Introduce kfd_node struct (v5)",
-      "2f77b9a242a2 drm/amdkfd: Update MQD management on multi XCC setup",
-      "3c8bdb51be0e drm/amdkfd: Add PM4 target XCC",
-      "e2069a7b0880 drm/amdkfd: Add XCC instance to kgd2kfd interface (v3)",
-      "7fe51e6fd236 drm/amdkfd: Update context save handling for multi XCC setup (v2)",
-      "1526ec9a3ed9 drm/amdkfd: EOP Removal - Handle size 0 correctly",
-      "c2d43918a14f drm/amdkfd: Setup current_logical_xcc_id in MQD",
-      "c4050ff1a43e drm/amdkfd: Use xcc mask for identifying xcc",
-      "4504f14338cd drm/amdgpu: setup hw debug registers on driver initialization",
-      "69a8c3ae2dea drm/amdkfd: apply trap workaround for gfx11",
-      "a70a93fa568b drm/amdkfd: add debug suspend and resume process queues operation",
-      "9041b53a59d7 drm/amdkfd: Use KIQ to unmap HIQ",
-      "fc6efed2c728 drm/amdkfd: Update CU masking for GFX 9.4.3"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98914"
-    ],
-    "kev": false,
-    "upstream": "27ef1795bc4e47cae838e0a3ced531c549f9b23d",
-    "subject": "drm/amdgpu: cap ATOM command table nesting depth",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/amdgpu/atom.c",
-      "drivers/gpu/drm/amd/amdgpu/atom.h"
-    ],
-    "prerequisites": [
-      "adf64e214280 drm/amd: Avoid reading the VBIOS part number twice",
-      "d0d692805830 drm/amdgpu: Fix identifier names to function definition arguments in atom.h",
-      "24f60ddc4b55 drm/amdgpu: Fix vbios version string search",
-      "8e317a811f3d drm/amdgpu: Remove unreachable code in 'atom_skip_src_int()'",
-      "4630d5031cd8 drm/amdgpu: check PS, WS index",
-      "7bfd16d0ec37 drm/amdgpu: initialize the last_jump_jiffies in atom_exec_context",
-      "27b500b77b82 drm/amdgpu: remove dead code in atom_get_src_int",
-      "5f60d5f6bbc1 move asm/unaligned.h to linux/unaligned.h",
-      "e5f7e4e0a445 drm/amdgpu/atom: Work around vbios NULL offset false positive",
-      "d6fa80266178 drm/amdgpu: Add vbios build number interface",
-      "b29c22b8dafd drm/amdgpu: Fix vbios build number parsing logic",
-      "e6c7ebeaba40 drm/amd: Add correct prefix for VBIOS message",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "4fd7b724a87a drm/amdgpu: Print full vbios info"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -12011,40 +10844,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-98401"
-    ],
-    "kev": false,
-    "upstream": "28a57fb2c5df4deb42a06e52fd36c14b37aa0034",
-    "subject": "net: iptunnel: fix stale transport header during tunnel decapsulation",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/gtp.c",
-      "include/linux/skbuff.h",
-      "net/core/gro_cells.c"
-    ],
-    "prerequisites": [
-      "4727bab4e9bb net: skb: move skb_pp_recycle() to skbuff.c",
-      "354259fa73e2 net: remove skb->vlan_present",
-      "ce098da1497c skbuff: Introduce slab_build_skb()",
-      "9a859da28787 net: skbuff: drop the linux/net.h include",
-      "2195e2a024ae net: skbuff: drop the linux/textsearch.h include",
-      "9ac849f2c492 net: skbuff: drop the linux/sched/clock.h include",
-      "422164224e32 net: skbuff: drop the linux/sched.h include",
-      "5255c0ca7983 net: skbuff: drop the linux/splice.h include",
-      "9dd0db2b1303 net: skbuff: drop the linux/hrtimer.h include",
-      "9dde0cd3b10f net: introduce skb_poison_list and use in kfree_skb_list",
-      "025a785ff083 net: skbuff: drop the word head from skb cache",
-      "80cd22c35c90 net/sched: cls_api: Support hardware miss to tc action",
-      "10369080454d net: reclaim skb->scm_io_uring bit",
-      "2c854e5fcd7e net: page_pool, skbuff: make skb_mark_for_recycle() always available",
-      "04aae213e719 net: skbuff: rename __pkt_vlan_present_offset to __mono_tc_offset"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-98127"
     ],
     "kev": false,
@@ -14915,38 +13714,6 @@
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98271"
-    ],
-    "kev": false,
-    "upstream": "a5117e1eccac6ee3bd4aed7cacf8ebcb6b3eb309",
-    "subject": "net: skbuff: do not leave stale header offsets after pskb_carve()",
-    "verdict": "needs-backport",
-    "files": [
-      "net/core/skbuff.c"
-    ],
-    "prerequisites": [
-      "4727bab4e9bb net: skb: move skb_pp_recycle() to skbuff.c",
-      "0e84afe8ebfb net: dropreason: add SKB_CONSUMED reason",
-      "511a3eda2f8d net: dropreason: propagate drop_reason to skb_release_data()",
-      "d57a3a151660 rxrpc: Save last ACK's SACK table rather than marking txbufs",
-      "57fc05e8e82d net: mm_account_pinned_pages() optimization",
-      "ce098da1497c skbuff: Introduce slab_build_skb()",
-      "12c1604ae1a3 net: skb: remove old comments about frag_size for build_skb()",
-      "a4650da2a2d6 net: fix call location in kfree_skb_list_reason",
-      "eedade12f4cb net: kfree_skb_list use kmem_cache_free_bulk",
-      "f72ff8b81ebc net: fix kfree_skb_list use of skb_mark_not_on_list",
-      "2195e2a024ae net: skbuff: drop the linux/textsearch.h include",
-      "9dde0cd3b10f net: introduce skb_poison_list and use in kfree_skb_list",
-      "bf9f1baa279f net: add dedicated kmem_cache for typical/small skb->head",
-      "0b34d68049b0 net: enable usercopy for skb_small_head_cache",
-      "025a785ff083 net: skbuff: drop the word head from skb cache"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## net/core/skbuff.c\nnet/core/skbuff.c:6249:9: error: implicit declaration of function \u2018skb_unset_transport_header\u2019; did you mean \u2018skb_set_transport_header\u2019? [-Wimplicit-function-declaration]"
   },
   {
     "series": "6.1",

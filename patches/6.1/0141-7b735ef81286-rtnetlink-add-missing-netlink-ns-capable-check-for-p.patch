@@ -1,0 +1,67 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 7b735ef81286007794a227ce2539419479c02a5f
+X-Fasttrack-CVE: CVE-2026-31692
+X-Fasttrack-Backport: cve/CVE-2026-31692/6.1
+From: Nikolaos Gkarlis <nickgarlis@gmail.com>
+Date: Sun, 1 Nov 2026 03:28:20 +0100
+Subject: [PATCH] rtnetlink: add missing netlink_ns_capable() check for peer
+ netns
+
+commit 7b735ef81286007794a227ce2539419479c02a5f upstream.
+
+[ Backport: 6.1 has no rtnl_get_peer_net() or ops->peer_type. veth and vxcan look up the peer netns in ->newlink(). Add the CAP_NET_ADMIN check there, after rtnl_link_get_net(). ]
+[ Backport: ->newlink() has no skb, so use ns_capable(). RTM_NEWLINK runs in the sender's context. ]
+[ Backport: 6.1 has no netkit. ]
+
+rtnl_newlink() lacks a CAP_NET_ADMIN capability check on the peer
+network namespace when creating paired devices (veth, vxcan,
+netkit). This allows an unprivileged user with a user namespace
+to create interfaces in arbitrary network namespaces, including
+init_net.
+
+Add a netlink_ns_capable() check for CAP_NET_ADMIN in the peer
+namespace before allowing device creation to proceed.
+
+Fixes: 81adee47dfb6 ("net: Support specifying the network namespace upon device creation.")
+Signed-off-by: Nikolaos Gkarlis <nickgarlis@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260402181432.4126920-1-nickgarlis@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ drivers/net/can/vxcan.c | 5 +++++
+ drivers/net/veth.c      | 5 +++++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/drivers/net/can/vxcan.c b/drivers/net/can/vxcan.c
+index 98c669ad5141..da4affff6547 100644
+--- a/drivers/net/can/vxcan.c
++++ b/drivers/net/can/vxcan.c
+@@ -211,6 +211,11 @@ static int vxcan_newlink(struct net *net, struct net_device *dev,
+ 	if (IS_ERR(peer_net))
+ 		return PTR_ERR(peer_net);
+ 
++	if (!ns_capable(peer_net->user_ns, CAP_NET_ADMIN)) {
++		put_net(peer_net);
++		return -EPERM;
++	}
++
+ 	peer = rtnl_create_link(peer_net, ifname, name_assign_type,
+ 				&vxcan_link_ops, tbp, extack);
+ 	if (IS_ERR(peer)) {
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 2eef96cfd279..424916373c09 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1723,6 +1723,11 @@ static int veth_newlink(struct net *src_net, struct net_device *dev,
+ 	if (IS_ERR(net))
+ 		return PTR_ERR(net);
+ 
++	if (!ns_capable(net->user_ns, CAP_NET_ADMIN)) {
++		put_net(net);
++		return -EPERM;
++	}
++
+ 	peer = rtnl_create_link(net, ifname, name_assign_type,
+ 				&veth_link_ops, tbp, extack);
+ 	if (IS_ERR(peer)) {
