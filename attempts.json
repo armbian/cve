@@ -2192,12 +2192,30 @@
     }
   },
   "CVE-2026-74639": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 has no us144mkii driver.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "us144mkii driver not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-74642": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "sound/usb/midi2.c and include/sound/ump.h do not exist in 6.1.",
       "run": null
     }
   },
@@ -2297,6 +2315,14 @@
     }
   },
   "CVE-2026-89610": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1.y removed fs/ntfs (b06b4fc2138d).",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -2316,6 +2342,14 @@
     }
   },
   "CVE-2026-89611": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1.y removed fs/ntfs (b06b4fc2138d).",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -2430,6 +2464,14 @@
     }
   },
   "CVE-2026-90098": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "Needs the ndo_set_rx_mode_async core (db9e726525e4, 3554b4345d85).",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -2457,6 +2499,14 @@
     }
   },
   "CVE-2026-90237": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "Needs refcounted dynamic conntrack helpers (6031487d4e27, ac46f3f35b6e).",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -2573,6 +2623,26 @@
       "run": null
     }
   },
+  "CVE-2026-93235": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "Needs four f2fs prerequisites absent from 6.1 (ba8dac350faf, 0b2cd5092139, c2f7c32b2540, b2205d3cfd6c).",
+      "run": null
+    }
+  },
+  "CVE-2026-93238": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "drivers/s390/crypto/vfio_ap_ops.c: vfio_ap_mdev_hot_plug_cfg() in 6.1 has no apm_filtered bitmap.",
+      "run": null
+    }
+  },
   "CVE-2026-93270": {
     "6.18": {
       "cost": 1.1788674000000001,
@@ -2597,6 +2667,26 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-97950": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 get_target() keeps the path pinned through create_link(); needs 1b25dea3867a.",
+      "run": null
+    }
+  },
+  "CVE-2026-98067": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The upstream fix disables LZ4 rolling decompression, an existing feature.",
       "run": null
     }
   },
@@ -2752,6 +2842,26 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98365": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 mr_check_range() already uses an overflow-safe check.",
+      "run": null
+    }
+  },
+  "CVE-2026-98401": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "patches/6.1 already has upstream 28a57fb2c5df (CVE-2026-53091).",
       "run": null
     }
   },
@@ -3201,6 +3311,14 @@
     }
   },
   "CVE-2026-99101": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1.y removed fs/ntfs (b06b4fc2138d).",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
