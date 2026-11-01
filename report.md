@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 17 patch(es)
+- added 6.12: 33 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -160,7 +160,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (104)
+### Included (137)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -193,6 +193,7 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-46279 | `6b1842775a46` | stable-list | mm/alloc_tag: clear codetag for pages allocated before page_ext initialization |
 |  | CVE-2026-52953 | `a6dea58d8625` | stable-list | iommu/vt-d: Fix oops due to out of scope access |
 |  | CVE-2026-80670 | `5484b43a0ec8` | stable-list | perf tools: Use perf_env__get_cpu_topology() in machine__resolve() |
+|  | CVE-2026-98924 | `7459c0218742` | stable-list | fs: avoid repeated scans in evict_inodes() |
 |  | CVE-2026-99122 | `ad9a7da3fa39` | stable-list | vsock/vmci: validate packet source for connected sockets |
 |  | CVE-2025-40025 | `c18ecd99e0c7` | claude | f2fs: fix to do sanity check on node footer for non inode dnode |
 |  | CVE-2025-71117 | `935a20d1bebf` | claude | block: Remove queue freezing from several sysfs store callbacks |
@@ -249,11 +250,17 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-98815 | `9952f3882ecb` | claude | nvme: fix cdev lifetime |
 |  | CVE-2026-93047 | `fa98563ab00d` | claude | drm/v3d: Associate BOs with every job that accesses them |
 |  | CVE-2026-92518 | `52fb1756ea1d` | claude | riscv, bpf: Fix kernel stack corruption in tailcall with CFI |
+|  | CVE-2026-92500 | `7edbb323bab2` | claude | ext4: use fsdata to track inline data write state and fix race |
 |  | CVE-2026-92493 | `8d31bb145164` | claude | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
+|  | CVE-2026-74560 | `a3c8382ebce4` | claude | xsk: fix buffer leak in xsk_drop_skb() for AF_XDP multi-buffer Tx |
 |  | CVE-2026-90379 | `915672c5ae32` | claude | wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash |
 |  | CVE-2026-93276 | `49c9b71b4508` | claude | phy: renesas: phy-rcar-gen3-usb2: Fix devm action registration for disabled VBUS regulator |
+|  | CVE-2026-90261 | `ecc05eda9a34` | claude | btrfs: zoned: flush active metadata block group at btree_writepages() start |
 |  | CVE-2026-89935 | `d378fceaafd7` | claude | iio: light: apds9306: fix PM reference leak in apds9306_read_data() |
 |  | CVE-2026-80785 | `061db6b7a910` | claude | fbdev: serialize mode sysfs access with lock_fb_info() |
+|  | CVE-2026-89637 | `730d0bb19507` | claude | smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2 |
+|  | CVE-2026-81010 | `14572de82e50` | claude | io_uring/waitid: honor task_work cancellation |
+|  | CVE-2026-98125 | `01261a6fa48b` | claude | smb/client: fix stale page cache in insert/collapse range |
 |  | CVE-2026-98674 | `549b71ce0506` | claude | iio: adc: adi-axi-adc: Initialize state mutex |
 |  | CVE-2026-90317 | `180c7000712d` | claude | bpf: Invalidate RCU pointers after final spin unlock |
 |  | CVE-2026-90315 | `747b9bbbbdfd` | claude | PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers |
@@ -261,15 +268,41 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-93270 | `7a0855e73757` | claude | bpf: Disallow interpreter fallback for BPF_ADDR_PERCPU insn |
 |  | CVE-2026-98115 | `d12168084c8c` | claude | ksmbd: safely drain sessions during logoff |
 |  | CVE-2026-99076 | `ac76cab50e89` | claude | ipv6: udp: Create exceptions before socket matching |
+|  | CVE-2026-98087 | `dae5c0292080` | claude | sched/rt,dl: Skip migrate-disabled tasks when picking a push candidate |
+|  | CVE-2026-98353 | `00baeade709f` | claude | RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables |
+|  | CVE-2026-97565 | `e6142a8bfc23` | claude | smb: client: reject short READ responses in CIFSSMBRead() |
+|  | CVE-2026-98341 | `dab68a74e90b` | claude | wifi: cfg80211: don't free driver-owned scan requests |
+|  | CVE-2026-98338 | `708f9d43d6a2` | claude | wifi: cfg80211: ibss: ref BSS entry for joined event |
+|  | CVE-2026-98333 | `78183e833195` | claude | wifi: mac80211: reset the LED state when ifup fails |
+|  | CVE-2026-98330 | `4635b1a1c1d6` | claude | wifi: cfg80211: get the wiphy out of a dying network namespace |
+|  | CVE-2026-98180 | `01c8d1f385f7` | claude | drm/msm: RCU-free the scheduler-containing ring and VM objects |
 |  | CVE-2026-98317 | `6d79b223ec44` | claude | neighbour: Enforce min/max to NDTPA_INTERVAL_PROBE_TIME_MS. |
+|  | CVE-2026-98313 | `e249a6e2a130` | claude | drm/msm/dp: skip PUSH_IDLE when the link was never enabled |
+|  | CVE-2026-98304 | `23ca4ddc4fce` | claude | net: bcmgenet: restore the hardware filters on open |
+|  | CVE-2026-98294 | `4e93c65f8782` | claude | Bluetooth: hci_qca: Do not write to the serial port after it is closed |
 |  | CVE-2026-98289 | `4a4263dfeaba` | claude | af_unix: Unify scc_index when finalising SCC in __unix_walk_scc(). |
+|  | CVE-2026-98288 | `15989abd74f1` | claude | net: stmmac: fix TSO header length truncation |
 |  | CVE-2026-98286 | `c391a40f7188` | claude | drop_monitor: use timer_shutdown_sync() to prevent timer rearming during teardown |
 |  | CVE-2026-98284 | `ceac0de741bf` | claude | netlink: do not free nlk->groups while lockless readers can use it |
+|  | CVE-2026-98279 | `76bf149cd029` | claude | btrfs: handle lack of space when cleaning up verity items |
 |  | CVE-2026-98427 | `7f4a5ec6258f` | claude | net/sched: codel: bound the dropping loop per dequeue call |
+|  | CVE-2026-98277 | `490599ab2313` | claude | eth: fbnic: ring the doorbell if a burst ends in a drop |
+|  | CVE-2026-98408 | `6274281c41ef` | claude | watchdog: rzv2h: Avoid division by zero |
+|  | CVE-2026-98273 | `a5f7a5bb3b7f` | claude | x86/kprobes: Fix crash when probing CS CALL instructions |
+|  | CVE-2026-98176 | `c883d0a132d4` | claude | drm/amdkfd: Avoid integer underflow with ffs in EOP ring size calc |
+|  | CVE-2026-98177 | `8ee521b8b189` | claude | drm/amdkfd: Avoid integer underflow in EOP ring size calculation. |
+|  | CVE-2026-98628 | `261b61d3735b` | claude | bpf: Make post-verification instruction rewrites killable |
+|  | CVE-2026-98449 | `8f6f8a48399f` | claude | smb: client: delete compound mids on send failure before unlock |
+|  | CVE-2026-98829 | `5e4f3509793b` | claude | wifi: mac80211: drop oversized fragments to avoid extra_len overflow |
+|  | CVE-2026-98599 | `79a9172f3ab4` | claude | bpf: Reject non-negative offsets in stack_slot_obj_get_spi() |
 |  | CVE-2026-98598 | `0346ec2f080b` | claude | ipv6: Prevent rt6_insert_exception() for dying fib6_info. |
+|  | CVE-2026-98863 | `10180a277549` | claude | KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails |
+|  | CVE-2026-98589 | `a6c1edfbe240` | claude | bpf: Reject pkt arguments in mutating subprogs |
+|  | CVE-2026-99109 | `4aa2c106aef4` | claude | smb: client: reject SetEA requests that do not fit the request buffer |
 |  | CVE-2026-98420 | `d7fd1f98607f` | claude | ksmbd: follow SMB2 session expiration semantics |
+|  | CVE-2026-98424 | `a41bd1938a9b` | claude | wifi: cfg80211: undo netns switch if renaming the wiphy fails |
 
-### Needs a backport (88)
+### Needs a backport (55)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -278,45 +311,12 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
-|  | CVE-2026-92500 | `7edbb323bab2` | mainline | ext4: use fsdata to track inline data write state and fix race |
-|  | CVE-2026-74560 | `a3c8382ebce4` | mainline | xsk: fix buffer leak in xsk_drop_skb() for AF_XDP multi-buffer Tx |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
-|  | CVE-2026-90261 | `ecc05eda9a34` | mainline | btrfs: zoned: flush active metadata block group at btree_writepages() start |
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
-|  | CVE-2026-89637 | `730d0bb19507` | mainline | smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2 |
-|  | CVE-2026-81010 | `14572de82e50` | mainline | io_uring/waitid: honor task_work cancellation |
-|  | CVE-2026-98125 | `01261a6fa48b` | mainline | smb/client: fix stale page cache in insert/collapse range |
-| does not build | CVE-2026-99109 | `4aa2c106aef4` | mainline | smb: client: reject SetEA requests that do not fit the request buffer |
-|  | CVE-2026-98087 | `dae5c0292080` | mainline | sched/rt,dl: Skip migrate-disabled tasks when picking a push candidate |
-|  | CVE-2026-98353 | `00baeade709f` | mainline | RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables |
-| does not build | CVE-2026-97565 | `e6142a8bfc23` | mainline | smb: client: reject short READ responses in CIFSSMBRead() |
 |  | CVE-2026-97563 | `5be5bdda5863` | mainline | smb: client: reject out-of-bounds DataOffset in CIFSSMBRead() |
-|  | CVE-2026-98341 | `dab68a74e90b` | mainline | wifi: cfg80211: don't free driver-owned scan requests |
-|  | CVE-2026-98338 | `708f9d43d6a2` | mainline | wifi: cfg80211: ibss: ref BSS entry for joined event |
-|  | CVE-2026-98333 | `78183e833195` | mainline | wifi: mac80211: reset the LED state when ifup fails |
-|  | CVE-2026-98330 | `4635b1a1c1d6` | mainline | wifi: cfg80211: get the wiphy out of a dying network namespace |
-|  | CVE-2026-98424 | `a41bd1938a9b` | mainline | wifi: cfg80211: undo netns switch if renaming the wiphy fails |
-|  | CVE-2026-98180 | `01c8d1f385f7` | mainline | drm/msm: RCU-free the scheduler-containing ring and VM objects |
-|  | CVE-2026-98313 | `e249a6e2a130` | mainline | drm/msm/dp: skip PUSH_IDLE when the link was never enabled |
-|  | CVE-2026-98304 | `23ca4ddc4fce` | mainline | net: bcmgenet: restore the hardware filters on open |
 |  | CVE-2026-98296 | `4b837ebd0ea2` | mainline | Bluetooth: btintel_pcie: validate TX skb length in send_sync |
-|  | CVE-2026-98294 | `4e93c65f8782` | mainline | Bluetooth: hci_qca: Do not write to the serial port after it is closed |
-|  | CVE-2026-98288 | `15989abd74f1` | mainline | net: stmmac: fix TSO header length truncation |
-|  | CVE-2026-98279 | `76bf149cd029` | mainline | btrfs: handle lack of space when cleaning up verity items |
-|  | CVE-2026-98277 | `490599ab2313` | mainline | eth: fbnic: ring the doorbell if a burst ends in a drop |
-|  | CVE-2026-98408 | `6274281c41ef` | mainline | watchdog: rzv2h: Avoid division by zero |
-|  | CVE-2026-98273 | `a5f7a5bb3b7f` | mainline | x86/kprobes: Fix crash when probing CS CALL instructions |
-|  | CVE-2026-98924 | `7459c0218742` | mainline | fs: avoid repeated scans in evict_inodes() |
-|  | CVE-2026-98176 | `c883d0a132d4` | mainline | drm/amdkfd: Avoid integer underflow with ffs in EOP ring size calc |
-|  | CVE-2026-98177 | `8ee521b8b189` | mainline | drm/amdkfd: Avoid integer underflow in EOP ring size calculation. |
-|  | CVE-2026-98628 | `261b61d3735b` | mainline | bpf: Make post-verification instruction rewrites killable |
 |  | CVE-2026-98616 | `4bcc4a92c603` | mainline | eth: fbnic: reset num_napi when the napi vectors are freed |
-| does not build | CVE-2026-98449 | `8f6f8a48399f` | mainline | smb: client: delete compound mids on send failure before unlock |
-|  | CVE-2026-98829 | `5e4f3509793b` | mainline | wifi: mac80211: drop oversized fragments to avoid extra_len overflow |
-|  | CVE-2026-98599 | `79a9172f3ab4` | mainline | bpf: Reject non-negative offsets in stack_slot_obj_get_spi() |
-|  | CVE-2026-98863 | `10180a277549` | mainline | KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails |
-|  | CVE-2026-98589 | `a6c1edfbe240` | mainline | bpf: Reject pkt arguments in mutating subprogs |
 |  | CVE-2026-98551 | `24b620729e53` | mainline | perf/core: Fill branch entries with a single assignment |
 |  | CVE-2026-98747 | `499485a67fba` | mainline | serial: core: fix NULL pointer dereference in serial_core_unregister_port() |
 |  | CVE-2026-98820 | `ab6c756f28c7` | mainline | blk-mq: set RQF_USE_SCHED when the operation is known |
@@ -361,6 +361,12 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-99172 | `f0e48172a59e` | mainline | ipc: drop the mqueue mount with kern_unmount() on setup failure |
 |  | CVE-2026-99189 | `38d44f78f041` | mainline | gpio: mxc: fix race between chained IRQ handler install and probe completion |
 |  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
+
+### cve/ backport does not apply on this base (1)
+
+| | CVE | Upstream | Source | Subject |
+|---|---|---|---|---|
+|  | CVE-2026-97563 | `5be5bdda5863` | claude | smb: client: reject out-of-bounds DataOffset in CIFSSMBRead() |
 
 ### Not affected per work package (needs review) (51)
 

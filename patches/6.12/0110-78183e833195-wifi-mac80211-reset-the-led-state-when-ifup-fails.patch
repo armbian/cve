@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 78183e8331958fda11cd2b6850bb424a9747c4b2
+X-Fasttrack-CVE: CVE-2026-98333
+X-Fasttrack-Backport: cve/CVE-2026-98333/6.12
+From: Johannes Berg <johannes.berg@intel.com>
+Date: Sat, 31 Oct 2026 23:54:39 +0100
+Subject: [PATCH] wifi: mac80211: reset the LED state when ifup fails
+
+commit 78183e8331958fda11cd2b6850bb424a9747c4b2 upstream.
+
+[ Backport: context only; 6.12 has no NAN_DATA handling after err_stop. ]
+
+When the first interface comes up, the radio LED is turned on. This can
+start the TPT trigger timer, which continues running.
+
+But if bringing up the interface fails then the timer keeps running and
+won't be stopped by anything, eventually it can be freed.
+
+Undo the LED state in the error path.
+
+Assisted-by: LLM
+Fixes: 67408c8c7b9d ("mac80211: selective throughput LED trigger active")
+Reported-by: syzbot+e84ecca6d1fa09a9b3d9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e84ecca6d1fa09a9b3d9
+Link: https://patch.msgid.link/20260904165722.044aa432f873.I601a67a2cd558b8ef8416a07554ae7efe896e9d8@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+---
+ net/mac80211/iface.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 645bb97de2ca..05fc3e37085c 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -1555,8 +1555,12 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
+  err_del_interface:
+ 	drv_remove_interface(local, sdata);
+  err_stop:
+-	if (!local->open_count)
++	if (!local->open_count) {
++		ieee80211_led_radio(local, false);
++		ieee80211_mod_tpt_led_trig(local, 0,
++					   IEEE80211_TPT_LEDTRIG_FL_RADIO);
+ 		drv_stop(local, false);
++	}
+  err_del_bss:
+ 	sdata->bss = NULL;
+ 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
