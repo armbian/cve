@@ -409,6 +409,16 @@
       "run": null
     }
   },
+  "CVE-2024-54191": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no iso_conn_big_sync() or PA/BIG sync path in 6.1",
+      "run": null
+    }
+  },
   "CVE-2024-56591": {
     "6.1": {
       "cost": null,
@@ -416,6 +426,46 @@
       "head": "6.1.191",
       "outcome": "unpatched",
       "reason": "needs disable_delayed_work_sync() (6.10 workqueue series)",
+      "run": null
+    }
+  },
+  "CVE-2024-56775": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "restore_planes_and_stream_state() not in 6.1 dc.c",
+      "run": null
+    }
+  },
+  "CVE-2024-57872": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "stable d06eb2620d3b frees the host via devres",
+      "run": null
+    }
+  },
+  "CVE-2024-57935": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "hr_qp->dip (faa62440a577) not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-57984": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no i3c hj_work (1d08326020fb) in 6.1",
       "run": null
     }
   },
@@ -429,6 +479,46 @@
       "run": null
     }
   },
+  "CVE-2024-58053": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 completion wakes calls; no poke model",
+      "run": null
+    }
+  },
+  "CVE-2024-58100": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "needs the full changes_pkt_data series across all JITs",
+      "run": null
+    }
+  },
+  "CVE-2025-21634": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "stable 2d6a67c2b3b8 removes the WARN; upstream change needs sync hotplug",
+      "run": null
+    }
+  },
+  "CVE-2025-21679": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "get_canonical_dev_path() (7e06de7c83a7) not in 6.1",
+      "run": null
+    }
+  },
   "CVE-2025-21752": {
     "6.12": {
       "cost": null,
@@ -439,7 +529,125 @@
       "run": null
     }
   },
+  "CVE-2025-21836": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "judgment: every buffer-list reader holds uring_lock; no mmap/RCU readers",
+      "run": null
+    }
+  },
+  "CVE-2025-21923": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 steam_remove() destroys client_hdev before cancelling work",
+      "run": null
+    }
+  },
+  "CVE-2025-21942": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 cow_file_range() -EAGAIN path unlocks the range",
+      "run": null
+    }
+  },
+  "CVE-2025-21985": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no dc/dml2 in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2025-22006": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 adds NAPI before requesting IRQs; 681eb2beb3ef absent",
+      "run": null
+    }
+  },
+  "CVE-2025-22028": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no call_s_stream() WARN; vimc stop handles a never-started subdev",
+      "run": null
+    }
+  },
+  "CVE-2025-22043": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no ksmbd durable handles in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2025-37802": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "ksmbd durable scavenger (d484d621d40f) not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2025-37878": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no pmu_ctx in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2025-37965": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no dc/dml2 in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2025-38014": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "upstream reverted the put_device(); applying it adds a double put",
+      "run": null
+    }
+  },
   "CVE-2025-38017": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "0a65bc27bd64 missing; no ep_schedule_timeout()",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -459,6 +667,56 @@
       "run": null
     }
   },
+  "CVE-2025-38038": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 set_boost takes no amd_pstate_driver_lock",
+      "run": null
+    }
+  },
+  "CVE-2025-38080": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no block_sequence / hwss_build_fast_sequence in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2025-38092": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "list_first_or_null_rcu() already returns NULL on empty list",
+      "run": null
+    }
+  },
+  "CVE-2025-38099": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "READ_VOICE_SETTING quirk (ff26b2dd6568) not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2025-38140": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no zone write plugs in 6.1",
+      "run": null
+    }
+  },
   "CVE-2025-38311": {
     "6.12": {
       "cost": null,
@@ -469,7 +727,45 @@
       "run": null
     }
   },
+  "CVE-2025-38333": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "needs get_new_segment() error propagation (245930617c9b, 7d009e048d7c, f9e28904e644)",
+      "run": null
+    }
+  },
+  "CVE-2025-38369": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "idxd event log drain not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2025-38379": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "42ca547b13a2 absent; smb2_reconnect() never queues query_interfaces",
+      "run": null
+    }
+  },
   "CVE-2025-38411": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no netfs misc.c or netfs_collect_in_app() in 6.1",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -479,7 +775,35 @@
       "run": null
     }
   },
+  "CVE-2025-38438": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "remove_file_ext() absent; fixup_tplg_name() frees its buffer",
+      "run": null
+    }
+  },
+  "CVE-2025-38656": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "start() returns NULL on error; caller treats it as failure",
+      "run": null
+    }
+  },
   "CVE-2025-39762": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "dc_get_host_router_index() not in 6.1",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
