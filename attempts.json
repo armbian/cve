@@ -1156,6 +1156,16 @@
       "run": null
     }
   },
+  "CVE-2026-98296": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "stable 3d6ba6be9bef already checks the length in the only caller",
+      "run": null
+    }
+  },
   "CVE-2026-98318": {
     "6.18": {
       "cost": 0.4916989,
@@ -1237,6 +1247,16 @@
       "run": null
     }
   },
+  "CVE-2026-98551": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "BRBE driver (drivers/perf/arm_brbe.c) not in 6.12",
+      "run": null
+    }
+  },
   "CVE-2026-98558": {
     "6.18": {
       "cost": 0.7347380000000001,
@@ -1270,6 +1290,16 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98616": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.12 fbnic uses a napi list; no fbnic_dbg_down()",
       "run": null
     }
   },
@@ -1333,6 +1363,26 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98718": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "93de2a6a4b91 absent; no misordered flush in sev_migrate_from()",
+      "run": null
+    }
+  },
+  "CVE-2026-98719": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "have_run_cpus not in 6.12",
       "run": null
     }
   },
@@ -1435,6 +1485,26 @@
       "run": null
     }
   },
+  "CVE-2026-98839": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.12 checks buf_len > pasted under the lock in the loop",
+      "run": null
+    }
+  },
+  "CVE-2026-98843": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.12 read collector zeroes short-read tails (netfs_clear_unread())",
+      "run": null
+    }
+  },
   "CVE-2026-98869": {
     "6.18": {
       "cost": 2.7726397,
@@ -1483,6 +1553,16 @@
       "run": null
     }
   },
+  "CVE-2026-98939": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "d5d8b8662e6e absent; change_page_attr_set_clr() takes no init_mm lock",
+      "run": null
+    }
+  },
   "CVE-2026-98946": {
     "6.18": {
       "cost": 0.6601173,
@@ -1519,12 +1599,32 @@
       "run": null
     }
   },
+  "CVE-2026-98996": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "unpatched",
+      "reason": "needs the propagate_umount() rewrite series (about 15 commits)",
+      "run": null
+    }
+  },
   "CVE-2026-99076": {
     "6.18": {
       "cost": 0.4968034999999999,
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99093": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.12.115",
+      "outcome": "not-affected-needs-review",
+      "reason": "no deferred kernel page-table freeing (pagetable_free_kernel()) in 6.12",
       "run": null
     }
   },
