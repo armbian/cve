@@ -2442,79 +2442,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-98800"
-    ],
-    "kev": false,
-    "upstream": "0fb5751a6e411b1b466c06e50021818d9391df98",
-    "subject": "bpf: Wait for an RCU tasks grace period before freeing trampoline progs",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/bpf.h",
-      "kernel/bpf/syscall.c",
-      "kernel/bpf/trampoline.c"
-    ],
-    "prerequisites": [
-      "1cb80d9e93f8 bpf: Support __uptr type tag in BTF",
-      "ba512b00e5ef bpf: Add uptr support in the map_value of the task local storage.",
-      "61c6fefa92bb bpf: decouple BPF link/attach hook and BPF program sleepable semantics",
-      "24507ce81eaf bpf: ensure RCU Tasks Trace GP for sleepable raw tracepoint BPF links",
-      "d920179b3d48 bpf: Add support for uprobe multi session attach",
-      "213a695297e1 bpf: Replace the document for PTR_TO_BTF_ID_OR_NULL",
-      "e00931c02568 bpf: Enable private stack for eligible subprogs",
-      "7d1cd70d4b16 bpf, x86: Support private stack in jit",
-      "5bd36da1e37e bpf: Support private stack for struct_ops progs",
-      "7cd1107f48e2 bpf, xdp: constify some bpf_prog * function arguments",
-      "4e885fab7164 bpf: Add a __btf_get_by_fd helper",
-      "4d3ae294f900 bpf: Add fd_array_cnt attribute for prog_load",
-      "4b7e7cd1c105 bpf: Disable migration before calling ops->map_free()",
-      "1751f872cc97 treewide: const qualify ctl_tables where applicable",
-      "432051806f61 bpf: Make every prog keep a copy of ctx_arg_info"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98799"
-    ],
-    "kev": false,
-    "upstream": "17637e1a581a22466ac3620a91e099683ff9cc6f",
-    "subject": "bpf: Skip detached progs in trampoline images that are still in use",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/arm64/net/bpf_jit_comp.c",
-      "arch/loongarch/net/bpf_jit.c",
-      "arch/powerpc/net/bpf_jit_comp.c",
-      "arch/riscv/net/bpf_jit_comp64.c",
-      "arch/s390/net/bpf_jit_comp.c",
-      "arch/x86/net/bpf_jit_comp.c",
-      "include/linux/bpf.h",
-      "kernel/bpf/trampoline.c"
-    ],
-    "prerequisites": [
-      "1cb80d9e93f8 bpf: Support __uptr type tag in BTF",
-      "ba512b00e5ef bpf: Add uptr support in the map_value of the task local storage.",
-      "d243b62b7bd3 powerpc64/bpf: Add support for bpf trampolines",
-      "61c6fefa92bb bpf: decouple BPF link/attach hook and BPF program sleepable semantics",
-      "0c3beacf681e asm-generic: introduce text-patching.h",
-      "213a695297e1 bpf: Replace the document for PTR_TO_BTF_ID_OR_NULL",
-      "e00931c02568 bpf: Enable private stack for eligible subprogs",
-      "7d1cd70d4b16 bpf, x86: Support private stack in jit",
-      "5bd36da1e37e bpf: Support private stack for struct_ops progs",
-      "a1087da9d11e bpf, x86: Propagate tailcall info only for subprogs",
-      "7cd1107f48e2 bpf, xdp: constify some bpf_prog * function arguments",
-      "4e885fab7164 bpf: Add a __btf_get_by_fd helper",
-      "0a5807219a86 bpf, arm64: Simplify if logic in emit_lse_atomic()",
-      "66bb58ac06c2 bpf, arm64: Factor out emit_a64_add_i()",
-      "8c21f88407d2 bpf, arm64: Emit A64_{ADD,SUB}_I when possible in emit_{lse,ll_sc}_atomic()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98843"
     ],
     "kev": false,
@@ -4145,38 +4072,6 @@
       "1d08326020fb i3c: dw: Add hot-join support.",
       "8f2cb0327938 i3c: dw: Fix clearing queue thld",
       "64bf14590806 i3c: dw: Fix IBI intr programming"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2025-21693"
-    ],
-    "kev": false,
-    "upstream": "12dcb0ef540629a281533f9dedc1b6b8e14cfb65",
-    "subject": "mm: zswap: properly synchronize freeing resources during CPU hotunplug",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/zswap.c"
-    ],
-    "prerequisites": [
-      "8d9b63708ddd zswap: do not allocate from atomic pool",
-      "6b3379e8dcbe zswap: fix writeback lock ordering for zsmalloc",
-      "62bf1258ec90 mm/zswap: try to avoid worst-case scenario on same element pages",
-      "7e137102ae97 zswap: remove MODULE_LICENSE in non-modules",
-      "b79191225271 mm/zswap: remove zswap_entry_cache_{create,destroy} helper function",
-      "9021ccec60f2 mm/zswap: replace zswap_init_{started/failed} with zswap_init_state",
-      "141fdeececb3 mm/zswap: delay the initialization of zswap",
-      "e0228d590beb mm: zswap: shrink until can accept",
-      "b9c91c43412f mm: zswap: support exclusive loads",
-      "f999f38b4e6f mm: zswap: add pool shrinking mechanism",
-      "35499e2b79ff mm: zswap: remove shrink from zpool interface",
-      "ff9d5ba202f9 mm: zswap: simplify writeback function",
-      "0bb488498c98 mm: zswap: remove zswap_header",
-      "418fd29d9de5 mm: zswap: invaldiate entry after writeback",
-      "18a937076c69 mm: zswap: fix double invalidate with exclusive loads"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -7321,38 +7216,6 @@
       "526bc5ba19e8 bpf: lru: Remove unused declaration bpf_lru_promote()",
       "d4adf1c9ee77 bpf: Adjust free target to avoid global starvation of LRU map",
       "d87fdb1f27d7 bpf: Replace get_next_cpu() with cpumask_next_wrap()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-53226"
-    ],
-    "kev": false,
-    "upstream": "1c1e0fc88d6ef65bf15d517853251f75ab9d18c3",
-    "subject": "gpio: rockchip: fix generic IRQ chip leak on remove",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpio/gpio-rockchip.c"
-    ],
-    "prerequisites": [
-      "b0047b90db71 gpio: rockchip: Do not mention legacy API in the code",
-      "e91d0f05e66a gpio: Explicitly include correct DT includes",
-      "12305969d7f7 gpio: rockchip: Convert to platform remove callback returning void",
-      "7233d90aead3 gpio: rockchip: use new pinctrl GPIO helpers",
-      "315c46f9b696 treewide: rename pinctrl_gpio_direction_input_new()",
-      "b679d6c06b2b treewide: rename pinctrl_gpio_direction_output_new()",
-      "678eefc1ca5f gpio: Switch back to struct platform_driver::remove()",
-      "c6789170ddef gpio: Use of_property_present() for non-boolean properties",
-      "591ae6bed250 gpio: rockchip: explan the format of the GPIO version ID",
-      "41209307cad7 gpio: rockchip: change the GPIO version judgment logic",
-      "8bcbd0379c05 gpio: rockchip: support new version GPIO",
-      "9cf19f061ccc gpio: Switch to irq_domain_create_*()",
-      "7b2c2f1eb391 gpio: Use dev_fwnode() where applicable across drivers",
-      "6731ad96e877 gpio: rockchip: use new GPIO line value setter callbacks",
-      "d9d87d90cc0b treewide: rename GPIO set callbacks back to their original names"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
