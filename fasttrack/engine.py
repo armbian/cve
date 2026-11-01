@@ -185,6 +185,8 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
             for i, err in bad.items():
                 rejected[id(accepted[i])] = err
                 log.info("%s %s: applies but does not build", accepted[i].series, accepted[i].upstream[:12])
+            # A rejected patch can be what kept a backport set from applying: try every set again.
+            broken.clear()
             gitutil.git(wt.path, "reset", "--quiet", "--hard", ref)
         # A mainline fix that a backport carries is not pending.
         carried = {c.upstream for c in candidates if c.backport and c.verdict == ACCEPTED}
