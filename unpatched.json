@@ -2214,39 +2214,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-97563"
-    ],
-    "kev": false,
-    "upstream": "5be5bdda5863eacc964b609ba927764f253431b3",
-    "subject": "smb: client: reject out-of-bounds DataOffset in CIFSSMBRead()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/trace.h"
-    ],
-    "prerequisites": [
-      "6c9903c330ab cifs: Remove pre-historic unused CIFSSMBCopy",
-      "b2fe4a8fa0f6 smb: client: get rid of @nlsc param in cifs_tree_connect()",
-      "e1481075981d smb: client: allow reconnect when sending ioctl",
-      "4acb665cf4f3 netfs: Work around recursion by abandoning retry if nothing read",
-      "e2d46f2ec332 netfs: Change the read result collector to only use one work item",
-      "b8ed9da102be cifs: support reconnect with alternate password for SMB1",
-      "72cf9e94f32f smb3: add missing tracepoint for querying wsl EAs",
-      "66cb85c441cd cifs: Fix the smb1 readv callback to correctly call netfs",
-      "7643dbd9db09 smb: client: don't retry IO on failed negprotos with soft mounts",
-      "6c06be908ca1 cifs: Check if server supports reparse points before using them",
-      "ad9364a6835c cifs: Fix getting DACL-only xattr system.cifs_acl and system.smb3_acl",
-      "e14b64247438 cifs: Add new mount option -o nounicode to disable SMB1 UNICODE mode",
-      "6aa9f1c9cd09 cifs: Fix access_flags_to_smbopen_mode",
-      "20d72b00ca81 netfs: Fix the request's work item to not require a ref",
-      "90b3ccf51457 netfs: Update tracepoints in a number of ways"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98296"
     ],
     "kev": false,
@@ -5190,40 +5157,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2025-39981"
-    ],
-    "kev": false,
-    "upstream": "302a1f674c00dd5581ab8e493ef44767c5101aab",
-    "subject": "Bluetooth: MGMT: Fix possible UAFs",
-    "verdict": "needs-backport",
-    "files": [
-      "net/bluetooth/mgmt.c",
-      "net/bluetooth/mgmt_util.c",
-      "net/bluetooth/mgmt_util.h"
-    ],
-    "prerequisites": [
-      "8032bf1233a7 treewide: use get_random_u32_below() instead of deprecated function",
-      "e8a533cbeb79 treewide: use get_random_u32_inclusive() when possible",
-      "288c90224eec Bluetooth: Enable all supported LE PHY by default",
-      "ae7533613133 Bluetooth: Check for ISO support in controller",
-      "78db544b5d27 Bluetooth: hci_core: Remove le_restart_scan work",
-      "b14202aff5ac Bluetooth: Add new state HCI_POWERING_DOWN",
-      "eeda1bf97bb5 Bluetooth: hci_event: Fix not indicating new connection for BIG Sync",
-      "bf98feea5b65 Bluetooth: hci_conn: Always use sk_timeo as conn_timeout",
-      "3237da12a388 Bluetooth: mgmt: remove NULL check in mgmt_set_connectable_complete()",
-      "a310d74dce68 Bluetooth: mgmt: remove NULL check in add_ext_adv_params_complete()",
-      "0ece498c27d8 Bluetooth: MGMT: Make MGMT_OP_LOAD_CONN_PARAM update existing connection",
-      "183469bccf68 Bluetooth: MGMT: Uninitialized variable in load_conn_param()",
-      "936daee9cf08 Bluetooth: Remove hci_request.{c,h}",
-      "5f60d5f6bbc1 move asm/unaligned.h to linux/unaligned.h",
-      "827af4787e74 Bluetooth: MGMT: Add initial implementation of MGMT_OP_HCI_CMD_SYNC"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2025-71315"
     ],
     "kev": false,
@@ -7707,22 +7640,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-68086"
-    ],
-    "kev": false,
-    "upstream": "2dfe9f5c91d0963058f8a5e46e1c2a908382cc46",
-    "subject": "mm/khugepaged: write all dirty file folios when collapsing",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/khugepaged.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-93072"
     ],
     "kev": false,
@@ -8312,39 +8229,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-97563"
-    ],
-    "kev": false,
-    "upstream": "5be5bdda5863eacc964b609ba927764f253431b3",
-    "subject": "smb: client: reject out-of-bounds DataOffset in CIFSSMBRead()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/trace.h"
-    ],
-    "prerequisites": [
-      "032137fe136a smb: client: fix warning in CIFSFindFirst()",
-      "215533f888dc smb: client: fix warning in CIFSFindNext()",
-      "61986a58bc6a cifs: new dynamic tracepoint to track ses not found errors",
-      "f1f047bd7ce0 smb: client: Fix -Wstringop-overflow issues",
-      "a43f95fdd394 cifs: fix charset issue in reconnection",
-      "feeec636b6b1 smb3: add trace point for queryfs (statfs)",
-      "e3603ccf4a35 smb3: Add dynamic trace points for RDMA (smbdirect) reconnect",
-      "ed3e0a149b58 smb: client: implement ->query_reparse_point() for SMB1",
-      "102466f303ff smb: client: allow creating special files via reparse points",
-      "67ec9949b0df smb: client: optimise reparse point querying",
-      "7435d51b7ea2 smb: client: fix renaming of reparse points",
-      "5408990aa662 smb: client: fix hardlinking of reparse points",
-      "8a3c4e44c243 cifs: get rid of dup length check in parse_reparse_point()",
-      "a69ce85ec9af filelock: split common fields into struct file_lock_core",
-      "84e286c1bb9b smb/client: adapt to breakup of struct file_lock"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-98067"
     ],
     "kev": false,
@@ -8688,69 +8572,6 @@
       "e37d5a2d60a3 iommu/sva: invalidate stale IOTLB entries for kernel address space",
       "ad8b2e096181 treewide: include linux/pgalloc.h instead of asm/pgalloc.h",
       "368076f52ebe mm/huge_memory: add device-private THP support to PMD operations"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99211"
-    ],
-    "kev": false,
-    "upstream": "8bf659bd54e1f00e34cf5244b1d289c506fa47c0",
-    "subject": "netlink: reset skb headers before unicast and multicast filtering",
-    "verdict": "needs-backport",
-    "files": [
-      "net/netlink/af_netlink.c"
-    ],
-    "prerequisites": [
-      "0cafd77dcd03 net: add a refcount tracker for kernel sockets",
-      "8032bf1233a7 treewide: use get_random_u32_below() instead of deprecated function",
-      "6978052448f9 netlink: remove unused 'compare' function",
-      "5ab8c41cef30 netlink: support extack in dump ->start()",
-      "dc97391e6610 sock: Remove ->sendpage*() in favour of sendmsg(MSG_SPLICE_PAGES)",
-      "b8e39b38487e netlink: Make use of __assign_bit() API",
-      "a3377386b564 netlink: Reverse the patch which removed filtering",
-      "a4c9a56e6a2c netlink: Add new netlink_release function",
-      "ac40916a3f72 rtnetlink: introduce nlmsg_new_large and use it in rtnl_getlink",
-      "403863e985e8 netlink: introduce typedef for filter function",
-      "e39951d965bf rtnetlink: change nlk->cb_mutex role",
-      "386520e0ecc0 rtnetlink: add RTNL_FLAG_DUMP_UNLOCKED flag",
-      "f8cbf6bde4c8 netlink: use kvmalloc() in netlink_alloc_large_skb()",
-      "b5a899154aa9 netlink: handle EMSGSIZE errors in the core",
-      "8b6d307f4391 net/netlink: Add getsockopt support for NETLINK_LISTEN_ALL_NSID"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99172"
-    ],
-    "kev": false,
-    "upstream": "f0e48172a59e517e613b73f73cc35f24fd123aeb",
-    "subject": "ipc: drop the mqueue mount with kern_unmount() on setup failure",
-    "verdict": "needs-backport",
-    "files": [
-      "ipc/namespace.c"
-    ],
-    "prerequisites": [
-      "a80c4adcb574 ipc,namespace: make ipc namespace allocation wait for pending free",
-      "da27f796a832 ipc,namespace: batch free ipc_namespace structures",
-      "edd3cb05c00a copy_process: pass clone_flags as u64 across calltree",
-      "90d4d9f4d235 ipc: use ns_common_init()",
-      "74b24a582e1f ipc: support ns lookup",
-      "d7afdf889561 ns: add to_<type>_ns() to respective headers",
-      "5612ff3ec588 nscommon: simplify initialization",
-      "be5f21d3985f ns: add ns_common_free()",
-      "d4825c99d6a7 ipc: port to ns_ref_*() helpers",
-      "d7610cb7454b ns: simplify ns_common_init() further",
-      "4055526d3574 ns: move ns type into struct ns_common",
-      "3826d5dd0699 ipc: enable is_ns_init_id() assertions",
-      "7229d74e5e8c ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
