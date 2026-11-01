@@ -83,15 +83,39 @@ class Builder:
         return f[:-2] + ".o"
 
     def files(self, patch: str) -> list[str]:
-        """Changed .c files this arch can build: no tools/, no other arch/ trees."""
+        """Changed .c files this arch can build: no tools/, no other arch/ trees.
+        A changed header adds a few .c files that include it."""
         out = []
         for f in gitutil.patch_files(patch):
-            if not f.endswith(".c") or f.startswith(("tools/", "Documentation/")):
+            if f.startswith(("tools/", "Documentation/")):
                 continue
             if f.startswith("arch/") and f.split("/")[1] != self.arch:
                 continue
-            if (self.tree / f).exists():
+            if f.endswith(".h"):
+                out += [c for c in self.includers(f) if c not in out]
+            elif f.endswith(".c") and (self.tree / f).exists() and f not in out:
                 out.append(f)
+        return out
+
+    def includers(self, h: str, limit: int = 3) -> list[str]:
+        """Up to ``limit`` buildable .c files that include header ``h``."""
+        d, name = os.path.split(h)
+        if h.startswith(("include/", "arch/")) and "/include/" in "/" + h:
+            inc = re.sub(r"^(arch/[^/]+/)?include/(uapi/|generated/)?", "", h)
+            pattern, where = rf"^#\s*include\s*<{re.escape(inc)}>", []
+        else:
+            pattern, where = rf'^#\s*include\s*"{re.escape(name)}"', [f"{d}/*.c"]
+        p = subprocess.run(["git", "-C", str(self.tree), "grep", "-l", "-E", pattern, "--", *(where or ["*.c"])],
+                           capture_output=True, text=True)
+        out = []
+        for c in sorted(p.stdout.split()):
+            if c.startswith(("tools/", "Documentation/", "samples/", "scripts/")):
+                continue
+            if c.startswith("arch/") and c.split("/")[1] != self.arch:
+                continue
+            out.append(c)
+            if len(out) == limit:
+                break
         return out
 
     def errors(self, files: list[str]) -> dict[str, str]:
