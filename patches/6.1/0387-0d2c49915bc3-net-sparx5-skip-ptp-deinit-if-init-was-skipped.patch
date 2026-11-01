@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 0d2c49915bc3aea4521cda5e4d42f24f63b94585
+X-Fasttrack-CVE: CVE-2026-98795
+X-Fasttrack-Backport: cve/CVE-2026-98795/6.1
+From: Quentin Freimanis <quentin@q-lab.dev>
+Date: Sun, 1 Nov 2026 18:25:25 +0100
+Subject: [PATCH] net: sparx5: skip ptp deinit if init was skipped
+
+commit 0d2c49915bc3aea4521cda5e4d42f24f63b94585 upstream.
+
+[ Backport: Context only: 6.1 sparx5_ptp_deinit() has no ptp_irq disable block. ]
+
+sparx5_ptp_init() returns early on the base lan969x variants
+because they do not have the SPX5_FEATURE_PTP flag. It also returns early
+when no "ptp" interrupt is described. Unbinding the driver then causes a
+NULL pointer dereference when cleaning up uninitialized tx_skbs queues:
+
+    Unable to handle kernel NULL pointer dereference at virtual address
+    0000000000000008
+    Call trace:
+    skb_queue_purge_reason+0x68/0x120 (P)
+    sparx5_ptp_deinit+0x64/0xc0
+    mchp_sparx5_remove+0x38/0x70
+    platform_remove+0x20/0x30
+    device_remove+0x4c/0x80
+
+Before per-port tx_skbs were added, a NULL dereference would have happened
+when calling ptp_clock_unregister() on the never-registered PTP clocks.
+
+Fix by returning early in sparx5_ptp_deinit() if PTP is not used.
+
+Fixes: 0933bd04047c ("net: sparx5: Add support for ptp clocks")
+Signed-off-by: Quentin Freimanis <quentin@q-lab.dev>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20260928044542.29287-1-quentin@q-lab.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
+index 9c602f19d43b..69150a85e199 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
+@@ -649,6 +649,9 @@ void sparx5_ptp_deinit(struct sparx5 *sparx5)
+ 	struct sparx5_port *port;
+ 	int i;
+ 
++	if (!sparx5->ptp)
++		return;
++
+ 	for (i = 0; i < SPX5_PORTS; i++) {
+ 		port = sparx5->ports[i];
+ 		if (!port)
