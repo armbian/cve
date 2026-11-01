@@ -795,6 +795,26 @@
       "run": null
     }
   },
+  "CVE-2025-39707": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable function `capabilities_show()` (debugfs file `amdgpu_dm_capabilities`) does not exist in 6.1.",
+      "run": null
+    }
+  },
+  "CVE-2025-39747": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable function msm_ioctl_gem_info_set_metadata() does not exist in 6.1.",
+      "run": null
+    }
+  },
   "CVE-2025-39762": {
     "6.1": {
       "cost": null,
@@ -813,7 +833,35 @@
       "run": null
     }
   },
+  "CVE-2025-39779": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug needs a folio that is still dirty when `btrfs_subpage_set_writeback()` starts writeback.",
+      "run": null
+    }
+  },
+  "CVE-2025-39882": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable code is absent in 6.1.",
+      "run": null
+    }
+  },
   "CVE-2025-40146": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix needs the elevator_tags infrastructure. 6.1 does not have it. A backport needs large prerequisites.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -834,12 +882,60 @@
     }
   },
   "CVE-2025-40247": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The fix changes `msm_iommu_pagetable_prealloc_allocate()` and `msm_iommu_pagetable_prealloc_cleanup()` in `dri",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "msm VM_BIND pgtable prealloc (e601ea31d66b) not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2025-40266": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable code is absent in 6.1. arch/arm64/kvm/hyp/nvhe/ffa.c does not exist.",
+      "run": null
+    }
+  },
+  "CVE-2025-40339": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "Upstream adds a `prt_va` update before `amdgpu_vm_handle_moved()` in `amdgpu_amdkfd_gpuvm_restore_process_bos(",
+      "run": null
+    }
+  },
+  "CVE-2025-40348": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable code (`alloc_slab_obj_exts()`, `mark_failed_objexts_alloc()`, `OBJEXTS_ALLOC_FAIL`) does not ex",
+      "run": null
+    }
+  },
+  "CVE-2025-40354": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 has neither part of the vulnerable code.",
       "run": null
     }
   },
@@ -863,7 +959,55 @@
       "run": null
     }
   },
+  "CVE-2025-68299": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug is a use of `cell->anonymous_key` before the cell is activated.",
+      "run": null
+    }
+  },
+  "CVE-2025-68300": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable function does not exist in 6.1.",
+      "run": null
+    }
+  },
+  "CVE-2025-68357": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug source, mainline 222f2c7c6d14 (\"iomap: always run error completions in",
+      "run": null
+    }
+  },
+  "CVE-2025-68768": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "fix adds a UAF; needs 32594b098549 and b824476c56a1 (+eb0dfc0ef195, ae2d90355aa5)",
+      "run": null
+    }
+  },
   "CVE-2025-71202": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The stale IOTLB entries come from SVA on x86. The x86 IOMMU walks the CPU page tables, including the kernel ha",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -873,7 +1017,25 @@
       "run": null
     }
   },
+  "CVE-2025-71225": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The upstream change (`mddev_lock()` -> `mddev_suspend_and_lock()` in `raid_disks_store()`) does not fix the bu",
+      "run": null
+    }
+  },
   "CVE-2025-71315": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix converts vkms to new DRM core vblank timer code. 6.1 does not have that code.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -893,6 +1055,14 @@
     }
   },
   "CVE-2026-22983": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug is a NULL pointer dereference in `unix_stream_read_generic()` (`net/unix/af_unix.c`).",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -903,6 +1073,14 @@
     }
   },
   "CVE-2026-22995": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug is in `ublk_partition_scan_work()`. Commit 7fc4da6a304b (\"ublk: scan partition in async way\") added th",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -913,6 +1091,14 @@
     }
   },
   "CVE-2026-23117": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The fix adds `ice_deinit_hw()` to `ice_devlink_reinit_down()`. 6.1 has no devlink reinit path.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -932,7 +1118,35 @@
       "run": null
     }
   },
+  "CVE-2026-23200": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug comes from f72514b3c569 (\"ipv6: clear RA flags when adding a static route\").",
+      "run": null
+    }
+  },
+  "CVE-2026-23240": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix needs disable_delayed_work_sync(). Linux 6.1 does not have it",
+      "run": null
+    }
+  },
   "CVE-2026-23288": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The driver does not exist in 6.1.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -952,12 +1166,40 @@
     }
   },
   "CVE-2026-23341": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The amdxdna driver does not exist in Linux 6.1.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "amdxdna driver not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-23348": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The race needs code from `f17b558d6663` (\"cxl/pmem: Refactor nvdimm device registration, delete the workqueue\"",
+      "run": null
+    }
+  },
+  "CVE-2026-31413": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 has no `maybe_fork_scalars()` in `kernel/bpf/verifier.c`.",
       "run": null
     }
   },
@@ -972,6 +1214,14 @@
     }
   },
   "CVE-2026-31437": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug is in netfs_unbuffered_write() in fs/netfs/direct_write.c. It comes from",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -981,7 +1231,45 @@
       "run": null
     }
   },
+  "CVE-2026-31458": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1.y stable commit dee11efae9e7 (v6.1.168) already has this fix.",
+      "run": null
+    }
+  },
+  "CVE-2026-31513": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug comes from c28d2bff7044 (\"Bluetooth: L2CAP: Fix result of L2CAP_ECRED_CONN_RSP",
+      "run": null
+    }
+  },
+  "CVE-2026-31516": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 stable commit 5850bc4e1d0a (\"xfrm: prevent policy_hthresh.work from racing with netns teardown\") already f",
+      "run": null
+    }
+  },
   "CVE-2026-31536": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "Upstream fixes `send_done()` for an unsignaled sibling send that completes with an error. In mainline, the smb",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -991,7 +1279,25 @@
       "run": null
     }
   },
+  "CVE-2026-31729": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "A 6.1 stable commit already fixes the out-of-bounds access. No commit made.",
+      "run": null
+    }
+  },
   "CVE-2026-31742": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug is in leave_alt_screen(). It restores vc_saved_uni_lines. Commit 5eb608319bb5 (\"vt: save/restore unico",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1011,12 +1317,30 @@
     }
   },
   "CVE-2026-43070": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug is in scalar_byte_swap(). That function comes from 9d2119984224 (\"bpf: Add bitwise tracking for BPF_EN",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "scalar_byte_swap() from 9d2119984224 not in 6.12",
+      "run": null
+    }
+  },
+  "CVE-2026-43084": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug is in the global verdict rhashtable nfqnl_packet_map. It comes from e19079adcd26 (\"netfilter: nfnetlin",
       "run": null
     }
   },
@@ -1031,12 +1355,42 @@
       "run": null
     }
   },
+  "CVE-2026-43137": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The fix adds a NULL check for the DAI widget in `hda_dai_get_ops()` (`sound/soc/sof/intel/hda-dai.c`).",
+      "run": null
+    }
+  },
+  "CVE-2026-43161": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "Upstream adds `pci_device_is_present()` to `__context_flush_dev_iotlb()` in `drivers/iommu/intel/pasid.c`. 6.1",
+      "run": null
+    }
+  },
   "CVE-2026-43174": {
     "6.18": {
       "cost": 0.8993971000000001,
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-43220": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug: `cmd_sem_val` is incremented outside `iommu->lock`, so CMD_COMPL_WAIT commands can be queued out of s",
       "run": null
     }
   },
@@ -1050,6 +1404,26 @@
       "run": null
     }
   },
+  "CVE-2026-43318": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug: `amdgpu_dma_buf_move_notify()` passes its `ticket` to `amdgpu_vm_handle_moved()`.",
+      "run": null
+    }
+  },
+  "CVE-2026-43323": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The fix changes `cfs_rq::zero_vruntime` tracking in the EEVDF scheduler. 6.1 does not have EEVDF.",
+      "run": null
+    }
+  },
   "CVE-2026-43326": {
     "6.18": {
       "cost": 0.9392932,
@@ -1059,7 +1433,45 @@
       "run": null
     }
   },
+  "CVE-2026-43362": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix needs struct smb_rqst.rq_iter. 6.1 does not have rq_iter.",
+      "run": null
+    }
+  },
+  "CVE-2026-43367": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The NULL version pointer cannot occur in 6.1. No commit made.",
+      "run": null
+    }
+  },
+  "CVE-2026-43369": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable call path is absent in 6.1.",
+      "run": null
+    }
+  },
   "CVE-2026-43440": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The workqueue does not exist in 6.1. No commit made.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1069,7 +1481,45 @@
       "run": null
     }
   },
+  "CVE-2026-45988": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug: a RESPONSE packet is decrypted in place in the sk_buff. On a temporary error",
+      "run": null
+    }
+  },
+  "CVE-2026-46017": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug comes from 8a8ca142a488 (\"mm: migrate: requeue destination folio on deferred split",
+      "run": null
+    }
+  },
+  "CVE-2026-46054": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix needs infrastructure that 6.1 does not have:",
+      "run": null
+    }
+  },
   "CVE-2026-46147": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 has no `__pkvm_init_vcpu()` or `pkvm_load_hyp_vcpu()`.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1085,6 +1535,26 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-46245": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The flagged code is absent in 6.1. The bug is a dc_link NULL check",
+      "run": null
+    }
+  },
+  "CVE-2026-46274": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "A 6.1 stable commit already fixes the bug. No commit made.",
       "run": null
     }
   },
@@ -1129,6 +1599,14 @@
     }
   },
   "CVE-2026-52966": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable function `drm_gem_change_handle_ioctl()` does not exist in 6.1.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1205,6 +1683,16 @@
       "run": null
     }
   },
+  "CVE-2026-53285": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "In 6.1, the phantom-plane allocation never enters vmalloc, so the BUG_ON() cannot trigger.",
+      "run": null
+    }
+  },
   "CVE-2026-63885": {
     "6.12": {
       "cost": null,
@@ -1224,6 +1712,16 @@
       "run": null
     }
   },
+  "CVE-2026-64060": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The leaked reference does not exist in 6.1.",
+      "run": null
+    }
+  },
   "CVE-2026-64160": {
     "6.18": {
       "cost": 1.4101600999999997,
@@ -1234,6 +1732,14 @@
     }
   },
   "CVE-2026-64212": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug is in iwl_mld_remove_link() in drivers/net/wireless/intel/iwlwifi/mld/link.c.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
