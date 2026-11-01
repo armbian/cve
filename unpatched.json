@@ -3734,40 +3734,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-47691"
-    ],
-    "kev": false,
-    "upstream": "c7f114d864ac91515bb07ac271e9824a20f5ed95",
-    "subject": "f2fs: fix to avoid use-after-free in f2fs_stop_gc_thread()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/f2fs/f2fs.h",
-      "fs/f2fs/file.c",
-      "fs/f2fs/super.c"
-    ],
-    "prerequisites": [
-      "138060ba92b3 fs: pass dentry to set acl method",
-      "cac2f8b8d8b5 fs: rename current get acl method",
-      "18792e64c86d f2fs: support fault injection for f2fs_is_valid_blkaddr()",
-      "3688cbe39b7a f2fs: remove batched_trim_sections node",
-      "6047de5482c3 f2fs: add barrier mount option",
-      "c46867e9b9b8 f2fs: introduce max_ordered_discard sysfs node",
-      "a5029a57a2f3 f2fs: Fix typo in comments",
-      "a3951cd199a5 f2fs: introduce gc_mode sysfs node",
-      "e5a0db6a9e2e f2fs: replace gc_urgent_high_remaining with gc_remaining_trials",
-      "41e8f85a75fc f2fs: introduce F2FS_IOC_START_ATOMIC_REPLACE",
-      "b7ad23cec26a f2fs: fix to alloc_mode changed after remount on a small volume device",
-      "777cd95b8066 f2fs: cleanup for 'f2fs_tuning_parameters' function",
-      "66aee5aaa237 f2fs: change type for 'sbi->readdir_ra'",
-      "1cd2e6d54435 f2fs: define MIN_DISCARD_GRANULARITY macro",
-      "8a47d228de6a f2fs: introduce discard_urgent_util sysfs node"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-50057"
     ],
     "kev": false,
@@ -3991,38 +3957,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-53218"
-    ],
-    "kev": false,
-    "upstream": "7b0033dbc48340a1c1c3f12448ba17d6587ca092",
-    "subject": "f2fs: fix race in concurrent f2fs_stop_gc_thread",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/f2fs/file.c"
-    ],
-    "prerequisites": [
-      "138060ba92b3 fs: pass dentry to set acl method",
-      "cac2f8b8d8b5 fs: rename current get acl method",
-      "a5029a57a2f3 f2fs: Fix typo in comments",
-      "41e8f85a75fc f2fs: introduce F2FS_IOC_START_ATOMIC_REPLACE",
-      "71644dff4811 f2fs: add block_age-based extent cache",
-      "fe59109ae5c0 f2fs: initialize extent_cache parameter",
-      "39bee2e6acc2 f2fs: file: drop useless initializer in expand_inode_data()",
-      "1cd7565449de f2fs: add a f2fs_ prefix to punch_hole() and expand_inode_data()",
-      "c40e15a9a59f f2fs: merge f2fs_show_injection_info() into time_to_inject()",
-      "c1632a0f1120 fs: port ->setattr() to pass mnt_idmap",
-      "b74d24f7a74f fs: port ->getattr() to pass mnt_idmap",
-      "13e83a4923be fs: port ->set_acl() to pass mnt_idmap",
-      "8782a9aea3ab fs: port ->fileattr_set() to pass mnt_idmap",
-      "f2d40141d5d9 fs: port inode_init_owner() to mnt_idmap",
-      "01beba7957a2 fs: port inode_owner_or_capable() to mnt_idmap"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-56591"
     ],
     "kev": false,
@@ -4152,72 +4086,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-58237"
-    ],
-    "kev": false,
-    "upstream": "1a4607ffba35bf2a630aab299e34dd3f6e658d70",
-    "subject": "bpf: consider that tail calls invalidate packet pointers",
-    "verdict": "needs-backport",
-    "files": [
-      "net/core/filter.c",
-      "tools/testing/selftests/bpf/progs/tc_bpf2bpf.c"
-    ],
-    "prerequisites": [
-      "9bb053490f1a bpf: Add hwtstamp field for the sockops prog",
-      "354259fa73e2 net: remove skb->vlan_present",
-      "6728aea7216c bpf: Refactor btf_struct_access",
-      "32637e33003f bpf: Expand map key argument of bpf_redirect_map to u64",
-      "ba6aac151677 udp: Access &udp_table via net.",
-      "d1e91173cd29 bpf, docs: DEVMAPs and XDP_REDIRECT",
-      "94151f5aa966 xfrm: interface: Add unstable helpers for setting/getting XFRM metadata from TC-BPF",
-      "e26aa600ba6a bpf: Add flag BPF_F_NO_TUNNEL_KEY to bpf_skb_set_tunnel_key()",
-      "66cf99b55e58 bpf: Remove the unnecessary insn buffer comparison",
-      "d219df60a70e bpf: Add ipip6 and ip6ip decap support for bpf_skb_adjust_room()",
-      "68e5b6aa2795 xdp: document xdp_do_flush() before napi_complete_done()",
-      "9d03ebc71a02 bpf: Rename bpf_{prog,map}_is_dev_bound to is_offloaded",
-      "2ab42c7b871f bpf: Check the protocol of a sock to agree the calls to bpf_setsockopt().",
-      "bf3849755ac6 bpf: Use ARG_CONST_SIZE_OR_ZERO for 3rd argument of bpf_tcp_raw_gen_syncookie_ipv{4,6}()",
-      "b9d460c92455 bpf: devmap: check XDP features in __xdp_enqueue routine"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-58098"
-    ],
-    "kev": false,
-    "upstream": "51081a3f25c742da5a659d7fc6fd77ebfdd555be",
-    "subject": "bpf: track changes_pkt_data property for global functions",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/bpf_verifier.h",
-      "kernel/bpf/verifier.c"
-    ],
-    "prerequisites": [
-      "9ef40974a82a bpf: Allow ringbuf memory to be used as map key",
-      "d1673304097c bpf: Consider all mem_types compatible for map_{key,value} args",
-      "c4bcfb38a95e bpf: Implement cgroup storage available to non-cgroup-attached bpf progs",
-      "b6d207999c35 bpf: Fix a typo in comment for DFS algorithm",
-      "a28ace782e68 bpf: Drop reg_type_may_be_refcounted_or_null",
-      "aa3496accc41 bpf: Refactor kptr_off_tab into btf_record",
-      "db559117828d bpf: Consolidate spin_lock, timer management into btf_record",
-      "f0c5941ff5b2 bpf: Support bpf_list_head in map values",
-      "2de2669b4e52 bpf: Rename RET_PTR_TO_ALLOC_MEM",
-      "894f2a8b1673 bpf: Rename MEM_ALLOC to MEM_RINGBUF",
-      "6728aea7216c bpf: Refactor btf_struct_access",
-      "32637e33003f bpf: Expand map key argument of bpf_redirect_map to u64",
-      "befae75856ab bpf: propagate nullness information for reg to reg comparisons",
-      "282de143ead9 bpf: Introduce allocated objects support",
-      "4e814da0d599 bpf: Allow locking bpf_spin_lock in allocated objects"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-58100"
     ],
     "kev": false,
@@ -4283,41 +4151,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-57857"
-    ],
-    "kev": false,
-    "upstream": "16b87037b48889d21854c8e97aec8a1baf2642b3",
-    "subject": "RDMA/siw: Remove direct link to net_device",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/infiniband/sw/siw/siw.h",
-      "drivers/infiniband/sw/siw/siw_cm.c",
-      "drivers/infiniband/sw/siw/siw_main.c",
-      "drivers/infiniband/sw/siw/siw_verbs.c"
-    ],
-    "prerequisites": [
-      "40e0b0908142 net/sock: Introduce trace_sk_data_ready()",
-      "8d7c7c0eeb74 RDMA: Add ib_virt_dma_to_page()",
-      "9191df002926 RDMA/siw: use vmalloc_array and vcalloc",
-      "91f36237b4b9 RDMA/siw: Fix tx thread initialization.",
-      "3ec648c631d2 IB: Use capital \"OR\" for multiple licenses in SPDX",
-      "0bc018b7a7b7 RDMA/siw: Annotate struct siw_pbl with __counted_by",
-      "476b7c7e00ec RDMA/siw: Use ib_umem_get() to pin user pages",
-      "d248960941b7 RDMA/siw: Remove goto lable in siw_mmap",
-      "659da08ed83a RDMA/siw: Remove rcu from siw_qp",
-      "065186d228c5 RDMA/siw: No need to check term_info.valid before call siw_send_terminate",
-      "25680c1f2614 RDMA/siw: Add one parameter to siw_destroy_cpulist",
-      "a410a7327870 RDMA/siw: Remove siw_sk_save_upcalls",
-      "84de14baf816 RDMA/siw: Move tx_cpu ahead",
-      "51ac45a66362 RDMA/siw: Reduce memory usage of struct siw_rx_stream",
-      "0b988c1bee28 RDMA/siw: Set qp_state in siw_query_qp"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-57935"
     ],
     "kev": false,
@@ -4343,43 +4176,6 @@
       "7243396aaf12 RDMA/hns: Add a max length of gid table",
       "c00743cbf2b8 RDMA/hns: Simplify 'struct hns_roce_hem' allocation",
       "6ec429d5887a RDMA/hns: Support userspace configuring congestion control algorithm with QP granularity"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-57795"
-    ],
-    "kev": false,
-    "upstream": "2ac5415022d16d63d912a39a06f32f1f51140261",
-    "subject": "RDMA/rxe: Remove the direct link to net_device",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/infiniband/sw/rxe/rxe.c",
-      "drivers/infiniband/sw/rxe/rxe.h",
-      "drivers/infiniband/sw/rxe/rxe_mcast.c",
-      "drivers/infiniband/sw/rxe/rxe_net.c",
-      "drivers/infiniband/sw/rxe/rxe_verbs.c",
-      "drivers/infiniband/sw/rxe/rxe_verbs.h"
-    ],
-    "prerequisites": [
-      "71d236399160 RDMA/rxe: Remove the member 'type' of struct rxe_mr",
-      "2778b72b1df0 RDMA/rxe: Replace pr_xxx by rxe_dbg_xxx in rxe_mr.c",
-      "14e501fdb0de RDMA/rxe: Replace pr_xxx by rxe_dbg_xxx in rxe_verbs.c",
-      "25fd735a4c9e RDMA/rxe: Replace pr_xxx by rxe_dbg_xxx in rxe_av.c",
-      "c6aba5ea0055 RDMA/rxe: Replace pr_xxx by rxe_dbg_xxx in rxe.c",
-      "ea1bb00ee9a5 RDMA/rxe: Implement flush execution in responder side",
-      "db4729a52519 RDMA/rxe: Move rxe_map_mr_sg to rxe_mr.c",
-      "f04d5b3d916c RDMA-rxe: Isolate mr code from atomic_reply()",
-      "325a7eb85199 RDMA/rxe: Cleanup page variables in rxe_mr.c",
-      "592627ccbdff RDMA/rxe: Replace rxe_map and rxe_phys_buf by xarray",
-      "72a03627443d RDMA/rxe: Remove rxe_alloc()",
-      "9168d125ea03 RDMA/rxe: Replace exists by rxe in rxe.c",
-      "a9fb3287211e RDMA/rxe: Change rxe_dbg to rxe_dbg_dev",
-      "9ac01f434a1e RDMA/rxe: Extend dbg log messages to err and info",
-      "5bf944f24129 RDMA/rxe: Add error messages"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""

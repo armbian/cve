@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.1: 29 patch(es)
+- added 6.1: 7 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -431,7 +431,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18
 
-### Included (79)
+### Included (87)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -471,6 +471,7 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2024-47703 | `5e0b273e0a62` | claude | bpf: Reset register bounds before narrowing retval range in check_mem_access() |
 |  | CVE-2024-45015 | `—` | claude | drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder functions |
 |  | CVE-2024-45015 | `aedf02e46eb5` | claude | drm/msm/dpu: move dpu_encoder's connector assignment to atomic_enable() |
+|  | CVE-2024-47691 | `c7f114d864ac` | claude | f2fs: fix to avoid use-after-free in f2fs_stop_gc_thread() |
 |  | CVE-2024-56544 | `1c0844c6184e` | claude | udmabuf: change folios array from kmalloc to kvmalloc |
 |  | CVE-2024-50028 | `a42a5839f400` | claude | thermal: core: Reference count the zone in thermal_zone_get_by_id() |
 |  | CVE-2024-50166 | `—` | claude | fsl/fman: Save device references taken in mac_probe() |
@@ -481,7 +482,10 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2024-57809 | `0a726f542d7c` | claude | PCI: imx6: Fix suspend/resume support on i.MX6QDL |
 |  | CVE-2024-53176 | `3fa640d035e5` | claude | smb: During unmount, ensure all cached dir instances drop their dentry |
 |  | CVE-2024-53176 | `—` | claude | smb: client: destroy cfid_put_wq on module exit |
+|  | CVE-2024-58237 | `—` | claude | bpf: refactor bpf_helper_changes_pkt_data to use helper number |
+|  | CVE-2024-58237 | `1a4607ffba35` | claude | bpf: consider that tail calls invalidate packet pointers |
 |  | CVE-2024-53687 | `b3431a8bb336` | claude | riscv: Fix IPIs usage in kfence_protect_page() |
+|  | CVE-2024-57857 | `16b87037b488` | claude | RDMA/siw: Remove direct link to net_device |
 |  | CVE-2024-58089 | `72dad8e377af` | claude | btrfs: fix double accounting race when btrfs_run_delalloc_range() failed |
 |  | CVE-2025-21817 | `7c0be4ead1f8` | claude | block: mark GFP_NOIO around sysfs ->store() |
 |  | CVE-2025-21825 | `58f038e6d209` | claude | bpf: Cancel the running bpf_timer through kworker for PREEMPT_RT |
@@ -514,22 +518,20 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2025-38449 | `5307dce878d4` | claude | drm/gem: Acquire references on GEM handles for framebuffers |
 |  | CVE-2025-38449 | `f6bfc9afc751` | claude | drm/framebuffer: Acquire internal references on GEM handles |
 |  | CVE-2024-57975 | `c2b47df81c8e` | claude | btrfs: do proper folio cleanup when run_delalloc_nocow() failed |
+|  | CVE-2024-53218 | `7b0033dbc483` | claude | f2fs: fix race in concurrent f2fs_stop_gc_thread |
+|  | CVE-2024-58098 | `51081a3f25c7` | claude | bpf: track changes_pkt_data property for global functions |
+|  | CVE-2024-57795 | `2ac5415022d1` | claude | RDMA/rxe: Remove the direct link to net_device |
+|  | CVE-2024-57795 | `8ce2eb9dfac8` | claude | RDMA/rxe: Fix the failure of ibv_query_device() and ibv_query_device_ex() tests |
 
-### Needs a backport (420)
+### Needs a backport (414)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2024-35961 | `c6e77aa9dd82` | mainline | net/mlx5: Register devlink first under devlink lock |
-|  | CVE-2024-47691 | `c7f114d864ac` | mainline | f2fs: fix to avoid use-after-free in f2fs_stop_gc_thread() |
 |  | CVE-2024-46678 | `2aeeef906d5a` | mainline | bonding: change ipsec_lock from spin lock to mutex |
 |  | CVE-2024-50211 | `c226964ec786` | mainline | udf: refactor inode_bmap() to handle error |
-|  | CVE-2024-53218 | `7b0033dbc483` | mainline | f2fs: fix race in concurrent f2fs_stop_gc_thread |
 |  | CVE-2024-56591 | `2b0f2fc9ed62` | mainline | Bluetooth: hci_conn: Use disable_delayed_work_sync |
-|  | CVE-2024-58237 | `1a4607ffba35` | mainline | bpf: consider that tail calls invalidate packet pointers |
-|  | CVE-2024-58098 | `51081a3f25c7` | mainline | bpf: track changes_pkt_data property for global functions |
 |  | CVE-2024-58100 | `81f6d0530ba0` | mainline | bpf: check changes_pkt_data property for extension programs |
-|  | CVE-2024-57857 | `16b87037b488` | mainline | RDMA/siw: Remove direct link to net_device |
-|  | CVE-2024-57795 | `2ac5415022d1` | mainline | RDMA/rxe: Remove the direct link to net_device |
 |  | CVE-2025-21693 | `12dcb0ef5406` | mainline | mm: zswap: properly synchronize freeing resources during CPU hotunplug |
 |  | CVE-2025-38333 | `bb5eb8a5b222` | mainline | f2fs: fix to bail out in get_new_segment() |
 |  | CVE-2025-39747 | `1c8c354098ea` | mainline | drm/msm: Add error handling for krealloc in metadata setup |
