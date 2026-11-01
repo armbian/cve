@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.1: 19 patch(es)
+- added 6.1: 29 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -431,7 +431,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18
 
-### Included (44)
+### Included (79)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -479,8 +479,43 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2024-53079 | `f8f931bba0f9` | claude | mm/thp: fix deferred split unqueue naming and locking |
 |  | CVE-2024-57809 | `—` | claude | PCI: imx6: Save and restore root port MSI control in suspend and resume |
 |  | CVE-2024-57809 | `0a726f542d7c` | claude | PCI: imx6: Fix suspend/resume support on i.MX6QDL |
+|  | CVE-2024-53176 | `3fa640d035e5` | claude | smb: During unmount, ensure all cached dir instances drop their dentry |
+|  | CVE-2024-53176 | `—` | claude | smb: client: destroy cfid_put_wq on module exit |
+|  | CVE-2024-53687 | `b3431a8bb336` | claude | riscv: Fix IPIs usage in kfence_protect_page() |
+|  | CVE-2024-58089 | `72dad8e377af` | claude | btrfs: fix double accounting race when btrfs_run_delalloc_range() failed |
+|  | CVE-2025-21817 | `7c0be4ead1f8` | claude | block: mark GFP_NOIO around sysfs ->store() |
+|  | CVE-2025-21825 | `58f038e6d209` | claude | bpf: Cancel the running bpf_timer through kworker for PREEMPT_RT |
+|  | CVE-2025-23133 | `—` | claude | wifi: cfg80211: call reg_notifier for self managed wiphy from driver hint |
+|  | CVE-2025-23133 | `933ab187e679` | claude | wifi: ath11k: update channel list in reg notifier instead reg worker |
+|  | CVE-2025-38039 | `689805dcc474` | claude | net/mlx5e: Avoid WARN_ON when configuring MQPRIO with HTB offload enabled |
+|  | CVE-2025-23132 | `eb85c2410d6f` | claude | f2fs: quota: fix to avoid warning in dquot_writeback_dquots() |
+|  | CVE-2025-23130 | `48ea8b200414` | claude | f2fs: fix to avoid panic once fallocation fails for pinfile |
+|  | CVE-2025-22125 | `e879a0d9cb08` | claude | md/raid1,raid10: don't ignore IO flags |
+|  | CVE-2025-22125 | `—` | claude | md/raid1: fix data lost for writemostly rdev |
+|  | CVE-2025-22125 | `9f346f7d4ea7` | claude | md/raid1,raid10: don't handle IO error for REQ_RAHEAD and REQ_NOWAIT |
+|  | CVE-2025-21976 | `—` | claude | fbdev: hyperv_fb: Simplify hvfb_putmem |
+|  | CVE-2025-21976 | `ea2f45ab0e53` | claude | fbdev: hyperv_fb: Allow graceful removal of framebuffer |
+|  | CVE-2025-22113 | `5a02a6204ca3` | claude | ext4: define ext4_journal_destroy wrapper |
+|  | CVE-2025-22113 | `ce2f26e73783` | claude | ext4: avoid journaling sb update on error if journal is destroying |
+|  | CVE-2025-37834 | `5f5ee52d4f58` | claude | mm/hwpoison: introduce folio_contain_hwpoisoned_page() helper |
+|  | CVE-2025-37834 | `1b0449544c64` | claude | mm/vmscan: don't try to reclaim hwpoison folio |
+|  | CVE-2025-37834 | `—` | claude | mm/vmscan: fix hwpoisoned large folio handling in shrink_folio_list |
+|  | CVE-2025-38426 | `5df0d6addb7e` | claude | drm/amdgpu: Add basic validation for RAS header |
+|  | CVE-2025-37776 | `d1c189c6cb8b` | claude | ksmbd: use rwsem instead of rwlock for lease break |
+|  | CVE-2025-37776 | `18b4fac5ef17` | claude | ksmbd: fix use-after-free in smb_break_all_levII_oplock() |
+|  | CVE-2025-37777 | `21a4e47578d4` | claude | ksmbd: fix use-after-free in __smb2_lease_break_noti() |
+|  | CVE-2025-37777 | `a89f5fae998b` | claude | ksmbd: add free_transport ops in ksmbd connection |
+|  | CVE-2025-37800 | `04d3e5461c1f` | claude | driver core: introduce device_set_driver() helper |
+|  | CVE-2025-37800 | `18daa52418e7` | claude | driver core: fix potential NULL pointer dereference in dev_uevent() |
+|  | CVE-2025-38264 | `—` | claude | llist: add interface to check if a node is on a list. |
+|  | CVE-2025-38264 | `0bf04c874fcb` | claude | nvme-tcp: sanitize request list handling |
+|  | CVE-2025-38207 | `2b12d06c37fd` | claude | mm: fix uprobe pte be overwritten when expanding vma |
+|  | CVE-2025-39746 | `c256a94d1b1b` | claude | wifi: ath10k: shutdown driver when hardware is unreliable |
+|  | CVE-2025-38449 | `5307dce878d4` | claude | drm/gem: Acquire references on GEM handles for framebuffers |
+|  | CVE-2025-38449 | `f6bfc9afc751` | claude | drm/framebuffer: Acquire internal references on GEM handles |
+|  | CVE-2024-57975 | `c2b47df81c8e` | claude | btrfs: do proper folio cleanup when run_delalloc_nocow() failed |
 
-### Needs a backport (442)
+### Needs a backport (420)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -490,35 +525,13 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2024-50211 | `c226964ec786` | mainline | udf: refactor inode_bmap() to handle error |
 |  | CVE-2024-53218 | `7b0033dbc483` | mainline | f2fs: fix race in concurrent f2fs_stop_gc_thread |
 |  | CVE-2024-56591 | `2b0f2fc9ed62` | mainline | Bluetooth: hci_conn: Use disable_delayed_work_sync |
-|  | CVE-2024-53176 | `3fa640d035e5` | mainline | smb: During unmount, ensure all cached dir instances drop their dentry |
 |  | CVE-2024-58237 | `1a4607ffba35` | mainline | bpf: consider that tail calls invalidate packet pointers |
 |  | CVE-2024-58098 | `51081a3f25c7` | mainline | bpf: track changes_pkt_data property for global functions |
 |  | CVE-2024-58100 | `81f6d0530ba0` | mainline | bpf: check changes_pkt_data property for extension programs |
-|  | CVE-2024-53687 | `b3431a8bb336` | mainline | riscv: Fix IPIs usage in kfence_protect_page() |
 |  | CVE-2024-57857 | `16b87037b488` | mainline | RDMA/siw: Remove direct link to net_device |
 |  | CVE-2024-57795 | `2ac5415022d1` | mainline | RDMA/rxe: Remove the direct link to net_device |
 |  | CVE-2025-21693 | `12dcb0ef5406` | mainline | mm: zswap: properly synchronize freeing resources during CPU hotunplug |
-|  | CVE-2024-58089 | `72dad8e377af` | mainline | btrfs: fix double accounting race when btrfs_run_delalloc_range() failed |
-|  | CVE-2025-21817 | `7c0be4ead1f8` | mainline | block: mark GFP_NOIO around sysfs ->store() |
-|  | CVE-2024-57975 | `c2b47df81c8e` | mainline | btrfs: do proper folio cleanup when run_delalloc_nocow() failed |
-|  | CVE-2025-21825 | `58f038e6d209` | mainline | bpf: Cancel the running bpf_timer through kworker for PREEMPT_RT |
-|  | CVE-2025-23133 | `933ab187e679` | mainline | wifi: ath11k: update channel list in reg notifier instead reg worker |
-| does not build | CVE-2025-38039 | `689805dcc474` | mainline | net/mlx5e: Avoid WARN_ON when configuring MQPRIO with HTB offload enabled |
-|  | CVE-2025-23132 | `eb85c2410d6f` | mainline | f2fs: quota: fix to avoid warning in dquot_writeback_dquots() |
-|  | CVE-2025-23130 | `48ea8b200414` | mainline | f2fs: fix to avoid panic once fallocation fails for pinfile |
-|  | CVE-2025-22125 | `e879a0d9cb08` | mainline | md/raid1,raid10: don't ignore IO flags |
-|  | CVE-2025-21976 | `ea2f45ab0e53` | mainline | fbdev: hyperv_fb: Allow graceful removal of framebuffer |
-|  | CVE-2025-22113 | `ce2f26e73783` | mainline | ext4: avoid journaling sb update on error if journal is destroying |
-| does not build | CVE-2025-37834 | `1b0449544c64` | mainline | mm/vmscan: don't try to reclaim hwpoison folio |
-|  | CVE-2025-38426 | `5df0d6addb7e` | mainline | drm/amdgpu: Add basic validation for RAS header |
-|  | CVE-2025-37776 | `18b4fac5ef17` | mainline | ksmbd: fix use-after-free in smb_break_all_levII_oplock() |
-|  | CVE-2025-37777 | `21a4e47578d4` | mainline | ksmbd: fix use-after-free in __smb2_lease_break_noti() |
-|  | CVE-2025-37800 | `18daa52418e7` | mainline | driver core: fix potential NULL pointer dereference in dev_uevent() |
 |  | CVE-2025-38333 | `bb5eb8a5b222` | mainline | f2fs: fix to bail out in get_new_segment() |
-|  | CVE-2025-38264 | `0bf04c874fcb` | mainline | nvme-tcp: sanitize request list handling |
-|  | CVE-2025-38207 | `2b12d06c37fd` | mainline | mm: fix uprobe pte be overwritten when expanding vma |
-|  | CVE-2025-39746 | `c256a94d1b1b` | mainline | wifi: ath10k: shutdown driver when hardware is unreliable |
-|  | CVE-2025-38449 | `5307dce878d4` | mainline | drm/gem: Acquire references on GEM handles for framebuffers |
 |  | CVE-2025-39747 | `1c8c354098ea` | mainline | drm/msm: Add error handling for krealloc in metadata setup |
 |  | CVE-2025-39732 | `65c12b104cb9` | mainline | wifi: ath11k: fix sleeping-in-atomic in ath11k_mac_op_set_bitrate_mask() |
 |  | CVE-2025-39789 | `3d9eb180fbe8` | mainline | crypto: x86/aegis - Add missing error checks |

@@ -752,6 +752,601 @@
       "prerequisites": [],
       "build_log": "",
       "backport": "CVE-2024-57809/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "3fa640d035e5ae526769615c35cb9ed4be6e3662",
+      "subject": "smb: During unmount, ensure all cached dir instances drop their dentry",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-53176"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0045-3fa640d035e5-smb-during-unmount-ensure-all-cached-dir-instances-d.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-53176/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "smb: client: destroy cfid_put_wq on module exit",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-53176"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0046-q-smb-client-destroy-cfid-put-wq-on-module-exit.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-53176/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "b3431a8bb336cece8adc452437befa7d4534b2fd",
+      "subject": "riscv: Fix IPIs usage in kfence_protect_page()",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-53687"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0047-b3431a8bb336-riscv-fix-ipis-usage-in-kfence-protect-page.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-53687/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "72dad8e377afa50435940adfb697e070d3556670",
+      "subject": "btrfs: fix double accounting race when btrfs_run_delalloc_range() failed",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-58089"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0048-72dad8e377af-btrfs-fix-double-accounting-race-when-btrfs-run-dela.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-58089/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "7c0be4ead1f8f5f8be0803f347de0de81e3b8e1c",
+      "subject": "block: mark GFP_NOIO around sysfs ->store()",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-21817"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0049-7c0be4ead1f8-block-mark-gfp-noio-around-sysfs-store.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-21817/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "58f038e6d209d2dd862fcf5de55407855856794d",
+      "subject": "bpf: Cancel the running bpf_timer through kworker for PREEMPT_RT",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-21825"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0050-58f038e6d209-bpf-cancel-the-running-bpf-timer-through-kworker-for.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-21825/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "wifi: cfg80211: call reg_notifier for self managed wiphy from driver hint",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-23133"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0051-q-wifi-cfg80211-call-reg-notifier-for-self-managed-wip.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-23133/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "933ab187e679e6fbdeea1835ae39efcc59c022d2",
+      "subject": "wifi: ath11k: update channel list in reg notifier instead reg worker",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-23133"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0052-933ab187e679-wifi-ath11k-update-channel-list-in-reg-notifier-inst.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-23133/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "689805dcc474c2accb5cffbbcea1c06ee4a54570",
+      "subject": "net/mlx5e: Avoid WARN_ON when configuring MQPRIO with HTB offload enabled",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-38039"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0053-689805dcc474-net-mlx5e-avoid-warn-on-when-configuring-mqprio-with.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-38039/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "eb85c2410d6f581e957cd03a644ff6ddbe592af9",
+      "subject": "f2fs: quota: fix to avoid warning in dquot_writeback_dquots()",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-23132"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0054-eb85c2410d6f-f2fs-quota-fix-to-avoid-warning-in-dquot-writeback-d.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-23132/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "48ea8b200414ac69ea96f4c231f5c7ef1fbeffef",
+      "subject": "f2fs: fix to avoid panic once fallocation fails for pinfile",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-23130"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0055-48ea8b200414-f2fs-fix-to-avoid-panic-once-fallocation-fails-for-p.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-23130/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "e879a0d9cb086c8e52ce6c04e5bfa63825a6213c",
+      "subject": "md/raid1,raid10: don't ignore IO flags",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-22125"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0056-e879a0d9cb08-md-raid1-raid10-don-t-ignore-io-flags.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-22125/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "md/raid1: fix data lost for writemostly rdev",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-22125"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0057-q-md-raid1-fix-data-lost-for-writemostly-rdev.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-22125/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "9f346f7d4ea73692b82f5102ca8698e4040469ea",
+      "subject": "md/raid1,raid10: don't handle IO error for REQ_RAHEAD and REQ_NOWAIT",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-22125"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0058-9f346f7d4ea7-md-raid1-raid10-don-t-handle-io-error-for-req-rahead.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-22125/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "fbdev: hyperv_fb: Simplify hvfb_putmem",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-21976"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0059-q-fbdev-hyperv-fb-simplify-hvfb-putmem.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-21976/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "ea2f45ab0e53b255f72c85ccd99e2b394fc5fceb",
+      "subject": "fbdev: hyperv_fb: Allow graceful removal of framebuffer",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-21976"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0060-ea2f45ab0e53-fbdev-hyperv-fb-allow-graceful-removal-of-framebuffe.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-21976/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "5a02a6204ca37e7c22fbb55a789c503f05e8e89a",
+      "subject": "ext4: define ext4_journal_destroy wrapper",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-22113"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0061-5a02a6204ca3-ext4-define-ext4-journal-destroy-wrapper.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-22113/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "ce2f26e73783b4a7c46a86e3af5b5c8de0971790",
+      "subject": "ext4: avoid journaling sb update on error if journal is destroying",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-22113"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0062-ce2f26e73783-ext4-avoid-journaling-sb-update-on-error-if-journal.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-22113/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "5f5ee52d4f58605330b09851273d6e56aaadd29e",
+      "subject": "mm/hwpoison: introduce folio_contain_hwpoisoned_page() helper",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-37834"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0063-5f5ee52d4f58-mm-hwpoison-introduce-folio-contain-hwpoisoned-page.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-37834/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "1b0449544c6482179ac84530b61fc192a6527bfd",
+      "subject": "mm/vmscan: don't try to reclaim hwpoison folio",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-37834"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0064-1b0449544c64-mm-vmscan-don-t-try-to-reclaim-hwpoison-folio.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-37834/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "mm/vmscan: fix hwpoisoned large folio handling in shrink_folio_list",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-37834"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0065-q-mm-vmscan-fix-hwpoisoned-large-folio-handling-in-shr.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-37834/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "5df0d6addb7e9b6f71f7162d1253762a5be9138e",
+      "subject": "drm/amdgpu: Add basic validation for RAS header",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-38426"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0066-5df0d6addb7e-drm-amdgpu-add-basic-validation-for-ras-header.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-38426/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "d1c189c6cb8b0fb7b5ee549237d27889c40c2f8b",
+      "subject": "ksmbd: use rwsem instead of rwlock for lease break",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-37776"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0067-d1c189c6cb8b-ksmbd-use-rwsem-instead-of-rwlock-for-lease-break.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-37776/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "18b4fac5ef17f77fed9417d22210ceafd6525fc7",
+      "subject": "ksmbd: fix use-after-free in smb_break_all_levII_oplock()",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-37776"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0068-18b4fac5ef17-ksmbd-fix-use-after-free-in-smb-break-all-levii-oplo.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-37776/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "21a4e47578d44c6b37c4fc4aba8ed7cc8dbb13de",
+      "subject": "ksmbd: fix use-after-free in __smb2_lease_break_noti()",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-37777"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0069-21a4e47578d4-ksmbd-fix-use-after-free-in-smb2-lease-break-noti.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-37777/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "a89f5fae998bdc4d0505306f93844c9ae059d50c",
+      "subject": "ksmbd: add free_transport ops in ksmbd connection",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-37777"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0070-a89f5fae998b-ksmbd-add-free-transport-ops-in-ksmbd-connection.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-37777/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "04d3e5461c1f5cf8eec964ab64948ebed826e95e",
+      "subject": "driver core: introduce device_set_driver() helper",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-37800"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0071-04d3e5461c1f-driver-core-introduce-device-set-driver-helper.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-37800/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "18daa52418e7e4629ed1703b64777294209d2622",
+      "subject": "driver core: fix potential NULL pointer dereference in dev_uevent()",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-37800"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0072-18daa52418e7-driver-core-fix-potential-null-pointer-dereference-i.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-37800/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "llist: add interface to check if a node is on a list.",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-38264"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0073-q-llist-add-interface-to-check-if-a-node-is-on-a-list.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-38264/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "0bf04c874fcb1ae46a863034296e4b33d8fbd66c",
+      "subject": "nvme-tcp: sanitize request list handling",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-38264"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0074-0bf04c874fcb-nvme-tcp-sanitize-request-list-handling.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-38264/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "2b12d06c37fd3a394376f42f026a7478d826ed63",
+      "subject": "mm: fix uprobe pte be overwritten when expanding vma",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-38207"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0075-2b12d06c37fd-mm-fix-uprobe-pte-be-overwritten-when-expanding-vma.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-38207/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "c256a94d1b1b15109740306f7f2a7c2173e12072",
+      "subject": "wifi: ath10k: shutdown driver when hardware is unreliable",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-39746"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0076-c256a94d1b1b-wifi-ath10k-shutdown-driver-when-hardware-is-unrelia.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-39746/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "5307dce878d4126e1b375587318955bd019c3741",
+      "subject": "drm/gem: Acquire references on GEM handles for framebuffers",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-38449"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0077-5307dce878d4-drm-gem-acquire-references-on-gem-handles-for-frameb.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-38449/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "f6bfc9afc7510cb5e6fbe0a17c507917b0120280",
+      "subject": "drm/framebuffer: Acquire internal references on GEM handles",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-38449"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0078-f6bfc9afc751-drm-framebuffer-acquire-internal-references-on-gem-h.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-38449/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "c2b47df81c8e20a8e8cd94f0d7df211137ae94ed",
+      "subject": "btrfs: do proper folio cleanup when run_delalloc_nocow() failed",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-57975"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0079-c2b47df81c8e-btrfs-do-proper-folio-cleanup-when-run-delalloc-noco.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-57975/6.1"
     }
   ]
 }
