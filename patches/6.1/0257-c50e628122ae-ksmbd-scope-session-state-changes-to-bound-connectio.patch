@@ -1,0 +1,150 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: c50e628122aed077695669e25b842e778511a43d
+X-Fasttrack-CVE: CVE-2026-90154
+X-Fasttrack-Backport: cve/CVE-2026-90154/6.1
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Sun, 1 Nov 2026 15:05:11 +0100
+Subject: [PATCH] ksmbd: scope session state changes to bound connections
+
+commit c50e628122aed077695669e25b842e778511a43d upstream.
+
+[ Backport: 6.1 iterates conn_list as a list, not a hash table. ]
+[ Backport: 6.1 has no ksmbd_conn_wait_idle_sess_id(); its destroy_previous_session() does not use ksmbd_all_conn_set_status(). Drop those hunks. ]
+[ Backport: 6.1 stop_sessions() sets EXITING unconditionally; take request_lock around it only. ]
+[ Backport: 6.1 ksmbd_conn_wait_idle() takes a session id; pass sess->id. ]
+
+ksmbd_all_conn_set_status() treats every connection whose transient
+binding flag is set as belonging to the target SessionId.  A logoff or
+session replacement can consequently move an unrelated connection to
+NEED_RECONNECT or NEED_SETUP.
+
+Pass the target session itself and select connections using either the
+connection-local session xarray or the session's permanent channel list.
+Use the same association test while waiting for requests to drain.
+
+Serialize session-wide status changes under request_lock and do not
+overwrite EXITING or RELEASING. Protect the shutdown transition with the
+same lock so a concurrent session update cannot revive a closing
+connection.
+
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Fixes: abcc506a9a71 ("ksmbd: fix racy issue from smb2 close and logoff with multichannel")
+Fixes: c444139cb747 ("ksmbd: rewrite stop_sessions() with restartable iteration")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+---
+ fs/smb/server/connection.c | 30 +++++++++++++++++++++++++++---
+ fs/smb/server/connection.h |  4 +++-
+ fs/smb/server/smb2pdu.c    |  8 +++-----
+ 3 files changed, 33 insertions(+), 9 deletions(-)
+
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index c9d8b5f9700c..57485f94ed95 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -260,14 +260,36 @@ void ksmbd_conn_unlock(struct ksmbd_conn *conn)
+ 	mutex_unlock(&conn->srv_mutex);
+ }
+ 
+-void ksmbd_all_conn_set_status(u64 sess_id, u32 status)
++static bool ksmbd_session_is_bound_to_conn(struct ksmbd_session *sess,
++					   struct ksmbd_conn *conn)
++{
++	bool found;
++
++	rcu_read_lock();
++	found = xa_load(&conn->sessions, sess->id) == sess;
++	rcu_read_unlock();
++	if (found)
++		return true;
++
++	down_read(&sess->chann_lock);
++	found = xa_load(&sess->ksmbd_chann_list, (long)conn);
++	up_read(&sess->chann_lock);
++	return found;
++}
++
++void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status)
+ {
+ 	struct ksmbd_conn *conn;
+ 
+ 	down_read(&conn_list_lock);
+ 	list_for_each_entry(conn, &conn_list, conns_list) {
+-		if (conn->binding || xa_load(&conn->sessions, sess_id))
+-			WRITE_ONCE(conn->status, status);
++		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
++			spin_lock(&conn->request_lock);
++			if (!ksmbd_conn_exiting(conn) &&
++			    !ksmbd_conn_releasing(conn))
++				WRITE_ONCE(conn->status, status);
++			spin_unlock(&conn->request_lock);
++		}
+ 	}
+ 	up_read(&conn_list_lock);
+ }
+@@ -551,7 +573,9 @@ static void stop_sessions(void)
+ 	down_read(&conn_list_lock);
+ 	list_for_each_entry(conn, &conn_list, conns_list) {
+ 		t = conn->transport;
++		spin_lock(&conn->request_lock);
+ 		ksmbd_conn_set_exiting(conn);
++		spin_unlock(&conn->request_lock);
+ 		if (t->ops->shutdown) {
+ 			up_read(&conn_list_lock);
+ 			t->ops->shutdown(t);
+diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
+index 8403dfc42e48..ecd78d5fa90b 100644
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -20,6 +20,8 @@
+ #include "smb_common.h"
+ #include "ksmbd_work.h"
+ 
++struct ksmbd_session;
++
+ #define KSMBD_SOCKET_BACKLOG		16
+ 
+ enum {
+@@ -261,5 +263,5 @@ static inline void ksmbd_conn_set_releasing(struct ksmbd_conn *conn)
+ 	WRITE_ONCE(conn->status, KSMBD_SESS_RELEASING);
+ }
+ 
+-void ksmbd_all_conn_set_status(u64 sess_id, u32 status);
++void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status);
+ #endif /* __CONNECTION_H__ */
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 702829a1d22e..f49dc5afda8a 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2263,7 +2263,6 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	struct ksmbd_session *sess = work->sess;
+ 	struct smb2_logoff_req *req;
+ 	struct smb2_logoff_rsp *rsp;
+-	u64 sess_id;
+ 	int err;
+ 
+ 	WORK_BUFFERS(work, req, rsp);
+@@ -2277,12 +2276,11 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 		smb2_set_err_rsp(work);
+ 		return -ENOENT;
+ 	}
+-	sess_id = le64_to_cpu(req->hdr.SessionId);
+-	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_RECONNECT);
++	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_RECONNECT);
+ 	ksmbd_conn_unlock(conn);
+ 
+ 	ksmbd_close_session_fds(work);
+-	ksmbd_conn_wait_idle(conn, sess_id);
++	ksmbd_conn_wait_idle(conn, sess->id);
+ 
+ 	if (ksmbd_tree_conn_session_logoff(sess)) {
+ 		ksmbd_debug(SMB, "Invalid tid %d\n", req->hdr.Id.SyncId.TreeId);
+@@ -2295,7 +2293,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	sess->state = SMB2_SESSION_EXPIRED;
+ 	up_write(&conn->session_lock);
+ 
+-	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_SETUP);
++	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_SETUP);
+ 
+ 	rsp->StructureSize = cpu_to_le16(4);
+ 	err = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_logoff_rsp));

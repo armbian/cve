@@ -1,0 +1,56 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 0fbd5c2327020858c45b2d1c65775d64cdeca523
+X-Fasttrack-CVE: CVE-2026-89899
+X-Fasttrack-Backport: cve/CVE-2026-89899/6.1
+From: Biren Pandya <birenpandya@gmail.com>
+Date: Sun, 1 Nov 2026 12:58:46 +0100
+Subject: [PATCH] media: cec: disable delayed work before freeing an
+ interrupted transmit
+
+commit 0fbd5c2327020858c45b2d1c65775d64cdeca523 upstream.
+
+[ Backport: 6.1 has no disable_delayed_work_sync(). Keep cancel_delayed_work_sync() and cancel the work again after cec_data_cancel() removes data from all lists, with adap->lock dropped. ]
+
+cec_transmit_msg_fh() drops adap->lock to wait for a blocking transmit in
+wait_for_completion_killable(). If that wait is interrupted by a signal,
+cancel_delayed_work_sync() can run before the CEC kthread arms the reply
+timeout via schedule_delayed_work(&data->work) in cec_transmit_done_ts().
+The work is then armed after the cancel, and the data is freed with its
+delayed_work still pending:
+
+  ODEBUG: free active (active state 0) object: ... hint: cec_wait_timeout
+
+Use disable_delayed_work_sync(): it cancels the work and disables it, so
+the later schedule_delayed_work() becomes a no-op and the work cannot be
+re-armed. The data is freed right after, so it need not be re-enabled.
+
+Fixes: 490d84f6d73c ("media: cec: forgot to cancel delayed work")
+Reported-by: syzbot+051024d603432b4ab395@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=051024d603432b4ab395
+Suggested-by: Hillf Danton <hdanton@sina.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Biren Pandya <birenpandya@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+---
+ drivers/media/cec/core/cec-adap.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index f9483268c84a..68cae10e2403 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -931,6 +931,13 @@ int cec_transmit_msg_fh(struct cec_adapter *adap, struct cec_msg *msg,
+ 			cec_data_cancel(data, CEC_TX_STATUS_OK, CEC_RX_STATUS_ABORTED);
+ 		else
+ 			cec_data_cancel(data, CEC_TX_STATUS_ABORTED, 0);
++		/*
++		 * The work can be armed after the cancel above. data is now
++		 * off all lists, so it cannot be armed again: cancel it here.
++		 */
++		mutex_unlock(&adap->lock);
++		cancel_delayed_work_sync(&data->work);
++		mutex_lock(&adap->lock);
+ 	}
+ 
+ 	/* The transmit completed (possibly with an error) */

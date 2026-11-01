@@ -1,0 +1,64 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-CVE: CVE-2026-98329
+X-Fasttrack-Backport: cve/CVE-2026-98329/6.1
+From: Evan Quan <quanliangl@hotmail.com>
+Date: Mon, 11 Dec 2023 18:06:24 +0800
+Subject: [PATCH] wifi: cfg80211: expose nl80211_chan_width_to_mhz for wide
+ sharing
+
+The newly added WBRF feature needs this interface for channel
+width calculation.
+
+Signed-off-by: Evan Quan <quanliangl@hotmail.com>
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://msgid.link/20231211100630.2170152-4-Jun.Ma2@amd.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+(cherry picked from commit 10fa22b6fb68198ab6bf2ab468a11c54f083761d)
+---
+ include/net/cfg80211.h | 9 +++++++++
+ net/wireless/chan.c    | 3 ++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index e648ef9d8721..35c381f3e447 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -923,6 +923,15 @@ const struct cfg80211_chan_def *
+ cfg80211_chandef_compatible(const struct cfg80211_chan_def *chandef1,
+ 			    const struct cfg80211_chan_def *chandef2);
+ 
++/**
++ * nl80211_chan_width_to_mhz - get the channel width in MHz
++ * @chan_width: the channel width from &enum nl80211_chan_width
++ *
++ * Return: channel width in MHz if the chan_width from &enum nl80211_chan_width
++ * is valid. -1 otherwise.
++ */
++int nl80211_chan_width_to_mhz(enum nl80211_chan_width chan_width);
++
+ /**
+  * cfg80211_chandef_valid - check if a channel definition is valid
+  * @chandef: the channel definition to check
+diff --git a/net/wireless/chan.c b/net/wireless/chan.c
+index 0b7e81db383d..227db04eac42 100644
+--- a/net/wireless/chan.c
++++ b/net/wireless/chan.c
+@@ -141,7 +141,7 @@ static bool cfg80211_edmg_chandef_valid(const struct cfg80211_chan_def *chandef)
+ 	return true;
+ }
+ 
+-static int nl80211_chan_width_to_mhz(enum nl80211_chan_width chan_width)
++int nl80211_chan_width_to_mhz(enum nl80211_chan_width chan_width)
+ {
+ 	int mhz;
+ 
+@@ -190,6 +190,7 @@ static int nl80211_chan_width_to_mhz(enum nl80211_chan_width chan_width)
+ 	}
+ 	return mhz;
+ }
++EXPORT_SYMBOL(nl80211_chan_width_to_mhz);
+ 
+ static int cfg80211_chandef_get_width(const struct cfg80211_chan_def *c)
+ {

@@ -1,0 +1,135 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: f5b8f203bfc07a5a257dff859e66d2c500f9f509
+X-Fasttrack-CVE: CVE-2026-89913
+X-Fasttrack-Backport: cve/CVE-2026-89913/6.1
+From: Qihang <q.h.hack.winter@gmail.com>
+Date: Sun, 1 Nov 2026 15:02:17 +0100
+Subject: [PATCH] KVM: arm64: vgic-v3: take an LPI reference in
+ vgic_v3_save_pending_tables
+
+commit f5b8f203bfc07a5a257dff859e66d2c500f9f509 upstream.
+
+[ Backport: 6.1 keeps LPIs on lpi_list_head, not lpi_xa. Snapshot the INTIDs
+  with vgic_copy_lpi_list(), then take each LPI with vgic_get_irq(). ]
+[ Backport: drop the now unused dist variable and free the INTID array. ]
+
+vgic_v3_save_pending_tables() iterates dist->lpi_xa using xa_for_each()
+and dereferences the returned struct vgic_irq in the loop body without
+holding a reference on the LPI.
+
+The xarray iterator only provides temporary RCU coverage while looking up
+the current entry. That is not sufficient for this loop body, which reads
+fields from struct vgic_irq and performs guest memory accesses before the
+iteration completes.
+
+A concurrent path can trigger this race: the irqfd cached injection path
+(vgic_its_inject_cached_translation) obtains a transient LPI reference
+via vgic_its_check_cache() without holding kvm->lock, vcpu->mutex,
+config_lock, or its_lock. If guest ITS DISCARD then drops the cache and
+ITE references under its_lock, the transient inject reference may become
+the final one. When vgic_put_irq() drops it, the LPI is erased from
+lpi_xa and freed via kfree_rcu(). Meanwhile, vgic_v3_save_pending_tables()
+may still hold a stale pointer obtained from the xarray iterator and
+dereference it after the RCU grace period completes.
+
+Fix this by re-fetching each iterated LPI via vgic_get_irq(), which takes
+a stable reference, and dropping it with vgic_put_irq() on all paths.
+This matches the pattern already used by other lpi_xa iterators in the
+vgic ITS code.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260807025534.34125-1-q.h.hack.winter@gmail.com
+Signed-off-by: Oliver Upton <oupton@kernel.org>
+---
+ arch/arm64/kvm/vgic/vgic-v3.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/arch/arm64/kvm/vgic/vgic-v3.c b/arch/arm64/kvm/vgic/vgic-v3.c
+index 1f8eea53e982..40814cebc57c 100644
+--- a/arch/arm64/kvm/vgic/vgic-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-v3.c
+@@ -375,16 +375,20 @@ static void map_all_vpes(struct kvm *kvm)
+  */
+ int vgic_v3_save_pending_tables(struct kvm *kvm)
+ {
+-	struct vgic_dist *dist = &kvm->arch.vgic;
+ 	struct vgic_irq *irq;
+ 	gpa_t last_ptr = ~(gpa_t)0;
+ 	bool vlpi_avail = false;
+-	int ret = 0;
++	int ret = 0, nr_lpis, i;
++	u32 *intids;
+ 	u8 val;
+ 
+ 	if (unlikely(!vgic_initialized(kvm)))
+ 		return -ENXIO;
+ 
++	nr_lpis = vgic_copy_lpi_list(kvm, NULL, &intids);
++	if (nr_lpis < 0)
++		return nr_lpis;
++
+ 	/*
+ 	 * A preparation for getting any VLPI states.
+ 	 * The above vgic initialized check also ensures that the allocation
+@@ -395,16 +399,20 @@ int vgic_v3_save_pending_tables(struct kvm *kvm)
+ 		vlpi_avail = true;
+ 	}
+ 
+-	list_for_each_entry(irq, &dist->lpi_list_head, lpi_list) {
++	for (i = 0; i < nr_lpis; i++) {
+ 		int byte_offset, bit_nr;
+ 		struct kvm_vcpu *vcpu;
+ 		gpa_t pendbase, ptr;
+ 		bool is_pending;
+ 		bool stored;
+ 
++		irq = vgic_get_irq(kvm, NULL, intids[i]);
++		if (!irq)
++			continue;
++
+ 		vcpu = irq->target_vcpu;
+ 		if (!vcpu)
+-			continue;
++			goto put_irq;
+ 
+ 		pendbase = GICR_PENDBASER_ADDRESS(vcpu->arch.vgic_cpu.pendbaser);
+ 
+@@ -415,7 +423,7 @@ int vgic_v3_save_pending_tables(struct kvm *kvm)
+ 		if (ptr != last_ptr) {
+ 			ret = kvm_read_guest_lock(kvm, ptr, &val, 1);
+ 			if (ret)
+-				goto out;
++				goto put_irq;
+ 			last_ptr = ptr;
+ 		}
+ 
+@@ -427,7 +435,7 @@ int vgic_v3_save_pending_tables(struct kvm *kvm)
+ 			vgic_v4_get_vlpi_state(irq, &is_pending);
+ 
+ 		if (stored == is_pending)
+-			continue;
++			goto put_irq;
+ 
+ 		if (is_pending)
+ 			val |= 1 << bit_nr;
+@@ -435,6 +443,8 @@ int vgic_v3_save_pending_tables(struct kvm *kvm)
+ 			val &= ~(1 << bit_nr);
+ 
+ 		ret = kvm_write_guest_lock(kvm, ptr, &val, 1);
++put_irq:
++		vgic_put_irq(kvm, irq);
+ 		if (ret)
+ 			goto out;
+ 	}
+@@ -443,6 +453,8 @@ int vgic_v3_save_pending_tables(struct kvm *kvm)
+ 	if (vlpi_avail)
+ 		map_all_vpes(kvm);
+ 
++	kfree(intids);
++
+ 	return ret;
+ }
+ 
