@@ -1,0 +1,67 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: fa091f46c3833fb22384f10eade2b4e1e1d0b278
+X-Fasttrack-CVE: CVE-2026-74753
+X-Fasttrack-Backport: cve/CVE-2026-74753/6.1
+From: Kyle Zeng <kylebot@openai.com>
+Date: Sun, 1 Nov 2026 15:01:32 +0100
+Subject: [PATCH] perf: Reject exited events as group leaders
+
+commit fa091f46c3833fb22384f10eade2b4e1e1d0b278 upstream.
+
+[ Backport: 6.1 has no early REVOKED check; add the early EXIT check after the group fd lookup, exit via err_group_fd. ]
+[ Backport: 6.1 has no pmu_ctx rework; do the locked recheck at not_move_group, which runs under ctx->mutex (and gctx->mutex for move_group). ]
+
+perf_event_remove_on_exec() sets remove-on-exec events to the EXIT state
+and detaches their group relationships.  The event's file descriptor can
+remain open, however, and perf_event_open() currently accepts that event
+as a group leader because its early validation rejects only REVOKED and
+DEAD events.
+
+A new sibling can consequently be linked to the detached leader.  When
+the leader is closed, perf_group_detach() observes that its
+PERF_ATTACH_GROUP bit is already clear and skips the new sibling.  The
+sibling then retains a group_leader pointer to the freed event.
+
+Reject group leaders in the EXIT state.  Perform the check while holding
+the shared context mutex so that an exec in the target task cannot detach
+the leader between validation and group attachment.
+
+[peterz: make the earlier test fully consistent]
+Fixes: 037a3c43edfb ("perf/core: Detach event groups during remove_on_exec")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260806205655.75722-1-kylebot@openai.com
+---
+ kernel/events/core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 1d45d5f1c33c..8a879957909f 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -12490,6 +12490,10 @@ SYSCALL_DEFINE5(perf_event_open,
+ 		if (err)
+ 			goto err_fd;
+ 		group_leader = group.file->private_data;
++		if (group_leader->state <= PERF_EVENT_STATE_EXIT) {
++			err = -ENODEV;
++			goto err_group_fd;
++		}
+ 		if (flags & PERF_FLAG_FD_OUTPUT)
+ 			output_event = group_leader;
+ 		if (flags & PERF_FLAG_FD_NO_GROUP)
+@@ -12708,6 +12712,12 @@ SYSCALL_DEFINE5(perf_event_open,
+ 	}
+ not_move_group:
+ 
++	/* Recheck under ctx::mutex to serialize against remove-on-exec. */
++	if (group_leader && group_leader->state <= PERF_EVENT_STATE_EXIT) {
++		err = -ENODEV;
++		goto err_locked;
++	}
++
+ 	if (ctx->task == TASK_TOMBSTONE) {
+ 		err = -ESRCH;
+ 		goto err_locked;
