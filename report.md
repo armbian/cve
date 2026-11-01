@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 28 patch(es)
+- added 6.12: 6 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -160,7 +160,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (166)
+### Included (172)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -310,8 +310,12 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-98816 | `ad139384ecdd` | claude | bpf: Fix overflow of jump offset in constant blinding |
 |  | CVE-2026-98814 | `72ece656abd4` | claude | nvme: fix command effects log lifetime for multipath heads |
 |  | CVE-2026-98471 | `93de2a6a4b91` | claude | KVM: SEV: Do cache maintenance on the source VM during intra-host migration |
+|  | CVE-2026-98714 | `e27fc915c8f5` | claude | KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded |
 |  | CVE-2026-98803 | `88095728511e` | claude | net: stmmac: fix rx Scatter-Gather support |
 |  | CVE-2026-98795 | `0d2c49915bc3` | claude | net: sparx5: skip ptp deinit if init was skipped |
+|  | CVE-2026-98685 | `4721587f96cb` | claude | smb: client: discard post-EOF pagecache when extending a file via clone range |
+|  | CVE-2026-98684 | `aa994489bd83` | claude | smb: client: flush and commit data before querying allocated ranges |
+|  | CVE-2026-98683 | `8f8d32c1044f` | claude | smb: client: flush dirty data before zeroing a range |
 |  | CVE-2026-98972 | `e06b678e3b4e` | claude | cgroup/cpuset: Don't access cpuset_cgrp_subsys.root in is_in_v2_mode() |
 |  | CVE-2026-98989 | `c640a01a78e4` | claude | namespace: check a recursive bind mount for mount namespace loops |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | claude | bpf: Fix objects stuck in free_by_rcu_ttrace |
@@ -330,8 +334,10 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-99172 | `f0e48172a59e` | claude | ipc: drop the mqueue mount with kern_unmount() on setup failure |
 |  | CVE-2026-99189 | `38d44f78f041` | claude | gpio: mxc: fix race between chained IRQ handler install and probe completion |
 |  | CVE-2026-99151 | `55a67aa89342` | claude | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
+|  | CVE-2026-98682 | `c9b1194e8ec9` | claude | smb: client: drain and invalidate before server-side copy/clone |
+|  | CVE-2026-98715 | `60d93c27859f` | claude | KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN |
 
-### Needs a backport (18)
+### Needs a backport (12)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -345,14 +351,8 @@ Already in tree: 131 · Other architectures (not built): 12
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-97563 | `5be5bdda5863` | mainline | smb: client: reject out-of-bounds DataOffset in CIFSSMBRead() |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
-|  | CVE-2026-98715 | `60d93c27859f` | mainline | KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN |
-|  | CVE-2026-98714 | `e27fc915c8f5` | mainline | KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded |
 |  | CVE-2026-98800 | `0fb5751a6e41` | mainline | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
 |  | CVE-2026-98799 | `17637e1a581a` | mainline | bpf: Skip detached progs in trampoline images that are still in use |
-|  | CVE-2026-98685 | `4721587f96cb` | mainline | smb: client: discard post-EOF pagecache when extending a file via clone range |
-|  | CVE-2026-98684 | `aa994489bd83` | mainline | smb: client: flush and commit data before querying allocated ranges |
-|  | CVE-2026-98683 | `8f8d32c1044f` | mainline | smb: client: flush dirty data before zeroing a range |
-|  | CVE-2026-98682 | `c9b1194e8ec9` | mainline | smb: client: drain and invalidate before server-side copy/clone |
 
 ### cve/ backport does not apply on this base (1)
 
