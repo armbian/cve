@@ -50,6 +50,12 @@ jobs:
       fingerprint: ${{ steps.fp.outputs.fingerprint }}
       series: ${{ steps.fp.outputs.series }}
     steps:
+      # Claude spends the API key: only the owner may start or rerun a Claude run.
+      - name: Claude access
+        if: github.event_name == 'workflow_dispatch' && inputs.claude && github.triggering_actor != 'igorpecovnik'
+        run: |
+          echo "::error::Only igorpecovnik may run with claude: true (triggered by ${{ github.triggering_actor }})."
+          exit 1
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
@@ -304,14 +310,14 @@ jobs:
             --title "Kernel security fixes $(date -u '+%F %H:%M')" --notes-file "$RUNNER_TEMP/notes.md"
 
       - name: Install Claude Code
-        if: github.event_name == 'workflow_dispatch' && inputs.claude
+        if: github.event_name == 'workflow_dispatch' && inputs.claude && github.triggering_actor == 'igorpecovnik'
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Resolve incidents
         if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '')
         # Claude runs here: no GitHub token in this step.
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ inputs.claude && github.triggering_actor == 'igorpecovnik' && secrets.ANTHROPIC_API_KEY || '' }}
         run: |
           args=()
           if [ "${{ inputs.incidents }}" = "unpatched" ]; then args+=(--unpatched); else args+=(${{ inputs.incidents }}); fi
