@@ -6112,35 +6112,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-23346"
-    ],
-    "kev": false,
-    "upstream": "8f098037139b294050053123ab2bc0f819d08932",
-    "subject": "arm64: io: Extract user memory type in ioremap_prot()",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/arm64/include/asm/io.h"
-    ],
-    "prerequisites": [
-      "c1d26c0f0295 arm64/io: Always inline all of __raw_{read,write}[bwlq]()",
-      "8f03d74f7163 arm64 : mm: add wrapper function ioremap_prot()",
-      "d044d6ba6f02 arm64: io: permit offset addressing",
-      "ead79118dae6 arm64/io: Provide a WC friendly __iowriteXX_copy()",
-      "5c40e428aea6 arm64/io: add constant-argument check",
-      "c86fa3470c10 arm64: mm: Add confidential computing hook to ioremap_prot()",
-      "371589437616 arm64: rsi: Add support for checking whether an MMIO is protected",
-      "0110feaaf6d0 arm64: Use new fallback IO memcpy/memset",
-      "86758b504864 mm/ioremap: pass pgprot_t to ioremap_prot() instead of unsigned long",
-      "fa84e534c3ec arm64: realm: ioremap: Allow mapping memory as encrypted",
-      "9e8a3df3e7f7 arm64: Enable EFI secret area Securityfs support",
-      "f6bf47ab32e0 arm64: io: Rename ioremap_prot() to __ioremap_prot()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-43369"
     ],
     "kev": false,
@@ -6365,43 +6336,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-31527"
-    ],
-    "kev": false,
-    "upstream": "2b38efc05bf7a8568ec74bfffea0f5cfa62bc01d",
-    "subject": "driver core: platform: use generic driver_override infrastructure",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/base/platform.c",
-      "drivers/bus/simple-pm-bus.c",
-      "drivers/clk/imx/clk-scu.c",
-      "drivers/slimbus/qcom-ngd-ctrl.c",
-      "include/linux/platform_device.h",
-      "sound/soc/samsung/i2s.c"
-    ],
-    "prerequisites": [
-      "d4ad017d6345 platform: use fwnode_irq_get_byname instead of of_irq_get_byname to get irq",
-      "882cf4c913d7 drivers: bus: simple-pm-bus: Use clocks",
-      "e8433659bf70 Revert \"drivers: bus: simple-pm-bus: Use clocks\"",
-      "97e1a5309190 slimbus: qcom-ngd-ctrl: check for device runtime PM status during ISR",
-      "63c60a226c90 slimbus: qcom-ngd-ctrl: drop PM runtime counter on transfer error paths",
-      "4594cb4b76c6 slimbus: qcom-ngd-ctrl: add support for 44.1 Khz frequency",
-      "1d01bcb4659c slimbus: qcom-ngd-ctrl: use devm_platform_get_and_ioremap_resource()",
-      "319a538d618f slimbus: qcom-ngd-ctrl: reinit the reconf completion flag",
-      "bc36d761cad7 ASoC: samsung: i2s: add support for FSD I2S",
-      "64f797423379 platform: Document platform_add_devices() return value",
-      "9dd4541b1693 platform: remove useless if-branch in __platform_get_irq_byname()",
-      "c45839309c3d drivers: bus: simple-pm-bus: Use clocks",
-      "2a81ada32f0e driver core: make struct bus_type.uevent() take a const *",
-      "b4ce0bf7ab02 driver core: platform: removed unneeded variable from __platform_driver_probe()",
-      "40b3880dc29b driver core: platform: simplify __platform_driver_probe()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-31729"
     ],
     "kev": false,
@@ -6491,39 +6425,6 @@
       "befae75856ab bpf: propagate nullness information for reg to reg comparisons",
       "282de143ead9 bpf: Introduce allocated objects support",
       "4e814da0d599 bpf: Allow locking bpf_spin_lock in allocated objects"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-31487"
-    ],
-    "kev": false,
-    "upstream": "cc34d77dd48708d810c12bfd6f5bf03304f6c824",
-    "subject": "spi: use generic driver_override infrastructure",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/spi/spi.c",
-      "include/linux/spi/spi.h"
-    ],
-    "prerequisites": [
-      "93cc2559d3fd spi: Remove the obsolte u64_stats_fetch_*_irq() users.",
-      "33a2fde5f77b spi: Introduce spi-cs-setup-ns property",
-      "e0fe6a31cac8 spi: Rename spi-cs-setup-ns property to spi-cs-setup-delay-ns",
-      "f276aacf5d2f spi: Use a 32-bit DT property for spi-cs-setup-delay-ns",
-      "5827b31d858e spi: Parse hold/inactive CS delay values from the DT",
-      "2a81ada32f0e driver core: make struct bus_type.uevent() take a const *",
-      "6e80133abeb0 spi: export spi_transfer_cs_change_delay_exec function",
-      "76a85704cb91 spi: spi-mem: Allow controller supporting mem_ops without exec_op",
-      "9d77522b4524 spi: Reorder fields in 'struct spi_transfer'",
-      "fc12d4bb3227 spi: Replace spi_pcpu_stats_totalize() macro by a C function",
-      "ae2ade4ba581 spi: Reorder fields in 'struct spi_message'",
-      "c7cc588bf005 spi: Propagate firmware node",
-      "20064c47f63e spi: Fix cocci warnings",
-      "cc4b15670340 spi: Constify spi_get_ctldata()'s spi parameter",
-      "38dca04d659a spi: Constify spi_get_drvdata()'s spi parameter"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -6730,142 +6631,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-53120"
-    ],
-    "kev": false,
-    "upstream": "10a4206a24013be4d558d476010cbf2eb4c9fa64",
-    "subject": "PCI: use generic driver_override infrastructure",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/pci/pci-driver.c",
-      "drivers/pci/pci-sysfs.c",
-      "drivers/pci/probe.c",
-      "drivers/vfio/pci/vfio_pci_core.c",
-      "drivers/xen/xen-pciback/pci_stub.c",
-      "include/linux/pci.h"
-    ],
-    "prerequisites": [
-      "5984de0b41bf PCI/PM: Remove unused 'state' parameter to pci_legacy_suspend_late()",
-      "913447d06f03 vfio: Remove vfio_free_device",
-      "4e016f969529 vfio: Add an option to get migration data size",
-      "a474d3fbe287 PCI/MSI: Get rid of PCI_MSI_IRQ_DOMAIN",
-      "5c0997dc33ac PCI/MSI: Move pci_alloc_irq_vectors() to api.c",
-      "361187e04733 PCI/AER: Add optional logging callback for correctable error",
-      "8f8bcc8c720c vfio/pci: Move all the SPAPR PCI specific logic to vfio_pci_core.ko",
-      "20601c45a0fa vfio: Remove CONFIG_VFIO_SPAPR_EEH",
-      "34026364df8e PCI/MSI: Provide post-enable dynamic allocation interfaces for MSI-X",
-      "0194425af0c8 PCI/MSI: Provide IMS (Interrupt Message Store) support",
-      "c9e5bea27383 PCI/MSI: Provide pci_ims_alloc/free_irq()",
-      "589c3357370a PCI/CXL: Export native CXL error reporting control",
-      "2a81ada32f0e driver core: make struct bus_type.uevent() take a const *",
-      "de82f60f9c86 PCI/ASPM: Add pci_enable_link_state()",
-      "1c71222e5f23 mm: replace vma->vm_flags direct modifications with modifier calls"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-53118"
-    ],
-    "kev": false,
-    "upstream": "85bb534ff12aab6916058897b39c748940a7a4c6",
-    "subject": "vdpa: use generic driver_override infrastructure",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/vdpa/vdpa.c",
-      "include/linux/vdpa.h"
-    ],
-    "prerequisites": [
-      "b9e05399d927 vdpa: merge functionally duplicated dev_features attributes",
-      "1c96d5457f72 vdpa: conditionally fill max max queue pair for stats",
-      "1538a8a49ecb vdpa: Add resume operation",
-      "25da258fa61b vdpa: introduce get_vq_dma_device()",
-      "99fb2b838f44 vdpa: set dma mask for vDPA device",
-      "699209fcc55c vdpa: Fix a couple of spelling mistakes in some messages",
-      "275487b4be89 vdpa: fix improper error message when adding vdpa dev",
-      "6e6d39830bc6 vdpa: conditionally read STATUS in config space",
-      "e7d09cd1d4a2 vdpa: validate provisioned device features against specified attribute",
-      "dbb6f1c42ade vdpa: validate device feature provisioning against supported class",
-      "1d24692732fb vdpa: Add set/get_vq_affinity callbacks in vdpa_config_ops",
-      "c618c84d4ccc vdpa: add bind_mm/unbind_mm callbacks",
-      "9be5d2d424a1 vdpa: address kdoc warnings",
-      "2c4e4a22a3b0 virtio-vdpa: add VIRTIO_F_NOTIFICATION_DATA feature support",
-      "b63e5c70c393 vdpa: add get_backend_features vdpa operation"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-53117"
-    ],
-    "kev": false,
-    "upstream": "ac4d8bb6e2e13e8684a76ea48d13ebaaaf5c24c4",
-    "subject": "s390/cio: use generic driver_override infrastructure",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/s390/cio/cio.h",
-      "drivers/s390/cio/css.c"
-    ],
-    "prerequisites": [
-      "ca34cda73fd4 s390/cio: evaluate devices with non-operational paths",
-      "2a81ada32f0e driver core: make struct bus_type.uevent() take a const *",
-      "b8fa3e90965e s390/cio: make sch->lock spinlock pointer a member",
-      "42c4c8fdbd1a s390/cio: make css_bus_type const",
-      "e3e9bda38e6d s390/virtio_ccw: use DMA handle from DMA API",
-      "aaebea959efb s390/cio: convert sprintf()/snprintf() to sysfs_emit()",
-      "d69d80484598 driver core: have match() callback in struct bus_type take a const *",
-      "cb787f4ac0c2 [tree-wide] finally take no_llseek out",
-      "bf017eed7590 s390/cio: Correct some typos in comments",
-      "ece8f29d69b4 s390/cio/css: Switch over to sysfs_emit()",
-      "c3d17464f026 s390: Remove KMSG_COMPONENT macro",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "32a92f8c8932 Convert more 'alloc_obj' cases to default GFP_KERNEL arguments"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-53115"
-    ],
-    "kev": false,
-    "upstream": "6c8dfb0362732bf1e4829867a2a5239fedc592d0",
-    "subject": "bus: fsl-mc: use generic driver_override infrastructure",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/bus/fsl-mc/fsl-mc-bus.c",
-      "drivers/vfio/fsl-mc/vfio_fsl_mc.c",
-      "include/linux/fsl/mc.h"
-    ],
-    "prerequisites": [
-      "913447d06f03 vfio: Remove vfio_free_device",
-      "9d4c8175b829 bus: fsl-mc: Remove linux/msi.h includes",
-      "a4d1f91db502 vfio-iommufd: Support iommufd for physical VFIO devices",
-      "4a6c971a06ff vfio/fsl-mc: Use GFP_KERNEL_ACCOUNT for userspace persistent allocations",
-      "2a81ada32f0e driver core: make struct bus_type.uevent() take a const *",
-      "75cff725d956 driver core: bus: mark the struct bus_type for sysfs callbacks as constant",
-      "b816b9444c10 bus: fsl-mc: Only warn once about errors on device unbind",
-      "59272ad8d9e8 bus: fsl-mc: Make remove function return void",
-      "9048c7341c4d vfio-iommufd: Add detach_ioas support for physical VFIO devices",
-      "53c5ae638da0 bus: Explicitly include correct DT includes",
-      "6c092088fad4 vfio/fsl-mc: Use module_fsl_mc_driver macro to simplify the code",
-      "09959520d2b0 bus: fsl-mc: Use common ranges functions",
-      "864acca58000 bus: fsl-mc: Drop if block with always false condition",
-      "a8759bd4c4fa bus: fsl-mc: Convert to platform remove callback returning void",
-      "d69d80484598 driver core: have match() callback in struct bus_type take a const *"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-46017"
     ],
     "kev": false,
@@ -6987,79 +6752,6 @@
       "cb16301626c3 KVM: arm64: Issue CMOs when tearing down guest s2 pages",
       "40458a66afde KVM: arm64: Fix comment for __pkvm_vcpu_init_traps()",
       "66d5b53e20a6 KVM: arm64: Allocate memory mapped at hyp for host sve state in pKVM"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-64078"
-    ],
-    "kev": false,
-    "upstream": "b4597d5fd7d2f8cebfffd40dffb5e003cc78964c",
-    "subject": "netfilter: x_tables: add and use xtables_unregister_table_exit",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/netfilter/x_tables.h",
-      "net/ipv4/netfilter/arp_tables.c",
-      "net/ipv4/netfilter/ip_tables.c",
-      "net/ipv4/netfilter/iptable_nat.c",
-      "net/ipv6/netfilter/ip6_tables.c",
-      "net/ipv6/netfilter/ip6table_nat.c",
-      "net/netfilter/x_tables.c"
-    ],
-    "prerequisites": [
-      "36ce9982ef2f xtables: move icmp/icmpv6 logic to xt_tcpudp",
-      "06f7d3c3f82c netfilter: x_tables: refactor deprecated strncpy",
-      "94090b23f3f7 netfilter: add missing module descriptions",
-      "26f4dac11775 netfilter: x_tables: Use unsafe_memcpy() for 0-sized destination",
-      "82183b03de5f net/ipv4: net: prefer strscpy over strcpy",
-      "20eb5e7cb78c netfilter: Use kmemdup_array instead of kmemdup for multiple allocation",
-      "3f330db30638 net: reformat kdoc return statements",
-      "a1f1acb9c5db netfilter: nf_dup{4, 6}: Move duplication check to task_struct",
-      "031a71247194 netfilter: x_tables: Remove unused functions xt_{in|out}name()",
-      "9fce66583f06 netfilter: Exclude LEGACY TABLES on PREEMPT_RT.",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "f30e5a7291a8 netfilter: x_tables: Avoid a couple -Wflex-array-member-not-at-end warnings",
-      "6813985ca456 netfilter: x_tables: add .check_hooks to matches and targets",
-      "8e72510db9fa netfilter: x_tables: allow initial table replace without emitting audit log message"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-64079"
-    ],
-    "kev": false,
-    "upstream": "b62eb8dcf2c47d4d676a434efbd57c4f776f7829",
-    "subject": "netfilter: x_tables: allocate hook ops while under mutex",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/netfilter/x_tables.h",
-      "net/ipv4/netfilter/arp_tables.c",
-      "net/ipv4/netfilter/ip_tables.c",
-      "net/ipv6/netfilter/ip6_tables.c",
-      "net/netfilter/x_tables.c"
-    ],
-    "prerequisites": [
-      "36ce9982ef2f xtables: move icmp/icmpv6 logic to xt_tcpudp",
-      "06f7d3c3f82c netfilter: x_tables: refactor deprecated strncpy",
-      "26f4dac11775 netfilter: x_tables: Use unsafe_memcpy() for 0-sized destination",
-      "82183b03de5f net/ipv4: net: prefer strscpy over strcpy",
-      "20eb5e7cb78c netfilter: Use kmemdup_array instead of kmemdup for multiple allocation",
-      "3f330db30638 net: reformat kdoc return statements",
-      "a1f1acb9c5db netfilter: nf_dup{4, 6}: Move duplication check to task_struct",
-      "031a71247194 netfilter: x_tables: Remove unused functions xt_{in|out}name()",
-      "9fce66583f06 netfilter: Exclude LEGACY TABLES on PREEMPT_RT.",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "f30e5a7291a8 netfilter: x_tables: Avoid a couple -Wflex-array-member-not-at-end warnings",
-      "6813985ca456 netfilter: x_tables: add .check_hooks to matches and targets",
-      "8e72510db9fa netfilter: x_tables: allow initial table replace without emitting audit log message"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8241,6 +7933,26 @@
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-72434"
+    ],
+    "kev": false,
+    "upstream": "4a597a87e2e2f608edb6be2c510dc826b4fdfb53",
+    "subject": "netfilter: ipset: make sure gc is properly stopped",
+    "verdict": "needs-backport",
+    "files": [
+      "net/netfilter/ipset/ip_set_hash_gen.h"
+    ],
+    "prerequisites": [
+      "e93745249505 netfilter: ipset: Add support for new bitmask parameter",
+      "1e2f2d31997a Kill sched.h dependency on rcupdate.h",
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
+    ],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## net/netfilter/ipset/ip_set_hash_ip.c\nnet/netfilter/ipset/ip_set_hash_gen.h:596:17: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]\n## net/netfilter/ipset/ip_set_hash_ipmac.c\nnet/netfilter/ipset/ip_set_hash_gen.h:596:17: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]\n## net/netfilter/ipset/ip_set_hash_ipmark.c\nnet/netfilter/ipset/ip_set_hash_gen.h:596:17: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]"
   },
   {
     "series": "6.1",

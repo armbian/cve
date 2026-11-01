@@ -1,0 +1,46 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 813bbc4d33d2ca5b0da63e70ae13b60874f20d37
+X-Fasttrack-CVE: CVE-2026-31527
+X-Fasttrack-Backport: cve/CVE-2026-31527/6.1
+From: Danilo Krummrich <dakr@kernel.org>
+Date: Tue, 3 Mar 2026 12:53:20 +0100
+Subject: [PATCH] hwmon: axi-fan: don't use driver_override as IRQ name
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+commit 813bbc4d33d2ca5b0da63e70ae13b60874f20d37 upstream.
+
+[ Backport: prerequisite for 2b38efc05bf7. 6.1 uses dev_err() instead of
+  dev_err_probe() in the error path. Keep the 6.1 error path. ]
+
+Do not use driver_override as IRQ name, as it is not guaranteed to point
+to a valid string; use NULL instead (which makes the devm IRQ helpers
+use dev_name()).
+
+Fixes: 8412b410fa5e ("hwmon: Support ADI Fan Control IP")
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Acked-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260303115720.48783-4-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+
+(cherry picked from commit 813bbc4d33d2ca5b0da63e70ae13b60874f20d37)
+---
+ drivers/hwmon/axi-fan-control.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/hwmon/axi-fan-control.c b/drivers/hwmon/axi-fan-control.c
+index 25abf28084c9..12b6512e45a0 100644
+--- a/drivers/hwmon/axi-fan-control.c
++++ b/drivers/hwmon/axi-fan-control.c
+@@ -518,7 +518,7 @@ static int axi_fan_control_probe(struct platform_device *pdev)
+ 	ret = devm_request_threaded_irq(&pdev->dev, ctl->irq, NULL,
+ 					axi_fan_control_irq_handler,
+ 					IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
+-					pdev->driver_override, ctl);
++					NULL, ctl);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to request an irq, %d", ret);
+ 		return ret;
