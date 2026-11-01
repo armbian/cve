@@ -1,0 +1,140 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 06e3f54e8b22040ada01a28343badf1990b4dd7d
+X-Fasttrack-CVE: CVE-2026-98558
+X-Fasttrack-Backport: cve/CVE-2026-98558/6.12
+From: Eric Dumazet <edumazet@google.com>
+Date: Sun, 1 Nov 2026 00:35:07 +0100
+Subject: [PATCH] net: flush skb_defer_nodes in dev_cpu_dead()
+
+commit 06e3f54e8b22040ada01a28343badf1990b4dd7d upstream.
+
+[ Backport: 6.12 keeps one defer list per softnet_data, not per-NUMA skb_defer_nodes. Flush oldsd in dev_cpu_dead(). ]
+[ Backport: skb_defer_node_flush() takes a softnet_data and disables BH, because 6.12 flush uses spin_lock(). ]
+[ Backport: no per-node drain and no CPU migration check: 6.12 has no per-node slots. ]
+
+When a CPU goes offline, dev_cpu_dead() drains its softnet queues
+(completion_queue, output_queue, poll_list, process_queue, and
+input_pkt_queue), but leaves net_hotdata.skb_defer_nodes untouched.
+
+If oldcpu goes offline while holding pending skbs in its
+skb_defer_nodes lists (e.g. below the sysctl_skb_defer_max >> 1 IPI
+threshold, or if the IPI races with CPU teardown), those skbs remain
+stranded until oldcpu is brought back online. If any of these skbs
+hold page_pool fragments, page_pool_destroy() will stall indefinitely
+waiting for inflight pages to be returned when a netdev or driver is
+torn down while oldcpu is offline.
+
+Additionally, if smp_call_function_single_async() fails in
+kick_defer_list_purge() because the target CPU went offline, reset
+defer_ipi_scheduled to 0 so future IPI kicks are not blocked when the
+CPU comes back online.
+
+Also, if oldcpu was the last online CPU on its NUMA node, drain that
+node's slot across all CPUs so no skbs deferred from that node remain
+stranded on idle remote CPUs (or if the node itself is subsequently
+offlined).
+
+Finally, in skb_attempt_defer_free(), re-check cpu_online(cpu) and
+whether the caller migrated CPUs after llist_add(), flushing the node
+list if so, to close the preemption TOCTOU race against CPU/node
+teardown.
+
+Fixes: 68822bdf76f1 ("net: generalize skb freeing deferral to per-cpu lists")
+Fixes: 5628f3fe3b16 ("net: add NUMA awareness to skb_attempt_defer_free()")
+Closes: https://lore.kernel.org/netdev/20260916003430.3612956-1-kris.pan@intel.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Kris Pan <kris.pan@intel.com>
+Link: https://patch.msgid.link/20260923130318.607255-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ net/core/dev.c    | 21 ++++++++++++++++++---
+ net/core/dev.h    |  1 +
+ net/core/skbuff.c |  5 +++++
+ 3 files changed, 24 insertions(+), 3 deletions(-)
+
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 397fd0f9cc7a..36454571d340 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -4983,7 +4983,8 @@ void kick_defer_list_purge(struct softnet_data *sd, unsigned int cpu)
+ 		backlog_unlock_irq_restore(sd, &flags);
+ 
+ 	} else if (!cmpxchg(&sd->defer_ipi_scheduled, 0, 1)) {
+-		smp_call_function_single_async(cpu, &sd->defer_csd);
++		if (smp_call_function_single_async(cpu, &sd->defer_csd))
++			WRITE_ONCE(sd->defer_ipi_scheduled, 0);
+ 	}
+ }
+ 
+@@ -6475,7 +6476,7 @@ bool napi_complete_done(struct napi_struct *n, int work_done)
+ }
+ EXPORT_SYMBOL(napi_complete_done);
+ 
+-static void skb_defer_free_flush(struct softnet_data *sd)
++static void __skb_defer_free_flush(struct softnet_data *sd, int budget)
+ {
+ 	struct sk_buff *skb, *next;
+ 
+@@ -6491,11 +6492,23 @@ static void skb_defer_free_flush(struct softnet_data *sd)
+ 
+ 	while (skb != NULL) {
+ 		next = skb->next;
+-		napi_consume_skb(skb, 1);
++		napi_consume_skb(skb, budget);
+ 		skb = next;
+ 	}
+ }
+ 
++void skb_defer_node_flush(struct softnet_data *sd)
++{
++	local_bh_disable();
++	__skb_defer_free_flush(sd, 0);
++	local_bh_enable();
++}
++
++static void skb_defer_free_flush(struct softnet_data *sd)
++{
++	__skb_defer_free_flush(sd, 1);
++}
++
+ #if defined(CONFIG_NET_RX_BUSY_POLL)
+ 
+ static void __busy_poll_stop(struct napi_struct *napi, bool skip_schedule)
+@@ -11979,6 +11992,8 @@ static int dev_cpu_dead(unsigned int oldcpu)
+ 		rps_input_queue_head_incr(oldsd);
+ 	}
+ 
++	skb_defer_node_flush(oldsd);
++
+ 	return 0;
+ }
+ 
+diff --git a/net/core/dev.h b/net/core/dev.h
+index e0603dcb6aa1..f90877e4dd09 100644
+--- a/net/core/dev.h
++++ b/net/core/dev.h
+@@ -160,6 +160,7 @@ static inline void napi_assert_will_not_race(const struct napi_struct *napi)
+ 	WARN_ON(READ_ONCE(napi->list_owner) != -1);
+ }
+ 
++void skb_defer_node_flush(struct softnet_data *sd);
+ void kick_defer_list_purge(struct softnet_data *sd, unsigned int cpu);
+ 
+ int dev_set_hwtstamp_phylib(struct net_device *dev,
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 5608b5507b5b..c1cafb6b4589 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -7254,6 +7254,11 @@ nodefer:	kfree_skb_napi_cache(skb);
+ 	WRITE_ONCE(sd->defer_list, skb);
+ 	spin_unlock_bh(&sd->defer_lock);
+ 
++	if (unlikely(!cpu_online(cpu))) {
++		skb_defer_node_flush(sd);
++		return;
++	}
++
+ 	/* Make sure to trigger NET_RX_SOFTIRQ on the remote CPU
+ 	 * if we are unlucky enough (this seems very unlikely).
+ 	 */
