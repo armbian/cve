@@ -426,9 +426,15 @@ def collect_work(repo: Path, res: Resolution, wdir: Path, builder=None, stack: l
         subj = gitutil.git(tree, "log", "-1", "--format=%s", sha).strip()
         body = gitutil.git(tree, "log", "-1", "--format=%B", sha)
         up = _upstream_of(body, res.candidates)
-        new.append(Candidate(res.series, up, subj, "claude", [res.cve], verdict=CLAUDE,
-                             reason="backport made in work package; review before use",
-                             patch=gitutil.format_patch(tree, sha)))
+        c = Candidate(res.series, up, subj, "claude", [res.cve], verdict=CLAUDE,
+                      reason="backport made in work package; review before use",
+                      patch=gitutil.format_patch(tree, sha))
+        stray = [f for f in gitutil.git(tree, "show", "--format=", "--name-only", sha).split()
+                 if f.endswith((".orig", ".rej"))]
+        if stray:
+            c.verdict, c.reason = CONFLICT, f"work-package commit adds {', '.join(stray)}"
+            log.info("%s %s: %s adds %s", res.cve, res.series, subj, ", ".join(stray))
+        new.append(c)
     # Fresh tree, whole series, no fuzz: the same bar as everything else.
     with tempfile.TemporaryDirectory(prefix="fasttrack-recheck-") as tmpd, \
             gitutil.Worktree(repo, res.head, Path(tmpd) / "wt") as wt:
