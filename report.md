@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.1: 36 patch(es)
+- added 6.1: 9 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -429,7 +429,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18
 
-### Included (212)
+### Included (221)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -612,14 +612,17 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-64079 | `8e72510db9fa` | claude | netfilter: x_tables: allow initial table replace without emitting audit log message |
 |  | CVE-2026-64079 | `b62eb8dcf2c4` | claude | netfilter: x_tables: allocate hook ops while under mutex |
 |  | CVE-2026-53178 | `88e994c57a79` | claude | staging: rtl8723bs: rtw_mlme: add bounds checks before ie_length subtraction |
+|  | CVE-2026-64001 | `4cc54bdd54b3` | claude | ALSA: pcm: oss: Fix setup list UAF on proc write error |
 |  | CVE-2026-64241 | `950007767823` | claude | gpio: rockchip: teardown bugs and resource leaks |
 |  | CVE-2026-80676 | `331d8900121a` | claude | Drivers: hv: vmbus: use generic driver_override infrastructure |
+|  | CVE-2026-97424 | `e3829992dd9f` | claude | drm/amdgpu/ras: add ras_suspend callback and use it for cp_ecc_error_irq |
 |  | CVE-2026-63805 | `4e67f504ee9d` | claude | crypto: nx - fix nx_crypto_ctx_exit argument |
 |  | CVE-2026-98906 | `aa97f11a76e5` | claude | net: lan966x: restore RX state on reload failure |
 |  | CVE-2026-72469 | `af9b65b29af3` | claude | xprtrdma: Fix ep kref imbalance on ADDR_CHANGE |
 |  | CVE-2026-72454 | `650716f23eac` | claude | i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev() |
 |  | CVE-2026-98903 | `5ccea7eacb77` | claude | mailbox: imx: Add a channel shutdown field |
 |  | CVE-2026-98904 | `1f602619e408` | claude | mailbox: imx: Use devm_pm_runtime_enable() |
+|  | CVE-2026-63819 | `8712353ed80f` | claude | f2fs: fix to do sanity check on f2fs_get_node_folio_ra() |
 |  | CVE-2026-98901 | `5015191096db` | claude | ksmbd: fix lease break and ack state handling |
 |  | CVE-2026-64513 | `c7722e5e1dae` | claude | KVM: x86: Move update_cr8_intercept() to lapic.c |
 |  | CVE-2026-64513 | `bb365a506b1e` | claude | KVM: x86: Unconditionally recompute CR8 intercept on PPR update |
@@ -635,18 +638,24 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-89929 | `6d00e67326d8` | claude | KVM: nVM: Ensure INVVPID is emulated on the correct physical CPU |
 |  | CVE-2026-93799 | `6aa77efaea9e` | claude | wifi: iwlwifi: mvm: validate sta_id in BA window status notif |
 |  | CVE-2026-93091 | `8e49055d0d49` | claude | firmware: arm_scmi: Quiesce notifications before teardown |
+|  | CVE-2026-98926 | `8fa813b7fd1e` | claude | drm/amd/display: Remove sink usage from DPMS |
 |  | CVE-2026-98815 | `—` | claude | nvme: add nvme_get_ns_head() |
 |  | CVE-2026-98815 | `9952f3882ecb` | claude | nvme: fix cdev lifetime |
+|  | CVE-2026-93047 | `fa98563ab00d` | claude | drm/v3d: Associate BOs with every job that accesses them |
+|  | CVE-2026-92499 | `bc4b7b0414c3` | claude | ext4: validate readdir offset before accessing dirent |
+|  | CVE-2026-92500 | `7edbb323bab2` | claude | ext4: use fsdata to track inline data write state and fix race |
 |  | CVE-2026-92493 | `8d31bb145164` | claude | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
 |  | CVE-2026-74536 | `ce57442a3792` | claude | Bluetooth: ISO: fix leaking sk after socket release |
 |  | CVE-2026-90379 | `915672c5ae32` | claude | wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash |
 |  | CVE-2026-90359 | `c48796aa6c39` | claude | bpf: Reject >8 byte return values on return-reading trampoline paths |
 |  | CVE-2026-74653 | `142341547127` | claude | serial: 8250_of: clear stuck empty-FIFO RX-timeout on LPC32xx |
+|  | CVE-2026-90321 | `8914a3330b72` | claude | ocfs2: validate inline xattrs during inode block validation |
 |  | CVE-2026-80556 | `c125ee35a49a` | claude | mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition |
 |  | CVE-2026-72324 | `—` | claude | genirq/generic_chip: Introduce irq_domain_{alloc,remove}_generic_chips() |
 |  | CVE-2026-72324 | `b11c513ad943` | claude | gpio: mvebu: free generic chips on unbind |
+|  | CVE-2026-90320 | `2cf82b46d5e4` | claude | ocfs2: validate external xattr entries when reading metadata |
 
-### Needs a backport (251)
+### Needs a backport (242)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -670,9 +679,7 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-46054 | `82544d36b172` | mainline | selinux: fix overlayfs mmap() and mprotect() access checks |
 | does not build | CVE-2026-64112 | `9fc75b71fdd3` | mainline | rbd: eliminate a race in lock_dwork draining on unmap |
 |  | CVE-2026-64026 | `d2bc90cf6c75` | mainline | rxrpc: Fix DATA decrypt vs splice() by copying data to buffer in recvmsg |
-|  | CVE-2026-64001 | `4cc54bdd54b3` | mainline | ALSA: pcm: oss: Fix setup list UAF on proc write error |
 |  | CVE-2026-74374 | `811545e0926d` | mainline | md/raid1,raid10: fix error-path detection with md_cloned_bio() |
-|  | CVE-2026-97424 | `e3829992dd9f` | mainline | drm/amdgpu/ras: add ras_suspend callback and use it for cp_ecc_error_irq |
 |  | CVE-2026-53185 | `732fd9f0b9c1` | mainline | zram: fix use-after-free in zram_bvec_write_partial() |
 |  | CVE-2026-80636 | `35e21a4dccc5` | mainline | netfilter: conntrack: revert ct extension genid infrastructure |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
@@ -680,16 +687,11 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-74314 | `a3a81d247651` | mainline | bpf: Cancel special fields on map value recycle |
 |  | CVE-2026-74272 | `4dd86ca99ffc` | mainline | cxl/region: Resolve region deletion races |
 | does not build | CVE-2026-72434 | `4a597a87e2e2` | mainline | netfilter: ipset: make sure gc is properly stopped |
-|  | CVE-2026-63819 | `8712353ed80f` | mainline | f2fs: fix to do sanity check on f2fs_get_node_folio_ra() |
 | does not build | CVE-2026-89899 | `0fbd5c232702` | mainline | media: cec: disable delayed work before freeing an interrupted transmit |
 |  | CVE-2026-68447 | `426ffae6ecc7` | mainline | drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size |
 |  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing |
 |  | CVE-2026-93099 | `2566b5cd6a27` | mainline | fs/resctrl: Fix UAF from worker threads when domains are removed |
-|  | CVE-2026-98926 | `8fa813b7fd1e` | mainline | drm/amd/display: Remove sink usage from DPMS |
 | does not build | CVE-2026-93072 | `616dd89d81ad` | mainline | irqchip/renesas-irqc: Fix generic interrupt chip leak on remove |
-|  | CVE-2026-93047 | `fa98563ab00d` | mainline | drm/v3d: Associate BOs with every job that accesses them |
-|  | CVE-2026-92500 | `7edbb323bab2` | mainline | ext4: use fsdata to track inline data write state and fix race |
-|  | CVE-2026-92499 | `bc4b7b0414c3` | mainline | ext4: validate readdir offset before accessing dirent |
 |  | CVE-2026-68152 | `ea20c44935d6` | mainline | amt: fix use-after-free in AMT delayed works |
 |  | CVE-2026-90227 | `b53d495c7f0d` | mainline | nvme/ioctl: check SUBMIT_IO with nvme_cmd_allowed() |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
@@ -697,8 +699,6 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-90389 | `bace2010dd7a` | mainline | md: scope memalloc_noio to allocation critical sections |
 |  | CVE-2026-90333 | `68c5c42567bc` | mainline | dm-integrity: replace forgeable discard filler with a keyed sector marker |
 |  | CVE-2026-89797 | `75b1e88d3425` | mainline | power: supply: ab8500_fg: fix use-after-free on remove |
-|  | CVE-2026-90321 | `8914a3330b72` | mainline | ocfs2: validate inline xattrs during inode block validation |
-|  | CVE-2026-90320 | `2cf82b46d5e4` | mainline | ocfs2: validate external xattr entries when reading metadata |
 |  | CVE-2026-74639 | `2615f0fb90df` | mainline | ALSA: us144mkii: re-anchor capture URBs on resubmission |
 |  | CVE-2026-74592 | `b80bed5c871a` | mainline | ima: Instantiate file_truncate and path_truncate hooks |
 |  | CVE-2026-90315 | `747b9bbbbdfd` | mainline | PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers |

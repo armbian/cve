@@ -1,0 +1,69 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 8fa813b7fd1eccbed13e126166cf764f1f11a7d3
+X-Fasttrack-CVE: CVE-2026-98926
+X-Fasttrack-Backport: cve/CVE-2026-98926/6.1
+From: Dominik Kaszewski <dominik.kaszewski@amd.com>
+Date: Sun, 1 Nov 2026 13:00:10 +0100
+Subject: [PATCH] drm/amd/display: Remove sink usage from DPMS
+
+commit 8fa813b7fd1eccbed13e126166cf764f1f11a7d3 upstream.
+
+[ Backport: 6.1 has the DPMS code in dc/core/dc_link.c, core_link_enable_stream() and core_link_disable_stream() ]
+[ Backport: take only the NULL sink fixes: stream->link in DPMS on/off, sink check before skip_avmute ]
+[ Backport: drop the USB4 BW allocation ASSERTs; 6.1 has no USB4 BW allocation code ]
+[ Backport: drop the cosmetic stream/link renames and the get_vpg() helper ]
+
+[Why]
+stream->sink is optional and can be null, so should always be checked
+before dereference. Additionally, most of its usage in DPMS sequences
+is for stream->sink->link, which can be replaced with stream->link,
+as the two should always be the same.
+
+[How]
+* Replace stream->sink->link in DPMS on/off
+* Add assert to USB4 BW allocation where sink is required
+* Avoid inconsistencies in resource access, e.g. don't repeat
+stream->link after it was already saved to a local variable
+* Pull out effective VPG calculation to helper getter
+* Formatting fixes
+
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Dominik Kaszewski <dominik.kaszewski@amd.com>
+Signed-off-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+---
+ drivers/gpu/drm/amd/display/dc/core/dc_link.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link.c b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
+index f0db2d58fd6b..151ce62dd64e 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
+@@ -4263,7 +4263,7 @@ void core_link_enable_stream(
+ {
+ 	struct dc *dc = pipe_ctx->stream->ctx->dc;
+ 	struct dc_stream_state *stream = pipe_ctx->stream;
+-	struct dc_link *link = stream->sink->link;
++	struct dc_link *link = stream->link;
+ 	enum dc_status status;
+ 	struct link_encoder *link_enc;
+ 	enum otg_out_mux_dest otg_out_dest = OUT_MUX_DIO;
+@@ -4461,7 +4461,7 @@ void core_link_disable_stream(struct pipe_ctx *pipe_ctx)
+ {
+ 	struct dc  *dc = pipe_ctx->stream->ctx->dc;
+ 	struct dc_stream_state *stream = pipe_ctx->stream;
+-	struct dc_link *link = stream->sink->link;
++	struct dc_link *link = stream->link;
+ 	struct vpg *vpg = pipe_ctx->stream_res.stream_enc->vpg;
+ 
+ 	if (is_dp_128b_132b_signal(pipe_ctx))
+@@ -4482,7 +4482,7 @@ void core_link_disable_stream(struct pipe_ctx *pipe_ctx)
+ 			dc_is_virtual_signal(pipe_ctx->stream->signal))
+ 		return;
+ 
+-	if (!pipe_ctx->stream->sink->edid_caps.panel_patch.skip_avmute) {
++	if (stream->sink && !stream->sink->edid_caps.panel_patch.skip_avmute) {
+ 		if (dc_is_hdmi_signal(pipe_ctx->stream->signal))
+ 			core_link_set_avmute(pipe_ctx, true);
+ 	}
