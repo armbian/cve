@@ -3100,104 +3100,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-35808"
-    ],
-    "kev": false,
-    "upstream": "cd32b27a66db8776d8b8e82ec7d7dde97a8693b0",
-    "subject": "md/dm-raid: don't call md_reap_sync_thread() directly",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/md/dm-raid.c"
-    ],
-    "prerequisites": [
-      "efdd3c3375aa dm raid: fix some spelling mistakes in comments",
-      "3bd940030752 dm: add missing SPDX-License-Indentifiers",
-      "2f06cd12e114 dm: avoid initializing static variables",
-      "b30f1607146c dm: add missing blank line after declarations/fix those",
-      "23fda2effbb1 dm: fix suspect indent whitespace",
-      "306fbc2e041c dm raid: remove unused d variable",
-      "3664ff82dae1 dm: add helper macro for simple DM target module init and exit",
-      "955a257d69e4 dm-raid: remove useless checking in raid_message()",
-      "a865b96c513b Revert \"md: unlock mddev before reap sync_thread in action_store\"",
-      "d58eff83bd3c md: initialize 'active_io' while allocating mddev",
-      "e3260d90c8f3 dm raid: Annotate struct raid_set with __counted_by",
-      "4eb3327aa28f md/dm-raid: use new apis to suspend array",
-      "2b16a52549d5 md: rename __mddev_suspend/resume() back to mddev_suspend/resume()",
-      "db29d79b34d9 dm-raid: delay flushing event_work() after reconfig_mutex is released",
-      "16c4770c75b1 dm-raid: really frozen sync_thread during suspend"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-27079"
-    ],
-    "kev": false,
-    "upstream": "81e921fd321614c2ad8ac333b041aae1da7a1c6d",
-    "subject": "iommu/vt-d: Fix NULL domain on device release",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/iommu/intel/iommu.c",
-      "drivers/iommu/intel/pasid.c",
-      "drivers/iommu/intel/pasid.h"
-    ],
-    "prerequisites": [
-      "bd7ebb771935 iommu: Regulate EINVAL in ->attach_dev callback functions",
-      "f4a147735793 iommu: Use EINVAL for incompatible device/domain in ->attach_dev",
-      "eaca8889a1ef iommu/vt-d: Add SVA domain support",
-      "1c263576f473 iommu: Remove SVA related callbacks from iommu ops",
-      "757636ed2607 iommu: Rename iommu-sva-lib.{c,h}",
-      "35a99c54dd60 iommu/vt-d: Add blocking domain support",
-      "ba502132f543 iommu/vt-d: Rename iommu_disable_dev_iotlb()",
-      "a8204479f284 iommu/vt-d: Rename domain_add_dev_info()",
-      "b1cf1563f3b7 iommu/vt-d: Remove unnecessary domain_context_mapped()",
-      "e5b0feb4361a iommu/vt-d: Use real field for indication of first level",
-      "4989764d8ed3 iommu: Add IOMMU_CAP_ENFORCE_CACHE_COHERENCY",
-      "f188bdb5f1df iommu/x86: Replace IOMMU_CAP_INTR_REMAP with IRQ_DOMAIN_FLAG_ISOLATED_MSI",
-      "2552d3a2292a iommu/intel: Add a gfp parameter to alloc_pgtable_page()",
-      "2d4d767659ff iommu/intel: Support the gfp argument to the map_pages op",
-      "4951eb262384 iommu/intel: Use GFP_KERNEL in sleepable contexts"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-26944"
-    ],
-    "kev": false,
-    "upstream": "1ec17ef59168a1a6f1105f5dc517f783839a5302",
-    "subject": "btrfs: zoned: fix use-after-free in do_zone_finish()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/btrfs/zoned.c"
-    ],
-    "prerequisites": [
-      "c7f13d428ea1 btrfs: move fs wide helpers out of ctree.h",
-      "07e81dc94474 btrfs: move accessor helpers into accessors.h",
-      "43dd529abed2 btrfs: update function comments",
-      "fd463ac4616e btrfs: zoned: use helper to check a power of two zone size",
-      "12adffe6cfb8 btrfs: fix uninitialized variable warning in btrfs_sb_log_location",
-      "cd30d3bc78d9 btrfs: zoned: fix uninitialized variable warning in btrfs_get_dev_zones",
-      "69ccf3f4244a btrfs: handle recording of zoned writes in the storage layer",
-      "243cf8d1b673 btrfs: calculate file system wide queue limit for zoned mode",
-      "d5e4377d5051 btrfs: split zone append bios in btrfs_submit_bio",
-      "921603c76246 btrfs: pass a btrfs_bio to btrfs_use_append",
-      "fdf9a37dcfd4 btrfs: never return true for reads in btrfs_use_zone_append",
-      "04f0847c4552 btrfs: don't rely on unchanging ->bi_bdev for zone append remaps",
-      "e15acc25880c btrfs: zoned: drop space_info->active_total_bytes",
-      "4317ff0056be btrfs: introduce btrfs_bio::fs_info member",
-      "b5345d6ceeee btrfs: export bitmap_test_range_all_{set,zero}"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-36951"
     ],
     "kev": false,
@@ -3226,38 +3128,6 @@
       "da3a815ccd3a drm/amdkfd: use mask to get v9 interrupt sq data bits correctly",
       "37fb87910724 drm/amdkfd: ratelimited SQ interrupt messages",
       "5f248462c69d drm/amdgpu: Add EXT_COHERENT memory allocation flags"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-36949"
-    ],
-    "kev": false,
-    "upstream": "d06af584be5a769d124b7302b32a033e9559761d",
-    "subject": "amd/amdkfd: sync all devices to wait all processes being evicted",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/amdkfd/kfd_device.c"
-    ],
-    "prerequisites": [
-      "d69a3b762dc4 drm/amdkfd: Cleanup kfd_dev struct",
-      "beb15bc1c65a drm/amdkfd: enable cooperative launch for gfx10.3",
-      "f200521899d2 drm/amdkfd: simplify cases",
-      "828d9a872cdf drm/amdkfd: Add GC 9.4.3 KFD support",
-      "1d44ff3d7a71 drm/amdkfd: Trap handler changes for GC 9.4.3 v2",
-      "00fa40353bf3 drm/amdkfd: Check PCIe atomics support on GFX11 to set CP_HQD_HQ_STATUS0[29]",
-      "70bdfedaaec1 drm/amdkfd: Add gfx_target_version for GC 9.4.3",
-      "f544afac3f34 drm/amdgpu: Add kgd2kfd for GC 9.4.3",
-      "8dc1db3172ae drm/amdkfd: Introduce kfd_node struct (v5)",
-      "74c5b85da754 drm/amdkfd: Add spatial partitioning support in KFD",
-      "a805889a1531 drm/amdkfd: Update SDMA queue management for GFX9.4.3",
-      "92085240ef9c drm/amdkfd: add gpu compute cores io links for gfx9.4.3",
-      "1bd6dd21fcd5 drm/amdkfd: Add SDMA info for SDMA 4.4.2",
-      "d1d22df174ae drm/amdkfd: Populate memory info before adding GPU node to topology",
-      "8078f1c610fd drm/amdgpu: Change num_xcd to xcc_mask"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -3487,91 +3357,6 @@
       "98ce7d32e215 drm/amd/display: convert link.h functions to function pointer style",
       "3306ba4b60b2 drm/amd/display: fix is_timing_changed() prototype",
       "1068e987ad0b drm/amd/display: Update scaler recout data for visual confirm"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-42162"
-    ],
-    "kev": false,
-    "upstream": "af9bcf910b1f86244f39e15e701b2dc564b469a6",
-    "subject": "gve: Account for stopped queues when reading NIC stats",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/google/gve/gve_ethtool.c"
-    ],
-    "prerequisites": [
-      "068c38ad88cc net: Remove the obsolte u64_stats_fetch_*_irq() users (drivers).",
-      "82fd151d38d9 gve: Reduce alloc and copy costs in the GQ rx path",
-      "2e80aeae9f80 gve: XDP support GQI-QPL: helper function changes",
-      "75eaae158b1b gve: Add XDP DROP and TX support for GQI-QPL format",
-      "39a7f4aa3e4a gve: Add XDP REDIRECT support for GQI-QPL format",
-      "fd8e40321a12 gve: Add AF_XDP zero-copy support for GQI-QPL format",
-      "9d0aba98316d gve: unify driver name usage",
-      "da7d4b42caf1 gve: Remove dependency on 4k page size.",
-      "5e37d8254e7f gve: Add header split data path",
-      "056a70924a02 gve: Add header split ethtool stats",
-      "3bcbc67be1b7 gve: Add counter adminq_get_ptype_map_cnt to stats report",
-      "834f9458f2fd gve: add support to change ring size via ethtool",
-      "4ca78e61ec70 gve: Correctly report software timestamping capabilities",
-      "fdf412374379 gve: Remove qpl_cfg struct since qpl_ids map with queues respectively"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-40965"
-    ],
-    "kev": false,
-    "upstream": "4268254a39484fc11ba991ae148bacbe75d9cc0a",
-    "subject": "i2c: lpi2c: Avoid calling clk_get_rate during transfer",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/i2c/busses/i2c-imx-lpi2c.c"
-    ],
-    "prerequisites": [
-      "fa39065833db i2c: imx-lpi2c: avoid taking clk_prepare mutex in PM callbacks",
-      "e190a0c389e6 i2c: Convert to platform remove callback returning void",
-      "c21a17b5ce6e i2c: imx-lpi2c: Don't open-code DIV_ROUND_UP",
-      "224acec66433 i2c: imx-lpi2c: directly return ISR when detect a NACK",
-      "5d51af11f41e i2c: imx-lpi2c: Use dev_err_probe in probe function",
-      "b610c4bbd153 i2c: imx-lpi2c: return -EINVAL when i2c peripheral clk doesn't work",
-      "59738ab26644 I2C: Explicitly include correct DT includes",
-      "188542964e78 i2c: imx-lpi2c: add generic GPIO recovery for LPI2C"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-39508"
-    ],
-    "kev": false,
-    "upstream": "8a565304927fbd28c9f028c492b5c1714002cbab",
-    "subject": "io_uring/io-wq: Use set_bit() and test_bit() at worker->flags",
-    "verdict": "needs-backport",
-    "files": [
-      "io_uring/io-wq.c"
-    ],
-    "prerequisites": [
-      "da64d6db3bd3 io_uring: One wqe per wq",
-      "dfd63baf892c io-wq: Move wq accounting to io_wq",
-      "eb47943f2238 io-wq: Drop struct io_wqe",
-      "07d99096e163 io_uring/io-wq: drop outdated comment",
-      "fd37b884003c io_uring/io-wq: don't clear PF_IO_WORKER on exit",
-      "adeaa3f290ec io_uring/io-wq: clear current->worker_private on exit",
-      "78848b9b0562 io_uring/io-wq: don't grab wq->lock for worker activation",
-      "de36a15f9a38 io_uring/io-wq: reduce frequency of acct->lock acquisitions",
-      "22f7fb80e6d9 io_uring/io-wq: don't gate worker wake up success on wake_up_process()",
-      "0f8baa3c9802 io-wq: fully initialize wqe before calling cpuhp_state_add_instance_nocalls()",
-      "068c27e32e51 io-wq: write next_work before dropping acct_lock",
-      "24c3fc5c75c5 io-wq: Drop intermediate step between pending list and active work"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -3821,39 +3606,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-42317"
-    ],
-    "kev": false,
-    "upstream": "d659b715e94ac039803d7601505d3473393fc0be",
-    "subject": "mm/huge_memory: avoid PMD-size page cache if needed",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/huge_mm.h",
-      "mm/huge_memory.c"
-    ],
-    "prerequisites": [
-      "9ee2c0862716 mm/huge_memory: convert split_huge_pages_in_file() to use a folio",
-      "0f0892356fa1 mm: allow multiple error returns in try_grab_page()",
-      "b0284cd29a95 mm: Do not enable PG_arch_2 for all 64-bit architectures",
-      "ef6458b1b6ca mm: Add PG_arch_3 page flag",
-      "cb67f4282bf9 mm,thp,rmap: simplify compound page mapcount handling",
-      "9bd3155ed83b mm,thp,rmap: lock_compound_mapcounts() on THP mapcounts",
-      "be5ef2d9b006 mm,thp,rmap: subpages_mapcount of PTE-mapped subpages",
-      "96d82deb743a mm,thp,rmap: clean up the end of __split_huge_pmd_locked()",
-      "c27f479ef542 mm/huge_memory: try avoiding write faults when changing PMD protection",
-      "6a56ccbcf6c6 mm/autonuma: use can_change_(pte|pmd)_writable() to replace savedwrite",
-      "cdc5021cda19 mm: add early FAULT_FLAG_UNSHARE consistency checks",
-      "84209e87c696 mm/gup: reliable R/O long-term pinning in COW mappings",
-      "e833bc503405 mm/thp: re-apply mkdirty for small pages after split",
-      "cb8d86331343 mm: remove VM_FAULT_WRITE",
-      "f1eb1bacfba9 mm/uffd: always wr-protect pte in pte|pmd_mkuffd_wp()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-49893"
     ],
     "kev": false,
@@ -3879,74 +3631,6 @@
       "1b11ff764aef drm/amd/display: Implement multiple secure display",
       "a5b50a0cbf6f drm/amd/display: Turn on phantom OTG before disabling phantom pipe",
       "b0fcf88b3f10 drm/amd/display: Adding braces to prepare for future changes to behavior of if block"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-47703"
-    ],
-    "kev": false,
-    "upstream": "5d99e198be279045e6ecefe220f5c52f8ce9bfd5",
-    "subject": "bpf, lsm: Add check for BPF LSM return value",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/bpf.h",
-      "include/linux/bpf_lsm.h",
-      "kernel/bpf/bpf_lsm.c",
-      "kernel/bpf/btf.c",
-      "kernel/bpf/verifier.c"
-    ],
-    "prerequisites": [
-      "9ef40974a82a bpf: Allow ringbuf memory to be used as map key",
-      "d1673304097c bpf: Consider all mem_types compatible for map_{key,value} args",
-      "0593dd34e534 bpf: Append _recur naming to the bpf_task_storage helper proto",
-      "4279adb094a1 bpf: Add new bpf_task_storage_get proto with no deadlock detection",
-      "8a7dac37f27a bpf: Add new bpf_task_storage_delete proto with no deadlock detection",
-      "c4bcfb38a95e bpf: Implement cgroup storage available to non-cgroup-attached bpf progs",
-      "b6d207999c35 bpf: Fix a typo in comment for DFS algorithm",
-      "23da464dd6b8 bpf: Allow specifying volatile type modifier for kptrs",
-      "a28ace782e68 bpf: Drop reg_type_may_be_refcounted_or_null",
-      "aa3496accc41 bpf: Refactor kptr_off_tab into btf_record",
-      "db559117828d bpf: Consolidate spin_lock, timer management into btf_record",
-      "f71b2f64177a bpf: Refactor map->off_arr handling",
-      "2d577252579b bpf: Remove BPF_MAP_OFF_ARR_MAX",
-      "e5feed0f64f7 bpf: Fix copy_map_value, zero_map_value",
-      "f0c5941ff5b2 bpf: Support bpf_list_head in map values"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-45015"
-    ],
-    "kev": false,
-    "upstream": "aedf02e46eb549dac8db4821a6b9f0c6bf6e3990",
-    "subject": "drm/msm/dpu: move dpu_encoder's connector assignment to atomic_enable()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c"
-    ],
-    "prerequisites": [
-      "4ba5a4ad568e drm/msm/dpu: Remove num_enc from topology struct in favour of num_dsc",
-      "7aa6f1a12ff4 drm/msm/dpu: Implement DSC binding to PP block for CTL V1",
-      "59f0182a291c drm/msm/dpu: remove dpu_encoder_virt_ops",
-      "4b27f469b155 drm/msm/dpu: add missing dpu_encoder kerneldoc",
-      "c0cd12a5d29f drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder functions",
-      "1122697810e5 drm/msm/disp/dpu: add PSR support for eDP interface in dpu driver",
-      "51aeb3997feb drm/msm/dpu: Remove empty prepare_commit() function",
-      "8aa22aaa1fc3 drm/msm/dpu: add DSPPs into reservation upon a CTM request",
-      "f4eddf1d7874 drm/msm/dpu: avoid unnecessary check in DPU reservations",
-      "5a7a86bfa2cd drm/msm/dpu: simplify intf allocation code",
-      "e955a3f0d86e drm/msm/dpu: Implement tearcheck support on INTF block",
-      "95666ca7431c drm/msm/dpu: drop dpu_encoder_phys_ops::late_register()",
-      "a659098d78d6 drm/msm/dpu: drop (mostly) unused DPU_NAME_SIZE define",
-      "d45be1ccd330 drm/msm/dpu: Introduce PINGPONG_NONE to disconnect DSC from PINGPONG",
-      "761c629d1860 drm/msm/dpu: separate DSC flush update out of interface"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -4207,33 +3891,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-56544"
-    ],
-    "kev": false,
-    "upstream": "1c0844c6184e658064e14c4335885785ad3bf84b",
-    "subject": "udmabuf: change folios array from kmalloc to kvmalloc",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/dma-buf/udmabuf.c"
-    ],
-    "prerequisites": [
-      "aa3f99896443 udmabuf: Assert held reservation lock for dma-buf mmapping",
-      "7ae2e684854c udmabuf: add vmap and vunmap methods to udmabuf_ops",
-      "be1c21f17ce2 udmabuf: remove MODULE_LICENSE in non-modules",
-      "b7cb3821905b udmabuf: revert 'Add support for mapping hugepages (v4)'",
-      "42850c9aadfe udmabuf: Don't assert held reservation lock for dma-buf mmapping",
-      "7d79cd784470 udmabuf: use vmf_insert_pfn and VM_PFNMAP for handling mmap",
-      "0c8b91ef5100 udmabuf: add back support for mapping hugetlb pages",
-      "5e72b2b41a21 udmabuf: convert udmabuf driver to use folios",
-      "c6a3194c05e7 udmabuf: pin the pages using memfd_pin_folios() API",
-      "f0bbcc258e81 udmabuf: pre-fault when first page fault"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-50211"
     ],
     "kev": false,
@@ -4270,40 +3927,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-50028"
-    ],
-    "kev": false,
-    "upstream": "a42a5839f400e929c489bb1b58f54596c4535167",
-    "subject": "thermal: core: Reference count the zone in thermal_zone_get_by_id()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/thermal/thermal_core.c",
-      "drivers/thermal/thermal_core.h",
-      "drivers/thermal/thermal_netlink.c"
-    ],
-    "prerequisites": [
-      "d35f29ed9d11 thermal/core: Destroy thermal zone device mutex in release function",
-      "30b2ae07d3d6 thermal/core: Delete device under thermal device zone lock",
-      "1c439dec359c thermal/core: Introduce locked version of thermal_zone_device_update",
-      "05eeee2b51b4 thermal/core: Protect sysfs accesses to thermal operations with thermal zone mutex",
-      "91b3aafc2238 thermal/core: Remove thermal_zone_set_trips()",
-      "b778b4d782d4 thermal/core: Protect thermal device operations against thermal device removal",
-      "7c3d5c20dc16 thermal/core: Add a generic thermal_zone_get_trip() function",
-      "2e38a2a981b2 thermal/core: Add a generic thermal_zone_set_trip() function",
-      "5c4855d76533 thermal/of: Remove unused functions",
-      "2480b02a36ce thermal/of: Remove of_thermal_get_ntrips()",
-      "f9061f4e15c5 thermal/of: Remove of_thermal_is_trip_valid()",
-      "e6ec64f85237 thermal/drivers/qcom: Fix set_trip_temp() deadlock",
-      "e398421fd03c thermal: core: Move cdev cleanup to thermal_release()",
-      "47e3f00074c2 thermal: core: Use device_unregister() instead of device_del/put()",
-      "58d1c9fd0e85 thermal/core: Fix unregistering netlink at thermal init time"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-50097"
     ],
     "kev": false,
@@ -4329,62 +3952,6 @@
       "6ead9c98cafc net: fec: remove the xdp_return_frame when lack of tx BDs",
       "9025944fddfe net: fec: add dma_wmb to ensure correct descriptor values",
       "e4ac7cc6e5a4 net: fec: turn on XDP features"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-50166"
-    ],
-    "kev": false,
-    "upstream": "1dec67e0d9fbb087c2ab17bf1bd17208231c3bb1",
-    "subject": "fsl/fman: Fix refcount handling of fman-related devices",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/freescale/fman/mac.c"
-    ],
-    "prerequisites": [
-      "5d93cfcf7360 net: dpaa: Convert to phylink",
-      "4875b2a362e9 net: fman: Convert to platform remove callback returning void",
-      "3d40aed86287 net: Explicitly include correct DT includes",
-      "34093c9fa05d net: Remove duplicated include in mac.c",
-      "efeddd552ec6 fsl/fman: Save device references taken in mac_probe()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-53219"
-    ],
-    "kev": false,
-    "upstream": "41748675c0bf252b3c5f600a95830f0936d366c1",
-    "subject": "virtiofs: use pages instead of pointer for kernel direct IO",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/fuse/file.c",
-      "fs/fuse/fuse_i.h",
-      "fs/fuse/virtio_fs.c"
-    ],
-    "prerequisites": [
-      "138060ba92b3 fs: pass dentry to set acl method",
-      "b138777786f7 fuse: Rearrange fuse_allow_current_process checks",
-      "5970e15dbcfe filelock: move file locking definitions to separate header file",
-      "13e83a4923be fs: port ->set_acl() to pass mnt_idmap",
-      "8782a9aea3ab fs: port ->fileattr_set() to pass mnt_idmap",
-      "9452e93e6dae fs: port privilege checking helpers to mnt_idmap",
-      "facd61053cff fuse: fixes after adapting to new posix acl api",
-      "8ed7cb3f279f fuse: optional supplementary group in create requests",
-      "5a8bee63b10f fuse: in fuse_flush only wait if someone wants the return code",
-      "06bbb761c12d fuse: fix all W=1 kernel-doc warnings",
-      "d585bdbeb79a fs: convert writepage_t callback to pass a folio",
-      "de4f5fed3f23 iov_iter: add iter_iovec() helper",
-      "2cb1e08985e3 splice: Use filemap_splice_read() instead of generic_file_splice_read()",
-      "0d625446d0a4 backing_dev: remove current->backing_dev_info",
-      "70e986c3b4f4 fuse: update ki_pos in fuse_perform_write"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -4449,77 +4016,6 @@
       "8782a9aea3ab fs: port ->fileattr_set() to pass mnt_idmap",
       "f2d40141d5d9 fs: port inode_init_owner() to mnt_idmap",
       "01beba7957a2 fs: port inode_owner_or_capable() to mnt_idmap"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-53079"
-    ],
-    "kev": false,
-    "upstream": "f8f931bba0f92052cf842b7e30917b1afcc77d5a",
-    "subject": "mm/thp: fix deferred split unqueue naming and locking",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/huge_memory.c",
-      "mm/internal.h",
-      "mm/memcontrol-v1.c",
-      "mm/memcontrol.c",
-      "mm/migrate.c",
-      "mm/page_alloc.c",
-      "mm/swap.c",
-      "mm/vmscan.c"
-    ],
-    "prerequisites": [
-      "0538a82c39e9 mm: vmscan: make rotations a secondary factor in balancing anon vs file",
-      "3392ca121872 filemap: find_lock_entries() now updates start offset",
-      "9fb6beea79c6 filemap: find_get_entries() now updates start offset",
-      "7848ed6284ec mm: memcontrol: use mem_cgroup_is_root() helper",
-      "9ee2c0862716 mm/huge_memory: convert split_huge_pages_in_file() to use a folio",
-      "524984ff66ee mm: convert find_get_incore_page() to filemap_get_incore_folio()",
-      "5033091de814 mm/hwpoison: introduce per-memory_block hwpoison counter",
-      "ea0ffd0c08d0 swap: add a limit for readahead page-cluster value",
-      "0f0892356fa1 mm: allow multiple error returns in try_grab_page()",
-      "8b8817630ae8 mm/migrate: make isolate_movable_page() skip slab pages",
-      "b0284cd29a95 mm: Do not enable PG_arch_2 for all 64-bit architectures",
-      "ef6458b1b6ca mm: Add PG_arch_3 page flag",
-      "57e9cc50f4dd mm: vmscan: split khugepaged stats from direct reclaim stats",
-      "345c62d16349 mm/hugetlb: convert move_hugetlb_state() to folios",
-      "cb67f4282bf9 mm,thp,rmap: simplify compound page mapcount handling"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-57809"
-    ],
-    "kev": false,
-    "upstream": "0a726f542d7c8cc0f9c5ed7df5a4bd4b59ac21b3",
-    "subject": "PCI: imx6: Fix suspend/resume support on i.MX6QDL",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/pci/controller/dwc/pci-imx6.c"
-    ],
-    "prerequisites": [
-      "75c2f26da03f PCI: imx6: Add i.MX PCIe EP mode support",
-      "530ba41250b6 PCI: imx6: Add i.MX8MQ PCIe EP support",
-      "fb3217e2cfc6 PCI: imx6: Add i.MX8MM PCIe EP support",
-      "c435669a41dd PCI: imx6: Add i.MX8MP PCIe EP support",
-      "3bbc3c72c4b8 PCI: imx6: Save and restore root port MSI control in suspend and resume",
-      "188f46cac267 PCI: imx6: Use devm_platform_get_and_ioremap_resource()",
-      "c925cfaf0992 PCI: Explicitly include correct DT includes",
-      "74955cb8ccc3 PCI: endpoint: Drop PCI_EPC_IRQ_XXX definitions",
-      "e9af4800d448 PCI: dwc: Rename dw_pcie_ep_raise_legacy_irq()",
-      "aea370b2aec9 PCI: dwc: Drop host prefix from struct dw_pcie_host_ops members",
-      "756dcb5a820a PCI: dwc: Rename .ep_init to .init in struct dw_pcie_ep_ops",
-      "e01c9797c0eb PCI: endpoint: Clean up hardware description for BARs",
-      "6a4018583875 PCI: imx6: Simplify clock handling by using clk_bulk*() function",
-      "4e37c2f48712 PCI: imx6: Simplify PHY handling by using IMX6_PCIE_FLAG_HAS_PHYDRV",
-      "0c9651c21f2a PCI: imx6: Simplify reset handling by using *_FLAG_HAS_*_RESET"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""

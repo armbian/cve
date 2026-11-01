@@ -395,6 +395,363 @@
       "prerequisites": [],
       "build_log": "",
       "backport": ""
+    },
+    {
+      "series": "6.1",
+      "upstream": "4268254a39484fc11ba991ae148bacbe75d9cc0a",
+      "subject": "i2c: lpi2c: Avoid calling clk_get_rate during transfer",
+      "source": "stable-list",
+      "cves": [
+        "CVE-2024-40965"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0024-4268254a3948-i2c-lpi2c-avoid-calling-clk-get-rate-during-transfer.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-40965/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "cd32b27a66db8776d8b8e82ec7d7dde97a8693b0",
+      "subject": "md/dm-raid: don't call md_reap_sync_thread() directly",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-35808"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0025-cd32b27a66db-md-dm-raid-don-t-call-md-reap-sync-thread-directly.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-35808/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "81e921fd321614c2ad8ac333b041aae1da7a1c6d",
+      "subject": "iommu/vt-d: Fix NULL domain on device release",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-27079"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0026-81e921fd3216-iommu-vt-d-fix-null-domain-on-device-release.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-27079/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "1ec17ef59168a1a6f1105f5dc517f783839a5302",
+      "subject": "btrfs: zoned: fix use-after-free in do_zone_finish()",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-26944"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0027-1ec17ef59168-btrfs-zoned-fix-use-after-free-in-do-zone-finish.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-26944/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "d06af584be5a769d124b7302b32a033e9559761d",
+      "subject": "amd/amdkfd: sync all devices to wait all processes being evicted",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-36949"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0028-d06af584be5a-amd-amdkfd-sync-all-devices-to-wait-all-processes-be.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-36949/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "af9bcf910b1f86244f39e15e701b2dc564b469a6",
+      "subject": "gve: Account for stopped queues when reading NIC stats",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-42162"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0029-af9bcf910b1f-gve-account-for-stopped-queues-when-reading-nic-stat.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-42162/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "8a565304927fbd28c9f028c492b5c1714002cbab",
+      "subject": "io_uring/io-wq: Use set_bit() and test_bit() at worker->flags",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-39508"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0030-8a565304927f-io-uring-io-wq-use-set-bit-and-test-bit-at-worker-fl.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-39508/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "d659b715e94ac039803d7601505d3473393fc0be",
+      "subject": "mm/huge_memory: avoid PMD-size page cache if needed",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-42317"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0031-d659b715e94a-mm-huge-memory-avoid-pmd-size-page-cache-if-needed.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-42317/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "5d99e198be279045e6ecefe220f5c52f8ce9bfd5",
+      "subject": "bpf, lsm: Add check for BPF LSM return value",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-47703"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0032-5d99e198be27-bpf-lsm-add-check-for-bpf-lsm-return-value.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-47703/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "763aa759d3b2c4f95b11855e3d37b860860107e2",
+      "subject": "bpf: Fix compare error in function retval_range_within",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-47703"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0033-763aa759d3b2-bpf-fix-compare-error-in-function-retval-range-withi.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-47703/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "5e0b273e0a62cc04ec338c7b502797c66c2ed42a",
+      "subject": "bpf: Reset register bounds before narrowing retval range in check_mem_access()",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-47703"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0034-5e0b273e0a62-bpf-reset-register-bounds-before-narrowing-retval-ra.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-47703/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder functions",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-45015"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0035-q-drm-msm-disp-dpu-use-atomic-enable-disable-callbacks.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-45015/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "aedf02e46eb549dac8db4821a6b9f0c6bf6e3990",
+      "subject": "drm/msm/dpu: move dpu_encoder's connector assignment to atomic_enable()",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-45015"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0036-aedf02e46eb5-drm-msm-dpu-move-dpu-encoder-s-connector-assignment.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-45015/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "1c0844c6184e658064e14c4335885785ad3bf84b",
+      "subject": "udmabuf: change folios array from kmalloc to kvmalloc",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-56544"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0037-1c0844c6184e-udmabuf-change-folios-array-from-kmalloc-to-kvmalloc.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-56544/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "a42a5839f400e929c489bb1b58f54596c4535167",
+      "subject": "thermal: core: Reference count the zone in thermal_zone_get_by_id()",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-50028"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0038-a42a5839f400-thermal-core-reference-count-the-zone-in-thermal-zon.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-50028/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "fsl/fman: Save device references taken in mac_probe()",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-50166"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0039-q-fsl-fman-save-device-references-taken-in-mac-probe.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-50166/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "1dec67e0d9fbb087c2ab17bf1bd17208231c3bb1",
+      "subject": "fsl/fman: Fix refcount handling of fman-related devices",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-50166"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0040-1dec67e0d9fb-fsl-fman-fix-refcount-handling-of-fman-related-devic.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-50166/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "41748675c0bf252b3c5f600a95830f0936d366c1",
+      "subject": "virtiofs: use pages instead of pointer for kernel direct IO",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-53219"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0041-41748675c0bf-virtiofs-use-pages-instead-of-pointer-for-kernel-dir.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-53219/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "f8f931bba0f92052cf842b7e30917b1afcc77d5a",
+      "subject": "mm/thp: fix deferred split unqueue naming and locking",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-53079"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0042-f8f931bba0f9-mm-thp-fix-deferred-split-unqueue-naming-and-locking.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-53079/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "PCI: imx6: Save and restore root port MSI control in suspend and resume",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-57809"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0043-q-pci-imx6-save-and-restore-root-port-msi-control-in-s.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-57809/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "0a726f542d7c8cc0f9c5ed7df5a4bd4b59ac21b3",
+      "subject": "PCI: imx6: Fix suspend/resume support on i.MX6QDL",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-57809"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0044-0a726f542d7c-pci-imx6-fix-suspend-resume-support-on-i-mx6qdl.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-57809/6.1"
     }
   ]
 }

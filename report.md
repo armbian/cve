@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 6 patch(es)
+- added 6.1: 19 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -431,7 +431,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18
 
-### Included (23)
+### Included (44)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -458,131 +458,67 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-98966 | `184b5ddf82d4` | mainline | bonding: fix the program leak when XDP is replaced |
 |  | CVE-2026-98980 | `8189ab688f5a` | mainline | namei: don't reveal overmounted entries in refwalk |
 |  | CVE-2026-99026 | `489114c9ecae` | mainline | net: team: free skb when broadcast has no txable port |
+|  | CVE-2024-40965 | `4268254a3948` | stable-list | i2c: lpi2c: Avoid calling clk_get_rate during transfer |
+|  | CVE-2024-35808 | `cd32b27a66db` | claude | md/dm-raid: don't call md_reap_sync_thread() directly |
+|  | CVE-2024-27079 | `81e921fd3216` | claude | iommu/vt-d: Fix NULL domain on device release |
+|  | CVE-2024-26944 | `1ec17ef59168` | claude | btrfs: zoned: fix use-after-free in do_zone_finish() |
+|  | CVE-2024-36949 | `d06af584be5a` | claude | amd/amdkfd: sync all devices to wait all processes being evicted |
+|  | CVE-2024-42162 | `af9bcf910b1f` | claude | gve: Account for stopped queues when reading NIC stats |
+|  | CVE-2024-39508 | `8a565304927f` | claude | io_uring/io-wq: Use set_bit() and test_bit() at worker->flags |
+|  | CVE-2024-42317 | `d659b715e94a` | claude | mm/huge_memory: avoid PMD-size page cache if needed |
+|  | CVE-2024-47703 | `5d99e198be27` | claude | bpf, lsm: Add check for BPF LSM return value |
+|  | CVE-2024-47703 | `763aa759d3b2` | claude | bpf: Fix compare error in function retval_range_within |
+|  | CVE-2024-47703 | `5e0b273e0a62` | claude | bpf: Reset register bounds before narrowing retval range in check_mem_access() |
+|  | CVE-2024-45015 | `—` | claude | drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder functions |
+|  | CVE-2024-45015 | `aedf02e46eb5` | claude | drm/msm/dpu: move dpu_encoder's connector assignment to atomic_enable() |
+|  | CVE-2024-56544 | `1c0844c6184e` | claude | udmabuf: change folios array from kmalloc to kvmalloc |
+|  | CVE-2024-50028 | `a42a5839f400` | claude | thermal: core: Reference count the zone in thermal_zone_get_by_id() |
+|  | CVE-2024-50166 | `—` | claude | fsl/fman: Save device references taken in mac_probe() |
+|  | CVE-2024-50166 | `1dec67e0d9fb` | claude | fsl/fman: Fix refcount handling of fman-related devices |
+|  | CVE-2024-53219 | `41748675c0bf` | claude | virtiofs: use pages instead of pointer for kernel direct IO |
+|  | CVE-2024-53079 | `f8f931bba0f9` | claude | mm/thp: fix deferred split unqueue naming and locking |
+|  | CVE-2024-57809 | `—` | claude | PCI: imx6: Save and restore root port MSI control in suspend and resume |
+|  | CVE-2024-57809 | `0a726f542d7c` | claude | PCI: imx6: Fix suspend/resume support on i.MX6QDL |
 
-### Needs a backport (527)
+### Needs a backport (442)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2024-26672 | `4f32504a2f85` | mainline | drm/amdgpu: Fix variable 'mca_funcs' dereferenced before NULL check in 'amdgpu_mca_smu_get_mca_entry()' |
-| does not build | CVE-2024-35931 | `601429cca96b` | mainline | drm/amdgpu: Skip do PCI error slot reset during RAS recovery |
-|  | CVE-2024-26691 | `10c02aad111d` | mainline | KVM: arm64: Fix circular locking dependency |
-|  | CVE-2024-26914 | `39079fe8e660` | mainline | drm/amd/display: fix incorrect mpc_combine array size |
-|  | CVE-2024-26913 | `faf51b201bc4` | mainline | drm/amd/display: Fix dcn35 8k30 Underflow/Corruption Issue |
-|  | CVE-2024-36024 | `6226a5aa7737` | mainline | drm/amd/display: Disable idle reallow as part of command/gpint execution |
-|  | CVE-2024-26758 | `1baae052cccd` | mainline | md: Don't ignore suspended array in md_check_recovery() |
-|  | CVE-2024-26757 | `55a48ad2db64` | mainline | md: Don't ignore read-only array in md_check_recovery() |
-|  | CVE-2024-26756 | `ad39c08186f8` | mainline | md: Don't register sync_thread for reshape directly |
-|  | CVE-2024-26836 | `6f7d0f5fd8e4` | mainline | platform/x86: think-lmi: Fix password opcode ordering for workstations |
-|  | CVE-2024-27411 | `f6ecfdad359a` | mainline | drm/nouveau: keep DMA buffers required for suspend/resume |
-|  | CVE-2024-35843 | `def054b01a86` | mainline | iommu/vt-d: Use device rbtree in iopf reporting path |
-|  | CVE-2024-35794 | `16c4770c75b1` | mainline | dm-raid: really frozen sync_thread during suspend |
-|  | CVE-2024-35808 | `cd32b27a66db` | mainline | md/dm-raid: don't call md_reap_sync_thread() directly |
-|  | CVE-2024-27079 | `81e921fd3216` | mainline | iommu/vt-d: Fix NULL domain on device release |
-|  | CVE-2024-26944 | `1ec17ef59168` | mainline | btrfs: zoned: fix use-after-free in do_zone_finish() |
-|  | CVE-2024-36951 | `0cac183b98d8` | mainline | drm/amdkfd: range check cp bad op exception interrupts |
-|  | CVE-2024-36949 | `d06af584be5a` | mainline | amd/amdkfd: sync all devices to wait all processes being evicted |
 |  | CVE-2024-35961 | `c6e77aa9dd82` | mainline | net/mlx5: Register devlink first under devlink lock |
-|  | CVE-2024-35957 | `89436f4f5412` | mainline | iommu/vt-d: Fix WARN_ON in iommu probe path |
-|  | CVE-2024-40969 | `3bdb7f161697` | mainline | f2fs: don't set RO when shutting down f2fs |
-|  | CVE-2024-36002 | `38d7b94e81d0` | mainline | dpll: fix dpll_pin_on_pin_register() for multiple parent pins |
-|  | CVE-2024-42118 | `3ac31c9a707d` | mainline | drm/amd/display: Do not return negative stream id for array |
-|  | CVE-2024-36887 | `387f295cb215` | mainline | e1000e: change usleep_range to udelay in PHY mdic access |
-|  | CVE-2024-46729 | `3941a3aa4b65` | mainline | drm/amd/display: Fix incorrect size calculation for loop |
-|  | CVE-2024-46727 | `871cd9d881fa` | mainline | drm/amd/display: Add otg_master NULL check within resource_log_pipe_topology_update |
-|  | CVE-2024-42162 | `af9bcf910b1f` | mainline | gve: Account for stopped queues when reading NIC stats |
-|  | CVE-2024-40965 | `4268254a3948` | mainline | i2c: lpi2c: Avoid calling clk_get_rate during transfer |
-|  | CVE-2024-39508 | `8a565304927f` | mainline | io_uring/io-wq: Use set_bit() and test_bit() at worker->flags |
-|  | CVE-2024-46806 | `1a00f2ac82d6` | mainline | drm/amdgpu: Fix the warning division or modulo by zero |
-|  | CVE-2024-47662 | `466423c6dd8a` | mainline | drm/amd/display: Remove register from DCN35 DMCUB diagnostic collection |
-|  | CVE-2024-46870 | `7c70e60fbf4b` | mainline | drm/amd/display: Disable DMCUB timeout for DCN35 |
-|  | CVE-2024-43901 | `5af757124792` | mainline | drm/amd/display: Fix NULL pointer dereference for DTN log in DCN401 |
-|  | CVE-2024-46776 | `3a82f62b0d9d` | mainline | drm/amd/display: Run DC_LOG_DC after checking link->link_enc |
-|  | CVE-2024-46760 | `adc539784c98` | mainline | wifi: rtw88: usb: schedule rx work after everything is set up |
-|  | CVE-2024-41052 | `5a88a3f67e37` | mainline | vfio/pci: Init the count variable in collecting hot-reset devices |
-|  | CVE-2024-49916 | `4b6377f0e960` | mainline | drm/amd/display: Add NULL check for clk_mgr and clk_mgr->funcs in dcn401_init_hw |
-|  | CVE-2024-42317 | `d659b715e94a` | mainline | mm/huge_memory: avoid PMD-size page cache if needed |
-|  | CVE-2024-49893 | `58a8ee96f84d` | mainline | drm/amd/display: Check stream_status before it is used |
-|  | CVE-2024-47703 | `5d99e198be27` | mainline | bpf, lsm: Add check for BPF LSM return value |
-|  | CVE-2024-45015 | `aedf02e46eb5` | mainline | drm/msm/dpu: move dpu_encoder's connector assignment to atomic_enable() |
-|  | CVE-2024-49910 | `dd340acd42c2` | mainline | drm/amd/display: Add NULL check for function pointer in dcn401_set_output_transfer_func |
-|  | CVE-2024-44933 | `da03f5d1b2c3` | mainline | bnxt_en : Fix memory out-of-bounds in bnxt_fill_hw_rss_tbl() |
-|  | CVE-2024-49908 | `0fe20258b498` | mainline | drm/amd/display: Add null check for 'afb' in amdgpu_dm_update_cursor (v2) |
 |  | CVE-2024-47691 | `c7f114d864ac` | mainline | f2fs: fix to avoid use-after-free in f2fs_stop_gc_thread() |
-|  | CVE-2024-50057 | `db63d9868f7f` | mainline | usb: typec: tipd: Free IRQ only if it was requested before |
-|  | CVE-2024-46712 | `e9fd436bb8fb` | mainline | drm/vmwgfx: Disable coherent dumb buffers without 3d |
 |  | CVE-2024-46678 | `2aeeef906d5a` | mainline | bonding: change ipsec_lock from spin lock to mutex |
-|  | CVE-2024-49988 | `ee426bfb9d09` | mainline | ksmbd: add refcnt to ksmbd_conn struct |
-|  | CVE-2024-56544 | `1c0844c6184e` | mainline | udmabuf: change folios array from kmalloc to kvmalloc |
 |  | CVE-2024-50211 | `c226964ec786` | mainline | udf: refactor inode_bmap() to handle error |
-|  | CVE-2024-50028 | `a42a5839f400` | mainline | thermal: core: Reference count the zone in thermal_zone_get_by_id() |
-|  | CVE-2024-50097 | `6be063071a45` | mainline | net: fec: don't save PTP state if PTP is unsupported |
-|  | CVE-2024-50166 | `1dec67e0d9fb` | mainline | fsl/fman: Fix refcount handling of fman-related devices |
-|  | CVE-2024-53219 | `41748675c0bf` | mainline | virtiofs: use pages instead of pointer for kernel direct IO |
-| does not build | CVE-2024-50217 | `aec8e6bf8391` | mainline | btrfs: fix use-after-free of block device file in __btrfs_free_extra_devids() |
 |  | CVE-2024-53218 | `7b0033dbc483` | mainline | f2fs: fix race in concurrent f2fs_stop_gc_thread |
-|  | CVE-2024-53079 | `f8f931bba0f9` | mainline | mm/thp: fix deferred split unqueue naming and locking |
-|  | CVE-2024-57809 | `0a726f542d7c` | mainline | PCI: imx6: Fix suspend/resume support on i.MX6QDL |
 |  | CVE-2024-56591 | `2b0f2fc9ed62` | mainline | Bluetooth: hci_conn: Use disable_delayed_work_sync |
-|  | CVE-2024-56775 | `27227a234c14` | mainline | drm/amd/display: Fix handling of plane refcount |
-|  | CVE-2024-57872 | `897df60c16d5` | mainline | scsi: ufs: pltfrm: Dellocate HBA during ufshcd_pltfrm_remove() |
 |  | CVE-2024-53176 | `3fa640d035e5` | mainline | smb: During unmount, ensure all cached dir instances drop their dentry |
-|  | CVE-2024-58053 | `0e56ebde245e` | mainline | rxrpc: Fix handling of received connection abort |
 |  | CVE-2024-58237 | `1a4607ffba35` | mainline | bpf: consider that tail calls invalidate packet pointers |
 |  | CVE-2024-58098 | `51081a3f25c7` | mainline | bpf: track changes_pkt_data property for global functions |
 |  | CVE-2024-58100 | `81f6d0530ba0` | mainline | bpf: check changes_pkt_data property for extension programs |
 |  | CVE-2024-53687 | `b3431a8bb336` | mainline | riscv: Fix IPIs usage in kfence_protect_page() |
-|  | CVE-2024-54191 | `7a17308c1788` | mainline | Bluetooth: iso: Fix circular lock in iso_conn_big_sync |
 |  | CVE-2024-57857 | `16b87037b488` | mainline | RDMA/siw: Remove direct link to net_device |
-|  | CVE-2024-57935 | `0572eccf239c` | mainline | RDMA/hns: Fix accessing invalid dip_ctx during destroying QP |
 |  | CVE-2024-57795 | `2ac5415022d1` | mainline | RDMA/rxe: Remove the direct link to net_device |
-|  | CVE-2025-21634 | `3cb97a927fff` | mainline | cgroup/cpuset: remove kernfs active break |
-|  | CVE-2024-57984 | `b75439c945b9` | mainline | i3c: dw: Fix use-after-free in dw_i3c_master driver due to race condition |
 |  | CVE-2025-21693 | `12dcb0ef5406` | mainline | mm: zswap: properly synchronize freeing resources during CPU hotunplug |
 |  | CVE-2024-58089 | `72dad8e377af` | mainline | btrfs: fix double accounting race when btrfs_run_delalloc_range() failed |
 |  | CVE-2025-21817 | `7c0be4ead1f8` | mainline | block: mark GFP_NOIO around sysfs ->store() |
 |  | CVE-2024-57975 | `c2b47df81c8e` | mainline | btrfs: do proper folio cleanup when run_delalloc_nocow() failed |
-|  | CVE-2025-21679 | `fe4de594f7a2` | mainline | btrfs: add the missing error handling inside get_canonical_dev_path |
 |  | CVE-2025-21825 | `58f038e6d209` | mainline | bpf: Cancel the running bpf_timer through kworker for PREEMPT_RT |
-|  | CVE-2025-21985 | `8adbb2a98b00` | mainline | drm/amd/display: Fix out-of-bound accesses |
 |  | CVE-2025-23133 | `933ab187e679` | mainline | wifi: ath11k: update channel list in reg notifier instead reg worker |
-|  | CVE-2025-38038 | `db1cafc77aaa` | mainline | cpufreq: amd-pstate: Remove unnecessary driver_lock in set_boost |
 | does not build | CVE-2025-38039 | `689805dcc474` | mainline | net/mlx5e: Avoid WARN_ON when configuring MQPRIO with HTB offload enabled |
 |  | CVE-2025-23132 | `eb85c2410d6f` | mainline | f2fs: quota: fix to avoid warning in dquot_writeback_dquots() |
 |  | CVE-2025-23130 | `48ea8b200414` | mainline | f2fs: fix to avoid panic once fallocation fails for pinfile |
-|  | CVE-2025-21836 | `8802766324e1` | mainline | io_uring/kbuf: reallocate buf lists on upgrade |
-|  | CVE-2025-38080 | `3a7810c212bc` | mainline | drm/amd/display: Increase block_sequence array size |
-|  | CVE-2025-21942 | `5a4041f2c472` | mainline | btrfs: zoned: fix extent range end unlock in cow_file_range() |
 |  | CVE-2025-22125 | `e879a0d9cb08` | mainline | md/raid1,raid10: don't ignore IO flags |
-|  | CVE-2025-21923 | `e53fc232a65f` | mainline | HID: hid-steam: Fix use-after-free when detaching device |
-| does not build | CVE-2025-22028 | `36cef585e2a3` | mainline | media: vimc: skip .s_stream() for stopped entities |
 |  | CVE-2025-21976 | `ea2f45ab0e53` | mainline | fbdev: hyperv_fb: Allow graceful removal of framebuffer |
-|  | CVE-2025-22006 | `5f079290e591` | mainline | net: ethernet: ti: am65-cpsw: Fix NAPI registration sequence |
 |  | CVE-2025-22113 | `ce2f26e73783` | mainline | ext4: avoid journaling sb update on error if journal is destroying |
 | does not build | CVE-2025-37834 | `1b0449544c64` | mainline | mm/vmscan: don't try to reclaim hwpoison folio |
-|  | CVE-2025-22043 | `542027e123fc` | mainline | ksmbd: add bounds check for durable handle context |
-| does not build | CVE-2025-38099 | `14d17c78a4b1` | mainline | Bluetooth: Disable SCO support if READ_VOICE_SETTING is unsupported/broken |
-|  | CVE-2025-37878 | `0ba3a4ab76fd` | mainline | perf/core: Fix WARN_ON(!ctx) in __free_event() for partial init |
 |  | CVE-2025-38426 | `5df0d6addb7e` | mainline | drm/amdgpu: Add basic validation for RAS header |
 |  | CVE-2025-37776 | `18b4fac5ef17` | mainline | ksmbd: fix use-after-free in smb_break_all_levII_oplock() |
-|  | CVE-2025-37802 | `1df0d4c61613` | mainline | ksmbd: fix WARNING "do not call blocking ops when !TASK_RUNNING" |
 |  | CVE-2025-37777 | `21a4e47578d4` | mainline | ksmbd: fix use-after-free in __smb2_lease_break_noti() |
 |  | CVE-2025-37800 | `18daa52418e7` | mainline | driver core: fix potential NULL pointer dereference in dev_uevent() |
-|  | CVE-2025-38017 | `d9ec73301099` | mainline | fs/eventpoll: fix endless busy loop after timeout has expired |
-|  | CVE-2025-38140 | `121218bef4c1` | mainline | dm: limit swapping tables for devices with zone write plugs |
 |  | CVE-2025-38333 | `bb5eb8a5b222` | mainline | f2fs: fix to bail out in get_new_segment() |
-|  | CVE-2025-37965 | `9984db637420` | mainline | drm/amd/display: Fix invalid context error in dml helper |
-|  | CVE-2025-38014 | `a409e919ca32` | mainline | dmaengine: idxd: Refactor remove call with idxd_cleanup() helper |
-|  | CVE-2025-38369 | `17502e7d7b71` | mainline | dmaengine: idxd: Check availability of workqueue allocated by idxd wq driver before using |
-|  | CVE-2025-38092 | `10379171f346` | mainline | ksmbd: use list_first_entry_or_null for opinfo_get_list() |
 |  | CVE-2025-38264 | `0bf04c874fcb` | mainline | nvme-tcp: sanitize request list handling |
 |  | CVE-2025-38207 | `2b12d06c37fd` | mainline | mm: fix uprobe pte be overwritten when expanding vma |
-|  | CVE-2025-38438 | `6c038b58a2dc` | mainline | ASoC: SOF: Intel: hda: Use devm_kstrdup() to avoid memleak. |
 |  | CVE-2025-39746 | `c256a94d1b1b` | mainline | wifi: ath10k: shutdown driver when hardware is unreliable |
-|  | CVE-2025-39762 | `158b9201c17f` | mainline | drm/amd/display: add null check |
-|  | CVE-2025-38379 | `3bbe46716092` | mainline | smb: client: fix warning when reconnecting channel |
-|  | CVE-2025-38411 | `9df7b5ebead6` | mainline | netfs: Fix double put of request |
 |  | CVE-2025-38449 | `5307dce878d4` | mainline | drm/gem: Acquire references on GEM handles for framebuffers |
-| does not build | CVE-2025-38656 | `cf80c02a9fdb` | mainline | wifi: iwlwifi: Fix error code in iwl_op_mode_dvm_start() |
 |  | CVE-2025-39747 | `1c8c354098ea` | mainline | drm/msm: Add error handling for krealloc in metadata setup |
 |  | CVE-2025-39732 | `65c12b104cb9` | mainline | wifi: ath11k: fix sleeping-in-atomic in ath11k_mac_op_set_bitrate_mask() |
 |  | CVE-2025-39789 | `3d9eb180fbe8` | mainline | crypto: x86/aegis - Add missing error checks |
@@ -990,6 +926,80 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-99172 | `f0e48172a59e` | mainline | ipc: drop the mqueue mount with kern_unmount() on setup failure |
 | does not build | CVE-2026-99191 | `8070ed578b6b` | mainline | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
 |  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
+
+### Not affected per work package (needs review) (69)
+
+| | CVE | Upstream | Source | Subject |
+|---|---|---|---|---|
+|  | CVE-2024-26672 | `4f32504a2f85` | mainline | drm/amdgpu: Fix variable 'mca_funcs' dereferenced before NULL check in 'amdgpu_mca_smu_get_mca_entry()' |
+| does not build | CVE-2024-35931 | `601429cca96b` | mainline | drm/amdgpu: Skip do PCI error slot reset during RAS recovery |
+|  | CVE-2024-26691 | `10c02aad111d` | mainline | KVM: arm64: Fix circular locking dependency |
+|  | CVE-2024-26914 | `39079fe8e660` | mainline | drm/amd/display: fix incorrect mpc_combine array size |
+|  | CVE-2024-26913 | `faf51b201bc4` | mainline | drm/amd/display: Fix dcn35 8k30 Underflow/Corruption Issue |
+|  | CVE-2024-36024 | `6226a5aa7737` | mainline | drm/amd/display: Disable idle reallow as part of command/gpint execution |
+|  | CVE-2024-26758 | `1baae052cccd` | mainline | md: Don't ignore suspended array in md_check_recovery() |
+|  | CVE-2024-26757 | `55a48ad2db64` | mainline | md: Don't ignore read-only array in md_check_recovery() |
+|  | CVE-2024-26756 | `ad39c08186f8` | mainline | md: Don't register sync_thread for reshape directly |
+|  | CVE-2024-26836 | `6f7d0f5fd8e4` | mainline | platform/x86: think-lmi: Fix password opcode ordering for workstations |
+|  | CVE-2024-27411 | `f6ecfdad359a` | mainline | drm/nouveau: keep DMA buffers required for suspend/resume |
+|  | CVE-2024-35843 | `def054b01a86` | mainline | iommu/vt-d: Use device rbtree in iopf reporting path |
+|  | CVE-2024-35794 | `16c4770c75b1` | mainline | dm-raid: really frozen sync_thread during suspend |
+|  | CVE-2024-36951 | `0cac183b98d8` | mainline | drm/amdkfd: range check cp bad op exception interrupts |
+|  | CVE-2024-35957 | `89436f4f5412` | mainline | iommu/vt-d: Fix WARN_ON in iommu probe path |
+|  | CVE-2024-40969 | `3bdb7f161697` | mainline | f2fs: don't set RO when shutting down f2fs |
+|  | CVE-2024-36002 | `38d7b94e81d0` | mainline | dpll: fix dpll_pin_on_pin_register() for multiple parent pins |
+|  | CVE-2024-42118 | `3ac31c9a707d` | mainline | drm/amd/display: Do not return negative stream id for array |
+|  | CVE-2024-36887 | `387f295cb215` | mainline | e1000e: change usleep_range to udelay in PHY mdic access |
+|  | CVE-2024-46729 | `3941a3aa4b65` | mainline | drm/amd/display: Fix incorrect size calculation for loop |
+|  | CVE-2024-46727 | `871cd9d881fa` | mainline | drm/amd/display: Add otg_master NULL check within resource_log_pipe_topology_update |
+|  | CVE-2024-46806 | `1a00f2ac82d6` | mainline | drm/amdgpu: Fix the warning division or modulo by zero |
+|  | CVE-2024-47662 | `466423c6dd8a` | mainline | drm/amd/display: Remove register from DCN35 DMCUB diagnostic collection |
+|  | CVE-2024-46870 | `7c70e60fbf4b` | mainline | drm/amd/display: Disable DMCUB timeout for DCN35 |
+|  | CVE-2024-43901 | `5af757124792` | mainline | drm/amd/display: Fix NULL pointer dereference for DTN log in DCN401 |
+|  | CVE-2024-46776 | `3a82f62b0d9d` | mainline | drm/amd/display: Run DC_LOG_DC after checking link->link_enc |
+|  | CVE-2024-46760 | `adc539784c98` | mainline | wifi: rtw88: usb: schedule rx work after everything is set up |
+|  | CVE-2024-41052 | `5a88a3f67e37` | mainline | vfio/pci: Init the count variable in collecting hot-reset devices |
+|  | CVE-2024-49916 | `4b6377f0e960` | mainline | drm/amd/display: Add NULL check for clk_mgr and clk_mgr->funcs in dcn401_init_hw |
+|  | CVE-2024-49893 | `58a8ee96f84d` | mainline | drm/amd/display: Check stream_status before it is used |
+|  | CVE-2024-49910 | `dd340acd42c2` | mainline | drm/amd/display: Add NULL check for function pointer in dcn401_set_output_transfer_func |
+|  | CVE-2024-44933 | `da03f5d1b2c3` | mainline | bnxt_en : Fix memory out-of-bounds in bnxt_fill_hw_rss_tbl() |
+|  | CVE-2024-49908 | `0fe20258b498` | mainline | drm/amd/display: Add null check for 'afb' in amdgpu_dm_update_cursor (v2) |
+|  | CVE-2024-50057 | `db63d9868f7f` | mainline | usb: typec: tipd: Free IRQ only if it was requested before |
+|  | CVE-2024-46712 | `e9fd436bb8fb` | mainline | drm/vmwgfx: Disable coherent dumb buffers without 3d |
+|  | CVE-2024-49988 | `ee426bfb9d09` | mainline | ksmbd: add refcnt to ksmbd_conn struct |
+|  | CVE-2024-50097 | `6be063071a45` | mainline | net: fec: don't save PTP state if PTP is unsupported |
+| does not build | CVE-2024-50217 | `aec8e6bf8391` | mainline | btrfs: fix use-after-free of block device file in __btrfs_free_extra_devids() |
+|  | CVE-2024-56775 | `27227a234c14` | mainline | drm/amd/display: Fix handling of plane refcount |
+|  | CVE-2024-57872 | `897df60c16d5` | mainline | scsi: ufs: pltfrm: Dellocate HBA during ufshcd_pltfrm_remove() |
+|  | CVE-2024-58053 | `0e56ebde245e` | mainline | rxrpc: Fix handling of received connection abort |
+|  | CVE-2024-54191 | `7a17308c1788` | mainline | Bluetooth: iso: Fix circular lock in iso_conn_big_sync |
+|  | CVE-2024-57935 | `0572eccf239c` | mainline | RDMA/hns: Fix accessing invalid dip_ctx during destroying QP |
+|  | CVE-2025-21634 | `3cb97a927fff` | mainline | cgroup/cpuset: remove kernfs active break |
+|  | CVE-2024-57984 | `b75439c945b9` | mainline | i3c: dw: Fix use-after-free in dw_i3c_master driver due to race condition |
+|  | CVE-2025-21679 | `fe4de594f7a2` | mainline | btrfs: add the missing error handling inside get_canonical_dev_path |
+|  | CVE-2025-21985 | `8adbb2a98b00` | mainline | drm/amd/display: Fix out-of-bound accesses |
+|  | CVE-2025-38038 | `db1cafc77aaa` | mainline | cpufreq: amd-pstate: Remove unnecessary driver_lock in set_boost |
+|  | CVE-2025-21836 | `8802766324e1` | mainline | io_uring/kbuf: reallocate buf lists on upgrade |
+|  | CVE-2025-38080 | `3a7810c212bc` | mainline | drm/amd/display: Increase block_sequence array size |
+|  | CVE-2025-21942 | `5a4041f2c472` | mainline | btrfs: zoned: fix extent range end unlock in cow_file_range() |
+|  | CVE-2025-21923 | `e53fc232a65f` | mainline | HID: hid-steam: Fix use-after-free when detaching device |
+| does not build | CVE-2025-22028 | `36cef585e2a3` | mainline | media: vimc: skip .s_stream() for stopped entities |
+|  | CVE-2025-22006 | `5f079290e591` | mainline | net: ethernet: ti: am65-cpsw: Fix NAPI registration sequence |
+|  | CVE-2025-22043 | `542027e123fc` | mainline | ksmbd: add bounds check for durable handle context |
+| does not build | CVE-2025-38099 | `14d17c78a4b1` | mainline | Bluetooth: Disable SCO support if READ_VOICE_SETTING is unsupported/broken |
+|  | CVE-2025-37878 | `0ba3a4ab76fd` | mainline | perf/core: Fix WARN_ON(!ctx) in __free_event() for partial init |
+|  | CVE-2025-37802 | `1df0d4c61613` | mainline | ksmbd: fix WARNING "do not call blocking ops when !TASK_RUNNING" |
+|  | CVE-2025-38017 | `d9ec73301099` | mainline | fs/eventpoll: fix endless busy loop after timeout has expired |
+|  | CVE-2025-38140 | `121218bef4c1` | mainline | dm: limit swapping tables for devices with zone write plugs |
+|  | CVE-2025-37965 | `9984db637420` | mainline | drm/amd/display: Fix invalid context error in dml helper |
+|  | CVE-2025-38014 | `a409e919ca32` | mainline | dmaengine: idxd: Refactor remove call with idxd_cleanup() helper |
+|  | CVE-2025-38369 | `17502e7d7b71` | mainline | dmaengine: idxd: Check availability of workqueue allocated by idxd wq driver before using |
+|  | CVE-2025-38092 | `10379171f346` | mainline | ksmbd: use list_first_entry_or_null for opinfo_get_list() |
+|  | CVE-2025-38438 | `6c038b58a2dc` | mainline | ASoC: SOF: Intel: hda: Use devm_kstrdup() to avoid memleak. |
+|  | CVE-2025-39762 | `158b9201c17f` | mainline | drm/amd/display: add null check |
+|  | CVE-2025-38379 | `3bbe46716092` | mainline | smb: client: fix warning when reconnecting channel |
+|  | CVE-2025-38411 | `9df7b5ebead6` | mainline | netfs: Fix double put of request |
+| does not build | CVE-2025-38656 | `cf80c02a9fdb` | mainline | wifi: iwlwifi: Fix error code in iwl_op_mode_dvm_start() |
 
 Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).
 
