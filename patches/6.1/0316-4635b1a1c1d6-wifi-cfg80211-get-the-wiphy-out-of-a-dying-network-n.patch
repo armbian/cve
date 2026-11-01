@@ -1,0 +1,111 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 4635b1a1c1d693178a537446a6e09963f0fdae52
+X-Fasttrack-CVE: CVE-2026-98330
+X-Fasttrack-Backport: cve/CVE-2026-98330/6.1
+From: Johannes Berg <johannes.berg@intel.com>
+Date: Sun, 1 Nov 2026 16:43:09 +0100
+Subject: [PATCH] wifi: cfg80211: get the wiphy out of a dying network
+ namespace
+
+commit 4635b1a1c1d693178a537446a6e09963f0fdae52 upstream.
+
+[ Backport: 6.1 lacks cfg80211_switch_wdev_netns() and the wiphy rename undo; add the force path to the open-coded interface loop ]
+[ Backport: 6.1 has no wiphy lock guard; use wiphy_lock()/wiphy_unlock() instead of scoped_guard() ]
+
+When a network namespace is destroyed, cfg80211_pernet_exit() moves any
+wiphy back to the initial namespace, and just warns if that fails. But
+moving an interface can fail (due to allocation failures), and then the
+wiphy is left behind with a garbage netns pointer:
+
+  Kernel mode fault at addr 0x30
+  genlmsg_multicast_netns.constprop.0+0x46/0xcf [cfg80211]
+  nl80211_notify_wiphy+0xcd/0xe8 [cfg80211]
+  wiphy_unregister+0x169/0x3fc [cfg80211]
+
+Note that commit debac3a20dec ("net: Remove conflicting altnames for
+dying netns in __dev_change_net_namespace().") fixed another path
+that could reach it without allocation failures.
+
+Remove interfaces that cannot be moved instead of failing the switch,
+so that the wiphy always ends up in the initial namespace. In this
+case the netdev core will unregister the interfaces anyway.
+
+Assisted-by: LLM
+Reported-by: syzbot+c5f8a81e794d4a4f2014@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c5f8a81e794d4a4f2014
+Fixes: 463d018323851 ("cfg80211: make aware of net namespaces")
+Link: https://patch.msgid.link/20260904170220.7f3edc6d9992.I5e57921011244d3d8ef14d89e738aa19a5d972a0@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+---
+ net/wireless/core.c | 35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
+
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 3179eb8899d6..5ceaa9033455 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -152,23 +152,29 @@ int cfg80211_dev_rename(struct cfg80211_registered_device *rdev,
+ 	return 0;
+ }
+ 
+-int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+-			  struct net *net)
++static int __cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
++				   struct net *net, bool force)
+ {
+-	struct wireless_dev *wdev;
++	struct wireless_dev *wdev, *tmp;
+ 	int err = 0;
+ 
+-	if (!(rdev->wiphy.flags & WIPHY_FLAG_NETNS_OK))
+-		return -EOPNOTSUPP;
+-
+-	list_for_each_entry(wdev, &rdev->wiphy.wdev_list, list) {
++	list_for_each_entry_safe(wdev, tmp, &rdev->wiphy.wdev_list, list) {
+ 		if (!wdev->netdev)
+ 			continue;
+ 		wdev->netdev->features &= ~NETIF_F_NETNS_LOCAL;
+ 		err = dev_change_net_namespace(wdev->netdev, net, "wlan%d");
+-		if (err)
++		if (!err) {
++			wdev->netdev->features |= NETIF_F_NETNS_LOCAL;
++			continue;
++		}
++		if (!force)
+ 			break;
+-		wdev->netdev->features |= NETIF_F_NETNS_LOCAL;
++		/* remove interfaces that fail to allow wiphy switching */
++		dev_close(wdev->netdev);
++		wiphy_lock(&rdev->wiphy);
++		cfg80211_unregister_wdev(wdev);
++		wiphy_unlock(&rdev->wiphy);
++		err = 0;
+ 	}
+ 
+ 	if (err) {
+@@ -212,6 +218,15 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+ 	return 0;
+ }
+ 
++int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
++			  struct net *net)
++{
++	if (!(rdev->wiphy.flags & WIPHY_FLAG_NETNS_OK))
++		return -EOPNOTSUPP;
++
++	return __cfg80211_switch_netns(rdev, net, false);
++}
++
+ static void cfg80211_rfkill_poll(struct rfkill *rfkill, void *data)
+ {
+ 	struct cfg80211_registered_device *rdev = data;
+@@ -1644,7 +1659,7 @@ static void __net_exit cfg80211_pernet_exit(struct net *net)
+ 	rtnl_lock();
+ 	list_for_each_entry(rdev, &cfg80211_rdev_list, list) {
+ 		if (net_eq(wiphy_net(&rdev->wiphy), net))
+-			WARN_ON(cfg80211_switch_netns(rdev, &init_net));
++			WARN_ON(__cfg80211_switch_netns(rdev, &init_net, true));
+ 	}
+ 	rtnl_unlock();
+ }
