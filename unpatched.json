@@ -2681,7 +2681,7 @@
       "0788a47e7cec drm/amdgpu: stop resubmittting jobs in amdgpu_pci_resume"
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## drivers/gpu/drm/amd/amdgpu/amdgpu_device.c\ndrivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6082:54: error: \u2018struct amdgpu_hive_info\u2019 has no member named \u2018ras_recovery\u2019\ndrivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6086:14: error: implicit declaration of function \u2018amdgpu_ip_version\u2019; did you mean \u2018amdgpu_in_reset\u2019? [-Wimplicit-function-declaration]"
+    "build_log": "## drivers/gpu/drm/amd/amdgpu/amdgpu_device.c\ndrivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6084:54: error: \u2018struct amdgpu_hive_info\u2019 has no member named \u2018ras_recovery\u2019\ndrivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6088:14: error: implicit declaration of function \u2018amdgpu_ip_version\u2019; did you mean \u2018amdgpu_in_reset\u2019? [-Wimplicit-function-declaration]"
   },
   {
     "series": "6.1",
@@ -8290,39 +8290,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-80728"
-    ],
-    "kev": false,
-    "upstream": "b96c529cd2551b78316a4afa3237b2ed96ba03c8",
-    "subject": "Revert \"drm/amdgpu: fix aperture mapping leak\"",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_device.c",
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c"
-    ],
-    "prerequisites": [
-      "b98a1648d661 Revert \"drm/amdgpu: let mode2 reset fallback to default when failure\"",
-      "b31d6ada8346 drm/amd/pm: disable cstate feature for gpu reset scenario",
-      "a2c554262d39 drm/amd/amdgpu: Replace kmap() with kmap_local_page()",
-      "df768a977027 drm/amdgpu: Fix for BO move issue",
-      "693073a04de4 drm/amdgpu: skip mes self test for gc 11.0.3 in recover",
-      "f543d2868748 drm/amdgpu: disallow gfxoff until GC IP blocks complete s2idle resume",
-      "12024b17617a amd/amdgpu: fix repeated words in comments",
-      "e3c92eb4a84f drm/ttm: rework on ttm_resource to use size_t type",
-      "7863c1552632 drm/amd: Fail the suspend if resources can't be evicted",
-      "4f91790b42ff drm/amdgpu: use drm_sched_job_add_resv_dependencies for moves",
-      "8a1fbb4a5ec2 drm/amdgpu: Disable MCBP from soc21 for SRIOV",
-      "ec4927d463cb drm/amdgpu: fix for suspend/resume sequence under sriov",
-      "45b64fd9f7ae drm/fb-helper: Remove unnecessary include statements",
-      "adf65dff5d61 drm/amdgpu: Fix the kerneldoc description",
-      "25263da37693 drm/amdgpu: rework SR-IOV virtual display handling"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-89913"
     ],
     "kev": false,
@@ -8348,83 +8315,6 @@
       "f7d03fcbf1f4 KVM: arm64: Introduce __pkvm_vcpu_{load,put}()",
       "dea8838128c5 KVM: arm64: vgic: Use str_enabled_disabled() in vgic_v3_probe()",
       "e3121298c7fc arm64: Modify _midr_range() functions to read MIDR/REVIDR internally"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-89938"
-    ],
-    "kev": false,
-    "upstream": "be61c8c6252671ecf1fee0ad90f87669e0be1e20",
-    "subject": "iio: chemical: atlas-sensor: use iio_trigger_poll_nested() to fix remove UAF",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/iio/chemical/atlas-sensor.c"
-    ],
-    "prerequisites": [
-      "50c359245069 iio: chemical: atlas-sensor: Convert to i2c's .probe_new()",
-      "7cf15f4275f5 iio: Switch i2c drivers back to use .probe()",
-      "ab3555b4b5b0 iio: chemical: atlas-sensor: Convert enum->pointer for data in the match tables",
-      "3976dc832340 iio: chemical: atlas-sensor: Switch to sparse friendly iio_device_claim/release_direct()",
-      "70788d26ae1c iio: normalize array sentinel style",
-      "cb4691913d9e iio: chemical: Use iio_push_to_buffers_with_ts() to provide length for runtime checks.",
-      "851b85447c7e iio: Remove single use of macro definition for regmap name",
-      "4a0f37593133 iio: chemical: Remove redundant pm_runtime_mark_last_busy() calls",
-      "f68afce8e8a7 iio: Initialize i2c_device_id arrays using member names"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-80785"
-    ],
-    "kev": false,
-    "upstream": "061db6b7a910b8378f3b2df64f8c0a3ddc6e85f2",
-    "subject": "fbdev: serialize mode sysfs access with lock_fb_info()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/video/fbdev/core/fbsysfs.c"
-    ],
-    "prerequisites": [
-      "5b6373de4351 drm/fbdev: Remove aperture handling and FBINFO_MISC_FIRMWARE",
-      "f0f6839be41d fbdev/core: Move framebuffer and backlight helpers into separate files",
-      "e2af003210c6 fbdev/core: Add fb_device_{create,destroy}()",
-      "1520081a785a fbdev/core: Use list_for_each_entry() helper",
-      "5fc830d6aca1 fbdev: Register sysfs groups through device_add_group",
-      "7e3711eb87c5 fbdev: Track display blanking state",
-      "68eeb0871e98 fbdev: Use device_create_with_groups() to fix sysfs groups registration race",
-      "8ef78cae98b5 fbdev: Wrap user-invoked calls to fb_blank() in helper",
-      "d15d51fb26e8 fbdev: bound mode sysfs output to the sysfs buffer"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-80580"
-    ],
-    "kev": false,
-    "upstream": "d15d51fb26e830af58f3f21964f1c09c239077ea",
-    "subject": "fbdev: bound mode sysfs output to the sysfs buffer",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/video/fbdev/core/fbsysfs.c"
-    ],
-    "prerequisites": [
-      "5b6373de4351 drm/fbdev: Remove aperture handling and FBINFO_MISC_FIRMWARE",
-      "f0f6839be41d fbdev/core: Move framebuffer and backlight helpers into separate files",
-      "e2af003210c6 fbdev/core: Add fb_device_{create,destroy}()",
-      "1520081a785a fbdev/core: Use list_for_each_entry() helper",
-      "5fc830d6aca1 fbdev: Register sysfs groups through device_add_group",
-      "7e3711eb87c5 fbdev: Track display blanking state",
-      "68eeb0871e98 fbdev: Use device_create_with_groups() to fix sysfs groups registration race",
-      "8ef78cae98b5 fbdev: Wrap user-invoked calls to fb_blank() in helper"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8565,35 +8455,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-90230"
-    ],
-    "kev": false,
-    "upstream": "5bb96cc218835769ab74ec7f3ea2bf81fbffe955",
-    "subject": "nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/nvme/target/fabrics-cmd-auth.c"
-    ],
-    "prerequisites": [
-      "2ad0713c73ff nvmet-auth: remove some dead code",
-      "94c78ea12400 nvmet-auth: remove unnecessary break after goto",
-      "6f66d046eade nvme-auth: always set valid seq_num in dhchap reply",
-      "5032167264ee nvmet: Add 'sq' argument to alloc_ctrl_args",
-      "fa2e0f8bbc68 nvmet-tcp: support secure channel concatenation",
-      "159de7a825ae nvmet-auth: update sc_c in target host hash calculation",
-      "efe8df9f9ce1 nvme-auth: target: remove obsolete crypto_has_shash() checks",
-      "ecf4d2d88351 nvmet-tcp: Don't error if TLS is enabed on a reset",
-      "2e6eb6b277f5 nvmet-tcp: Don't free SQ on authentication success",
-      "3d553be6d295 nvmet: replace use of system_wq with system_percpu_wq",
-      "f920ebd03cd1 Revert \"nvmet-tcp: Don't free SQ on authentication success\"",
-      "3a6d89836ab0 nvme-auth: use crypto_memneq for DH-HMAC-CHAP response comparison"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## drivers/nvme/target/fabrics-cmd-auth.c\ndrivers/nvme/target/fabrics-cmd-auth.c:60:51: error: \u2018NVME_AUTH_DHCHAP_MAX_DH_IDS\u2019 undeclared (first use in this function); did you mean \u2018NVME_AUTH_DHCHAP_AUTH_ID\u2019?\ndrivers/nvme/target/fabrics-cmd-auth.c:61:51: error: \u2018NVME_AUTH_DHCHAP_MAX_HASH_IDS\u2019 undeclared (first use in this function); did you mean \u2018NVME_AUTH_DHCHAP_AUTH_ID\u2019?"
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-93235"
     ],
     "kev": false,
@@ -8651,66 +8512,6 @@
       "211c06d845a7 s390/ap: make tapq gr2 response a struct",
       "4bdf3c3956d8 s390/ap: provide F bit parameter for ap_rapq() and ap_zapq()",
       "6afc770048ed s390/vfio-ap: realize the VFIO_DEVICE_GET_IRQ_INFO ioctl"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98156"
-    ],
-    "kev": false,
-    "upstream": "6a736d2f9d0c6e6217fe7532bc4c50ceca71db78",
-    "subject": "drm/virtio: use the DMA API for resource backing on Xen",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/virtio/virtgpu_drv.h",
-      "drivers/gpu/drm/virtio/virtgpu_object.c",
-      "drivers/gpu/drm/virtio/virtgpu_vq.c"
-    ],
-    "prerequisites": [
-      "45b64fd9f7ae drm/fb-helper: Remove unnecessary include statements",
-      "2591939e881c drm/virtio: Spiff out cmd queue/response traces",
-      "8ac752463390 drm/virtio: use strscpy() to instead of strncpy()",
-      "e4812ab8e6b1 drm/virtio: Refactor and optimize job submission code path",
-      "f8afe6b41b9f drm/virtio: Remove unused function declarations",
-      "25765dde572b drm/virtio: Annotate struct virtio_gpu_object_array with __counted_by",
-      "7add80126bce drm/uapi: add explicit virtgpu context debug name",
-      "ac15c653fb09 drm/virtio: switch to struct drm_edid",
-      "c85021f35ace drm/virtio: Use generic dumb_map_offset implementation",
-      "06a0f77195c6 drm/virtio: Implement VIRTIO_GPU_CMD_RESOURCE_DETACH_BACKING cmd",
-      "25c3fd1183c0 drm/virtio: Add a helper to map and note the dma addrs and lengths",
-      "2885e575abc7 drm/virtio: Add helpers to initialize and free the imported object",
-      "cb2e1c2136f7 drm: remove driver date from struct drm_driver and all drivers",
-      "ffda6454267d drm/virtio: Set missing bo->attached flag",
-      "6f3d9d0dd335 drm/virtio: Add drm_panic support"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-100072"
-    ],
-    "kev": false,
-    "upstream": "a9ba4dd2f18bf3f439d9ef0d8f375f90360ba1bd",
-    "subject": "ACPI: platform: Use acpi_bus_get_primary_device()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/acpi/acpi_platform.c"
-    ],
-    "prerequisites": [
-      "cefbd80bf52c ACPI: platform: Ignore SMB0001 only when it has resources",
-      "bf6067a6caa6 ACPI: platform: Move SMB0001 HID to the header and reuse",
-      "ab06eb920401 ACPI: scan: Register platform devices for fixed event buttons",
-      "336aae5c4e1a ACPI: scan: Register platform devices for backlight device objects",
-      "b862e66a9c2e ACPI: scan: Clean up after recent changes",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "6ab3532b4c98 ACPI: video: Switch over to auxiliary bus type",
-      "f234fdaae1ca ACPI: scan: Avoid registering platform devices with resource overlaps"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8854,27 +8655,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-90119"
-    ],
-    "kev": false,
-    "upstream": "d736eba9c453fedce664fdf592c8b71ecff1932b",
-    "subject": "ALSA: ice1712: Fix the card leak at probe error with the auto-cleanup",
-    "verdict": "needs-backport",
-    "files": [
-      "sound/pci/ice1712/ice1712.c"
-    ],
-    "prerequisites": [
-      "dbaa14de42ca ALSA: ice: Use pure devres PCI",
-      "b51681287f9c ALSA: ice1712: Use safer strscpy() instead of strcpy()",
-      "d0b8e4190407 ALSA: ice1712: Use guard() for spin locks",
-      "4ce505c4905b ALSA: Consistently define pci_device_ids using named initializers"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## sound/pci/ice1712/ice1712.c\nsound/pci/ice1712/ice1712.c:2552:16: error: cleanup argument not a function"
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-90098"
     ],
     "kev": false,
@@ -8895,306 +8675,6 @@
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
     "build_log": "## drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c\ndrivers/net/ethernet/microchip/sparx5/sparx5_netdev.c:240:10: error: \u2018const struct net_device_ops\u2019 has no member named \u2018ndo_set_rx_mode_async\u2019; did you mean \u2018ndo_set_rx_mode\u2019?\ndrivers/net/ethernet/microchip/sparx5/sparx5_netdev.c:240:35: error: initialization of \u2018netdev_features_t (*)(struct sk_buff *, struct net_device *, netdev_features_t)\u2019 {aka \u2018long long unsigned int (*)(struct sk_buff *, struct net_device *, long long unsigned int)\u2019} from incompatible pointer type \u2018int (*)(struct net_device *, struct netdev_hw_addr_list *, struct netdev_hw_addr_list *)\u2019 [-Wincompatible-pointer-types]"
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98148"
-    ],
-    "kev": false,
-    "upstream": "cb732d027aa18e1fcf9d2797f47d20b179ebc59c",
-    "subject": "drm/gud: validate GUD_ROTATION_0 is present in supported rotations",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/gud/gud_drv.c"
-    ],
-    "prerequisites": [
-      "8ab59da26bc0 drm/fb-helper: Move generic fbdev emulation into separate source file",
-      "c17d048609bf drm/gud: Use the shadow plane helper",
-      "c702545e19eb drm/gud: use new debugfs device-centered functions",
-      "994c6277e68d drm/gud: Use fbdev-shmem",
-      "665415092eca drm: add missing MODULE_DESCRIPTION() macros",
-      "3284948f2267 drm/gud: Run DRM default client setup",
-      "b86711c6d6e2 drm/client: Move public client header to clients/ subdirectory",
-      "cb2e1c2136f7 drm: remove driver date from struct drm_driver and all drivers",
-      "f5bd9d528eba drm/gud: Set struct drm_device.dma_dev",
-      "fb6c2d16a46e drm/gud: Remove unnecessary logging",
-      "73cfd166e045 drm/gud: Replace simple display pipe with DRM atomic helpers",
-      "b9e5e9d2c187 drm/gud: rearrange gud_probe() to prepare for function splitting",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "32a92f8c8932 Convert more 'alloc_obj' cases to default GFP_KERNEL arguments"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-89637"
-    ],
-    "kev": false,
-    "upstream": "730d0bb19507b9e19c2fe5343109ac618e2fbce5",
-    "subject": "smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb1transport.c"
-    ],
-    "prerequisites": [
-      "b09eab52b307 cifs: SMB1 split: Rename cifstransport.c",
-      "bae7afc4b4ec cifs: SMB1 split: Move some SMB1 receive bits to smb1transport.c",
-      "282432612aa7 cifs: SMB1 split: Move some SMB1 received PDU checking bits to smb1transport.c",
-      "a7c7f35bcf09 cifs: SMB1 split: Add some #includes",
-      "ed1e53796f51 cifs: SMB1 split: Split SMB1 protocol defs into smb1pdu.h",
-      "66dc58bdbd7c cifs: SMB1 split: Remove duplicate include of cifs_debug.h",
-      "dc96f01d54cc smb: client: terminate session upon failed client required signing",
-      "50bfd2a22b75 cifs: smb1: fix comment typo",
-      "26fa4d17c023 smb: client: fix SMB1 TRANS2 multi-response truncation in SendReceive()",
-      "6343c1da5619 smb: client: fix OOB read/write from unvalidated DataOffset in coalesce_t2()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98142"
-    ],
-    "kev": false,
-    "upstream": "92312d333bf700798f92f30406c721bce87506f3",
-    "subject": "drm/cirrus-qemu: Validate BAR0 size during probe",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/tiny/cirrus-qemu.c"
-    ],
-    "prerequisites": [
-      "5c3c99868aa2 drm/cirrus: Rename to cirrus-qemu",
-      "cb2e1c2136f7 drm: remove driver date from struct drm_driver and all drivers",
-      "4bfb389a0136 drm/cirrus-qemu: Fix pitch programming",
-      "1eb4d744fb86 drm/cirrus-qemu: Stricter mode validation",
-      "9efd2cfc84ba drm/cirrus-qemu: Use framebuffer format as-is, drop adjustments",
-      "43985820217d drm/cirrus-qemu: Remove custom plane state",
-      "91bdccf57981 drm/cirrus: Use non-hybrid PCI devres API",
-      "42dd66d377cc drm/cirrus-qemu: Use vblank timer",
-      "f6e8dc9edf96 drm: include drm_print.h where needed",
-      "5164f7e7ff8e drm: Rename struct drm_atomic_state to drm_atomic_commit"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98127"
-    ],
-    "kev": false,
-    "upstream": "1519dc88c87f5346dae0464d7d6da1b6bf1f6e8e",
-    "subject": "smb/client: validate new EOF for insert range",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb2ops.c"
-    ],
-    "prerequisites": [
-      "396ac4c982f6 smb: delete an unnecessary statement",
-      "0d7aeb68700f Drop the netfs_ prefix from netfs_extract_iter_to_sg()",
-      "e4645cc2f1e2 cifs: add a warning when the in-flight count goes negative",
-      "e8eeca0bf446 smb3: do not reserve too many oplock credits",
-      "ac615db03ba5 cifs: log session id when a matching ses is not found",
-      "61986a58bc6a cifs: new dynamic tracepoint to track ses not found errors",
-      "c071b34f62dd cifs: is_network_name_deleted should return a bool",
-      "9448765397b6 smb: convert to ctime accessor functions",
-      "9a49e221a641 smb: client: do not query reparse points twice on symlinks",
-      "f2762ae4d3e0 smb: client: query reparse points in older dialects",
-      "f4e5ceb6c1a6 smb: client: reduce stack usage in smb2_set_ea()",
-      "b9148756d3e7 smb: client: reduce stack usage in smb2_query_info_compound()",
-      "74e01332d958 smb: client: reduce stack usage in smb2_query_reparse_point()",
-      "09ee7a3bf866 [SMB3] send channel sequence number in SMB3 requests after reconnects",
-      "b3773b19d43f SMB3: rename macro CIFS_SERVER_IS_CHAN to avoid confusion"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98126"
-    ],
-    "kev": false,
-    "upstream": "88972e35750792e717af287dc71f42a03b5cbce4",
-    "subject": "smb/client: validate new EOF for zero range",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb2ops.c"
-    ],
-    "prerequisites": [
-      "396ac4c982f6 smb: delete an unnecessary statement",
-      "0d7aeb68700f Drop the netfs_ prefix from netfs_extract_iter_to_sg()",
-      "e4645cc2f1e2 cifs: add a warning when the in-flight count goes negative",
-      "e8eeca0bf446 smb3: do not reserve too many oplock credits",
-      "ac615db03ba5 cifs: log session id when a matching ses is not found",
-      "61986a58bc6a cifs: new dynamic tracepoint to track ses not found errors",
-      "c071b34f62dd cifs: is_network_name_deleted should return a bool",
-      "9448765397b6 smb: convert to ctime accessor functions",
-      "9a49e221a641 smb: client: do not query reparse points twice on symlinks",
-      "f2762ae4d3e0 smb: client: query reparse points in older dialects",
-      "f4e5ceb6c1a6 smb: client: reduce stack usage in smb2_set_ea()",
-      "b9148756d3e7 smb: client: reduce stack usage in smb2_query_info_compound()",
-      "74e01332d958 smb: client: reduce stack usage in smb2_query_reparse_point()",
-      "09ee7a3bf866 [SMB3] send channel sequence number in SMB3 requests after reconnects",
-      "b3773b19d43f SMB3: rename macro CIFS_SERVER_IS_CHAN to avoid confusion"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98125"
-    ],
-    "kev": false,
-    "upstream": "01261a6fa48b62f5ead8e88aaca1e27cb9ab9032",
-    "subject": "smb/client: fix stale page cache in insert/collapse range",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb2ops.c"
-    ],
-    "prerequisites": [
-      "396ac4c982f6 smb: delete an unnecessary statement",
-      "0d7aeb68700f Drop the netfs_ prefix from netfs_extract_iter_to_sg()",
-      "e4645cc2f1e2 cifs: add a warning when the in-flight count goes negative",
-      "e8eeca0bf446 smb3: do not reserve too many oplock credits",
-      "ac615db03ba5 cifs: log session id when a matching ses is not found",
-      "61986a58bc6a cifs: new dynamic tracepoint to track ses not found errors",
-      "c071b34f62dd cifs: is_network_name_deleted should return a bool",
-      "9448765397b6 smb: convert to ctime accessor functions",
-      "9a49e221a641 smb: client: do not query reparse points twice on symlinks",
-      "f2762ae4d3e0 smb: client: query reparse points in older dialects",
-      "f4e5ceb6c1a6 smb: client: reduce stack usage in smb2_set_ea()",
-      "b9148756d3e7 smb: client: reduce stack usage in smb2_query_info_compound()",
-      "74e01332d958 smb: client: reduce stack usage in smb2_query_reparse_point()",
-      "09ee7a3bf866 [SMB3] send channel sequence number in SMB3 requests after reconnects",
-      "b3773b19d43f SMB3: rename macro CIFS_SERVER_IS_CHAN to avoid confusion"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98124"
-    ],
-    "kev": false,
-    "upstream": "448ba0ae65ca61064183564d2983c9aa59bd6ba7",
-    "subject": "smb/client: invalidate fscache for fallocate range operations",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb2ops.c"
-    ],
-    "prerequisites": [
-      "396ac4c982f6 smb: delete an unnecessary statement",
-      "0d7aeb68700f Drop the netfs_ prefix from netfs_extract_iter_to_sg()",
-      "e4645cc2f1e2 cifs: add a warning when the in-flight count goes negative",
-      "e8eeca0bf446 smb3: do not reserve too many oplock credits",
-      "ac615db03ba5 cifs: log session id when a matching ses is not found",
-      "61986a58bc6a cifs: new dynamic tracepoint to track ses not found errors",
-      "c071b34f62dd cifs: is_network_name_deleted should return a bool",
-      "9448765397b6 smb: convert to ctime accessor functions",
-      "9a49e221a641 smb: client: do not query reparse points twice on symlinks",
-      "f2762ae4d3e0 smb: client: query reparse points in older dialects",
-      "f4e5ceb6c1a6 smb: client: reduce stack usage in smb2_set_ea()",
-      "b9148756d3e7 smb: client: reduce stack usage in smb2_query_info_compound()",
-      "74e01332d958 smb: client: reduce stack usage in smb2_query_reparse_point()",
-      "09ee7a3bf866 [SMB3] send channel sequence number in SMB3 requests after reconnects",
-      "b3773b19d43f SMB3: rename macro CIFS_SERVER_IS_CHAN to avoid confusion"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98665"
-    ],
-    "kev": false,
-    "upstream": "f0ea4824deebf21dacfbe397c4b0a5fd3e745a8d",
-    "subject": "iio: health: max30102: fix NULL dereference in interrupt handler",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/iio/health/max30102.c"
-    ],
-    "prerequisites": [
-      "6b701cda3632 iio: health: max30102: do not use internal iio_dev lock",
-      "15818f089013 iio: health: max30102: Convert to i2c's .probe_new()",
-      "7cf15f4275f5 iio: Switch i2c drivers back to use .probe()",
-      "c71af78d9bf2 iio: health: max30102: add support for max30101",
-      "513735883335 iio: health: max30102: make use of regmap_set_bits()",
-      "4ae1ebaabc27 iio: health: max30102: make use of iio_get_masklength()",
-      "6c9dc1e8f296 iio: health: max30102: Switch to sparse friendly iio_device_claim/release_direct()",
-      "70788d26ae1c iio: normalize array sentinel style",
-      "851b85447c7e iio: Remove single use of macro definition for regmap name",
-      "2daee817df13 iio: core: Match iio_device_claim_*() semantics and implementation",
-      "421ac0c231cd iio: health: max30102: Use IIO cleanup helpers",
-      "f68afce8e8a7 iio: Initialize i2c_device_id arrays using member names",
-      "995832b2cebe Replace <linux/mod_devicetable.h> by more specific <linux/device-id/*.h> (c files)",
-      "aa624c43a369 iio: health: Remove redundant dev_err()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98114"
-    ],
-    "kev": false,
-    "upstream": "c61dc7b1b4a3234b4aa3965502908a292238805c",
-    "subject": "ksmbd: propagate DACL parsing errors",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/smbacl.c"
-    ],
-    "prerequisites": [
-      "0066f623bce8 ksmbd: use __GFP_RETRY_MAYFAIL",
-      "62e7dd0a39c2 smb: common: change the data type of num_aces to le16",
-      "8dd2e58b6273 ksmbd: remove redundant DACL check in smb_check_perm_dacl",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "e5f42cb75772 ksmbd: support access-based directory enumeration",
-      "5d47ebb2795d ksmbd: honor owner rights ACEs in maximal access"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99109"
-    ],
-    "kev": false,
-    "upstream": "4aa2c106aef4bf3dfd97c30842db0767b26e8428",
-    "subject": "smb: client: reject SetEA requests that do not fit the request buffer",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/cifssmb.c"
-    ],
-    "prerequisites": [
-      "032137fe136a smb: client: fix warning in CIFSFindFirst()",
-      "215533f888dc smb: client: fix warning in CIFSFindNext()",
-      "f1f047bd7ce0 smb: client: Fix -Wstringop-overflow issues",
-      "a43f95fdd394 cifs: fix charset issue in reconnection",
-      "ed3e0a149b58 smb: client: implement ->query_reparse_point() for SMB1",
-      "7435d51b7ea2 smb: client: fix renaming of reparse points",
-      "5408990aa662 smb: client: fix hardlinking of reparse points",
-      "8a3c4e44c243 cifs: get rid of dup length check in parse_reparse_point()",
-      "a69ce85ec9af filelock: split common fields into struct file_lock_core",
-      "84e286c1bb9b smb/client: adapt to breakup of struct file_lock",
-      "2c7d399e551c smb: client: reuse file lease key in compound operations",
-      "ebd9779683aa smb: client: replace deprecated strncpy with strscpy",
-      "753b67eb630d cifs: Replace cifs_readdata with a wrapper around netfs_io_subrequest",
-      "a975a2f22cdc cifs: Replace cifs_writedata with a wrapper around netfs_io_subrequest",
-      "ab58fbdeebc7 cifs: Use more fields from netfs_io_subrequest"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
   },
   {
     "series": "6.1",
@@ -9250,71 +8730,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-98353"
-    ],
-    "kev": false,
-    "upstream": "00baeade709fb66da647e8327e8398bb532e30f7",
-    "subject": "RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/infiniband/hw/erdma/erdma_main.c",
-      "drivers/infiniband/hw/erdma/erdma_verbs.c"
-    ],
-    "prerequisites": [
-      "ece43fad220b RDMA/erdma: Extend access right field of FRMR and REG MR to support atomic",
-      "71c6925f280a RDMA/erdma: Report atomic capacity when hardware supports atomic feature",
-      "35765dccaf34 RDMA/erdma: Add a workqueue for WRs reflushing",
-      "54d8fffc2a50 RDMA/erdma: Implement the lifecycle of reflushing work for each QP",
-      "901d9d62416b RDMA/erdma: Minor refactor of device init flow",
-      "128f8404306d RDMA/erdma: Configure PAGE_SIZE to hardware",
-      "7e9a1dada226 RDMA/erdma: Allocate doorbell resources from hardware",
-      "6534de1fe385 RDMA/erdma: Associate QPs/CQs with doorbells for authorization",
-      "3b3dfd58bace RDMA/erdma: Refactor the original doorbell allocation mechanism",
-      "c619af832778 RDMA/erdma: use vmalloc_array and vcalloc",
-      "d7cfbba90b80 RDMA/erdma: Renaming variable names and field names of struct erdma_mem",
-      "7244b4aa4221 RDMA/erdma: Refactor the storage structure of MTT entries",
-      "ed10435d3583 RDMA/erdma: Implement hierarchical MTT",
-      "6b5f0749ce48 RDMA/erdma: Fix error code in erdma_create_scatter_mtt()",
-      "b2abdffb505f RDMA/erdma: Fix NULL pointer access in regmr_cmd"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-97565"
-    ],
-    "kev": false,
-    "upstream": "e6142a8bfc230c7263eb8b0475249c958ce49367",
-    "subject": "smb: client: reject short READ responses in CIFSSMBRead()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/cifssmb.c"
-    ],
-    "prerequisites": [
-      "032137fe136a smb: client: fix warning in CIFSFindFirst()",
-      "215533f888dc smb: client: fix warning in CIFSFindNext()",
-      "f1f047bd7ce0 smb: client: Fix -Wstringop-overflow issues",
-      "a43f95fdd394 cifs: fix charset issue in reconnection",
-      "ed3e0a149b58 smb: client: implement ->query_reparse_point() for SMB1",
-      "7435d51b7ea2 smb: client: fix renaming of reparse points",
-      "5408990aa662 smb: client: fix hardlinking of reparse points",
-      "8a3c4e44c243 cifs: get rid of dup length check in parse_reparse_point()",
-      "a69ce85ec9af filelock: split common fields into struct file_lock_core",
-      "84e286c1bb9b smb/client: adapt to breakup of struct file_lock",
-      "2c7d399e551c smb: client: reuse file lease key in compound operations",
-      "ebd9779683aa smb: client: replace deprecated strncpy with strscpy",
-      "753b67eb630d cifs: Replace cifs_readdata with a wrapper around netfs_io_subrequest",
-      "a975a2f22cdc cifs: Replace cifs_writedata with a wrapper around netfs_io_subrequest",
-      "ab58fbdeebc7 cifs: Use more fields from netfs_io_subrequest"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/smb/client/cifssmb.c\nfs/smb/client/cifssmb.c:1449:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/cifssmb.c:1449:31: error: \u2018smb_eio_trace_read_rsp_short\u2019 undeclared (first use in this function)"
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-97563"
     ],
     "kev": false,
@@ -9341,38 +8756,6 @@
       "8a3c4e44c243 cifs: get rid of dup length check in parse_reparse_point()",
       "a69ce85ec9af filelock: split common fields into struct file_lock_core",
       "84e286c1bb9b smb/client: adapt to breakup of struct file_lock"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-97562"
-    ],
-    "kev": false,
-    "upstream": "d806d5a85dcbe2a0f181b2f0f9f61ddfbefa1818",
-    "subject": "smb: client: pin DFS superblock in iterator callback",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/misc.c"
-    ],
-    "prerequisites": [
-      "49024ec8795e smb: client: fix parsing of source mount option",
-      "3ae872de4107 smb: client: fix shared DFS root mounts with different prefixes",
-      "a43f95fdd394 cifs: fix charset issue in reconnection",
-      "b3773b19d43f SMB3: rename macro CIFS_SERVER_IS_CHAN to avoid confusion",
-      "2da338ff752a smb3: do not start laundromat thread when dir leases  disabled",
-      "d8392c203e84 smb3: show beginning time for per share stats",
-      "ffceb7640cbf smb: client: do not defer close open handles to deleted files",
-      "5b142b37c70b cifs: Move some extern decls from .c files to .h",
-      "062a7f0ff46e smb: client: guarantee refcounted children from parent session",
-      "35f834265e0d smb3: fix broken reconnect when password changing on the server by allowing password rotation",
-      "cd936507986e cifs: Remove cifs_aio_ctx",
-      "bdcffe4be7cb Fix spelling errors in Server Message Block",
-      "36bb22a08a69 cifs: cifs_inval_name_dfs_link_error: correct the check for fullpath",
-      "21dcbc17eba3 smb: use LIST_HEAD() to simplify code",
-      "4f42a8b54b5c smb: client: fix DFS interlink failover"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -9414,58 +8797,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-98056"
-    ],
-    "kev": false,
-    "upstream": "4ed7f3d7d435bf5b63da2814dc9270f5ba896011",
-    "subject": "nvme: remove stale namespaces by NSID range during scan",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/nvme/host/core.c"
-    ],
-    "prerequisites": [
-      "71b26083d59c block: set the disk capacity to 0 in blk_mark_disk_dead",
-      "23a908647efa nvme: don't remove namespaces in nvme_passthru_end",
-      "4f17344e9dae nvme: remove the NVME_NS_DEAD check in nvme_remove_invalid_namespaces",
-      "fde776afdd84 nvme: remove the NVME_NS_DEAD check in nvme_validate_ns",
-      "6bcd5089ee13 nvme: don't unquiesce the admin queue in nvme_kill_queues",
-      "cd50f9b24726 nvme: split nvme_kill_queues",
-      "483239c75ba7 blk-mq: pass a tagset to blk_mq_wait_quiesce_done",
-      "98d81f0df70c nvme: use blk_mq_[un]quiesce_tagset",
-      "1b96f862eccc nvme: implement the DEAC bit for the Write Zeroes command",
-      "1e37a307f148 nvme: don't call nvme_init_ctrl_finish from nvme_passthru_end",
-      "94cc781f69f4 nvme: move OPAL setup from PCIe to core",
-      "e481fc0a3777 nvme-auth: guarantee dhchap buffers under memory pressure",
-      "aa36d711e945 nvme-auth: convert dhchap_auth_list to an array",
-      "811f4de0344d nvme: avoid fallback to sequential scan due to transient issues",
-      "9f27bd701d18 nvme: rename the queue quiescing helpers"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98212"
-    ],
-    "kev": false,
-    "upstream": "5d132990475f02cfa1debe03d50b479432864ebd",
-    "subject": "mmc: hsq: Fix use-after-free in retry work",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/mmc/host/mmc_hsq.c"
-    ],
-    "prerequisites": [
-      "e026a3f9172f mmc: mmc-hsq: Use fifo to dispatch mmc_request",
-      "2e2b547950bc mmc: core: Allow dynamical updates of the number of requests for hsq",
-      "68df98c48398 mmc: hsq: Improve random I/O write performance for 4k buffers"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-98043"
     ],
     "kev": false,
@@ -9498,25 +8829,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-97929"
-    ],
-    "kev": false,
-    "upstream": "8f5ef203abda9dd36b2af473c7b737d544f807bd",
-    "subject": "ALSA: usbusx2y: validate URB actual_length in interrupt callback",
-    "verdict": "needs-backport",
-    "files": [
-      "sound/usb/usx2y/usbusx2y.c"
-    ],
-    "prerequisites": [
-      "f8466d91f36d ALSA: usx2y: Use standard print API",
-      "f3d81c058f48 ALSA: usx2y: Use safer strscpy() instead of strcpy()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-97950"
     ],
     "kev": false,
@@ -9531,38 +8843,6 @@
       "4609e1f18e19 fs: port ->permission() to pass mnt_idmap",
       "1b25dea3867a configfs:get_target() - release path as soon as we grab configfs_item reference",
       "1387aedb391a configfs: mark pinned dentries persistent"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-97992"
-    ],
-    "kev": false,
-    "upstream": "62be4e3e5f5f947fbf765b914cebdc478f715d12",
-    "subject": "vhost-vdpa: protect config_ctx from being freed under the config callback",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/vhost/vdpa.c"
-    ],
-    "prerequisites": [
-      "1369459b2e21 iommu: Add a gfp parameter to iommu_map()",
-      "1c71222e5f23 mm: replace vma->vm_flags direct modifications with modifier calls",
-      "69106b6fb3d7 vhost-vdpa: Introduce RESUME backend feature bit",
-      "3b688d7a086d vhost-vdpa: uAPI to resume the device",
-      "6830a6aba9d4 vhost-vdpa: print warning when vhost_vdpa_alloc_domain fails",
-      "94a115042194 vhost-vdpa: vhost_vdpa_alloc_domain() should be using a const struct bus_type *",
-      "9067de4725a2 vhost-vdpa: use bind_mm/unbind_mm device callbacks",
-      "4c630f307455 mm/gup: remove vmas parameter from pin_user_pages()",
-      "9f09fd6171fe vdpa: accept VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK backend feature",
-      "b63e5c70c393 vdpa: add get_backend_features vdpa operation",
-      "7db0d6027e69 vhost-vdpa: introduce descriptor group backend feature",
-      "c8068d9bae0c vhost-vdpa: uAPI to get dedicated descriptor group id",
-      "1d0f874bfe78 vhost-vdpa: reset vendor specific mapping to initial state in .release",
-      "4398776f7a6d vhost-vdpa: introduce IOTLB_PERSIST backend feature bit",
-      "bc91df5c70ac vhost-vdpa: clean iotlb map during reset for older userspace"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -9595,38 +8875,6 @@
       "ba3e0c47c070 virtio_ring: introduce virtqueue_reset()",
       "d5c0ed17fea6 virtio: packed: fix unmap leak for indirect desc table",
       "f9dac92ba908 virtio_ring: enable premapped mode whatever use_dma_api"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-97994"
-    ],
-    "kev": false,
-    "upstream": "ccb1dc7c527f8c925925cf92afc76ae590dac311",
-    "subject": "vhost/vdpa: reject VRING_NUM larger than device max",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/vhost/vdpa.c"
-    ],
-    "prerequisites": [
-      "1369459b2e21 iommu: Add a gfp parameter to iommu_map()",
-      "1c71222e5f23 mm: replace vma->vm_flags direct modifications with modifier calls",
-      "69106b6fb3d7 vhost-vdpa: Introduce RESUME backend feature bit",
-      "3b688d7a086d vhost-vdpa: uAPI to resume the device",
-      "6830a6aba9d4 vhost-vdpa: print warning when vhost_vdpa_alloc_domain fails",
-      "94a115042194 vhost-vdpa: vhost_vdpa_alloc_domain() should be using a const struct bus_type *",
-      "9067de4725a2 vhost-vdpa: use bind_mm/unbind_mm device callbacks",
-      "4c630f307455 mm/gup: remove vmas parameter from pin_user_pages()",
-      "9f09fd6171fe vdpa: accept VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK backend feature",
-      "b63e5c70c393 vdpa: add get_backend_features vdpa operation",
-      "7db0d6027e69 vhost-vdpa: introduce descriptor group backend feature",
-      "c8068d9bae0c vhost-vdpa: uAPI to get dedicated descriptor group id",
-      "1d0f874bfe78 vhost-vdpa: reset vendor specific mapping to initial state in .release",
-      "4398776f7a6d vhost-vdpa: introduce IOTLB_PERSIST backend feature bit",
-      "bc91df5c70ac vhost-vdpa: clean iotlb map during reset for older userspace"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""

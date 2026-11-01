@@ -1,0 +1,64 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 8f5ef203abda9dd36b2af473c7b737d544f807bd
+X-Fasttrack-CVE: CVE-2026-97929
+X-Fasttrack-Backport: cve/CVE-2026-97929/6.1
+From: Tristan Madani <tristan@talencesecurity.com>
+Date: Sun, 1 Nov 2026 15:10:52 +0100
+Subject: [PATCH] ALSA: usbusx2y: validate URB actual_length in interrupt
+ callback
+
+commit 8f5ef203abda9dd36b2af473c7b737d544f807bd upstream.
+
+[ Backport: context only; 6.1 uses snd_printk()/snd_printdd() in place of dev_err()/dev_dbg(). ]
+
+i_usx2y_in04_int() processes the interrupt URB data without checking
+urb->actual_length.  A short transfer from a malfunctioning device
+would cause the handler to process uninitialized heap data from the
+kmalloc-allocated in04_buf, which is then copied to the mmap-accessible
+ctl_snapshot[] array.
+
+Fix by using kzalloc() for in04_buf to zero-initialize the buffer,
+and adding an actual_length check to skip processing on short
+transfers while still resubmitting the URB.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260904205826.4071119-2-tristmd@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+---
+ sound/usb/usx2y/usbusx2y.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/sound/usb/usx2y/usbusx2y.c b/sound/usb/usx2y/usbusx2y.c
+index f6ab927490b4..bfe128e24b6a 100644
+--- a/sound/usb/usx2y/usbusx2y.c
++++ b/sound/usb/usx2y/usbusx2y.c
+@@ -189,6 +189,9 @@ static void i_usx2y_in04_int(struct urb *urb)
+ 		return;
+ 	}
+ 
++	if (urb->actual_length < USX2Y_IN04_SIZE)
++		goto resubmit;
++
+ 	//	printk("%i:0x%02X ", 8, (int)((unsigned char*)usx2y->in04_buf)[8]); Master volume shows 0 here if fader is at max during boot ?!?
+ 	if (us428ctls) {
+ 		diff = -1;
+@@ -254,6 +257,7 @@ static void i_usx2y_in04_int(struct urb *urb)
+ 	if (err)
+ 		snd_printk(KERN_ERR "in04_int() usb_submit_urb err=%i\n", err);
+ 
++resubmit:
+ 	urb->dev = usx2y->dev;
+ 	usb_submit_urb(urb, GFP_ATOMIC);
+ }
+@@ -306,7 +310,7 @@ int usx2y_in04_init(struct usx2ydev *usx2y)
+ 		goto error;
+ 	}
+ 
+-	usx2y->in04_buf = kmalloc(USX2Y_IN04_SIZE, GFP_KERNEL);
++	usx2y->in04_buf = kzalloc(USX2Y_IN04_SIZE, GFP_KERNEL);
+ 	if (!usx2y->in04_buf) {
+ 		err = -ENOMEM;
+ 		goto error;
