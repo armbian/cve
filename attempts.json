@@ -3057,6 +3057,14 @@
     }
   },
   "CVE-2026-98719": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "have_run_cpus does not exist in 6.1; SEV uses wbinvd_on_all_cpus().",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-11-01",
@@ -3094,6 +3102,14 @@
     }
   },
   "CVE-2026-98789": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "Needs bpf_mem_alloc draining flag, drain lock and atomic lists; 6.1 is affected.",
+      "run": null
+    },
     "6.18": {
       "cost": 0.7099544999999998,
       "date": "2026-10-31",
@@ -3176,6 +3192,14 @@
     }
   },
   "CVE-2026-98839": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The loop recomputes count under the lock; 80fa7a033785 is not in 6.1.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-11-01",
@@ -3254,6 +3278,14 @@
     }
   },
   "CVE-2026-98939": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "Fixes d5d8b8662e6e is absent; set_memory.c takes no init_mm mmap lock.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-11-01",
@@ -3327,6 +3359,14 @@
     }
   },
   "CVE-2026-99093": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "pagetable_free_kernel() and deferred kernel page-table freeing do not exist in 6.1.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-11-01",
@@ -3389,6 +3429,16 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99191": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "6.1 BIG TCP uses an HBH jumbo header that the upstream fix does not handle.",
       "run": null
     }
   }
