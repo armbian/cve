@@ -1,0 +1,233 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 34abd408c8ba24d7c97bd02ba874d8c714f49db1
+X-Fasttrack-CVE: CVE-2026-31537
+X-Fasttrack-Backport: cve/CVE-2026-31537/6.1
+From: Stefan Metzmacher <metze@samba.org>
+Date: Sun, 1 Nov 2026 03:17:45 +0100
+Subject: [PATCH] smb: server: make use of smbdirect_socket.send_io.bcredits
+
+commit 34abd408c8ba24d7c97bd02ba874d8c714f49db1 upstream.
+
+[ Backport: 6.1 has no struct smbdirect_socket. Add send_bcredits and wait_send_bcredits to struct smb_direct_transport. ]
+[ Backport: 6.1 has no local credits (lcredits). The bcredit is taken before the send credit; the error path releases both. ]
+[ Backport: 6.1 smb_direct_flush_send_list() re-inits send_ctx after a post; keep the credit across the re-init. ]
+[ Backport: wake up wait_send_bcredits in free_transport() and on RDMA_CM disconnect, where 6.1 wakes wait_send_credits. ]
+
+It turns out that our code will corrupt the stream of
+reassabled data transfer messages when we trigger an
+immendiate (empty) send.
+
+In order to fix this we'll have a single 'batch' credit per
+connection. And code getting that credit is free to use
+as much messages until remaining_length reaches 0, then
+the batch credit it given back and the next logical send can
+happen.
+
+Cc: <stable@vger.kernel.org> # 6.18.x
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+---
+ fs/smb/server/transport_rdma.c | 73 ++++++++++++++++++++++++++++++----
+ 1 file changed, 66 insertions(+), 7 deletions(-)
+
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index bcf0631ce10a..8e201c468c41 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -129,6 +129,7 @@ struct smb_direct_transport {
+ 	struct list_head	recvmsg_queue;
+ 
+ 	int			send_credit_target;
++	atomic_t		send_bcredits;
+ 	atomic_t		send_credits;
+ 	spinlock_t		lock_new_recv_credits;
+ 	int			new_recv_credits;
+@@ -136,6 +137,7 @@ struct smb_direct_transport {
+ 	int			pages_per_rw_credit;
+ 	atomic_t		rw_credits;
+ 
++	wait_queue_head_t	wait_send_bcredits;
+ 	wait_queue_head_t	wait_send_credits;
+ 	wait_queue_head_t	wait_rw_credits;
+ 
+@@ -172,6 +174,7 @@ struct smb_direct_send_ctx {
+ 	int			wr_cnt;
+ 	bool			need_invalidate_rkey;
+ 	unsigned int		remote_key;
++	int			credit;
+ };
+ 
+ struct smb_direct_sendmsg {
+@@ -360,6 +363,7 @@ static struct smb_direct_transport *alloc_transport(struct rdma_cm_id *cm_id)
+ 	t->reassembly_data_length = 0;
+ 	t->reassembly_queue_length = 0;
+ 	init_waitqueue_head(&t->wait_reassembly_queue);
++	init_waitqueue_head(&t->wait_send_bcredits);
+ 	init_waitqueue_head(&t->wait_send_credits);
+ 	init_waitqueue_head(&t->wait_rw_credits);
+ 
+@@ -393,6 +397,7 @@ static void free_transport(struct smb_direct_transport *t)
+ {
+ 	struct smb_direct_recvmsg *recvmsg;
+ 
++	wake_up_all(&t->wait_send_bcredits);
+ 	wake_up_interruptible(&t->wait_send_credits);
+ 
+ 	ksmbd_debug(RDMA, "wait for all send posted to IB to finish\n");
+@@ -914,6 +919,7 @@ static void smb_direct_send_ctx_init(struct smb_direct_transport *t,
+ 	send_ctx->wr_cnt = 0;
+ 	send_ctx->need_invalidate_rkey = need_invalidate_rkey;
+ 	send_ctx->remote_key = remote_key;
++	send_ctx->credit = 0;
+ }
+ 
+ static int smb_direct_flush_send_list(struct smb_direct_transport *t,
+@@ -921,10 +927,10 @@ static int smb_direct_flush_send_list(struct smb_direct_transport *t,
+ 				      bool is_last)
+ {
+ 	struct smb_direct_sendmsg *first, *last;
+-	int ret;
++	int ret = 0;
+ 
+ 	if (list_empty(&send_ctx->msg_list))
+-		return 0;
++		goto release_credit;
+ 
+ 	first = list_first_entry(&send_ctx->msg_list,
+ 				 struct smb_direct_sendmsg,
+@@ -945,9 +951,12 @@ static int smb_direct_flush_send_list(struct smb_direct_transport *t,
+ 
+ 	ret = smb_direct_post_send(t, &first->wr);
+ 	if (!ret) {
++		int credit = send_ctx->credit;
++
+ 		smb_direct_send_ctx_init(t, send_ctx,
+ 					 send_ctx->need_invalidate_rkey,
+ 					 send_ctx->remote_key);
++		send_ctx->credit = credit;
+ 	} else {
+ 		atomic_add(send_ctx->wr_cnt, &t->send_credits);
+ 		wake_up(&t->wait_send_credits);
+@@ -956,6 +965,14 @@ static int smb_direct_flush_send_list(struct smb_direct_transport *t,
+ 			smb_direct_free_sendmsg(t, first);
+ 		}
+ 	}
++
++release_credit:
++	if (is_last && !ret && send_ctx->credit) {
++		atomic_add(send_ctx->credit, &t->send_bcredits);
++		send_ctx->credit = 0;
++		wake_up(&t->wait_send_bcredits);
++	}
++
+ 	return ret;
+ }
+ 
+@@ -981,6 +998,25 @@ static int wait_for_credits(struct smb_direct_transport *t,
+ 	} while (true);
+ }
+ 
++static int wait_for_send_bcredit(struct smb_direct_transport *t,
++				 struct smb_direct_send_ctx *send_ctx)
++{
++	int ret;
++
++	if (send_ctx->credit)
++		return 0;
++
++	ret = wait_for_credits(t,
++			       &t->wait_send_bcredits,
++			       &t->send_bcredits,
++			       1);
++	if (ret)
++		return ret;
++
++	send_ctx->credit = 1;
++	return 0;
++}
++
+ static int wait_for_send_credits(struct smb_direct_transport *t,
+ 				 struct smb_direct_send_ctx *send_ctx)
+ {
+@@ -1158,10 +1194,20 @@ static int smb_direct_post_send_data(struct smb_direct_transport *t,
+ 	struct smb_direct_sendmsg *msg;
+ 	int data_length;
+ 	struct scatterlist sg[SMB_DIRECT_MAX_SEND_SGES - 1];
++	struct smb_direct_send_ctx _send_ctx;
++
++	if (!send_ctx) {
++		smb_direct_send_ctx_init(t, &_send_ctx, false, 0);
++		send_ctx = &_send_ctx;
++	}
++
++	ret = wait_for_send_bcredit(t, send_ctx);
++	if (ret)
++		goto bcredit_failed;
+ 
+ 	ret = wait_for_send_credits(t, send_ctx);
+ 	if (ret)
+-		return ret;
++		goto credit_failed;
+ 
+ 	data_length = 0;
+ 	for (i = 0; i < niov; i++)
+@@ -1169,10 +1215,8 @@ static int smb_direct_post_send_data(struct smb_direct_transport *t,
+ 
+ 	ret = smb_direct_create_header(t, data_length, remaining_data_length,
+ 				       &msg);
+-	if (ret) {
+-		atomic_inc(&t->send_credits);
+-		return ret;
+-	}
++	if (ret)
++		goto header_failed;
+ 
+ 	for (i = 0; i < niov; i++) {
+ 		struct ib_sge *sge;
+@@ -1208,10 +1252,22 @@ static int smb_direct_post_send_data(struct smb_direct_transport *t,
+ 	ret = post_sendmsg(t, send_ctx, msg);
+ 	if (ret)
+ 		goto err;
++
++	if (send_ctx == &_send_ctx) {
++		ret = smb_direct_flush_send_list(t, send_ctx, true);
++		if (ret)
++			goto err;
++	}
++
+ 	return 0;
+ err:
+ 	smb_direct_free_sendmsg(t, msg);
++header_failed:
+ 	atomic_inc(&t->send_credits);
++credit_failed:
++	atomic_add(send_ctx->credit, &t->send_bcredits);
++	send_ctx->credit = 0;
++bcredit_failed:
+ 	return ret;
+ }
+ 
+@@ -1533,6 +1589,7 @@ static int smb_direct_cm_handler(struct rdma_cm_id *cm_id,
+ 		t->status = SMB_DIRECT_CS_DISCONNECTED;
+ 		wake_up_interruptible(&t->wait_status);
+ 		wake_up_interruptible(&t->wait_reassembly_queue);
++		wake_up_all(&t->wait_send_bcredits);
+ 		wake_up(&t->wait_send_credits);
+ 		break;
+ 	}
+@@ -1598,6 +1655,8 @@ static int smb_direct_send_negotiate_response(struct smb_direct_transport *t,
+ 		resp->max_receive_size = cpu_to_le32(t->max_recv_size);
+ 		resp->max_fragmented_size =
+ 				cpu_to_le32(t->max_fragmented_recv_size);
++
++		atomic_set(&t->send_bcredits, 1);
+ 	}
+ 
+ 	sendmsg->sge[0].addr = ib_dma_map_single(t->cm_id->device,

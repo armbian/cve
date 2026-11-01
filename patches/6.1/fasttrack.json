@@ -1483,6 +1483,312 @@
       "prerequisites": [],
       "build_log": "",
       "backport": "CVE-2024-57795/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "65c12b104cb942d588a1a093acc4537fb3d3b129",
+      "subject": "wifi: ath11k: fix sleeping-in-atomic in ath11k_mac_op_set_bitrate_mask()",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-39732"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0088-65c12b104cb9-wifi-ath11k-fix-sleeping-in-atomic-in-ath11k-mac-op.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-39732/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "736a0516a16268995f4898eded49bfef077af709",
+      "subject": "hfs: fix general protection fault in hfs_find_init()",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-38716"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0089-736a0516a162-hfs-fix-general-protection-fault-in-hfs-find-init.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-38716/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "1071d560afb4c245c2076494226df47db5a35708",
+      "subject": "dm-stripe: fix a possible integer overflow",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-39940"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0090-1071d560afb4-dm-stripe-fix-a-possible-integer-overflow.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-39940/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "52565a935213cd6a8662ddb8efe5b4219343a25d",
+      "subject": "net: kcm: Fix race condition in kcm_unattach()",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-38717"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0091-52565a935213-net-kcm-fix-race-condition-in-kcm-unattach.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-38717/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "e4414b01c1cd9887bbde92f946c1ba94e40d6d64",
+      "subject": "bpf: Check the helper function is valid in get_helper_proto",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-39990"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0092-e4414b01c1cd-bpf-check-the-helper-function-is-valid-in-get-helper.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-39990/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "cd8ae32e4e4652db55bce6b9c79267d8946765a9",
+      "subject": "xfrm: xfrm_alloc_spi shouldn't use 0 as SPI",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-39965"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0093-cd8ae32e4e46-xfrm-xfrm-alloc-spi-shouldn-t-use-0-as-spi.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-39965/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "15f519e9f883b316d86e2bb6b767a023aafd9d83",
+      "subject": "ceph: fix race condition validating r_parent before applying state",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-39927"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0094-15f519e9f883-ceph-fix-race-condition-validating-r-parent-before-a.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-39927/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "23361bd54966b437e1ed3eb1a704572f4b279e58",
+      "subject": "f2fs: fix infinite loop in __insert_extent_tree()",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-40333"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0095-23361bd54966-f2fs-fix-infinite-loop-in-insert-extent-tree.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-40333/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "c7fbb8218b4ad35fec0bd2256d2b9c8d60331f33",
+      "subject": "sysfs: check visibility before changing group attribute ownership",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-40355"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0096-c7fbb8218b4a-sysfs-check-visibility-before-changing-group-attribu.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-40355/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "2618849f31e7cf51fadd4a5242458501a6d5b315",
+      "subject": "btrfs: ensure no dirty metadata is written back for an fs with errors",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-40303"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0097-2618849f31e7-btrfs-ensure-no-dirty-metadata-is-written-back-for-a.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-40303/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "ca8b201f28547e28343a6f00a6e91fa8c09572fe",
+      "subject": "f2fs: fix to avoid potential deadlock",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-71065"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0098-ca8b201f2854-f2fs-fix-to-avoid-potential-deadlock.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-71065/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "netfilter: nf_tables: remove redundant chain validation on register store",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-71160"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0099-q-netfilter-nf-tables-remove-redundant-chain-validatio.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-71160/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "8e1a1bc4f5a42747c08130b8242ebebd1210b32f",
+      "subject": "netfilter: nf_tables: avoid chain re-validation if possible",
+      "source": "claude",
+      "cves": [
+        "CVE-2025-71160"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0100-8e1a1bc4f5a4-netfilter-nf-tables-avoid-chain-re-validation-if-pos.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2025-71160/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "58192b9ce09b0f0f86e2036683bd542130b91a98",
+      "subject": "wifi: iwlwifi: fix 22000 series SMEM parsing",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-43172"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0101-58192b9ce09b-wifi-iwlwifi-fix-22000-series-smem-parsing.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-43172/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "55dcfdf8af9c38cce6f5b2058d3b58dde25e5020",
+      "subject": "dm raid: use proper md_ro_state enumerators",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-43309"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0102-55dcfdf8af9c-dm-raid-use-proper-md-ro-state-enumerators.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-43309/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "cefcb9297fbdb6d94b61787b4f8d84f55b741470",
+      "subject": "md raid: fix hang when stopping arrays with metadata through dm-raid",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-43309"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0103-cefcb9297fbd-md-raid-fix-hang-when-stopping-arrays-with-metadata.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-43309/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "34abd408c8ba24d7c97bd02ba874d8c714f49db1",
+      "subject": "smb: server: make use of smbdirect_socket.send_io.bcredits",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-31537"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0104-34abd408c8ba-smb-server-make-use-of-smbdirect-socket-send-io-bcre.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-31537/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "e1512c1db9e8794d8d130addd2615ec27231d994",
+      "subject": "espintcp: Fix race condition in espintcp_close()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-23239"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0105-e1512c1db9e8-espintcp-fix-race-condition-in-espintcp-close.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-23239/6.1"
     }
   ]
 }

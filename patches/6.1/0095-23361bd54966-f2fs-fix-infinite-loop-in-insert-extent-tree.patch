@@ -1,0 +1,74 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 23361bd54966b437e1ed3eb1a704572f4b279e58
+X-Fasttrack-CVE: CVE-2025-40333
+X-Fasttrack-Backport: cve/CVE-2025-40333/6.1
+From: wangzijie <wangzijie1@honor.com>
+Date: Sun, 1 Nov 2026 03:07:27 +0100
+Subject: [PATCH] f2fs: fix infinite loop in __insert_extent_tree()
+
+commit 23361bd54966b437e1ed3eb1a704572f4b279e58 upstream.
+
+[ Backport: 6.1 searches the tree in the shared f2fs_lookup_rb_tree_for_insert(); return NULL there on overlap, leaving *parent at the overlapping entry. ]
+[ Backport: __insert_extent_tree() prints the message, hits f2fs_bug_on() and returns NULL when the lookup returns NULL. ]
+[ Backport: __insert_discard_tree() also uses the helper; it hits f2fs_bug_on() and skips the insert, as mainline does. ]
+[ Backport: 6.1 has no f2fs_err_ratelimited() and no extent age fields; use f2fs_err() and drop the age values. ]
+
+When we get wrong extent info data, and look up extent_node in rb tree,
+it will cause infinite loop (CONFIG_F2FS_CHECK_FS=n). Avoiding this by
+return NULL and print some kernel messages in that case.
+
+Signed-off-by: wangzijie <wangzijie1@honor.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+---
+ fs/f2fs/extent_cache.c | 13 ++++++++++++-
+ fs/f2fs/segment.c      |  4 ++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
+index b4c14efc83cd..fa70adba5286 100644
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -188,7 +188,8 @@ struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
+ 			p = &(*p)->rb_right;
+ 			*leftmost = false;
+ 		} else {
+-			f2fs_bug_on(sbi, 1);
++			/* *parent is the overlapping entry */
++			return NULL;
+ 		}
+ 	}
+ 
+@@ -596,6 +597,16 @@ static struct extent_node *__insert_extent_tree(struct f2fs_sb_info *sbi,
+ 
+ 	p = f2fs_lookup_rb_tree_for_insert(sbi, &et->root, &parent,
+ 						ei->fofs, &leftmost);
++	if (!p) {
++		en = rb_entry(parent, struct extent_node, rb_node);
++		f2fs_err(sbi, "%s: corrupted extent, type: %d, "
++			"extent node in rb tree [%u, %u, %u], "
++			"extent node to insert [%u, %u, %u]",
++			__func__, et->type, en->ei.fofs, en->ei.blk, en->ei.len,
++			ei->fofs, ei->blk, ei->len);
++		f2fs_bug_on(sbi, 1);
++		return NULL;
++	}
+ do_insert:
+ 	en = __attach_extent_node(sbi, et, ei, parent, p, leftmost);
+ 	if (!en)
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index bf52ba8a32c0..06ac4400e05e 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -1240,6 +1240,10 @@ static void __insert_discard_tree(struct f2fs_sb_info *sbi,
+ 
+ 	p = f2fs_lookup_rb_tree_for_insert(sbi, &dcc->root, &parent,
+ 							lstart, &leftmost);
++	if (!p) {
++		f2fs_bug_on(sbi, 1);
++		return;
++	}
+ do_insert:
+ 	__attach_discard_cmd(sbi, bdev, lstart, start, len, parent,
+ 								p, leftmost);
