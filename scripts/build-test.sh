@@ -55,6 +55,18 @@ target() {
 	echo "${1%.c}.o"
 }
 
+# Up to 3 buildable .c files that include header $1.
+_includers() {
+	local h=$1 inc
+	if [[ /$h == */include/* ]] && [[ $h == include/* || $h == arch/* ]]; then
+		inc=$(sed -E 's#^(arch/[^/]+/)?include/(uapi/|generated/)?##' <<<"$h")
+		git -C "$src" grep -l -E "^#[[:space:]]*include[[:space:]]*<${inc//./\\.}>" -- '*.c'
+	else
+		git -C "$src" grep -l -E "^#[[:space:]]*include[[:space:]]*\"${h##*/}\"" -- "${h%/*}/*.c"
+	fi | grep -E -v "^(tools|Documentation|samples|scripts)/" | awk -F/ -v a="$arch" '$1 != "arch" || $2 == a' ; true
+} 2>/dev/null
+includers() { _includers "$@" | head -3; }
+
 prepare() { # $1 = base commit; in this slot's tree
 	out=$work/out-$arch-$slot-${1:0:12}
 	[ -f "$out/.prepared" ] && return 0
@@ -132,8 +144,12 @@ worker() {
 			fi
 		fi
 		# Changed .c files, without arch/ trees of other architectures.
-		mapfile -t files < <(sed -n 's|^+++ b/\(.*\.c\)$|\1|p' "${patches[@]}" | sort -u |
-			grep -E -v "^(arch|tools)/" ; sed -n 's|^+++ b/\(arch/'"$arch"'/.*\.c\)$|\1|p' "${patches[@]}" | sort -u)
+		# A changed header adds a few .c files that include it.
+		mapfile -t files < <( { sed -n 's|^+++ b/\(.*\.c\)$|\1|p' "${patches[@]}" | sort -u |
+			grep -E -v "^(arch|tools)/" ; sed -n 's|^+++ b/\(arch/'"$arch"'/.*\.c\)$|\1|p' "${patches[@]}" | sort -u
+			sed -n 's|^+++ b/\(.*\.h\)$|\1|p' "${patches[@]}" | sort -u | grep -E -v "^(tools|Documentation)/" |
+				grep -E -v "^arch/" ; sed -n 's|^+++ b/\(arch/'"$arch"'/.*\.h\)$|\1|p' "${patches[@]}" | sort -u
+			} | while read -r f; do [[ $f == *.h ]] && includers "$f" || echo "$f"; done | awk '!seen[$0]++')
 		declare -A before=() obj=() broken=()
 		for f in "${files[@]}"; do
 			obj[$f]=$(target "$f")
