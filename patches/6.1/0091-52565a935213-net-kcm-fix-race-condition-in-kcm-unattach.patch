@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 52565a935213cd6a8662ddb8efe5b4219343a25d
+X-Fasttrack-CVE: CVE-2025-38717
+X-Fasttrack-Backport: cve/CVE-2025-38717/6.1
+From: Sven Stegemann <sven@stegemann.de>
+Date: Sun, 1 Nov 2026 03:06:55 +0100
+Subject: [PATCH] net: kcm: Fix race condition in kcm_unattach()
+
+commit 52565a935213cd6a8662ddb8efe5b4219343a25d upstream.
+
+[ Backport: 6.1 has no disable_work_sync(); keep kcm->tx_stopped and check it in kcm_unattach() before queue_work(). ]
+
+syzbot found a race condition when kcm_unattach(psock)
+and kcm_release(kcm) are executed at the same time.
+
+kcm_unattach() is missing a check of the flag
+kcm->tx_stopped before calling queue_work().
+
+If the kcm has a reserved psock, kcm_unattach() might get executed
+between cancel_work_sync() and unreserve_psock() in kcm_release(),
+requeuing kcm->tx_work right before kcm gets freed in kcm_done().
+
+Remove kcm->tx_stopped and replace it by the less
+error-prone disable_work_sync().
+
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Reported-by: syzbot+e62c9db591c30e174662@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e62c9db591c30e174662
+Reported-by: syzbot+d199b52665b6c3069b94@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d199b52665b6c3069b94
+Reported-by: syzbot+be6b1fdfeae512726b4e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=be6b1fdfeae512726b4e
+Signed-off-by: Sven Stegemann <sven@stegemann.de>
+Link: https://patch.msgid.link/20250812191810.27777-1-sven@stegemann.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ net/kcm/kcmsock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index 7778a444ccb1..7dddf990bf65 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -1566,7 +1566,8 @@ static void kcm_unattach(struct kcm_psock *psock)
+ 		smp_mb();
+ 
+ 		/* Queue tx work to make sure psock->done is handled */
+-		queue_work(kcm_wq, &psock->tx_kcm->tx_work);
++		if (!psock->tx_kcm->tx_stopped)
++			queue_work(kcm_wq, &psock->tx_kcm->tx_work);
+ 		spin_unlock_bh(&mux->lock);
+ 	} else {
+ no_reserved:

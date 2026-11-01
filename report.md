@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.1: 7 patch(es)
+- added 6.1: 17 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -431,7 +431,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18
 
-### Included (87)
+### Included (105)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -522,8 +522,26 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2024-58098 | `51081a3f25c7` | claude | bpf: track changes_pkt_data property for global functions |
 |  | CVE-2024-57795 | `2ac5415022d1` | claude | RDMA/rxe: Remove the direct link to net_device |
 |  | CVE-2024-57795 | `8ce2eb9dfac8` | claude | RDMA/rxe: Fix the failure of ibv_query_device() and ibv_query_device_ex() tests |
+|  | CVE-2025-39732 | `65c12b104cb9` | claude | wifi: ath11k: fix sleeping-in-atomic in ath11k_mac_op_set_bitrate_mask() |
+|  | CVE-2025-38716 | `736a0516a162` | claude | hfs: fix general protection fault in hfs_find_init() |
+|  | CVE-2025-39940 | `1071d560afb4` | claude | dm-stripe: fix a possible integer overflow |
+|  | CVE-2025-38717 | `52565a935213` | claude | net: kcm: Fix race condition in kcm_unattach() |
+|  | CVE-2025-39990 | `e4414b01c1cd` | claude | bpf: Check the helper function is valid in get_helper_proto |
+|  | CVE-2025-39965 | `cd8ae32e4e46` | claude | xfrm: xfrm_alloc_spi shouldn't use 0 as SPI |
+|  | CVE-2025-39927 | `15f519e9f883` | claude | ceph: fix race condition validating r_parent before applying state |
+|  | CVE-2025-40333 | `23361bd54966` | claude | f2fs: fix infinite loop in __insert_extent_tree() |
+|  | CVE-2025-40355 | `c7fbb8218b4a` | claude | sysfs: check visibility before changing group attribute ownership |
+|  | CVE-2025-40303 | `2618849f31e7` | claude | btrfs: ensure no dirty metadata is written back for an fs with errors |
+|  | CVE-2025-71065 | `ca8b201f2854` | claude | f2fs: fix to avoid potential deadlock |
+|  | CVE-2025-71160 | `—` | claude | netfilter: nf_tables: remove redundant chain validation on register store |
+|  | CVE-2025-71160 | `8e1a1bc4f5a4` | claude | netfilter: nf_tables: avoid chain re-validation if possible |
+|  | CVE-2026-43172 | `58192b9ce09b` | claude | wifi: iwlwifi: fix 22000 series SMEM parsing |
+|  | CVE-2026-43309 | `55dcfdf8af9c` | claude | dm raid: use proper md_ro_state enumerators |
+|  | CVE-2026-43309 | `cefcb9297fbd` | claude | md raid: fix hang when stopping arrays with metadata through dm-raid |
+|  | CVE-2026-31537 | `34abd408c8ba` | claude | smb: server: make use of smbdirect_socket.send_io.bcredits |
+|  | CVE-2026-23239 | `e1512c1db9e8` | claude | espintcp: Fix race condition in espintcp_close() |
 
-### Needs a backport (414)
+### Needs a backport (398)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -535,32 +553,22 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2025-21693 | `12dcb0ef5406` | mainline | mm: zswap: properly synchronize freeing resources during CPU hotunplug |
 |  | CVE-2025-38333 | `bb5eb8a5b222` | mainline | f2fs: fix to bail out in get_new_segment() |
 |  | CVE-2025-39747 | `1c8c354098ea` | mainline | drm/msm: Add error handling for krealloc in metadata setup |
-|  | CVE-2025-39732 | `65c12b104cb9` | mainline | wifi: ath11k: fix sleeping-in-atomic in ath11k_mac_op_set_bitrate_mask() |
 |  | CVE-2025-39789 | `3d9eb180fbe8` | mainline | crypto: x86/aegis - Add missing error checks |
-|  | CVE-2025-38716 | `736a0516a162` | mainline | hfs: fix general protection fault in hfs_find_init() |
 |  | CVE-2025-39707 | `b4a69f7f29c8` | mainline | drm/amdgpu: check if hubbub is NULL in debugfs/amdgpu_dm_capabilities |
 |  | CVE-2025-38585 | `ee4cf798202d` | mainline | staging: media: atomisp: Fix stack buffer overflow in gmin_get_var_int() |
-|  | CVE-2025-39940 | `1071d560afb4` | mainline | dm-stripe: fix a possible integer overflow |
 |  | CVE-2025-39779 | `b1511360c8ac` | mainline | btrfs: subpage: keep TOWRITE tag until folio is cleaned |
-| does not build | CVE-2025-38717 | `52565a935213` | mainline | net: kcm: Fix race condition in kcm_unattach() |
-|  | CVE-2025-39990 | `e4414b01c1cd` | mainline | bpf: Check the helper function is valid in get_helper_proto |
 |  | CVE-2025-40339 | `859958a7faef` | mainline | drm/amdgpu: fix nullptr err of vm_handle_moved |
 |  | CVE-2025-40025 | `c18ecd99e0c7` | mainline | f2fs: fix to do sanity check on node footer for non inode dnode |
-|  | CVE-2025-39965 | `cd8ae32e4e46` | mainline | xfrm: xfrm_alloc_spi shouldn't use 0 as SPI |
-|  | CVE-2025-39927 | `15f519e9f883` | mainline | ceph: fix race condition validating r_parent before applying state |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-39882 | `4de37a48b6b5` | mainline | drm/mediatek: fix potential OF node use-after-free |
 |  | CVE-2025-39947 | `6b4be64fd9fe` | mainline | net/mlx5e: Harden uplink netdev access against device unbind |
-|  | CVE-2025-40333 | `23361bd54966` | mainline | f2fs: fix infinite loop in __insert_extent_tree() |
 |  | CVE-2025-39961 | `1e56310b40fd` | mainline | iommu/amd/pgtbl: Fix possible race while increase page table level |
 |  | CVE-2025-39981 | `302a1f674c00` | mainline | Bluetooth: MGMT: Fix possible UAFs |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
 |  | CVE-2025-40247 | `830d68f2cb8a` | mainline | drm/msm: Fix pgtable prealloc error path |
-|  | CVE-2025-40355 | `c7fbb8218b4a` | mainline | sysfs: check visibility before changing group attribute ownership |
 |  | CVE-2025-40348 | `6ed8bfd24ce1` | mainline | slab: Avoid race on slab->obj_exts in alloc_slab_obj_exts |
 |  | CVE-2025-40354 | `bec947cbe9a6` | mainline | drm/amd/display: increase max link count and fix link->enc NULL pointer access |
 |  | CVE-2025-40266 | `103e17aac09c` | mainline | KVM: arm64: Check the untrusted offset in FF-A memory share |
-|  | CVE-2025-40303 | `2618849f31e7` | mainline | btrfs: ensure no dirty metadata is written back for an fs with errors |
 |  | CVE-2025-68334 | `db4a3f0fbedb` | mainline | platform/x86/amd/pmc: Add support for Van Gogh SoC |
 |  | CVE-2025-71202 | `e37d5a2d60a3` | mainline | iommu/sva: invalidate stale IOTLB entries for kernel address space |
 |  | CVE-2025-68296 | `eb76d0f55535` | mainline | drm, fbcon, vga_switcheroo: Avoid race condition in fbcon setup |
@@ -568,9 +576,7 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2025-68357 | `7fd8720dff2d` | mainline | iomap: allocate s_dio_done_wq for async reads as well |
 |  | CVE-2025-68226 | `abd29b6e17a9` | mainline | smb: client: fix incomplete backport in cfids_invalidation_worker() |
 |  | CVE-2025-68299 | `d27c71257825` | mainline | afs: Fix delayed allocation of a cell's anonymous key |
-|  | CVE-2025-71065 | `ca8b201f2854` | mainline | f2fs: fix to avoid potential deadlock |
 |  | CVE-2025-68768 | `006a5035b495` | mainline | inet: frags: flush pending skbs in fqdir_pre_exit() |
-|  | CVE-2025-71160 | `8e1a1bc4f5a4` | mainline | netfilter: nf_tables: avoid chain re-validation if possible |
 | does not build | CVE-2025-68781 | `41ca62e3e21e` | mainline | usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal |
 |  | CVE-2025-71272 | `1f4c9d8a1021` | mainline | most: core: fix resource leak in most_register_interface error paths |
 | does not build | CVE-2025-71225 | `2cc583653bbe` | mainline | md: suspend array while updating raid_disks via sysfs |
@@ -581,18 +587,14 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-23035 | `4ef8512e1427` | mainline | net/mlx5e: Pass netdev to mlx5e_destroy_netdev instead of priv |
 |  | CVE-2026-23265 | `50ac3ecd8e05` | mainline | f2fs: fix to do sanity check on node footer in {read,write}_end_io |
 |  | CVE-2026-23117 | `42fb5f3deb58` | mainline | ice: add missing ice_deinit_hw() in devlink reinit path |
-| does not build | CVE-2026-43172 | `58192b9ce09b` | mainline | wifi: iwlwifi: fix 22000 series SMEM parsing |
 |  | CVE-2026-43161 | `42662d19839f` | mainline | iommu/vt-d: Skip dev-iotlb flush for inaccessible PCIe device without scalable mode |
-|  | CVE-2026-43309 | `cefcb9297fbd` | mainline | md raid: fix hang when stopping arrays with metadata through dm-raid |
 |  | CVE-2026-43317 | `2c198c272f9c` | mainline | most: core: fix leak on early registration failure |
 |  | CVE-2026-43220 | `9e249c484128` | mainline | iommu/amd: serialize sequence allocation under concurrent TLB invalidations |
 |  | CVE-2026-43137 | `16c589567a95` | mainline | ASoC: SOF: Intel: hda: Fix NULL pointer dereference |
 |  | CVE-2026-23200 | `bbf4a17ad9ff` | mainline | ipv6: Fix ECMP sibling count mismatch when clearing RTF_ADDRCONF |
-|  | CVE-2026-31537 | `34abd408c8ba` | mainline | smb: server: make use of smbdirect_socket.send_io.bcredits |
 |  | CVE-2026-31536 | `9da82dc73cb0` | mainline | smb: server: let send_done handle a completion without IB_SEND_SIGNALED |
 |  | CVE-2026-46245 | `226a40c06a18` | mainline | drm/amd/display: Fix dc_link NULL handling in HPD init |
 |  | CVE-2026-43318 | `b18fc0ab8373` | mainline | drm/amdgpu: fix sync handling in amdgpu_dma_buf_move_notify |
-|  | CVE-2026-23239 | `e1512c1db9e8` | mainline | espintcp: Fix race condition in espintcp_close() |
 |  | CVE-2026-23341 | `8363c0286333` | mainline | accel/amdxdna: Fix crash when destroying a suspended hardware context |
 |  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling |
 | does not build | CVE-2026-23240 | `7bb09315f93d` | mainline | tls: Fix race condition in tls_sw_cancel_work_tx() |
