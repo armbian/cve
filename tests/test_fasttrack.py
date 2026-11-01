@@ -532,6 +532,41 @@ class TestBuildCheck(Fixture):
         self.assertEqual(v[(self.A, "CVE-2026-0001/6.18")], engine.ACCEPTED)
         self.assertEqual(v[("f" * 40, "CVE-2026-0011/6.18")], engine.ACCEPTED)
 
+    def test_backport_needs_prerequisite_from_superseded_set(self):
+        # cve/0001 holds a prerequisite (bar.c) and the backport of A. Mainline A applies, so the
+        # set is superseded in the first pass, but A and cve/0011 build only with the prerequisite.
+        class B(FakeBuilder):
+            def _make(self, *targets, timeout=0):
+                out = []
+                for t in (t for t in targets if not t.startswith("-")):
+                    text = (self.tree / (t[:-2] + ".c")).read_text()
+                    if ("foo line 6 FIXED" in text or "USES" in text) and \
+                            "PROVIDED" not in (self.tree / "bar.c").read_text():
+                        out.append(f"{self.tree}/{t[:-2]}.c:7:1: error: missing prerequisite")
+                return not out, "\n".join(out)
+
+        wt = self.tmp / "bp"
+        sh(self.repo, "git", "worktree", "add", "-q", "--detach", str(wt), "linux-6.18.y")
+
+        def made(filename, upstream, name, old, new):
+            f = wt / name
+            f.write_text(f.read_text().replace(old, new))
+            sh(wt, "git", "commit", "-qam", "backport")
+            return engine.Candidate("6.18", upstream, "backport", "claude", [], verdict=engine.ACCEPTED,
+                                    filename=filename,
+                                    patch=sh(wt, "git", "format-patch", "-1", "--stdout"))
+        pre = made("0001-pre.patch", "d" * 40, "bar.c", "bar line 3\n", "bar line 3 PROVIDED\n")
+        a = made("0002-a.patch", self.A, "foo.c", "foo line 6\n", "foo line 6 FIXED\n")
+        emit.write_patch_dir(self.tmp / "cve" / "CVE-2026-0001" / "6.18", "6.18", "h", "6.18.2", [pre, a])
+        q = made("0001-q.patch", "f" * 40, "qux.c", "qux line 0\n", "qux line 0 USES\n")
+        emit.write_patch_dir(self.tmp / "cve" / "CVE-2026-0011" / "6.18", "6.18", "h", "6.18.2", [q])
+        res = engine.run_series(self.repo, (6, 18), self.records, self.data / "stable-queue", {},
+                                {"6.18": "6.18.2"}, remote="none", builder=B, cve_root=self.tmp / "cve")
+        v = {(c.upstream, c.backport): c.verdict for c in res.candidates}
+        self.assertEqual(v[(self.A, "")], engine.BACKPORTED)
+        self.assertEqual(v[("d" * 40, "CVE-2026-0001/6.18")], engine.ACCEPTED)
+        self.assertEqual(v[("f" * 40, "CVE-2026-0011/6.18")], engine.ACCEPTED)
+
     def test_claude_backport_that_does_not_build(self):
         rec = vulns.find(self.data / "vulns", "CVE-2026-0001")
         bld = fake_builder("foo line 6 FIXED")
