@@ -1,4 +1,424 @@
 {
+  "CVE-2024-26672": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "amdgpu_mca_smu_get_mca_entry() (7ff607e27233) not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-26691": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 pkvm.c has no pkvm_create_hyp_vm()",
+      "run": null
+    }
+  },
+  "CVE-2024-26756": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "needs f52f5c71f3d4 (v6.7)",
+      "run": null
+    }
+  },
+  "CVE-2024-26757": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "needs f52f5c71f3d4; 6.1 reaps the sync thread directly",
+      "run": null
+    }
+  },
+  "CVE-2024-26758": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "needs f52f5c71f3d4; 6.1 __md_stop_writes() reaps the sync thread directly",
+      "run": null
+    }
+  },
+  "CVE-2024-26836": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "current_value_store() opcode branch (4ca9c3d404ce) not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-26913": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no dc/dml2 and no DCN 3.5 in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-26914": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no pipe_slice_table.mpc_combines (9d1e17227888) in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-27411": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "nvkm gsp r535.c not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-35794": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "regression from f52f5c71f3d4, not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-35843": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no device_rbtree; prq_event_thread() holds a pci ref",
+      "run": null
+    }
+  },
+  "CVE-2024-35931": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "fix is for GC 9.4.3, which 6.1 does not support",
+      "run": null
+    }
+  },
+  "CVE-2024-35957": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "device rbtree (1a75cc710b95) not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-35961": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "needs the devlink register/param-lock rework",
+      "run": null
+    }
+  },
+  "CVE-2024-36002": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no drivers/dpll in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-36024": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no DCN35 IPS idle-reallow code in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-36887": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6dbdd4de0362 absent; MDIC routines use udelay()",
+      "run": null
+    }
+  },
+  "CVE-2024-36951": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no KFD debugger in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-40969": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no f2fs_handle_critical_error(); shutdown never sets read-only",
+      "run": null
+    }
+  },
+  "CVE-2024-41052": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 counts into zeroed fill.max; f6944d4a0b87 absent",
+      "run": null
+    }
+  },
+  "CVE-2024-42118": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "resource_stream_to_stream_idx() not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-43901": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no dpp_get_gamut_remap and no DCN401 in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-44933": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "98ba1d931f61 absent; RSS table set unconditionally",
+      "run": null
+    }
+  },
+  "CVE-2024-46678": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "fix adds sleep-in-atomic; its fix needs a large xfrm/bonding series",
+      "run": null
+    }
+  },
+  "CVE-2024-46712": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "vmw_dumb_create() surface path (d6667f0ddf46) not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-46727": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "resource_log_pipe_topology_update() not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-46729": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no DCN 3.5 (dcn35_dccg.c) in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-46760": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no rtw88 usb.c in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-46776": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "construct_phy() logs only after the link_enc NULL check",
+      "run": null
+    }
+  },
+  "CVE-2024-46806": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "aqua_vanjaram.c (MI300) not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-46870": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no DCN 3.5 (dcn35_resource.c) in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-47662": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "dmub_dcn35.c not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-49893": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "commit_planes_for_stream_fast() not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-49908": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "fixed in 6.1.113 by stable bd0e24e5e608",
+      "run": null
+    }
+  },
+  "CVE-2024-49910": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "DCN 4.0.1 and dc/hwss not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-49916": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "DCN401 (dcn401_hwseq.c) not in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-49988": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "stable 76b01d15e7d2 gives opinfo a counted conn ref",
+      "run": null
+    }
+  },
+  "CVE-2024-50057": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 tipd has no polling mode",
+      "run": null
+    }
+  },
+  "CVE-2024-50097": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no fec_ptp_save_state() in 6.1",
+      "run": null
+    }
+  },
+  "CVE-2024-50211": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "needs b405c1e58b73 plus 6afdc60ec30b and 55dd5b4db3bf",
+      "run": null
+    }
+  },
+  "CVE-2024-50217": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "no bdev_file in 6.1; close sets device->bdev = NULL",
+      "run": null
+    }
+  },
+  "CVE-2024-56591": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "needs disable_delayed_work_sync() (6.10 workqueue series)",
+      "run": null
+    }
+  },
   "CVE-2024-58015": {
     "6.12": {
       "cost": null,
