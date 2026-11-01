@@ -1,0 +1,103 @@
+From mboxrd@z Thu Jan  1 00:00:00 1970
+X-Fasttrack-Source: stable-list
+X-Fasttrack-Upstream: 93de2a6a4b91b72607136dd656edf03fb399d27f
+X-Fasttrack-CVE: CVE-2026-98471
+X-Fasttrack-Backport: cve/CVE-2026-98471/6.1
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBCE4E234A
+	for <stable@vger.kernel.org>; Wed, 30 Sep 2026 12:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790772996; cv=none; b=GAaoCXdcWerTa0eOAkuZYmtvZUljxZPb+NBQZt9UmAyAIAZu5ej4HuR0IqjBlk4jTkjeSTCV+PVPpVZZGlKmjRpdvd08AwfloNHw/CwDi27y0xeTofl5cxVAOvAYYu39tquswZHT8kW18oWyWJQbsIBb/t0Ot4pt6N1G2W3P2oE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790772996; c=relaxed/simple;
+	bh=GSTMZ16P8wXXw9ZdeWoAS5n224c/oyGRqyq2sRdX93Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NNuYzkFQATf6w4lWGB83VVWFnd+YIBA8M6rrI8l9Y9swTrgL3yASt/uhR2hBHMatbT96EmKRfyMWtCUPnVkjy4o0XOq4dAoSb7p/5MjWL/Sxqy49nRZQCQY1Us3Gojg6bUfXDqf6LEITLYiq3EOroXoxWidjrdedWh9/oLeF9gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AIfYL7dW; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AIfYL7dW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7842A1F000FF;
+	Wed, 30 Sep 2026 12:56:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790772991;
+	bh=N8E/ooGclZF9up8HhkMd7lkJFX0AGeOgh0PiTJto3lk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=AIfYL7dW7wDnzhfDyJWcDZ9dfLue2QYVehJM17WqOU/ioxyG0zJQyzStaCpXkIS2d
+	 bWSuNtumPUW4wtRpX9TO+GLmJuKZ+cbigZeeAC08yhovoC6egMHd/z0Sd3omDlWu66
+	 NjUVuJNg4r1E1FxKDJtpE5OSl9O/1uMwhl8Rz2ZOTNrtsQhpptCwSkwiGSTuso3zd3
+	 FHjzKG2/OYYDilgXG70FAaq0VugpE5ndS1UxTCcOFoCP171OK4OTDBmyx0/h/GpyvN
+	 hactU9kU6pxSf720oUjH8x0w+BMv+N7HNObQH6+ybT89cmB6orsYJ/49hb6G786rnl
+	 Y8blsVY/Y7nBw==
+From: Sasha Levin <sashal@kernel.org>
+To: stable@vger.kernel.org
+Cc: Sean Christopherson <seanjc@google.com>,
+	Stefan Teodorescu <fane@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1.y] KVM: SEV: Do cache maintenance on the source VM during intra-host migration
+Date: Wed, 30 Sep 2026 08:56:29 -0400
+Message-ID: <20260930125629.1687453-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <2026092918-shimmer-unhitched-7560@gregkh>
+References: <2026092918-shimmer-unhitched-7560@gregkh>
+Precedence: bulk
+X-Mailing-List: stable@vger.kernel.org
+List-Id: <stable.vger.kernel.org>
+List-Subscribe: <mailto:stable+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:stable+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+From: Sean Christopherson <seanjc@google.com>
+
+[ Upstream commit 93de2a6a4b91b72607136dd656edf03fb399d27f ]
+
+Manually perform cache maintenance on the source VM during intra-host
+migration to ensure no stale data is left in CPU caches after the VM is
+destroyed.  Because the source VM is "converted" to a non-SEV VM, KVM's
+memory reclaim flows won't trigger cache maintenance, e.g. when all guest
+memory is reclaimed in response to detaching from the mmu_notifier.
+
+Note, relying on the destination VM to do cache maintenance isn't an option
+as KVM doesn't require identical guest memory configurations, i.e. the
+source VM may have access to memory that the destination VM does not.
+Enforcing equivalent memory configurations is infeasible, as it would
+require a *deep* comparison of memslots, e.g. to verify that not only are
+the memslot identical, but what the memslots point at is also identical.
+
+Fixes: b56639318bb2 ("KVM: SEV: Add support for SEV intra host migration")
+Cc: stable@vger.kernel.org
+Reported-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260923163721.1584779-3-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ Replaced unavailable sev_writeback_caches(src_kvm) with wbinvd_on_all_cpus(). ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/x86/kvm/svm/sev.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+index 53b37f3d770bc..46a7e64337ae6 100644
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -1696,6 +1696,12 @@ static void sev_migrate_from(struct kvm *dst_kvm, struct kvm *src_kvm)
+ 	src->pages_locked = 0;
+ 	src->es_active = false;
+ 
++	/*
++	 * Do cache maintenance on the source VM as it is no longer an SEV VM,
++	 * i.e. memory reclaim flows won't trigger cache maintenance on the VM.
++	 */
++	wbinvd_on_all_cpus();
++
+ 	list_cut_before(&dst->regions_list, &src->regions_list, &src->regions_list);
+ 
+ 	mutex_lock(&sev_mirror_lock);
+-- 
+2.53.0
+
+

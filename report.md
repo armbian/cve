@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.1: 41 patch(es)
+- added 6.1: 28 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -429,7 +429,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
 
-### Included (364)
+### Included (394)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -797,8 +797,38 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98816 | `ad139384ecdd` | claude | bpf: Fix overflow of jump offset in constant blinding |
 |  | CVE-2026-98288 | `15989abd74f1` | claude | net: stmmac: fix TSO header length truncation |
 |  | CVE-2026-98424 | `a41bd1938a9b` | claude | wifi: cfg80211: undo netns switch if renaming the wiphy fails |
+|  | CVE-2026-98932 | `eef3b67f9c67` | claude | EDAC/altera: Fix use-after-free in error paths |
+|  | CVE-2026-98714 | `e27fc915c8f5` | claude | KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded |
+|  | CVE-2026-98720 | `2abb25273c82` | claude | KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified |
+|  | CVE-2026-98734 | `848a7a91c7f0` | claude | Bluetooth: hci_core: Serialize SCO and ISO scheduling with teardown |
+|  | CVE-2026-98737 | `8ed67535fdff` | claude | Bluetooth: hci_sync: Fix inquiry cache use-after-free |
+|  | CVE-2026-98738 | `81a2345f1984` | claude | Bluetooth: Serialize SMP remote OOB data access |
+|  | CVE-2026-98802 | `8ae3f4067ba4` | claude | seg6: ensure packet data is writable before modifying SRH and IPv6 DA |
+|  | CVE-2026-98801 | `37e02c42a00b` | claude | net: restrict SO_RESERVE_MEM to TCP sockets and cap max value |
+|  | CVE-2026-98800 | `0fb5751a6e41` | claude | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
+|  | CVE-2026-98853 | `006c8b834aed` | claude | net: gso: limit recursive IP-in-IP segmentation |
+|  | CVE-2026-98797 | `ea4d4b5dddb5` | claude | net: cap skb->queue_mapping when the tx queue is picked |
+|  | CVE-2026-98792 | `7c549fb7eecd` | claude | netfilter: flowtable: generalize pending status bit |
+|  | CVE-2026-98972 | `e06b678e3b4e` | claude | cgroup/cpuset: Don't access cpuset_cgrp_subsys.root in is_in_v2_mode() |
+|  | CVE-2026-98989 | `c640a01a78e4` | claude | namespace: check a recursive bind mount for mount namespace loops |
+|  | CVE-2026-98786 | `217f64f348c9` | claude | drm/amd/display: guard dc_sink dereferences in MST mode validation |
+|  | CVE-2026-98978 | `f78ddcc87224` | claude | namespace: never expire a locked mount |
+|  | CVE-2026-99215 | `—` | claude | power: supply: Use power_supply_external_power_changed() in __power_supply_changed_work() |
+|  | CVE-2026-99215 | `5b4bd13e0552` | claude | power: supply: core: prevent unregistering a power supply while a callback runs |
+|  | CVE-2026-98959 | `858bee1c7785` | claude | btrfs: fix xattr replace when multiple xattrs are packed in the same item |
+|  | CVE-2026-98954 | `44378d02c5aa` | claude | net: always dissect GSO packets in __virtio_net_hdr_to_skb() |
+|  | CVE-2026-99090 | `1a6023edfbb5` | claude | drm/amdgpu: serialize vblank counter reads against GPU reset |
+|  | CVE-2026-98471 | `93de2a6a4b91` | stable-list | KVM: SEV: Do cache maintenance on the source VM during intra-host migration |
+|  | CVE-2026-98947 | `7c24a4e87e21` | claude | vsock: Fix memory leak in vmci_transport_recv_dgram_cb() |
+|  | CVE-2026-98946 | `—` | claude | drm/vc4: Use devm_request_irq() for automatic cleanup |
+|  | CVE-2026-98946 | `6abc8e4dcfbc` | claude | drm/vc4: Disable the V3D interrupt across runtime suspend |
+|  | CVE-2026-98975 | `d84d6c1a7f1e` | claude | xfs: stop exchanging reflink flags when exchanging mappings |
+|  | CVE-2026-99178 | `81d99abe2bd8` | claude | x86/kvm: Don't consume async #PF flags on a kernel #PF in NMI context |
+|  | CVE-2026-99146 | `7dedc5bb11f9` | claude | drm/i915/dmc: Add sanity check for DMC load address |
+|  | CVE-2026-98715 | `60d93c27859f` | claude | KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN |
+|  | CVE-2026-98718 | `973ea70393e8` | claude | KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state |
 
-### Needs a backport (95)
+### Needs a backport (63)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -852,48 +882,16 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98558 | `06e3f54e8b22` | mainline | net: flush skb_defer_nodes in dev_cpu_dead() |
 |  | CVE-2026-98814 | `72ece656abd4` | mainline | nvme: fix command effects log lifetime for multipath heads |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
-|  | CVE-2026-98932 | `eef3b67f9c67` | mainline | EDAC/altera: Fix use-after-free in error paths |
-|  | CVE-2026-98471 | `93de2a6a4b91` | mainline | KVM: SEV: Do cache maintenance on the source VM during intra-host migration |
-|  | CVE-2026-98715 | `60d93c27859f` | mainline | KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN |
-|  | CVE-2026-98714 | `e27fc915c8f5` | mainline | KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded |
-|  | CVE-2026-98720 | `2abb25273c82` | mainline | KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified |
-|  | CVE-2026-98738 | `81a2345f1984` | mainline | Bluetooth: Serialize SMP remote OOB data access |
-|  | CVE-2026-98734 | `848a7a91c7f0` | mainline | Bluetooth: hci_core: Serialize SCO and ISO scheduling with teardown |
-|  | CVE-2026-98737 | `8ed67535fdff` | mainline | Bluetooth: hci_sync: Fix inquiry cache use-after-free |
-|  | CVE-2026-98939 | `e3ee38c1bc0b` | mainline | x86/mm: Drop unnecessary PMD page copy when freeing |
-|  | CVE-2026-98719 | `8abbc76120a7` | mainline | KVM: SEV: Nullify "have run CPUs" mask pointer when freeing it |
-|  | CVE-2026-98718 | `973ea70393e8` | mainline | KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state |
 |  | CVE-2026-98808 | `eb7b84af0ec5` | mainline | net: systemport: Fix buffer overflow in bcm_sysport_get_stats() |
 |  | CVE-2026-98807 | `04c824940d52` | mainline | net/mlx5: Fix slab-out-of-bounds when handling team device events |
 |  | CVE-2026-98803 | `88095728511e` | mainline | net: stmmac: fix rx Scatter-Gather support |
-|  | CVE-2026-98802 | `8ae3f4067ba4` | mainline | seg6: ensure packet data is writable before modifying SRH and IPv6 DA |
-|  | CVE-2026-98801 | `37e02c42a00b` | mainline | net: restrict SO_RESERVE_MEM to TCP sockets and cap max value |
-|  | CVE-2026-98800 | `0fb5751a6e41` | mainline | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
 |  | CVE-2026-98799 | `17637e1a581a` | mainline | bpf: Skip detached progs in trampoline images that are still in use |
-|  | CVE-2026-98853 | `006c8b834aed` | mainline | net: gso: limit recursive IP-in-IP segmentation |
-|  | CVE-2026-98797 | `ea4d4b5dddb5` | mainline | net: cap skb->queue_mapping when the tx queue is picked |
 |  | CVE-2026-98796 | `6f0c2c4f5e71` | mainline | net: ethernet: mtk_eth_soc: allocate dummy netdev sooner |
 |  | CVE-2026-98795 | `0d2c49915bc3` | mainline | net: sparx5: skip ptp deinit if init was skipped |
-|  | CVE-2026-98792 | `7c549fb7eecd` | mainline | netfilter: flowtable: generalize pending status bit |
 |  | CVE-2026-98684 | `aa994489bd83` | mainline | smb: client: flush and commit data before querying allocated ranges |
-|  | CVE-2026-98972 | `e06b678e3b4e` | mainline | cgroup/cpuset: Don't access cpuset_cgrp_subsys.root in is_in_v2_mode() |
-|  | CVE-2026-98839 | `39495ef5d6f8` | mainline | vt: selection: Fix unsigned underflow and slab-out-of-bounds read in paste_selection() |
-|  | CVE-2026-98989 | `c640a01a78e4` | mainline | namespace: check a recursive bind mount for mount namespace loops |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
-|  | CVE-2026-98786 | `217f64f348c9` | mainline | drm/amd/display: guard dc_sink dereferences in MST mode validation |
-|  | CVE-2026-98978 | `f78ddcc87224` | mainline | namespace: never expire a locked mount |
-|  | CVE-2026-99215 | `5b4bd13e0552` | mainline | power: supply: core: prevent unregistering a power supply while a callback runs |
-|  | CVE-2026-98959 | `858bee1c7785` | mainline | btrfs: fix xattr replace when multiple xattrs are packed in the same item |
 |  | CVE-2026-98957 | `916c484d29d8` | mainline | wifi: mt76: mt7915: disable rx napi when removing device |
-|  | CVE-2026-98954 | `44378d02c5aa` | mainline | net: always dissect GSO packets in __virtio_net_hdr_to_skb() |
-|  | CVE-2026-99093 | `2fb552b0bee7` | mainline | mm: don't schedule deferred kernel page table freeing while booting |
-|  | CVE-2026-99090 | `1a6023edfbb5` | mainline | drm/amdgpu: serialize vblank counter reads against GPU reset |
-|  | CVE-2026-98947 | `7c24a4e87e21` | mainline | vsock: Fix memory leak in vmci_transport_recv_dgram_cb() |
-|  | CVE-2026-98946 | `6abc8e4dcfbc` | mainline | drm/vc4: Disable the V3D interrupt across runtime suspend |
-|  | CVE-2026-98975 | `d84d6c1a7f1e` | mainline | xfs: stop exchanging reflink flags when exchanging mappings |
 |  | CVE-2026-99211 | `8bf659bd54e1` | mainline | netlink: reset skb headers before unicast and multicast filtering |
-|  | CVE-2026-99178 | `81d99abe2bd8` | mainline | x86/kvm: Don't consume async #PF flags on a kernel #PF in NMI context |
-|  | CVE-2026-99146 | `7dedc5bb11f9` | mainline | drm/i915/dmc: Add sanity check for DMC load address |
 |  | CVE-2026-99172 | `f0e48172a59e` | mainline | ipc: drop the mqueue mount with kern_unmount() on setup failure |
 | does not build | CVE-2026-99191 | `8070ed578b6b` | mainline | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
 |  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
@@ -905,7 +903,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 | does not build | CVE-2026-53226 | `1c1e0fc88d6e` | claude | gpio: rockchip: fix generic IRQ chip leak on remove |
 |  | CVE-2026-97563 | `5be5bdda5863` | claude | smb: client: reject out-of-bounds DataOffset in CIFSSMBRead() |
 
-### Not affected per work package (needs review) (146)
+### Not affected per work package (needs review) (150)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1055,6 +1053,10 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-97950 | `a7c1290eef60` | mainline | configfs: pin the symlink target's dirent instead of chasing ->ci_dentry |
 |  | CVE-2026-98551 | `24b620729e53` | mainline | perf/core: Fill branch entries with a single assignment |
 |  | CVE-2026-98820 | `ab6c756f28c7` | mainline | blk-mq: set RQF_USE_SCHED when the operation is known |
+|  | CVE-2026-98939 | `e3ee38c1bc0b` | mainline | x86/mm: Drop unnecessary PMD page copy when freeing |
+|  | CVE-2026-98719 | `8abbc76120a7` | mainline | KVM: SEV: Nullify "have run CPUs" mask pointer when freeing it |
+|  | CVE-2026-98839 | `39495ef5d6f8` | mainline | vt: selection: Fix unsigned underflow and slab-out-of-bounds read in paste_selection() |
+|  | CVE-2026-99093 | `2fb552b0bee7` | mainline | mm: don't schedule deferred kernel page table freeing while booting |
 
 Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).
 
