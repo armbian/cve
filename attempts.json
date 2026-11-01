@@ -1363,6 +1363,16 @@
       "run": null
     }
   },
+  "CVE-2026-43115": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-02",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.12.y reverted this backport (aaf9de6160d6): it breaks UP builds without IRQ_WORK. No call_srcu() under pi_lock in 6.1; Armbian 6.1 kernels are SMP.",
+      "run": null
+    }
+  },
   "CVE-2026-43137": {
     "6.1": {
       "cost": null,
