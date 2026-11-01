@@ -312,26 +312,18 @@ jobs:
           gh release create "$tag" "${files[@]}" --target "$(git rev-parse HEAD)" \
             --title "Kernel security fixes $(date -u '+%F %H:%M')" --notes-file "$RUNNER_TEMP/notes.md"
 
-      - name: Install Claude Code
-        if: github.event_name == 'workflow_dispatch' && inputs.claude && github.triggering_actor == 'igorpecovnik'
-        run: npm install -g @anthropic-ai/claude-code
-
       - name: Resolve incidents
-        if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '')
-        # Claude runs here: no GitHub token in this step.
-        env:
-          ANTHROPIC_API_KEY: ${{ inputs.claude && github.triggering_actor == 'igorpecovnik' && secrets.ANTHROPIC_API_KEY || '' }}
+        if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '') && !inputs.claude
         run: |
           args=()
           if [ "${{ inputs.incidents }}" = "unpatched" ]; then args+=(--unpatched); else args+=(${{ inputs.incidents }}); fi
           [ -n "${{ inputs.commit }}" ] && args+=(--commit "${{ inputs.commit }}")
-          if [ "${{ inputs.claude }}" = "true" ]; then args+=(--claude); else args+=(--adapt --package); fi
-          [ "${{ inputs.retry }}" = "true" ] && args+=(--retry)
+          args+=(--adapt --package)
           python3 -m fasttrack.cli -v cve "${args[@]}" || true
           cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish incident results
-        if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '')
+        if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '') && !inputs.claude
         env:
           GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
         run: |
@@ -376,6 +368,106 @@ jobs:
             --body "$(grep -E '^- kev' report.md)
 
           ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  # Claude spends the API key. The key is a secret of environment "claude":
+  # only main may deploy to it, and each run waits for the owner's approval.
+  claude:
+    needs: [check, fasttrack]
+    if: github.event_name == 'workflow_dispatch' && inputs.claude && (inputs.incidents != '' || inputs.commit != '') && github.triggering_actor == 'igorpecovnik'
+    environment: claude
+    runs-on: ${{ vars.FASTTRACK_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 360
+    steps:
+      - name: Free space
+        id: space
+        run: echo "low=$([ "$(df --output=avail -BG / | tail -1 | tr -dc 0-9)" -lt 40 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Free Github Runner
+        if: runner.environment == 'github-hosted' && steps.space.outputs.low == 'true'
+        uses: descriptinc/free-disk-space@main # no tagged releases; pinned to default branch
+        with:
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: true
+          swap-storage: true
+
+      # No token in .git/config: Claude runs in this job. The publish step sets it.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref_name }}
+          persist-credentials: false
+
+      - name: Tooling
+        run: |
+          need=""
+          [ "$(uname -m)" = x86_64 ] || command -v x86_64-linux-gnu-gcc >/dev/null || need=gcc-x86-64-linux-gnu
+          if ! command -v bc bison flex pahole >/dev/null || ! [ -e /usr/include/libelf.h ] || [ -n "$need" ]; then
+            sudo apt-get update -q
+            sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
+          fi
+          python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
+          npm install -g @anthropic-ai/claude-code
+          git config --global user.name  "armbianworker"
+          git config --global user.email "78210198+armbianworker@users.noreply.github.com"
+
+      - name: Persistent data
+        if: runner.environment == 'self-hosted'
+        run: |
+          mkdir -p "$HOME/.cache/armbian-cve/data"
+          ln -sfn "$HOME/.cache/armbian-cve/data" data
+
+      - name: Upstream data cache
+        if: runner.environment == 'github-hosted'
+        uses: actions/cache/restore@v6
+        with:
+          path: data
+          key: data-${{ hashFiles('fasttrack.yaml') }}-none
+          restore-keys: data-${{ hashFiles('fasttrack.yaml') }}-
+
+      - name: Sync
+        run: python3 -m fasttrack.cli -v sync
+
+      - name: Resolve incidents with Claude
+        # No GitHub token in this step.
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          args=()
+          if [ "${{ inputs.incidents }}" = "unpatched" ]; then args+=(--unpatched); else args+=(${{ inputs.incidents }}); fi
+          [ -n "${{ inputs.commit }}" ] && args+=(--commit "${{ inputs.commit }}")
+          args+=(--claude)
+          [ "${{ inputs.retry }}" = "true" ] && args+=(--retry)
+          python3 -m fasttrack.cli -v cve "${args[@]}" || true
+          cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish incident results
+        env:
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
+        run: |
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          # Incident results always go through review, never straight to main.
+          br="incident/${{ github.run_id }}"
+          git checkout -q -b "$br"
+          # attempts.json rides along: once merged, no later run pays for the same CVE.
+          git add -A cve cve-report.md cve-result.json
+          [ -f attempts.json ] && git add attempts.json
+          if ! git diff --cached --quiet; then
+            git commit -q -m "cve: incident patches for review (run ${{ github.run_id }})"
+            git push -q origin "$br"
+            gh pr create --head "$br" --base "$GITHUB_REF_NAME" --label security \
+              --title "Incident patches for review (run ${{ github.run_id }})" --body-file cve-report.md
+          fi
+
+      - name: Keep work packages (BRIEF.md, RESULT.md, claude.log)
+        if: always() && hashFiles('work/**/BRIEF.md') != ''
+        uses: actions/upload-artifact@v7
+        with:
+          name: work-claude-${{ github.run_id }}
+          path: |
+            work/
+            !work/*/*/tree
 
   # Same as armbian/docker-armbian-build: stop GitHub from disabling the hourly
   # schedule after 60 days without repository activity (quiet weeks commit nothing).
