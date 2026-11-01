@@ -1,0 +1,222 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: c18ecd99e0c707ef8f83cace861cbc3162f4fdf1
+X-Fasttrack-CVE: CVE-2025-40025
+X-Fasttrack-Backport: cve/CVE-2025-40025/6.1
+From: Chao Yu <chao@kernel.org>
+Date: Sun, 1 Nov 2026 03:06:04 +0100
+Subject: [PATCH] f2fs: fix to do sanity check on node footer for non inode
+ dnode
+
+commit c18ecd99e0c707ef8f83cace861cbc3162f4fdf1 upstream.
+
+[ Backport: 6.1 uses pages, not folios: change the __get_node_page() callers. ]
+[ Backport: keep the f2fs_get_node_page() signature; the four upstream callers use __get_node_page(). ]
+[ Backport: add enum node_type to node.h; 6.1 has no NODE_TYPE_INODE/XATTR. ]
+[ Backport: add sanity_check_node_footer() with only the NON_INODE case. ]
+[ Backport: 6.1 has no FAULT_INCONSISTENT_FOOTER; drop the fault-injection check. ]
+[ Backport: gc.c, recovery.c and f2fs.h unchanged; they keep NODE_TYPE_REGULAR. ]
+
+As syzbot reported below:
+
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/file.c:1243!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+CPU: 0 UID: 0 PID: 5354 Comm: syz.0.0 Not tainted 6.17.0-rc1-syzkaller-00211-g90d970cade8e #0 PREEMPT(full)
+RIP: 0010:f2fs_truncate_hole+0x69e/0x6c0 fs/f2fs/file.c:1243
+Call Trace:
+ <TASK>
+ f2fs_punch_hole+0x2db/0x330 fs/f2fs/file.c:1306
+ f2fs_fallocate+0x546/0x990 fs/f2fs/file.c:2018
+ vfs_fallocate+0x666/0x7e0 fs/open.c:342
+ ksys_fallocate fs/open.c:366 [inline]
+ __do_sys_fallocate fs/open.c:371 [inline]
+ __se_sys_fallocate fs/open.c:369 [inline]
+ __x64_sys_fallocate+0xc0/0x110 fs/open.c:369
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f1e65f8ebe9
+
+w/ a fuzzed image, f2fs may encounter panic due to it detects inconsistent
+truncation range in direct node in f2fs_truncate_hole().
+
+The root cause is: a non-inode dnode may has the same footer.ino and
+footer.nid, so the dnode will be parsed as an inode, then ADDRS_PER_PAGE()
+may return wrong blkaddr count which may be 923 typically, by chance,
+dn.ofs_in_node is equal to 923, then count can be calculated to 0 in below
+statement, later it will trigger panic w/ f2fs_bug_on(, count == 0 || ...).
+
+	count = min(end_offset - dn.ofs_in_node, pg_end - pg_start);
+
+This patch introduces a new node_type NODE_TYPE_NON_INODE, then allowing
+passing the new_type to sanity_check_node_footer in f2fs_get_node_folio()
+to detect corruption that a non-inode dnode has the same footer.ino and
+footer.nid.
+
+Scripts to reproduce:
+mkfs.f2fs -f /dev/vdb
+mount /dev/vdb /mnt/f2fs
+touch /mnt/f2fs/foo
+touch /mnt/f2fs/bar
+dd if=/dev/zero of=/mnt/f2fs/foo bs=1M count=8
+umount /mnt/f2fs
+inject.f2fs --node --mb i_nid --nid 4 --idx 0 --val 5 /dev/vdb
+mount /dev/vdb /mnt/f2fs
+xfs_io /mnt/f2fs/foo -c "fpunch 6984k 4k"
+
+Cc: stable@kernel.org
+Reported-by: syzbot+b9c7ffd609c3f09416ab@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/68a68e27.050a0220.1a3988.0002.GAE@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+---
+ fs/f2fs/node.c | 60 ++++++++++++++++++++++++++++++++++++--------------
+ fs/f2fs/node.h |  5 +++++
+ 2 files changed, 49 insertions(+), 16 deletions(-)
+
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 233448ba3a29..d5156b269c5e 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -27,6 +27,10 @@ static struct kmem_cache *free_nid_slab;
+ static struct kmem_cache *nat_entry_set_slab;
+ static struct kmem_cache *fsync_node_entry_slab;
+ 
++static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
++					struct page *parent, int start,
++					enum node_type ntype);
++
+ static inline bool is_invalid_nid(struct f2fs_sb_info *sbi, nid_t nid)
+ {
+ 	return nid < F2FS_ROOT_INO(sbi) || nid >= NM_I(sbi)->max_nid;
+@@ -848,7 +852,8 @@ int f2fs_get_dnode_of_data(struct dnode_of_data *dn, pgoff_t index, int mode)
+ 		}
+ 
+ 		if (!done) {
+-			npage[i] = f2fs_get_node_page(sbi, nids[i]);
++			npage[i] = __get_node_page(sbi, nids[i], NULL, 0,
++						NODE_TYPE_NON_INODE);
+ 			if (IS_ERR(npage[i])) {
+ 				err = PTR_ERR(npage[i]);
+ 				f2fs_put_page(npage[0], 0);
+@@ -966,7 +971,7 @@ static int truncate_dnode(struct dnode_of_data *dn)
+ 		return 1;
+ 
+ 	/* get direct node */
+-	page = f2fs_get_node_page(sbi, dn->nid);
++	page = __get_node_page(sbi, dn->nid, NULL, 0, NODE_TYPE_NON_INODE);
+ 	if (PTR_ERR(page) == -ENOENT)
+ 		return 1;
+ 	else if (IS_ERR(page))
+@@ -1010,7 +1015,8 @@ static int truncate_nodes(struct dnode_of_data *dn, unsigned int nofs,
+ 
+ 	trace_f2fs_truncate_nodes_enter(dn->inode, dn->nid, dn->data_blkaddr);
+ 
+-	page = f2fs_get_node_page(F2FS_I_SB(dn->inode), dn->nid);
++	page = __get_node_page(F2FS_I_SB(dn->inode), dn->nid, NULL, 0,
++						NODE_TYPE_NON_INODE);
+ 	if (IS_ERR(page)) {
+ 		trace_f2fs_truncate_nodes_exit(dn->inode, PTR_ERR(page));
+ 		return PTR_ERR(page);
+@@ -1088,7 +1094,8 @@ static int truncate_partial_nodes(struct dnode_of_data *dn,
+ 	/* get indirect nodes in the path */
+ 	for (i = 0; i < idx + 1; i++) {
+ 		/* reference count'll be increased */
+-		pages[i] = f2fs_get_node_page(F2FS_I_SB(dn->inode), nid[i]);
++		pages[i] = __get_node_page(F2FS_I_SB(dn->inode), nid[i], NULL, 0,
++							NODE_TYPE_NON_INODE);
+ 		if (IS_ERR(pages[i])) {
+ 			err = PTR_ERR(pages[i]);
+ 			idx = i - 1;
+@@ -1456,8 +1463,36 @@ void f2fs_ra_node_page(struct f2fs_sb_info *sbi, nid_t nid)
+ 	f2fs_put_page(apage, err ? 1 : 0);
+ }
+ 
++static int sanity_check_node_footer(struct f2fs_sb_info *sbi,
++					struct page *page, pgoff_t nid,
++					enum node_type ntype)
++{
++	if (unlikely(nid != nid_of_node(page)))
++		goto out_err;
++
++	switch (ntype) {
++	case NODE_TYPE_NON_INODE:
++		if (IS_INODE(page))
++			goto out_err;
++		break;
++	default:
++		break;
++	}
++	return 0;
++out_err:
++	f2fs_warn(sbi, "inconsistent node block, node_type:%d, nid:%lu, "
++		  "node_footer[nid:%u,ino:%u,ofs:%u,cpver:%llu,blkaddr:%u]",
++		  ntype, nid, nid_of_node(page), ino_of_node(page),
++		  ofs_of_node(page), cpver_of_node(page),
++		  next_blkaddr_of_node(page));
++	set_sbi_flag(sbi, SBI_NEED_FSCK);
++	f2fs_handle_error(sbi, ERROR_INCONSISTENT_FOOTER);
++	return -EFSCORRUPTED;
++}
++
+ static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
+-					struct page *parent, int start)
++					struct page *parent, int start,
++					enum node_type ntype)
+ {
+ 	struct page *page;
+ 	int err;
+@@ -1499,16 +1534,9 @@ static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
+ 		goto out_err;
+ 	}
+ page_hit:
+-	if (likely(nid == nid_of_node(page)))
++	err = sanity_check_node_footer(sbi, page, nid, ntype);
++	if (!err)
+ 		return page;
+-
+-	f2fs_warn(sbi, "inconsistent node block, nid:%lu, node_footer[nid:%u,ino:%u,ofs:%u,cpver:%llu,blkaddr:%u]",
+-			  nid, nid_of_node(page), ino_of_node(page),
+-			  ofs_of_node(page), cpver_of_node(page),
+-			  next_blkaddr_of_node(page));
+-	set_sbi_flag(sbi, SBI_NEED_FSCK);
+-	f2fs_handle_error(sbi, ERROR_INCONSISTENT_FOOTER);
+-	err = -EFSCORRUPTED;
+ out_err:
+ 	clear_node_page_dirty(page);
+ out_put_err:
+@@ -1521,7 +1549,7 @@ static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
+ 
+ struct page *f2fs_get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid)
+ {
+-	return __get_node_page(sbi, nid, NULL, 0);
++	return __get_node_page(sbi, nid, NULL, 0, NODE_TYPE_REGULAR);
+ }
+ 
+ struct page *f2fs_get_node_page_ra(struct page *parent, int start)
+@@ -1529,7 +1557,7 @@ struct page *f2fs_get_node_page_ra(struct page *parent, int start)
+ 	struct f2fs_sb_info *sbi = F2FS_P_SB(parent);
+ 	nid_t nid = get_nid(parent, start, false);
+ 
+-	return __get_node_page(sbi, nid, parent, start);
++	return __get_node_page(sbi, nid, parent, start, NODE_TYPE_REGULAR);
+ }
+ 
+ static void flush_inline_data(struct f2fs_sb_info *sbi, nid_t ino)
+diff --git a/fs/f2fs/node.h b/fs/f2fs/node.h
+index 7068f3ac036a..ecffa7741163 100644
+--- a/fs/f2fs/node.h
++++ b/fs/f2fs/node.h
+@@ -53,6 +53,11 @@ enum {
+ 	IS_PREALLOC,		/* nat entry is preallocated */
+ };
+ 
++enum node_type {
++	NODE_TYPE_REGULAR,
++	NODE_TYPE_NON_INODE,
++};
++
+ /*
+  * For node information
+  */

@@ -1,0 +1,74 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 27ef1795bc4e47cae838e0a3ced531c549f9b23d
+X-Fasttrack-CVE: CVE-2026-98914
+X-Fasttrack-Backport: cve/CVE-2026-98914/6.1
+From: Candice Li <candice.li@amd.com>
+Date: Wed, 13 May 2026 11:11:15 +0800
+Subject: [PATCH] drm/amdgpu: cap ATOM command table nesting depth
+
+commit 27ef1795bc4e47cae838e0a3ced531c549f9b23d upstream.
+
+[ Backport: atom.h context differs. 6.1 struct atom_context has no build_num field. ]
+
+Cap nesting at 32 levels with execute_depth and
+return -ELOOP when exceeded.
+
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+---
+ drivers/gpu/drm/amd/amdgpu/atom.c | 11 +++++++++++
+ drivers/gpu/drm/amd/amdgpu/atom.h |  3 +++
+ 2 files changed, 14 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/atom.c b/drivers/gpu/drm/amd/amdgpu/atom.c
+index 0a7666be1dea..d2afdb9887df 100644
+--- a/drivers/gpu/drm/amd/amdgpu/atom.c
++++ b/drivers/gpu/drm/amd/amdgpu/atom.c
+@@ -59,6 +59,9 @@
+ 
+ #define ATOM_CMD_TIMEOUT_SEC	20
+ 
++/* Limit ATOM command table recursion (calltable) to avoid kernel stack overflow. */
++#define ATOM_EXECUTE_MAX_DEPTH	32
++
+ typedef struct {
+ 	struct atom_context *ctx;
+ 	uint32_t *ps, *ws;
+@@ -1215,6 +1218,13 @@ static int amdgpu_atom_execute_table_locked(struct atom_context *ctx, int index,
+ 	if (!base)
+ 		return -EINVAL;
+ 
++	if (ctx->execute_depth >= ATOM_EXECUTE_MAX_DEPTH) {
++		DRM_ERROR("atombios command table nesting exceeded limit (%u)\n",
++			  ATOM_EXECUTE_MAX_DEPTH);
++		return -ELOOP;
++	}
++	ctx->execute_depth++;
++
+ 	len = CU16(base + ATOM_CT_SIZE_PTR);
+ 	ws = CU8(base + ATOM_CT_WS_PTR);
+ 	ps = CU8(base + ATOM_CT_PS_PTR) & ATOM_CT_PS_MASK;
+@@ -1267,6 +1277,7 @@ static int amdgpu_atom_execute_table_locked(struct atom_context *ctx, int index,
+ free:
+ 	if (ws)
+ 		kfree(ectx.ws);
++	ctx->execute_depth--;
+ 	return ret;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/atom.h b/drivers/gpu/drm/amd/amdgpu/atom.h
+index 0c1839824520..e2fa660a1d59 100644
+--- a/drivers/gpu/drm/amd/amdgpu/atom.h
++++ b/drivers/gpu/drm/amd/amdgpu/atom.h
+@@ -150,6 +150,9 @@ struct atom_context {
+ 	uint32_t version;
+ 	uint8_t vbios_ver_str[STRLEN_NORMAL];
+ 	uint8_t date[STRLEN_NORMAL];
++
++	/* Nesting depth for ATOM_OP_CALLTABLE */
++	unsigned int execute_depth;
+ };
+ 
+ extern int amdgpu_atom_debug;
