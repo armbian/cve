@@ -17,6 +17,10 @@ Stable releases take weeks to carry a fix, and some fixes never reach an older L
 - A fix that does not apply is backported with Claude. A person reviews the backport.
 - A fix leaves the folder when the stable branch has it.
 
+## Design in one picture
+
+![Armbian kernel security fixes workflow](docs/images/workflow.png)
+
 ## Usage
 
 Apply the patches in `series.conf` order on the commit in `base`.
