@@ -1,0 +1,355 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: bace2010dd7ac07bc980575afb135c406730a7fe
+X-Fasttrack-CVE: CVE-2026-90389
+X-Fasttrack-Backport: cve/CVE-2026-90389/6.1
+From: Chen Cheng <chencheng@fnnas.com>
+Date: Sun, 1 Nov 2026 13:10:16 +0100
+Subject: [PATCH] md: scope memalloc_noio to allocation critical sections
+
+commit bace2010dd7ac07bc980575afb135c406730a7fe upstream.
+
+[ Backport: 6.1 suspends the array only around parts of each operation,
+  under reconfig_mutex. Enter the noio scope inside each suspended section
+  that allocates memory, in the functions upstream covers ]
+[ Backport: 6.1 does not suspend in raid_disks_store(), new_dev_store(),
+  md_ioctl() or md_start_sync(). Cover the 6.1 suspended sections of the
+  same operations instead: add_bound_rdev() journal add, set_bitmap_file()
+  and update_array_info() bitmap load ]
+[ Backport: 6.1 raid5_change_consistency_policy() suspends only around
+  log_exit() and clear_bit(), which do not allocate; no change there ]
+[ Backport: bitmap sections that only call md_bitmap_destroy() do not
+  allocate and get no noio scope ]
+[ Backport: 6.1 linear_add() suspends the array itself and calls
+  set_capacity_and_notify(), which allocates. Enter the noio scope there;
+  upstream covers this path in new_dev_store() and md_ioctl() ]
+
+Storing a memalloc_noio_save() token in mddev->noio_flags lets one task
+save the token and another task restore it. With concurrent suspend sysfs
+writes, task A can enter PF_MEMALLOC_NOIO, return to userspace still in
+that scope, and later task B can restore A's saved token.
+
+Avoid tying the token lifetime to mddev. Keep mddev_suspend() and
+mddev_resume() only responsible for array suspension, and enter
+PF_MEMALLOC_NOIO only in the MD paths that allocate memory after the array
+has been suspended. Restore the token before resuming the array.
+
+A reproducer repeatedly writes suspend_lo and suspend_hi from concurrent
+workers and checks each worker's /proc/self/stat flags before and after the
+sysfs write.
+
+Link: https://github.com/chencheng-fnnas/reproducer/blob/main/repro-md-noio-token-leak.sh
+Fixes: 78f57ef9d50a ("md: use memalloc scope APIs in mddev_suspend()/mddev_resume()")
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260718084218.417895-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
+---
+ drivers/md/md-bitmap.c |  4 ++++
+ drivers/md/md-linear.c |  4 ++++
+ drivers/md/md.c        | 31 +++++++++++++++++++------------
+ drivers/md/md.h        |  1 -
+ drivers/md/raid5.c     | 11 ++++++-----
+ 5 files changed, 33 insertions(+), 18 deletions(-)
+
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 2e73be016d3c..40a1c4f80e6d 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -2271,6 +2271,7 @@ static ssize_t
+ location_store(struct mddev *mddev, const char *buf, size_t len)
+ {
+ 	int rv;
++	unsigned int noio_flags;
+ 
+ 	rv = mddev_lock(mddev);
+ 	if (rv)
+@@ -2335,6 +2336,7 @@ location_store(struct mddev *mddev, const char *buf, size_t len)
+ 				struct bitmap *bitmap;
+ 				bitmap = md_bitmap_create(mddev, -1);
+ 				mddev_suspend(mddev);
++				noio_flags = memalloc_noio_save();
+ 				if (IS_ERR(bitmap))
+ 					rv = PTR_ERR(bitmap);
+ 				else {
+@@ -2345,9 +2347,11 @@ location_store(struct mddev *mddev, const char *buf, size_t len)
+ 				}
+ 				if (rv) {
+ 					md_bitmap_destroy(mddev);
++					memalloc_noio_restore(noio_flags);
+ 					mddev_resume(mddev);
+ 					goto out;
+ 				}
++				memalloc_noio_restore(noio_flags);
+ 				mddev_resume(mddev);
+ 			}
+ 		}
+diff --git a/drivers/md/md-linear.c b/drivers/md/md-linear.c
+index 4eb72b9dd933..4b192b7be2a4 100644
+--- a/drivers/md/md-linear.c
++++ b/drivers/md/md-linear.c
+@@ -14,6 +14,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
++#include <linux/sched/mm.h>
+ #include <trace/events/block.h>
+ #include "md.h"
+ #include "md-linear.h"
+@@ -165,6 +166,7 @@ static int linear_add(struct mddev *mddev, struct md_rdev *rdev)
+ 	 * This avoids races.
+ 	 */
+ 	struct linear_conf *newconf, *oldconf;
++	unsigned int noio_flags;
+ 
+ 	if (rdev->saved_raid_disk != mddev->raid_disks)
+ 		return -EINVAL;
+@@ -184,6 +186,7 @@ static int linear_add(struct mddev *mddev, struct md_rdev *rdev)
+ 	 * oldconf until no one uses it anymore.
+ 	 */
+ 	mddev_suspend(mddev);
++	noio_flags = memalloc_noio_save();
+ 	oldconf = rcu_dereference_protected(mddev->private,
+ 			lockdep_is_held(&mddev->reconfig_mutex));
+ 	mddev->raid_disks++;
+@@ -192,6 +195,7 @@ static int linear_add(struct mddev *mddev, struct md_rdev *rdev)
+ 	rcu_assign_pointer(mddev->private, newconf);
+ 	md_set_array_sectors(mddev, linear_size(mddev, 0, 0));
+ 	set_capacity_and_notify(mddev->gendisk, mddev->array_sectors);
++	memalloc_noio_restore(noio_flags);
+ 	mddev_resume(mddev);
+ 	kfree_rcu(oldconf, rcu);
+ 	return 0;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index deeba88a955f..588ae7d06619 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -212,6 +212,7 @@ void mddev_create_serial_pool(struct mddev *mddev, struct md_rdev *rdev,
+ 			      bool is_suspend)
+ {
+ 	int ret = 0;
++	unsigned int noio_flags;
+ 
+ 	if (!mddev->serialize_policy &&
+ 	    rdev && !rdev_need_serial(rdev) &&
+@@ -221,6 +222,7 @@ void mddev_create_serial_pool(struct mddev *mddev, struct md_rdev *rdev,
+ 	if (!is_suspend)
+ 		mddev_suspend(mddev);
+ 
++	noio_flags = memalloc_noio_save();
+ 	if (!rdev)
+ 		ret = rdevs_init_serial(mddev);
+ 	else
+@@ -229,10 +231,6 @@ void mddev_create_serial_pool(struct mddev *mddev, struct md_rdev *rdev,
+ 		goto abort;
+ 
+ 	if (mddev->serial_info_pool == NULL) {
+-		/*
+-		 * already in memalloc noio context by
+-		 * mddev_suspend()
+-		 */
+ 		mddev->serial_info_pool =
+ 			mempool_create_kmalloc_pool(NR_SERIAL_INFOS,
+ 						sizeof(struct serial_info));
+@@ -243,6 +241,7 @@ void mddev_create_serial_pool(struct mddev *mddev, struct md_rdev *rdev,
+ 	}
+ 
+ abort:
++	memalloc_noio_restore(noio_flags);
+ 	if (!is_suspend)
+ 		mddev_resume(mddev);
+ }
+@@ -473,9 +472,6 @@ void mddev_suspend(struct mddev *mddev)
+ 	mddev->pers->quiesce(mddev, 1);
+ 	clear_bit_unlock(MD_ALLOW_SB_UPDATE, &mddev->flags);
+ 	wait_event(mddev->sb_wait, !test_bit(MD_UPDATING_SB, &mddev->flags));
+-
+-	/* restrict memory reclaim I/O during raid array is suspend */
+-	mddev->noio_flag = memalloc_noio_save();
+ }
+ EXPORT_SYMBOL_GPL(mddev_suspend);
+ 
+@@ -485,9 +481,6 @@ void mddev_resume(struct mddev *mddev)
+ 	if (--mddev->suspended)
+ 		return;
+ 
+-	/* entred the memalloc scope from mddev_suspend() */
+-	memalloc_noio_restore(mddev->noio_flag);
+-
+ 	percpu_ref_resurrect(&mddev->active_io);
+ 	wake_up(&mddev->sb_wait);
+ 	mddev->pers->quiesce(mddev, 0);
+@@ -2902,6 +2895,7 @@ static int add_bound_rdev(struct md_rdev *rdev)
+ {
+ 	struct mddev *mddev = rdev->mddev;
+ 	int err = 0;
++	unsigned int noio_flags = 0;
+ 	bool add_journal = test_bit(Journal, &rdev->flags);
+ 
+ 	if (!mddev->pers->hot_remove_disk || add_journal) {
+@@ -2911,11 +2905,15 @@ static int add_bound_rdev(struct md_rdev *rdev)
+ 		 */
+ 		super_types[mddev->major_version].
+ 			validate_super(mddev, NULL/*freshest*/, rdev);
+-		if (add_journal)
++		if (add_journal) {
+ 			mddev_suspend(mddev);
++			noio_flags = memalloc_noio_save();
++		}
+ 		err = mddev->pers->hot_add_disk(mddev, rdev);
+-		if (add_journal)
++		if (add_journal) {
++			memalloc_noio_restore(noio_flags);
+ 			mddev_resume(mddev);
++		}
+ 		if (err) {
+ 			md_kick_rdev_from_array(rdev);
+ 			return err;
+@@ -3958,6 +3956,7 @@ level_store(struct mddev *mddev, const char *buf, size_t len)
+ 	char clevel[16];
+ 	ssize_t rv;
+ 	size_t slen = len;
++	unsigned int noio_flags;
+ 	struct md_personality *pers, *oldpers;
+ 	long level;
+ 	void *priv, *oldpriv;
+@@ -4060,6 +4059,7 @@ level_store(struct mddev *mddev, const char *buf, size_t len)
+ 
+ 	/* Looks like we have a winner */
+ 	mddev_suspend(mddev);
++	noio_flags = memalloc_noio_save();
+ 	mddev_detach(mddev);
+ 
+ 	spin_lock(&mddev->lock);
+@@ -4145,6 +4145,7 @@ level_store(struct mddev *mddev, const char *buf, size_t len)
+ 	blk_set_stacking_limits(&mddev->queue->limits);
+ 	pers->run(mddev);
+ 	set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
++	memalloc_noio_restore(noio_flags);
+ 	mddev_resume(mddev);
+ 	if (!mddev->thread)
+ 		md_update_sb(mddev, 1);
+@@ -7135,6 +7136,7 @@ static int hot_add_disk(struct mddev *mddev, dev_t dev)
+ static int set_bitmap_file(struct mddev *mddev, int fd)
+ {
+ 	int err = 0;
++	unsigned int noio_flags;
+ 
+ 	if (mddev->pers) {
+ 		if (!mddev->pers->quiesce || !mddev->thread)
+@@ -7187,6 +7189,7 @@ static int set_bitmap_file(struct mddev *mddev, int fd)
+ 
+ 			bitmap = md_bitmap_create(mddev, -1);
+ 			mddev_suspend(mddev);
++			noio_flags = memalloc_noio_save();
+ 			if (!IS_ERR(bitmap)) {
+ 				mddev->bitmap = bitmap;
+ 				err = md_bitmap_load(mddev);
+@@ -7196,6 +7199,7 @@ static int set_bitmap_file(struct mddev *mddev, int fd)
+ 				md_bitmap_destroy(mddev);
+ 				fd = -1;
+ 			}
++			memalloc_noio_restore(noio_flags);
+ 			mddev_resume(mddev);
+ 		} else if (fd < 0) {
+ 			mddev_suspend(mddev);
+@@ -7412,6 +7416,7 @@ static int update_array_info(struct mddev *mddev, mdu_array_info_t *info)
+ 	int rv = 0;
+ 	int cnt = 0;
+ 	int state = 0;
++	unsigned int noio_flags;
+ 
+ 	/* calculate expected state,ignoring low bits */
+ 	if (mddev->bitmap && mddev->bitmap_info.offset)
+@@ -7490,6 +7495,7 @@ static int update_array_info(struct mddev *mddev, mdu_array_info_t *info)
+ 				mddev->bitmap_info.default_space;
+ 			bitmap = md_bitmap_create(mddev, -1);
+ 			mddev_suspend(mddev);
++			noio_flags = memalloc_noio_save();
+ 			if (!IS_ERR(bitmap)) {
+ 				mddev->bitmap = bitmap;
+ 				rv = md_bitmap_load(mddev);
+@@ -7497,6 +7503,7 @@ static int update_array_info(struct mddev *mddev, mdu_array_info_t *info)
+ 				rv = PTR_ERR(bitmap);
+ 			if (rv)
+ 				md_bitmap_destroy(mddev);
++			memalloc_noio_restore(noio_flags);
+ 			mddev_resume(mddev);
+ 		} else {
+ 			/* remove the bitmap */
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index 1d048976e743..8b804d6ee609 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -529,7 +529,6 @@ struct mddev {
+ 	void (*sync_super)(struct mddev *mddev, struct md_rdev *rdev);
+ 	struct md_cluster_info		*cluster_info;
+ 	unsigned int			good_device_nr;	/* good device num within cluster raid */
+-	unsigned int			noio_flag; /* for memalloc scope API */
+ 
+ 	bool	has_superblocks:1;
+ 	bool	fail_last_dev:1;
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 092cf1d0008e..e0ba26075e87 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -2477,11 +2477,6 @@ static int scribble_alloc(struct raid5_percpu *percpu,
+ 		sizeof(unsigned int) * (num + 2);
+ 	void *scribble;
+ 
+-	/*
+-	 * If here is in raid array suspend context, it is in memalloc noio
+-	 * context as well, there is no potential recursive memory reclaim
+-	 * I/Os with the GFP_KERNEL flag.
+-	 */
+ 	scribble = kvmalloc_array(cnt, obj_size, GFP_KERNEL);
+ 	if (!scribble)
+ 		return -ENOMEM;
+@@ -2496,6 +2491,7 @@ static int scribble_alloc(struct raid5_percpu *percpu,
+ static int resize_chunks(struct r5conf *conf, int new_disks, int new_sectors)
+ {
+ 	unsigned long cpu;
++	unsigned int noio_flags;
+ 	int err = 0;
+ 
+ 	/*
+@@ -2507,6 +2503,7 @@ static int resize_chunks(struct r5conf *conf, int new_disks, int new_sectors)
+ 	    conf->scribble_sectors >= new_sectors)
+ 		return 0;
+ 	mddev_suspend(conf->mddev);
++	noio_flags = memalloc_noio_save();
+ 	cpus_read_lock();
+ 
+ 	for_each_present_cpu(cpu) {
+@@ -2520,6 +2517,7 @@ static int resize_chunks(struct r5conf *conf, int new_disks, int new_sectors)
+ 	}
+ 
+ 	cpus_read_unlock();
++	memalloc_noio_restore(noio_flags);
+ 	mddev_resume(conf->mddev);
+ 	if (!err) {
+ 		conf->scribble_disks = new_disks;
+@@ -7024,6 +7022,7 @@ raid5_store_stripe_size(struct mddev  *mddev, const char *page, size_t len)
+ {
+ 	struct r5conf *conf;
+ 	unsigned long new;
++	unsigned int noio_flags;
+ 	int err;
+ 	int size;
+ 
+@@ -7067,6 +7066,7 @@ raid5_store_stripe_size(struct mddev  *mddev, const char *page, size_t len)
+ 	}
+ 
+ 	mddev_suspend(mddev);
++	noio_flags = memalloc_noio_save();
+ 	mutex_lock(&conf->cache_size_mutex);
+ 	size = conf->max_nr_stripes;
+ 
+@@ -7081,6 +7081,7 @@ raid5_store_stripe_size(struct mddev  *mddev, const char *page, size_t len)
+ 		err = -ENOMEM;
+ 	}
+ 	mutex_unlock(&conf->cache_size_mutex);
++	memalloc_noio_restore(noio_flags);
+ 	mddev_resume(mddev);
+ 
+ out_unlock:

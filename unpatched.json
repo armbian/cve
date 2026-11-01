@@ -5597,7 +5597,7 @@
       "ae220766d87c block: remove the unused mode argument to ->release"
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## drivers/md/md.c\ndrivers/md/md.c:4232:15: error: implicit declaration of function \u2018mddev_suspend_and_lock\u2019 [-Wimplicit-function-declaration]\ndrivers/md/md.c:4257:9: error: implicit declaration of function \u2018mddev_unlock_and_resume\u2019 [-Wimplicit-function-declaration]"
+    "build_log": "## drivers/md/md.c\ndrivers/md/md.c:4233:15: error: implicit declaration of function \u2018mddev_suspend_and_lock\u2019 [-Wimplicit-function-declaration]\ndrivers/md/md.c:4258:9: error: implicit declaration of function \u2018mddev_unlock_and_resume\u2019 [-Wimplicit-function-declaration]"
   },
   {
     "series": "6.1",
@@ -7980,41 +7980,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-90389"
-    ],
-    "kev": false,
-    "upstream": "bace2010dd7ac07bc980575afb135c406730a7fe",
-    "subject": "md: scope memalloc_noio to allocation critical sections",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/md/md-bitmap.c",
-      "drivers/md/md.c",
-      "drivers/md/md.h",
-      "drivers/md/raid5.c"
-    ],
-    "prerequisites": [
-      "2f6d261e15e8 md: factor out __md_set_array_info()",
-      "fb541ca4c365 md: remove lock_bdev / unlock_bdev",
-      "d57d9d696550 md: mark md_kick_rdev_from_array static",
-      "b5c1acf012a7 md: fold unbind_rdev_from_array into md_kick_rdev_from_array",
-      "b0907cadabca md: fix incorrect declaration about claim_rdev in md_import_device",
-      "07dbb13542cc md: Free writes_pending in md_stop",
-      "ed821cf84e7b md: use MD_RESYNC_* whenever possible",
-      "76fed01420bb md: account io_acct_set usage with active_io",
-      "9adcf9d3d5c9 md: simplify sysctl registration",
-      "4d72a9de2f00 md: make kobj_type structures constant",
-      "328e17d8d942 md: Move sb writer loop to its own function",
-      "10172f200b67 md: Fix types in sb writer",
-      "8745faa95611 md: Use optimal I/O size for last bitmap page",
-      "7bc436121e55 md/raid5: remove unused working_disks variable",
-      "b1211978ecf1 md: Fix bitmap offset type in sb writer"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-80820"
     ],
     "kev": false,
@@ -8041,40 +8006,6 @@
       "6772fcc8890a xfs: convert xbitmap to interval tree",
       "e06ef14b9f8e xfs: move the post-repair block reaping code to a separate file",
       "77a1396f9ff1 xfs: rearrange xrep_reap_block to make future code flow easier"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-90333"
-    ],
-    "kev": false,
-    "upstream": "68c5c42567bc462139128968ebbfadd0aefff519",
-    "subject": "dm-integrity: replace forgeable discard filler with a keyed sector marker",
-    "verdict": "needs-backport",
-    "files": [
-      "Documentation/admin-guide/device-mapper/dm-ima.rst",
-      "Documentation/admin-guide/device-mapper/dm-integrity.rst",
-      "drivers/md/dm-integrity.c"
-    ],
-    "prerequisites": [
-      "96747228b725 dm: Add scaffolding to change completion function signature",
-      "dcfe653d7cd4 dm: Remove completion function scaffolding",
-      "3bd940030752 dm: add missing SPDX-License-Indentifiers",
-      "1c1318866928 dm: prefer '\"%s...\", __func__'",
-      "6cc435fa76cc dm: avoid 'do {} while(0)' loop in single statement macros",
-      "8d1058fb2ac2 dm: fix use of sizeof() macro",
-      "ba287d7ccb9b dm integrity: change macros min/max() -> min_t/max_t where appropriate",
-      "b362c733ed7b dm: push error reporting down to dm_register_target()",
-      "26cb62a28580 dm: remove unnecessary (void*) conversions",
-      "57bbf99ce963 dm integrity: Use alloc_ordered_workqueue() to create ordered workqueues",
-      "25c9a4ab4d73 dm integrity: Use %*ph for printing hexdump of a small buffer",
-      "c3ba5aa6f789 Documentation: dm-integrity: Fix minor grammatical error.",
-      "3b671459e687 Documentation: dm-integrity: Document the meaning of \"buffer\".",
-      "52145f284c66 Documentation: dm-integrity: Document default values.",
-      "2971c0587463 Documentation: dm-integrity: Document an example of how the tunables relate."
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8469,167 +8400,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-98335"
-    ],
-    "kev": false,
-    "upstream": "ac7472a24bd433b81c06582835dd1d5547c10da9",
-    "subject": "wifi: mac80211: abort chanswitch when leaving a mesh",
-    "verdict": "needs-backport",
-    "files": [
-      "net/mac80211/mesh.c"
-    ],
-    "prerequisites": [
-      "e626dad92383 wifi: mac80211: fix race in mesh sequence number assignment",
-      "d5edb9ae8d56 wifi: mac80211: mesh fast xmit support",
-      "df1875c4f345 wifi: mac80211: enable EHT mesh support",
-      "15ddba5f4311 wifi: mac80211: consistently use u64 for BSS changes",
-      "076fc8775daf wifi: cfg80211: remove wdev mutex",
-      "6e48ebffc2db wifi: mac80211: fix mesh id corruption on 32 bit systems",
-      "c00de1c49294 wifi: mac80211: mesh: fix some kdoc warnings",
-      "310c8387c638 wifi: mac80211: clean up connection process",
-      "2d9698dd32d0 wifi: mac80211: clean up HE 6 GHz and EHT chandef parsing",
-      "6092077ad09c wifi: mac80211: introduce 'channel request'",
-      "90233160d761 wifi: mac80211: simplify HE/EHT element length functions",
-      "6239da18d2f9 wifi: mac80211: adjust EHT capa when lowering bandwidth",
-      "552a26b3854e wifi: mac80211: rename ieee80211_ie_build_he_6ghz_cap()",
-      "147ceae20534 wifi: mac80211: simplify adding supported rates",
-      "28aa895bb0b3 wifi: mac80211: convert ieee80211_ie_build_he_cap() to SKB use"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98332"
-    ],
-    "kev": false,
-    "upstream": "6f0a100df8539ce90f37c14e1945f396ca2410bc",
-    "subject": "wifi: mac80211: only operate on TDLS peers in the TDLS code",
-    "verdict": "needs-backport",
-    "files": [
-      "net/mac80211/tdls.c"
-    ],
-    "prerequisites": [
-      "107395f9cf44 wifi: mac80211: Drop support for TX push path",
-      "1444f58931ef wifi: mac80211: use wiphy work for SMPS",
-      "71b3b7ac3eb8 wifi: mac80211: Add HE and EHT capa elements in TDLS frames",
-      "05995d05aab3 wifi: mac80211: Extend AID element addition for TDLS frames",
-      "4d3acf4311a0 wifi: mac80211: remove sta_mtx",
-      "5435af6e6ac0 wifi: mac80211: remove chanctx_mtx",
-      "0cd8080e46b8 wifi: mac80211: remove local->mtx",
-      "076fc8775daf wifi: cfg80211: remove wdev mutex",
-      "5b43bd71f494 wifi: cfg80211: make read-only array centers_80mhz static const",
-      "271d14b37fa5 wifi: mac80211: make mgd_protect_tdls_discover MLO-aware",
-      "0528e0fdba9e wifi: mac80211: Replace ENOTSUPP with EOPNOTSUPP",
-      "310c8387c638 wifi: mac80211: clean up connection process",
-      "6092077ad09c wifi: mac80211: introduce 'channel request'",
-      "6239da18d2f9 wifi: mac80211: adjust EHT capa when lowering bandwidth",
-      "e0b5ee918723 wifi: mac80211: tdls: use ieee80211_put_he_6ghz_cap()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98182"
-    ],
-    "kev": false,
-    "upstream": "2b04d6556964ae9f89819b86a0a7801e39c3aae5",
-    "subject": "wifi: mac80211: refuse to make a monitor active when it has no queue",
-    "verdict": "needs-backport",
-    "files": [
-      "net/mac80211/cfg.c"
-    ],
-    "prerequisites": [
-      "9a886df0c369 wifi: mac80211: use link_id in ieee80211_change_bss()",
-      "107395f9cf44 wifi: mac80211: Drop support for TX push path",
-      "71a659bffeb9 wifi: mac80211: fix double space in comment",
-      "42470fa09324 wifi: mac80211: Add VHT MU-MIMO related flags in ieee80211_bss_conf",
-      "b1b3297df7db wifi: mac80211: Add HE MU-MIMO related flags in ieee80211_bss_conf",
-      "82253ddaff58 wifi: mac80211: drop extra 'e' from ieeee80211... name",
-      "b345f0637c00 wifi: cfg80211: include puncturing bitmap in channel switch events",
-      "2cc25e4b2a04 wifi: mac80211: configure puncturing bitmap",
-      "935ef47b16cc wifi: cfg80211: get rid of gfp in cfg80211_bss_color_notify",
-      "81202305f7c2 wifi: mac80211: add support for set_hw_timestamp command",
-      "e8edb34640ee wifi: mac80211: simplify reasoning about EHT capa handling",
-      "f4d1181e4759 wifi: mac80211: add EHT MU-MIMO related flags in ieee80211_bss_conf",
-      "2ad7dd942540 wifi: mac80211: add LDPC related flags in ieee80211_bss_conf",
-      "e3e0ca32cf47 wifi: mac80211: set EHT support flag in AP mode",
-      "13ad2b1eeacd wifi: mac80211: Fix puncturing bitmap handling in __ieee80211_csa_finalize()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98822"
-    ],
-    "kev": false,
-    "upstream": "7f93ca31f7fd9b42e7d692f59514436d448ac908",
-    "subject": "wifi: mac80211: prevent AP VLAN tx from other interfaces",
-    "verdict": "needs-backport",
-    "files": [
-      "net/mac80211/ieee80211_i.h",
-      "net/mac80211/tx.c"
-    ],
-    "prerequisites": [
-      "45ebac4f059b wifi: mac80211: Parse station profile from association response",
-      "c2d052a3c41a wifi: mac80211: Process association status for affiliated links",
-      "107395f9cf44 wifi: mac80211: Drop support for TX push path",
-      "944509631920 wifi: mac80211: Drop not needed check for NULL",
-      "209d70d34a7f wifi: mac80211: update TIM for S1G specification changes",
-      "7d360f6061db wifi: mac80211: add support for restricting netdev features per vif",
-      "3ffcc659dc6f wifi: mac80211: check key taint for beacon protection",
-      "d1b9bb6520fe wifi: mac80211: allow beacon protection HW offload",
-      "170cd6a66d9a wifi: mac80211: add netdev per-link debugfs data and driver hook",
-      "007ae9b268ba wifi: mac80211: Serialize ieee80211_handle_wake_tx_queue()",
-      "61587f1556fe wifi: mac80211: add support for letting drivers register tc offload support",
-      "e626dad92383 wifi: mac80211: fix race in mesh sequence number assignment",
-      "d5edb9ae8d56 wifi: mac80211: mesh fast xmit support",
-      "8b0f5cb6bc7c wifi: mac80211: use mesh header cache to speed up mesh forwarding",
-      "0333a81bc834 wifi: mac80211: S1G capabilities information element in probe request"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98589"
-    ],
-    "kev": false,
-    "upstream": "a6c1edfbe240e4377038a0e1d233ad81fde9a21b",
-    "subject": "bpf: Reject pkt arguments in mutating subprogs",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/bpf/verifier.c"
-    ],
-    "prerequisites": [
-      "9ef40974a82a bpf: Allow ringbuf memory to be used as map key",
-      "d1673304097c bpf: Consider all mem_types compatible for map_{key,value} args",
-      "c4bcfb38a95e bpf: Implement cgroup storage available to non-cgroup-attached bpf progs",
-      "b6d207999c35 bpf: Fix a typo in comment for DFS algorithm",
-      "a28ace782e68 bpf: Drop reg_type_may_be_refcounted_or_null",
-      "aa3496accc41 bpf: Refactor kptr_off_tab into btf_record",
-      "db559117828d bpf: Consolidate spin_lock, timer management into btf_record",
-      "f0c5941ff5b2 bpf: Support bpf_list_head in map values",
-      "2de2669b4e52 bpf: Rename RET_PTR_TO_ALLOC_MEM",
-      "894f2a8b1673 bpf: Rename MEM_ALLOC to MEM_RINGBUF",
-      "6728aea7216c bpf: Refactor btf_struct_access",
-      "32637e33003f bpf: Expand map key argument of bpf_redirect_map to u64",
-      "befae75856ab bpf: propagate nullness information for reg to reg comparisons",
-      "282de143ead9 bpf: Introduce allocated objects support",
-      "4e814da0d599 bpf: Allow locking bpf_spin_lock in allocated objects"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-98551"
     ],
     "kev": false,
@@ -8692,73 +8462,6 @@
       "ee9d55210c2f blk-mq: simplify blk_mq_realloc_tag_set_tags",
       "d4b2e0d43376 block: fix missing nr_hw_queues update in blk_mq_realloc_tag_set_tags",
       "90b0296ece4b block: fix crash in 'blk_mq_elv_switch_none'"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98558"
-    ],
-    "kev": false,
-    "upstream": "06e3f54e8b22040ada01a28343badf1990b4dd7d",
-    "subject": "net: flush skb_defer_nodes in dev_cpu_dead()",
-    "verdict": "needs-backport",
-    "files": [
-      "net/core/dev.c",
-      "net/core/dev.h",
-      "net/core/skbuff.c"
-    ],
-    "prerequisites": [
-      "4727bab4e9bb net: skb: move skb_pp_recycle() to skbuff.c",
-      "d120d1a63b2c net: Remove the obsolte u64_stats_fetch_*_irq() users (net).",
-      "0e84afe8ebfb net: dropreason: add SKB_CONSUMED reason",
-      "511a3eda2f8d net: dropreason: propagate drop_reason to skb_release_data()",
-      "02a68a47eade net: devlink: track netdev with devlink_port assigned",
-      "d57a3a151660 rxrpc: Save last ACK's SACK table rather than marking txbufs",
-      "bd039b5ea2a9 net/core: Allow live renaming when an interface is up",
-      "3e52fba03a20 net: introduce a helper to move notifier block to different namespace",
-      "57fc05e8e82d net: mm_account_pinned_pages() optimization",
-      "6af645a5b2da net: net_{enable|disable}_timestamp() optimizations",
-      "1462160c7455 net: adopt try_cmpxchg() in napi_schedule_prep() and napi_complete_done()",
-      "4ffa1d1c6842 net: adopt try_cmpxchg() in napi_{enable|disable}()",
-      "fd896e38e5df net: fix napi_disable() logic error",
-      "d93607082e98 net: add netdev_sw_irq_coalesce_default_on()",
-      "ce098da1497c skbuff: Introduce slab_build_skb()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98814"
-    ],
-    "kev": false,
-    "upstream": "72ece656abd4de8645a421fb482d7a11e6533a45",
-    "subject": "nvme: fix command effects log lifetime for multipath heads",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/nvme/host/core.c",
-      "drivers/nvme/host/nvme.h"
-    ],
-    "prerequisites": [
-      "71b26083d59c block: set the disk capacity to 0 in blk_mark_disk_dead",
-      "23a908647efa nvme: don't remove namespaces in nvme_passthru_end",
-      "4f17344e9dae nvme: remove the NVME_NS_DEAD check in nvme_remove_invalid_namespaces",
-      "fde776afdd84 nvme: remove the NVME_NS_DEAD check in nvme_validate_ns",
-      "6bcd5089ee13 nvme: don't unquiesce the admin queue in nvme_kill_queues",
-      "cd50f9b24726 nvme: split nvme_kill_queues",
-      "483239c75ba7 blk-mq: pass a tagset to blk_mq_wait_quiesce_done",
-      "98d81f0df70c nvme: use blk_mq_[un]quiesce_tagset",
-      "1b96f862eccc nvme: implement the DEAC bit for the Write Zeroes command",
-      "1e37a307f148 nvme: don't call nvme_init_ctrl_finish from nvme_passthru_end",
-      "94cc781f69f4 nvme: move OPAL setup from PCIe to core",
-      "e481fc0a3777 nvme-auth: guarantee dhchap buffers under memory pressure",
-      "aa36d711e945 nvme-auth: convert dhchap_auth_list to an array",
-      "811f4de0344d nvme: avoid fallback to sequential scan due to transient issues",
-      "9f27bd701d18 nvme: rename the queue quiescing helpers"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8862,100 +8565,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-98808"
-    ],
-    "kev": false,
-    "upstream": "eb7b84af0ec5c71b4920e999611b466b3784496c",
-    "subject": "net: systemport: Fix buffer overflow in bcm_sysport_get_stats()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/broadcom/bcmsysport.c"
-    ],
-    "prerequisites": [
-      "068c38ad88cc net: Remove the obsolte u64_stats_fetch_*_irq() users (drivers).",
-      "b98deb2f9803 net: systemport: Add support for RDMA overflow statistic counter",
-      "f93b30e50a81 net: systemport: Replace platform_get_irq with platform_get_irq_optional",
-      "d4295df3e043 net: ethernet: broadcom: Convert to platform remove callback returning void",
-      "6ca80638b90c net: dsa: Use conduit and user terms",
-      "e96321fad3ad net: ethernet: Switch back to struct platform_driver::remove()",
-      "890bde75a236 net: systemport: Remove unused txchk accessors",
-      "e69fbd287d5a net: systemport: Move IO macros to header file",
-      "61bf0009a765 dim: pass dim_sample to net_dim() by reference",
-      "fda960354eac net: broadcom: use ethtool string helpers",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "32a92f8c8932 Convert more 'alloc_obj' cases to default GFP_KERNEL arguments"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98807"
-    ],
-    "kev": false,
-    "upstream": "04c824940d52871c49866a4ac67b504146f7cf35",
-    "subject": "net/mlx5: Fix slab-out-of-bounds when handling team device events",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c"
-    ],
-    "prerequisites": [
-      "9a49a64ea7ed net/mlx5: Lag, Use mlx5_lag_dev() instead of derefering pointers",
-      "6a80313d24ac net/mlx5: Lag, Use flag to check for shared FDB mode",
-      "a32327a3a02c net/mlx5: Lag, Control MultiPort E-Switch single FDB mode",
-      "27f9e0ccb6da net/mlx5: Lag, Add single RDMA device in multiport mode",
-      "014e4d48eaa3 net/mlx5: E-switch, generalize shared FDB creation",
-      "e67f928a5204 net/mlx5: Devcom, Rename paired to ready",
-      "222dd185833e {net/RDMA}/mlx5: introduce lag_for_each_peer",
-      "4c103aea4bed net/mlx5: LAG, check if all eswitches are paired for shared FDB",
-      "86a12124dc02 net/mlx5: LAG, generalize handling of shared FDB",
-      "c83e6ab96ef2 net/mlx5: LAG, change mlx5_shared_fdb_supported() to static",
-      "6ec0b55e72a5 net/mlx5: Enable 4 ports VF LAG",
-      "8ec91f5d077c net/mlx5: Lag, Remove duplicate code checking lag is supported",
-      "02ceda65f014 net/mlx5: Use shared code for checking lag is supported",
-      "88d162b47981 net/mlx5: Devcom, Infrastructure changes",
-      "e534552c92a4 net/mlx5: Refactor LAG peer device lookout bus logic to mlx5 devcom"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98803"
-    ],
-    "kev": false,
-    "upstream": "88095728511e0df9c89528944f5a1762ad298983",
-    "subject": "net: stmmac: fix rx Scatter-Gather support",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/stmicro/stmmac/stmmac_main.c"
-    ],
-    "prerequisites": [
-      "e1f4ecab1933 net: remove explicit phylink_generic_validate() references",
-      "f72cd76b05ea net: stmmac: use sysfs_streq() instead of strncmp()",
-      "469d258d9e11 Revert \"net: stmmac: use sysfs_streq() instead of strncmp()\"",
-      "66c0e13ad236 drivers: net: turn on XDP features",
-      "522d15ea831f net/sched: taprio: only pass gate mask per TXQ for igc, stmmac, tsnep, am65_cpsw",
-      "c758fedf0802 net: stmmac: add missing NETDEV_XDP_ACT_XSK_ZEROCOPY bit to xdp_features",
-      "ff0011cf5601 net: stmmac: Make stmmac_dvr_remove() return void",
-      "e3f9c3e34840 net: stmmac: add Rx HWTS metadata to XDP receive pkt",
-      "9570df353309 net: stmmac: add Rx HWTS metadata to XDP ZC receive pkt",
-      "6b2c6e4a938f net: stmmac: propagate feature flags to vlan",
-      "4e1951666248 stmmac: fix changing mac address",
-      "ffb3322181d9 net: stmmac: fix call trace when stmmac_xdp_xmit() is invoked",
-      "5d1f3fe7d2d5 net: stmmac: dwmac-sogfpga: use the lynx pcs driver",
-      "aa571b6275fb net: stmmac: add new switch to struct plat_stmmacenet_data",
-      "d26979f1cef7 net: stmmac: replace the has_integrated_pcs field with a flag"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-98799"
     ],
     "kev": false,
@@ -8988,94 +8597,6 @@
       "aa3496accc41 bpf: Refactor kptr_off_tab into btf_record",
       "db559117828d bpf: Consolidate spin_lock, timer management into btf_record",
       "f71b2f64177a bpf: Refactor map->off_arr handling"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98796"
-    ],
-    "kev": false,
-    "upstream": "6f0c2c4f5e7143eba75153ecc8af3a03f7b6a98b",
-    "subject": "net: ethernet: mtk_eth_soc: allocate dummy netdev sooner",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/mediatek/mtk_eth_soc.c"
-    ],
-    "prerequisites": [
-      "068c38ad88cc net: Remove the obsolte u64_stats_fetch_*_irq() users (drivers).",
-      "e1f4ecab1933 net: remove explicit phylink_generic_validate() references",
-      "190487031584 net: ethernet: mtk_eth_soc: pass correct VLAN protocol ID to the network stack",
-      "08666cbb7dd5 net: ethernet: mtk_eth_soc: add support for configuring vlan rx offload",
-      "2d7605a72906 net: ethernet: mtk_eth_soc: enable hardware DSA untagging",
-      "ec8cd134eeee net: ethernet: mtk_eth_soc: remove cpu_relax in mtk_pending_work",
-      "c30e0b9b88b3 net: ethernet: mtk_eth_soc: increase tx ring size for QDMA devices",
-      "71ba8e4891c7 net: ethernet: mtk_eth_soc: avoid port_mg assignment on MT7622 and newer",
-      "f63959c7eec3 net: ethernet: mtk_eth_soc: implement multi-queue support for per-port queues",
-      "c9f8d73645b6 net: mtk_eth_soc: enable flow offload support for MT7986 SoC",
-      "900888374e73 net: ethernet: mtk_eth_soc: Separate C22 and C45 transactions",
-      "bccd19bce0b6 net: ethernet: mtk_eth_soc: introduce mtk_hw_reset utility routine",
-      "a9724b9c477f net: ethernet: mtk_eth_soc: introduce mtk_hw_warm_reset support",
-      "06127504c282 net: ethernet: mtk_eth_soc: align reset procedure to vendor sdk",
-      "93b2591ad0d0 net: ethernet: mtk_eth_soc: add dma checks to mtk_hw_reset_check"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98795"
-    ],
-    "kev": false,
-    "upstream": "0d2c49915bc3aea4521cda5e4d42f24f63b94585",
-    "subject": "net: sparx5: skip ptp deinit if init was skipped",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c"
-    ],
-    "prerequisites": [
-      "9e02131ec272 net: microchip: sparx5: add function for calculating PTP basetime",
-      "7bdde44463b2 net: sparx5: convert to ndo_hwtstamp_get() and ndo_hwtstamp_set()",
-      "3f9e46347a46 net: sparx5: use SPX5_CONST for constants which already have a symbol",
-      "1ebaa5e18915 net: sparx5: add support for lan969x targets and core clock",
-      "24fe83541755 net: lan969x: add PTP handler function",
-      "1cd7523f4baa net: lan969x: fix cyclic dependency reported by depmod",
-      "0432c60112b4 net: sparx5: move PTP IRQ handling out of sparx5_start()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98684"
-    ],
-    "kev": false,
-    "upstream": "aa994489bd835547c191827acc460192e147032d",
-    "subject": "smb: client: flush and commit data before querying allocated ranges",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb2ops.c"
-    ],
-    "prerequisites": [
-      "396ac4c982f6 smb: delete an unnecessary statement",
-      "0d7aeb68700f Drop the netfs_ prefix from netfs_extract_iter_to_sg()",
-      "e4645cc2f1e2 cifs: add a warning when the in-flight count goes negative",
-      "e8eeca0bf446 smb3: do not reserve too many oplock credits",
-      "ac615db03ba5 cifs: log session id when a matching ses is not found",
-      "61986a58bc6a cifs: new dynamic tracepoint to track ses not found errors",
-      "c071b34f62dd cifs: is_network_name_deleted should return a bool",
-      "9448765397b6 smb: convert to ctime accessor functions",
-      "9a49e221a641 smb: client: do not query reparse points twice on symlinks",
-      "f2762ae4d3e0 smb: client: query reparse points in older dialects",
-      "f4e5ceb6c1a6 smb: client: reduce stack usage in smb2_set_ea()",
-      "b9148756d3e7 smb: client: reduce stack usage in smb2_query_info_compound()",
-      "74e01332d958 smb: client: reduce stack usage in smb2_query_reparse_point()",
-      "09ee7a3bf866 [SMB3] send channel sequence number in SMB3 requests after reconnects",
-      "b3773b19d43f SMB3: rename macro CIFS_SERVER_IS_CHAN to avoid confusion"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -9135,38 +8656,6 @@
       "d114dde245f9 bpf: Change bpf_mem_cache draining process.",
       "822fb26bdb55 bpf: Add a hint to allocated objects.",
       "04fabf00b4d3 bpf: Allow reuse from waiting_for_gp_ttrace list."
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98957"
-    ],
-    "kev": false,
-    "upstream": "916c484d29d82f45c281da2786fcd6a1284430ce",
-    "subject": "wifi: mt76: mt7915: disable rx napi when removing device",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/wireless/mediatek/mt76/mt7915/init.c"
-    ],
-    "prerequisites": [
-      "ee0863aecdec wifi: mt76: mt7915: deal with special variant of mt7916",
-      "b0bfa00595be wifi: mt76: mt7915: improve accuracy of time_busy calculation",
-      "a71b648e3527 wifi: mt76: mt7915: add ack signal support",
-      "d44f5bca5166 wifi: mt76: mt7915: Fix VHT beamforming capabilities with DBDC",
-      "510ef2269428 wifi: mt76: mt7915: don't claim 160MHz support with mt7915 DBDC",
-      "66b181b8a991 wifi: mt76: mt7915: enable .sta_set_txpwr support",
-      "3eb50cc90534 wifi: mt76: mt7915: rely on band_idx of mt76_phy",
-      "a00b79102692 wifi: mt76: move leds field in leds struct",
-      "3abd46ddf80a wifi: mt76: move leds struct in mt76_phy",
-      "9e81c2c7b9af wifi: mt76: mt7915: enable per-phy led support",
-      "5ad42d19f659 wifi: mt76: mt7915: rework mt7915_mcu_set_thermal_throttling",
-      "ecaccdae7a7e wifi: mt76: mt7915: rework mt7915_thermal_temp_store()",
-      "2f2d86309e22 wifi: mt76: mt7915: add error message in mt7915_thermal_set_cur_throttle_state()",
-      "ac922bd60ace wifi: mt76: mt7915: remove BW160 and BW80+80 support",
-      "c2f73eacee3b wifi: mt76: mt7915: add back 160MHz channel width support for MT7915"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
