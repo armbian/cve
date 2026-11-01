@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: e6142a8bfc230c7263eb8b0475249c958ce49367
+X-Fasttrack-CVE: CVE-2026-97565
+X-Fasttrack-Backport: cve/CVE-2026-97565/6.12
+From: Diego Oliva <diego@bynar.io>
+Date: Sat, 31 Oct 2026 23:57:50 +0100
+Subject: [PATCH] smb: client: reject short READ responses in CIFSSMBRead()
+
+commit e6142a8bfc230c7263eb8b0475249c958ce49367 upstream.
+
+[ Backport: 6.12 has no smb_EIO2() tracepoint helper; return -EIO ]
+
+CIFSSMBRead() reads DataLengthHigh, DataLength and DataOffset out of
+the READ_RSP returned by the server without first checking that a
+whole READ_RSP was actually received. The length of the response is
+recorded in rsp_iov.iov_len, but nothing constrains it to be at least
+read_rsp_size before those fields are dereferenced.
+
+A malicious or compromised SMB1 server can return a response shorter
+than the READ_RSP header, so that parsing the header itself reads past
+the end of the receive buffer. SMB1 is not negotiated by default;
+reaching this code requires an explicit vers=1.0 mount.
+
+Reject the response unless it is at least read_rsp_size bytes long.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Paulo Alcantara <pc@manguebit.org>
+Cc: stable@vger.kernel.org # 6.19.x
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+---
+ fs/smb/client/cifssmb.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 626212f99255..2fa9e4b5fde5 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -1469,6 +1469,13 @@ CIFSSMBRead(const unsigned int xid, struct cifs_io_parms *io_parms,
+ 	pSMBr = (READ_RSP *)rsp_iov.iov_base;
+ 	if (rc) {
+ 		cifs_dbg(VFS, "Send error in read = %d\n", rc);
++	} else if (rsp_iov.iov_len < tcon->ses->server->vals->read_rsp_size) {
++		/* check that the received response can hold a whole READ_RSP */
++		cifs_dbg(FYI, "%s: server returned short header. got=%zu expected=%zu\n",
++			 __func__, rsp_iov.iov_len,
++			 tcon->ses->server->vals->read_rsp_size);
++		rc = -EIO;
++		*nbytes = 0;
+ 	} else {
+ 		int data_length = le16_to_cpu(pSMBr->DataLengthHigh);
+ 		data_length = data_length << 16;
