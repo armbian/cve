@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 97fcd34aa9fd73cefe3120ac9a82ca9d7763922f
+X-Fasttrack-CVE: CVE-2026-98269
+X-Fasttrack-Backport: cve/CVE-2026-98269/6.1
+From: Filipe Manana <fdmanana@suse.com>
+Date: Sun, 1 Nov 2026 16:44:17 +0100
+Subject: [PATCH] btrfs: abort transaction on failure to update inode for hole
+ punching and reflinking
+
+commit 97fcd34aa9fd73cefe3120ac9a82ca9d7763922f upstream.
+
+[ Backport: context only. 6.1 btrfs_update_inode() takes a root argument
+  and sets i_mtime/i_ctime directly. ]
+
+If we fail to update the inode we error out without aborting the
+transaction, which can result in a persistent inconsistency if after
+the failure the transaction is committed, as we have dropped file
+extent items from a range and either punched a hole or insert a new file
+extent item for that range (for reflinks).
+
+So add the missing transaction abort.
+
+Fixes: 2aaa66558172 ("Btrfs: add hole punching")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+---
+ fs/btrfs/file.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index d34407035b6a..62ece0430284 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -2480,8 +2480,10 @@ int btrfs_replace_file_extents(struct btrfs_inode *inode,
+ 		}
+ 
+ 		ret = btrfs_update_inode(trans, root, inode);
+-		if (ret)
++		if (unlikely(ret)) {
++			btrfs_abort_transaction(trans, ret);
+ 			break;
++		}
+ 
+ 		btrfs_end_transaction(trans);
+ 		btrfs_btree_balance_dirty(fs_info);
