@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 1 patch(es)
+- added 6.12: 2 patch(es)
 - added 6.1: 5 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
@@ -160,7 +160,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (173)
+### Included (175)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -313,6 +313,7 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-98471 | `93de2a6a4b91` | claude | KVM: SEV: Do cache maintenance on the source VM during intra-host migration |
 |  | CVE-2026-98714 | `e27fc915c8f5` | claude | KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded |
 |  | CVE-2026-98803 | `88095728511e` | claude | net: stmmac: fix rx Scatter-Gather support |
+|  | CVE-2026-98799 | `17637e1a581a` | claude | bpf: Skip detached progs in trampoline images that are still in use |
 |  | CVE-2026-98795 | `0d2c49915bc3` | claude | net: sparx5: skip ptp deinit if init was skipped |
 |  | CVE-2026-98685 | `4721587f96cb` | claude | smb: client: discard post-EOF pagecache when extending a file via clone range |
 |  | CVE-2026-98684 | `aa994489bd83` | claude | smb: client: flush and commit data before querying allocated ranges |
@@ -334,11 +335,12 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-99146 | `7dedc5bb11f9` | claude | drm/i915/dmc: Add sanity check for DMC load address |
 |  | CVE-2026-99172 | `f0e48172a59e` | claude | ipc: drop the mqueue mount with kern_unmount() on setup failure |
 |  | CVE-2026-99189 | `38d44f78f041` | claude | gpio: mxc: fix race between chained IRQ handler install and probe completion |
+|  | CVE-2026-98800 | `0fb5751a6e41` | claude | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
 |  | CVE-2026-99151 | `55a67aa89342` | claude | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
 |  | CVE-2026-98682 | `c9b1194e8ec9` | claude | smb: client: drain and invalidate before server-side copy/clone |
 |  | CVE-2026-98715 | `60d93c27859f` | claude | KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN |
 
-### Needs a backport (11)
+### Needs a backport (9)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -351,8 +353,6 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
-|  | CVE-2026-98800 | `0fb5751a6e41` | mainline | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
-|  | CVE-2026-98799 | `17637e1a581a` | mainline | bpf: Skip detached progs in trampoline images that are still in use |
 
 ### Not affected per work package (needs review) (59)
 
@@ -424,7 +424,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
 
-### Included (417)
+### Included (422)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -497,6 +497,10 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2024-58237 | `1a4607ffba35` | claude | bpf: consider that tail calls invalidate packet pointers |
 |  | CVE-2024-53687 | `b3431a8bb336` | claude | riscv: Fix IPIs usage in kfence_protect_page() |
 |  | CVE-2024-57857 | `16b87037b488` | claude | RDMA/siw: Remove direct link to net_device |
+|  | CVE-2025-21693 | `12dcb0ef5406` | claude | mm: zswap: properly synchronize freeing resources during CPU hotunplug |
+|  | CVE-2025-21693 | `779b9955f643` | claude | mm: zswap: move allocations during CPU init outside the lock |
+|  | CVE-2025-21693 | `c11bcbc0a517` | claude | mm: zswap: fix crypto_free_acomp() deadlock in zswap_cpu_comp_dead() |
+|  | CVE-2025-21693 | `590b13669b81` | claude | mm/zswap: fix error pointer free in zswap_cpu_comp_prepare() |
 |  | CVE-2024-58089 | `72dad8e377af` | claude | btrfs: fix double accounting race when btrfs_run_delalloc_range() failed |
 |  | CVE-2025-21817 | `7c0be4ead1f8` | claude | block: mark GFP_NOIO around sysfs ->store() |
 |  | CVE-2025-21825 | `58f038e6d209` | claude | bpf: Cancel the running bpf_timer through kworker for PREEMPT_RT |
@@ -666,6 +670,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-80556 | `c125ee35a49a` | claude | mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition |
 |  | CVE-2026-72324 | `—` | claude | genirq/generic_chip: Introduce irq_domain_{alloc,remove}_generic_chips() |
 |  | CVE-2026-72324 | `b11c513ad943` | claude | gpio: mvebu: free generic chips on unbind |
+|  | CVE-2026-53226 | `1c1e0fc88d6e` | claude | gpio: rockchip: fix generic IRQ chip leak on remove |
 |  | CVE-2026-90320 | `2cf82b46d5e4` | claude | ocfs2: validate external xattr entries when reading metadata |
 |  | CVE-2026-74592 | `b80bed5c871a` | claude | ima: Instantiate file_truncate and path_truncate hooks |
 |  | CVE-2026-90315 | `747b9bbbbdfd` | claude | PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers |
@@ -846,7 +851,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-99211 | `8bf659bd54e1` | claude | netlink: reset skb headers before unicast and multicast filtering |
 |  | CVE-2026-68086 | `2dfe9f5c91d0` | claude | mm/khugepaged: write all dirty file folios when collapsing |
 
-### Needs a backport (39)
+### Needs a backport (37)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -855,7 +860,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2024-50211 | `c226964ec786` | mainline | udf: refactor inode_bmap() to handle error |
 |  | CVE-2024-56591 | `2b0f2fc9ed62` | mainline | Bluetooth: hci_conn: Use disable_delayed_work_sync |
 |  | CVE-2024-58100 | `81f6d0530ba0` | mainline | bpf: check changes_pkt_data property for extension programs |
-|  | CVE-2025-21693 | `12dcb0ef5406` | mainline | mm: zswap: properly synchronize freeing resources during CPU hotunplug |
 |  | CVE-2025-38333 | `bb5eb8a5b222` | mainline | f2fs: fix to bail out in get_new_segment() |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
@@ -872,7 +876,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-53185 | `732fd9f0b9c1` | mainline | zram: fix use-after-free in zram_bvec_write_partial() |
 |  | CVE-2026-80636 | `35e21a4dccc5` | mainline | netfilter: conntrack: revert ct extension genid infrastructure |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
-|  | CVE-2026-53226 | `1c1e0fc88d6e` | mainline | gpio: rockchip: fix generic IRQ chip leak on remove |
 |  | CVE-2026-74314 | `a3a81d247651` | mainline | bpf: Cancel special fields on map value recycle |
 |  | CVE-2026-68447 | `426ffae6ecc7` | mainline | drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size |
 | does not build | CVE-2026-93072 | `616dd89d81ad` | mainline | irqchip/renesas-irqc: Fix generic interrupt chip leak on remove |
@@ -889,12 +892,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98799 | `17637e1a581a` | mainline | bpf: Skip detached progs in trampoline images that are still in use |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
 | does not build | CVE-2026-99191 | `8070ed578b6b` | mainline | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
-
-### cve/ backport does not apply on this base (1)
-
-| | CVE | Upstream | Source | Subject |
-|---|---|---|---|---|
-| does not build | CVE-2026-53226 | `1c1e0fc88d6e` | claude | gpio: rockchip: fix generic IRQ chip leak on remove |
 
 ### Not affected per work package (needs review) (153)
 
