@@ -1,0 +1,107 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 18b4fac5ef17f77fed9417d22210ceafd6525fc7
+X-Fasttrack-CVE: CVE-2025-37776
+X-Fasttrack-Backport: cve/CVE-2025-37776/6.1
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Sun, 1 Nov 2026 02:02:22 +0100
+Subject: [PATCH] ksmbd: fix use-after-free in smb_break_all_levII_oplock()
+
+commit 18b4fac5ef17f77fed9417d22210ceafd6525fc7 upstream.
+
+[ Backport: keep call_rcu() freeing of oplock_info and the rcu_head.
+  Upstream 1dfd062caa16 restores it because opinfo_get() still reads
+  fp->f_opinfo under RCU. ]
+[ Backport: use list_first_entry_or_null() in opinfo_get_list(), as
+  upstream 10379171f346 does. ]
+[ Backport: 6.1 uses conn->r_count and opinfo_conn_put(). Keep them. ]
+[ Backport: needs d1c189c6cb8b for the m_lock rwsem. ]
+
+There is a room in smb_break_all_levII_oplock that can cause racy issues
+when unlocking in the middle of the loop. This patch use read lock
+to protect whole loop.
+
+Cc: stable@vger.kernel.org
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+---
+ fs/smb/server/oplock.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
+
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 73388f298d43..671e31a6a548 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -155,9 +155,9 @@ static struct oplock_info *opinfo_get_list(struct ksmbd_inode *ci)
+ 	if (list_empty(&ci->m_op_list))
+ 		return NULL;
+ 
+-	rcu_read_lock();
+-	opinfo = list_first_or_null_rcu(&ci->m_op_list, struct oplock_info,
+-					op_entry);
++	down_read(&ci->m_lock);
++	opinfo = list_first_entry_or_null(&ci->m_op_list, struct oplock_info,
++					  op_entry);
+ 	if (opinfo) {
+ 		if (!atomic_inc_not_zero(&opinfo->refcount))
+ 			opinfo = NULL;
+@@ -170,8 +170,7 @@ static struct oplock_info *opinfo_get_list(struct ksmbd_inode *ci)
+ 			}
+ 		}
+ 	}
+-
+-	rcu_read_unlock();
++	up_read(&ci->m_lock);
+ 
+ 	return opinfo;
+ }
+@@ -207,7 +206,7 @@ static void opinfo_add(struct oplock_info *opinfo)
+ 	struct ksmbd_inode *ci = opinfo->o_fp->f_ci;
+ 
+ 	down_write(&ci->m_lock);
+-	list_add_rcu(&opinfo->op_entry, &ci->m_op_list);
++	list_add(&opinfo->op_entry, &ci->m_op_list);
+ 	up_write(&ci->m_lock);
+ }
+ 
+@@ -221,7 +220,7 @@ static void opinfo_del(struct oplock_info *opinfo)
+ 		write_unlock(&lease_list_lock);
+ 	}
+ 	down_write(&ci->m_lock);
+-	list_del_rcu(&opinfo->op_entry);
++	list_del(&opinfo->op_entry);
+ 	up_write(&ci->m_lock);
+ }
+ 
+@@ -1431,8 +1430,8 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 	ci = fp->f_ci;
+ 	op = opinfo_get(fp);
+ 
+-	rcu_read_lock();
+-	list_for_each_entry_rcu(brk_op, &ci->m_op_list, op_entry) {
++	down_read(&ci->m_lock);
++	list_for_each_entry(brk_op, &ci->m_op_list, op_entry) {
+ 		if (!atomic_inc_not_zero(&brk_op->refcount))
+ 			continue;
+ 
+@@ -1443,7 +1442,6 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 			continue;
+ 		}
+ 
+-		rcu_read_unlock();
+ 		if (brk_op->is_lease && (brk_op->o_lease->state &
+ 		    (~(SMB2_LEASE_READ_CACHING_LE |
+ 				SMB2_LEASE_HANDLE_CACHING_LE)))) {
+@@ -1473,9 +1471,8 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 		oplock_break(brk_op, SMB2_OPLOCK_LEVEL_NONE, NULL);
+ next:
+ 		opinfo_conn_put(brk_op);
+-		rcu_read_lock();
+ 	}
+-	rcu_read_unlock();
++	up_read(&ci->m_lock);
+ 
+ 	if (op)
+ 		opinfo_put(op);

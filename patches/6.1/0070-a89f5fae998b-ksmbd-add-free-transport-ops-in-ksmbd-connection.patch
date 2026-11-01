@@ -1,0 +1,111 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: a89f5fae998bdc4d0505306f93844c9ae059d50c
+X-Fasttrack-CVE: CVE-2025-37777
+X-Fasttrack-Backport: cve/CVE-2025-37777/6.1
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Sun, 1 Nov 2026 02:09:31 +0100
+Subject: [PATCH] ksmbd: add free_transport ops in ksmbd connection
+
+commit a89f5fae998bdc4d0505306f93844c9ae059d50c upstream.
+
+[ Backport: call the op from __ksmbd_conn_release_work(), where 6.1 frees the transport ]
+
+free_transport function for tcp connection can be called from smbdirect.
+It will cause kernel oops. This patch add free_transport ops in ksmbd
+connection, and add each free_transports for tcp and smbdirect.
+
+Fixes: 21a4e47578d4 ("ksmbd: fix use-after-free in __smb2_lease_break_noti()")
+Reviewed-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+---
+ fs/smb/server/connection.c     | 2 +-
+ fs/smb/server/connection.h     | 1 +
+ fs/smb/server/transport_rdma.c | 9 ++++++++-
+ fs/smb/server/transport_tcp.c  | 3 ++-
+ 4 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index 39f117bb1769..c9d8b5f9700c 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -56,7 +56,7 @@ static void __ksmbd_conn_release_work(struct work_struct *work)
+ 		container_of(work, struct ksmbd_conn, release_work);
+ 
+ 	ida_destroy(&conn->async_ida);
+-	ksmbd_free_transport(conn->transport);
++	conn->transport->ops->free_transport(conn->transport);
+ 	kfree(conn);
+ }
+ 
+diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
+index 5af53c34885b..8403dfc42e48 100644
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -141,6 +141,7 @@ struct ksmbd_transport_ops {
+ 			  void *buf, unsigned int len,
+ 			  struct smb2_buffer_desc_v1 *desc,
+ 			  unsigned int desc_len);
++	void (*free_transport)(struct ksmbd_transport *kt);
+ };
+ 
+ struct ksmbd_transport {
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index bcf0631ce10a..e798a71cfd0c 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -159,6 +159,8 @@ struct smb_direct_transport {
+ };
+ 
+ #define KSMBD_TRANS(t) ((struct ksmbd_transport *)&((t)->transport))
++#define SMBD_TRANS(t)	((struct smb_direct_transport *)container_of(t, \
++				struct smb_direct_transport, transport))
+ 
+ enum {
+ 	SMB_DIRECT_MSG_NEGOTIATE_REQ = 0,
+@@ -389,6 +391,11 @@ static struct smb_direct_transport *alloc_transport(struct rdma_cm_id *cm_id)
+ 	return NULL;
+ }
+ 
++static void smb_direct_free_transport(struct ksmbd_transport *kt)
++{
++	kfree(SMBD_TRANS(kt));
++}
++
+ static void free_transport(struct smb_direct_transport *t)
+ {
+ 	struct smb_direct_recvmsg *recvmsg;
+@@ -435,7 +442,6 @@ static void free_transport(struct smb_direct_transport *t)
+ 
+ 	smb_direct_destroy_pools(t);
+ 	ksmbd_conn_free(KSMBD_TRANS(t)->conn);
+-	kfree(t);
+ }
+ 
+ static struct smb_direct_sendmsg
+@@ -2358,4 +2364,5 @@ static struct ksmbd_transport_ops ksmbd_smb_direct_transport_ops = {
+ 	.read		= smb_direct_read,
+ 	.rdma_read	= smb_direct_rdma_read,
+ 	.rdma_write	= smb_direct_rdma_write,
++	.free_transport = smb_direct_free_transport,
+ };
+diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
+index e16d1d31433d..650ba3253cd7 100644
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -102,7 +102,7 @@ static struct tcp_transport *alloc_transport(struct socket *client_sk)
+ 	return t;
+ }
+ 
+-void ksmbd_free_transport(struct ksmbd_transport *kt)
++static void ksmbd_tcp_free_transport(struct ksmbd_transport *kt)
+ {
+ 	struct tcp_transport *t = TCP_TRANS(kt);
+ 
+@@ -701,4 +701,5 @@ static struct ksmbd_transport_ops ksmbd_tcp_transport_ops = {
+ 	.read		= ksmbd_tcp_read,
+ 	.writev		= ksmbd_tcp_writev,
+ 	.disconnect	= ksmbd_tcp_disconnect,
++	.free_transport = ksmbd_tcp_free_transport,
+ };
