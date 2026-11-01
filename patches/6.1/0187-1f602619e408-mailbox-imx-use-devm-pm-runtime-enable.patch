@@ -1,0 +1,91 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 1f602619e408b6e9655ee76656a2a5ab6e89c5e4
+X-Fasttrack-CVE: CVE-2026-98904
+X-Fasttrack-Backport: cve/CVE-2026-98904/6.1
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Date: Sun, 1 Nov 2026 12:58:04 +0100
+Subject: [PATCH] mailbox: imx: Use devm_pm_runtime_enable()
+
+commit 1f602619e408b6e9655ee76656a2a5ab6e89c5e4 upstream.
+
+[ Backport: 6.1 has no of_platform_populate() call in probe; nothing to move ]
+[ Backport: 6.1 probe has no disable_clk label; add it with err_out ]
+[ Backport: imx_mu_remove() returns int in 6.1; keep it with only return 0 ]
+
+sashiko complained about early usage of the device while probe isn't
+completed. This can be mitigated by delaying the pm_runtime_enable()
+into the removal path instead doing it early. This ensures that in an
+error case the device is removed (and imx_mu_shutdown()) before
+pm_runtime_disable() so we don't have to do this manually.
+
+For the order to work, lets move devm_mbox_controller_register() until
+after the pm-runtime part. So the reverse order will be mbox-controller
+removal followed by disabling pm runtime.
+
+Use devm_pm_runtime_enable(), remove manual pm_runtime_disable()
+invocations and move the pm_runtime handling in probe before
+devm_mbox_controller_register().
+
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+---
+ drivers/mailbox/imx-mailbox.c | 26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
+
+diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+index 5eef59f00abd..5be52c15cba2 100644
+--- a/drivers/mailbox/imx-mailbox.c
++++ b/drivers/mailbox/imx-mailbox.c
+@@ -852,38 +852,34 @@ static int imx_mu_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, priv);
+ 
+-	ret = devm_mbox_controller_register(dev, &priv->mbox);
+-	if (ret) {
+-		clk_disable_unprepare(priv->clk);
+-		return ret;
+-	}
+-
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret < 0)
++		goto disable_clk;
+ 
+ 	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+-		goto disable_runtime_pm;
++		goto disable_clk;
+ 
+ 	ret = pm_runtime_put_sync(dev);
+ 	if (ret < 0)
+-		goto disable_runtime_pm;
++		goto disable_clk;
+ 
+ 	clk_disable_unprepare(priv->clk);
+ 
++	ret = devm_mbox_controller_register(dev, &priv->mbox);
++	if (ret)
++		goto err_out;
++
+ 	return 0;
+ 
+-disable_runtime_pm:
+-	pm_runtime_disable(dev);
++disable_clk:
+ 	clk_disable_unprepare(priv->clk);
++err_out:
+ 	return ret;
+ }
+ 
+ static int imx_mu_remove(struct platform_device *pdev)
+ {
+-	struct imx_mu_priv *priv = platform_get_drvdata(pdev);
+-
+-	pm_runtime_disable(priv->dev);
+-
+ 	return 0;
+ }
+ 

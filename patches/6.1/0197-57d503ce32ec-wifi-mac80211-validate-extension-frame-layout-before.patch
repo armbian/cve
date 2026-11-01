@@ -1,0 +1,230 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 57d503ce32eccfa7650065ca4c560f7e29a2e676
+X-Fasttrack-CVE: CVE-2026-68470
+X-Fasttrack-Backport: cve/CVE-2026-68470/6.1
+From: Zhao Li <enderaoelyther@gmail.com>
+Date: Fri, 12 Jun 2026 00:19:45 +0800
+Subject: [PATCH] wifi: mac80211: validate extension-frame layout before RX
+
+commit 57d503ce32eccfa7650065ca4c560f7e29a2e676 upstream.
+
+[ Backport: add ieee80211_s1g_optional_len() and its S1G_BCN_CSSID/ANO helpers to include/linux/ieee80211.h,
+  copied from 1e1f706fc2ce ("wifi: cfg80211/mac80211: correctly parse S1G beacon optional elements"),
+  which 6.1 does not have; the rest of 1e1f706fc2ce is not taken. ]
+[ Backport: ieee80211_accept_frame(): 6.1 has no nan_network_id; context only. ]
+[ Backport: ieee80211_prepare_and_rx_handle(): 6.1 has no rx->link_addrs copy; the S1G
+  early return goes before the MLO address translation. ]
+
+Extension frames only have the extension header at the regular 802.11
+header offset. The generic RX path can still reach helpers and interface
+dispatch code that read regular header address fields before unsupported
+extension subtypes are dropped.
+
+mac80211 currently only handles S1G beacon extension frames. Drop other
+extension subtypes before they can reach regular-header RX processing.
+For S1G beacons, linearize the SKB with the management-frame path and
+require the fixed S1G beacon header, including optional fixed fields
+indicated by frame control, before generic RX dispatch.
+
+Route S1G beacons through the station/default-link RX path without
+regular-header station lookup. Avoid regular-header address reads in the
+mac80211 RX paths that process S1G extension beacons, including
+accept-frame, duplicate-detection, address-copy, and MLO
+address-translation paths.
+
+Also make ieee80211_get_bssid() length-safe before returning the S1G
+source-address pointer.
+
+Fixes: 09a740ce352e ("mac80211: receive and process S1G beacons")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260611161943.91069-5-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+---
+ include/linux/ieee80211.h | 69 +++++++++++++++++++++++++++++++++++++++
+ net/mac80211/rx.c         | 34 +++++++++++++++++--
+ net/mac80211/util.c       |  3 ++
+ 3 files changed, 104 insertions(+), 2 deletions(-)
+
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index d7ad2e9b0baa..2c6dbaee0811 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -111,6 +111,8 @@
+ 
+ /* bits unique to S1G beacon */
+ #define IEEE80211_S1G_BCN_NEXT_TBTT	0x100
++#define IEEE80211_S1G_BCN_CSSID		0x200
++#define IEEE80211_S1G_BCN_ANO		0x400
+ 
+ /* see 802.11ah-2016 9.9 NDP CMAC frames */
+ #define IEEE80211_S1G_1MHZ_NDP_BITS	25
+@@ -580,6 +582,42 @@ static inline bool ieee80211_is_s1g_beacon(__le16 fc)
+ 	       cpu_to_le16(IEEE80211_FTYPE_EXT | IEEE80211_STYPE_S1G_BEACON);
+ }
+ 
++/**
++ * ieee80211_s1g_has_next_tbtt - check if IEEE80211_S1G_BCN_NEXT_TBTT
++ * @fc: frame control bytes in little-endian byteorder
++ * Return: whether or not the frame contains the variable-length
++ *	next TBTT field
++ */
++static inline bool ieee80211_s1g_has_next_tbtt(__le16 fc)
++{
++	return ieee80211_is_s1g_beacon(fc) &&
++		(fc & cpu_to_le16(IEEE80211_S1G_BCN_NEXT_TBTT));
++}
++
++/**
++ * ieee80211_s1g_has_ano - check if IEEE80211_S1G_BCN_ANO
++ * @fc: frame control bytes in little-endian byteorder
++ * Return: whether or not the frame contains the variable-length
++ *	ANO field
++ */
++static inline bool ieee80211_s1g_has_ano(__le16 fc)
++{
++	return ieee80211_is_s1g_beacon(fc) &&
++		(fc & cpu_to_le16(IEEE80211_S1G_BCN_ANO));
++}
++
++/**
++ * ieee80211_s1g_has_cssid - check if IEEE80211_S1G_BCN_CSSID
++ * @fc: frame control bytes in little-endian byteorder
++ * Return: whether or not the frame contains the variable-length
++ *	compressed SSID field
++ */
++static inline bool ieee80211_s1g_has_cssid(__le16 fc)
++{
++	return ieee80211_is_s1g_beacon(fc) &&
++		(fc & cpu_to_le16(IEEE80211_S1G_BCN_CSSID));
++}
++
+ /**
+  * ieee80211_next_tbtt_present - check if IEEE80211_FTYPE_EXT &&
+  * IEEE80211_STYPE_S1G_BEACON && IEEE80211_S1G_BCN_NEXT_TBTT
+@@ -1124,6 +1162,37 @@ struct ieee80211_ext {
+ 	} u;
+ } __packed __aligned(2);
+ 
++/**
++ * ieee80211_s1g_optional_len - determine length of optional S1G beacon fields
++ * @fc: frame control bytes in little-endian byteorder
++ * Return: total length in bytes of the optional fixed-length fields
++ *
++ * S1G beacons may contain up to three optional fixed-length fields that
++ * precede the variable-length elements. Whether these fields are present
++ * is indicated by flags in the frame control field.
++ *
++ * From IEEE 802.11-2024 section 9.3.4.3:
++ *  - Next TBTT field may be 0 or 3 bytes
++ *  - Short SSID field may be 0 or 4 bytes
++ *  - Access Network Options (ANO) field may be 0 or 1 byte
++ */
++static inline size_t
++ieee80211_s1g_optional_len(__le16 fc)
++{
++	size_t len = 0;
++
++	if (ieee80211_s1g_has_next_tbtt(fc))
++		len += 3;
++
++	if (ieee80211_s1g_has_cssid(fc))
++		len += 4;
++
++	if (ieee80211_s1g_has_ano(fc))
++		len += 1;
++
++	return len;
++}
++
+ #define IEEE80211_TWT_CONTROL_NDP			BIT(0)
+ #define IEEE80211_TWT_CONTROL_RESP_MODE			BIT(1)
+ #define IEEE80211_TWT_CONTROL_NEG_TYPE_BROADCAST	BIT(3)
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 1fbccdb37166..1c67fb1ae555 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -1435,6 +1435,9 @@ ieee80211_rx_h_check_dup(struct ieee80211_rx_data *rx)
+ 	if (status->flag & RX_FLAG_DUP_VALIDATED)
+ 		return RX_CONTINUE;
+ 
++	if (ieee80211_is_ext(hdr->frame_control))
++		return RX_CONTINUE;
++
+ 	/*
+ 	 * Drop duplicate 802.11 retransmissions
+ 	 * (IEEE 802.11-2012: 9.3.2.10 "Duplicate detection and recovery")
+@@ -4297,8 +4300,12 @@ static bool ieee80211_accept_frame(struct ieee80211_rx_data *rx)
+ 	struct ieee80211_hdr *hdr = (void *)skb->data;
+ 	struct ieee80211_rx_status *status = IEEE80211_SKB_RXCB(skb);
+ 	u8 *bssid = ieee80211_get_bssid(hdr, skb->len, sdata->vif.type);
+-	bool multicast = is_multicast_ether_addr(hdr->addr1) ||
+-			 ieee80211_is_s1g_beacon(hdr->frame_control);
++	bool multicast;
++
++	if (ieee80211_is_s1g_beacon(hdr->frame_control))
++		return sdata->vif.type == NL80211_IFTYPE_STATION && bssid;
++
++	multicast = is_multicast_ether_addr(hdr->addr1);
+ 
+ 	switch (sdata->vif.type) {
+ 	case NL80211_IFTYPE_STATION:
+@@ -4906,6 +4913,11 @@ static bool ieee80211_prepare_and_rx_handle(struct ieee80211_rx_data *rx,
+ 		hdr = (struct ieee80211_hdr *)rx->skb->data;
+ 	}
+ 
++	if (ieee80211_is_s1g_beacon(hdr->frame_control)) {
++		ieee80211_invoke_rx_handlers(rx);
++		return true;
++	}
++
+ 	if (unlikely(rx->sta && rx->sta->sta.mlo) &&
+ 	    is_unicast_ether_addr(hdr->addr1) &&
+ 	    !ieee80211_is_probe_resp(hdr->frame_control) &&
+@@ -4990,6 +5002,13 @@ static bool ieee80211_rx_for_interface(struct ieee80211_rx_data *rx,
+ 	struct sta_info *sta;
+ 	int link_id = -1;
+ 
++	if (ieee80211_is_s1g_beacon(hdr->frame_control)) {
++		if (!ieee80211_rx_data_set_sta(rx, NULL, -1))
++			return false;
++
++		return ieee80211_prepare_and_rx_handle(rx, skb, consume);
++	}
++
+ 	/*
+ 	 * Look up link station first, in case there's a
+ 	 * chance that they might have a link address that
+@@ -5049,6 +5068,17 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
+ 			err = -ENOBUFS;
+ 		else
+ 			err = skb_linearize(skb);
++	} else if (ieee80211_is_s1g_beacon(fc)) {
++		size_t s1g_hdr_len = offsetof(struct ieee80211_ext,
++					      u.s1g_beacon.variable) +
++				     ieee80211_s1g_optional_len(fc);
++
++		if (skb->len < s1g_hdr_len)
++			err = -ENOBUFS;
++		else
++			err = skb_linearize(skb);
++	} else if (ieee80211_is_ext(fc)) {
++		err = -EINVAL;
+ 	} else {
+ 		err = !pskb_may_pull(skb, ieee80211_hdrlen(fc));
+ 	}
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 73116ed609e1..3d95f4a2d78e 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -67,6 +67,9 @@ u8 *ieee80211_get_bssid(struct ieee80211_hdr *hdr, size_t len,
+ 	if (ieee80211_is_s1g_beacon(fc)) {
+ 		struct ieee80211_ext *ext = (void *) hdr;
+ 
++		if (len < offsetofend(struct ieee80211_ext, u.s1g_beacon.sa))
++			return NULL;
++
+ 		return ext->u.s1g_beacon.sa;
+ 	}
+ 

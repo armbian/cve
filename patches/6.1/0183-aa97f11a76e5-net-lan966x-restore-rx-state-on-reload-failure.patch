@@ -1,0 +1,73 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: aa97f11a76e545ed73cc455bcdd1ece4b480b507
+X-Fasttrack-CVE: CVE-2026-98906
+X-Fasttrack-Backport: cve/CVE-2026-98906/6.1
+From: Guangshuo Li <lgs201920130244@gmail.com>
+Date: Sun, 1 Nov 2026 12:54:54 +0100
+Subject: [PATCH] net: lan966x: restore RX state on reload failure
+
+commit aa97f11a76e545ed73cc455bcdd1ece4b480b507 upstream.
+
+[ Backport: 6.1 has no rx.max_mtu field and no XDP/page_pool support, so only
+  rx.page_order is saved and restored; the XDP RXQ re-registration is dropped. ]
+
+lan966x_fdma_reload() backs up rx->page_pool and rx->fdma before
+reallocating the RX resources for the new MTU. If the allocation fails,
+the restore path puts these fields back before restarting RX.
+
+However, the reload path also updates rx->page_order and rx->max_mtu
+before calling lan966x_fdma_rx_alloc(). These fields are not restored on
+failure, so RX can be restarted with the old pages, old FDMA state and
+old page pool, but with the page geometry from the failed new MTU.
+
+This can make the XDP path advertise a frame size derived from the new
+page_order while the actual RX pages still come from the old allocation.
+For example, after a failed reload to a jumbo MTU, xdp_init_buff() may be
+called with a frame size larger than the restored RX pages.
+
+lan966x_fdma_rx_alloc_page_pool() also registers the newly allocated page
+pool with each port's XDP RXQ before fdma_alloc_coherent() is called. If
+fdma_alloc_coherent() fails, the new page pool is destroyed, but the
+rollback path does not restore the per-port XDP RXQ mem model
+registration either.
+
+Save and restore rx->page_order and rx->max_mtu, and restore the old page
+pool registration for each port's XDP RXQ before RX is started again.
+This keeps the restored RX state consistent after a failed reload.
+
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260607145747.1494514-1-lgs201920130244@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+index e6948939ccc2..93961fae4513 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+@@ -698,12 +698,14 @@ static int lan966x_fdma_reload(struct lan966x *lan966x, int new_mtu)
+ {
+ 	dma_addr_t rx_dma;
+ 	void *rx_dcbs;
++	int page_order;
+ 	u32 size;
+ 	int err;
+ 
+ 	/* Store these for later to free them */
+ 	rx_dma = lan966x->rx.dma;
+ 	rx_dcbs = lan966x->rx.dcbs;
++	page_order = lan966x->rx.page_order;
+ 
+ 	napi_synchronize(&lan966x->napi);
+ 	napi_disable(&lan966x->napi);
+@@ -728,6 +730,7 @@ static int lan966x_fdma_reload(struct lan966x *lan966x, int new_mtu)
+ restore:
+ 	lan966x->rx.dma = rx_dma;
+ 	lan966x->rx.dcbs = rx_dcbs;
++	lan966x->rx.page_order = page_order;
+ 	lan966x_fdma_rx_start(&lan966x->rx);
+ 
+ 	return err;
