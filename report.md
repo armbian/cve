@@ -2,7 +2,8 @@
 
 **Events this run**
 
-- added 6.1: 45 patch(es)
+- added 6.1: 15 patch(es)
+- retired 6.1: 1 patch(es) (landed upstream or superseded)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -431,7 +432,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18
 
-### Included (157)
+### Included (174)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -440,7 +441,6 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2024-27023 | `855678ed8534` | mainline | md: Fix missing release of 'active_io' for flush |
 |  | CVE-2024-41149 | `85672ca9ceea` | mainline | block: avoid to reuse `hctx` not removed from cpuhp callback list |
 |  | CVE-2026-23451 | `b7405dcf7385` | mainline | bonding: prevent potential infinite loop in bond_header_parse() |
-|  | CVE-2026-72434 | `4a597a87e2e2` | mainline | netfilter: ipset: make sure gc is properly stopped |
 |  | CVE-2026-93184 | `3359ba93d01a` | mainline | ASoC: fsl_audmix: rework runtime PM handling in probe |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
 |  | CVE-2026-98161 | `c644a2f8fef5` | mainline | nvdimm: pmem: keep PREFLUSH before data writes |
@@ -550,6 +550,12 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-43309 | `cefcb9297fbd` | claude | md raid: fix hang when stopping arrays with metadata through dm-raid |
 |  | CVE-2026-31537 | `34abd408c8ba` | claude | smb: server: make use of smbdirect_socket.send_io.bcredits |
 |  | CVE-2026-23239 | `e1512c1db9e8` | claude | espintcp: Fix race condition in espintcp_close() |
+|  | CVE-2026-23346 | `—` | claude | mm/ioremap: define generic_ioremap_prot() and generic_iounmap() |
+|  | CVE-2026-23346 | `—` | claude | mm: ioremap: allow ARCH to have its own ioremap method definition |
+|  | CVE-2026-23346 | `—` | claude | arm64 : mm: add wrapper function ioremap_prot() |
+|  | CVE-2026-23346 | `f6bf47ab32e0` | claude | arm64: io: Rename ioremap_prot() to __ioremap_prot() |
+|  | CVE-2026-23346 | `8f098037139b` | claude | arm64: io: Extract user memory type in ioremap_prot() |
+|  | CVE-2026-23346 | `bb756b11ad63` | claude | arm64: io: Reject non-user protection in ioremap_prot() |
 |  | CVE-2026-23355 | `aac9b27f7c1f` | claude | ata: libata: cancel pending work after clearing deferred_qc |
 |  | CVE-2026-46014 | `3700f0788da6` | claude | KVM: SVM: Add missing save/restore handling of LBR MSRs |
 |  | CVE-2026-31493 | `ef3b06742c8a` | claude | RDMA/efa: Fix use of completion ctx after free |
@@ -573,6 +579,8 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-43053 | `—` | claude | xfs: factor out xfs_attr3_node_entry_remove |
 |  | CVE-2026-43053 | `—` | claude | xfs: factor out xfs_attr3_leaf_init |
 |  | CVE-2026-43053 | `b854e1c4eff3` | claude | xfs: close crash window in attr dabtree inactivation |
+|  | CVE-2026-31487 | `cb3d1049f4ea` | claude | driver core: generalize driver_override in struct device |
+|  | CVE-2026-31487 | `cc34d77dd487` | claude | spi: use generic driver_override infrastructure |
 |  | CVE-2026-31777 | `277c6960d4dd` | claude | ALSA: ctxfi: Check the error for index mapping |
 |  | CVE-2026-23000 | `4dadc4077e3f` | claude | net/mlx5e: Fix crash on profile change rollback failure |
 |  | CVE-2026-31692 | `7b735ef81286` | claude | rtnetlink: add missing netlink_ns_capable() check for peer netns |
@@ -581,6 +589,8 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-46153 | `fc69decc811b` | claude | 8021q: use RCU for egress QoS mappings |
 |  | CVE-2026-46153 | `7dddc74af369` | claude | 8021q: delete cleared egress QoS mappings |
 |  | CVE-2026-98916 | `55308cee9c21` | claude | wifi: nl80211: check link is beaconing for color change |
+|  | CVE-2026-64078 | `527d6931473b` | claude | netfilter: x_tables: add and use xt_unregister_table_pre_exit |
+|  | CVE-2026-64078 | `b4597d5fd7d2` | claude | netfilter: x_tables: add and use xtables_unregister_table_exit |
 |  | CVE-2026-43500 | `aa54b1d27fe0` | claude | rxrpc: Also unshare DATA/RESPONSE packets when paged frags are present |
 |  | CVE-2026-53179 | `514ab9836459` | claude | staging: rtl8723bs: fix buffer over-read in rtw_update_protection |
 |  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
@@ -592,8 +602,16 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-53091 | `7fb4c1967011` | claude | net: pull headers in qdisc_pkt_len_segs_init() |
 |  | CVE-2026-53091 | `28a57fb2c5df` | claude | net: iptunnel: fix stale transport header during tunnel decapsulation |
 |  | CVE-2026-53091 | `fa90a3145c03` | claude | xfrm: Don't clobber inner headers when already set |
+|  | CVE-2026-53115 | `6c8dfb036273` | claude | bus: fsl-mc: use generic driver_override infrastructure |
+|  | CVE-2026-31527 | `813bbc4d33d2` | claude | hwmon: axi-fan: don't use driver_override as IRQ name |
+|  | CVE-2026-31527 | `2b38efc05bf7` | claude | driver core: platform: use generic driver_override infrastructure |
+|  | CVE-2026-53118 | `85bb534ff12a` | claude | vdpa: use generic driver_override infrastructure |
+|  | CVE-2026-53117 | `ac4d8bb6e2e1` | claude | s390/cio: use generic driver_override infrastructure |
+|  | CVE-2026-53120 | `10a4206a2401` | claude | PCI: use generic driver_override infrastructure |
+|  | CVE-2026-64079 | `8e72510db9fa` | claude | netfilter: x_tables: allow initial table replace without emitting audit log message |
+|  | CVE-2026-64079 | `b62eb8dcf2c4` | claude | netfilter: x_tables: allocate hook ops while under mutex |
 
-### Needs a backport (311)
+### Needs a backport (303)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -611,19 +629,10 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2025-68768 | `006a5035b495` | mainline | inet: frags: flush pending skbs in fqdir_pre_exit() |
 | does not build | CVE-2025-71225 | `2cc583653bbe` | mainline | md: suspend array while updating raid_disks via sysfs |
 | does not build | CVE-2026-23240 | `7bb09315f93d` | mainline | tls: Fix race condition in tls_sw_cancel_work_tx() |
-|  | CVE-2026-23346 | `8f098037139b` | mainline | arm64: io: Extract user memory type in ioremap_prot() |
 |  | CVE-2026-43362 | `d78840a6a38d` | mainline | smb: client: fix in-place encryption corruption in SMB2_write() |
-|  | CVE-2026-31527 | `2b38efc05bf7` | mainline | driver core: platform: use generic driver_override infrastructure |
-|  | CVE-2026-31487 | `cc34d77dd487` | mainline | spi: use generic driver_override infrastructure |
 |  | CVE-2026-43115 | `a6fc88b22bc8` | mainline | srcu: Use irq_work to start GP in tiny SRCU |
 |  | CVE-2026-43073 | `d187a86de793` | mainline | x86-64: rename misleadingly named '__copy_user_nocache()' function |
 |  | CVE-2026-46054 | `82544d36b172` | mainline | selinux: fix overlayfs mmap() and mprotect() access checks |
-|  | CVE-2026-53120 | `10a4206a2401` | mainline | PCI: use generic driver_override infrastructure |
-|  | CVE-2026-53118 | `85bb534ff12a` | mainline | vdpa: use generic driver_override infrastructure |
-|  | CVE-2026-53117 | `ac4d8bb6e2e1` | mainline | s390/cio: use generic driver_override infrastructure |
-|  | CVE-2026-53115 | `6c8dfb036273` | mainline | bus: fsl-mc: use generic driver_override infrastructure |
-|  | CVE-2026-64078 | `b4597d5fd7d2` | mainline | netfilter: x_tables: add and use xtables_unregister_table_exit |
-|  | CVE-2026-64079 | `b62eb8dcf2c4` | mainline | netfilter: x_tables: allocate hook ops while under mutex |
 |  | CVE-2026-64109 | `be309f8eae8b` | mainline | af_unix: Fix UAF read of tail->len in unix_stream_data_wait() |
 | does not build | CVE-2026-64112 | `9fc75b71fdd3` | mainline | rbd: eliminate a race in lock_dwork draining on unmap |
 |  | CVE-2026-64026 | `d2bc90cf6c75` | mainline | rxrpc: Fix DATA decrypt vs splice() by copying data to buffer in recvmsg |
@@ -656,6 +665,7 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-74272 | `4dd86ca99ffc` | mainline | cxl/region: Resolve region deletion races |
 |  | CVE-2026-72454 | `650716f23eac` | mainline | i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev() |
 |  | CVE-2026-72493 | `46762cefe7f4` | mainline | net: serialize netif_running() check in enqueue_to_backlog() |
+| does not build | CVE-2026-72434 | `4a597a87e2e2` | mainline | netfilter: ipset: make sure gc is properly stopped |
 |  | CVE-2026-98904 | `1f602619e408` | mainline | mailbox: imx: Use devm_pm_runtime_enable() |
 |  | CVE-2026-98903 | `5ccea7eacb77` | mainline | mailbox: imx: Add a channel shutdown field |
 |  | CVE-2026-63816 | `e0288584baa5` | mainline | f2fs: atomic: fix UAF issue on f2fs_inode_info.atomic_inode |
