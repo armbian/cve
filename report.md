@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.1: 31 patch(es)
+- added 6.1: 26 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -429,7 +429,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18
 
-### Included (252)
+### Included (279)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -462,7 +462,9 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-80670 | `5484b43a0ec8` | stable-list | perf tools: Use perf_env__get_cpu_topology() in machine__resolve() |
 |  | CVE-2026-80999 | `fb58b6a696b3` | stable-list | net: dsa: realtek: use gpiod_set_value_cansleep for reset GPIO |
 |  | CVE-2026-93216 | `90f095b816e2` | stable-list | mm/page_owner: use memcg_data snapshot to avoid TOCTOU in print_page_owner_memcg() |
+|  | CVE-2026-97562 | `d806d5a85dcb` | stable-list | smb: client: pin DFS superblock in iterator callback |
 |  | CVE-2026-97949 | `f06c2d26d199` | stable-list | configfs: unhash the dentry before dropping the item in rmdir |
+|  | CVE-2026-98212 | `5d132990475f` | stable-list | mmc: hsq: Fix use-after-free in retry work |
 |  | CVE-2026-99122 | `ad9a7da3fa39` | stable-list | vsock/vmci: validate packet source for connected sockets |
 |  | CVE-2024-35808 | `cd32b27a66db` | claude | md/dm-raid: don't call md_reap_sync_thread() directly |
 |  | CVE-2024-27079 | `81e921fd3216` | claude | iommu/vt-d: Fix NULL domain on device release |
@@ -658,12 +660,29 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-72324 | `b11c513ad943` | claude | gpio: mvebu: free generic chips on unbind |
 |  | CVE-2026-90320 | `2cf82b46d5e4` | claude | ocfs2: validate external xattr entries when reading metadata |
 |  | CVE-2026-90315 | `747b9bbbbdfd` | claude | PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers |
+|  | CVE-2026-80728 | `b96c529cd255` | claude | Revert "drm/amdgpu: fix aperture mapping leak" |
 |  | CVE-2026-74753 | `fa091f46c383` | claude | perf: Reject exited events as group leaders |
 |  | CVE-2026-74752 | `3dbb44d88b1e` | claude | sctp: validate cookie AUTH state before use |
+|  | CVE-2026-89938 | `be61c8c62526` | claude | iio: chemical: atlas-sensor: use iio_trigger_poll_nested() to fix remove UAF |
+|  | CVE-2026-80580 | `d15d51fb26e8` | claude | fbdev: bound mode sysfs output to the sysfs buffer |
 |  | CVE-2026-90036 | `9026932ac8be` | claude | NFSD: Prevent client use-after-free during blocked-lock reaping |
 |  | CVE-2026-93221 | `11a5fe42e181` | claude | nfsd: convert nfsd_net boolean flags to unsigned long flags word |
+|  | CVE-2026-90230 | `—` | claude | nvme: Add the DHCHAP maximum HD IDs |
+|  | CVE-2026-90230 | `5bb96cc21883` | claude | nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate() |
+|  | CVE-2026-98156 | `6a736d2f9d0c` | claude | drm/virtio: use the DMA API for resource backing on Xen |
+|  | CVE-2026-100072 | `a9ba4dd2f18b` | claude | ACPI: platform: Use acpi_bus_get_primary_device() |
+|  | CVE-2026-90119 | `d736eba9c453` | claude | ALSA: ice1712: Fix the card leak at probe error with the auto-cleanup |
+|  | CVE-2026-98148 | `cb732d027aa1` | claude | drm/gud: validate GUD_ROTATION_0 is present in supported rotations |
+|  | CVE-2026-89637 | `730d0bb19507` | claude | smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2 |
+|  | CVE-2026-98142 | `92312d333bf7` | claude | drm/cirrus-qemu: Validate BAR0 size during probe |
 |  | CVE-2026-98131 | `a5d946466a95` | claude | net: stmmac: fix dma mapping leak in stmmac_tso_xmit() |
+|  | CVE-2026-98126 | `88972e357507` | claude | smb/client: validate new EOF for zero range |
+|  | CVE-2026-98127 | `1519dc88c87f` | claude | smb/client: validate new EOF for insert range |
+|  | CVE-2026-98124 | `448ba0ae65ca` | claude | smb/client: invalidate fscache for fallocate range operations |
+|  | CVE-2026-98665 | `f0ea4824deeb` | claude | iio: health: max30102: fix NULL dereference in interrupt handler |
 |  | CVE-2026-97938 | `5a88f78df753` | claude | reboot: fix cad_pid use-after-free race |
+|  | CVE-2026-98114 | `c61dc7b1b4a3` | claude | ksmbd: propagate DACL parsing errors |
+|  | CVE-2026-99109 | `4aa2c106aef4` | claude | smb: client: reject SetEA requests that do not fit the request buffer |
 |  | CVE-2026-98111 | `a086c0892969` | claude | Bluetooth: btintel: validate version TLV value lengths |
 |  | CVE-2026-98107 | `56c2b5831d39` | claude | Bluetooth: L2CAP: fix out-of-bounds write in l2cap_ecred_connect |
 |  | CVE-2026-98103 | `2987ee196c88` | claude | igmp: convert struct ip_sf_list to RCU |
@@ -673,20 +692,28 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-98229 | `3cf5cdecd99c` | claude | xfrm: save input state data before secpath resets |
 |  | CVE-2026-89793 | `6e2b571b0a54` | claude | ublk: clear VM_MAYWRITE on read-only ublk char device mmap |
 |  | CVE-2026-98087 | `dae5c0292080` | claude | sched/rt,dl: Skip migrate-disabled tasks when picking a push candidate |
+|  | CVE-2026-98353 | `00baeade709f` | claude | RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables |
+|  | CVE-2026-97565 | `e6142a8bfc23` | claude | smb: client: reject short READ responses in CIFSSMBRead() |
 |  | CVE-2026-98081 | `a18a6b93a284` | claude | btrfs: zoned: finish active block group cleanup if call_zone_finish() fails |
 |  | CVE-2026-98079 | `2acb9f3d1cc8` | claude | btrfs: zstd: fix lost wakeup when waiting for a workspace |
 |  | CVE-2026-98073 | `debac3a20dec` | claude | net: Remove conflicting altnames for dying netns in __dev_change_net_namespace(). |
+|  | CVE-2026-98056 | `4ed7f3d7d435` | claude | nvme: remove stale namespaces by NSID range during scan |
 |  | CVE-2026-98041 | `e51179a4e098` | claude | bpf: Don't predict JMP32 pointer vs zero comparisons |
 |  | CVE-2026-98033 | `b90c5d770dad` | claude | bpf: Preserve inner map identity in callback frames |
 |  | CVE-2026-98034 | `ecdc5043794c` | claude | bpf: Mark NULL kptr stores precise |
 |  | CVE-2026-98026 | `4b772869a1e5` | claude | net: bridge: mcast: properly convert mglist to rcu |
 |  | CVE-2026-98021 | `1aa9e143bf51` | claude | net: reject oversized tx_queue_len at netlink parse time |
 |  | CVE-2026-98019 | `1a3a10b030c9` | claude | bpf: mark a NULL call argument precise |
+|  | CVE-2026-97929 | `8f5ef203abda` | claude | ALSA: usbusx2y: validate URB actual_length in interrupt callback |
 |  | CVE-2026-98003 | `00a7dd64888d` | claude | iommu/amd: Do not reallocate GA log buffers on resume |
+|  | CVE-2026-97992 | `62be4e3e5f5f` | claude | vhost-vdpa: protect config_ctx from being freed under the config callback |
+|  | CVE-2026-97994 | `ccb1dc7c527f` | claude | vhost/vdpa: reject VRING_NUM larger than device max |
 |  | CVE-2026-98101 | `c073d1b070f1` | claude | ipv6: mcast: use copy-on-write RCU updates in ip6_mc_source() |
 |  | CVE-2026-98102 | `93b49239840b` | claude | ipv6: mcast: fix RCU list diversion in ip6_mc_del1_src() |
+|  | CVE-2026-80785 | `061db6b7a910` | claude | fbdev: serialize mode sysfs access with lock_fb_info() |
+|  | CVE-2026-98125 | `01261a6fa48b` | claude | smb/client: fix stale page cache in insert/collapse range |
 
-### Needs a backport (204)
+### Needs a backport (178)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -732,45 +759,19 @@ Already in tree: 89 · Other architectures (not built): 18
 |  | CVE-2026-89797 | `75b1e88d3425` | mainline | power: supply: ab8500_fg: fix use-after-free on remove |
 |  | CVE-2026-74592 | `b80bed5c871a` | mainline | ima: Instantiate file_truncate and path_truncate hooks |
 |  | CVE-2026-74677 | `fde39b8a5217` | mainline | net: usb: ipheth: fix carrier_work UAF on disconnect |
-|  | CVE-2026-80728 | `b96c529cd255` | mainline | Revert "drm/amdgpu: fix aperture mapping leak" |
 |  | CVE-2026-89913 | `f5b8f203bfc0` | mainline | KVM: arm64: vgic-v3: take an LPI reference in vgic_v3_save_pending_tables |
-|  | CVE-2026-89938 | `be61c8c62526` | mainline | iio: chemical: atlas-sensor: use iio_trigger_poll_nested() to fix remove UAF |
-|  | CVE-2026-80785 | `061db6b7a910` | mainline | fbdev: serialize mode sysfs access with lock_fb_info() |
-|  | CVE-2026-80580 | `d15d51fb26e8` | mainline | fbdev: bound mode sysfs output to the sysfs buffer |
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 |  | CVE-2026-89708 | `01c5d5f58a5d` | mainline | nfsd: RCU-protect cl_cb_session to fix use-after-free on session teardown |
 |  | CVE-2026-89675 | `62c0f6eaf050` | mainline | nfsd: fix UAF in async copy cancel and shutdown |
-| does not build | CVE-2026-90230 | `5bb96cc21883` | mainline | nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate() |
 |  | CVE-2026-93235 | `5eced87b7d19` | mainline | f2fs: fix to zero post-EOF data when extending file size |
-|  | CVE-2026-98156 | `6a736d2f9d0c` | mainline | drm/virtio: use the DMA API for resource backing on Xen |
-|  | CVE-2026-100072 | `a9ba4dd2f18b` | mainline | ACPI: platform: Use acpi_bus_get_primary_device() |
 |  | CVE-2026-80920 | `cd305ee3633a` | mainline | io_uring: defer eventfd signaling when queued from a wakeup handler |
 |  | CVE-2026-90154 | `c50e628122ae` | mainline | ksmbd: scope session state changes to bound connections |
-| does not build | CVE-2026-90119 | `d736eba9c453` | mainline | ALSA: ice1712: Fix the card leak at probe error with the auto-cleanup |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
-|  | CVE-2026-98148 | `cb732d027aa1` | mainline | drm/gud: validate GUD_ROTATION_0 is present in supported rotations |
-|  | CVE-2026-89637 | `730d0bb19507` | mainline | smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2 |
-|  | CVE-2026-98142 | `92312d333bf7` | mainline | drm/cirrus-qemu: Validate BAR0 size during probe |
-|  | CVE-2026-98127 | `1519dc88c87f` | mainline | smb/client: validate new EOF for insert range |
-|  | CVE-2026-98126 | `88972e357507` | mainline | smb/client: validate new EOF for zero range |
-|  | CVE-2026-98125 | `01261a6fa48b` | mainline | smb/client: fix stale page cache in insert/collapse range |
-|  | CVE-2026-98124 | `448ba0ae65ca` | mainline | smb/client: invalidate fscache for fallocate range operations |
-|  | CVE-2026-98665 | `f0ea4824deeb` | mainline | iio: health: max30102: fix NULL dereference in interrupt handler |
-|  | CVE-2026-98114 | `c61dc7b1b4a3` | mainline | ksmbd: propagate DACL parsing errors |
-|  | CVE-2026-99109 | `4aa2c106aef4` | mainline | smb: client: reject SetEA requests that do not fit the request buffer |
 | does not build | CVE-2026-97600 | `ff5891b266a7` | mainline | ieee802154: cc2520: fix FIFOP work use-after-free |
-|  | CVE-2026-98353 | `00baeade709f` | mainline | RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables |
-| does not build | CVE-2026-97565 | `e6142a8bfc23` | mainline | smb: client: reject short READ responses in CIFSSMBRead() |
 |  | CVE-2026-97563 | `5be5bdda5863` | mainline | smb: client: reject out-of-bounds DataOffset in CIFSSMBRead() |
-|  | CVE-2026-97562 | `d806d5a85dcb` | mainline | smb: client: pin DFS superblock in iterator callback |
 |  | CVE-2026-98067 | `82e664cf1219` | mainline | erofs: disable LZ4 rolling decompression for now |
-|  | CVE-2026-98056 | `4ed7f3d7d435` | mainline | nvme: remove stale namespaces by NSID range during scan |
-|  | CVE-2026-98212 | `5d132990475f` | mainline | mmc: hsq: Fix use-after-free in retry work |
 |  | CVE-2026-98043 | `67b529f521a6` | mainline | bpf: Don't infer non-NULL from a pointer with an unbounded offset |
-|  | CVE-2026-97929 | `8f5ef203abda` | mainline | ALSA: usbusx2y: validate URB actual_length in interrupt callback |
-|  | CVE-2026-97992 | `62be4e3e5f5f` | mainline | vhost-vdpa: protect config_ctx from being freed under the config callback |
 |  | CVE-2026-97997 | `75d276e5bb68` | mainline | virtio_ring: fix stale descriptor flags after a failed packed add |
-|  | CVE-2026-97994 | `ccb1dc7c527f` | mainline | vhost/vdpa: reject VRING_NUM larger than device max |
 |  | CVE-2026-97990 | `0d195797a80b` | mainline | vdpa_sim_net: check TX pull result before RX copy |
 |  | CVE-2026-97988 | `e4f4761879a2` | mainline | vhost: invalidate vring access on IOTLB transitions |
 |  | CVE-2026-97989 | `fa2c25b4add5` | mainline | vduse: validate virtqueue alignment |
@@ -895,11 +896,12 @@ Already in tree: 89 · Other architectures (not built): 18
 | does not build | CVE-2026-99191 | `8070ed578b6b` | mainline | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
 |  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
 
-### cve/ backport does not apply on this base (1)
+### cve/ backport does not apply on this base (2)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 | does not build | CVE-2026-53226 | `1c1e0fc88d6e` | claude | gpio: rockchip: fix generic IRQ chip leak on remove |
+|  | CVE-2026-97563 | `5be5bdda5863` | claude | smb: client: reject out-of-bounds DataOffset in CIFSSMBRead() |
 
 ### Not affected per work package (needs review) (144)
 

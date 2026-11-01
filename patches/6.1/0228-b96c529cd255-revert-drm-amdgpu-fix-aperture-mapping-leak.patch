@@ -1,0 +1,115 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: b96c529cd2551b78316a4afa3237b2ed96ba03c8
+X-Fasttrack-CVE: CVE-2026-80728
+X-Fasttrack-Backport: cve/CVE-2026-80728/6.1
+From: Asad Kamal <asad.kamal@amd.com>
+Date: Sun, 1 Nov 2026 15:01:58 +0100
+Subject: [PATCH] Revert "drm/amdgpu: fix aperture mapping leak"
+
+commit b96c529cd2551b78316a4afa3237b2ed96ba03c8 upstream.
+
+[ Backport: revert 6.1 stable commit 8cf4724ea4f2 (the 6.1 copy of d871e99879cb). ]
+[ Backport: 6.1 has no gmc.is_app_apu branch; restore the 6.1 code from before 8cf4724ea4f2. ]
+
+devres teardown is LIFO. The aperture devres node was registered after
+the DRM device node, so devres_release_all() unmaps the aperture before
+the DRM device release callback fires amdgpu_device_fini_sw(). IP
+sw_fini callbacks (e.g. vcn_v4_0_sw_fini) write to fw_shared through a
+pointer derived from aper_base_kaddr, causing a kernel page fault on
+probe failure / rollback:
+
+  BUG: unable to handle page fault ... PMD 0
+  RIP: vcn_v4_0_sw_fini+0x7b/0x170 [amdgpu]
+  Call Trace:
+    amdgpu_device_fini_sw
+    amdgpu_driver_release_kms
+    devm_drm_dev_init_release
+    devres_release_all
+
+This reverts commit d871e99879cb5fd1fa798b006b4888887e63a17a.
+
+Fixes: d871e99879cb ("drm/amdgpu: fix aperture mapping leak")
+Reported-by: Yuansheng Mao <yuansheng.mao@amd.com>
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 336e0cd576817ac64a4b394ca2b3680029f3e37f)
+Cc: stable@vger.kernel.org
+---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  2 ++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c    | 33 ++++++++++++----------
+ 2 files changed, 20 insertions(+), 15 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index e34e2cd8ac18..9e989119e25f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4114,6 +4114,8 @@ static void amdgpu_device_unmap_mmio(struct amdgpu_device *adev)
+ 
+ 	iounmap(adev->rmmio);
+ 	adev->rmmio = NULL;
++	if (adev->mman.aper_base_kaddr)
++		iounmap(adev->mman.aper_base_kaddr);
+ 	adev->mman.aper_base_kaddr = NULL;
+ 
+ 	/* Memory manager related */
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index 2ea823fdcd9f..2c8ee880cefa 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -1777,20 +1777,15 @@ int amdgpu_ttm_init(struct amdgpu_device *adev)
+ 	/* Change the size here instead of the init above so only lpfn is affected */
+ 	amdgpu_ttm_set_buffer_funcs_status(adev, false);
+ #ifdef CONFIG_64BIT
+-	if (adev->gmc.xgmi.connected_to_cpu) {
+-		void *kaddr = devm_memremap(adev->dev, adev->gmc.aper_base,
+-					    adev->gmc.visible_vram_size,
+-					    MEMREMAP_WB);
+-		if (IS_ERR(kaddr))
+-			return PTR_ERR(kaddr);
+-		adev->mman.aper_base_kaddr = (__force void __iomem *)kaddr;
+-	} else {
+-		adev->mman.aper_base_kaddr = devm_ioremap_wc(adev->dev,
+-							     adev->gmc.aper_base,
+-							     adev->gmc.visible_vram_size);
+-		if (!adev->mman.aper_base_kaddr)
+-			return -ENOMEM;
+-	}
++#ifdef CONFIG_X86
++	if (adev->gmc.xgmi.connected_to_cpu)
++		adev->mman.aper_base_kaddr = ioremap_cache(adev->gmc.aper_base,
++				adev->gmc.visible_vram_size);
++
++	else
++#endif
++		adev->mman.aper_base_kaddr = ioremap_wc(adev->gmc.aper_base,
++				adev->gmc.visible_vram_size);
+ #endif
+ 
+ 	/*
+@@ -1928,6 +1923,7 @@ int amdgpu_ttm_init(struct amdgpu_device *adev)
+  */
+ void amdgpu_ttm_fini(struct amdgpu_device *adev)
+ {
++	int idx;
+ 	if (!adev->mman.initialized)
+ 		return;
+ 
+@@ -1946,7 +1942,14 @@ void amdgpu_ttm_fini(struct amdgpu_device *adev)
+ 	amdgpu_ttm_fw_reserve_vram_fini(adev);
+ 	amdgpu_ttm_drv_reserve_vram_fini(adev);
+ 
+-	adev->mman.aper_base_kaddr = NULL;
++	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
++
++		if (adev->mman.aper_base_kaddr)
++			iounmap(adev->mman.aper_base_kaddr);
++		adev->mman.aper_base_kaddr = NULL;
++
++		drm_dev_exit(idx);
++	}
+ 
+ 	amdgpu_vram_mgr_fini(adev);
+ 	amdgpu_gtt_mgr_fini(adev);
