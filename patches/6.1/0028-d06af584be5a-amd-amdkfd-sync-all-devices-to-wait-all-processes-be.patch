@@ -1,0 +1,88 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: d06af584be5a769d124b7302b32a033e9559761d
+X-Fasttrack-CVE: CVE-2024-36949
+X-Fasttrack-Backport: cve/CVE-2024-36949/6.1
+From: Zhigang Luo <Zhigang.Luo@amd.com>
+Date: Sun, 1 Nov 2026 01:24:32 +0100
+Subject: [PATCH] amd/amdkfd: sync all devices to wait all processes being
+ evicted
+
+commit d06af584be5a769d124b7302b32a033e9559761d upstream.
+
+[ Backport: 6.1 lacks fe1f05df5919 ("drm/amdkfd: Rework kfd_locked handling"); kfd_locked stays atomic_t, the atomic ops are now done under kfd_processes_mutex ]
+[ Backport: make kfd_processes_mutex non-static and declare it in kfd_priv.h, as fe1f05df5919 does ]
+[ Backport: 6.1 has no kfd_node loop; only the kfd_locked blocks change ]
+
+If there are more than one device doing reset in parallel, the first
+device will call kfd_suspend_all_processes() to evict all processes
+on all devices, this call takes time to finish. other device will
+start reset and recover without waiting. if the process has not been
+evicted before doing recover, it will be restored, then caused page
+fault.
+
+Signed-off-by: Zhigang Luo <Zhigang.Luo@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+---
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c  | 6 +++++-
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h    | 2 ++
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c | 2 +-
+ 3 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+index a4eadd6416f8..7a28ffe04856 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -753,9 +753,11 @@ void kgd2kfd_suspend(struct kfd_dev *kfd, bool run_pm)
+ 
+ 	/* for runtime suspend, skip locking kfd */
+ 	if (!run_pm) {
++		mutex_lock(&kfd_processes_mutex);
+ 		/* For first KFD device suspend all the KFD processes */
+ 		if (atomic_inc_return(&kfd_locked) == 1)
+ 			kfd_suspend_all_processes();
++		mutex_unlock(&kfd_processes_mutex);
+ 	}
+ 
+ 	kfd->dqm->ops.stop(kfd->dqm);
+@@ -775,10 +777,12 @@ int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm)
+ 
+ 	/* for runtime resume, skip unlocking kfd */
+ 	if (!run_pm) {
++		mutex_lock(&kfd_processes_mutex);
+ 		count = atomic_dec_return(&kfd_locked);
+-		WARN_ONCE(count < 0, "KFD suspend / resume ref. error");
+ 		if (count == 0)
+ 			ret = kfd_resume_all_processes();
++		WARN_ONCE(count < 0, "KFD suspend / resume ref. error");
++		mutex_unlock(&kfd_processes_mutex);
+ 	}
+ 
+ 	return ret;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index cdcaba185052..0ba7c586f8b2 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -206,6 +206,8 @@ extern int amdgpu_no_queue_eviction_on_vm_fault;
+ /* Enable eviction debug messages */
+ extern bool debug_evictions;
+ 
++extern struct mutex kfd_processes_mutex;
++
+ enum cache_policy {
+ 	cache_policy_coherent,
+ 	cache_policy_noncoherent
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index fd7fecaa9254..91cf714c67b1 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -51,7 +51,7 @@ struct mm_struct;
+  * Unique/indexed by mm_struct*
+  */
+ DEFINE_HASHTABLE(kfd_processes_table, KFD_PROCESS_TABLE_SIZE);
+-static DEFINE_MUTEX(kfd_processes_mutex);
++DEFINE_MUTEX(kfd_processes_mutex);
+ 
+ DEFINE_SRCU(kfd_processes_srcu);
+ 

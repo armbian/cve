@@ -1,0 +1,188 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 81e921fd321614c2ad8ac333b041aae1da7a1c6d
+X-Fasttrack-CVE: CVE-2024-27079
+X-Fasttrack-Backport: cve/CVE-2024-27079/6.1
+From: Lu Baolu <baolu.lu@linux.intel.com>
+Date: Tue, 5 Mar 2024 20:21:18 +0800
+Subject: [PATCH] iommu/vt-d: Fix NULL domain on device release
+
+commit 81e921fd321614c2ad8ac333b041aae1da7a1c6d upstream.
+
+[ Backport: 6.1 core has no iommu_ops->release_domain and no blocking_domain. Call device_block_translation() in intel_iommu_release_device() instead. It handles a NULL info->domain. ]
+[ Backport: keep dmar_remove_one_dev_info(). 6.1 intel_iommu_detach_device() still uses it. ]
+[ Backport: move context_clear_entry() from iommu.c to iommu.h, so pasid.c can use it. ]
+[ Backport: use PASID_RID2PASID. 6.1 has no IOMMU_NO_PASID. ]
+
+In the kdump kernel, the IOMMU operates in deferred_attach mode. In this
+mode, info->domain may not yet be assigned by the time the release_device
+function is called. It leads to the following crash in the crash kernel:
+
+    BUG: kernel NULL pointer dereference, address: 000000000000003c
+    ...
+    RIP: 0010:do_raw_spin_lock+0xa/0xa0
+    ...
+    _raw_spin_lock_irqsave+0x1b/0x30
+    intel_iommu_release_device+0x96/0x170
+    iommu_deinit_device+0x39/0xf0
+    __iommu_group_remove_device+0xa0/0xd0
+    iommu_bus_notifier+0x55/0xb0
+    notifier_call_chain+0x5a/0xd0
+    blocking_notifier_call_chain+0x41/0x60
+    bus_notify+0x34/0x50
+    device_del+0x269/0x3d0
+    pci_remove_bus_device+0x77/0x100
+    p2sb_bar+0xae/0x1d0
+    ...
+    i801_probe+0x423/0x740
+
+Use the release_domain mechanism to fix it. The scalable mode context
+entry which is not part of release domain should be cleared in
+release_device().
+
+Fixes: 586081d3f6b1 ("iommu/vt-d: Remove DEFER_DEVICE_DOMAIN_INFO")
+Reported-by: Eric Badger <ebadger@purestorage.com>
+Closes: https://lore.kernel.org/r/20240113181713.1817855-1-ebadger@purestorage.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20240305013305.204605-3-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+---
+ drivers/iommu/intel/iommu.c | 14 ++++----
+ drivers/iommu/intel/iommu.h |  6 ++++
+ drivers/iommu/intel/pasid.c | 64 +++++++++++++++++++++++++++++++++++++
+ drivers/iommu/intel/pasid.h |  1 +
+ 4 files changed, 78 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 48b9d5e4a3cd..2b570ec7fc6f 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -232,12 +232,6 @@ static inline int context_domain_id(struct context_entry *c)
+ 	return((c->hi >> 8) & 0xffff);
+ }
+ 
+-static inline void context_clear_entry(struct context_entry *context)
+-{
+-	context->lo = 0;
+-	context->hi = 0;
+-}
+-
+ static inline bool context_copied(struct intel_iommu *iommu, u8 bus, u8 devfn)
+ {
+ 	if (!iommu->copied_tables)
+@@ -4610,8 +4604,14 @@ static struct iommu_device *intel_iommu_probe_device(struct device *dev)
+ static void intel_iommu_release_device(struct device *dev)
+ {
+ 	struct device_domain_info *info = dev_iommu_priv_get(dev);
++	struct intel_iommu *iommu = info->iommu;
++
++	device_block_translation(dev);
++
++	if (sm_supported(iommu) && !dev_is_real_dma_subdevice(dev) &&
++	    !context_copied(iommu, info->bus, info->devfn))
++		intel_pasid_teardown_sm_context(dev);
+ 
+-	dmar_remove_one_dev_info(dev);
+ 	intel_pasid_free_table(dev);
+ 	dev_iommu_priv_set(dev, NULL);
+ 	kfree(info);
+diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
+index 080cbaafec43..64cde70b00ae 100644
+--- a/drivers/iommu/intel/iommu.h
++++ b/drivers/iommu/intel/iommu.h
+@@ -707,6 +707,12 @@ static inline bool context_present(struct context_entry *context)
+ 	return (context->lo & 1);
+ }
+ 
++static inline void context_clear_entry(struct context_entry *context)
++{
++	context->lo = 0;
++	context->hi = 0;
++}
++
+ extern struct dmar_drhd_unit * dmar_find_matched_drhd_unit(struct pci_dev *dev);
+ 
+ extern int dmar_enable_qi(struct intel_iommu *iommu);
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index e0647142c6af..761f8bf5d77f 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -776,3 +776,67 @@ void intel_pasid_setup_page_snoop_control(struct intel_iommu *iommu,
+ 	if (!cap_caching_mode(iommu->cap))
+ 		devtlb_invalidation_with_pasid(iommu, dev, pasid);
+ }
++
++/*
++ * Interfaces to setup or teardown a pasid table to the scalable-mode
++ * context table entry:
++ */
++
++static void device_pasid_table_teardown(struct device *dev, u8 bus, u8 devfn)
++{
++	struct device_domain_info *info = dev_iommu_priv_get(dev);
++	struct intel_iommu *iommu = info->iommu;
++	struct context_entry *context;
++
++	spin_lock(&iommu->lock);
++	context = iommu_context_addr(iommu, bus, devfn, false);
++	if (!context) {
++		spin_unlock(&iommu->lock);
++		return;
++	}
++
++	context_clear_entry(context);
++	__iommu_flush_cache(iommu, context, sizeof(*context));
++	spin_unlock(&iommu->lock);
++
++	/*
++	 * Cache invalidation for changes to a scalable-mode context table
++	 * entry.
++	 *
++	 * Section 6.5.3.3 of the VT-d spec:
++	 * - Device-selective context-cache invalidation;
++	 * - Domain-selective PASID-cache invalidation to affected domains
++	 *   (can be skipped if all PASID entries were not-present);
++	 * - Domain-selective IOTLB invalidation to affected domains;
++	 * - Global Device-TLB invalidation to affected functions.
++	 *
++	 * The iommu has been parked in the blocking state. All domains have
++	 * been detached from the device or PASID. The PASID and IOTLB caches
++	 * have been invalidated during the domain detach path.
++	 */
++	iommu->flush.flush_context(iommu, 0, PCI_DEVID(bus, devfn),
++				   DMA_CCMD_MASK_NOBIT, DMA_CCMD_DEVICE_INVL);
++	devtlb_invalidation_with_pasid(iommu, dev, PASID_RID2PASID);
++}
++
++static int pci_pasid_table_teardown(struct pci_dev *pdev, u16 alias, void *data)
++{
++	struct device *dev = data;
++
++	if (dev == &pdev->dev)
++		device_pasid_table_teardown(dev, PCI_BUS_NUM(alias), alias & 0xff);
++
++	return 0;
++}
++
++void intel_pasid_teardown_sm_context(struct device *dev)
++{
++	struct device_domain_info *info = dev_iommu_priv_get(dev);
++
++	if (!dev_is_pci(dev)) {
++		device_pasid_table_teardown(dev, info->bus, info->devfn);
++		return;
++	}
++
++	pci_for_each_dma_alias(to_pci_dev(dev), pci_pasid_table_teardown, dev);
++}
+diff --git a/drivers/iommu/intel/pasid.h b/drivers/iommu/intel/pasid.h
+index 20c54e50f533..3d3fe94d7bf4 100644
+--- a/drivers/iommu/intel/pasid.h
++++ b/drivers/iommu/intel/pasid.h
+@@ -125,4 +125,5 @@ int vcmd_alloc_pasid(struct intel_iommu *iommu, u32 *pasid);
+ void vcmd_free_pasid(struct intel_iommu *iommu, u32 pasid);
+ void intel_pasid_setup_page_snoop_control(struct intel_iommu *iommu,
+ 					  struct device *dev, u32 pasid);
++void intel_pasid_teardown_sm_context(struct device *dev);
+ #endif /* __INTEL_PASID_H */
