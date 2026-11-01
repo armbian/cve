@@ -1644,7 +1644,25 @@
       "run": null
     }
   },
+  "CVE-2026-53143": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 `drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c` has no `checkpoint_mqd`/`restore_mqd` callbacks.",
+      "run": null
+    }
+  },
   "CVE-2026-53145": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable function `drm_gem_change_handle_ioctl()` and the `DRM_IOCTL_GEM_CHANGE_HANDLE` ioctl do not exist in 6.1.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1654,7 +1672,25 @@
       "run": null
     }
   },
+  "CVE-2026-53156": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The use-after-free needs NVMEM layout code that 6.1 does not have.",
+      "run": null
+    }
+  },
   "CVE-2026-53243": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable code does not exist in 6.1.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1674,6 +1710,14 @@
     }
   },
   "CVE-2026-53246": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "an equivalent check is already in linux-6.1.y.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1693,7 +1737,25 @@
       "run": null
     }
   },
+  "CVE-2026-63816": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 f2fs has no atomic_inode field or COW-file GC path.",
+      "run": null
+    }
+  },
   "CVE-2026-63885": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable function does not exist in this tree.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1712,6 +1774,36 @@
       "run": null
     }
   },
+  "CVE-2026-63983": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 has stable commit 325f5ec67cc0 (\"net/sched: Restrict conditions for adding duplicating netems to qdisc tree\", backport of ec8e0e3d7ade).",
+      "run": null
+    }
+  },
+  "CVE-2026-64016": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable durable reconnect path does not exist in 6.1.",
+      "run": null
+    }
+  },
+  "CVE-2026-64026": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The rxrpc fix redesigns the receive path on code that 6.1 does not have.",
+      "run": null
+    }
+  },
   "CVE-2026-64060": {
     "6.1": {
       "cost": null,
@@ -1719,6 +1811,16 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The leaked reference does not exist in 6.1.",
+      "run": null
+    }
+  },
+  "CVE-2026-64112": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix needs disable_work_sync(), which 6.1 does not have.",
       "run": null
     }
   },
@@ -1779,7 +1881,65 @@
       "run": null
     }
   },
+  "CVE-2026-68112": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable file does not exist in 6.1.",
+      "run": null
+    }
+  },
+  "CVE-2026-68152": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The bug exists in 6.1, but the fix needs the workqueue disable/enable API, which 6.1 does not have.",
+      "run": null
+    }
+  },
+  "CVE-2026-68205": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 never sets sd->owner; prerequisite 8a718752f5c3 is absent.",
+      "run": null
+    }
+  },
+  "CVE-2026-68337": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 uses per-CPU bpf_redirect_info; it has no bpf_net_context.",
+      "run": null
+    }
+  },
+  "CVE-2026-68412": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 already frees creq when the SSID length check fails.",
+      "run": null
+    }
+  },
   "CVE-2026-68447": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The bound needs topology ctl_stack_size and queue size validation (71776e0965f9, 629568d25fea).",
+      "run": null
+    },
     "6.18": {
       "cost": 0.7671581999999999,
       "date": "2026-10-31",
@@ -1855,6 +2015,26 @@
       "run": null
     }
   },
+  "CVE-2026-72373": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 afs_break_some_callbacks() already checks if (volume).",
+      "run": null
+    }
+  },
+  "CVE-2026-72376": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "the vulnerable code is absent in 6.1.",
+      "run": null
+    }
+  },
   "CVE-2026-72377": {
     "6.18": {
       "cost": 0.5202957,
@@ -1873,6 +2053,16 @@
       "run": null
     }
   },
+  "CVE-2026-72493": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "In 6.1 `net/core/dev.c`, `enqueue_to_backlog()` checks `netif_running(skb->dev)` after `rps_lock_irqsave(sd, &flags)`.",
+      "run": null
+    }
+  },
   "CVE-2026-74272": {
     "6.18": {
       "cost": 0.5865549999999999,
@@ -1883,6 +2073,14 @@
     }
   },
   "CVE-2026-74314": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix needs the bpf_mem_alloc destructor (1df97a7453ee); without it, kptrs leak.",
+      "run": null
+    },
     "6.18": {
       "cost": 1.0484153000000005,
       "date": "2026-10-30",
@@ -1902,6 +2100,14 @@
     }
   },
   "CVE-2026-74337": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix needs resilient queued spinlocks (rqspinlock).",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1912,6 +2118,14 @@
     }
   },
   "CVE-2026-74342": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.1 does not have 12e9e3cd03b5 (\"simpe_xattr: use per-sb cache\"), the commit that added the bug.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -1939,12 +2153,32 @@
       "run": null
     }
   },
+  "CVE-2026-74374": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "md_cloned_bio() needs the md io_clone_set rework, which 6.1 does not have.",
+      "run": null
+    }
+  },
   "CVE-2026-74419": {
     "6.18": {
       "cost": 0.8510734999999998,
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-74506": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The UAF needs an async op call where `afs_make_call()` runs without a caller ref.",
       "run": null
     }
   },
@@ -1967,12 +2201,32 @@
       "run": null
     }
   },
+  "CVE-2026-74725": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix needs disable_work_sync(), which 6.1 does not have.",
+      "run": null
+    }
+  },
   "CVE-2026-74752": {
     "6.18": {
       "cost": 0.6084113,
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-80636": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The revert needs the helper datapath refcount (ac46f3f35b6e, 6031487d4e27); without it, a UAF opens.",
       "run": null
     }
   },
@@ -1987,12 +2241,32 @@
       "run": null
     }
   },
+  "CVE-2026-80704": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "In 6.1 the DC log macros do not read DC_LOGGER, so no context is dereferenced.",
+      "run": null
+    }
+  },
   "CVE-2026-80785": {
     "6.18": {
       "cost": 0.5083749999999999,
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-80820": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The vulnerable loops do not exist in 6.1.",
       "run": null
     }
   },
@@ -2116,6 +2390,16 @@
       "run": null
     }
   },
+  "CVE-2026-89797": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "The fix needs disable_work_sync() and disable_delayed_work_sync().",
+      "run": null
+    }
+  },
   "CVE-2026-89805": {
     "6.18": {
       "cost": 0.689509,
@@ -2159,6 +2443,16 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-90227": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "the fix needs the nvme_cmd_allowed() permission model, which 6.1 does not have.",
       "run": null
     }
   },
@@ -2207,6 +2501,14 @@
     }
   },
   "CVE-2026-90401": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "Upstream fix 3fe5b7c9fb72 (\"md: remove REQ_NOWAIT support from raid1/10/456\") removes a feature.",
+      "run": null
+    },
     "6.12": {
       "cost": null,
       "date": "2026-10-31",
@@ -2231,6 +2533,16 @@
       "date": "2026-10-30",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-93072": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "unpatched",
+      "reason": "Needs the IRQ_DOMAIN_FLAG_DESTROY_GC genirq rework (e6f67ce32e8e) and irq_domain_instantiate().",
       "run": null
     }
   },
@@ -2761,6 +3073,16 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98880": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-01",
+      "head": "6.1.191",
+      "outcome": "not-affected-needs-review",
+      "reason": "The bug needs a block size larger than PAGE_SIZE.",
       "run": null
     }
   },
