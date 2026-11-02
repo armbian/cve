@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.1: 4 patch(es)
+- retired 6.1: 1 patch(es) (landed upstream or superseded)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -339,7 +339,7 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-98682 | `c9b1194e8ec9` | claude | smb: client: drain and invalidate before server-side copy/clone |
 |  | CVE-2026-98715 | `60d93c27859f` | claude | KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN |
 
-### Needs a backport (9)
+### Needs a backport (10)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -352,70 +352,75 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
+|  | CVE-2026-98718 | `973ea70393e8` | mainline | KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state |
 
-### Not affected per work package (needs review) (59)
+### Not affected per work package (needs review) (1)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2024-58015 | `eb8c05347138` | mainline | wifi: ath12k: Fix for out-of bound access error |
-|  | CVE-2025-21752 | `dc14ba10781b` | mainline | btrfs: don't use btrfs_set_item_key_safe on RAID stripe-extents |
-| does not build | CVE-2025-38036 | `13265fe7426e` | mainline | drm/xe/vf: Perform early GT MMIO initialization to read GMDID |
-|  | CVE-2025-38017 | `d9ec73301099` | mainline | fs/eventpoll: fix endless busy loop after timeout has expired |
-|  | CVE-2025-39762 | `158b9201c17f` | mainline | drm/amd/display: add null check |
-|  | CVE-2025-38411 | `9df7b5ebead6` | mainline | netfs: Fix double put of request |
-|  | CVE-2025-40217 | `3c17001b21b9` | mainline | pidfs: validate extensible ioctls |
-|  | CVE-2025-40247 | `830d68f2cb8a` | mainline | drm/msm: Fix pgtable prealloc error path |
-|  | CVE-2025-71202 | `e37d5a2d60a3` | mainline | iommu/sva: invalidate stale IOTLB entries for kernel address space |
-|  | CVE-2026-43301 | `9cf4452e824c` | mainline | media: chips-media: wave5: Fix PM runtime usage count underflow |
-|  | CVE-2026-22983 | `7d11e047eda5` | mainline | net: do not write to msg_get_inq in callee |
-|  | CVE-2026-22995 | `f0d385f6689f` | mainline | ublk: fix use-after-free in ublk_partition_scan_work |
-|  | CVE-2026-23117 | `42fb5f3deb58` | mainline | ice: add missing ice_deinit_hw() in devlink reinit path |
-|  | CVE-2026-23152 | `1eab33aa63c9` | mainline | wifi: mac80211: correctly decode TTLM with default link map |
-|  | CVE-2026-31536 | `9da82dc73cb0` | mainline | smb: server: let send_done handle a completion without IB_SEND_SIGNALED |
-|  | CVE-2026-23341 | `8363c0286333` | mainline | accel/amdxdna: Fix crash when destroying a suspended hardware context |
-|  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling |
-|  | CVE-2026-31437 | `e9075e420a1e` | mainline | netfs: Fix NULL pointer dereference in netfs_unbuffered_write() on retry |
-|  | CVE-2026-43070 | `a3125bc01884` | mainline | bpf: Reset register ID for BPF_END value tracking |
-|  | CVE-2026-43440 | `87c2302813ab` | mainline | net/mana: Null service_wq on setup error to prevent double destroy |
-|  | CVE-2026-31435 | `7e57523490cd` | mainline | netfs: Fix read abandonment during retry |
-|  | CVE-2026-31742 | `40014493cece` | mainline | vt: discard stale unicode buffer on alt screen exit after resize |
-|  | CVE-2026-46314 | `fb44d589bf31` | mainline | drm/v3d: Reject empty multisync extension to prevent infinite loop |
-|  | CVE-2026-52994 | `1cb36e252211` | mainline | vsock/virtio: fix MSG_ZEROCOPY pinned-pages accounting |
-|  | CVE-2026-46147 | `73b9c1e5da84` | mainline | KVM: arm64: Fix pin leak and publication ordering in __pkvm_init_vcpu() |
-|  | CVE-2026-52966 | `dc366607c41c` | mainline | drm: Replace old pointer to new idr |
-|  | CVE-2026-64212 | `d733ed481fd2` | mainline | wifi: iwlwifi: mld: don't dereference a pointer before NULL checking it |
 |  | CVE-2026-64255 | `f056fc2b9274` | mainline | wifi: iwlwifi: mld: validate sta_mask before ffs() in BA session handlers |
-|  | CVE-2026-63885 | `7164d78559b0` | mainline | drm/gem: fix race between change_handle and handle_delete |
-|  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() |
-|  | CVE-2026-53246 | `0861615c28de` | mainline | sctp: validate cached peer INIT chunk length in COOKIE_ECHO processing |
-|  | CVE-2026-46317 | `70543358fa08` | mainline | KVM: arm64: Reassign nested_mmus array behind mmu_lock |
-|  | CVE-2026-72203 | `76bc14c7097f` | mainline | ntfs: skip extent mft records in writeback to prevent deadlock |
-|  | CVE-2026-72200 | `ec4f061f2219` | mainline | ntfs: detect mapping-pairs LCN accumulator overflow |
-|  | CVE-2026-53145 | `1a4f03d22fb6` | mainline | drm/gem: Try to fix change_handle ioctl, attempt 4 |
-|  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook |
-|  | CVE-2026-74324 | `c7369a00860a` | mainline | wifi: mt76: mt7925: validate skb length in testmode query |
-|  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes |
-|  | CVE-2026-98897 | `27a9bc968d4a` | mainline | ksmbd: don't hold ci->m_lock while waiting for a lease break ack |
-| does not build | CVE-2026-72365 | `ba6a9f6533c7` | mainline | netfs: Fix writethrough to use collection offload |
-|  | CVE-2026-89866 | `a52e6f7923c1` | mainline | media: chips-media: wave5: Resume device before setting EOS flag |
-|  | CVE-2026-89826 | `8321b093fa6c` | mainline | drm/panthor: harden firmware build-info bounds checks |
-|  | CVE-2026-74639 | `2615f0fb90df` | mainline | ALSA: us144mkii: re-anchor capture URBs on resubmission |
-|  | CVE-2026-89675 | `62c0f6eaf050` | mainline | nfsd: fix UAF in async copy cancel and shutdown |
-|  | CVE-2026-98162 | `39f203209671` | mainline | smb/server: fix tree connection leak in smb2_tree_connect() |
-|  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets |
-|  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary |
-|  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() |
-|  | CVE-2026-98119 | `8fb45a934661` | mainline | netfs: break unbuffered write when netfs_alloc_subrequest() fails |
-|  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
-|  | CVE-2026-98296 | `4b837ebd0ea2` | mainline | Bluetooth: btintel_pcie: validate TX skb length in send_sync |
-|  | CVE-2026-98616 | `4bcc4a92c603` | mainline | eth: fbnic: reset num_napi when the napi vectors are freed |
-|  | CVE-2026-98551 | `24b620729e53` | mainline | perf/core: Fill branch entries with a single assignment |
-|  | CVE-2026-98939 | `e3ee38c1bc0b` | mainline | x86/mm: Drop unnecessary PMD page copy when freeing |
-|  | CVE-2026-98719 | `8abbc76120a7` | mainline | KVM: SEV: Nullify "have run CPUs" mask pointer when freeing it |
-|  | CVE-2026-98718 | `973ea70393e8` | mainline | KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state |
-|  | CVE-2026-98843 | `8db55c5cd831` | mainline | netfs: zero gaps in read-gaps folio to avoid writing back stale data |
-|  | CVE-2026-98839 | `39495ef5d6f8` | mainline | vt: selection: Fix unsigned underflow and slab-out-of-bounds read in paste_selection() |
-|  | CVE-2026-99093 | `2fb552b0bee7` | mainline | mm: don't schedule deferred kernel page table freeing while booting |
+
+### Not affected (reviewed) (57)
+
+| | CVE | Upstream | Source | Subject |
+|---|---|---|---|---|
+|  | CVE-2024-58015 | `eb8c05347138` | mainline | wifi: ath12k: Fix for out-of bound access error — selfgen stats code from 44cfb7c58eb8 not in 6.12 |
+|  | CVE-2025-21752 | `dc14ba10781b` | mainline | btrfs: don't use btrfs_set_item_key_safe on RAID stripe-extents — btrfs_partially_delete_raid_extent() from 6aea95ee3188 not in 6.12 |
+| does not build | CVE-2025-38036 | `13265fe7426e` | mainline | drm/xe/vf: Perform early GT MMIO initialization to read GMDID — 58548b91101f missing; tile mmio set before read_gmdid() |
+|  | CVE-2025-38017 | `d9ec73301099` | mainline | fs/eventpoll: fix endless busy loop after timeout has expired — 0a65bc27bd64 missing; no ep_schedule_timeout() in 6.12 |
+|  | CVE-2025-39762 | `158b9201c17f` | mainline | drm/amd/display: add null check — no dc_get_host_router_index() or lowest_dpia_link_index in 6.12 |
+|  | CVE-2025-38411 | `9df7b5ebead6` | mainline | netfs: Fix double put of request — netfs_collect_in_app() from 2b1424cd131c not in 6.12 |
+|  | CVE-2025-40217 | `3c17001b21b9` | mainline | pidfs: validate extensible ioctls — no pidfs_ioctl_valid() or PIDFD_GET_INFO in 6.12 |
+|  | CVE-2025-40247 | `830d68f2cb8a` | mainline | drm/msm: Fix pgtable prealloc error path — msm VM_BIND pgtable prealloc (e601ea31d66b) not in 6.12 |
+|  | CVE-2025-71202 | `e37d5a2d60a3` | mainline | iommu/sva: invalidate stale IOTLB entries for kernel address space — SVA is off on x86 in 6.12 (c2c3f1a3fd74) |
+|  | CVE-2026-43301 | `9cf4452e824c` | mainline | media: chips-media: wave5: Fix PM runtime usage count underflow — wave5 has no runtime PM in 6.12 (2092b3833487 missing) |
+|  | CVE-2026-22983 | `7d11e047eda5` | mainline | net: do not write to msg_get_inq in callee — af_unix SO_INQ not in 6.12; io_uring sets msg_get_inq itself |
+|  | CVE-2026-22995 | `f0d385f6689f` | mainline | ublk: fix use-after-free in ublk_partition_scan_work — ublk_partition_scan_work() from 7fc4da6a304b not in 6.12 |
+|  | CVE-2026-23117 | `42fb5f3deb58` | mainline | ice: add missing ice_deinit_hw() in devlink reinit path — 1390b8b3d2be missing; ice_deinit_dev() still calls ice_deinit_hw() |
+|  | CVE-2026-23152 | `1eab33aa63c9` | mainline | wifi: mac80211: correctly decode TTLM with default link map — 6.12 returns early on DEF_LINK_MAP before the bad read |
+|  | CVE-2026-31536 | `9da82dc73cb0` | mainline | smb: server: let send_done handle a completion without IB_SEND_SIGNALED — batched sends have wr_cqe NULL; send_done() runs only for the last |
+|  | CVE-2026-23341 | `8363c0286333` | mainline | accel/amdxdna: Fix crash when destroying a suspended hardware context — amdxdna driver not in 6.12 |
+|  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling — drivers/accel/amdxdna not in 6.12 |
+|  | CVE-2026-31437 | `e9075e420a1e` | mainline | netfs: Fix NULL pointer dereference in netfs_unbuffered_write() on retry — a0b4c7a49137 is absent; netfs_retry_write_stream() handles a NULL prepare_write. |
+|  | CVE-2026-43070 | `a3125bc01884` | mainline | bpf: Reset register ID for BPF_END value tracking — scalar_byte_swap() from 9d2119984224 not in 6.12 |
+|  | CVE-2026-43440 | `87c2302813ab` | mainline | net/mana: Null service_wq on setup error to prevent double destroy — no service_wq in mana_gd_setup() in 6.12 |
+|  | CVE-2026-31435 | `7e57523490cd` | mainline | netfs: Fix read abandonment during retry — 6.12 abandon path walks a local list; no stale subreq |
+|  | CVE-2026-31742 | `40014493cece` | mainline | vt: discard stale unicode buffer on alt screen exit after resize — alt-screen unicode save from 5eb608319bb5 not in 6.12 |
+|  | CVE-2026-46314 | `fb44d589bf31` | mainline | drm/v3d: Reject empty multisync extension to prevent infinite loop — fixed in 6.12.91 by stable 2270513b5d47 |
+|  | CVE-2026-52994 | `1cb36e252211` | mainline | vsock/virtio: fix MSG_ZEROCOPY pinned-pages accounting — fixed by stable 293fe8f2d1b5; zerocopy sized from pkt_len |
+|  | CVE-2026-46147 | `73b9c1e5da84` | mainline | KVM: arm64: Fix pin leak and publication ordering in __pkvm_init_vcpu() — index checked before pinning; vcpus[] only under vm_table_lock |
+|  | CVE-2026-52966 | `dc366607c41c` | mainline | drm: Replace old pointer to new idr — no drm_gem_change_handle_ioctl() in 6.12 |
+|  | CVE-2026-64212 | `d733ed481fd2` | mainline | wifi: iwlwifi: mld: don't dereference a pointer before NULL checking it — iwlwifi mld sub-driver not in 6.12 |
+|  | CVE-2026-63885 | `7164d78559b0` | mainline | drm/gem: fix race between change_handle and handle_delete — no GEM_CHANGE_HANDLE ioctl in 6.12 |
+|  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() — rseq_entry.h and 82f572449cfe not in 6.12 |
+|  | CVE-2026-53246 | `0861615c28de` | mainline | sctp: validate cached peer INIT chunk length in COOKIE_ECHO processing — fixed in 6.12.114 by stable 29ab56e7660b |
+|  | CVE-2026-46317 | `70543358fa08` | mainline | KVM: arm64: Reassign nested_mmus array behind mmu_lock — 6.12 has fixed-size nested_mmus array (ea242bdc29e8) |
+|  | CVE-2026-72203 | `76bc14c7097f` | mainline | ntfs: skip extent mft records in writeback to prevent deadlock — classic fs/ntfs not in 6.12; removed in 6.9 |
+|  | CVE-2026-72200 | `ec4f061f2219` | mainline | ntfs: detect mapping-pairs LCN accumulator overflow — classic fs/ntfs not in 6.12; removed in 6.9 |
+|  | CVE-2026-53145 | `1a4f03d22fb6` | mainline | drm/gem: Try to fix change_handle ioctl, attempt 4 — no drm_gem_change_handle_ioctl() in 6.12 |
+|  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook — Bug commit 1e7cd8a53b72 (simple_xattr per-sb cache) is not in 6.12. |
+|  | CVE-2026-74324 | `c7369a00860a` | mainline | wifi: mt76: mt7925: validate skb length in testmode query — mt7925 testmode (0a41b6751e4f) not in 6.12 |
+|  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes — classic fs/ntfs not in 6.12; removed in 6.9 |
+|  | CVE-2026-98897 | `27a9bc968d4a` | mainline | ksmbd: don't hold ci->m_lock while waiting for a lease break ack — fixed in 6.12.111 by stable 5de0527f7824 |
+| does not build | CVE-2026-72365 | `ba6a9f6533c7` | mainline | netfs: Fix writethrough to use collection offload — 6.12 always queues write collection; no such flag |
+|  | CVE-2026-89866 | `a52e6f7923c1` | mainline | media: chips-media: wave5: Resume device before setting EOS flag — wave5 has no runtime PM in 6.12 (2092b3833487 missing) |
+|  | CVE-2026-89826 | `8321b093fa6c` | mainline | drm/panthor: harden firmware build-info bounds checks — panthor_fw_read_build_info() from 9d443deb0441 not in 6.12 |
+|  | CVE-2026-74639 | `2615f0fb90df` | mainline | ALSA: us144mkii: re-anchor capture URBs on resubmission — us144mkii driver not in 6.12 |
+|  | CVE-2026-89675 | `62c0f6eaf050` | mainline | nfsd: fix UAF in async copy cancel and shutdown — nfsd4_copy() forces sync copies (stable 8d915bbf3926) |
+|  | CVE-2026-98162 | `39f203209671` | mainline | smb/server: fix tree connection leak in smb2_tree_connect() — fixed in 6.12.114 by stable bd58a52738f7 |
+|  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets — classic fs/ntfs not in 6.12; only ntfs3 |
+|  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary — classic fs/ntfs not in 6.12; removed in 6.9 |
+|  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() — reparse_buf_ptr() // stops before reading ReparseDataLength |
+|  | CVE-2026-98119 | `8fb45a934661` | mainline | netfs: break unbuffered write when netfs_alloc_subrequest() fails — write-side netfs_alloc_subrequest() uses mempool; never NULL |
+|  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront — single-thread read collector from e2d46f2ec332 (6.14) not in 6.12 |
+|  | CVE-2026-98296 | `4b837ebd0ea2` | mainline | Bluetooth: btintel_pcie: validate TX skb length in send_sync — stable 3d6ba6be9bef already checks the length in the only caller |
+|  | CVE-2026-98616 | `4bcc4a92c603` | mainline | eth: fbnic: reset num_napi when the napi vectors are freed — 6.12 fbnic uses a napi list; no fbnic_dbg_down() |
+|  | CVE-2026-98551 | `24b620729e53` | mainline | perf/core: Fill branch entries with a single assignment — BRBE driver (drivers/perf/arm_brbe.c) not in 6.12 |
+|  | CVE-2026-98939 | `e3ee38c1bc0b` | mainline | x86/mm: Drop unnecessary PMD page copy when freeing — d5d8b8662e6e absent; change_page_attr_set_clr() takes no init_mm lock |
+|  | CVE-2026-98719 | `8abbc76120a7` | mainline | KVM: SEV: Nullify "have run CPUs" mask pointer when freeing it — have_run_cpus not in 6.12 |
+|  | CVE-2026-98843 | `8db55c5cd831` | mainline | netfs: zero gaps in read-gaps folio to avoid writing back stale data — 6.12 read collector zeroes short-read tails (netfs_clear_unread()) |
+|  | CVE-2026-98839 | `39495ef5d6f8` | mainline | vt: selection: Fix unsigned underflow and slab-out-of-bounds read in paste_selection() — 6.12 checks buf_len > pasted under the lock in the loop |
+|  | CVE-2026-99093 | `2fb552b0bee7` | mainline | mm: don't schedule deferred kernel page table freeing while booting — no deferred kernel page-table freeing (pagetable_free_kernel()) in 6.12 |
 
 Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).
 
@@ -423,7 +428,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
 
-### Included (429)
+### Included (427)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -487,6 +492,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2024-50166 | `—` | claude | fsl/fman: Save device references taken in mac_probe() |
 |  | CVE-2024-50166 | `1dec67e0d9fb` | claude | fsl/fman: Fix refcount handling of fman-related devices |
 |  | CVE-2024-53219 | `41748675c0bf` | claude | virtiofs: use pages instead of pointer for kernel direct IO |
+|  | CVE-2024-53219 | `—` | claude | mm/vmalloc: export is_vmalloc_or_module_addr() |
 |  | CVE-2024-53079 | `f8f931bba0f9` | claude | mm/thp: fix deferred split unqueue naming and locking |
 |  | CVE-2024-57809 | `—` | claude | PCI: imx6: Save and restore root port MSI control in suspend and resume |
 |  | CVE-2024-57809 | `0a726f542d7c` | claude | PCI: imx6: Fix suspend/resume support on i.MX6QDL |
@@ -594,9 +600,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-43053 | `b854e1c4eff3` | claude | xfs: close crash window in attr dabtree inactivation |
 |  | CVE-2026-31487 | `cb3d1049f4ea` | claude | driver core: generalize driver_override in struct device |
 |  | CVE-2026-31487 | `cc34d77dd487` | claude | spi: use generic driver_override infrastructure |
-|  | CVE-2026-43115 | `—` | claude | types: move struct rcuwait into types.h |
-|  | CVE-2026-43115 | `—` | claude | irqwork: Move data struct to a types header |
-|  | CVE-2026-43115 | `a6fc88b22bc8` | claude | srcu: Use irq_work to start GP in tiny SRCU |
 |  | CVE-2026-31777 | `277c6960d4dd` | claude | ALSA: ctxfi: Check the error for index mapping |
 |  | CVE-2026-23000 | `4dadc4077e3f` | claude | net/mlx5e: Fix crash on profile change rollback failure |
 |  | CVE-2026-43073 | `3639a535587d` | claude | x86: move stac/clac from user copy routines into callers |
@@ -896,163 +899,169 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
 | does not build | CVE-2026-99191 | `8070ed578b6b` | mainline | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
 
-### Not affected per work package (needs review) (153)
+### Not affected per work package (needs review) (2)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2024-26672 | `4f32504a2f85` | mainline | drm/amdgpu: Fix variable 'mca_funcs' dereferenced before NULL check in 'amdgpu_mca_smu_get_mca_entry()' |
-| does not build | CVE-2024-35931 | `601429cca96b` | mainline | drm/amdgpu: Skip do PCI error slot reset during RAS recovery |
-|  | CVE-2024-26691 | `10c02aad111d` | mainline | KVM: arm64: Fix circular locking dependency |
-|  | CVE-2024-26914 | `39079fe8e660` | mainline | drm/amd/display: fix incorrect mpc_combine array size |
-|  | CVE-2024-26913 | `faf51b201bc4` | mainline | drm/amd/display: Fix dcn35 8k30 Underflow/Corruption Issue |
-|  | CVE-2024-36024 | `6226a5aa7737` | mainline | drm/amd/display: Disable idle reallow as part of command/gpint execution |
-|  | CVE-2024-26758 | `1baae052cccd` | mainline | md: Don't ignore suspended array in md_check_recovery() |
-|  | CVE-2024-26757 | `55a48ad2db64` | mainline | md: Don't ignore read-only array in md_check_recovery() |
-|  | CVE-2024-26756 | `ad39c08186f8` | mainline | md: Don't register sync_thread for reshape directly |
-|  | CVE-2024-26836 | `6f7d0f5fd8e4` | mainline | platform/x86: think-lmi: Fix password opcode ordering for workstations |
-|  | CVE-2024-27411 | `f6ecfdad359a` | mainline | drm/nouveau: keep DMA buffers required for suspend/resume |
 |  | CVE-2024-35843 | `def054b01a86` | mainline | iommu/vt-d: Use device rbtree in iopf reporting path |
-|  | CVE-2024-35794 | `16c4770c75b1` | mainline | dm-raid: really frozen sync_thread during suspend |
-|  | CVE-2024-36951 | `0cac183b98d8` | mainline | drm/amdkfd: range check cp bad op exception interrupts |
-|  | CVE-2024-35957 | `89436f4f5412` | mainline | iommu/vt-d: Fix WARN_ON in iommu probe path |
-|  | CVE-2024-40969 | `3bdb7f161697` | mainline | f2fs: don't set RO when shutting down f2fs |
-|  | CVE-2024-36002 | `38d7b94e81d0` | mainline | dpll: fix dpll_pin_on_pin_register() for multiple parent pins |
-|  | CVE-2024-42118 | `3ac31c9a707d` | mainline | drm/amd/display: Do not return negative stream id for array |
-|  | CVE-2024-36887 | `387f295cb215` | mainline | e1000e: change usleep_range to udelay in PHY mdic access |
-|  | CVE-2024-46729 | `3941a3aa4b65` | mainline | drm/amd/display: Fix incorrect size calculation for loop |
-|  | CVE-2024-46727 | `871cd9d881fa` | mainline | drm/amd/display: Add otg_master NULL check within resource_log_pipe_topology_update |
-|  | CVE-2024-46806 | `1a00f2ac82d6` | mainline | drm/amdgpu: Fix the warning division or modulo by zero |
-|  | CVE-2024-47662 | `466423c6dd8a` | mainline | drm/amd/display: Remove register from DCN35 DMCUB diagnostic collection |
-|  | CVE-2024-46870 | `7c70e60fbf4b` | mainline | drm/amd/display: Disable DMCUB timeout for DCN35 |
-|  | CVE-2024-43901 | `5af757124792` | mainline | drm/amd/display: Fix NULL pointer dereference for DTN log in DCN401 |
-|  | CVE-2024-46776 | `3a82f62b0d9d` | mainline | drm/amd/display: Run DC_LOG_DC after checking link->link_enc |
-|  | CVE-2024-46760 | `adc539784c98` | mainline | wifi: rtw88: usb: schedule rx work after everything is set up |
-|  | CVE-2024-41052 | `5a88a3f67e37` | mainline | vfio/pci: Init the count variable in collecting hot-reset devices |
-|  | CVE-2024-49916 | `4b6377f0e960` | mainline | drm/amd/display: Add NULL check for clk_mgr and clk_mgr->funcs in dcn401_init_hw |
-|  | CVE-2024-49893 | `58a8ee96f84d` | mainline | drm/amd/display: Check stream_status before it is used |
-|  | CVE-2024-49910 | `dd340acd42c2` | mainline | drm/amd/display: Add NULL check for function pointer in dcn401_set_output_transfer_func |
-|  | CVE-2024-44933 | `da03f5d1b2c3` | mainline | bnxt_en : Fix memory out-of-bounds in bnxt_fill_hw_rss_tbl() |
-|  | CVE-2024-49908 | `0fe20258b498` | mainline | drm/amd/display: Add null check for 'afb' in amdgpu_dm_update_cursor (v2) |
-|  | CVE-2024-50057 | `db63d9868f7f` | mainline | usb: typec: tipd: Free IRQ only if it was requested before |
-|  | CVE-2024-46712 | `e9fd436bb8fb` | mainline | drm/vmwgfx: Disable coherent dumb buffers without 3d |
-|  | CVE-2024-49988 | `ee426bfb9d09` | mainline | ksmbd: add refcnt to ksmbd_conn struct |
-|  | CVE-2024-50097 | `6be063071a45` | mainline | net: fec: don't save PTP state if PTP is unsupported |
-| does not build | CVE-2024-50217 | `aec8e6bf8391` | mainline | btrfs: fix use-after-free of block device file in __btrfs_free_extra_devids() |
-|  | CVE-2024-56775 | `27227a234c14` | mainline | drm/amd/display: Fix handling of plane refcount |
-|  | CVE-2024-57872 | `897df60c16d5` | mainline | scsi: ufs: pltfrm: Dellocate HBA during ufshcd_pltfrm_remove() |
-|  | CVE-2024-58053 | `0e56ebde245e` | mainline | rxrpc: Fix handling of received connection abort |
-|  | CVE-2024-54191 | `7a17308c1788` | mainline | Bluetooth: iso: Fix circular lock in iso_conn_big_sync |
-|  | CVE-2024-57935 | `0572eccf239c` | mainline | RDMA/hns: Fix accessing invalid dip_ctx during destroying QP |
-|  | CVE-2025-21634 | `3cb97a927fff` | mainline | cgroup/cpuset: remove kernfs active break |
-|  | CVE-2024-57984 | `b75439c945b9` | mainline | i3c: dw: Fix use-after-free in dw_i3c_master driver due to race condition |
-|  | CVE-2025-21679 | `fe4de594f7a2` | mainline | btrfs: add the missing error handling inside get_canonical_dev_path |
-|  | CVE-2025-21985 | `8adbb2a98b00` | mainline | drm/amd/display: Fix out-of-bound accesses |
-|  | CVE-2025-38038 | `db1cafc77aaa` | mainline | cpufreq: amd-pstate: Remove unnecessary driver_lock in set_boost |
-|  | CVE-2025-21836 | `8802766324e1` | mainline | io_uring/kbuf: reallocate buf lists on upgrade |
-|  | CVE-2025-38080 | `3a7810c212bc` | mainline | drm/amd/display: Increase block_sequence array size |
-|  | CVE-2025-21942 | `5a4041f2c472` | mainline | btrfs: zoned: fix extent range end unlock in cow_file_range() |
-|  | CVE-2025-21923 | `e53fc232a65f` | mainline | HID: hid-steam: Fix use-after-free when detaching device |
-| does not build | CVE-2025-22028 | `36cef585e2a3` | mainline | media: vimc: skip .s_stream() for stopped entities |
-|  | CVE-2025-22006 | `5f079290e591` | mainline | net: ethernet: ti: am65-cpsw: Fix NAPI registration sequence |
-|  | CVE-2025-22043 | `542027e123fc` | mainline | ksmbd: add bounds check for durable handle context |
-| does not build | CVE-2025-38099 | `14d17c78a4b1` | mainline | Bluetooth: Disable SCO support if READ_VOICE_SETTING is unsupported/broken |
-|  | CVE-2025-37878 | `0ba3a4ab76fd` | mainline | perf/core: Fix WARN_ON(!ctx) in __free_event() for partial init |
-|  | CVE-2025-37802 | `1df0d4c61613` | mainline | ksmbd: fix WARNING "do not call blocking ops when !TASK_RUNNING" |
-|  | CVE-2025-38017 | `d9ec73301099` | mainline | fs/eventpoll: fix endless busy loop after timeout has expired |
-|  | CVE-2025-38140 | `121218bef4c1` | mainline | dm: limit swapping tables for devices with zone write plugs |
-|  | CVE-2025-37965 | `9984db637420` | mainline | drm/amd/display: Fix invalid context error in dml helper |
-|  | CVE-2025-38014 | `a409e919ca32` | mainline | dmaengine: idxd: Refactor remove call with idxd_cleanup() helper |
-|  | CVE-2025-38369 | `17502e7d7b71` | mainline | dmaengine: idxd: Check availability of workqueue allocated by idxd wq driver before using |
-|  | CVE-2025-38092 | `10379171f346` | mainline | ksmbd: use list_first_entry_or_null for opinfo_get_list() |
-|  | CVE-2025-38438 | `6c038b58a2dc` | mainline | ASoC: SOF: Intel: hda: Use devm_kstrdup() to avoid memleak. |
-|  | CVE-2025-39762 | `158b9201c17f` | mainline | drm/amd/display: add null check |
-|  | CVE-2025-38379 | `3bbe46716092` | mainline | smb: client: fix warning when reconnecting channel |
-|  | CVE-2025-38411 | `9df7b5ebead6` | mainline | netfs: Fix double put of request |
-| does not build | CVE-2025-38656 | `cf80c02a9fdb` | mainline | wifi: iwlwifi: Fix error code in iwl_op_mode_dvm_start() |
-|  | CVE-2025-39747 | `1c8c354098ea` | mainline | drm/msm: Add error handling for krealloc in metadata setup |
-|  | CVE-2025-39707 | `b4a69f7f29c8` | mainline | drm/amdgpu: check if hubbub is NULL in debugfs/amdgpu_dm_capabilities |
-|  | CVE-2025-39779 | `b1511360c8ac` | mainline | btrfs: subpage: keep TOWRITE tag until folio is cleaned |
-|  | CVE-2025-40339 | `859958a7faef` | mainline | drm/amdgpu: fix nullptr err of vm_handle_moved |
-|  | CVE-2025-39882 | `4de37a48b6b5` | mainline | drm/mediatek: fix potential OF node use-after-free |
-|  | CVE-2025-40247 | `830d68f2cb8a` | mainline | drm/msm: Fix pgtable prealloc error path |
-|  | CVE-2025-40348 | `6ed8bfd24ce1` | mainline | slab: Avoid race on slab->obj_exts in alloc_slab_obj_exts |
-|  | CVE-2025-40354 | `bec947cbe9a6` | mainline | drm/amd/display: increase max link count and fix link->enc NULL pointer access |
-|  | CVE-2025-40266 | `103e17aac09c` | mainline | KVM: arm64: Check the untrusted offset in FF-A memory share |
-|  | CVE-2025-71202 | `e37d5a2d60a3` | mainline | iommu/sva: invalidate stale IOTLB entries for kernel address space |
-|  | CVE-2025-68300 | `7b6dcd9bfd86` | mainline | fs/namespace: fix reference leak in grab_requested_mnt_ns |
-|  | CVE-2025-68357 | `7fd8720dff2d` | mainline | iomap: allocate s_dio_done_wq for async reads as well |
-|  | CVE-2025-68226 | `abd29b6e17a9` | mainline | smb: client: fix incomplete backport in cfids_invalidation_worker() |
-|  | CVE-2025-68299 | `d27c71257825` | mainline | afs: Fix delayed allocation of a cell's anonymous key |
-|  | CVE-2026-22983 | `7d11e047eda5` | mainline | net: do not write to msg_get_inq in callee |
-|  | CVE-2026-22995 | `f0d385f6689f` | mainline | ublk: fix use-after-free in ublk_partition_scan_work |
-|  | CVE-2026-23117 | `42fb5f3deb58` | mainline | ice: add missing ice_deinit_hw() in devlink reinit path |
-|  | CVE-2026-43161 | `42662d19839f` | mainline | iommu/vt-d: Skip dev-iotlb flush for inaccessible PCIe device without scalable mode |
-|  | CVE-2026-43220 | `9e249c484128` | mainline | iommu/amd: serialize sequence allocation under concurrent TLB invalidations |
 |  | CVE-2026-43137 | `16c589567a95` | mainline | ASoC: SOF: Intel: hda: Fix NULL pointer dereference |
-|  | CVE-2026-23200 | `bbf4a17ad9ff` | mainline | ipv6: Fix ECMP sibling count mismatch when clearing RTF_ADDRCONF |
-|  | CVE-2026-31536 | `9da82dc73cb0` | mainline | smb: server: let send_done handle a completion without IB_SEND_SIGNALED |
-|  | CVE-2026-46245 | `226a40c06a18` | mainline | drm/amd/display: Fix dc_link NULL handling in HPD init |
-|  | CVE-2026-43318 | `b18fc0ab8373` | mainline | drm/amdgpu: fix sync handling in amdgpu_dma_buf_move_notify |
-|  | CVE-2026-23341 | `8363c0286333` | mainline | accel/amdxdna: Fix crash when destroying a suspended hardware context |
-|  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling |
-|  | CVE-2026-23348 | `96a1fd0d84b1` | mainline | cxl: Fix race of nvdimm_bus object when creating nvdimm objects |
-|  | CVE-2026-43369 | `062ea905fff7` | mainline | drm/amd: Fix NULL pointer dereference in device cleanup |
-|  | CVE-2026-43367 | `72ecb1dae727` | mainline | drm/amd: Fix a few more NULL pointer dereference in device cleanup |
-|  | CVE-2026-31437 | `e9075e420a1e` | mainline | netfs: Fix NULL pointer dereference in netfs_unbuffered_write() on retry |
-|  | CVE-2026-43070 | `a3125bc01884` | mainline | bpf: Reset register ID for BPF_END value tracking |
-|  | CVE-2026-43440 | `87c2302813ab` | mainline | net/mana: Null service_wq on setup error to prevent double destroy |
-|  | CVE-2026-31516 | `29fe3a61bcdc` | mainline | xfrm: prevent policy_hthresh.work from racing with netns teardown |
-|  | CVE-2026-31729 | `d2d8c17ac01a` | mainline | usb: typec: ucsi: validate connector number in ucsi_notify_common() |
-|  | CVE-2026-31513 | `9d87cb22195b` | mainline | Bluetooth: L2CAP: Fix stack-out-of-bounds read in l2cap_ecred_conn_req |
-|  | CVE-2026-31413 | `c845894ebd6f` | mainline | bpf: Fix unsound scalar forking in maybe_fork_scalars() for BPF_OR |
-|  | CVE-2026-31458 | `1bfe9fb5ed26` | mainline | mm/damon/sysfs: check contexts->nr before accessing contexts_arr[0] |
-|  | CVE-2026-31742 | `40014493cece` | mainline | vt: discard stale unicode buffer on alt screen exit after resize |
-|  | CVE-2026-43323 | `1319ea57529e` | mainline | sched/fair: Fix zero_vruntime tracking fix |
-|  | CVE-2026-46017 | `3bac01168982` | mainline | mm: fix deferred split queue races during migration |
-|  | CVE-2026-43084 | `936206e3f6ff` | mainline | netfilter: nfnetlink_queue: make hash table per queue |
-|  | CVE-2026-45988 | `0422e7a4883f` | mainline | rxrpc: Fix re-decryption of RESPONSE packets |
-|  | CVE-2026-46147 | `73b9c1e5da84` | mainline | KVM: arm64: Fix pin leak and publication ordering in __pkvm_init_vcpu() |
-|  | CVE-2026-53285 | `183182235f6d` | mainline | drm/amd/display: Wrap DCN32 phantom-plane allocation in DC_RUN_WITH_PREEMPTION_ENABLED |
-|  | CVE-2026-64060 | `5046a34f0643` | mainline | netfs: Fix leak of request in netfs_write_begin() error handling |
-|  | CVE-2026-46274 | `d6a2d7b04b5a` | mainline | io-wq: check that the predecessor is hashed in io_wq_remove_pending() |
-|  | CVE-2026-52966 | `dc366607c41c` | mainline | drm: Replace old pointer to new idr |
-|  | CVE-2026-64212 | `d733ed481fd2` | mainline | wifi: iwlwifi: mld: don't dereference a pointer before NULL checking it |
-|  | CVE-2026-98880 | `24f7d1824b75` | mainline | ntfs3: handle set_blocksize failures |
-|  | CVE-2026-64016 | `3515503322f4` | mainline | ksmbd: fix durable reconnect error path file lifetime |
-|  | CVE-2026-63983 | `9552b11e3eda` | mainline | net/sched: fix packet loop on netem when duplicate is on |
-|  | CVE-2026-63885 | `7164d78559b0` | mainline | drm/gem: fix race between change_handle and handle_delete |
-|  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() |
-|  | CVE-2026-53143 | `352ea59028ea` | mainline | drm/amdkfd: Fix buffer overflow in SDMA queue checkpoint/restore on GFX11 |
-|  | CVE-2026-53246 | `0861615c28de` | mainline | sctp: validate cached peer INIT chunk length in COOKIE_ECHO processing |
-|  | CVE-2026-68205 | `06cb687a5132` | mainline | media: v4l2-fwnode: Fix subdev owner overwritten in v4l2_async_register_subdev_sensor() |
-|  | CVE-2026-53156 | `5b6b6fc49189` | mainline | nvmem: core: fix use-after-free bugs in error paths |
-|  | CVE-2026-53145 | `1a4f03d22fb6` | mainline | drm/gem: Try to fix change_handle ioctl, attempt 4 |
-|  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook |
-|  | CVE-2026-72493 | `46762cefe7f4` | mainline | net: serialize netif_running() check in enqueue_to_backlog() |
-| does not build | CVE-2026-72434 | `4a597a87e2e2` | mainline | netfilter: ipset: make sure gc is properly stopped |
-|  | CVE-2026-63816 | `e0288584baa5` | mainline | f2fs: atomic: fix UAF issue on f2fs_inode_info.atomic_inode |
-|  | CVE-2026-72376 | `c9c3b615a462` | mainline | afs: Fix misplaced inc of net->cells_outstanding |
-|  | CVE-2026-72373 | `794a01110390` | mainline | afs: Fix missing NULL pointer check in afs_break_some_callbacks() |
-|  | CVE-2026-68112 | `00f4050f7c36` | mainline | drm/amdgpu/gfx9.4.3: replace BUG_ON() with WARN_ON() |
-|  | CVE-2026-68412 | `c6659f66d4ee` | mainline | wifi: cfg80211: Fix an error handling path in cfg80211_wext_siwscan() |
-|  | CVE-2026-68337 | `3f4920d165b2` | mainline | bpf: Reject redirect helpers without a bpf_net_context |
-|  | CVE-2026-74506 | `4af1ec68d54b` | mainline | afs: Fix UAF when sending a message |
-|  | CVE-2026-80704 | `114b42507b6a` | mainline | drm/amd/display: use proper context for logging |
-|  | CVE-2026-80820 | `527eaaefddb6` | mainline | xfs: don't livelock in scrub on a circular unlinked list |
-|  | CVE-2026-74639 | `2615f0fb90df` | mainline | ALSA: us144mkii: re-anchor capture URBs on resubmission |
-|  | CVE-2026-74642 | `f8a80cfb6861` | mainline | ALSA: usb: Fix UAF at delayed release of MIDI2 EPs |
-|  | CVE-2026-93238 | `bf09b9d7cd78` | mainline | s390/vfio-ap: fix potential use of uninitialized apm_filtered bitmap |
-|  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets |
-|  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary |
-|  | CVE-2026-98365 | `d10e2a08799e` | mainline | RDMA/rxe: Fix integer overflow in mr_check_range() leading to OOB access |
-|  | CVE-2026-97950 | `a7c1290eef60` | mainline | configfs: pin the symlink target's dirent instead of chasing ->ci_dentry |
-|  | CVE-2026-98551 | `24b620729e53` | mainline | perf/core: Fill branch entries with a single assignment |
-|  | CVE-2026-98820 | `ab6c756f28c7` | mainline | blk-mq: set RQF_USE_SCHED when the operation is known |
-|  | CVE-2026-98939 | `e3ee38c1bc0b` | mainline | x86/mm: Drop unnecessary PMD page copy when freeing |
-|  | CVE-2026-98719 | `8abbc76120a7` | mainline | KVM: SEV: Nullify "have run CPUs" mask pointer when freeing it |
-|  | CVE-2026-98839 | `39495ef5d6f8` | mainline | vt: selection: Fix unsigned underflow and slab-out-of-bounds read in paste_selection() |
-|  | CVE-2026-99093 | `2fb552b0bee7` | mainline | mm: don't schedule deferred kernel page table freeing while booting |
-|  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
+
+### Not affected (reviewed) (152)
+
+| | CVE | Upstream | Source | Subject |
+|---|---|---|---|---|
+|  | CVE-2024-26672 | `4f32504a2f85` | mainline | drm/amdgpu: Fix variable 'mca_funcs' dereferenced before NULL check in 'amdgpu_mca_smu_get_mca_entry()' — amdgpu_mca_smu_get_mca_entry() (7ff607e27233) not in 6.1 |
+| does not build | CVE-2024-35931 | `601429cca96b` | mainline | drm/amdgpu: Skip do PCI error slot reset during RAS recovery — fix is for GC 9.4.3, which 6.1 does not support |
+|  | CVE-2024-26691 | `10c02aad111d` | mainline | KVM: arm64: Fix circular locking dependency — 6.1 pkvm.c has no pkvm_create_hyp_vm() |
+|  | CVE-2024-26914 | `39079fe8e660` | mainline | drm/amd/display: fix incorrect mpc_combine array size — no pipe_slice_table.mpc_combines (9d1e17227888) in 6.1 |
+|  | CVE-2024-26913 | `faf51b201bc4` | mainline | drm/amd/display: Fix dcn35 8k30 Underflow/Corruption Issue — no dc/dml2 and no DCN 3.5 in 6.1 |
+|  | CVE-2024-36024 | `6226a5aa7737` | mainline | drm/amd/display: Disable idle reallow as part of command/gpint execution — no DCN35 IPS idle-reallow code in 6.1 |
+|  | CVE-2024-26758 | `1baae052cccd` | mainline | md: Don't ignore suspended array in md_check_recovery() — needs f52f5c71f3d4; 6.1 __md_stop_writes() reaps the sync thread directly |
+|  | CVE-2024-26757 | `55a48ad2db64` | mainline | md: Don't ignore read-only array in md_check_recovery() — needs f52f5c71f3d4; 6.1 reaps the sync thread directly |
+|  | CVE-2024-26756 | `ad39c08186f8` | mainline | md: Don't register sync_thread for reshape directly — needs f52f5c71f3d4 (v6.7) |
+|  | CVE-2024-26836 | `6f7d0f5fd8e4` | mainline | platform/x86: think-lmi: Fix password opcode ordering for workstations — current_value_store() opcode branch (4ca9c3d404ce) not in 6.1 |
+|  | CVE-2024-27411 | `f6ecfdad359a` | mainline | drm/nouveau: keep DMA buffers required for suspend/resume — nvkm gsp r535.c not in 6.1 |
+|  | CVE-2024-35794 | `16c4770c75b1` | mainline | dm-raid: really frozen sync_thread during suspend — regression from f52f5c71f3d4, not in 6.1 |
+|  | CVE-2024-36951 | `0cac183b98d8` | mainline | drm/amdkfd: range check cp bad op exception interrupts — no KFD debugger in 6.1 |
+|  | CVE-2024-35957 | `89436f4f5412` | mainline | iommu/vt-d: Fix WARN_ON in iommu probe path — device rbtree (1a75cc710b95) not in 6.1 |
+|  | CVE-2024-40969 | `3bdb7f161697` | mainline | f2fs: don't set RO when shutting down f2fs — no f2fs_handle_critical_error(); shutdown never sets read-only |
+|  | CVE-2024-36002 | `38d7b94e81d0` | mainline | dpll: fix dpll_pin_on_pin_register() for multiple parent pins — no drivers/dpll in 6.1 |
+|  | CVE-2024-42118 | `3ac31c9a707d` | mainline | drm/amd/display: Do not return negative stream id for array — resource_stream_to_stream_idx() not in 6.1 |
+|  | CVE-2024-36887 | `387f295cb215` | mainline | e1000e: change usleep_range to udelay in PHY mdic access — 6dbdd4de0362 absent; MDIC routines use udelay() |
+|  | CVE-2024-46729 | `3941a3aa4b65` | mainline | drm/amd/display: Fix incorrect size calculation for loop — no DCN 3.5 (dcn35_dccg.c) in 6.1 |
+|  | CVE-2024-46727 | `871cd9d881fa` | mainline | drm/amd/display: Add otg_master NULL check within resource_log_pipe_topology_update — resource_log_pipe_topology_update() not in 6.1 |
+|  | CVE-2024-46806 | `1a00f2ac82d6` | mainline | drm/amdgpu: Fix the warning division or modulo by zero — aqua_vanjaram.c (MI300) not in 6.1 |
+|  | CVE-2024-47662 | `466423c6dd8a` | mainline | drm/amd/display: Remove register from DCN35 DMCUB diagnostic collection — dmub_dcn35.c not in 6.1 |
+|  | CVE-2024-46870 | `7c70e60fbf4b` | mainline | drm/amd/display: Disable DMCUB timeout for DCN35 — no DCN 3.5 (dcn35_resource.c) in 6.1 |
+|  | CVE-2024-43901 | `5af757124792` | mainline | drm/amd/display: Fix NULL pointer dereference for DTN log in DCN401 — no dpp_get_gamut_remap and no DCN401 in 6.1 |
+|  | CVE-2024-46776 | `3a82f62b0d9d` | mainline | drm/amd/display: Run DC_LOG_DC after checking link->link_enc — construct_phy() logs only after the link_enc NULL check |
+|  | CVE-2024-46760 | `adc539784c98` | mainline | wifi: rtw88: usb: schedule rx work after everything is set up — no rtw88 usb.c in 6.1 |
+|  | CVE-2024-41052 | `5a88a3f67e37` | mainline | vfio/pci: Init the count variable in collecting hot-reset devices — 6.1 counts into zeroed fill.max; f6944d4a0b87 absent |
+|  | CVE-2024-49916 | `4b6377f0e960` | mainline | drm/amd/display: Add NULL check for clk_mgr and clk_mgr->funcs in dcn401_init_hw — DCN401 (dcn401_hwseq.c) not in 6.1 |
+|  | CVE-2024-49893 | `58a8ee96f84d` | mainline | drm/amd/display: Check stream_status before it is used — commit_planes_for_stream_fast() not in 6.1 |
+|  | CVE-2024-49910 | `dd340acd42c2` | mainline | drm/amd/display: Add NULL check for function pointer in dcn401_set_output_transfer_func — DCN 4.0.1 and dc/hwss not in 6.1 |
+|  | CVE-2024-44933 | `da03f5d1b2c3` | mainline | bnxt_en : Fix memory out-of-bounds in bnxt_fill_hw_rss_tbl() — 98ba1d931f61 absent; RSS table set unconditionally |
+|  | CVE-2024-49908 | `0fe20258b498` | mainline | drm/amd/display: Add null check for 'afb' in amdgpu_dm_update_cursor (v2) — fixed in 6.1.113 by stable bd0e24e5e608 |
+|  | CVE-2024-50057 | `db63d9868f7f` | mainline | usb: typec: tipd: Free IRQ only if it was requested before — 6.1 tipd has no polling mode |
+|  | CVE-2024-46712 | `e9fd436bb8fb` | mainline | drm/vmwgfx: Disable coherent dumb buffers without 3d — vmw_dumb_create() surface path (d6667f0ddf46) not in 6.1 |
+|  | CVE-2024-49988 | `ee426bfb9d09` | mainline | ksmbd: add refcnt to ksmbd_conn struct — stable 76b01d15e7d2 gives opinfo a counted conn ref |
+|  | CVE-2024-50097 | `6be063071a45` | mainline | net: fec: don't save PTP state if PTP is unsupported — no fec_ptp_save_state() in 6.1 |
+| does not build | CVE-2024-50217 | `aec8e6bf8391` | mainline | btrfs: fix use-after-free of block device file in __btrfs_free_extra_devids() — no bdev_file in 6.1; close sets device->bdev = NULL |
+|  | CVE-2024-56775 | `27227a234c14` | mainline | drm/amd/display: Fix handling of plane refcount — restore_planes_and_stream_state() not in 6.1 dc.c |
+|  | CVE-2024-57872 | `897df60c16d5` | mainline | scsi: ufs: pltfrm: Dellocate HBA during ufshcd_pltfrm_remove() — stable d06eb2620d3b frees the host via devres |
+|  | CVE-2024-58053 | `0e56ebde245e` | mainline | rxrpc: Fix handling of received connection abort — 6.1 completion wakes calls; no poke model |
+|  | CVE-2024-54191 | `7a17308c1788` | mainline | Bluetooth: iso: Fix circular lock in iso_conn_big_sync — no iso_conn_big_sync() or PA/BIG sync path in 6.1 |
+|  | CVE-2024-57935 | `0572eccf239c` | mainline | RDMA/hns: Fix accessing invalid dip_ctx during destroying QP — hr_qp->dip (faa62440a577) not in 6.1 |
+|  | CVE-2025-21634 | `3cb97a927fff` | mainline | cgroup/cpuset: remove kernfs active break — stable 2d6a67c2b3b8 removes the WARN; upstream change needs sync hotplug |
+|  | CVE-2024-57984 | `b75439c945b9` | mainline | i3c: dw: Fix use-after-free in dw_i3c_master driver due to race condition — no i3c hj_work (1d08326020fb) in 6.1 |
+|  | CVE-2025-21679 | `fe4de594f7a2` | mainline | btrfs: add the missing error handling inside get_canonical_dev_path — get_canonical_dev_path() (7e06de7c83a7) not in 6.1 |
+|  | CVE-2025-21985 | `8adbb2a98b00` | mainline | drm/amd/display: Fix out-of-bound accesses — no dc/dml2 in 6.1 |
+|  | CVE-2025-38038 | `db1cafc77aaa` | mainline | cpufreq: amd-pstate: Remove unnecessary driver_lock in set_boost — 6.1 set_boost takes no amd_pstate_driver_lock |
+|  | CVE-2025-21836 | `8802766324e1` | mainline | io_uring/kbuf: reallocate buf lists on upgrade — judgment: every buffer-list reader holds uring_lock; no mmap/RCU readers |
+|  | CVE-2025-38080 | `3a7810c212bc` | mainline | drm/amd/display: Increase block_sequence array size — no block_sequence / hwss_build_fast_sequence in 6.1 |
+|  | CVE-2025-21942 | `5a4041f2c472` | mainline | btrfs: zoned: fix extent range end unlock in cow_file_range() — 6.1 cow_file_range() -EAGAIN path unlocks the range |
+|  | CVE-2025-21923 | `e53fc232a65f` | mainline | HID: hid-steam: Fix use-after-free when detaching device — 6.1 steam_remove() destroys client_hdev before cancelling work |
+| does not build | CVE-2025-22028 | `36cef585e2a3` | mainline | media: vimc: skip .s_stream() for stopped entities — no call_s_stream() WARN; vimc stop handles a never-started subdev |
+|  | CVE-2025-22006 | `5f079290e591` | mainline | net: ethernet: ti: am65-cpsw: Fix NAPI registration sequence — 6.1 adds NAPI before requesting IRQs; 681eb2beb3ef absent |
+|  | CVE-2025-22043 | `542027e123fc` | mainline | ksmbd: add bounds check for durable handle context — no ksmbd durable handles in 6.1 |
+| does not build | CVE-2025-38099 | `14d17c78a4b1` | mainline | Bluetooth: Disable SCO support if READ_VOICE_SETTING is unsupported/broken — READ_VOICE_SETTING quirk (ff26b2dd6568) not in 6.1 |
+|  | CVE-2025-37878 | `0ba3a4ab76fd` | mainline | perf/core: Fix WARN_ON(!ctx) in __free_event() for partial init — no pmu_ctx in 6.1 |
+|  | CVE-2025-37802 | `1df0d4c61613` | mainline | ksmbd: fix WARNING "do not call blocking ops when !TASK_RUNNING" — ksmbd durable scavenger (d484d621d40f) not in 6.1 |
+|  | CVE-2025-38017 | `d9ec73301099` | mainline | fs/eventpoll: fix endless busy loop after timeout has expired — 0a65bc27bd64 missing; no ep_schedule_timeout() |
+|  | CVE-2025-38140 | `121218bef4c1` | mainline | dm: limit swapping tables for devices with zone write plugs — no zone write plugs in 6.1 |
+|  | CVE-2025-37965 | `9984db637420` | mainline | drm/amd/display: Fix invalid context error in dml helper — no dc/dml2 in 6.1 |
+|  | CVE-2025-38014 | `a409e919ca32` | mainline | dmaengine: idxd: Refactor remove call with idxd_cleanup() helper — upstream reverted the put_device(); applying it adds a double put |
+|  | CVE-2025-38369 | `17502e7d7b71` | mainline | dmaengine: idxd: Check availability of workqueue allocated by idxd wq driver before using — idxd event log drain not in 6.1 |
+|  | CVE-2025-38092 | `10379171f346` | mainline | ksmbd: use list_first_entry_or_null for opinfo_get_list() — list_first_or_null_rcu() already returns NULL on empty list |
+|  | CVE-2025-38438 | `6c038b58a2dc` | mainline | ASoC: SOF: Intel: hda: Use devm_kstrdup() to avoid memleak. — remove_file_ext() absent; fixup_tplg_name() frees its buffer |
+|  | CVE-2025-39762 | `158b9201c17f` | mainline | drm/amd/display: add null check — dc_get_host_router_index() not in 6.1 |
+|  | CVE-2025-38379 | `3bbe46716092` | mainline | smb: client: fix warning when reconnecting channel — 42ca547b13a2 absent; smb2_reconnect() never queues query_interfaces |
+|  | CVE-2025-38411 | `9df7b5ebead6` | mainline | netfs: Fix double put of request — no netfs misc.c or netfs_collect_in_app() in 6.1 |
+| does not build | CVE-2025-38656 | `cf80c02a9fdb` | mainline | wifi: iwlwifi: Fix error code in iwl_op_mode_dvm_start() — start() returns NULL on error; caller treats it as failure |
+|  | CVE-2025-39747 | `1c8c354098ea` | mainline | drm/msm: Add error handling for krealloc in metadata setup — The vulnerable function msm_ioctl_gem_info_set_metadata() does not exist in 6.1. |
+|  | CVE-2025-39707 | `b4a69f7f29c8` | mainline | drm/amdgpu: check if hubbub is NULL in debugfs/amdgpu_dm_capabilities — The vulnerable function `capabilities_show()` (debugfs file `amdgpu_dm_capabilities`) does not exist in 6.1. |
+|  | CVE-2025-39779 | `b1511360c8ac` | mainline | btrfs: subpage: keep TOWRITE tag until folio is cleaned — The bug needs a folio that is still dirty when `btrfs_subpage_set_writeback()` starts writeback. |
+|  | CVE-2025-40339 | `859958a7faef` | mainline | drm/amdgpu: fix nullptr err of vm_handle_moved — Upstream adds a `prt_va` update before `amdgpu_vm_handle_moved()` in `amdgpu_amdkfd_gpuvm_restore_process_bos( |
+|  | CVE-2025-39882 | `4de37a48b6b5` | mainline | drm/mediatek: fix potential OF node use-after-free — The vulnerable code is absent in 6.1. |
+|  | CVE-2025-40247 | `830d68f2cb8a` | mainline | drm/msm: Fix pgtable prealloc error path — The fix changes `msm_iommu_pagetable_prealloc_allocate()` and `msm_iommu_pagetable_prealloc_cleanup()` in `dri |
+|  | CVE-2025-40348 | `6ed8bfd24ce1` | mainline | slab: Avoid race on slab->obj_exts in alloc_slab_obj_exts — The vulnerable code (`alloc_slab_obj_exts()`, `mark_failed_objexts_alloc()`, `OBJEXTS_ALLOC_FAIL`) does not ex |
+|  | CVE-2025-40354 | `bec947cbe9a6` | mainline | drm/amd/display: increase max link count and fix link->enc NULL pointer access — 6.1 has neither part of the vulnerable code. |
+|  | CVE-2025-40266 | `103e17aac09c` | mainline | KVM: arm64: Check the untrusted offset in FF-A memory share — The vulnerable code is absent in 6.1. arch/arm64/kvm/hyp/nvhe/ffa.c does not exist. |
+|  | CVE-2025-71202 | `e37d5a2d60a3` | mainline | iommu/sva: invalidate stale IOTLB entries for kernel address space — The stale IOTLB entries come from SVA on x86. The x86 IOMMU walks the CPU page tables, including the kernel ha |
+|  | CVE-2025-68300 | `7b6dcd9bfd86` | mainline | fs/namespace: fix reference leak in grab_requested_mnt_ns — The vulnerable function does not exist in 6.1. |
+|  | CVE-2025-68357 | `7fd8720dff2d` | mainline | iomap: allocate s_dio_done_wq for async reads as well — The bug source, mainline 222f2c7c6d14 ("iomap: always run error completions in |
+|  | CVE-2025-68226 | `abd29b6e17a9` | mainline | smb: client: fix incomplete backport in cfids_invalidation_worker() — Fixed in the patch set: patch 0064 (3fa640d035e5, CVE-2024-53176) calls close_cached_dir(). |
+|  | CVE-2025-68299 | `d27c71257825` | mainline | afs: Fix delayed allocation of a cell's anonymous key — The bug is a use of `cell->anonymous_key` before the cell is activated. |
+|  | CVE-2026-22983 | `7d11e047eda5` | mainline | net: do not write to msg_get_inq in callee — The bug is a NULL pointer dereference in `unix_stream_read_generic()` (`net/unix/af_unix.c`). |
+|  | CVE-2026-22995 | `f0d385f6689f` | mainline | ublk: fix use-after-free in ublk_partition_scan_work — The bug is in `ublk_partition_scan_work()`. Commit 7fc4da6a304b ("ublk: scan partition in async way") added th |
+|  | CVE-2026-23117 | `42fb5f3deb58` | mainline | ice: add missing ice_deinit_hw() in devlink reinit path — The fix adds `ice_deinit_hw()` to `ice_devlink_reinit_down()`. 6.1 has no devlink reinit path. |
+|  | CVE-2026-43161 | `42662d19839f` | mainline | iommu/vt-d: Skip dev-iotlb flush for inaccessible PCIe device without scalable mode — Upstream adds `pci_device_is_present()` to `__context_flush_dev_iotlb()` in `drivers/iommu/intel/pasid.c`. 6.1 |
+|  | CVE-2026-43220 | `9e249c484128` | mainline | iommu/amd: serialize sequence allocation under concurrent TLB invalidations — The bug: `cmd_sem_val` is incremented outside `iommu->lock`, so CMD_COMPL_WAIT commands can be queued out of s |
+|  | CVE-2026-23200 | `bbf4a17ad9ff` | mainline | ipv6: Fix ECMP sibling count mismatch when clearing RTF_ADDRCONF — The bug comes from f72514b3c569 ("ipv6: clear RA flags when adding a static route"). |
+|  | CVE-2026-31536 | `9da82dc73cb0` | mainline | smb: server: let send_done handle a completion without IB_SEND_SIGNALED — Upstream fixes `send_done()` for an unsignaled sibling send that completes with an error. In mainline, the smb |
+|  | CVE-2026-46245 | `226a40c06a18` | mainline | drm/amd/display: Fix dc_link NULL handling in HPD init — The flagged code is absent in 6.1. The bug is a dc_link NULL check |
+|  | CVE-2026-43318 | `b18fc0ab8373` | mainline | drm/amdgpu: fix sync handling in amdgpu_dma_buf_move_notify — The bug: `amdgpu_dma_buf_move_notify()` passes its `ticket` to `amdgpu_vm_handle_moved()`. |
+|  | CVE-2026-23341 | `8363c0286333` | mainline | accel/amdxdna: Fix crash when destroying a suspended hardware context — The amdxdna driver does not exist in Linux 6.1. |
+|  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling — The driver does not exist in 6.1. |
+|  | CVE-2026-23348 | `96a1fd0d84b1` | mainline | cxl: Fix race of nvdimm_bus object when creating nvdimm objects — The race needs code from `f17b558d6663` ("cxl/pmem: Refactor nvdimm device registration, delete the workqueue" |
+|  | CVE-2026-43369 | `062ea905fff7` | mainline | drm/amd: Fix NULL pointer dereference in device cleanup — The vulnerable call path is absent in 6.1. |
+|  | CVE-2026-43367 | `72ecb1dae727` | mainline | drm/amd: Fix a few more NULL pointer dereference in device cleanup — The NULL version pointer cannot occur in 6.1. No commit made. |
+|  | CVE-2026-31437 | `e9075e420a1e` | mainline | netfs: Fix NULL pointer dereference in netfs_unbuffered_write() on retry — The bug is in netfs_unbuffered_write() in fs/netfs/direct_write.c. It comes from |
+|  | CVE-2026-43070 | `a3125bc01884` | mainline | bpf: Reset register ID for BPF_END value tracking — The bug is in scalar_byte_swap(). That function comes from 9d2119984224 ("bpf: Add bitwise tracking for BPF_EN |
+|  | CVE-2026-43440 | `87c2302813ab` | mainline | net/mana: Null service_wq on setup error to prevent double destroy — The workqueue does not exist in 6.1. No commit made. |
+|  | CVE-2026-31516 | `29fe3a61bcdc` | mainline | xfrm: prevent policy_hthresh.work from racing with netns teardown — 6.1 stable commit 5850bc4e1d0a ("xfrm: prevent policy_hthresh.work from racing with netns teardown") already f |
+|  | CVE-2026-31729 | `d2d8c17ac01a` | mainline | usb: typec: ucsi: validate connector number in ucsi_notify_common() — A 6.1 stable commit already fixes the out-of-bounds access. No commit made. |
+|  | CVE-2026-31513 | `9d87cb22195b` | mainline | Bluetooth: L2CAP: Fix stack-out-of-bounds read in l2cap_ecred_conn_req — The bug comes from c28d2bff7044 ("Bluetooth: L2CAP: Fix result of L2CAP_ECRED_CONN_RSP |
+|  | CVE-2026-31413 | `c845894ebd6f` | mainline | bpf: Fix unsound scalar forking in maybe_fork_scalars() for BPF_OR — 6.1 has no `maybe_fork_scalars()` in `kernel/bpf/verifier.c`. |
+|  | CVE-2026-43115 | `a6fc88b22bc8` | mainline | srcu: Use irq_work to start GP in tiny SRCU — 6.12.y reverted this backport (aaf9de6160d6): it breaks UP builds without IRQ_WORK. No call_srcu() under pi_lock in 6.1; Armbian 6.1 kernels are SMP. |
+|  | CVE-2026-31458 | `1bfe9fb5ed26` | mainline | mm/damon/sysfs: check contexts->nr before accessing contexts_arr[0] — 6.1.y stable commit dee11efae9e7 (v6.1.168) already has this fix. |
+|  | CVE-2026-31742 | `40014493cece` | mainline | vt: discard stale unicode buffer on alt screen exit after resize — The bug is in leave_alt_screen(). It restores vc_saved_uni_lines. Commit 5eb608319bb5 ("vt: save/restore unico |
+|  | CVE-2026-43323 | `1319ea57529e` | mainline | sched/fair: Fix zero_vruntime tracking fix — The fix changes `cfs_rq::zero_vruntime` tracking in the EEVDF scheduler. 6.1 does not have EEVDF. |
+|  | CVE-2026-46017 | `3bac01168982` | mainline | mm: fix deferred split queue races during migration — The bug comes from 8a8ca142a488 ("mm: migrate: requeue destination folio on deferred split |
+|  | CVE-2026-43084 | `936206e3f6ff` | mainline | netfilter: nfnetlink_queue: make hash table per queue — The bug is in the global verdict rhashtable nfqnl_packet_map. It comes from e19079adcd26 ("netfilter: nfnetlin |
+|  | CVE-2026-45988 | `0422e7a4883f` | mainline | rxrpc: Fix re-decryption of RESPONSE packets — The bug: a RESPONSE packet is decrypted in place in the sk_buff. On a temporary error |
+|  | CVE-2026-46147 | `73b9c1e5da84` | mainline | KVM: arm64: Fix pin leak and publication ordering in __pkvm_init_vcpu() — 6.1 has no `__pkvm_init_vcpu()` or `pkvm_load_hyp_vcpu()`. |
+|  | CVE-2026-53285 | `183182235f6d` | mainline | drm/amd/display: Wrap DCN32 phantom-plane allocation in DC_RUN_WITH_PREEMPTION_ENABLED — In 6.1, the phantom-plane allocation never enters vmalloc, so the BUG_ON() cannot trigger. |
+|  | CVE-2026-64060 | `5046a34f0643` | mainline | netfs: Fix leak of request in netfs_write_begin() error handling — The leaked reference does not exist in 6.1. |
+|  | CVE-2026-46274 | `d6a2d7b04b5a` | mainline | io-wq: check that the predecessor is hashed in io_wq_remove_pending() — A 6.1 stable commit already fixes the bug. No commit made. |
+|  | CVE-2026-52966 | `dc366607c41c` | mainline | drm: Replace old pointer to new idr — The vulnerable function `drm_gem_change_handle_ioctl()` does not exist in 6.1. |
+|  | CVE-2026-64212 | `d733ed481fd2` | mainline | wifi: iwlwifi: mld: don't dereference a pointer before NULL checking it — The bug is in iwl_mld_remove_link() in drivers/net/wireless/intel/iwlwifi/mld/link.c. |
+|  | CVE-2026-98880 | `24f7d1824b75` | mainline | ntfs3: handle set_blocksize failures — The bug needs a block size larger than PAGE_SIZE. |
+|  | CVE-2026-64016 | `3515503322f4` | mainline | ksmbd: fix durable reconnect error path file lifetime — The vulnerable durable reconnect path does not exist in 6.1. |
+|  | CVE-2026-63983 | `9552b11e3eda` | mainline | net/sched: fix packet loop on netem when duplicate is on — 6.1 has stable commit 325f5ec67cc0 ("net/sched: Restrict conditions for adding duplicating netems to qdisc tree", backport of ec8e0e3d7ade). |
+|  | CVE-2026-63885 | `7164d78559b0` | mainline | drm/gem: fix race between change_handle and handle_delete — The vulnerable function does not exist in this tree. |
+|  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() — The vulnerable code does not exist in 6.1. |
+|  | CVE-2026-53143 | `352ea59028ea` | mainline | drm/amdkfd: Fix buffer overflow in SDMA queue checkpoint/restore on GFX11 — 6.1 `drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c` has no `checkpoint_mqd`/`restore_mqd` callbacks. |
+|  | CVE-2026-53246 | `0861615c28de` | mainline | sctp: validate cached peer INIT chunk length in COOKIE_ECHO processing — an equivalent check is already in linux-6.1.y. |
+|  | CVE-2026-68205 | `06cb687a5132` | mainline | media: v4l2-fwnode: Fix subdev owner overwritten in v4l2_async_register_subdev_sensor() — 6.1 never sets sd->owner; prerequisite 8a718752f5c3 is absent. |
+|  | CVE-2026-53156 | `5b6b6fc49189` | mainline | nvmem: core: fix use-after-free bugs in error paths — The use-after-free needs NVMEM layout code that 6.1 does not have. |
+|  | CVE-2026-53145 | `1a4f03d22fb6` | mainline | drm/gem: Try to fix change_handle ioctl, attempt 4 — The vulnerable function `drm_gem_change_handle_ioctl()` and the `DRM_IOCTL_GEM_CHANGE_HANDLE` ioctl do not exist in 6.1. |
+|  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook — Bug commit 1e7cd8a53b72 (simple_xattr per-sb cache) is not in 6.1. |
+|  | CVE-2026-72493 | `46762cefe7f4` | mainline | net: serialize netif_running() check in enqueue_to_backlog() — In 6.1 `net/core/dev.c`, `enqueue_to_backlog()` checks `netif_running(skb->dev)` after `rps_lock_irqsave(sd, &flags)`. |
+| does not build | CVE-2026-72434 | `4a597a87e2e2` | mainline | netfilter: ipset: make sure gc is properly stopped — 6.1 cancel_delayed_work_sync() holds PENDING; the self-requeue in gc fails, so gc cannot run after cancel. |
+|  | CVE-2026-63816 | `e0288584baa5` | mainline | f2fs: atomic: fix UAF issue on f2fs_inode_info.atomic_inode — 6.1 f2fs has no atomic_inode field or COW-file GC path. |
+|  | CVE-2026-72376 | `c9c3b615a462` | mainline | afs: Fix misplaced inc of net->cells_outstanding — the vulnerable code is absent in 6.1. |
+|  | CVE-2026-72373 | `794a01110390` | mainline | afs: Fix missing NULL pointer check in afs_break_some_callbacks() — 6.1 afs_break_some_callbacks() already checks if (volume). |
+|  | CVE-2026-68112 | `00f4050f7c36` | mainline | drm/amdgpu/gfx9.4.3: replace BUG_ON() with WARN_ON() — The vulnerable file does not exist in 6.1. |
+|  | CVE-2026-68412 | `c6659f66d4ee` | mainline | wifi: cfg80211: Fix an error handling path in cfg80211_wext_siwscan() — 6.1 already frees creq when the SSID length check fails. |
+|  | CVE-2026-68337 | `3f4920d165b2` | mainline | bpf: Reject redirect helpers without a bpf_net_context — 6.1 uses per-CPU bpf_redirect_info; it has no bpf_net_context. |
+|  | CVE-2026-74506 | `4af1ec68d54b` | mainline | afs: Fix UAF when sending a message — The UAF needs an async op call where `afs_make_call()` runs without a caller ref. |
+|  | CVE-2026-80704 | `114b42507b6a` | mainline | drm/amd/display: use proper context for logging — In 6.1 the DC log macros do not read DC_LOGGER, so no context is dereferenced. |
+|  | CVE-2026-80820 | `527eaaefddb6` | mainline | xfs: don't livelock in scrub on a circular unlinked list — The vulnerable loops do not exist in 6.1. |
+|  | CVE-2026-74639 | `2615f0fb90df` | mainline | ALSA: us144mkii: re-anchor capture URBs on resubmission — 6.1 has no us144mkii driver. |
+|  | CVE-2026-74642 | `f8a80cfb6861` | mainline | ALSA: usb: Fix UAF at delayed release of MIDI2 EPs — sound/usb/midi2.c and include/sound/ump.h do not exist in 6.1. |
+|  | CVE-2026-93238 | `bf09b9d7cd78` | mainline | s390/vfio-ap: fix potential use of uninitialized apm_filtered bitmap — drivers/s390/crypto/vfio_ap_ops.c: vfio_ap_mdev_hot_plug_cfg() in 6.1 has no apm_filtered bitmap. |
+|  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets — 6.1.y removed fs/ntfs (b06b4fc2138d). |
+|  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary — 6.1.y removed fs/ntfs (b06b4fc2138d). |
+|  | CVE-2026-98365 | `d10e2a08799e` | mainline | RDMA/rxe: Fix integer overflow in mr_check_range() leading to OOB access — 6.1 mr_check_range() already uses an overflow-safe check. |
+|  | CVE-2026-97950 | `a7c1290eef60` | mainline | configfs: pin the symlink target's dirent instead of chasing ->ci_dentry — 6.1 get_target() keeps the path pinned through create_link(); needs 1b25dea3867a. |
+|  | CVE-2026-98551 | `24b620729e53` | mainline | perf/core: Fill branch entries with a single assignment — 6.1 has no arm64 BRBE driver; x86 never writes new_type or priv. |
+|  | CVE-2026-98820 | `ab6c756f28c7` | mainline | blk-mq: set RQF_USE_SCHED when the operation is known — 6.1 has no RQF_USE_SCHED (dd6216bb16e8); cached-request paths check op_is_flush(). |
+|  | CVE-2026-98939 | `e3ee38c1bc0b` | mainline | x86/mm: Drop unnecessary PMD page copy when freeing — Fixes d5d8b8662e6e is absent; set_memory.c takes no init_mm mmap lock. |
+|  | CVE-2026-98719 | `8abbc76120a7` | mainline | KVM: SEV: Nullify "have run CPUs" mask pointer when freeing it — have_run_cpus does not exist in 6.1; SEV uses wbinvd_on_all_cpus(). |
+|  | CVE-2026-98839 | `39495ef5d6f8` | mainline | vt: selection: Fix unsigned underflow and slab-out-of-bounds read in paste_selection() — The loop recomputes count under the lock; 80fa7a033785 is not in 6.1. |
+|  | CVE-2026-99093 | `2fb552b0bee7` | mainline | mm: don't schedule deferred kernel page table freeing while booting — pagetable_free_kernel() and deferred kernel page-table freeing do not exist in 6.1. |
+|  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions — 8fa813b7fd1e brings the bug; 6.1 lacks it and the USB4 bandwidth code. |
 
 Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).
 
