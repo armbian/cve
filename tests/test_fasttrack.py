@@ -449,6 +449,15 @@ git -C tree -c user.name=c -c user.email=c@c commit -qam "baz: fix race" -m "com
         rows = {r["cve"]: r["outcome"] for r in json.loads((self.out / "cve-result.json").read_text())}
         self.assertEqual(rows, {"CVE-2026-0003": "unpatched", "CVE-2026-0006": "patched-needs-review"})
 
+    def test_unpatched_only_where_open(self):
+        # CVE-1 is open on 6.12 only: --unpatched leaves 6.18, where it is in the set.
+        self.out.mkdir(parents=True)
+        (self.out / "unpatched.json").write_text(json.dumps([
+            {"series": "6.12", "cves": ["CVE-2026-0001"], "upstream": self.A}]))
+        cli.main(["--config", str(self.cfg), "cve", "--unpatched", "--adapt"])
+        self.assertEqual(json.loads((self.out / "cve-result.json").read_text()), [])
+        self.assertFalse((self.out / "cve" / "CVE-2026-0001").exists())
+
     def test_stable_list_backport(self):
         # the author's backport of C onto the reworked stable code, as posted to the list
         sh(self.repo, "git", "checkout", "-q", "-b", "posted", "linux-6.18.y")
