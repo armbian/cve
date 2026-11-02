@@ -2,7 +2,8 @@
 
 **Events this run**
 
-- added 6.12: 2 patch(es)
+- added 6.12: 9 patch(es)
+- added 6.1: 20 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -163,7 +164,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (178)
+### Included (187)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -193,7 +194,7 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-98802 | `8ae3f4067ba4` | mainline | seg6: ensure packet data is writable before modifying SRH and IPv6 DA |
 |  | CVE-2026-98966 | `184b5ddf82d4` | mainline | bonding: fix the program leak when XDP is replaced |
 |  | CVE-2026-99026 | `489114c9ecae` | mainline | net: team: free skb when broadcast has no txable port |
-|  | CVE-2026-46279 | `6b1842775a46` | stable-list | mm/alloc_tag: clear codetag for pages allocated before page_ext initialization |
+|  | CVE-2026-46279 | `6b1842775a46` | stable-list | mm/alloc_tag: clear codetag for pages allocated before |
 |  | CVE-2026-52953 | `a6dea58d8625` | stable-list | iommu/vt-d: Fix oops due to out of scope access |
 |  | CVE-2026-80670 | `5484b43a0ec8` | stable-list | perf tools: Use perf_env__get_cpu_topology() in machine__resolve() |
 |  | CVE-2026-98924 | `3bc4e4410830` | claude | vfs: Remove unnecessary list_for_each_entry_safe() from evict_inodes() |
@@ -205,6 +206,7 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2025-68304 | `79a2d4678ba9` | claude | Bluetooth: hci_core: lookup hci_conn on RX path on protocol side |
 |  | CVE-2026-23102 | `d2907cbe9ea0` | claude | arm64/fpsimd: signal: Fix restoration of SVE context |
 |  | CVE-2026-31537 | `34abd408c8ba` | claude | smb: server: make use of smbdirect_socket.send_io.bcredits |
+|  | CVE-2026-31537 | `84ff995ae826` | claude | smb: server: avoid double-free in smb_direct_free_sendmsg |
 |  | CVE-2026-23348 | `—` | claude | cxl: Move devm_cxl_add_nvdimm_bridge() to cxl_pmem.ko |
 |  | CVE-2026-23348 | `96a1fd0d84b1` | claude | cxl: Fix race of nvdimm_bus object when creating nvdimm objects |
 |  | CVE-2026-23348 | `—` | claude | cxl/acpi: Fix CXL_ACPI and CXL_PMEM Kconfig tristate mismatch |
@@ -217,6 +219,7 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-46017 | `3bac01168982` | claude | mm: fix deferred split queue races during migration |
 |  | CVE-2026-31591 | `cb923ee6a80f` | claude | KVM: SEV: Lock all vCPUs when synchronzing VMSAs for SNP launch finish |
 |  | CVE-2026-23265 | `50ac3ecd8e05` | claude | f2fs: fix to do sanity check on node footer in {read,write}_end_io |
+|  | CVE-2026-23265 | `7b9161a605e9` | claude | f2fs: fix to avoid uninit-value access in |
 |  | CVE-2026-63858 | `10f79dbd7719` | claude | netfilter: nf_tables: add hook transactions for device deletions |
 |  | CVE-2026-46153 | `fc69decc811b` | claude | 8021q: use RCU for egress QoS mappings |
 |  | CVE-2026-46153 | `7dddc74af369` | claude | 8021q: delete cleared egress QoS mappings |
@@ -282,6 +285,13 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-98333 | `78183e833195` | claude | wifi: mac80211: reset the LED state when ifup fails |
 |  | CVE-2026-98330 | `4635b1a1c1d6` | claude | wifi: cfg80211: get the wiphy out of a dying network namespace |
 |  | CVE-2026-98180 | `01c8d1f385f7` | claude | drm/msm: RCU-free the scheduler-containing ring and VM objects |
+|  | CVE-2026-98180 | `ecec875a6c33` | claude | dma-fence: Add helpers for accessing driver and timeline name |
+|  | CVE-2026-98180 | `68ff0e07f9b3` | claude | sync_file: Use dma-fence driver and timeline name helpers |
+|  | CVE-2026-98180 | `5cc809d62b8c` | claude | drm/i915: Use dma-fence driver and timeline name helpers |
+|  | CVE-2026-98180 | `ad10976d6cf0` | claude | sync_file: Protect access to driver and timeline name |
+|  | CVE-2026-98180 | `4d2f8bc628ce` | claude | drm/i915: Protect access to driver and timeline name |
+|  | CVE-2026-98180 | `506aa8b02a8d` | claude | dma-fence: Add safe access helpers and document the rules |
+|  | CVE-2026-98180 | `033559473dd3` | claude | dma-fence: Fix safe access wrapper to call timeline name |
 |  | CVE-2026-98317 | `6d79b223ec44` | claude | neighbour: Enforce min/max to NDTPA_INTERVAL_PROBE_TIME_MS. |
 |  | CVE-2026-98313 | `e249a6e2a130` | claude | drm/msm/dp: skip PUSH_IDLE when the link was never enabled |
 |  | CVE-2026-98304 | `23ca4ddc4fce` | claude | net: bcmgenet: restore the hardware filters on open |
@@ -434,7 +444,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
 
-### Included (448)
+### Included (468)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -464,6 +474,10 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-99026 | `489114c9ecae` | mainline | net: team: free skb when broadcast has no txable port |
 |  | CVE-2024-40965 | `4268254a3948` | stable-list | i2c: lpi2c: Avoid calling clk_get_rate during transfer |
 |  | CVE-2025-39981 | `302a1f674c00` | stable-list | Bluetooth: MGMT: Fix possible UAFs |
+|  | CVE-2025-39981 | `e8785404de06` | claude | Bluetooth: MGMT: fix crash in set_mesh_sync and |
+|  | CVE-2025-39981 | `1b9c17fd0a7f` | claude | Bluetooth: MGMT: Fix memory leak in set_ssp_complete |
+|  | CVE-2025-39981 | `17f89341cb42` | claude | Bluetooth: MGMT: Fix list corruption and UAF in command |
+|  | CVE-2025-39981 | `5f5fa4cd35f7` | claude | Bluetooth: MGMT: Fix dangling pointer on |
 |  | CVE-2026-64109 | `be309f8eae8b` | stable-list | af_unix: Fix UAF read of tail->len in unix_stream_data_wait() |
 |  | CVE-2026-80670 | `5484b43a0ec8` | stable-list | perf tools: Use perf_env__get_cpu_topology() in machine__resolve() |
 |  | CVE-2026-80999 | `fb58b6a696b3` | stable-list | net: dsa: realtek: use gpiod_set_value_cansleep for reset GPIO |
@@ -482,6 +496,8 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-99122 | `ad9a7da3fa39` | stable-list | vsock/vmci: validate packet source for connected sockets |
 |  | CVE-2024-35808 | `cd32b27a66db` | claude | md/dm-raid: don't call md_reap_sync_thread() directly |
 |  | CVE-2024-27079 | `81e921fd3216` | claude | iommu/vt-d: Fix NULL domain on device release |
+|  | CVE-2024-27079 | `42662d19839f` | claude | iommu/vt-d: Skip dev-iotlb flush for inaccessible PCIe device |
+|  | CVE-2024-27079 | `f46452c3df7a` | claude | iommu/vt-d: Clear Present bit before tearing down |
 |  | CVE-2024-26944 | `1ec17ef59168` | claude | btrfs: zoned: fix use-after-free in do_zone_finish() |
 |  | CVE-2024-36949 | `d06af584be5a` | claude | amd/amdkfd: sync all devices to wait all processes being evicted |
 |  | CVE-2024-42162 | `af9bcf910b1f` | claude | gve: Account for stopped queues when reading NIC stats |
@@ -506,6 +522,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2024-53176 | `—` | claude | smb: client: destroy cfid_put_wq on module exit |
 |  | CVE-2024-58237 | `—` | claude | bpf: refactor bpf_helper_changes_pkt_data to use helper number |
 |  | CVE-2024-58237 | `1a4607ffba35` | claude | bpf: consider that tail calls invalidate packet pointers |
+|  | CVE-2024-58237 | `e3245f899043` | claude | bpf: properly verify tail call behavior |
 |  | CVE-2024-53687 | `b3431a8bb336` | claude | riscv: Fix IPIs usage in kfence_protect_page() |
 |  | CVE-2024-57857 | `16b87037b488` | claude | RDMA/siw: Remove direct link to net_device |
 |  | CVE-2025-21693 | `12dcb0ef5406` | claude | mm: zswap: properly synchronize freeing resources during CPU hotunplug |
@@ -523,6 +540,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2025-22125 | `e879a0d9cb08` | claude | md/raid1,raid10: don't ignore IO flags |
 |  | CVE-2025-22125 | `—` | claude | md/raid1: fix data lost for writemostly rdev |
 |  | CVE-2025-22125 | `9f346f7d4ea7` | claude | md/raid1,raid10: don't handle IO error for REQ_RAHEAD and REQ_NOWAIT |
+|  | CVE-2025-22125 | `5fa31c499281` | claude | md/raid1,raid10: strip REQ_NOWAIT from member bios |
 |  | CVE-2025-21976 | `—` | claude | fbdev: hyperv_fb: Simplify hvfb_putmem |
 |  | CVE-2025-21976 | `ea2f45ab0e53` | claude | fbdev: hyperv_fb: Allow graceful removal of framebuffer |
 |  | CVE-2025-22113 | `5a02a6204ca3` | claude | ext4: define ext4_journal_destroy wrapper |
@@ -541,6 +559,8 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2025-38264 | `0bf04c874fcb` | claude | nvme-tcp: sanitize request list handling |
 |  | CVE-2025-38207 | `2b12d06c37fd` | claude | mm: fix uprobe pte be overwritten when expanding vma |
 |  | CVE-2025-39746 | `c256a94d1b1b` | claude | wifi: ath10k: shutdown driver when hardware is unreliable |
+|  | CVE-2025-39746 | `f35a07a4842a` | claude | wifi: ath10k: move recovery check logic into a new work |
+|  | CVE-2025-39746 | `54a5b38e4396` | claude | wifi: ath10k: skip WMI and beacon transmission when device is |
 |  | CVE-2025-38449 | `5307dce878d4` | claude | drm/gem: Acquire references on GEM handles for framebuffers |
 |  | CVE-2025-38449 | `f6bfc9afc751` | claude | drm/framebuffer: Acquire internal references on GEM handles |
 |  | CVE-2024-57975 | `c2b47df81c8e` | claude | btrfs: do proper folio cleanup when run_delalloc_nocow() failed |
@@ -574,6 +594,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-43309 | `55dcfdf8af9c` | claude | dm raid: use proper md_ro_state enumerators |
 |  | CVE-2026-43309 | `cefcb9297fbd` | claude | md raid: fix hang when stopping arrays with metadata through dm-raid |
 |  | CVE-2026-31537 | `34abd408c8ba` | claude | smb: server: make use of smbdirect_socket.send_io.bcredits |
+|  | CVE-2026-31537 | `84ff995ae826` | claude | smb: server: avoid double-free in smb_direct_free_sendmsg |
 |  | CVE-2026-23239 | `e1512c1db9e8` | claude | espintcp: Fix race condition in espintcp_close() |
 |  | CVE-2026-23346 | `—` | claude | mm/ioremap: define generic_ioremap_prot() and generic_iounmap() |
 |  | CVE-2026-23346 | `—` | claude | mm: ioremap: allow ARCH to have its own ioremap method definition |
@@ -596,6 +617,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-23035 | `4ef8512e1427` | claude | net/mlx5e: Pass netdev to mlx5e_destroy_netdev instead of priv |
 |  | CVE-2026-53106 | `350de5b8a9be` | claude | bpf: Do not allow deleting local storage in NMI |
 |  | CVE-2026-23265 | `50ac3ecd8e05` | claude | f2fs: fix to do sanity check on node footer in {read,write}_end_io |
+|  | CVE-2026-23265 | `7b9161a605e9` | claude | f2fs: fix to avoid uninit-value access in |
 |  | CVE-2026-43317 | `2c198c272f9c` | claude | most: core: fix leak on early registration failure |
 |  | CVE-2026-46068 | `adb3faf2db1a` | claude | crypto: nx - fix bounce buffer leaks in nx842_crypto_{alloc,free}_ctx |
 |  | CVE-2026-31444 | `48623ec358c1` | claude | ksmbd: fix use-after-free and NULL deref in smb_grant_oplock() |
@@ -706,6 +728,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-80920 | `cd305ee3633a` | claude | io_uring: defer eventfd signaling when queued from a wakeup handler |
 |  | CVE-2026-90154 | `c50e628122ae` | claude | ksmbd: scope session state changes to bound connections |
 |  | CVE-2026-90119 | `d736eba9c453` | claude | ALSA: ice1712: Fix the card leak at probe error with the auto-cleanup |
+|  | CVE-2026-90119 | `e6229c0402ea` | claude | ALSA: ice1712: Fix the error handling via auto-cleanup at |
 |  | CVE-2026-98148 | `cb732d027aa1` | claude | drm/gud: validate GUD_ROTATION_0 is present in supported rotations |
 |  | CVE-2026-89637 | `730d0bb19507` | claude | smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2 |
 |  | CVE-2026-98142 | `92312d333bf7` | claude | drm/cirrus-qemu: Validate BAR0 size during probe |
@@ -773,6 +796,13 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-97965 | `be83178bfc44` | claude | vxlan: initialize _md in vxlan_xmit_one() |
 |  | CVE-2026-97953 | `5e38d732ec67` | claude | net: stmmac: fix TX descriptor availability check for TSO traffic |
 |  | CVE-2026-98180 | `01c8d1f385f7` | claude | drm/msm: RCU-free the scheduler-containing ring and VM objects |
+|  | CVE-2026-98180 | `ecec875a6c33` | claude | dma-fence: Add helpers for accessing driver and timeline name |
+|  | CVE-2026-98180 | `68ff0e07f9b3` | claude | sync_file: Use dma-fence driver and timeline name helpers |
+|  | CVE-2026-98180 | `5cc809d62b8c` | claude | drm/i915: Use dma-fence driver and timeline name helpers |
+|  | CVE-2026-98180 | `ad10976d6cf0` | claude | sync_file: Protect access to driver and timeline name |
+|  | CVE-2026-98180 | `4d2f8bc628ce` | claude | drm/i915: Protect access to driver and timeline name |
+|  | CVE-2026-98180 | `506aa8b02a8d` | claude | dma-fence: Add safe access helpers and document the rules |
+|  | CVE-2026-98180 | `033559473dd3` | claude | dma-fence: Fix safe access wrapper to call timeline name |
 |  | CVE-2026-98248 | `8cf2093f5372` | claude | arm64: percpu: Fix LSE operations on {8,16}-bit types |
 |  | CVE-2026-97918 | `92383cef6679` | claude | tracing: Undo the registration when enabling the histogram trigger fails |
 |  | CVE-2026-98222 | `8697c431e297` | claude | KEYS: encrypted: fix integer overflow of datablob_len |
@@ -923,7 +953,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |---|---|---|---|---|
 |  | CVE-2024-35843 | `def054b01a86` | mainline | iommu/vt-d: Use device rbtree in iopf reporting path |
 
-### Not affected (reviewed) (152)
+### Not affected (reviewed) (151)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1012,7 +1042,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-22983 | `7d11e047eda5` | mainline | net: do not write to msg_get_inq in callee — The bug is a NULL pointer dereference in `unix_stream_read_generic()` (`net/unix/af_unix.c`). |
 |  | CVE-2026-22995 | `f0d385f6689f` | mainline | ublk: fix use-after-free in ublk_partition_scan_work — The bug is in `ublk_partition_scan_work()`. Commit 7fc4da6a304b ("ublk: scan partition in async way") added th |
 |  | CVE-2026-23117 | `42fb5f3deb58` | mainline | ice: add missing ice_deinit_hw() in devlink reinit path — The fix adds `ice_deinit_hw()` to `ice_devlink_reinit_down()`. 6.1 has no devlink reinit path. |
-|  | CVE-2026-43161 | `42662d19839f` | mainline | iommu/vt-d: Skip dev-iotlb flush for inaccessible PCIe device without scalable mode — Upstream adds `pci_device_is_present()` to `__context_flush_dev_iotlb()` in `drivers/iommu/intel/pasid.c`. 6.1 |
 |  | CVE-2026-43220 | `9e249c484128` | mainline | iommu/amd: serialize sequence allocation under concurrent TLB invalidations — The bug: `cmd_sem_val` is incremented outside `iommu->lock`, so CMD_COMPL_WAIT commands can be queued out of s |
 |  | CVE-2026-23200 | `bbf4a17ad9ff` | mainline | ipv6: Fix ECMP sibling count mismatch when clearing RTF_ADDRCONF — The bug comes from f72514b3c569 ("ipv6: clear RA flags when adding a static route"). |
 |  | CVE-2026-31536 | `9da82dc73cb0` | mainline | smb: server: let send_done handle a completion without IB_SEND_SIGNALED — Upstream fixes `send_done()` for an unsignaled sibling send that completes with an error. In mainline, the smb |

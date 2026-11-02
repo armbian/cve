@@ -5359,38 +5359,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-43161"
-    ],
-    "kev": false,
-    "upstream": "42662d19839f34735b718129ea200e3734b07e50",
-    "subject": "iommu/vt-d: Skip dev-iotlb flush for inaccessible PCIe device without scalable mode",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/iommu/intel/pasid.c"
-    ],
-    "prerequisites": [
-      "bd7ebb771935 iommu: Regulate EINVAL in ->attach_dev callback functions",
-      "2552d3a2292a iommu/intel: Add a gfp parameter to alloc_pgtable_page()",
-      "113a031becc8 iommu/vt-d: Remove PASID supervisor request support",
-      "4298780126c2 iommu: Generalize PASID 0 for normal DMA w/o PASID",
-      "f35f22cc760e iommu/vt-d: Access/Dirty bit support for SS domains",
-      "111bf85c68f6 iommu/vt-d: Add helper to setup pasid nested translation",
-      "47642bdd5a25 iommu/vt-d: Remove unused parameter of intel_pasid_setup_pass_through()",
-      "d2b66903464e iommu/vt-d: Remove unused vcmd interfaces",
-      "80b79e141da7 iommu/vt-d: Move inline helpers to header files",
-      "56ecaf6c5834 iommu/vt-d: Remove domain parameter for intel_pasid_setup_dirty_tracking()",
-      "1f0198fce683 iommu/vt-d: Set SSADE when attaching to a parent with dirty tracking",
-      "81e921fd3216 iommu/vt-d: Fix NULL domain on device release",
-      "301f1a80487f iommu/vt-d: Setup scalable mode context entry in probe path",
-      "06c375053cef iommu/vt-d: add wrapper functions for page allocations",
-      "5c555f1f1c31 iommu/vt-d: Use try_cmpxchg64() in intel_pasid_get_entry()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-43220"
     ],
     "kev": false,

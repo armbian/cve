@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 68ff0e07f9b3f0e376bb8b95a0c3e6205695362a
+X-Fasttrack-CVE: CVE-2026-98180
+X-Fasttrack-Backport: cve/CVE-2026-98180/6.1
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Date: Thu, 15 May 2025 10:49:59 +0100
+Subject: [PATCH] sync_file: Use dma-fence driver and timeline name helpers
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+commit 68ff0e07f9b3f0e376bb8b95a0c3e6205695362a upstream.
+
+Access the dma-fence internals via the previously added helpers.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20250515095004.28318-5-tvrtko.ursulin@igalia.com
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ drivers/dma-buf/sync_file.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/dma-buf/sync_file.c b/drivers/dma-buf/sync_file.c
+index 2e9a316c596a..f917c43282de 100644
+--- a/drivers/dma-buf/sync_file.c
++++ b/drivers/dma-buf/sync_file.c
+@@ -137,8 +137,8 @@ char *sync_file_get_name(struct sync_file *sync_file, char *buf, int len)
+ 		struct dma_fence *fence = sync_file->fence;
+ 
+ 		snprintf(buf, len, "%s-%s%llu-%lld",
+-			 fence->ops->get_driver_name(fence),
+-			 fence->ops->get_timeline_name(fence),
++			 dma_fence_driver_name(fence),
++			 dma_fence_timeline_name(fence),
+ 			 fence->context,
+ 			 fence->seqno);
+ 	}
+@@ -262,9 +262,9 @@ static long sync_file_ioctl_merge(struct sync_file *sync_file,
+ static int sync_fill_fence_info(struct dma_fence *fence,
+ 				 struct sync_fence_info *info)
+ {
+-	strscpy(info->obj_name, fence->ops->get_timeline_name(fence),
++	strscpy(info->obj_name, dma_fence_timeline_name(fence),
+ 		sizeof(info->obj_name));
+-	strscpy(info->driver_name, fence->ops->get_driver_name(fence),
++	strscpy(info->driver_name, dma_fence_driver_name(fence),
+ 		sizeof(info->driver_name));
+ 
+ 	info->status = dma_fence_get_status(fence);
+-- 
+2.53.0
+
