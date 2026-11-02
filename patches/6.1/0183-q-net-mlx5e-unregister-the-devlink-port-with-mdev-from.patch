@@ -1,0 +1,87 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-CVE: CVE-2026-22996
+X-Fasttrack-Backport: cve/CVE-2026-22996/6.1
+From: Igor Pecovnik <igor@armbian.com>
+Date: Mon, 2 Nov 2026 05:54:57 +0100
+Subject: [PATCH] net/mlx5e: unregister the devlink port with mdev from
+ mlx5_adev
+
+The 6.1 backport of 123eda2e5b16 ("net/mlx5e: Don't store mlx5e_priv
+in mlx5e_dev devlink priv") takes mdev from mlx5_adev in
+mlx5e_remove(). But mlx5e_devlink_port_unregister() still gets mdev
+from priv->mdev. A failed profile rollback sets priv to zero. Then
+mlx5e_remove() dereferences a NULL priv->mdev.
+
+Give mlx5e_devlink_port_unregister() the mdev. mlx5e_remove() passes
+edev->mdev. Mainline does not use priv here either: it unregisters the
+port of struct mlx5e_dev.
+
+CVE: CVE-2026-22996
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/en/devlink.c | 10 +++++-----
+ drivers/net/ethernet/mellanox/mlx5/core/en/devlink.h |  2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c    |  4 ++--
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/en/devlink.c
+index b69f9d10ccbd..c346b2cd1df7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/devlink.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/devlink.c
+@@ -58,15 +58,15 @@ void mlx5e_devlink_port_type_eth_set(struct mlx5e_priv *priv)
+ 	devlink_port_type_eth_set(dl_port, priv->netdev);
+ }
+ 
+-void mlx5e_devlink_port_unregister(struct mlx5e_priv *priv)
++void mlx5e_devlink_port_unregister(struct mlx5_core_dev *mdev)
+ {
+-	struct devlink_port *dl_port = mlx5e_devlink_get_dl_port(priv);
+-	struct devlink *devlink = priv_to_devlink(priv->mdev);
++	struct devlink_port *dl_port = &mdev->mlx5e_res.dl_port;
++	struct devlink *devlink = priv_to_devlink(mdev);
+ 
+-	if (!(priv->mdev->priv.flags & MLX5_PRIV_FLAGS_MLX5E_LOCKED_FLOW))
++	if (!(mdev->priv.flags & MLX5_PRIV_FLAGS_MLX5E_LOCKED_FLOW))
+ 		devl_lock(devlink);
+ 	devl_port_unregister(dl_port);
+-	if (!(priv->mdev->priv.flags & MLX5_PRIV_FLAGS_MLX5E_LOCKED_FLOW))
++	if (!(mdev->priv.flags & MLX5_PRIV_FLAGS_MLX5E_LOCKED_FLOW))
+ 		devl_unlock(devlink);
+ }
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/devlink.h b/drivers/net/ethernet/mellanox/mlx5/core/en/devlink.h
+index 10b50feb9883..b5bc305e48a0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/devlink.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/devlink.h
+@@ -8,7 +8,7 @@
+ #include "en.h"
+ 
+ int mlx5e_devlink_port_register(struct mlx5e_priv *priv);
+-void mlx5e_devlink_port_unregister(struct mlx5e_priv *priv);
++void mlx5e_devlink_port_unregister(struct mlx5_core_dev *mdev);
+ void mlx5e_devlink_port_type_eth_set(struct mlx5e_priv *priv);
+ struct devlink_port *mlx5e_get_devlink_port(struct net_device *dev);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 7b58c82905b1..54b9f9263182 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -6004,7 +6004,7 @@ static int mlx5e_probe(struct auxiliary_device *adev,
+ err_profile_cleanup:
+ 	profile->cleanup(priv);
+ err_devlink_cleanup:
+-	mlx5e_devlink_port_unregister(priv);
++	mlx5e_devlink_port_unregister(mdev);
+ err_destroy_netdev:
+ 	mlx5e_destroy_netdev(netdev);
+ 	return err;
+@@ -6026,7 +6026,7 @@ static void mlx5e_remove(struct auxiliary_device *adev)
+ 	/* Avoid cleanup if profile rollback failed. */
+ 	if (priv->profile)
+ 		priv->profile->cleanup(priv);
+-	mlx5e_devlink_port_unregister(priv);
++	mlx5e_devlink_port_unregister(edev->mdev);
+ 	mlx5e_destroy_netdev(netdev);
+ }
+ 
