@@ -750,6 +750,9 @@
   },
   "CVE-2025-38092": {
     "6.1": {
+      "bug_in_set_ok": [
+        "18b4fac5ef17"
+      ],
       "cost": null,
       "date": "2026-11-01",
       "head": "6.1.191",
@@ -3643,6 +3646,9 @@
   },
   "CVE-2026-99151": {
     "6.1": {
+      "bug_in_set_ok": [
+        "8fa813b7fd1e"
+      ],
       "cost": null,
       "date": "2026-11-01",
       "head": "6.1.191",
@@ -3653,11 +3659,9 @@
     },
     "6.18": {
       "cost": null,
-      "date": "2026-10-31",
+      "date": "2026-11-02",
       "head": "6.18.60",
-      "outcome": "not-affected-needs-review",
-      "reason": "bug comes from 8fa813b7fd1e, not in 6.18",
-      "reviewed": "2026-10-31",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
