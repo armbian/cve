@@ -1,10 +1,5 @@
 # Kernel security fast-track
 
-**Events this run**
-
-- added 6.12: 4 patch(es)
-- added 6.1: 26 patch(es)
-
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no longer needed: 3
