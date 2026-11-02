@@ -49,6 +49,8 @@ jobs:
       due: ${{ steps.due.outputs.due }}
       fingerprint: ${{ steps.fp.outputs.fingerprint }}
       series: ${{ steps.fp.outputs.series }}
+      sha: ${{ steps.fp.outputs.sha }}
+      inputs: ${{ steps.fp.outputs.inputs }}
     steps:
       # Claude spends the API key: only the owner may start or rerun a Claude run.
       - name: Claude access
@@ -56,11 +58,15 @@ jobs:
         run: |
           echo "::error::Only igorpecovnik may run with claude: true (triggered by ${{ github.triggering_actor }})."
           exit 1
+      # The branch tip: every verify job checks out this commit.
       - uses: actions/checkout@v7
         with:
+          ref: ${{ github.ref_name }}
           persist-credentials: false
       - id: fp
         run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "inputs=$(git ls-tree HEAD cve fasttrack fasttrack.yaml | sha256sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
           python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
           echo "fingerprint=$(python3 -m fasttrack.cli fingerprint)" >> "$GITHUB_OUTPUT"
           echo "series=$(python3 -c 'import json, yaml; print(json.dumps([str(s) for s in yaml.safe_load(open("fasttrack.yaml"))["series"]]))')" >> "$GITHUB_OUTPUT"
@@ -114,11 +120,10 @@ jobs:
           sudo apt-get clean
           df -h /
 
-      # No token in .git/config: Claude runs in this job. Push steps set it themselves.
-      # The branch tip, not the triggering commit: an earlier run may have merged since.
+      # No token in .git/config. All series verify the same commit: the check job's.
       - uses: actions/checkout@v7
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ needs.check.outputs.sha }}
           persist-credentials: false
 
       # Kernel build tools for the compile check (build_check in fasttrack.yaml).
@@ -210,6 +215,19 @@ jobs:
           ref: ${{ github.ref_name }}
           persist-credentials: false
 
+      # verify read cve/ and the tool at the check's commit. When the tip has others,
+      # its results are stale: publish nothing. The run for the new commit publishes.
+      - name: Same inputs as verify
+        id: fresh
+        run: |
+          now=$(git ls-tree HEAD cve fasttrack fasttrack.yaml | sha256sum | cut -c1-16)
+          if [ "$now" = "${{ needs.check.outputs.inputs }}" ]; then
+            echo "fresh=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "fresh=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::cve/ or the tool changed after verify: nothing is published."
+          fi
+
       # Kernel build tools for the compile check (build_check in fasttrack.yaml).
       - name: Tooling
         run: |
@@ -265,7 +283,9 @@ jobs:
       - name: Drop incident patches stable has absorbed
         run: python3 -m fasttrack.cli -v prune
 
+      # Only the main group commits to main: an incident run has its own group.
       - name: Commit patches and reports
+        if: steps.fresh.outputs.fresh == 'true' && !(inputs.incidents || inputs.commit)
         env:
           # PRs, pushes and issues as armbianworker; built-in token when the secret is absent.
           GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
@@ -352,9 +372,11 @@ jobs:
 
       # Mark this fingerprint as done, so the next check skips until upstream moves.
       - name: Record fingerprint
+        if: steps.fresh.outputs.fresh == 'true' && !(inputs.incidents || inputs.commit)
         run: echo "${{ needs.check.outputs.fingerprint }}" > .fingerprint
 
       - uses: actions/cache/save@v6
+        if: steps.fresh.outputs.fresh == 'true' && !(inputs.incidents || inputs.commit)
         with:
           path: .fingerprint
           key: fingerprint-${{ needs.check.outputs.fingerprint }}
