@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 636abbe7a66d80e179011a31754d55001cd44f63
+X-Fasttrack-CVE: CVE-2026-98115
+X-Fasttrack-Backport: cve/CVE-2026-98115/6.18
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Wed, 2 Sep 2026 13:23:52 +0900
+Subject: [PATCH] ksmbd: fix sparc build with atomic work state
+
+commit 636abbe7a66d80e179011a31754d55001cd44f63 upstream.
+
+[ Backport: ksmbd_work.h context adjusted; 6.18 has no compress_buf
+  member. ]
+
+Use an unsigned int for the work state so xchg() uses a supported
+4-byte operation on sparc.
+
+Fixes: d12168084c8c ("ksmbd: safely drain sessions during logoff")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609021157.8f7Wx34I-lkp@intel.com/
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ fs/smb/server/ksmbd_work.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/smb/server/ksmbd_work.h b/fs/smb/server/ksmbd_work.h
+index d36393ff8310..2c245261b38e 100644
+--- a/fs/smb/server/ksmbd_work.h
++++ b/fs/smb/server/ksmbd_work.h
+@@ -68,7 +68,7 @@ struct ksmbd_work {
+ 
+ 	void				*tr_buf;
+ 
+-	unsigned char			state;
++	unsigned int			state;
+ 	/* No response for cancelled request */
+ 	bool                            send_no_response:1;
+ 	/* Request is encrypted */

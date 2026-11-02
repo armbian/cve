@@ -424,38 +424,6 @@
     "build_log": ""
   },
   {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-99151"
-    ],
-    "kev": false,
-    "upstream": "55a67aa89342545b89f469dea6f29bfb6fac6f3d",
-    "subject": "drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/display/dc/link/link_dpms.c"
-    ],
-    "prerequisites": [
-      "81557c96c8a1 drm/amd/display: Correct slice width calculation for YCbCr420",
-      "8c8df54a2b4b drm/amd/display: Don't use stereo sync and audio on RGB signals (v2)",
-      "e45d60a76999 drm/amd/display: Add analog link detection (v2)",
-      "8ffa289f90be drm/amd/display: Add null pointer check in link_dpms",
-      "42408773ffcf drm/amd/display: Move analog check to dce110_hwseq",
-      "d0e9de7a8150 Revert \"drm/amd/display: Move setup_stream_attribute\"",
-      "5fdd03c7e2ec drm/amd/display: Move RGB-type check for audio sync to DCE HW sequence",
-      "08f133e932cc drm/amd/display: Write default Vesa Aux backlight control in dmub",
-      "c7062be3380c drm/amd/display: Correct DSC padding accounting",
-      "217737bb5a17 drm/amd/display: Fix DPMS log printing",
-      "1758cf3cfd31 drm/amd/display: revert \"write default Vesa Aux backlight control in dmub\"",
-      "5a113e15d156 drm/amd/display: init code for external panel replay",
-      "4bd8b5f8bcb5 drm/amd/display: Enable DAC in DCE link encoder",
-      "a4f01bf729b2 drm/amd/display: Refactor and fix link_dpms I2C",
-      "40989bf0e7d1 drm/amd/display: Refactor and fix link_dpms info"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
     "series": "6.12",
     "cves": [
       "CVE-2024-58015"

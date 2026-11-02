@@ -1,0 +1,102 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 55a67aa89342545b89f469dea6f29bfb6fac6f3d
+X-Fasttrack-CVE: CVE-2026-99151
+X-Fasttrack-Backport: cve/CVE-2026-99151/6.18
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Date: Mon, 2 Nov 2026 04:24:13 +0100
+Subject: [PATCH] drm/amd/display: Fix NULL sink dereference in USB4 bandwidth
+ functions
+
+commit 55a67aa89342545b89f469dea6f29bfb6fac6f3d upstream.
+
+[ Backport: 6.18 names the allocate_usb4_bandwidth_for_stream()
+  parameter bw, not stream_bw; context adjusted. ]
+
+allocate_usb4_bandwidth_for_stream() and allocate_usb4_bandwidth() both
+use ASSERT(stream->sink) before dereferencing stream->sink->link. ASSERT
+is compiled out in production builds, so a NULL stream->sink causes a
+NULL pointer dereference.
+
+link_set_dpms_off() already guards two earlier accesses to stream->sink
+with explicit NULL checks, confirming that stream->sink can legitimately
+be NULL. The subsequent call to deallocate_usb4_bandwidth() had no
+equivalent guard.
+
+Replace the ASSERT() calls with proper NULL checks that return false
+early, and add a matching stream->sink guard at the call site in
+link_set_dpms_off() consistent with the surrounding pattern.
+
+v2: Keep the existing ASSERT() calls for diagnostics (to report
+    unexpected NULL sink), and add explicit NULL checks that return false
+    before dereferencing stream->sink. Also add a matching stream->sink
+    guard at the deallocation call site in link_set_dpms_off(). (Alex)
+
+Fixes: 8fa813b7fd1e ("drm/amd/display: Remove sink usage from DPMS")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Cc: Dominik Kaszewski <dominik.kaszewski@amd.com>
+Cc: George Zhang <george.zhang@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Roman Li <Roman.Li@amd.com>
+Cc: Ivan Lipski <ivan.lipski@amd.com>
+Cc: Dan Wheeler <daniel.wheeler@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 98029a0ce61feb52c563f65349dd9b25f672e355)
+Cc: stable@vger.kernel.org
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ .../gpu/drm/amd/display/dc/link/link_dpms.c    | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index e82b6e562edf..d01a33b33f7c 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -2279,9 +2279,14 @@ static bool allocate_usb4_bandwidth_for_stream(struct dc_stream_state *stream, i
+ {
+ 	ASSERT(stream->sink);
+ 
+-	struct dc_link *link = stream->sink->link;
++	struct dc_link *link;
+ 	int req_bw = bw;
+ 
++	if (!stream->sink)
++		return false;
++
++	link = stream->sink->link;
++
+ 	DC_LOGGER_INIT(link->ctx->logger);
+ 
+ 	if (!link->dpia_bw_alloc_config.bw_alloc_enabled)
+@@ -2329,9 +2334,13 @@ static bool allocate_usb4_bandwidth(struct dc_stream_state *stream)
+ 	ASSERT(stream->sink);
+ 
+ 	bool ret;
++	int bw;
+ 
+-	int bw = dc_bandwidth_in_kbps_from_timing(&stream->timing,
+-			dc_link_get_highest_encoding_format(stream->sink->link));
++	if (!stream->sink)
++		return false;
++
++	bw = dc_bandwidth_in_kbps_from_timing(&stream->timing,
++					      dc_link_get_highest_encoding_format(stream->sink->link));
+ 
+ 	ret = allocate_usb4_bandwidth_for_stream(stream, bw);
+ 
+@@ -2388,7 +2397,8 @@ void link_set_dpms_off(struct pipe_ctx *pipe_ctx)
+ 	update_psp_stream_config(pipe_ctx, true);
+ 	dc->hwss.blank_stream(pipe_ctx);
+ 
+-	if (pipe_ctx->link_config.dp_tunnel_settings.should_use_dp_bw_allocation)
++	if (pipe_ctx->link_config.dp_tunnel_settings.should_use_dp_bw_allocation &&
++	    stream->sink)
+ 		deallocate_usb4_bandwidth(stream);
+ 
+ 	if (stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST)

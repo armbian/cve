@@ -2,13 +2,13 @@
 
 **Events this run**
 
-- added 6.1: 15 patch(es)
+- added 6.18: 3 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no longer needed: 3
 
-### Included (119)
+### Included (124)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -47,6 +47,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-63977 | `d733f519f644` | claude | dpll: zl3073x: use __dpll_device_change_ntf() and remove change_work |
 |  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 |  | CVE-2026-68103 | `a609b6278bf3` | claude | drm/amdgpu: reject mapping a reserved doorbell to a new queue |
+|  | CVE-2026-68103 | `—` | claude | drm/amdgpu: free queue when userq fence driver alloc fails |
 |  | CVE-2026-68447 | `426ffae6ecc7` | claude | drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size |
 |  | CVE-2026-72397 | `828cd614e2af` | claude | hwmon: (pmbus/core) honor vrm_version in pmbus_data2reg_vid() |
 |  | CVE-2026-74272 | `4dd86ca99ffc` | claude | cxl/region: Resolve region deletion races |
@@ -57,6 +58,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-74752 | `3dbb44d88b1e` | claude | sctp: validate cookie AUTH state before use |
 |  | CVE-2026-80899 | `c37460cd9b2f` | claude | erofs: remove fscache backend entirely |
 |  | CVE-2026-89584 | `14b007e17881` | claude | block: validate user space vectors during extraction |
+|  | CVE-2026-89584 | `b0d8d56b7c93` | claude | block: Fix start and length check added to |
 |  | CVE-2026-89755 | `34a00895d032` | claude | mm/migrate_device: clear stale mapping after freeing swapcache |
 |  | CVE-2026-89772 | `5376c9db4536` | claude | btrfs: write-protect folios during data writeback |
 |  | CVE-2026-89788 | `5258572aa5fd` | claude | ksmbd: fix share_conf UAF in tree_conn disconnect |
@@ -75,6 +77,8 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-97563 | `5be5bdda5863` | claude | smb: client: reject out-of-bounds DataOffset in CIFSSMBRead() |
 |  | CVE-2026-98106 | `c4126f1db36e` | claude | drm/pagemap: Prevent double migration of device pages |
 |  | CVE-2026-98115 | `d12168084c8c` | claude | ksmbd: safely drain sessions during logoff |
+|  | CVE-2026-98115 | `—` | claude | ksmbd: make connection teardown cancel atomic |
+|  | CVE-2026-98115 | `636abbe7a66d` | claude | ksmbd: fix sparc build with atomic work state |
 |  | CVE-2026-98153 | `—` | claude | nvme: set ns->head in nvme_alloc_ns_head |
 |  | CVE-2026-98153 | `56e1c6bbe4bb` | claude | nvme: fix racy access to FDP placement id array |
 |  | CVE-2026-98176 | `c883d0a132d4` | claude | drm/amdkfd: Avoid integer underflow with ffs in EOP ring size calc |
@@ -131,8 +135,9 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-98815 | `9952f3882ecb` | claude | nvme: fix cdev lifetime |
 |  | CVE-2026-98125 | `01261a6fa48b` | claude | smb/client: fix stale page cache in insert/collapse range |
 |  | CVE-2026-98682 | `c9b1194e8ec9` | claude | smb: client: drain and invalidate before server-side copy/clone |
+|  | CVE-2026-99151 | `55a67aa89342` | claude | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
 
-### Not affected (reviewed) (18)
+### Not affected (reviewed) (17)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -153,7 +158,6 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary — fs/ntfs (classic) not in 6.18; removed in 6.9 |
 |  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() — 6.18 checks the length before it reads it |
 |  | CVE-2026-98938 | `9a7931e847f3` | mainline | rust: irq: pass RegistrationInner as cookie to request_irq — fix already in 6.18.y as 8f317daa50fe |
-|  | CVE-2026-99151 | `55a67aa89342` | mainline | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions — bug comes from 8fa813b7fd1e, not in 6.18 |
 
 ## 6.12 (base 6.12.115, `03bae623ec32`)
 
