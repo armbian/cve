@@ -6,6 +6,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "amdgpu_mca_smu_get_mca_entry() (7ff607e27233) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -16,6 +17,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 pkvm.c has no pkvm_create_hyp_vm()",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -26,6 +28,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "needs f52f5c71f3d4 (v6.7)",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -36,6 +39,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "needs f52f5c71f3d4; 6.1 reaps the sync thread directly",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -46,6 +50,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "needs f52f5c71f3d4; 6.1 __md_stop_writes() reaps the sync thread directly",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -56,6 +61,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "current_value_store() opcode branch (4ca9c3d404ce) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -66,6 +72,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no dc/dml2 and no DCN 3.5 in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -76,6 +83,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no pipe_slice_table.mpc_combines (9d1e17227888) in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -86,6 +94,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "nvkm gsp r535.c not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -96,6 +105,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "regression from f52f5c71f3d4, not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -116,6 +126,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "fix is for GC 9.4.3, which 6.1 does not support",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -126,6 +137,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "device rbtree (1a75cc710b95) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -146,6 +158,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no drivers/dpll in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -156,6 +169,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no DCN35 IPS idle-reallow code in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -166,6 +180,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6dbdd4de0362 absent; MDIC routines use udelay()",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -176,6 +191,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no KFD debugger in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -186,6 +202,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no f2fs_handle_critical_error(); shutdown never sets read-only",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -196,6 +213,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 counts into zeroed fill.max; f6944d4a0b87 absent",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -206,6 +224,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "resource_stream_to_stream_idx() not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -216,6 +235,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no dpp_get_gamut_remap and no DCN401 in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -226,6 +246,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "98ba1d931f61 absent; RSS table set unconditionally",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -246,6 +267,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "vmw_dumb_create() surface path (d6667f0ddf46) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -256,6 +278,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "resource_log_pipe_topology_update() not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -266,6 +289,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no DCN 3.5 (dcn35_dccg.c) in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -276,6 +300,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no rtw88 usb.c in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -286,6 +311,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "construct_phy() logs only after the link_enc NULL check",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -296,6 +322,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "aqua_vanjaram.c (MI300) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -306,6 +333,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no DCN 3.5 (dcn35_resource.c) in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -316,6 +344,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "dmub_dcn35.c not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -326,6 +355,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "commit_planes_for_stream_fast() not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -336,6 +366,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "fixed in 6.1.113 by stable bd0e24e5e608",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -346,6 +377,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "DCN 4.0.1 and dc/hwss not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -356,6 +388,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "DCN401 (dcn401_hwseq.c) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -366,6 +399,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "stable 76b01d15e7d2 gives opinfo a counted conn ref",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -376,6 +410,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 tipd has no polling mode",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -386,6 +421,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no fec_ptp_save_state() in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -406,6 +442,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no bdev_file in 6.1; close sets device->bdev = NULL",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -416,6 +453,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no iso_conn_big_sync() or PA/BIG sync path in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -436,6 +474,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "restore_planes_and_stream_state() not in 6.1 dc.c",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -446,6 +485,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "stable d06eb2620d3b frees the host via devres",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -456,6 +496,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "hr_qp->dip (faa62440a577) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -466,6 +507,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no i3c hj_work (1d08326020fb) in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -476,6 +518,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "selfgen stats code from 44cfb7c58eb8 not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -486,6 +529,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 completion wakes calls; no poke model",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -506,6 +550,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "stable 2d6a67c2b3b8 removes the WARN; upstream change needs sync hotplug",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -516,6 +561,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "get_canonical_dev_path() (7e06de7c83a7) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -526,6 +572,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "btrfs_partially_delete_raid_extent() from 6aea95ee3188 not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -536,6 +583,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "judgment: every buffer-list reader holds uring_lock; no mmap/RCU readers",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -546,6 +594,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 steam_remove() destroys client_hdev before cancelling work",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -556,6 +605,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 cow_file_range() -EAGAIN path unlocks the range",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -566,6 +616,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no dc/dml2 in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -576,6 +627,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 adds NAPI before requesting IRQs; 681eb2beb3ef absent",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -586,6 +638,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no call_s_stream() WARN; vimc stop handles a never-started subdev",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -596,6 +649,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no ksmbd durable handles in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -606,6 +660,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "ksmbd durable scavenger (d484d621d40f) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -616,6 +671,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no pmu_ctx in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -626,6 +682,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no dc/dml2 in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -636,6 +693,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "upstream reverted the put_device(); applying it adds a double put",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -646,6 +704,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "0a65bc27bd64 missing; no ep_schedule_timeout()",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -654,6 +713,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "0a65bc27bd64 missing; no ep_schedule_timeout() in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -664,6 +724,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "58548b91101f missing; tile mmio set before read_gmdid()",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -674,6 +735,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 set_boost takes no amd_pstate_driver_lock",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -684,6 +746,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no block_sequence / hwss_build_fast_sequence in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -694,6 +757,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "list_first_or_null_rcu() already returns NULL on empty list",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -704,6 +768,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "READ_VOICE_SETTING quirk (ff26b2dd6568) not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -714,6 +779,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no zone write plugs in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -744,6 +810,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "idxd event log drain not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -754,6 +821,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "42ca547b13a2 absent; smb2_reconnect() never queues query_interfaces",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -764,6 +832,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "no netfs misc.c or netfs_collect_in_app() in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -772,6 +841,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "netfs_collect_in_app() from 2b1424cd131c not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -782,6 +852,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "remove_file_ext() absent; fixup_tplg_name() frees its buffer",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -792,6 +863,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "start() returns NULL on error; caller treats it as failure",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -802,6 +874,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable function `capabilities_show()` (debugfs file `amdgpu_dm_capabilities`) does not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -812,6 +885,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable function msm_ioctl_gem_info_set_metadata() does not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -822,6 +896,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "dc_get_host_router_index() not in 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -830,6 +905,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "no dc_get_host_router_index() or lowest_dpia_link_index in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -840,6 +916,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug needs a folio that is still dirty when `btrfs_subpage_set_writeback()` starts writeback.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -850,6 +927,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable code is absent in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -878,6 +956,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "no pidfs_ioctl_valid() or PIDFD_GET_INFO in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -888,6 +967,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The fix changes `msm_iommu_pagetable_prealloc_allocate()` and `msm_iommu_pagetable_prealloc_cleanup()` in `dri",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -896,6 +976,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "msm VM_BIND pgtable prealloc (e601ea31d66b) not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -906,6 +987,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable code is absent in 6.1. arch/arm64/kvm/hyp/nvhe/ffa.c does not exist.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -916,6 +998,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "Upstream adds a `prt_va` update before `amdgpu_vm_handle_moved()` in `amdgpu_amdkfd_gpuvm_restore_process_bos(",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -926,6 +1009,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable code (`alloc_slab_obj_exts()`, `mark_failed_objexts_alloc()`, `OBJEXTS_ALLOC_FAIL`) does not ex",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -936,6 +1020,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 has neither part of the vulnerable code.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -945,7 +1030,8 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
-      "reason": "Fixed in the patch set: CVE-2024-53176 backport already calls close_cached_dir().",
+      "reason": "Fixed in the patch set: patch 0064 (3fa640d035e5, CVE-2024-53176) calls close_cached_dir().",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -974,6 +1060,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug is a use of `cell->anonymous_key` before the cell is activated.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -984,6 +1071,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable function does not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -994,6 +1082,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug source, mainline 222f2c7c6d14 (\"iomap: always run error completions in",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1014,6 +1103,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The stale IOTLB entries come from SVA on x86. The x86 IOMMU walks the CPU page tables, including the kernel ha",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1022,6 +1112,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "SVA is off on x86 in 6.12 (c2c3f1a3fd74)",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1069,6 +1160,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug is a NULL pointer dereference in `unix_stream_read_generic()` (`net/unix/af_unix.c`).",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1077,6 +1169,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "af_unix SO_INQ not in 6.12; io_uring sets msg_get_inq itself",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1087,6 +1180,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug is in `ublk_partition_scan_work()`. Commit 7fc4da6a304b (\"ublk: scan partition in async way\") added th",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1095,6 +1189,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "ublk_partition_scan_work() from 7fc4da6a304b not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1105,6 +1200,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The fix adds `ice_deinit_hw()` to `ice_devlink_reinit_down()`. 6.1 has no devlink reinit path.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1113,6 +1209,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "1390b8b3d2be missing; ice_deinit_dev() still calls ice_deinit_hw()",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1123,6 +1220,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "6.12 returns early on DEF_LINK_MAP before the bad read",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1133,6 +1231,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug comes from f72514b3c569 (\"ipv6: clear RA flags when adding a static route\").",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1153,6 +1252,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The driver does not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1161,6 +1261,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "drivers/accel/amdxdna not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -1180,6 +1281,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The amdxdna driver does not exist in Linux 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1188,6 +1290,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "amdxdna driver not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1198,6 +1301,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The race needs code from `f17b558d6663` (\"cxl/pmem: Refactor nvdimm device registration, delete the workqueue\"",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1208,6 +1312,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 has no `maybe_fork_scalars()` in `kernel/bpf/verifier.c`.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1218,6 +1323,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "6.12 abandon path walks a local list; no stale subreq",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1228,6 +1334,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug is in netfs_unbuffered_write() in fs/netfs/direct_write.c. It comes from",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1235,7 +1342,8 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
-      "reason": "no netfs_unbuffered_write() (a0b4c7a49137) in 6.12",
+      "reason": "a0b4c7a49137 is absent; netfs_retry_write_stream() handles a NULL prepare_write.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1246,6 +1354,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1.y stable commit dee11efae9e7 (v6.1.168) already has this fix.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1256,6 +1365,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug comes from c28d2bff7044 (\"Bluetooth: L2CAP: Fix result of L2CAP_ECRED_CONN_RSP",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1266,6 +1376,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 stable commit 5850bc4e1d0a (\"xfrm: prevent policy_hthresh.work from racing with netns teardown\") already f",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1276,6 +1387,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "Upstream fixes `send_done()` for an unsignaled sibling send that completes with an error. In mainline, the smb",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1284,6 +1396,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "batched sends have wr_cqe NULL; send_done() runs only for the last",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1294,6 +1407,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "A 6.1 stable commit already fixes the out-of-bounds access. No commit made.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1304,6 +1418,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug is in leave_alt_screen(). It restores vc_saved_uni_lines. Commit 5eb608319bb5 (\"vt: save/restore unico",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1312,6 +1427,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "alt-screen unicode save from 5eb608319bb5 not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1331,6 +1447,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug is in scalar_byte_swap(). That function comes from 9d2119984224 (\"bpf: Add bitwise tracking for BPF_EN",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1339,6 +1456,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "scalar_byte_swap() from 9d2119984224 not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1349,6 +1467,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug is in the global verdict rhashtable nfqnl_packet_map. It comes from e19079adcd26 (\"netfilter: nfnetlin",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1370,6 +1489,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.12.y reverted this backport (aaf9de6160d6): it breaks UP builds without IRQ_WORK. No call_srcu() under pi_lock in 6.1; Armbian 6.1 kernels are SMP.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1390,6 +1510,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "Upstream adds `pci_device_is_present()` to `__context_flush_dev_iotlb()` in `drivers/iommu/intel/pasid.c`. 6.1",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1409,6 +1530,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug: `cmd_sem_val` is incremented outside `iommu->lock`, so CMD_COMPL_WAIT commands can be queued out of s",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1419,6 +1541,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "wave5 has no runtime PM in 6.12 (2092b3833487 missing)",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1429,6 +1552,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug: `amdgpu_dma_buf_move_notify()` passes its `ticket` to `amdgpu_vm_handle_moved()`.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1439,6 +1563,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The fix changes `cfs_rq::zero_vruntime` tracking in the EEVDF scheduler. 6.1 does not have EEVDF.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1468,6 +1593,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The NULL version pointer cannot occur in 6.1. No commit made.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1478,6 +1604,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable call path is absent in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1488,6 +1615,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The workqueue does not exist in 6.1. No commit made.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1496,6 +1624,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "no service_wq in mana_gd_setup() in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1506,6 +1635,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug: a RESPONSE packet is decrypted in place in the sk_buff. On a temporary error",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1516,6 +1646,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug comes from 8a8ca142a488 (\"mm: migrate: requeue destination folio on deferred split",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1536,6 +1667,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 has no `__pkvm_init_vcpu()` or `pkvm_load_hyp_vcpu()`.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1544,6 +1676,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "index checked before pinning; vcpus[] only under vm_table_lock",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1563,6 +1696,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The flagged code is absent in 6.1. The bug is a dc_link NULL check",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1573,6 +1707,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "A 6.1 stable commit already fixes the bug. No commit made.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1583,6 +1718,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "fixed in 6.12.91 by stable 2270513b5d47",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1593,6 +1729,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "6.12 has fixed-size nested_mmus array (ea242bdc29e8)",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1623,6 +1760,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable function `drm_gem_change_handle_ioctl()` does not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1631,6 +1769,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "no drm_gem_change_handle_ioctl() in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1641,6 +1780,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "fixed by stable 293fe8f2d1b5; zerocopy sized from pkt_len",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1669,6 +1809,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 `drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c` has no `checkpoint_mqd`/`restore_mqd` callbacks.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1679,6 +1820,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable function `drm_gem_change_handle_ioctl()` and the `DRM_IOCTL_GEM_CHANGE_HANDLE` ioctl do not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1687,6 +1829,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "no drm_gem_change_handle_ioctl() in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1697,6 +1840,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The use-after-free needs NVMEM layout code that 6.1 does not have.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1707,6 +1851,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable code does not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1715,6 +1860,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "rseq_entry.h and 82f572449cfe not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -1734,6 +1880,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "an equivalent check is already in linux-6.1.y.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1742,6 +1889,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "fixed in 6.12.114 by stable 29ab56e7660b",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1752,6 +1900,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "In 6.1, the phantom-plane allocation never enters vmalloc, so the BUG_ON() cannot trigger.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1762,6 +1911,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 f2fs has no atomic_inode field or COW-file GC path.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1772,6 +1922,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable function does not exist in this tree.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1780,6 +1931,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "no GEM_CHANGE_HANDLE ioctl in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1799,6 +1951,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 has stable commit 325f5ec67cc0 (\"net/sched: Restrict conditions for adding duplicating netems to qdisc tree\", backport of ec8e0e3d7ade).",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1809,6 +1962,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable durable reconnect path does not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1829,6 +1983,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The leaked reference does not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1858,6 +2013,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug is in iwl_mld_remove_link() in drivers/net/wireless/intel/iwlwifi/mld/link.c.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -1866,6 +2022,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "iwlwifi mld sub-driver not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1906,6 +2063,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable file does not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1926,6 +2084,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 never sets sd->owner; prerequisite 8a718752f5c3 is absent.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1936,6 +2095,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 uses per-CPU bpf_redirect_info; it has no bpf_net_context.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1946,6 +2106,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 already frees creq when the SSID length check fails.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -1973,6 +2134,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "classic fs/ntfs not in 6.12; removed in 6.9",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -1992,6 +2154,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "classic fs/ntfs not in 6.12; removed in 6.9",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -2011,6 +2174,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "classic fs/ntfs not in 6.12; removed in 6.9",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -2030,6 +2194,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "6.12 always queues write collection; no such flag",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2040,6 +2205,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 afs_break_some_callbacks() already checks if (volume).",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2050,6 +2216,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "the vulnerable code is absent in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2078,6 +2245,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 cancel_delayed_work_sync() holds PENDING; the self-requeue in gc fails, so gc cannot run after cancel.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2088,6 +2256,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "In 6.1 `net/core/dev.c`, `enqueue_to_backlog()` checks `netif_running(skb->dev)` after `rps_lock_irqsave(sd, &flags)`.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2124,6 +2293,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "mt7925 testmode (0a41b6751e4f) not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2151,7 +2321,8 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
-      "reason": "6.1 does not have 12e9e3cd03b5 (\"simpe_xattr: use per-sb cache\"), the commit that added the bug.",
+      "reason": "Bug commit 1e7cd8a53b72 (simple_xattr per-sb cache) is not in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -2159,7 +2330,8 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
-      "reason": "12e9e3cd03b5 missing; kernfs_xattr_set() never calls kernfs_root()",
+      "reason": "Bug commit 1e7cd8a53b72 (simple_xattr per-sb cache) is not in 6.12.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -2207,6 +2379,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The UAF needs an async op call where `afs_make_call()` runs without a caller ref.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2226,6 +2399,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 has no us144mkii driver.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -2234,6 +2408,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "us144mkii driver not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2244,6 +2419,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "sound/usb/midi2.c and include/sound/ump.h do not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2294,6 +2470,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "In 6.1 the DC log macros do not read DC_LOGGER, so no context is dereferenced.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2313,6 +2490,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The vulnerable loops do not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2349,6 +2527,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1.y removed fs/ntfs (b06b4fc2138d).",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -2357,6 +2536,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "classic fs/ntfs not in 6.12; removed in 6.9",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -2376,6 +2556,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1.y removed fs/ntfs (b06b4fc2138d).",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -2384,6 +2565,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "classic fs/ntfs not in 6.12; only ntfs3",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -2403,6 +2585,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "reparse_buf_ptr() || stops before reading ReparseDataLength",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -2422,6 +2605,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "nfsd4_copy() forces sync copies (stable 8d915bbf3926)",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2478,6 +2662,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "panthor_fw_read_build_info() from 9d443deb0441 not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2488,6 +2673,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "wave5 has no runtime PM in 6.12 (2092b3833487 missing)",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2668,6 +2854,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "drivers/s390/crypto/vfio_ap_ops.c: vfio_ap_mdev_hot_plug_cfg() in 6.1 has no apm_filtered bitmap.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2705,6 +2892,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 get_target() keeps the path pinned through create_link(); needs 1b25dea3867a.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2743,6 +2931,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "single-thread read collector from e2d46f2ec332 (6.14) not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -2760,6 +2949,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "write-side netfs_alloc_subrequest() uses mempool; never NULL",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2797,6 +2987,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "fixed in 6.12.114 by stable bd58a52738f7",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2843,6 +3034,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "stable 3d6ba6be9bef already checks the length in the only caller",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2880,6 +3072,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 mr_check_range() already uses an overflow-safe check.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2890,6 +3083,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "patches/6.1 already has upstream 28a57fb2c5df (CVE-2026-53091).",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -2954,6 +3148,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 has no arm64 BRBE driver; x86 never writes new_type or priv.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -2962,6 +3157,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "BRBE driver (drivers/perf/arm_brbe.c) not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3008,6 +3204,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "6.12 fbnic uses a napi list; no fbnic_dbg_down()",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3077,10 +3274,9 @@
   "CVE-2026-98718": {
     "6.12": {
       "cost": null,
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "head": "6.12.115",
-      "outcome": "not-affected-needs-review",
-      "reason": "93de2a6a4b91 absent; no misordered flush in sev_migrate_from()",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -3091,6 +3287,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "have_run_cpus does not exist in 6.1; SEV uses wbinvd_on_all_cpus().",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -3099,6 +3296,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "have_run_cpus not in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3216,6 +3414,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1 has no RQF_USE_SCHED (dd6216bb16e8); cached-request paths check op_is_flush().",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3226,6 +3425,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The loop recomputes count under the lock; 80fa7a033785 is not in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -3234,6 +3434,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "6.12 checks buf_len > pasted under the lock in the loop",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3244,6 +3445,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "6.12 read collector zeroes short-read tails (netfs_clear_unread())",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3263,6 +3465,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "The bug needs a block size larger than PAGE_SIZE.",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3273,6 +3476,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "fixed in 6.12.111 by stable 5de0527f7824",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3312,6 +3516,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "Fixes d5d8b8662e6e is absent; set_memory.c takes no init_mm mmap lock.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -3320,6 +3525,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "d5d8b8662e6e absent; change_page_attr_set_clr() takes no init_mm lock",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3393,6 +3599,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "pagetable_free_kernel() and deferred kernel page-table freeing do not exist in 6.1.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -3401,6 +3608,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "no deferred kernel page-table freeing (pagetable_free_kernel()) in 6.12",
+      "reviewed": "2026-11-02",
       "run": null
     }
   },
@@ -3411,6 +3619,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "6.1.y removed fs/ntfs (b06b4fc2138d).",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.12": {
@@ -3419,6 +3628,7 @@
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
       "reason": "no fs/ntfs/ea.c; new ntfs driver is mainline only",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
@@ -3447,6 +3657,7 @@
       "head": "6.1.191",
       "outcome": "not-affected-needs-review",
       "reason": "8fa813b7fd1e brings the bug; 6.1 lacks it and the USB4 bandwidth code.",
+      "reviewed": "2026-11-02",
       "run": null
     },
     "6.18": {
