@@ -306,6 +306,26 @@ def _order_mainline(repo: Path, cands: list[Candidate]) -> None:
                               when.get(c.upstream, 1 << 62) if c.source == "mainline" else 0))
 
 
+def _place_carried(cands: list[Candidate]) -> None:
+    """A mainline pick that a backport set carries goes right before that set. The set was
+    made on top of the earlier sets, so the pick can need them too (bisect builds)."""
+    owner: dict[str, str] = {}
+    for c in cands:
+        if c.backport and c.upstream:
+            owner.setdefault(c.upstream, c.backport)
+    moved: dict[str, list[Candidate]] = {}
+    rest = []
+    for c in cands:
+        if c.source == "mainline" and not c.backport and c.upstream in owner:
+            moved.setdefault(owner[c.upstream], []).append(c)
+        else:
+            rest.append(c)
+    cands[:] = []
+    for c in rest:
+        cands += moved.pop(c.backport, [])
+        cands.append(c)
+
+
 def run_series(
     repo: Path,
     series: tuple[int, int],
@@ -333,6 +353,7 @@ def run_series(
     # Reviewed backports go after the clean picks: one patch set per series.
     if cve_root and cve_root.is_dir():
         cands += load_backports(cve_root, label)
+        _place_carried(cands)
     log.info("%s: verify %d candidates on %s", label, len(cands), ref[:12])
     verify(repo, ref, cands, arches=arches, builder=builder)
     log.info("%s: done in %.0fs", label, time.monotonic() - t)

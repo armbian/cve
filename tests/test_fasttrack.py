@@ -677,6 +677,27 @@ class TestBuildCheck(Fixture):
         self.assertEqual(v[("d" * 40, "CVE-2026-0001/6.18")], engine.ACCEPTED)
         self.assertEqual(v[("f" * 40, "CVE-2026-0011/6.18")], engine.ACCEPTED)
 
+    def test_pick_goes_after_sets_its_backport_was_made_on(self):
+        # cve/0001 adds an API (bar.c). cve/0011 backports A on top of it. Mainline A applies,
+        # so cve/0011 is superseded; A must still come after cve/0001.
+        wt = self.tmp / "bp"
+        sh(self.repo, "git", "worktree", "add", "-q", "--detach", str(wt), "linux-6.18.y")
+        for cve, upstream, name, old, new in (("CVE-2026-0001", "d" * 40, "bar.c", "bar line 3\n", "bar line 3 API\n"),
+                                              ("CVE-2026-0011", self.A, "foo.c", "foo line 6\n", "foo line 6 FIXED\n")):
+            f = wt / name
+            f.write_text(f.read_text().replace(old, new))
+            sh(wt, "git", "commit", "-qam", "backport")
+            c = engine.Candidate("6.18", upstream, "backport", "claude", [cve], verdict=engine.ACCEPTED,
+                                 filename=f"0001-{upstream[:12]}-backport.patch",
+                                 patch=sh(wt, "git", "format-patch", "-1", "--stdout"))
+            emit.write_patch_dir(self.tmp / "cve" / cve / "6.18", "6.18", "h", "6.18.2", [c])
+        res = engine.run_series(self.repo, (6, 18), self.records, self.data / "stable-queue", {},
+                                {"6.18": "6.18.2"}, remote="none", cve_root=self.tmp / "cve")
+        v = {(c.upstream, c.backport): c.verdict for c in res.candidates}
+        self.assertEqual(v[(self.A, "CVE-2026-0011/6.18")], engine.SUPERSEDED)
+        order = [(c.upstream, c.backport) for c in res.accepted]
+        self.assertLess(order.index(("d" * 40, "CVE-2026-0001/6.18")), order.index((self.A, "")))
+
     def test_claude_backport_that_does_not_build(self):
         rec = vulns.find(self.data / "vulns", "CVE-2026-0001")
         bld = fake_builder("foo line 6 FIXED")
