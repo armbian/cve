@@ -645,6 +645,31 @@ class TestExpiry(Fixture):
         self.assertFalse((cve / "CVE-2026-0001").exists())
         self.assertTrue((cve / "CVE-2026-0006" / "6.18").is_dir())
 
+    def test_prune_retires_set_with_overlapping_patches(self):
+        # The second patch changes the line the first one adds. Stable takes both.
+        wt = self.tmp / "bp"
+        sh(self.repo, "git", "worktree", "add", "-q", "--detach", str(wt), "linux-6.18.y")
+        cands = []
+        for i, (old, new) in enumerate((("foo line 6\n", "foo line 6 FIXED\n"),
+                                        ("foo line 6 FIXED\n", "foo line 6 FIXED MORE\n")), 1):
+            (wt / "foo.c").write_text((wt / "foo.c").read_text().replace(old, new))
+            sh(wt, "git", "commit", "-qam", f"foo: part {i}")
+            cands.append(engine.Candidate("6.18", "", f"part {i}", "claude", ["CVE-2026-0001"],
+                                          filename=f"000{i}-part.patch",
+                                          patch=sh(wt, "git", "format-patch", "-1", "--stdout")))
+        d = self.out / "cve" / "CVE-2026-0001" / "6.18"
+        emit.write_patch_dir(d, "6.18", "h", "6.18.2", cands)
+        cli.main(["--config", str(self.cfg), "prune"])
+        self.assertTrue(d.is_dir())                                    # nothing landed yet
+        sh(self.repo, "git", "checkout", "-q", "linux-6.18.y")
+        sh(self.repo, "git", "merge", "-q", "--ff-only", sh(wt, "git", "rev-parse", "HEAD").strip())
+        commit(self.repo, "Linux 6.18.3", Makefile=makefile(3))
+        sh(self.repo, "git", "checkout", "-q", "master")
+        sh(self.tmp, "git", "-C", str(self.data / "linux"), "fetch", "-q", str(self.repo),
+           "+refs/heads/linux-6.18.y:refs/remotes/origin/linux-6.18.y")
+        cli.main(["--config", str(self.cfg), "prune"])
+        self.assertFalse(d.exists())
+
 
 class TestHints(Fixture):
     def test_prerequisite_hint(self):
