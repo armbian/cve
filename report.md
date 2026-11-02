@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.18: 3 patch(es)
+- added 6.12: 2 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -163,7 +163,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (176)
+### Included (178)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -196,6 +196,7 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-46279 | `6b1842775a46` | stable-list | mm/alloc_tag: clear codetag for pages allocated before page_ext initialization |
 |  | CVE-2026-52953 | `a6dea58d8625` | stable-list | iommu/vt-d: Fix oops due to out of scope access |
 |  | CVE-2026-80670 | `5484b43a0ec8` | stable-list | perf tools: Use perf_env__get_cpu_topology() in machine__resolve() |
+|  | CVE-2026-98924 | `3bc4e4410830` | claude | vfs: Remove unnecessary list_for_each_entry_safe() from evict_inodes() |
 |  | CVE-2026-98924 | `7459c0218742` | stable-list | fs: avoid repeated scans in evict_inodes() |
 |  | CVE-2026-99021 | `e2151c29cec7` | stable-list | regulator: of: fill in supply names in of_regulator_bulk_get_all() |
 |  | CVE-2026-99122 | `ad9a7da3fa39` | stable-list | vsock/vmci: validate packet source for connected sockets |
@@ -234,6 +235,7 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-74314 | `a3a81d247651` | claude | bpf: Cancel special fields on map value recycle |
 |  | CVE-2026-72454 | `650716f23eac` | claude | i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev() |
 |  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
+|  | CVE-2026-64160 | `8cf8b5ae8e09` | claude | cifs: Fix undefined variables |
 |  | CVE-2026-64066 | `8a8c0cfdf465` | claude | netfs: Fix netfs_read_to_pagecache() to pause on subreq failure |
 |  | CVE-2026-64067 | `b5782e2d462c` | claude | netfs: Fix missing barriers when accessing stream->subrequests locklessly |
 |  | CVE-2026-72355 | `5c6ce05e4065` | claude | netfs: Fix barriering when walking subrequest list |
