@@ -3657,42 +3657,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-50211"
-    ],
-    "kev": false,
-    "upstream": "c226964ec786f3797ed389a16392ce4357697d24",
-    "subject": "udf: refactor inode_bmap() to handle error",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/udf/directory.c",
-      "fs/udf/inode.c",
-      "fs/udf/partition.c",
-      "fs/udf/truncate.c",
-      "fs/udf/udfdecl.h"
-    ],
-    "prerequisites": [
-      "36273e5b4e3a udf: remove ->writepage",
-      "e57191a8d400 udf: Move setting of i_lenExtents into udf_do_extend_file()",
-      "b316c443b4e8 udf: Keep i_lenExtents consistent with the total length of extents",
-      "02113feaf62c udf: Fix spelling mistake \"lenght\" -> \"length\"",
-      "1fb40763a58c udf: remove redundant variable netype",
-      "3bea4ae1c97b udf: Zero udf name padding",
-      "ee454ad2fce7 udf: Propagate errors from udf_advance_blk()",
-      "bd904f3c7496 udf: Unify types in anchor block detection",
-      "101ee137d32a udf: Drop VARCONV support",
-      "de80dae03c43 udf: Move incrementing of goal block directly into inode_getblk()",
-      "f3a30be77750 udf: Factor out block mapping into udf_map_block()",
-      "4215db46d538 udf: Use udf_bread() in udf_get_pblock_virt15()",
-      "364a6665d573 udf: Fold udf_block_map() into udf_map_block()",
-      "b3c03fcef271 udf: Pass mapping request into inode_getblk()",
-      "809425217805 udf: Add flag to disable block preallocation"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-50097"
     ],
     "kev": false,
@@ -5298,41 +5262,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2025-68768"
-    ],
-    "kev": false,
-    "upstream": "006a5035b495dec008805df249f92c22c89c3d2e",
-    "subject": "inet: frags: flush pending skbs in fqdir_pre_exit()",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/inet_frag.h",
-      "include/net/ipv6_frag.h",
-      "net/ipv4/inet_fragment.c",
-      "net/ipv4/ip_fragment.c"
-    ],
-    "prerequisites": [
-      "4ecbb1c27c36 net: dropreason: add SKB_DROP_REASON_DUP_FRAG",
-      "77adfd3a1d44 net: dropreason: add SKB_DROP_REASON_FRAG_REASM_TIMEOUT",
-      "3bdfb04f13eb net: dropreason: add SKB_DROP_REASON_FRAG_TOO_FAR",
-      "5b8285cca6fe net: move dropreason.h to dropreason-core.h",
-      "d20909a0689f inet: frags: eliminate kernel-doc warning",
-      "c899710fe7f9 networking: Update to register_net_sysctl_sz",
-      "802e12ff9cbf inet: frags: delay fqdir_free_fn()",
-      "bfa858f220ab sysctl: treewide: constify ctl_table_header::ctl_table_arg",
-      "1c106eb01cee net: ipv{6,4}: Remove the now superfluous sentinel elements from ctl_table array",
-      "4d25ca2d6801 net: Rename mono_delivery_time to tstamp_type for scalabilty",
-      "66fb6386d358 ipv4: Convert ip_route_input_noref() to dscp_t.",
-      "82d9983ebeb8 net: ip: make ip_route_input_noref() return drop reasons",
-      "ae2d90355aa5 inet: frags: add inet_frag_putn() helper",
-      "a2fb987c0ecf ipv4: frags: remove ipq_put()",
-      "eb0dfc0ef195 inet: frags: change inet_frag_kill() to defer refcount updates"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2025-71225"
     ],
     "kev": false,
@@ -5902,38 +5831,6 @@
       "befae75856ab bpf: propagate nullness information for reg to reg comparisons",
       "282de143ead9 bpf: Introduce allocated objects support",
       "4e814da0d599 bpf: Allow locking bpf_spin_lock in allocated objects"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-43362"
-    ],
-    "kev": false,
-    "upstream": "d78840a6a38d312dc1a51a65317bb67e46f0b929",
-    "subject": "smb: client: fix in-place encryption corruption in SMB2_write()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb2pdu.c"
-    ],
-    "prerequisites": [
-      "b535cc796a4b smb3: missing null check in SMB2_change_notify",
-      "a43f95fdd394 cifs: fix charset issue in reconnection",
-      "09ee7a3bf866 [SMB3] send channel sequence number in SMB3 requests after reconnects",
-      "b3773b19d43f SMB3: rename macro CIFS_SERVER_IS_CHAN to avoid confusion",
-      "de54845290ce fs/smb/client: Use common code in client",
-      "05d0f8f55ad6 smb3: move server check earlier when setting channel sequence number",
-      "2c75426c1fea smb3: fix some minor typos and repeated words",
-      "2da338ff752a smb3: do not start laundromat thread when dir leases  disabled",
-      "c8ebf077fbeb smb3: fix confusing debug message",
-      "19a4b9d6c372 cifs: reconnect work should have reference on server struct",
-      "705fc522fe9d cifs: handle when server starts supporting multichannel",
-      "823342524868 Revert \"cifs: reconnect work should have reference on server struct\"",
-      "04909192ada3 cifs: reconnect worker should take reference on server struct unconditionally",
-      "f30bbc38704e cifs: fix a pending undercount of srv_count",
-      "6ebfede8d57a cifs: Pass unbyteswapped eof value into SMB2_set_eof()"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -6750,39 +6647,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-74374"
-    ],
-    "kev": false,
-    "upstream": "811545e0926d02a6a0b1a1258bb5544777c164d4",
-    "subject": "md/raid1,raid10: fix error-path detection with md_cloned_bio()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/md/raid1.c",
-      "drivers/md/raid10.c"
-    ],
-    "prerequisites": [
-      "c34b7ac65087 block: remove bio_set_op_attrs",
-      "dccb8ad615bf md/raid10: Fix typo in comment (replacment -> replacement)",
-      "9fdfe6d45be2 md/raid10: don't BUG_ON() in raise_barrier()",
-      "b42473cdbab7 md: check for failure when adding pages in alloc_behind_master_bio",
-      "f83123223a84 md: raid1: use __bio_add_page for adding single page to bio",
-      "0c67dd644176 md: raid1: check if adding pages to resync bio fails",
-      "446931543982 md: protect md_thread with rcu",
-      "6090368abcb4 md/raid10: prioritize adding disk to 'removed' mirror",
-      "8d355a46c1e0 md/raid10: Do not add spare disk when recovery fails",
-      "9efcc2c3df76 md/raid1-10: don't handle pluged bio by daemon thread",
-      "460af1f9d9e6 md/raid1-10: limit the number of plugged bio",
-      "a8d5fdd4d270 raid10: avoid spin_lock from fastpath from raid10_unplug()",
-      "bb2a9acefaf9 md/raid1: switch to use md_account_bio() for io accounting",
-      "820455238366 md/raid10: switch to use md_account_bio() for io accounting",
-      "ffb1e7a03f96 md/raid1: prioritize adding disk to 'removed' mirror"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-53243"
     ],
     "kev": false,
@@ -7489,38 +7353,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-90227"
-    ],
-    "kev": false,
-    "upstream": "b53d495c7f0db46b6748b5ade48371a10dd5d3bc",
-    "subject": "nvme/ioctl: check SUBMIT_IO with nvme_cmd_allowed()",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/nvme/host/ioctl.c"
-    ],
-    "prerequisites": [
-      "855b7717f44b nvme: fine-granular CAP_SYS_ADMIN for nvme io commands",
-      "e4fbcf32c860 nvme: identify-namespace without CAP_SYS_ADMIN",
-      "ea43fceea417 nvme: allow unprivileged passthrough of Identify Controller",
-      "6f99ac04c469 nvme: consult the CSE log page for unprivileged passthrough",
-      "2fa1dc8637b5 nvme: remove __nvme_ioctl",
-      "7b7fdb8e2dbc nvme: replace the \"bool vec\" arguments with flags in the ioctl path",
-      "313c08c72ee7 nvme: don't allow unprivileged passthrough on partitions",
-      "888545cb43d7 nvme: set REQ_ALLOC_CACHE for uring-passthru request",
-      "62281b9ed671 nvme: remove nvme_execute_passthru_rq",
-      "fd9b8547bc5c io_uring: Pass whole sqe to commands",
-      "f026be0e1e88 nvme: optimise io_uring passthrough completion",
-      "7d9d7d59d44b nvme: replace the fmode_t argument to the nvme ioctl handlers with a simple bool",
-      "05bdb9965305 block: replace fmode_t with a block-specific type for block open flags",
-      "9408d8a37e6c nvme: improved uring polling",
-      "80814b8e359f bio-integrity: update the payload size in bio_integrity_add_page()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-80704"
     ],
     "kev": false,
@@ -7769,38 +7601,6 @@
       "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
       "6b94d081f81d netfilter: nf_tables: remove register tracking infrastructure",
       "66b75e6bbeeb netfilter: add more netlink-based policy range checks"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-93235"
-    ],
-    "kev": false,
-    "upstream": "5eced87b7d19dbc76ebdddaf322046f9ac582fcb",
-    "subject": "f2fs: fix to zero post-EOF data when extending file size",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/f2fs/file.c"
-    ],
-    "prerequisites": [
-      "138060ba92b3 fs: pass dentry to set acl method",
-      "cac2f8b8d8b5 fs: rename current get acl method",
-      "a5029a57a2f3 f2fs: Fix typo in comments",
-      "41e8f85a75fc f2fs: introduce F2FS_IOC_START_ATOMIC_REPLACE",
-      "71644dff4811 f2fs: add block_age-based extent cache",
-      "fe59109ae5c0 f2fs: initialize extent_cache parameter",
-      "39bee2e6acc2 f2fs: file: drop useless initializer in expand_inode_data()",
-      "1cd7565449de f2fs: add a f2fs_ prefix to punch_hole() and expand_inode_data()",
-      "c40e15a9a59f f2fs: merge f2fs_show_injection_info() into time_to_inject()",
-      "c1632a0f1120 fs: port ->setattr() to pass mnt_idmap",
-      "b74d24f7a74f fs: port ->getattr() to pass mnt_idmap",
-      "13e83a4923be fs: port ->set_acl() to pass mnt_idmap",
-      "8782a9aea3ab fs: port ->fileattr_set() to pass mnt_idmap",
-      "f2d40141d5d9 fs: port inode_init_owner() to mnt_idmap",
-      "01beba7957a2 fs: port inode_owner_or_capable() to mnt_idmap"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""

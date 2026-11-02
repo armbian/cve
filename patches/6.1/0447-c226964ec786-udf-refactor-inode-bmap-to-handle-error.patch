@@ -1,0 +1,212 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: c226964ec786f3797ed389a16392ce4357697d24
+X-Fasttrack-CVE: CVE-2024-50211
+X-Fasttrack-Backport: cve/CVE-2024-50211/6.1
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+Date: Tue, 1 Oct 2024 19:54:25 +0800
+Subject: [PATCH] udf: refactor inode_bmap() to handle error
+
+commit c226964ec786f3797ed389a16392ce4357697d24 upstream.
+
+[ Backport: 6.1 has udf_block_map(), not udf_map_block() (no 364a6665d573): convert its inode_bmap() call. udf_block_map() still returns 0 on error, as before. ]
+[ Backport: udfdecl.h: adapt the inode_bmap() prototype to the 6.1 context. ]
+
+Refactor inode_bmap() to handle error since udf_next_aext() can return
+error now. On situations like ftruncate, udf_extend_file() can now
+detect errors and bail out early without resorting to checking for
+particular offsets and assuming internal behavior of these functions.
+
+Reported-by: syzbot+7a4842f0b1801230a989@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7a4842f0b1801230a989
+Tested-by: syzbot+7a4842f0b1801230a989@syzkaller.appspotmail.com
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20241001115425.266556-4-zhaomzhao@126.com
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ fs/udf/directory.c | 13 ++++++++-----
+ fs/udf/inode.c     | 28 +++++++++++++++++-----------
+ fs/udf/partition.c |  6 ++++--
+ fs/udf/truncate.c  |  6 ++++--
+ fs/udf/udfdecl.h   |  5 +++--
+ 5 files changed, 36 insertions(+), 22 deletions(-)
+
+diff --git a/fs/udf/directory.c b/fs/udf/directory.c
+index e3f0f409b79d..c79b8f997ea0 100644
+--- a/fs/udf/directory.c
++++ b/fs/udf/directory.c
+@@ -247,6 +247,7 @@ int udf_fiiter_init(struct udf_fileident_iter *iter, struct inode *dir,
+ {
+ 	struct udf_inode_info *iinfo = UDF_I(dir);
+ 	int err = 0;
++	int8_t etype;
+ 
+ 	iter->dir = dir;
+ 	iter->bh[0] = iter->bh[1] = NULL;
+@@ -266,9 +267,9 @@ int udf_fiiter_init(struct udf_fileident_iter *iter, struct inode *dir,
+ 		goto out;
+ 	}
+ 
+-	if (inode_bmap(dir, iter->pos >> dir->i_blkbits, &iter->epos,
+-		       &iter->eloc, &iter->elen, &iter->loffset) !=
+-	    (EXT_RECORDED_ALLOCATED >> 30)) {
++	err = inode_bmap(dir, iter->pos >> dir->i_blkbits, &iter->epos,
++			 &iter->eloc, &iter->elen, &iter->loffset, &etype);
++	if (err <= 0 || etype != (EXT_RECORDED_ALLOCATED >> 30)) {
+ 		if (pos == dir->i_size)
+ 			return 0;
+ 		udf_err(dir->i_sb,
+@@ -456,6 +457,7 @@ int udf_fiiter_append_blk(struct udf_fileident_iter *iter)
+ 	sector_t block;
+ 	uint32_t old_elen = iter->elen;
+ 	int err;
++	int8_t etype;
+ 
+ 	if (WARN_ON_ONCE(iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB))
+ 		return -EINVAL;
+@@ -470,8 +472,9 @@ int udf_fiiter_append_blk(struct udf_fileident_iter *iter)
+ 		udf_fiiter_update_elen(iter, old_elen);
+ 		return err;
+ 	}
+-	if (inode_bmap(iter->dir, block, &iter->epos, &iter->eloc, &iter->elen,
+-		       &iter->loffset) != (EXT_RECORDED_ALLOCATED >> 30)) {
++	err = inode_bmap(iter->dir, block, &iter->epos, &iter->eloc, &iter->elen,
++		   &iter->loffset, &etype);
++	if (err <= 0 || etype != (EXT_RECORDED_ALLOCATED >> 30)) {
+ 		udf_err(iter->dir->i_sb,
+ 			"block %llu not allocated in directory (ino %lu)\n",
+ 			(unsigned long long)block, iter->dir->i_ino);
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index 3d82f6914ba9..0789aa3cfc97 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -536,8 +536,10 @@ static int udf_extend_file(struct inode *inode, loff_t newsize)
+ 	 */
+ 	udf_discard_prealloc(inode);
+ 
+-	etype = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset);
+-	within_last_ext = (etype != -1);
++	err = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset, &etype);
++	if (err < 0)
++		goto out;
++	within_last_ext = (err == 1);
+ 	/* We don't expect extents past EOF... */
+ 	WARN_ON_ONCE(within_last_ext &&
+ 		     elen > ((loff_t)offset + 1) << inode->i_blkbits);
+@@ -2295,13 +2297,15 @@ int8_t udf_delete_aext(struct inode *inode, struct extent_position epos)
+ 	return (elen >> 30);
+ }
+ 
+-int8_t inode_bmap(struct inode *inode, sector_t block,
+-		  struct extent_position *pos, struct kernel_lb_addr *eloc,
+-		  uint32_t *elen, sector_t *offset)
++/*
++ * Returns 1 on success, -errno on error, 0 on hit EOF.
++ */
++int inode_bmap(struct inode *inode, sector_t block, struct extent_position *pos,
++	       struct kernel_lb_addr *eloc, uint32_t *elen, sector_t *offset,
++	       int8_t *etype)
+ {
+ 	unsigned char blocksize_bits = inode->i_sb->s_blocksize_bits;
+ 	loff_t lbcount = 0, bcount = (loff_t) block << blocksize_bits;
+-	int8_t etype;
+ 	struct udf_inode_info *iinfo;
+ 	int err = 0;
+ 
+@@ -2313,13 +2317,13 @@ int8_t inode_bmap(struct inode *inode, sector_t block,
+ 	}
+ 	*elen = 0;
+ 	do {
+-		err = udf_next_aext(inode, pos, eloc, elen, &etype, 1);
++		err = udf_next_aext(inode, pos, eloc, elen, etype, 1);
+ 		if (err <= 0) {
+ 			if (err == 0) {
+ 				*offset = (bcount - lbcount) >> blocksize_bits;
+ 				iinfo->i_lenExtents = lbcount;
+ 			}
+-			return -1;
++			return err;
+ 		}
+ 		lbcount += *elen;
+ 	} while (lbcount <= bcount);
+@@ -2327,7 +2331,7 @@ int8_t inode_bmap(struct inode *inode, sector_t block,
+ 	udf_update_extent_cache(inode, lbcount - *elen, pos);
+ 	*offset = (bcount + *elen - lbcount) >> blocksize_bits;
+ 
+-	return etype;
++	return 1;
+ }
+ 
+ udf_pblk_t udf_block_map(struct inode *inode, sector_t block)
+@@ -2336,12 +2340,14 @@ udf_pblk_t udf_block_map(struct inode *inode, sector_t block)
+ 	uint32_t elen;
+ 	sector_t offset;
+ 	struct extent_position epos = {};
++	int8_t etype;
+ 	udf_pblk_t ret;
+ 
+ 	down_read(&UDF_I(inode)->i_data_sem);
+ 
+-	if (inode_bmap(inode, block, &epos, &eloc, &elen, &offset) ==
+-						(EXT_RECORDED_ALLOCATED >> 30))
++	if (inode_bmap(inode, block, &epos, &eloc, &elen, &offset,
++		       &etype) > 0 &&
++	    etype == (EXT_RECORDED_ALLOCATED >> 30))
+ 		ret = udf_get_lb_pblock(inode->i_sb, &eloc, offset);
+ 	else
+ 		ret = 0;
+diff --git a/fs/udf/partition.c b/fs/udf/partition.c
+index 1c12b25e84cc..bf97348fe5b0 100644
+--- a/fs/udf/partition.c
++++ b/fs/udf/partition.c
+@@ -287,9 +287,11 @@ static uint32_t udf_try_read_meta(struct inode *inode, uint32_t block,
+ 	sector_t ext_offset;
+ 	struct extent_position epos = {};
+ 	uint32_t phyblock;
++	int8_t etype;
++	int err = 0;
+ 
+-	if (inode_bmap(inode, block, &epos, &eloc, &elen, &ext_offset) !=
+-						(EXT_RECORDED_ALLOCATED >> 30))
++	err = inode_bmap(inode, block, &epos, &eloc, &elen, &ext_offset, &etype);
++	if (err <= 0 || etype != (EXT_RECORDED_ALLOCATED >> 30))
+ 		phyblock = 0xFFFFFFFF;
+ 	else {
+ 		map = &UDF_SB(sb)->s_partmaps[partition];
+diff --git a/fs/udf/truncate.c b/fs/udf/truncate.c
+index f8a8a22102a3..68e3c3bbecfe 100644
+--- a/fs/udf/truncate.c
++++ b/fs/udf/truncate.c
+@@ -218,10 +218,12 @@ int udf_truncate_extents(struct inode *inode)
+ 	else
+ 		BUG();
+ 
+-	etype = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset);
++	ret = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset, &etype);
++	if (ret < 0)
++		return ret;
+ 	byte_offset = (offset << sb->s_blocksize_bits) +
+ 		(inode->i_size & (sb->s_blocksize - 1));
+-	if (etype == -1) {
++	if (ret == 0) {
+ 		/* We should extend the file? */
+ 		WARN_ON(byte_offset);
+ 		return 0;
+diff --git a/fs/udf/udfdecl.h b/fs/udf/udfdecl.h
+index 5290c1fa159a..a96e25fe82c5 100644
+--- a/fs/udf/udfdecl.h
++++ b/fs/udf/udfdecl.h
+@@ -161,8 +161,9 @@ extern int udf_setsize(struct inode *, loff_t);
+ extern void udf_evict_inode(struct inode *);
+ extern int udf_write_inode(struct inode *, struct writeback_control *wbc);
+ extern udf_pblk_t udf_block_map(struct inode *inode, sector_t block);
+-extern int8_t inode_bmap(struct inode *, sector_t, struct extent_position *,
+-			 struct kernel_lb_addr *, uint32_t *, sector_t *);
++extern int inode_bmap(struct inode *inode, sector_t block,
++		      struct extent_position *pos, struct kernel_lb_addr *eloc,
++		      uint32_t *elen, sector_t *offset, int8_t *etype);
+ extern int udf_setup_indirect_aext(struct inode *inode, udf_pblk_t block,
+ 				   struct extent_position *epos);
+ extern int __udf_add_aext(struct inode *inode, struct extent_position *epos,

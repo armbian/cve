@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.1: 5 patch(es)
+- added 6.1: 15 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -428,7 +428,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
 
-### Included (433)
+### Included (448)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -865,26 +865,37 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-99191 | `b2936b4fd562` | claude | net/ipv6: Introduce payload_len helpers |
 |  | CVE-2026-99191 | `8070ed578b6b` | claude | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
 |  | CVE-2026-98067 | `82e664cf1219` | claude | erofs: disable LZ4 rolling decompression for now |
+|  | CVE-2025-68768 | `1231eec6994b` | claude | inet: frags: add inet_frag_queue_flush() |
+|  | CVE-2025-68768 | `006a5035b495` | claude | inet: frags: flush pending skbs in fqdir_pre_exit() |
+|  | CVE-2025-68768 | `32594b098549` | claude | inet: frags: fix use-after-free caused by the fqdir_pre_exit() flush |
+|  | CVE-2025-68768 | `b824476c56a1` | claude | inet: frags: invalidate queues before flushing them |
+|  | CVE-2026-90227 | `b53d495c7f0d` | claude | nvme/ioctl: check SUBMIT_IO with nvme_cmd_allowed() |
+|  | CVE-2026-74374 | `811545e0926d` | claude | md/raid1,raid10: fix error-path detection with md_cloned_bio() |
+|  | CVE-2026-43362 | `d78840a6a38d` | claude | smb: client: fix in-place encryption corruption in SMB2_write() |
+|  | CVE-2026-93235 | `ba8dac350faf` | claude | f2fs: fix to zero post-eof page |
+|  | CVE-2026-93235 | `c2f7c32b2540` | claude | f2fs: fix to mitigate overhead of f2fs_zero_post_eof_page() |
+|  | CVE-2026-93235 | `b2205d3cfd6c` | claude | f2fs: fix to off-by-one issue in f2fs_zero_post_eof_page() |
+|  | CVE-2026-93235 | `5eced87b7d19` | claude | f2fs: fix to zero post-EOF data when extending file size |
+|  | CVE-2026-93235 | `0b2cd5092139` | claude | f2fs: fix to zero data after EOF for compressed file correctly |
+|  | CVE-2024-50211 | `b405c1e58b73` | claude | udf: refactor udf_next_aext() to handle error |
+|  | CVE-2024-50211 | `c226964ec786` | claude | udf: refactor inode_bmap() to handle error |
+|  | CVE-2024-50211 | `55dd5b4db3bf` | claude | udf: Make sure i_lenExtents is uptodate on inode eviction |
 
-### Needs a backport (31)
+### Needs a backport (25)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2024-35961 | `c6e77aa9dd82` | mainline | net/mlx5: Register devlink first under devlink lock |
 |  | CVE-2024-46678 | `2aeeef906d5a` | mainline | bonding: change ipsec_lock from spin lock to mutex |
-|  | CVE-2024-50211 | `c226964ec786` | mainline | udf: refactor inode_bmap() to handle error |
 |  | CVE-2024-56591 | `2b0f2fc9ed62` | mainline | Bluetooth: hci_conn: Use disable_delayed_work_sync |
 |  | CVE-2025-38333 | `bb5eb8a5b222` | mainline | f2fs: fix to bail out in get_new_segment() |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
-|  | CVE-2025-68768 | `006a5035b495` | mainline | inet: frags: flush pending skbs in fqdir_pre_exit() |
 | does not build | CVE-2025-71225 | `2cc583653bbe` | mainline | md: suspend array while updating raid_disks via sysfs |
 | does not build | CVE-2026-23240 | `7bb09315f93d` | mainline | tls: Fix race condition in tls_sw_cancel_work_tx() |
-|  | CVE-2026-43362 | `d78840a6a38d` | mainline | smb: client: fix in-place encryption corruption in SMB2_write() |
 |  | CVE-2026-46054 | `82544d36b172` | mainline | selinux: fix overlayfs mmap() and mprotect() access checks |
 | does not build | CVE-2026-64112 | `9fc75b71fdd3` | mainline | rbd: eliminate a race in lock_dwork draining on unmap |
 |  | CVE-2026-64026 | `d2bc90cf6c75` | mainline | rxrpc: Fix DATA decrypt vs splice() by copying data to buffer in recvmsg |
-|  | CVE-2026-74374 | `811545e0926d` | mainline | md/raid1,raid10: fix error-path detection with md_cloned_bio() |
 |  | CVE-2026-53185 | `732fd9f0b9c1` | mainline | zram: fix use-after-free in zram_bvec_write_partial() |
 |  | CVE-2026-80636 | `35e21a4dccc5` | mainline | netfilter: conntrack: revert ct extension genid infrastructure |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
@@ -892,12 +903,10 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-68447 | `426ffae6ecc7` | mainline | drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size |
 | does not build | CVE-2026-93072 | `616dd89d81ad` | mainline | irqchip/renesas-irqc: Fix generic interrupt chip leak on remove |
 |  | CVE-2026-68152 | `ea20c44935d6` | mainline | amt: fix use-after-free in AMT delayed works |
-|  | CVE-2026-90227 | `b53d495c7f0d` | mainline | nvme/ioctl: check SUBMIT_IO with nvme_cmd_allowed() |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
 | does not build | CVE-2026-74725 | `ec680ea4ba1b` | mainline | enic: fix tx_hang_reset use-after-free on device removal |
 |  | CVE-2026-89797 | `75b1e88d3425` | mainline | power: supply: ab8500_fg: fix use-after-free on remove |
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
-|  | CVE-2026-93235 | `5eced87b7d19` | mainline | f2fs: fix to zero post-EOF data when extending file size |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
