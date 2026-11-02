@@ -1,16 +1,11 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: claude
+X-Fasttrack-Source: mainline
 X-Fasttrack-Upstream: 0fbd5c2327020858c45b2d1c65775d64cdeca523
 X-Fasttrack-CVE: CVE-2026-89899
-X-Fasttrack-Backport: cve/CVE-2026-89899/6.1
 From: Biren Pandya <birenpandya@gmail.com>
-Date: Sun, 1 Nov 2026 12:58:46 +0100
+Date: Sun, 21 Jun 2026 10:04:37 +0530
 Subject: [PATCH] media: cec: disable delayed work before freeing an
  interrupted transmit
-
-commit 0fbd5c2327020858c45b2d1c65775d64cdeca523 upstream.
-
-[ Backport: 6.1 has no disable_delayed_work_sync(). Keep cancel_delayed_work_sync() and cancel the work again after cec_data_cancel() removes data from all lists, with adap->lock dropped. ]
 
 cec_transmit_msg_fh() drops adap->lock to wait for a blocking transmit in
 wait_for_completion_killable(). If that wait is interrupted by a signal,
@@ -33,24 +28,19 @@ Cc: stable@vger.kernel.org
 Signed-off-by: Biren Pandya <birenpandya@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 ---
- drivers/media/cec/core/cec-adap.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/cec/core/cec-adap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
-index f9483268c84a..68cae10e2403 100644
+index a90cb84a4b4d..829ee4861bf7 100644
 --- a/drivers/media/cec/core/cec-adap.c
 +++ b/drivers/media/cec/core/cec-adap.c
-@@ -931,6 +931,13 @@ int cec_transmit_msg_fh(struct cec_adapter *adap, struct cec_msg *msg,
- 			cec_data_cancel(data, CEC_TX_STATUS_OK, CEC_RX_STATUS_ABORTED);
- 		else
- 			cec_data_cancel(data, CEC_TX_STATUS_ABORTED, 0);
-+		/*
-+		 * The work can be armed after the cancel above. data is now
-+		 * off all lists, so it cannot be armed again: cancel it here.
-+		 */
-+		mutex_unlock(&adap->lock);
-+		cancel_delayed_work_sync(&data->work);
-+		mutex_lock(&adap->lock);
- 	}
+@@ -965,7 +965,7 @@ int cec_transmit_msg_fh(struct cec_adapter *adap, struct cec_msg *msg,
+ 	 */
+ 	mutex_unlock(&adap->lock);
+ 	err = wait_for_completion_killable(&data->c);
+-	cancel_delayed_work_sync(&data->work);
++	disable_delayed_work_sync(&data->work);
+ 	mutex_lock(&adap->lock);
  
- 	/* The transmit completed (possibly with an error) */
+ 	if (err)

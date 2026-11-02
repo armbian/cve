@@ -20,7 +20,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "1a919b17ef012ca0572bae759c27e5ea02bfb47f"
+      ]
     },
     {
       "series": "6.12",
@@ -37,7 +40,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "3347c960295583eee3fd58e5c539fb1972fbc005"
+      ]
     },
     {
       "series": "6.12",
@@ -54,7 +60,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "ac27a0ec112a089f1a5102bc8dffc79c8c815571"
+      ]
     },
     {
       "series": "6.12",
@@ -71,7 +80,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "0626e6641f6b467447c81dd7678a69c66f7746cf"
+      ]
     },
     {
       "series": "6.12",
@@ -88,7 +100,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "de85488138247d034eb3241840424a54d660926b"
+      ]
     },
     {
       "series": "6.12",
@@ -105,7 +120,12 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "39fc2bc4da0082c226cbee331f0a5d44db3997da",
+        "6d7ac4a0ebb6b7bc885274aa8b2bd9971f07013c",
+        "fc58ef30e0a1524ce72a8e873d773ba3b0830c7d"
+      ]
     },
     {
       "series": "6.12",
@@ -122,7 +142,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "db69718b8efac802c7cc20d5a6c7dfc913f99c43"
+      ]
     },
     {
       "series": "6.12",
@@ -139,7 +162,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "c3f89986fde7bb9ccc86a901bf28e1f7d69fc3b3"
+      ]
     },
     {
       "series": "6.12",
@@ -156,7 +182,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "1da177e4c3f41524e886b7f1b8a0c1fc7321cac2"
+      ]
     },
     {
       "series": "6.12",
@@ -173,7 +202,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "1da177e4c3f41524e886b7f1b8a0c1fc7321cac2"
+      ]
     },
     {
       "series": "6.12",
@@ -190,7 +222,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "25ee3286dcbc830a833354bb1d15567956844813"
+      ]
     },
     {
       "series": "6.12",
@@ -207,7 +242,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "5a93929d9f9a1d82946ddd49e260b6dd1756ad6d"
+      ]
     },
     {
       "series": "6.12",
@@ -224,7 +262,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "468dfca38b1a6fbdccd195d875599cb7c8875cd9"
+      ]
     },
     {
       "series": "6.12",
@@ -241,7 +282,14 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "6d1af517817a760d7af3dee0fc4603645485495c",
+        "949476b8601bde5459048eebdf457c9db20addd8",
+        "dd6c85f98ff33b009b819090268cbf679dc208b9",
+        "e0489f6e221f5ddee6cb3bd51b992b790c5fa4b9",
+        "f1b4affca1e13706ca2eb075bf6775421236d7d1"
+      ]
     },
     {
       "series": "6.12",
@@ -258,7 +306,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "daba287b299ec7a2c61ae3a714920e90e8396ad5"
+      ]
     },
     {
       "series": "6.12",
@@ -275,7 +326,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "dfe018bf99537e42c816d3f543620a7e09fcf3cd"
+      ]
     },
     {
       "series": "6.12",
@@ -292,7 +346,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "1cd472bf036ca038e783ef5f058f54e45b7e8180"
+      ]
     },
     {
       "series": "6.12",
@@ -309,7 +366,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "e0b67035a90b58d01f911fed77b6e3da153da66e"
+      ]
     },
     {
       "series": "6.12",
@@ -326,7 +386,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "bf361ad38165939049a2649b1a0078f3268d4bd1"
+      ]
     },
     {
       "series": "6.12",
@@ -343,7 +406,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "a5f69d94d8e239b48299abdd836840b7447866ab"
+      ]
     },
     {
       "series": "6.12",
@@ -360,7 +426,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "788586efd116d6d7d05985881eda503333e702b4"
+      ]
     },
     {
       "series": "6.12",
@@ -377,7 +446,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "588cb03ea208b303e6dee7e916f329043fd0fc26"
+      ]
     },
     {
       "series": "6.12",
@@ -394,7 +466,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "9b8a74e3482f9fc077a88c13fa0ceca8feb0b772"
+      ]
     },
     {
       "series": "6.12",
@@ -411,7 +486,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "140f04c33bbcf89440dcaf8bef04918abff5a52d"
+      ]
     },
     {
       "series": "6.12",
@@ -428,7 +506,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "9e2ee5c7e7c35d195e2aa0692a7241d47a433d1e"
+      ]
     },
     {
       "series": "6.12",
@@ -445,7 +526,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "5fc889911a99043a97da1daa0d010ad72cbc3042"
+      ]
     },
     {
       "series": "6.12",
@@ -462,7 +546,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-46279/6.12"
+      "backport": "CVE-2026-46279/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -479,7 +564,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-52953/6.12"
+      "backport": "CVE-2026-52953/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -496,7 +582,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-80670/6.12"
+      "backport": "CVE-2026-80670/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -513,7 +600,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98924/6.12"
+      "backport": "CVE-2026-98924/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -530,7 +618,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98924/6.12"
+      "backport": "CVE-2026-98924/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -547,7 +636,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99021/6.12"
+      "backport": "CVE-2026-99021/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -564,7 +654,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99122/6.12"
+      "backport": "CVE-2026-99122/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -581,7 +672,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2025-40025/6.12"
+      "backport": "CVE-2025-40025/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -598,7 +690,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2025-71117/6.12"
+      "backport": "CVE-2025-71117/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -615,7 +708,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2025-68304/6.12"
+      "backport": "CVE-2025-68304/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -632,7 +726,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-23102/6.12"
+      "backport": "CVE-2026-23102/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -649,7 +744,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-31537/6.12"
+      "backport": "CVE-2026-31537/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -666,7 +762,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-31537/6.12"
+      "backport": "CVE-2026-31537/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -683,7 +780,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-23348/6.12"
+      "backport": "CVE-2026-23348/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -700,7 +798,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-23348/6.12"
+      "backport": "CVE-2026-23348/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -717,7 +816,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-23348/6.12"
+      "backport": "CVE-2026-23348/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -734,7 +834,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-23348/6.12"
+      "backport": "CVE-2026-23348/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -751,7 +852,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-43367/6.12"
+      "backport": "CVE-2026-43367/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -768,7 +870,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-53106/6.12"
+      "backport": "CVE-2026-53106/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -785,7 +888,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-31777/6.12"
+      "backport": "CVE-2026-31777/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -802,7 +906,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-43326/6.12"
+      "backport": "CVE-2026-43326/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -819,7 +924,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-31692/6.12"
+      "backport": "CVE-2026-31692/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -836,7 +942,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-46017/6.12"
+      "backport": "CVE-2026-46017/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -853,7 +960,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-31591/6.12"
+      "backport": "CVE-2026-31591/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -870,7 +978,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-23265/6.12"
+      "backport": "CVE-2026-23265/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -887,7 +996,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-23265/6.12"
+      "backport": "CVE-2026-23265/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -904,7 +1014,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-63858/6.12"
+      "backport": "CVE-2026-63858/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -921,7 +1032,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-46153/6.12"
+      "backport": "CVE-2026-46153/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -938,7 +1050,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-46153/6.12"
+      "backport": "CVE-2026-46153/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -955,7 +1068,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-64520/6.12"
+      "backport": "CVE-2026-64520/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -972,7 +1086,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-64520/6.12"
+      "backport": "CVE-2026-64520/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -989,7 +1104,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-80872/6.12"
+      "backport": "CVE-2026-80872/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1006,7 +1122,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-80872/6.12"
+      "backport": "CVE-2026-80872/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1023,7 +1140,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-64078/6.12"
+      "backport": "CVE-2026-64078/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1040,7 +1158,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-64078/6.12"
+      "backport": "CVE-2026-64078/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1057,7 +1176,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-97499/6.12"
+      "backport": "CVE-2026-97499/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1074,7 +1194,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98914/6.12"
+      "backport": "CVE-2026-98914/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1091,7 +1212,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98875/6.12"
+      "backport": "CVE-2026-98875/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1108,7 +1230,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-63941/6.12"
+      "backport": "CVE-2026-63941/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1125,7 +1248,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-74354/6.12"
+      "backport": "CVE-2026-74354/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1142,7 +1266,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-63805/6.12"
+      "backport": "CVE-2026-63805/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1159,7 +1284,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-74314/6.12"
+      "backport": "CVE-2026-74314/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1176,7 +1302,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-72454/6.12"
+      "backport": "CVE-2026-72454/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1193,7 +1320,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-64160/6.12"
+      "backport": "CVE-2026-64160/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1210,7 +1338,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-64160/6.12"
+      "backport": "CVE-2026-64160/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1227,7 +1356,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-64066/6.12"
+      "backport": "CVE-2026-64066/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1244,7 +1374,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-64067/6.12"
+      "backport": "CVE-2026-64067/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1261,7 +1392,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-72355/6.12"
+      "backport": "CVE-2026-72355/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1278,7 +1410,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-63819/6.12"
+      "backport": "CVE-2026-63819/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1295,7 +1428,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93154/6.12"
+      "backport": "CVE-2026-93154/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1312,7 +1446,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93154/6.12"
+      "backport": "CVE-2026-93154/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1329,7 +1464,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93154/6.12"
+      "backport": "CVE-2026-93154/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1346,7 +1482,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93154/6.12"
+      "backport": "CVE-2026-93154/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1363,7 +1500,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-89722/6.12"
+      "backport": "CVE-2026-89722/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1380,7 +1518,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93135/6.12"
+      "backport": "CVE-2026-93135/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1397,7 +1536,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93135/6.12"
+      "backport": "CVE-2026-93135/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1414,7 +1554,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-90040/6.12"
+      "backport": "CVE-2026-90040/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1431,7 +1572,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93099/6.12"
+      "backport": "CVE-2026-93099/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1448,7 +1590,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98926/6.12"
+      "backport": "CVE-2026-98926/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1465,7 +1608,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-68382/6.12"
+      "backport": "CVE-2026-68382/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1482,7 +1626,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-68382/6.12"
+      "backport": "CVE-2026-68382/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1499,7 +1644,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98815/6.12"
+      "backport": "CVE-2026-98815/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1516,7 +1662,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98815/6.12"
+      "backport": "CVE-2026-98815/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1533,7 +1680,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93047/6.12"
+      "backport": "CVE-2026-93047/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1550,7 +1698,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-92518/6.12"
+      "backport": "CVE-2026-92518/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1567,7 +1716,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-92500/6.12"
+      "backport": "CVE-2026-92500/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1584,7 +1734,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-92493/6.12"
+      "backport": "CVE-2026-92493/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1601,7 +1752,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-74560/6.12"
+      "backport": "CVE-2026-74560/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1618,7 +1770,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-90379/6.12"
+      "backport": "CVE-2026-90379/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1635,7 +1788,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93276/6.12"
+      "backport": "CVE-2026-93276/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1652,7 +1806,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-90261/6.12"
+      "backport": "CVE-2026-90261/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1669,7 +1824,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-89935/6.12"
+      "backport": "CVE-2026-89935/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1686,7 +1842,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-80785/6.12"
+      "backport": "CVE-2026-80785/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1703,7 +1860,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-89637/6.12"
+      "backport": "CVE-2026-89637/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1720,7 +1878,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-81010/6.12"
+      "backport": "CVE-2026-81010/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1737,7 +1896,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98125/6.12"
+      "backport": "CVE-2026-98125/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1754,7 +1914,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98674/6.12"
+      "backport": "CVE-2026-98674/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1771,7 +1932,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-90317/6.12"
+      "backport": "CVE-2026-90317/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1788,7 +1950,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-90315/6.12"
+      "backport": "CVE-2026-90315/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1805,7 +1968,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93044/6.12"
+      "backport": "CVE-2026-93044/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1822,7 +1986,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-93270/6.12"
+      "backport": "CVE-2026-93270/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1839,7 +2004,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98115/6.12"
+      "backport": "CVE-2026-98115/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1856,7 +2022,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99076/6.12"
+      "backport": "CVE-2026-99076/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1873,7 +2040,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98087/6.12"
+      "backport": "CVE-2026-98087/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1890,7 +2058,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98353/6.12"
+      "backport": "CVE-2026-98353/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1907,7 +2076,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-97565/6.12"
+      "backport": "CVE-2026-97565/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1924,7 +2094,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98341/6.12"
+      "backport": "CVE-2026-98341/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1941,7 +2112,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98338/6.12"
+      "backport": "CVE-2026-98338/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1958,7 +2130,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98333/6.12"
+      "backport": "CVE-2026-98333/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1975,7 +2148,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98330/6.12"
+      "backport": "CVE-2026-98330/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -1992,7 +2166,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98180/6.12"
+      "backport": "CVE-2026-98180/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2009,7 +2184,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98180/6.12"
+      "backport": "CVE-2026-98180/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2026,7 +2202,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98180/6.12"
+      "backport": "CVE-2026-98180/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2043,7 +2220,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98180/6.12"
+      "backport": "CVE-2026-98180/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2060,7 +2238,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98180/6.12"
+      "backport": "CVE-2026-98180/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2077,7 +2256,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98180/6.12"
+      "backport": "CVE-2026-98180/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2094,7 +2274,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98180/6.12"
+      "backport": "CVE-2026-98180/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2111,7 +2292,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98180/6.12"
+      "backport": "CVE-2026-98180/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2128,7 +2310,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98317/6.12"
+      "backport": "CVE-2026-98317/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2145,7 +2328,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98313/6.12"
+      "backport": "CVE-2026-98313/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2162,7 +2346,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98304/6.12"
+      "backport": "CVE-2026-98304/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2179,7 +2364,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98294/6.12"
+      "backport": "CVE-2026-98294/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2196,7 +2382,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98289/6.12"
+      "backport": "CVE-2026-98289/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2213,7 +2400,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98288/6.12"
+      "backport": "CVE-2026-98288/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2230,7 +2418,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98286/6.12"
+      "backport": "CVE-2026-98286/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2247,7 +2436,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98284/6.12"
+      "backport": "CVE-2026-98284/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2264,7 +2454,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98279/6.12"
+      "backport": "CVE-2026-98279/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2281,7 +2472,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98427/6.12"
+      "backport": "CVE-2026-98427/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2298,7 +2490,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98277/6.12"
+      "backport": "CVE-2026-98277/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2315,7 +2508,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98408/6.12"
+      "backport": "CVE-2026-98408/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2332,7 +2526,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98273/6.12"
+      "backport": "CVE-2026-98273/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2349,7 +2544,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98176/6.12"
+      "backport": "CVE-2026-98176/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2366,7 +2562,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98177/6.12"
+      "backport": "CVE-2026-98177/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2383,7 +2580,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98628/6.12"
+      "backport": "CVE-2026-98628/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2400,7 +2598,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98449/6.12"
+      "backport": "CVE-2026-98449/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2417,7 +2616,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98829/6.12"
+      "backport": "CVE-2026-98829/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2434,7 +2634,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98599/6.12"
+      "backport": "CVE-2026-98599/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2451,7 +2652,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98598/6.12"
+      "backport": "CVE-2026-98598/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2468,7 +2670,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98863/6.12"
+      "backport": "CVE-2026-98863/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2485,7 +2688,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98589/6.12"
+      "backport": "CVE-2026-98589/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2502,7 +2706,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99109/6.12"
+      "backport": "CVE-2026-99109/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2519,7 +2724,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98420/6.12"
+      "backport": "CVE-2026-98420/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2536,7 +2742,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-97563/6.12"
+      "backport": "CVE-2026-97563/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2553,7 +2760,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98424/6.12"
+      "backport": "CVE-2026-98424/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2570,7 +2778,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98747/6.12"
+      "backport": "CVE-2026-98747/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2587,7 +2796,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98820/6.12"
+      "backport": "CVE-2026-98820/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2604,7 +2814,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98929/6.12"
+      "backport": "CVE-2026-98929/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2621,7 +2832,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98558/6.12"
+      "backport": "CVE-2026-98558/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2638,7 +2850,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98556/6.12"
+      "backport": "CVE-2026-98556/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2655,7 +2868,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98816/6.12"
+      "backport": "CVE-2026-98816/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2672,7 +2886,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98814/6.12"
+      "backport": "CVE-2026-98814/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2689,7 +2904,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98471/6.12"
+      "backport": "CVE-2026-98471/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2706,7 +2922,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98714/6.12"
+      "backport": "CVE-2026-98714/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2723,7 +2940,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98803/6.12"
+      "backport": "CVE-2026-98803/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2740,7 +2958,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98799/6.12"
+      "backport": "CVE-2026-98799/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2757,7 +2976,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98795/6.12"
+      "backport": "CVE-2026-98795/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2774,7 +2994,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98685/6.12"
+      "backport": "CVE-2026-98685/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2791,7 +3012,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98684/6.12"
+      "backport": "CVE-2026-98684/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2808,7 +3030,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98683/6.12"
+      "backport": "CVE-2026-98683/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2825,7 +3048,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98972/6.12"
+      "backport": "CVE-2026-98972/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2842,7 +3066,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98989/6.12"
+      "backport": "CVE-2026-98989/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2859,7 +3084,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98789/6.12"
+      "backport": "CVE-2026-98789/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2876,7 +3102,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98786/6.12"
+      "backport": "CVE-2026-98786/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2893,7 +3120,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98978/6.12"
+      "backport": "CVE-2026-98978/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2910,7 +3138,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99215/6.12"
+      "backport": "CVE-2026-99215/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2927,7 +3156,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98999/6.12"
+      "backport": "CVE-2026-98999/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2944,7 +3174,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98958/6.12"
+      "backport": "CVE-2026-98958/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2961,7 +3192,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98954/6.12"
+      "backport": "CVE-2026-98954/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2978,7 +3210,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98951/6.12"
+      "backport": "CVE-2026-98951/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -2995,7 +3228,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98946/6.12"
+      "backport": "CVE-2026-98946/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3012,7 +3246,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98946/6.12"
+      "backport": "CVE-2026-98946/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3029,7 +3264,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99209/6.12"
+      "backport": "CVE-2026-99209/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3046,7 +3282,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99208/6.12"
+      "backport": "CVE-2026-99208/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3063,7 +3300,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99146/6.12"
+      "backport": "CVE-2026-99146/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3080,7 +3318,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99172/6.12"
+      "backport": "CVE-2026-99172/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3097,7 +3336,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99189/6.12"
+      "backport": "CVE-2026-99189/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3114,7 +3354,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98800/6.12"
+      "backport": "CVE-2026-98800/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3131,7 +3372,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-99151/6.12"
+      "backport": "CVE-2026-99151/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3148,7 +3390,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98682/6.12"
+      "backport": "CVE-2026-98682/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3165,7 +3408,8 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98715/6.12"
+      "backport": "CVE-2026-98715/6.12",
+      "bug_commits": []
     },
     {
       "series": "6.12",
@@ -3182,7 +3426,80 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98718/6.12"
+      "backport": "CVE-2026-98718/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "6031487d4e273d7e7c8c7deea5061b7a9aaa9db3",
+      "subject": "netfilter: nf_conntrack_helper: dynamically allocate struct nf_conntrack_helper",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90237"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0188-6031487d4e27-netfilter-nf-conntrack-helper-dynamically-allocate-s.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90237/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "fe97fd540a03034a780224f24b0b2f0e21c9c763",
+      "subject": "netfilter: nf_conntrack_pptp: move GRE specific cleanup to GRE tracker",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90237"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0189-fe97fd540a03-netfilter-nf-conntrack-pptp-move-gre-specific-cleanu.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90237/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "ac46f3f35b6e68fb062ae7cf780d516c0cf4c00a",
+      "subject": "netfilter: nf_conntrack_helper: add refcounting from datapath",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90237"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0190-ac46f3f35b6e-netfilter-nf-conntrack-helper-add-refcounting-from-d.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90237/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "3679da4ad8be84cddaf40bc307fef1fe13e051ff",
+      "subject": "netfilter: nft_ct: move custom expectation support to helper",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90237"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0191-3679da4ad8be-netfilter-nft-ct-move-custom-expectation-support-to.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90237/6.12",
+      "bug_commits": []
     }
   ]
 }

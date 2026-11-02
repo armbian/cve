@@ -20,7 +20,10 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": ""
+      "backport": "",
+      "bug_commits": [
+        "709f0f1f1bf5ca62a000084e5446ca6b57c8678c"
+      ]
     }
   ]
 }
