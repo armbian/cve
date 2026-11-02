@@ -28,6 +28,14 @@ def _get(url: str) -> str:
         return r.read().decode(**ENC)
 
 
+def cites_as_upstream(body: str, sha: str) -> bool:
+    """True when the post is a backport of ``sha`` itself. A prerequisite in a series
+    names the fix only in "Stable-dep-of: <sha>", and must not count."""
+    s = re.escape(sha)
+    return bool(re.search(rf"^(?:commit {s} upstream\.?|\[ ?upstream commit {s} ?\]|upstream commit {s}\.?)\s*$",
+                          body, re.M | re.I))
+
+
 def backports(sha: str, series: str) -> list[str]:
     """Patches posted for ``series`` that cite upstream ``sha``, newest first."""
     want = re.compile(rf"^\[PATCH[^\]]*?\b{re.escape(series)}(?:\.y)?\b[^\]]*\]")
@@ -49,7 +57,7 @@ def backports(sha: str, series: str) -> list[str]:
         except Exception as e:
             log.info("lore %s: %s", href, e)
             continue
-        if sha in body and "\ndiff --git " in body:
+        if cites_as_upstream(body, sha) and "\ndiff --git " in body:
             log.info("lore %s: %s", sha[:12], title)
             out.append(body)
     return out
