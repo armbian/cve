@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.1: 1 patch(es)
+- added 6.1: 5 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -428,7 +428,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
 
-### Included (428)
+### Included (433)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -860,8 +860,13 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-99211 | `8bf659bd54e1` | claude | netlink: reset skb headers before unicast and multicast filtering |
 |  | CVE-2026-68086 | `2dfe9f5c91d0` | claude | mm/khugepaged: write all dirty file folios when collapsing |
 |  | CVE-2026-43137 | `16c589567a95` | claude | ASoC: SOF: Intel: hda: Fix NULL pointer dereference |
+|  | CVE-2024-58100 | `81f6d0530ba0` | claude | bpf: check changes_pkt_data property for extension programs |
+|  | CVE-2024-58100 | `ac6542ad9275` | claude | bpf: fix null dereference when computing changes_pkt_data of prog w/o subprogs |
+|  | CVE-2026-99191 | `b2936b4fd562` | claude | net/ipv6: Introduce payload_len helpers |
+|  | CVE-2026-99191 | `8070ed578b6b` | claude | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
+|  | CVE-2026-98067 | `82e664cf1219` | claude | erofs: disable LZ4 rolling decompression for now |
 
-### Needs a backport (34)
+### Needs a backport (31)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -869,7 +874,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2024-46678 | `2aeeef906d5a` | mainline | bonding: change ipsec_lock from spin lock to mutex |
 |  | CVE-2024-50211 | `c226964ec786` | mainline | udf: refactor inode_bmap() to handle error |
 |  | CVE-2024-56591 | `2b0f2fc9ed62` | mainline | Bluetooth: hci_conn: Use disable_delayed_work_sync |
-|  | CVE-2024-58100 | `81f6d0530ba0` | mainline | bpf: check changes_pkt_data property for extension programs |
 |  | CVE-2025-38333 | `bb5eb8a5b222` | mainline | f2fs: fix to bail out in get_new_segment() |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
@@ -895,10 +899,8 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 |  | CVE-2026-93235 | `5eced87b7d19` | mainline | f2fs: fix to zero post-EOF data when extending file size |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
-|  | CVE-2026-98067 | `82e664cf1219` | mainline | erofs: disable LZ4 rolling decompression for now |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
-| does not build | CVE-2026-99191 | `8070ed578b6b` | mainline | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
 
 ### Not affected per work package (needs review) (1)
 
