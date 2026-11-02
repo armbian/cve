@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-CVE: CVE-2026-68103
+X-Fasttrack-Backport: cve/CVE-2026-68103/6.18
+From: Igor Pecovnik <igor@armbian.com>
+Date: Mon, 2 Nov 2026 04:23:29 +0100
+Subject: [PATCH] drm/amdgpu: free queue when userq fence driver alloc fails
+
+CVE-2026-68103 backport (a609b6278bf3) makes
+amdgpu_userq_fence_driver_alloc() return -EBUSY when the doorbell
+index is already in adev->userq_xa. Userspace can trigger this.
+
+The error path in amdgpu_userq_create() only unlocks. It leaks the
+queue, its userq_va_list entries, the doorbell BO pin and reference,
+and the runtime PM reference from pm_runtime_get_sync().
+
+Release these on that error path, as upstream does in its clean_mqd
+path.
+
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index a0bf7c82b83b..546c12e8d995 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -584,7 +584,21 @@ amdgpu_userq_create(struct drm_file *filp, union drm_amdgpu_userq *args)
+ 	xa_init_flags(&queue->fence_drv_xa, XA_FLAGS_ALLOC);
+ 	r = amdgpu_userq_fence_driver_alloc(adev, queue);
+ 	if (r) {
++		struct amdgpu_userq_va_cursor *va_cursor, *tmp;
++
+ 		drm_file_err(uq_mgr->file, "Failed to alloc fence driver\n");
++		if (!amdgpu_bo_reserve(queue->db_obj.obj, true)) {
++			amdgpu_bo_unpin(queue->db_obj.obj);
++			amdgpu_bo_unreserve(queue->db_obj.obj);
++		}
++		amdgpu_bo_unref(&queue->db_obj.obj);
++		list_for_each_entry_safe(va_cursor, tmp, &queue->userq_va_list, list) {
++			list_del(&va_cursor->list);
++			kfree(va_cursor);
++		}
++		kfree(queue);
++		pm_runtime_mark_last_busy(adev_to_drm(adev)->dev);
++		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
+ 		goto unlock;
+ 	}
+ 
