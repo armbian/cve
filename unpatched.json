@@ -1896,40 +1896,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-90237"
-    ],
-    "kev": false,
-    "upstream": "3679da4ad8be84cddaf40bc307fef1fe13e051ff",
-    "subject": "netfilter: nft_ct: move custom expectation support to helper",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/netfilter/nf_conntrack_helper.h",
-      "net/netfilter/nf_conntrack_helper.c",
-      "net/netfilter/nft_ct.c"
-    ],
-    "prerequisites": [
-      "514f1dc8f2ca netfilter: nft_ct: enable labels for get case too",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "66b75e6bbeeb netfilter: add more netlink-based policy range checks",
-      "8e57338c3601 netfilter: nf_tables: add netlink policy based cap on registers",
-      "84dee05d9d61 netfilter: conntrack: remove UDP-Lite conntrack support",
-      "1afc25ae7528 netfilter: nf_conntrack_helper: fix possible null deref during error log",
-      "6031487d4e27 netfilter: nf_conntrack_helper: dynamically allocate struct nf_conntrack_helper",
-      "ac46f3f35b6e netfilter: nf_conntrack_helper: add refcounting from datapath",
-      "42eb1ca711b6 netfilter: nf_tables: use DEBUG_NET_WARN_ON_ONCE in packet and control paths",
-      "e3cd138e5607 netfilter: conntrack: check NULL when retrieving ct extension",
-      "57f940017a77 netfilter: conntrack: add deprecation warnings for irc and pptp trackers",
-      "6fb421bd07f1 netfilter: nft_ct: expectation timeouts are passed in milliseconds",
-      "397c8300972f netfilter: nf_conntrack_helper: cap maximum number of expectation at helper registration",
-      "26fb502773bc netfilter: nf_conntrack_helper: do not hash by tuple"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-89675"
     ],
     "kev": false,
@@ -3685,38 +3651,6 @@
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
     "build_log": "## fs/btrfs/volumes.c\nfs/btrfs/volumes.c:1188:23: error: \u2018struct btrfs_device\u2019 has no member named \u2018bdev_file\u2019"
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-56591"
-    ],
-    "kev": false,
-    "upstream": "2b0f2fc9ed62e73c95df1fa8ed2ba3dac54699df",
-    "subject": "Bluetooth: hci_conn: Use disable_delayed_work_sync",
-    "verdict": "needs-backport",
-    "files": [
-      "net/bluetooth/hci_conn.c"
-    ],
-    "prerequisites": [
-      "d11ab690c300 Bluetooth: hci_conn: use HCI dst_type values also for BIS",
-      "37224a290853 Bluetooth: Use kzalloc instead of kmalloc/memset",
-      "3958e87783e7 Bluetooth: Use kzalloc instead of kmalloc/memset",
-      "5cd39700de9b Bluetooth: Make sure LE create conn cancel is sent when timeout",
-      "0fe8c8d07134 Bluetooth: Split bt_iso_qos into dedicated structures",
-      "9e3c2ea67a4c Bluetooth: hci_conn: remove extra line in hci_le_big_create_sync",
-      "06149746e720 Bluetooth: hci_conn: Add support for linking multiple hcon",
-      "c09b80be6ffc Bluetooth: hci_conn: Fix not waiting for HCI_EVT_LE_CIS_ESTABLISHED",
-      "ca1fd42e7dbf Bluetooth: Fix potential double free caused by hci_conn_unlink",
-      "2910431ab0e5 Bluetooth: Refcnt drop must be placed last in hci_conn_unlink",
-      "a2ac591cb4d8 Bluetooth: Fix UAF in hci_conn_hash_flush again",
-      "a2904d282553 Bluetooth: Unlink CISes when LE disconnects in hci_conn_del",
-      "31c5f9164949 Bluetooth: ISO: consider right CIS when removing CIG at cleanup",
-      "e6a7a46b8636 Bluetooth: ISO: Fix CIG auto-allocation to select configurable CIG",
-      "14f0dceca60b Bluetooth: ISO: Rework sync_interval to be sync_factor"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
   },
   {
     "series": "6.1",
@@ -5580,38 +5514,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-23240"
-    ],
-    "kev": false,
-    "upstream": "7bb09315f93dce6acc54bf59e5a95ba7365c2be4",
-    "subject": "tls: Fix race condition in tls_sw_cancel_work_tx()",
-    "verdict": "needs-backport",
-    "files": [
-      "net/tls/tls_sw.c"
-    ],
-    "prerequisites": [
-      "40e0b0908142 net/sock: Introduce trace_sk_data_ready()",
-      "8580e55aa85f tls: Remove completion function scaffolding",
-      "d3777ceaad08 tls: Pass rec instead of aead_req into tls_encrypt_done",
-      "81840b3b91aa tls: Allow MSG_SPLICE_PAGES but treat it as normal sendmsg",
-      "fe1e81d4f73b tls/sw: Support MSG_SPLICE_PAGES",
-      "45e5be844ab6 tls/sw: Convert tls_sw_sendpage() to use MSG_SPLICE_PAGES",
-      "dc97391e6610 sock: Remove ->sendpage*() in favour of sendmsg(MSG_SPLICE_PAGES)",
-      "b848b26c6672 net: Kill MSG_SENDPAGE_NOTLAST",
-      "e22e358bbeb3 net/tls: handle MSG_EOR for tls_sw TX flow",
-      "662fbcec32f4 net/tls: implement ->read_sock()",
-      "ba4a734e1aa0 net/tls: avoid TCP window full during ->read_sock()",
-      "d9a6ca1a9758 tls: use tls_cipher_desc to get per-cipher sizes in tls_set_sw_offload",
-      "48dfad27fd40 tls: use tls_cipher_desc to access per-cipher crypto_info in tls_set_sw_offload",
-      "f3e444e31f9f tls: get cipher_name from cipher_desc in tls_set_sw_offload",
-      "6d5029e54700 tls: store rec_seq directly within cipher_context"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## net/tls/tls_sw.c\nnet/tls/tls_sw.c:2524:9: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]"
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-23348"
     ],
     "kev": false,
@@ -6384,38 +6286,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-64112"
-    ],
-    "kev": false,
-    "upstream": "9fc75b71fdd38465c76c6f6a884cdd4ae3c72d90",
-    "subject": "rbd: eliminate a race in lock_dwork draining on unmap",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/block/rbd.c"
-    ],
-    "prerequisites": [
-      "7df2af0bb491 rbd: use bvec_set_page to initialize the copy up bvec",
-      "75cff725d956 driver core: bus: mark the struct bus_type for sysfs callbacks as constant",
-      "d32e2bf83791 block: pass a gendisk to ->open",
-      "ae220766d87c block: remove the unused mode argument to ->release",
-      "05bdb9965305 block: replace fmode_t with a block-specific type for block open flags",
-      "cd59cdefc2f1 rbd: use list_for_each_entry() helper",
-      "cd30e8bde28a rbd: remove usage of the deprecated ida_simple_*() API",
-      "052618c71c66 block: rbd: make rbd_bus_type const",
-      "27e32cd23fed block: pass a queue_limits argument to blk_mq_alloc_disk",
-      "24f30b770c0f rbd: pass queue_limits to blk_mq_alloc_disk",
-      "a00d4bfce7c6 rbd: increase io_opt again",
-      "a23634644afc block: take io_opt and io_min into account for max_sectors",
-      "bd4a633b6f7c block: move the nonrot flag to queue_limits",
-      "1a02f3a73f8c block: move the stable_writes flag to queue_limits",
-      "a471977780cc rbd: unfreeze queue after marking disk as dead"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## drivers/block/rbd.c\ndrivers/block/rbd.c:6554:9: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]\ndrivers/block/rbd.c:6555:9: error: implicit declaration of function \u2018disable_work_sync\u2019; did you mean \u2018disable_irq_nosync\u2019? [-Wimplicit-function-declaration]"
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-64026"
     ],
     "kev": false,
@@ -6737,40 +6607,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-80636"
-    ],
-    "kev": false,
-    "upstream": "35e21a4dccc5c255ba59ccfbfeb4629ed21da972",
-    "subject": "netfilter: conntrack: revert ct extension genid infrastructure",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/netfilter/nf_conntrack_extend.h",
-      "net/netfilter/nf_conntrack_core.c",
-      "net/netfilter/nf_conntrack_extend.c"
-    ],
-    "prerequisites": [
-      "d2c806abcf0b netfilter: conntrack: use siphash_4u64",
-      "8032bf1233a7 treewide: use get_random_u32_below() instead of deprecated function",
-      "50bfbb8957ab netfilter: conntrack: remove pr_debug calls",
-      "4883ec512c17 netfilter: conntrack: avoid reload of ct->status",
-      "2a2fa2efc65f netfilter: conntrack: move rcu read lock to nf_conntrack_find_get",
-      "df25455e5a48 netfilter: nf_conntrack: allow early drop of offloaded UDP conns",
-      "e5d015a114da netfilter: conntrack: fix typo",
-      "eaf9e7192ec9 netfilter: conntrack: don't fold port numbers into addresses before hashing",
-      "8a23f4ab92f9 netfilter: conntrack: simplify nf_conntrack_alter_reply",
-      "6291b3a67ad5 netfilter: conntrack: convert nf_conntrack_update to netfilter verdicts",
-      "1ebb85f9c03d netfilter: conntrack: expedite rcu in nf_conntrack_cleanup_net_list",
-      "8edc27fc4f22 netfilter: use NF_DROP instead of -NF_DROP",
-      "119c790a271d netfilter: conntrack: remove flowtable early-drop test",
-      "b8c7dd15ceb8 kernel-wide: fix spelling mistakes like \"assocative\" -> \"associative\"",
-      "09c0d0aef56b netfilter: conntrack: Convert to use ERR_CAST()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-53156"
     ],
     "kev": false,
@@ -6959,26 +6795,6 @@
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-72434"
-    ],
-    "kev": false,
-    "upstream": "4a597a87e2e2f608edb6be2c510dc826b4fdfb53",
-    "subject": "netfilter: ipset: make sure gc is properly stopped",
-    "verdict": "needs-backport",
-    "files": [
-      "net/netfilter/ipset/ip_set_hash_gen.h"
-    ],
-    "prerequisites": [
-      "e93745249505 netfilter: ipset: Add support for new bitmask parameter",
-      "1e2f2d31997a Kill sched.h dependency on rcupdate.h",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## net/netfilter/ipset/ip_set_hash_ip.c\nnet/netfilter/ipset/ip_set_hash_gen.h:596:17: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]\n## net/netfilter/ipset/ip_set_hash_ipmac.c\nnet/netfilter/ipset/ip_set_hash_gen.h:596:17: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]\n## net/netfilter/ipset/ip_set_hash_ipmark.c\nnet/netfilter/ipset/ip_set_hash_gen.h:596:17: error: implicit declaration of function \u2018disable_delayed_work_sync\u2019; did you mean \u2018cancel_delayed_work_sync\u2019? [-Wimplicit-function-declaration]"
   },
   {
     "series": "6.1",
@@ -7225,38 +7041,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-68152"
-    ],
-    "kev": false,
-    "upstream": "ea20c44935d6142daecfa9b39d635033a7553e1b",
-    "subject": "amt: fix use-after-free in AMT delayed works",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/amt.c"
-    ],
-    "prerequisites": [
-      "55c900477f5b net: fill in MODULE_DESCRIPTION()s under drivers/net/",
-      "2892956e93f7 net: amt: Move stats allocation to core",
-      "7598531c3aed net: amt: Remove generic .ndo_get_stats64",
-      "00d066a4d4ed netdev_features: convert NETIF_F_LLTX to dev->lltx",
-      "05c1280a2bcf netdev_features: convert NETIF_F_NETNS_LOCAL to dev->netns_local",
-      "a885a6b2d37e net: convert to nla_get_*_default()",
-      "69c7be1b903f rtnetlink: Pack newlink() params into struct",
-      "cf517ac16ad9 net: Use link/peer netns in newlink() of rtnl_link_ops",
-      "0c493da86374 net: rename netns_local to netns_immutable",
-      "c969149bafbe net: amt: convert to use secs_to_jiffies",
-      "e3411e326fa4 net: ipv4: Add a flags argument to iptunnel_xmit(), udp_tunnel_xmit_skb()",
-      "1bec9d0c0046 ipv4: Convert ->flowi4_tos to dscp_t.",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "944bfc1b1c6f udp_tunnel: Pass struct sock to udp_tunnel_sock_release().",
-      "2cba193628fe udp_tunnel: Pass struct sock to setup_udp_tunnel_sock()."
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-74506"
     ],
     "kev": false,
@@ -7362,38 +7146,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-74725"
-    ],
-    "kev": false,
-    "upstream": "ec680ea4ba1bca92a767fb7e7869758bfdd886e3",
-    "subject": "enic: fix tx_hang_reset use-after-free on device removal",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/cisco/enic/enic_main.c"
-    ],
-    "prerequisites": [
-      "e2ac2a00dae1 enic: define constants for legacy interrupts offset",
-      "328771deab16 net: remove stale mentions of dev_base_lock in comments",
-      "1eb2cded45b3 net: annotate writes on dev->mtu from ndo_change_mtu()",
-      "f3f915099496 enic: Collect per queue statistics",
-      "77805ddb5755 enic: Report per queue statistics in netdev qstats",
-      "b67609c93153 enic: Create enic_wq/rq structures to bundle per wq/rq data",
-      "a64e5492ca90 enic: Allocate arrays in enic struct based on VIC config",
-      "cc94d6c4d40c enic: Adjust used MSI-X wq/rq/cq/interrupt resources in a more robust way",
-      "374f6c04df8e enic: Move enic resource adjustments to separate function",
-      "a28ccf1d6c10 enic: Move kdump check into enic_adjust_resources()",
-      "af2ccc6908f7 enic: Move RX coalescing set function",
-      "238d77d110f7 enic: Obtain the Link speed only after the link comes up",
-      "8e0644e5398b enic: Fix typo in comment in table indexed by link speed",
-      "fe57762c6490 enic: Move RX functions to their own file",
-      "d24cb52b2d8a enic: Use the Page Pool API for RX"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## drivers/net/ethernet/cisco/enic/enic_main.c\ndrivers/net/ethernet/cisco/enic/enic_main.c:3020:17: error: implicit declaration of function \u2018disable_work_sync\u2019; did you mean \u2018disable_irq_nosync\u2019? [-Wimplicit-function-declaration]"
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-80820"
     ],
     "kev": false,
@@ -7420,35 +7172,6 @@
       "6772fcc8890a xfs: convert xbitmap to interval tree",
       "e06ef14b9f8e xfs: move the post-repair block reaping code to a separate file",
       "77a1396f9ff1 xfs: rearrange xrep_reap_block to make future code flow easier"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-89797"
-    ],
-    "kev": false,
-    "upstream": "75b1e88d34254f4fb7753345e21bfee47abddd7f",
-    "subject": "power: supply: ab8500_fg: fix use-after-free on remove",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/power/supply/ab8500_fg.c"
-    ],
-    "prerequisites": [
-      "35aa06286c09 power: supply: use sysfs_emit() instead of scnprintf() for sysfs show()",
-      "a441f3b90a34 power: supply: use sysfs_emit() instead of sprintf() for sysfs show()",
-      "59016f4c0e10 power: supply: ab8500_fg: Convert to platform remove callback returning void",
-      "71c2cc5cbf68 power: supply: core: make power_supply_class constant",
-      "68ade0976df7 power: supply: core: add power_supply_for_each_device()",
-      "a5dd84f3bde0 power: supply: ab8500: remove unused struct 'inst_curr_result_list'",
-      "eb1ea1351da0 power: supply: ab8500: Constify struct kobj_type",
-      "83bce34420ea power: Switch back to struct platform_driver::remove()",
-      "87f57faa20ee power: supply: ab8500: use power_supply_for_each_psy()",
-      "1f4971fd33b1 power: supply: ab8500: use dev_to_psy()",
-      "15384402c94a power: supply: ab8500_fg: Fix typos in comments",
-      "aa5f4decedfb power: supply: ab8500_fg: Remove redundant dev_err()/dev_err_probe()"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -7503,40 +7226,6 @@
       "7c4298534ce3 ALSA: usb-audio: fix typo",
       "b28654233f65 ALSA: usb-audio: Accept multiple protocols in GTBs",
       "ac3a9185bd5f ALSA: usb-audio: Set MIDI1 flag appropriately for GTB MIDI 1.0 entry"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-90237"
-    ],
-    "kev": false,
-    "upstream": "3679da4ad8be84cddaf40bc307fef1fe13e051ff",
-    "subject": "netfilter: nft_ct: move custom expectation support to helper",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/netfilter/nf_conntrack_helper.h",
-      "net/netfilter/nf_conntrack_helper.c",
-      "net/netfilter/nft_ct.c"
-    ],
-    "prerequisites": [
-      "ca71277f36e0 net: move the ct helper function to nf_conntrack_helper for ovs and tc",
-      "f96cba2eb923 net: move add ct helper function to nf_conntrack_helper for ovs and tc",
-      "d9e789147605 netfilter: nf_tables: avoid retpoline overhead for some ct expression calls",
-      "c0c3ab63de60 net: create nf_conntrack_ovs for ovs and tc use",
-      "a412dbf40ff3 netfilter: nf_tables: limit allowed range via nla_policy",
-      "529f63fa11eb netfilter: helper: Remove unused function declarations",
-      "6cdd75a4a66b netfilter: nf_tables: refactor deprecated strncpy",
-      "8a23f4ab92f9 netfilter: conntrack: simplify nf_conntrack_alter_reply",
-      "aefb2f2e619b x86/bugs: Rename CONFIG_RETPOLINE            => CONFIG_MITIGATION_RETPOLINE",
-      "31768596b15a netfilter: conntrack: remove skb argument from nf_ct_refresh",
-      "514f1dc8f2ca netfilter: nft_ct: enable labels for get case too",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "6b94d081f81d netfilter: nf_tables: remove register tracking infrastructure",
-      "66b75e6bbeeb netfilter: add more netlink-based policy range checks"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""

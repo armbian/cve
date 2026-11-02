@@ -1,17 +1,11 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: claude
+X-Fasttrack-Source: mainline
 X-Fasttrack-Upstream: 41ca62e3e21e48c2903b3b45e232cf4f2ff7434f
 X-Fasttrack-CVE: CVE-2025-68781
-X-Fasttrack-Backport: cve/CVE-2025-68781/6.1
 From: Duoming Zhou <duoming@zju.edu.cn>
-Date: Sun, 1 Nov 2026 03:09:28 +0100
+Date: Fri, 5 Dec 2025 11:48:31 +0800
 Subject: [PATCH] usb: phy: fsl-usb: Fix use-after-free in delayed work during
  device removal
-
-commit 41ca62e3e21e48c2903b3b45e232cf4f2ff7434f upstream.
-
-[ Backport: 6.1 has no disable_delayed_work_sync(); use cancel_delayed_work_sync(). ]
-[ Backport: cancel after free_irq(), so the ID-pin IRQ cannot queue the work again. ]
 
 The delayed work item otg_event is initialized in fsl_otg_conf() and
 scheduled under two conditions:
@@ -47,14 +41,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/usb/phy/phy-fsl-usb.c b/drivers/usb/phy/phy-fsl-usb.c
-index 0b83b0f9ab05..fc6e3d9d7c26 100644
+index 40ac68e52cee..e266a47c4d48 100644
 --- a/drivers/usb/phy/phy-fsl-usb.c
 +++ b/drivers/usb/phy/phy-fsl-usb.c
-@@ -989,6 +989,7 @@ static int fsl_otg_remove(struct platform_device *pdev)
+@@ -988,6 +988,7 @@ static void fsl_otg_remove(struct platform_device *pdev)
+ {
+ 	struct fsl_usb2_platform_data *pdata = dev_get_platdata(&pdev->dev);
  
++	disable_delayed_work_sync(&fsl_otg_dev->otg_event);
  	usb_remove_phy(&fsl_otg_dev->phy);
  	free_irq(fsl_otg_dev->irq, fsl_otg_dev);
-+	cancel_delayed_work_sync(&fsl_otg_dev->otg_event);
- 
- 	iounmap((void *)usb_dr_regs);
  

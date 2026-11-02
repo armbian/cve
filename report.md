@@ -2,7 +2,8 @@
 
 **Events this run**
 
-- added 6.1: 6 patch(es)
+- added 6.12: 4 patch(es)
+- added 6.1: 26 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -163,7 +164,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (187)
+### Included (191)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -354,8 +355,12 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-98682 | `c9b1194e8ec9` | claude | smb: client: drain and invalidate before server-side copy/clone |
 |  | CVE-2026-98715 | `60d93c27859f` | claude | KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN |
 |  | CVE-2026-98718 | `973ea70393e8` | claude | KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state |
+|  | CVE-2026-90237 | `6031487d4e27` | claude | netfilter: nf_conntrack_helper: dynamically allocate struct nf_conntrack_helper |
+|  | CVE-2026-90237 | `fe97fd540a03` | claude | netfilter: nf_conntrack_pptp: move GRE specific cleanup to GRE tracker |
+|  | CVE-2026-90237 | `ac46f3f35b6e` | claude | netfilter: nf_conntrack_helper: add refcounting from datapath |
+|  | CVE-2026-90237 | `3679da4ad8be` | claude | netfilter: nft_ct: move custom expectation support to helper |
 
-### Needs a backport (9)
+### Needs a backport (8)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -365,7 +370,6 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
-|  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
 
@@ -441,9 +445,9 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 ## 6.1 (base 6.1.191, `08889840163e`)
 
-Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
+Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 9
 
-### Included (478)
+### Included (504)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -452,11 +456,20 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2024-26690 | `38cc3c6dcc09` | stable-queue | Revert "net: stmmac: protect updates of 64-bit statistics counters" |
 |  | CVE-2024-27023 | `855678ed8534` | mainline | md: Fix missing release of 'active_io' for flush |
 |  | CVE-2024-41149 | `85672ca9ceea` | mainline | block: avoid to reuse `hctx` not removed from cpuhp callback list |
+|  | CVE-2025-38717 | `52565a935213` | mainline | net: kcm: Fix race condition in kcm_unattach() |
+|  | CVE-2025-68781 | `41ca62e3e21e` | mainline | usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal |
+|  | CVE-2026-23240 | `7bb09315f93d` | mainline | tls: Fix race condition in tls_sw_cancel_work_tx() |
+|  | CVE-2026-23393 | `3715a0085531` | mainline | bridge: cfm: Fix race condition in peer_mep deletion |
 |  | CVE-2026-23451 | `b7405dcf7385` | mainline | bonding: prevent potential infinite loop in bond_header_parse() |
+|  | CVE-2026-64112 | `9fc75b71fdd3` | mainline | rbd: eliminate a race in lock_dwork draining on unmap |
+|  | CVE-2026-72434 | `4a597a87e2e2` | mainline | netfilter: ipset: make sure gc is properly stopped — 6.1 cancel_delayed_work_sync() holds PENDING; the self-requeue in gc fails, so gc cannot run after cancel. |
+|  | CVE-2026-89899 | `0fbd5c232702` | mainline | media: cec: disable delayed work before freeing an interrupted transmit |
 |  | CVE-2026-93184 | `3359ba93d01a` | mainline | ASoC: fsl_audmix: rework runtime PM handling in probe |
+|  | CVE-2026-74725 | `ec680ea4ba1b` | mainline | enic: fix tx_hang_reset use-after-free on device removal |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
 |  | CVE-2026-98161 | `c644a2f8fef5` | mainline | nvdimm: pmem: keep PREFLUSH before data writes |
 |  | CVE-2026-98364 | `9fa903b24b1f` | mainline | xfrm: hold net_device reference under RCU in bundle creation |
+|  | CVE-2026-97600 | `ff5891b266a7` | mainline | ieee802154: cc2520: fix FIFOP work use-after-free |
 |  | CVE-2026-98355 | `99c24a8968eb` | mainline | RDMA/rtrs: guard against null kobj name |
 |  | CVE-2026-99087 | `7d4d4f3b668d` | mainline | dm-integrity: fix NULL pointer dereference when the 'R' flag is used |
 |  | CVE-2026-98058 | `d05524794240` | mainline | bpf: Mark syscall helpers as sleepable |
@@ -580,7 +593,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2025-38716 | `736a0516a162` | claude | hfs: fix general protection fault in hfs_find_init() |
 |  | CVE-2025-38585 | `ee4cf798202d` | claude | staging: media: atomisp: Fix stack buffer overflow in gmin_get_var_int() |
 |  | CVE-2025-39940 | `1071d560afb4` | claude | dm-stripe: fix a possible integer overflow |
-|  | CVE-2025-38717 | `52565a935213` | claude | net: kcm: Fix race condition in kcm_unattach() |
 |  | CVE-2025-39990 | `e4414b01c1cd` | claude | bpf: Check the helper function is valid in get_helper_proto |
 |  | CVE-2025-40025 | `c18ecd99e0c7` | claude | f2fs: fix to do sanity check on node footer for non inode dnode |
 |  | CVE-2025-39965 | `cd8ae32e4e46` | claude | xfrm: xfrm_alloc_spi shouldn't use 0 as SPI |
@@ -595,7 +607,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2025-71065 | `ca8b201f2854` | claude | f2fs: fix to avoid potential deadlock |
 |  | CVE-2025-71160 | `—` | claude | netfilter: nf_tables: remove redundant chain validation on register store |
 |  | CVE-2025-71160 | `8e1a1bc4f5a4` | claude | netfilter: nf_tables: avoid chain re-validation if possible |
-|  | CVE-2025-68781 | `41ca62e3e21e` | claude | usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal |
 |  | CVE-2025-71272 | `1f4c9d8a1021` | claude | most: core: fix resource leak in most_register_interface error paths |
 |  | CVE-2026-43172 | `58192b9ce09b` | claude | wifi: iwlwifi: fix 22000 series SMEM parsing |
 |  | CVE-2026-43309 | `55dcfdf8af9c` | claude | dm raid: use proper md_ro_state enumerators |
@@ -616,7 +627,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-23276 | `c38b8f5f791e` | claude | net: prevent NULL deref in ip[6]tunnel_xmit() |
 |  | CVE-2026-23276 | `77facb35227c` | claude | net: increase IP_TUNNEL_RECURSION_LIMIT to 5 |
 |  | CVE-2026-23276 | `5638504a2aa9` | claude | gtp: disable BH before calling udp_tunnel_xmit_skb() |
-|  | CVE-2026-23393 | `3715a0085531` | claude | bridge: cfm: Fix race condition in peer_mep deletion |
 |  | CVE-2026-43409 | `—` | claude | kprobe/ftrace: bail out if ftrace was killed |
 |  | CVE-2026-43409 | `—` | claude | kprobe/ftrace: fix build error due to bad function definition |
 |  | CVE-2026-43409 | `e113f0b46d19` | claude | kprobes: avoid crash when rmmod/insmod after ftrace killed |
@@ -686,7 +696,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98901 | `5015191096db` | claude | ksmbd: fix lease break and ack state handling |
 |  | CVE-2026-64513 | `c7722e5e1dae` | claude | KVM: x86: Move update_cr8_intercept() to lapic.c |
 |  | CVE-2026-64513 | `bb365a506b1e` | claude | KVM: x86: Unconditionally recompute CR8 intercept on PPR update |
-|  | CVE-2026-89899 | `0fbd5c232702` | claude | media: cec: disable delayed work before freeing an interrupted transmit |
 |  | CVE-2026-72397 | `828cd614e2af` | claude | hwmon: (pmbus/core) honor vrm_version in pmbus_data2reg_vid() |
 |  | CVE-2026-98937 | `a4573a3838ae` | claude | perf/core: Check kernel access when kernel callchains are requested |
 |  | CVE-2026-93154 | `097f50384e18` | claude | RDMA/irdma: Deduplicate the irdma_del_memlist logic |
@@ -758,7 +767,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98229 | `3cf5cdecd99c` | claude | xfrm: save input state data before secpath resets |
 |  | CVE-2026-89793 | `6e2b571b0a54` | claude | ublk: clear VM_MAYWRITE on read-only ublk char device mmap |
 |  | CVE-2026-98087 | `dae5c0292080` | claude | sched/rt,dl: Skip migrate-disabled tasks when picking a push candidate |
-|  | CVE-2026-97600 | `ff5891b266a7` | claude | ieee802154: cc2520: fix FIFOP work use-after-free |
 |  | CVE-2026-98353 | `00baeade709f` | claude | RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables |
 |  | CVE-2026-97565 | `e6142a8bfc23` | claude | smb: client: reject short READ responses in CIFSSMBRead() |
 |  | CVE-2026-98081 | `a18a6b93a284` | claude | btrfs: zoned: finish active block group cleanup if call_zone_finish() fails |
@@ -910,6 +918,10 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-99191 | `b2936b4fd562` | claude | net/ipv6: Introduce payload_len helpers |
 |  | CVE-2026-99191 | `8070ed578b6b` | claude | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
 |  | CVE-2026-98067 | `82e664cf1219` | claude | erofs: disable LZ4 rolling decompression for now |
+|  | CVE-2026-90237 | `6031487d4e27` | claude | netfilter: nf_conntrack_helper: dynamically allocate struct nf_conntrack_helper |
+|  | CVE-2026-90237 | `fe97fd540a03` | claude | netfilter: nf_conntrack_pptp: move GRE specific cleanup to GRE tracker |
+|  | CVE-2026-90237 | `ac46f3f35b6e` | claude | netfilter: nf_conntrack_helper: add refcounting from datapath |
+|  | CVE-2026-90237 | `3679da4ad8be` | claude | netfilter: nft_ct: move custom expectation support to helper |
 |  | CVE-2025-68768 | `1231eec6994b` | claude | inet: frags: add inet_frag_queue_flush() |
 |  | CVE-2025-68768 | `006a5035b495` | claude | inet: frags: flush pending skbs in fqdir_pre_exit() |
 |  | CVE-2025-68768 | `32594b098549` | claude | inet: frags: fix use-after-free caused by the fqdir_pre_exit() flush |
@@ -925,33 +937,43 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2024-50211 | `b405c1e58b73` | claude | udf: refactor udf_next_aext() to handle error |
 |  | CVE-2024-50211 | `c226964ec786` | claude | udf: refactor inode_bmap() to handle error |
 |  | CVE-2024-50211 | `55dd5b4db3bf` | claude | udf: Make sure i_lenExtents is uptodate on inode eviction |
+|  | CVE-2026-80636 | `35e21a4dccc5` | claude | netfilter: conntrack: revert ct extension genid infrastructure |
+|  | CVE-2024-56591 | `e563d0a7cdc1` | claude | workqueue: Break up enum definitions and give names to the types |
+|  | CVE-2024-56591 | `c7a40c49af92` | claude | workqueue: Cosmetic changes |
+|  | CVE-2024-56591 | `d355001fa937` | claude | workqueue: Use rcu_read_lock_any_held() instead of rcu_read_lock_held() |
+|  | CVE-2024-56591 | `c5140688d19a` | claude | workqueue: Rename __cancel_work_timer() to __cancel_timer_sync() |
+|  | CVE-2024-56591 | `cdc6e4b329bc` | claude | workqueue: Reorganize flush and cancel[_sync] functions |
+|  | CVE-2024-56591 | `c26e2f2e2fcf` | claude | workqueue: Use variable name irq_flags for saving local irq flags |
+|  | CVE-2024-56591 | `c5f5b9422a49` | claude | workqueue: Introduce work_cancel_flags |
+|  | CVE-2024-56591 | `e9a8e01f9b13` | claude | workqueue: Clean up enum work_bits and related constants |
+|  | CVE-2024-56591 | `978b8409eab1` | claude | workqueue: Factor out work_grab_pending() from __cancel_work_sync() |
+|  | CVE-2024-56591 | `afe928c1dc61` | claude | workqueue: Remove clear_work_data() |
+|  | CVE-2024-56591 | `bccdc1faafaf` | claude | workqueue: Make @flags handling consistent across set_work_data() and friends |
+|  | CVE-2024-56591 | `1211f3b21c2a` | claude | workqueue: Preserve OFFQ bits in cancel[_sync] paths |
+|  | CVE-2024-56591 | `86898fa6b8cd` | claude | workqueue: Implement disable/enable for (delayed) work items |
+|  | CVE-2024-56591 | `38f7e14519d3` | claude | workqueue: Fix UBSAN 'subtraction overflow' error in shift_and_mask() |
+|  | CVE-2024-56591 | `2b0f2fc9ed62` | claude | Bluetooth: hci_conn: Use disable_delayed_work_sync |
+|  | CVE-2026-68152 | `ea20c44935d6` | claude | amt: fix use-after-free in AMT delayed works |
+|  | CVE-2026-89797 | `75b1e88d3425` | claude | power: supply: ab8500_fg: fix use-after-free on remove |
 
-### Needs a backport (25)
+### Needs a backport (17)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2024-35961 | `c6e77aa9dd82` | mainline | net/mlx5: Register devlink first under devlink lock |
 |  | CVE-2024-46678 | `2aeeef906d5a` | mainline | bonding: change ipsec_lock from spin lock to mutex |
-|  | CVE-2024-56591 | `2b0f2fc9ed62` | mainline | Bluetooth: hci_conn: Use disable_delayed_work_sync |
 |  | CVE-2025-38333 | `bb5eb8a5b222` | mainline | f2fs: fix to bail out in get_new_segment() |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
 | does not build | CVE-2025-71225 | `2cc583653bbe` | mainline | md: suspend array while updating raid_disks via sysfs |
-| does not build | CVE-2026-23240 | `7bb09315f93d` | mainline | tls: Fix race condition in tls_sw_cancel_work_tx() |
 |  | CVE-2026-46054 | `82544d36b172` | mainline | selinux: fix overlayfs mmap() and mprotect() access checks |
-| does not build | CVE-2026-64112 | `9fc75b71fdd3` | mainline | rbd: eliminate a race in lock_dwork draining on unmap |
 |  | CVE-2026-64026 | `d2bc90cf6c75` | mainline | rxrpc: Fix DATA decrypt vs splice() by copying data to buffer in recvmsg |
 |  | CVE-2026-53185 | `732fd9f0b9c1` | mainline | zram: fix use-after-free in zram_bvec_write_partial() |
-|  | CVE-2026-80636 | `35e21a4dccc5` | mainline | netfilter: conntrack: revert ct extension genid infrastructure |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
 |  | CVE-2026-74314 | `a3a81d247651` | mainline | bpf: Cancel special fields on map value recycle |
 |  | CVE-2026-68447 | `426ffae6ecc7` | mainline | drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size |
 | does not build | CVE-2026-93072 | `616dd89d81ad` | mainline | irqchip/renesas-irqc: Fix generic interrupt chip leak on remove |
-|  | CVE-2026-68152 | `ea20c44935d6` | mainline | amt: fix use-after-free in AMT delayed works |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
-| does not build | CVE-2026-74725 | `ec680ea4ba1b` | mainline | enic: fix tx_hang_reset use-after-free on device removal |
-|  | CVE-2026-89797 | `75b1e88d3425` | mainline | power: supply: ab8500_fg: fix use-after-free on remove |
-|  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
@@ -962,7 +984,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |---|---|---|---|---|
 |  | CVE-2024-35843 | `def054b01a86` | mainline | iommu/vt-d: Use device rbtree in iopf reporting path |
 
-### Not affected (reviewed) (151)
+### Not affected (reviewed) (150)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1093,7 +1115,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-53145 | `1a4f03d22fb6` | mainline | drm/gem: Try to fix change_handle ioctl, attempt 4 — The vulnerable function `drm_gem_change_handle_ioctl()` and the `DRM_IOCTL_GEM_CHANGE_HANDLE` ioctl do not exist in 6.1. |
 |  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook — Bug commit 1e7cd8a53b72 (simple_xattr per-sb cache) is not in 6.1. |
 |  | CVE-2026-72493 | `46762cefe7f4` | mainline | net: serialize netif_running() check in enqueue_to_backlog() — In 6.1 `net/core/dev.c`, `enqueue_to_backlog()` checks `netif_running(skb->dev)` after `rps_lock_irqsave(sd, &flags)`. |
-| does not build | CVE-2026-72434 | `4a597a87e2e2` | mainline | netfilter: ipset: make sure gc is properly stopped — 6.1 cancel_delayed_work_sync() holds PENDING; the self-requeue in gc fails, so gc cannot run after cancel. |
 |  | CVE-2026-63816 | `e0288584baa5` | mainline | f2fs: atomic: fix UAF issue on f2fs_inode_info.atomic_inode — 6.1 f2fs has no atomic_inode field or COW-file GC path. |
 |  | CVE-2026-72376 | `c9c3b615a462` | mainline | afs: Fix misplaced inc of net->cells_outstanding — the vulnerable code is absent in 6.1. |
 |  | CVE-2026-72373 | `794a01110390` | mainline | afs: Fix missing NULL pointer check in afs_break_some_callbacks() — 6.1 afs_break_some_callbacks() already checks if (volume). |
