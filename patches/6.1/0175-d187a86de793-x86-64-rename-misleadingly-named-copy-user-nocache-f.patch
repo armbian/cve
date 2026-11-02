@@ -1,0 +1,184 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: d187a86de793f84766ea40b9ade7ac60aabbb4fe
+X-Fasttrack-CVE: CVE-2026-43073
+X-Fasttrack-Backport: cve/CVE-2026-43073/6.1
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Mon, 30 Mar 2026 10:39:09 -0700
+Subject: [PATCH] x86-64: rename misleadingly named '__copy_user_nocache()'
+ function
+
+commit d187a86de793f84766ea40b9ade7ac60aabbb4fe upstream.
+
+[ Backport: 6.1 has the function in arch/x86/lib/copy_user_64.S, not in
+  copy_user_uncached_64.S; rename it there ]
+
+This function was a masterclass in bad naming, for various historical
+reasons.
+
+It claimed to be a non-cached user copy.  It is literally _neither_ of
+those things.  It's a specialty memory copy routine that uses
+non-temporal stores for the destination (but not the source), and that
+does exception handling for both source and destination accesses.
+
+Also note that while it works for unaligned targets, any unaligned parts
+(whether at beginning or end) will not use non-temporal stores, since
+only words and quadwords can be non-temporal on x86.
+
+The exception handling means that it _can_ be used for user space
+accesses, but not on its own - it needs all the normal "start user space
+access" logic around it.
+
+But typically the user space access would be the source, not the
+non-temporal destination.  That was the original intention of this,
+where the destination was some fragile persistent memory target that
+needed non-temporal stores in order to catch machine check exceptions
+synchronously and deal with them gracefully.
+
+Thus that non-descriptive name: one use case was to copy from user space
+into a non-cached kernel buffer.  However, the existing users are a mix
+of that intended use-case, and a couple of random drivers that just did
+this as a performance tweak.
+
+Some of those random drivers then actively misused the user copying
+version (with STAC/CLAC and all) to do kernel copies without ever even
+caring about the exception handling, _just_ for the non-temporal
+destination.
+
+Rename it as a first small step to actually make it halfway sane, and
+change the prototype to be more normal: it doesn't take a user pointer
+unless the caller has done the proper conversion, and the argument size
+is the full size_t (it still won't actually copy more than 4GB in one
+go, but there's also no reason to silently truncate the size argument in
+the caller).
+
+Finally, use this now sanely named function in the NTB code, which
+mis-used a user copy version (with STAC/CLAC and all) of this interface
+despite it not actually being a user copy at all.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+ arch/x86/include/asm/uaccess_64.h | 5 +++--
+ arch/x86/lib/copy_user_64.S       | 6 +++---
+ arch/x86/lib/usercopy_64.c        | 4 ++--
+ drivers/infiniband/sw/rdmavt/qp.c | 8 +++-----
+ drivers/ntb/ntb_transport.c       | 7 ++++---
+ tools/objtool/check.c             | 2 +-
+ 6 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
+index 66e060bfdd87..192cbb5ad3dc 100644
+--- a/arch/x86/include/asm/uaccess_64.h
++++ b/arch/x86/include/asm/uaccess_64.h
+@@ -60,7 +60,8 @@ raw_copy_to_user(void __user *dst, const void *src, unsigned long size)
+ 	return copy_user_generic((__force void *)dst, src, size);
+ }
+ 
+-extern long __copy_user_nocache(void *dst, const void __user *src, unsigned size);
++#define copy_to_nontemporal copy_to_nontemporal
++extern size_t copy_to_nontemporal(void *dst, const void *src, size_t size);
+ extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
+ extern void memcpy_page_flushcache(char *to, struct page *page, size_t offset,
+ 			   size_t len);
+@@ -72,7 +73,7 @@ __copy_from_user_inatomic_nocache(void *dst, const void __user *src,
+ 	long ret;
+ 	kasan_check_write(dst, size);
+ 	stac();
+-	ret = __copy_user_nocache(dst, src, size);
++	ret = copy_to_nontemporal(dst, (__force const void *)src, size);
+ 	clac();
+ 	return ret;
+ }
+diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
+index f97564818e9b..d051777bda43 100644
+--- a/arch/x86/lib/copy_user_64.S
++++ b/arch/x86/lib/copy_user_64.S
+@@ -261,7 +261,7 @@ SYM_CODE_END(copy_user_short_string)
+  *  - Require 8-byte alignment when size is 8 bytes or larger.
+  *  - Require 4-byte alignment when size is 4 bytes.
+  */
+-SYM_FUNC_START(__copy_user_nocache)
++SYM_FUNC_START(copy_to_nontemporal)
+ 	/* If size is less than 8 bytes, go to 4-byte copy */
+ 	cmpl $8,%edx
+ 	jb .L_4b_nocache_copy_entry
+@@ -395,5 +395,5 @@ SYM_FUNC_START(__copy_user_nocache)
+ 	_ASM_EXTABLE_CPY(31b, .L_fixup_4b_copy)
+ 	_ASM_EXTABLE_CPY(40b, .L_fixup_1b_copy)
+ 	_ASM_EXTABLE_CPY(41b, .L_fixup_1b_copy)
+-SYM_FUNC_END(__copy_user_nocache)
+-EXPORT_SYMBOL(__copy_user_nocache)
++SYM_FUNC_END(copy_to_nontemporal)
++EXPORT_SYMBOL(copy_to_nontemporal)
+diff --git a/arch/x86/lib/usercopy_64.c b/arch/x86/lib/usercopy_64.c
+index c3a5bbc0b41e..5a7cedf3fb33 100644
+--- a/arch/x86/lib/usercopy_64.c
++++ b/arch/x86/lib/usercopy_64.c
+@@ -48,11 +48,11 @@ long __copy_user_flushcache(void *dst, const void __user *src, unsigned size)
+ 	long rc;
+ 
+ 	stac();
+-	rc = __copy_user_nocache(dst, src, size);
++	rc = copy_to_nontemporal(dst, (__force const void *)src, size);
+ 	clac();
+ 
+ 	/*
+-	 * __copy_user_nocache() uses non-temporal stores for the bulk
++	 * copy_to_nontemporal() uses non-temporal stores for the bulk
+ 	 * of the transfer, but we need to manually flush if the
+ 	 * transfer is unaligned. A cached memory copy is used when
+ 	 * destination or size is not naturally aligned. That is:
+diff --git a/drivers/infiniband/sw/rdmavt/qp.c b/drivers/infiniband/sw/rdmavt/qp.c
+index de02df0e95d3..627e47ba6f3e 100644
+--- a/drivers/infiniband/sw/rdmavt/qp.c
++++ b/drivers/infiniband/sw/rdmavt/qp.c
+@@ -92,12 +92,10 @@ static int rvt_wss_llc_size(void)
+ static void cacheless_memcpy(void *dst, void *src, size_t n)
+ {
+ 	/*
+-	 * Use the only available X64 cacheless copy.  Add a __user cast
+-	 * to quiet sparse.  The src agument is already in the kernel so
+-	 * there are no security issues.  The extra fault recovery machinery
+-	 * is not invoked.
++	 * Use the only available X64 cacheless copy.
++	 * The extra fault recovery machinery is not invoked.
+ 	 */
+-	__copy_user_nocache(dst, (void __user *)src, n);
++	copy_to_nontemporal(dst, src, n);
+ }
+ 
+ void rvt_wss_exit(struct rvt_dev_info *rdi)
+diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
+index a0143aafa73b..562c9ba3c852 100644
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1807,12 +1807,13 @@ static void ntb_tx_copy_callback(void *data,
+ 
+ static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
+ {
+-#ifdef ARCH_HAS_NOCACHE_UACCESS
++#ifdef copy_to_nontemporal
+ 	/*
+ 	 * Using non-temporal mov to improve performance on non-cached
+-	 * writes, even though we aren't actually copying from user space.
++	 * writes. This only works if __iomem is strictly memory-like,
++	 * but that is the case on x86-64
+ 	 */
+-	__copy_from_user_inatomic_nocache(offset, entry->buf, entry->len);
++	copy_to_nontemporal(offset, entry->buf, entry->len);
+ #else
+ 	memcpy_toio(offset, entry->buf, entry->len);
+ #endif
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index a501e44091bb..29eb4f10db8e 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -1113,7 +1113,7 @@ static const char *uaccess_safe_builtin[] = {
+ 	"copy_user_generic_unrolled",
+ 	"copy_user_generic_string",
+ 	"copy_user_enhanced_fast_string",
+-	"__copy_user_nocache",
++	"copy_to_nontemporal",
+ 	NULL
+ };
+ 

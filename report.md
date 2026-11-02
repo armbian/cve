@@ -2,8 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 2 patch(es)
-- added 6.1: 5 patch(es)
+- added 6.1: 4 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -424,7 +423,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
 
-### Included (422)
+### Included (429)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -595,8 +594,14 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-43053 | `b854e1c4eff3` | claude | xfs: close crash window in attr dabtree inactivation |
 |  | CVE-2026-31487 | `cb3d1049f4ea` | claude | driver core: generalize driver_override in struct device |
 |  | CVE-2026-31487 | `cc34d77dd487` | claude | spi: use generic driver_override infrastructure |
+|  | CVE-2026-43115 | `—` | claude | types: move struct rcuwait into types.h |
+|  | CVE-2026-43115 | `—` | claude | irqwork: Move data struct to a types header |
+|  | CVE-2026-43115 | `a6fc88b22bc8` | claude | srcu: Use irq_work to start GP in tiny SRCU |
 |  | CVE-2026-31777 | `277c6960d4dd` | claude | ALSA: ctxfi: Check the error for index mapping |
 |  | CVE-2026-23000 | `4dadc4077e3f` | claude | net/mlx5e: Fix crash on profile change rollback failure |
+|  | CVE-2026-43073 | `3639a535587d` | claude | x86: move stac/clac from user copy routines into callers |
+|  | CVE-2026-43073 | `—` | claude | x86: remove 'zerorest' argument from __copy_user_nocache() |
+|  | CVE-2026-43073 | `d187a86de793` | claude | x86-64: rename misleadingly named '__copy_user_nocache()' function |
 |  | CVE-2026-31692 | `7b735ef81286` | claude | rtnetlink: add missing netlink_ns_capable() check for peer netns |
 |  | CVE-2026-31579 | `60a25ef8dacb` | claude | wireguard: device: use exit_rtnl callback instead of manual rtnl_lock in pre_exit |
 |  | CVE-2026-63858 | `10f79dbd7719` | claude | netfilter: nf_tables: add hook transactions for device deletions |
@@ -817,6 +822,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98803 | `88095728511e` | claude | net: stmmac: fix rx Scatter-Gather support |
 |  | CVE-2026-98802 | `8ae3f4067ba4` | claude | seg6: ensure packet data is writable before modifying SRH and IPv6 DA |
 |  | CVE-2026-98801 | `37e02c42a00b` | claude | net: restrict SO_RESERVE_MEM to TCP sockets and cap max value |
+|  | CVE-2026-98799 | `17637e1a581a` | claude | bpf: Skip detached progs in trampoline images that are still in use |
 |  | CVE-2026-98800 | `0fb5751a6e41` | claude | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
 |  | CVE-2026-98853 | `006c8b834aed` | claude | net: gso: limit recursive IP-in-IP segmentation |
 |  | CVE-2026-98797 | `ea4d4b5dddb5` | claude | net: cap skb->queue_mapping when the tx queue is picked |
@@ -851,7 +857,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-99211 | `8bf659bd54e1` | claude | netlink: reset skb headers before unicast and multicast filtering |
 |  | CVE-2026-68086 | `2dfe9f5c91d0` | claude | mm/khugepaged: write all dirty file folios when collapsing |
 
-### Needs a backport (37)
+### Needs a backport (34)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -867,8 +873,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 | does not build | CVE-2025-71225 | `2cc583653bbe` | mainline | md: suspend array while updating raid_disks via sysfs |
 | does not build | CVE-2026-23240 | `7bb09315f93d` | mainline | tls: Fix race condition in tls_sw_cancel_work_tx() |
 |  | CVE-2026-43362 | `d78840a6a38d` | mainline | smb: client: fix in-place encryption corruption in SMB2_write() |
-|  | CVE-2026-43115 | `a6fc88b22bc8` | mainline | srcu: Use irq_work to start GP in tiny SRCU |
-|  | CVE-2026-43073 | `d187a86de793` | mainline | x86-64: rename misleadingly named '__copy_user_nocache()' function |
 |  | CVE-2026-46054 | `82544d36b172` | mainline | selinux: fix overlayfs mmap() and mprotect() access checks |
 | does not build | CVE-2026-64112 | `9fc75b71fdd3` | mainline | rbd: eliminate a race in lock_dwork draining on unmap |
 |  | CVE-2026-64026 | `d2bc90cf6c75` | mainline | rxrpc: Fix DATA decrypt vs splice() by copying data to buffer in recvmsg |
@@ -889,7 +893,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-98067 | `82e664cf1219` | mainline | erofs: disable LZ4 rolling decompression for now |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
-|  | CVE-2026-98799 | `17637e1a581a` | mainline | bpf: Skip detached progs in trampoline images that are still in use |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
 | does not build | CVE-2026-99191 | `8070ed578b6b` | mainline | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
 

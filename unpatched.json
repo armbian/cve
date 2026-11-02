@@ -6198,39 +6198,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-43115"
-    ],
-    "kev": false,
-    "upstream": "a6fc88b22bc8d12ad52e8412c667ec0f5bf055af",
-    "subject": "srcu: Use irq_work to start GP in tiny SRCU",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/srcutiny.h",
-      "kernel/rcu/srcutiny.c"
-    ],
-    "prerequisites": [
-      "51f5f78a4f80 srcu: Make Tiny synchronize_srcu() check for readers",
-      "f0f44752f5f6 rcu: Annotate SRCU's update-side lockdep dependencies",
-      "95433f726301 srcu: Begin offloading srcu_struct fields to srcu_update",
-      "ed2b9e1b6d82 srcu,notifier: Remove #ifdefs in favor of SRCU Tiny srcu_usage",
-      "65b4a59557f6 srcu: Make Tiny SRCU explicitly disable preemption",
-      "e206f33e2c07 srcu: Fill out polled grace-period APIs",
-      "0ea3acbc804c rcu/srcutiny: don't return before reenabling preemption",
-      "9407f5c3ec10 srcu: Unconditionally record srcu_read_lock_lite() in ->srcu_reader_flavor",
-      "4dca1af414fb rcu: rename PREEMPT_AUTO to PREEMPT_LAZY",
-      "da2ac5623716 srcu: Make Tiny SRCU able to operate in preemptible kernels",
-      "780818a68132 srcu: Rename srcu_check_read_flavor_lite() to srcu_check_read_flavor_force()",
-      "443971156ceb srcu: Move SRCU Tree/Tiny definitions from srcu.h",
-      "c4020620528e srcu: Add SRCU-fast readers",
-      "623baa01d5b4 srcu: Remove SRCU-lite implementation",
-      "e6a43aeb7185 srcu/tiny: Remove preempt_disable/enable() in srcu_gp_start_if_needed()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-31458"
     ],
     "kev": false,
@@ -6288,43 +6255,6 @@
       "ffc1e089725e VT: Add height parameter to con_font_get/set consw operations",
       "24d69384bcd3 VT: Add KD_FONT_OP_SET/GET_TALL operations",
       "05e2600cb0a4 VT: Bump font size limitation to 64x128 pixels"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-43073"
-    ],
-    "kev": false,
-    "upstream": "d187a86de793f84766ea40b9ade7ac60aabbb4fe",
-    "subject": "x86-64: rename misleadingly named '__copy_user_nocache()' function",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/x86/include/asm/uaccess_64.h",
-      "arch/x86/lib/copy_user_uncached_64.S",
-      "arch/x86/lib/usercopy_64.c",
-      "drivers/infiniband/sw/rdmavt/qp.c",
-      "drivers/ntb/ntb_transport.c",
-      "tools/objtool/check.c"
-    ],
-    "prerequisites": [
-      "61c6065ef7ec objtool: Allow !PC relative relocations",
-      "6644ee846cb9 objtool: Track init section",
-      "00abd3840812 objtool: Add .call_sites section",
-      "0c0a6d8934e2 objtool: Add --hacks=skylake",
-      "08ef8c40112b objtool: Allow symbol range comparisons for IBT/ENDBR",
-      "dbcdbdfdf137 objtool: Rework instruction -> symbol mapping",
-      "5a9c361a416f objtool: Allow STT_NOTYPE -> STT_FUNC+0 sibling-calls",
-      "9f2899fe36a6 objtool: Add option to generate prefix symbols",
-      "9a479f766be1 objtool: Add --cfi to generate the .cfi_sites section",
-      "023f2340f053 objtool: Fix weak hole vs prefix symbol",
-      "0646c28b417b objtool: Use target file endianness instead of a compiled constant",
-      "86ea7f361537 objtool: Use target file class size instead of a compiled constant",
-      "280981d6994e objtool: Add --mnop as an option to --mcount",
-      "de6fbcedf5ab objtool: Read special sections with alts only when specific options are selected",
-      "c1449735211d objtool: Use macros to define arch specific reloc types"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8305,45 +8235,6 @@
       "389fbbec261b KVM: SVM: Don't defer NMI unblocking until next exit for SEV-ES guests",
       "63dbc67cf4ed KVM: SEV: remove ghcb variable declarations",
       "80d0f521d59e KVM: SVM: Require nrips support for SEV guests (and beyond)"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-98799"
-    ],
-    "kev": false,
-    "upstream": "17637e1a581a22466ac3620a91e099683ff9cc6f",
-    "subject": "bpf: Skip detached progs in trampoline images that are still in use",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/arm64/net/bpf_jit_comp.c",
-      "arch/loongarch/net/bpf_jit.c",
-      "arch/powerpc/net/bpf_jit_comp.c",
-      "arch/riscv/net/bpf_jit_comp64.c",
-      "arch/s390/net/bpf_jit_comp.c",
-      "arch/x86/net/bpf_jit_comp.c",
-      "include/linux/bpf.h",
-      "kernel/bpf/trampoline.c"
-    ],
-    "prerequisites": [
-      "2e30960097f6 bpf, x64: Remove unnecessary check on existence of SSE2",
-      "bea75b33895f x86/Kconfig: Introduce function padding",
-      "3b6c1747da48 x86/retpoline: Add SKL retthunk retpolines",
-      "b2e9dfe54be4 x86/bpf: Emit call depth accounting if required",
-      "ee3e2469b346 x86/ftrace: Make it call depth tracking aware",
-      "81b35e7cad79 bpf,x64: avoid unnecessary instructions when shift dest is ecx",
-      "77d8f5d47bfb bpf,x64: use shrx/sarx/shlx when available",
-      "0593dd34e534 bpf: Append _recur naming to the bpf_task_storage helper proto",
-      "4279adb094a1 bpf: Add new bpf_task_storage_get proto with no deadlock detection",
-      "8a7dac37f27a bpf: Add new bpf_task_storage_delete proto with no deadlock detection",
-      "c4bcfb38a95e bpf: Implement cgroup storage available to non-cgroup-attached bpf progs",
-      "931ab63664f0 x86/ibt: Implement FineIBT",
-      "aa3496accc41 bpf: Refactor kptr_off_tab into btf_record",
-      "db559117828d bpf: Consolidate spin_lock, timer management into btf_record",
-      "f71b2f64177a bpf: Refactor map->off_arr handling"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
