@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 1 patch(es)
+- added 6.1: 1 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -428,7 +428,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
 
-### Included (427)
+### Included (428)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -859,6 +859,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-99172 | `f0e48172a59e` | claude | ipc: drop the mqueue mount with kern_unmount() on setup failure |
 |  | CVE-2026-99211 | `8bf659bd54e1` | claude | netlink: reset skb headers before unicast and multicast filtering |
 |  | CVE-2026-68086 | `2dfe9f5c91d0` | claude | mm/khugepaged: write all dirty file folios when collapsing |
+|  | CVE-2026-43137 | `16c589567a95` | claude | ASoC: SOF: Intel: hda: Fix NULL pointer dereference |
 
 ### Needs a backport (34)
 
@@ -899,12 +900,11 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
 | does not build | CVE-2026-99191 | `8070ed578b6b` | mainline | calipso: keep BIG TCP payload_len in calipso_skbuff_setattr() |
 
-### Not affected per work package (needs review) (2)
+### Not affected per work package (needs review) (1)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2024-35843 | `def054b01a86` | mainline | iommu/vt-d: Use device rbtree in iopf reporting path |
-|  | CVE-2026-43137 | `16c589567a95` | mainline | ASoC: SOF: Intel: hda: Fix NULL pointer dereference |
 
 ### Not affected (reviewed) (152)
 

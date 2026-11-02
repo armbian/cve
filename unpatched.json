@@ -5561,38 +5561,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-43137"
-    ],
-    "kev": false,
-    "upstream": "16c589567a956d46a7c1363af3f64de3d420af20",
-    "subject": "ASoC: SOF: Intel: hda: Fix NULL pointer dereference",
-    "verdict": "needs-backport",
-    "files": [
-      "sound/soc/sof/intel/hda-dai.c"
-    ],
-    "prerequisites": [
-      "7f1e16ae4864 ASoC: SOF: Intel: hda-dai: use hlink variable/parameter",
-      "b0cd60f3e9f5 ALSA/ASoC: hda: clarify bus_get_link() and bus_link_get() helpers",
-      "00b6cd957d66 ALSA/ASoC: hda: ext: remove 'link' prefix for stream-related operations",
-      "7fa403f2a0f4 ALSA/ASoC: hda: ext: add 'bus' prefix for multi-link stream setting",
-      "0351a9b8f844 ASoC: SOF: Intel: hda-dai: start removing the use of runtime->private_data in BE",
-      "4842f79f8fdd ASoC: SOF: Intel: hda-dai: use component_get_drvdata to find hdac_bus",
-      "8d44a4fceeb0 ASoC: SOF: Intel: hda-dai: remove useless members in hda_pipe_params",
-      "a4203256e469 ASoC: SOF: Intel: hda: clarify Kconfig dependencies",
-      "a2ba1f70b301 ASoC: SOF: ipc4: get pipeline instance id from pipe_widget->instance_id",
-      "37a26eec53b0 ASoC: SOF: ipc4: Add flag to skip triggering pipelines during FE DAI trigger",
-      "9c04363d222b ASoC: SOF: Introduce struct snd_sof_pipeline",
-      "274f8a3b4eb8 ASoC: SOF: Intel: hda-dai: Remove BE DAI DRV ops for SSP DAI's",
-      "a8310c0093f4 ASoC: SOF: Intel: hda-dai: Remove hda_link_dma_params()",
-      "2a6afac248b0 ASoC: SOF: Intel: hda-dai: remove struct hda_pipe_params",
-      "2be2caf481c7 ASoC: SOF: Intel: hda-dai: Modify the signature of hda_link_dma_cleanup()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-23200"
     ],
     "kev": false,
