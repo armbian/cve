@@ -162,16 +162,19 @@ class Builder:
                 continue
             touching = [i for i, fs in enumerate(files) if f in fs]
             culprit = touching[-1] if touching else len(patches) - 1
-            if len(touching) > 1:              # the last patch whose removal fixes the build
-                undone = []
-                for i in reversed(range(len(patches))):
-                    apply(patches[i], True)
-                    undone.append(i)
-                    if i in touching and self._make(self.target(f))[0]:
-                        culprit = i
-                        break
-                for i in reversed(undone):
-                    apply(patches[i], False)
+            # The last patch whose removal fixes the build: one on the file, or before
+            # them all, one on a header (it can break more includers than files() lists).
+            first = touching[0] if touching else len(patches)
+            undone = []
+            for i in reversed(range(len(patches))):
+                apply(patches[i], True)
+                undone.append(i)
+                if (i in touching or i < first and any(x.endswith(".h") for x in gitutil.patch_files(patches[i]))) \
+                        and self._make(self.target(f))[0]:
+                    culprit = i
+                    break
+            for i in reversed(undone):
+                apply(patches[i], False)
             log_text = f"## {f}\n{summary(text.replace(f'{self.tree}/', ''))}"
             out[culprit] = (out[culprit] + "\n" + log_text) if culprit in out else log_text
         return out
