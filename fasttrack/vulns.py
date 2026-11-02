@@ -41,6 +41,7 @@ class CveRecord:
     stable_fixed: dict[tuple[int, int], tuple] = field(default_factory=dict)
     files: list[str] = field(default_factory=list)
     description: str = ""
+    bug_commits: list[str] = field(default_factory=list)  # commits that bring the bug (git ranges)
 
     def status(self, series: tuple[int, int]) -> tuple[str, Optional[tuple]]:
         s = series
@@ -95,7 +96,9 @@ def parse_record(path: Path) -> Optional[CveRecord]:
         ver = parse_version(v.get("version", ""))
         status = v.get("status")
         vtype = v.get("versionType")
-        if status == "affected" and ver and "lessThan" not in v and "lessThanOrEqual" not in v:
+        if status == "affected" and vtype == "git" and re.fullmatch(r"[0-9a-f]{40}", v.get("version", "")):
+            out.bug_commits.append(v["version"])
+        elif status == "affected" and ver and "lessThan" not in v and "lessThanOrEqual" not in v:
             out.introduced = ver
         elif status == "unaffected" and v.get("version") == "0" and v.get("lessThan"):
             out.introduced = parse_version(v["lessThan"]) or out.introduced
