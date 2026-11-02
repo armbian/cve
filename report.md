@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- retired 6.1: 1 patch(es) (landed upstream or superseded)
+- added 6.12: 1 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -159,7 +159,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 
 Already in tree: 131 · Other architectures (not built): 12
 
-### Included (175)
+### Included (176)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -338,8 +338,9 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-99151 | `55a67aa89342` | claude | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
 |  | CVE-2026-98682 | `c9b1194e8ec9` | claude | smb: client: drain and invalidate before server-side copy/clone |
 |  | CVE-2026-98715 | `60d93c27859f` | claude | KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN |
+|  | CVE-2026-98718 | `973ea70393e8` | claude | KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state |
 
-### Needs a backport (10)
+### Needs a backport (9)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -352,7 +353,6 @@ Already in tree: 131 · Other architectures (not built): 12
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
-|  | CVE-2026-98718 | `973ea70393e8` | mainline | KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state |
 
 ### Not affected per work package (needs review) (1)
 

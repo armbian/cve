@@ -2410,38 +2410,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-98718"
-    ],
-    "kev": false,
-    "upstream": "973ea70393e885e540f714904e51bc6cac80e3d7",
-    "subject": "KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/x86/kvm/svm/sev.c"
-    ],
-    "prerequisites": [
-      "365e31920844 KVM: Pass in write/dirty to kvm_vcpu_map(), not kvm_vcpu_unmap()",
-      "1fbee5b01a0f KVM: guest_memfd: Provide \"struct page\" as output from kvm_gmem_get_pfn()",
-      "8f2a27752e80 KVM: x86: Replace (almost) all guest CPUID feature queries with cpu_caps",
-      "9a1dfeff4414 KVM: x86: clear vcpu->run->hypercall.ret before exiting for KVM_EXIT_HYPERCALL",
-      "c4c083d95105 KVM: x86: Add a helper to check for user interception of KVM hypercalls",
-      "800173cf7560 KVM: SVM: Use str_enabled_disabled() helper in sev_hardware_setup()",
-      "8a01902a0168 KVM: SEV: Use to_kvm_sev_info() for fetching kvm_sev_info struct",
-      "c9e5f3fa9039 KVM: x86: Introduce kvm_set_mp_state()",
-      "e9cb61055fee KVM: x86: Clear pv_unhalted on all transitions to KVM_MP_STATE_RUNNABLE",
-      "93da6af3ae56 KVM: x86: Defer runtime updates of dynamic CPUID bits until CPUID emulation",
-      "ea4c2f2f5ed3 KVM: SVM: Convert plain error code numbers to defines",
-      "c3392d0ab714 KVM: SVM: Provide helpers to set the error code",
-      "807cb9ce2ed9 KVM: SVM: Don't rely on DebugSwap to restore host DR0..DR3",
-      "72d12715edcd KVM: SVM: Refuse to attempt VRMUN if an SEV-ES+ guest has an invalid VMSA",
-      "745ff82199b1 KVM: SVM: Require AP's \"requested\" SEV_FEATURES to match KVM's view"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98843"
     ],
     "kev": false,
