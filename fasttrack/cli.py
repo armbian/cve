@@ -245,8 +245,11 @@ def cmd_cve(args) -> int:
             made = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()) \
                 if any(c.verdict == incident.CLAUDE for c in res.patches) else None
             # An open result keeps an earlier backport: retired only by prune or a new one.
-            if res.patches or res.outcome not in ("unpatched", "partial"):
-                emit.write_patch_dir(out / "cve" / cid / res.series, res.series, res.head, res.head_version,
+            pdir = out / "cve" / cid / res.series
+            made_before = (pdir / "fasttrack.json").exists() and \
+                json.loads((pdir / "fasttrack.json").read_text()).get("made")
+            if res.outcome not in ("unpatched", "partial") or (res.patches and (made or not made_before)):
+                emit.write_patch_dir(pdir, res.series, res.head, res.head_version,
                                      res.patches, {"incident": cid, "outcome": res.outcome,
                                                    "fixed_in": res.fixed_in, "made": made})
             resolutions.append(res)
