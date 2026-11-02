@@ -198,7 +198,7 @@ def verify(repo: Path, ref: str, candidates: list[Candidate], workdir: Optional[
         # A mainline fix that a backport carries is not pending.
         carried = {c.upstream for c in candidates if c.backport and c.verdict == ACCEPTED}
         for c in candidates:
-            if not c.backport and c.verdict == CONFLICT and c.upstream in carried:
+            if not c.backport and c.verdict in (CONFLICT, MISSING) and c.upstream in carried:
                 c.verdict, c.reason = BACKPORTED, "carried by a reviewed backport from cve/"
         # Hints read only history, not the tree: in parallel.
         conflicts = [c for c in candidates if c.verdict == CONFLICT and c.upstream and not c.backport]
