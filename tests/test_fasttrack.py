@@ -320,17 +320,6 @@ class TestRun(Fixture):
         self.assertIn("cve/ backport does not apply on this base (1)", emit.report([res], []))
 
 
-class TestLore(unittest.TestCase):
-    def test_prerequisite_in_series_does_not_count(self):
-        fix = "1" * 40
-        dep = f"Subject: [PATCH 6.1.y 1/2] foo: refactor\n\n[ Upstream commit {'2' * 40} ]\n\nStable-dep-of: {fix[:12]} (\"foo: fix\")\n"
-        own = f"Subject: [PATCH 6.1.y 2/2] foo: fix\n\n[ Upstream commit {fix} ]\n\n"
-        gkh = f"Subject: [PATCH 6.1 12/80] foo: fix\n\ncommit {fix} upstream.\n\n"
-        self.assertFalse(lore.cites_as_upstream(dep.replace(fix[:12], fix), fix))
-        self.assertTrue(lore.cites_as_upstream(own, fix))
-        self.assertTrue(lore.cites_as_upstream(gkh, fix))
-        self.assertTrue(lore.cites_as_upstream(f"Upstream commit {fix}\n", fix))
-
 class TestIncident(Fixture):
     def test_outcomes(self):
         self.assertEqual(self.resolve("CVE-2026-0001").outcome, "patched")
@@ -781,6 +770,17 @@ class TestShallow(Fixture):
         # second sync is a plain incremental fetch
         sync.fetch_linux(mirror, f"file://{self.repo}", ["6.18", "7.3"], shallow=True)
 
+
+class TestLore(unittest.TestCase):
+    def test_prerequisite_in_series_does_not_count(self):
+        fix = "1" * 40
+        dep = f"Subject: [PATCH 6.1.y 1/2] foo: refactor\n\n[ Upstream commit {'2' * 40} ]\n\nStable-dep-of: {fix[:12]} (\"foo: fix\")\n"
+        own = f"Subject: [PATCH 6.1.y 2/2] foo: fix\n\n[ Upstream commit {fix} ]\n\n"
+        gkh = f"Subject: [PATCH 6.1 12/80] foo: fix\n\ncommit {fix} upstream.\n\n"
+        self.assertFalse(lore.cites_as_upstream(dep.replace(fix[:12], fix), fix))
+        self.assertTrue(lore.cites_as_upstream(own, fix))
+        self.assertTrue(lore.cites_as_upstream(gkh, fix))
+        self.assertTrue(lore.cites_as_upstream(f"Upstream commit {fix}\n", fix))
 
 if __name__ == "__main__":
     unittest.main()
