@@ -303,6 +303,28 @@ class TestRun(Fixture):
         self.assertIn("X-Fasttrack-Backport: cve/CVE-2026-0003/6.18", body)
         self.assertIn("### Included (3)", emit.report([res], []))
 
+    def test_cve_backport_for_missing_commit(self):
+        # The fix commit is not in the mirror and cannot be downloaded; a reviewed backport carries it.
+        from fasttrack import gitutil
+        F = "c" * 40
+        pub = self.data / "vulns" / "cve" / "published" / "2026"
+        body = json.loads((pub / "CVE-2026-0003.json").read_text())
+        body["cveMetadata"]["cveId"] = "CVE-2026-0008"
+        (pub / "CVE-2026-0008.json").write_text(json.dumps(body))
+        (pub / "CVE-2026-0008.sha1").write_text(F + "\n")
+        self.records = list(vulns.iter_records(self.data / "vulns"))
+        self.cve_backport("CVE-2026-0008", F, "bar line 3", "bar line 3 FIX")
+        old = gitutil.PATCH_URLS
+        gitutil.PATCH_URLS = ["file:///nonexistent/{sha}"]
+        try:
+            res = self.run_with_cve()
+        finally:
+            gitutil.PATCH_URLS = old
+        v = {(c.upstream, c.backport): c.verdict for c in res.candidates}
+        self.assertEqual(v[(F, "CVE-2026-0008/6.18")], engine.ACCEPTED)
+        self.assertEqual(v[(F, "")], engine.BACKPORTED)
+        self.assertNotIn(F, [r["upstream"] for r in emit.unpatched([res])])
+
     def test_cve_backport_stale_or_superseded(self):
         self.cve_backport("CVE-2026-0003", self.C, "baz line 6 REWORKED", "baz line 6 FIXED")
         self.cve_backport("CVE-2026-0001", self.A, "foo line 6", "foo line 6 FIXED")
