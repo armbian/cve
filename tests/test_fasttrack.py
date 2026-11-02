@@ -603,6 +603,35 @@ class TestBuildCheck(Fixture):
         self.assertEqual(b.target("kernel/ext.c"), "kernel/build_policy.o")
         self.assertEqual(b.target("kernel/build_policy.c"), "kernel/build_policy.o")
 
+    def test_blame_header_change_not_the_patch_on_the_file(self):
+        # X changes drv/a.h; f.c, the 4th includer, then breaks. Y only touches f.c.
+        class B(FakeBuilder):
+            def _make(self, *targets, timeout=0):
+                out = []
+                for t in (t for t in targets if not t.startswith("-")):
+                    if "OLD" in (self.tree / (t[:-2] + ".c")).read_text() and \
+                            "NEW" in (self.tree / "drv" / "a.h").read_text():
+                        out += [f"{self.tree}/{t[:-2]}.c:1:1: error: old call",
+                                f"make[2]: *** [scripts/Makefile.build:287: {t}] Error 1"]
+                return not out, "\n".join(out)
+
+        t = self.tmp / "k"
+        (t / "drv").mkdir(parents=True)
+        sh(t, "git", "init", "-q")
+        (t / "drv" / "a.h").write_text("api\n")
+        for n in ("a1", "a2", "a3"):
+            (t / "drv" / f"{n}.c").write_text('#include "a.h"\n')
+        (t / "drv" / "f.c").write_text('#include "a.h"\nOLD\nline\n')
+        sh(t, "git", "add", "-A")
+        sh(t, "git", "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "base")
+        patches = []
+        for name, old, new in (("drv/a.h", "api", "NEW api"), ("drv/f.c", "line", "line fixed")):
+            (t / name).write_text((t / name).read_text().replace(old, new))
+            sh(t, "git", "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qam", name)
+            patches.append(sh(t, "git", "format-patch", "-1", "--stdout"))
+        bad = B(t, t / "out").batch_regressions(patches, build.worktree_flip(t))
+        self.assertEqual(list(bad), [0])
+
 
 class TestFingerprint(Fixture):
     def test_changes_with_upstream_heads(self):
