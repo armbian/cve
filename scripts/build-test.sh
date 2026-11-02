@@ -102,7 +102,8 @@ worker() {
 		mapfile -t series < <(grep -v -e '^#' -e '^$' "$d/series.conf")
 		patches=("${series[@]/#/$root/$d/}")
 		# A cve/ backport is tested as patches/<series>/ uses it: the set up to its
-		# place, then the set's copy of it (a duplicate prerequisite is dropped there).
+		# place, then the backport itself, as this change has it. A patch the tree
+		# has by then is dropped, as the set drops a duplicate prerequisite.
 		# Not in the set: on top of the whole set, or skipped when the set has the fix.
 		ver=${d%/}; ver=${ver##*/} prefix=() own=()
 		if [[ $d == cve/* ]] && [ "$(cat "patches/$ver/base" 2>/dev/null)" = "$base" ]; then
@@ -113,9 +114,7 @@ worker() {
 					prefix+=("$root/patches/$ver/$p")
 				fi
 			done
-			if [ ${#own[@]} -gt 0 ]; then
-				patches=("${own[@]}")
-			else
+			if [ ${#own[@]} -eq 0 ]; then
 				dup=$(sed -n 's/^X-Fasttrack-Upstream: //p' "${patches[@]}" | grep -xFf - <(sed -n 's/^X-Fasttrack-Upstream: //p' "${prefix[@]}") | head -1)
 				if [ -n "$dup" ]; then
 					echo "$name: skipped (patches/$ver has ${dup:0:12})"
@@ -141,6 +140,18 @@ worker() {
 				git -C "$src" am --abort 2>/dev/null
 				echo "$name: error (patches/$ver does not apply)"
 				echo "| $name | error | patches/$ver does not apply |" >>"$rows"; fail=1; continue
+			fi
+			if [ ${#own[@]} -gt 0 ]; then
+				keep=()
+				for p in "${patches[@]}"; do
+					git -C "$src" apply --check -R "$p" 2>/dev/null && ! git -C "$src" apply --check "$p" 2>/dev/null ||
+						keep+=("$p")
+				done
+				patches=("${keep[@]}")
+				if [ ${#patches[@]} -eq 0 ]; then
+					echo "$name: skipped (patches/$ver has every patch)"
+					echo "| $name | skipped | patches/$ver has every patch |" >>"$rows"; continue
+				fi
 			fi
 		fi
 		# Changed .c files, without arch/ trees of other architectures.
