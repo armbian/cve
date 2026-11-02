@@ -442,6 +442,28 @@ git -C tree -c user.name=c -c user.email=c@c commit -qam "baz: fix race" -m "com
         self.assertIn("X-Fasttrack-Backport: cve/CVE-2026-0003/6.18",
                       "".join(p.read_text() for p in (self.out / "patches" / "6.18").glob("*.patch")))
 
+    def test_stack_leaves_out_superseded_set(self):
+        # cve/0001 holds a prerequisite and a backport of A. Mainline A is in patches/, so run
+        # leaves cve/0001 out: a new backport must not be made on its prerequisite.
+        cli.main(["--config", str(self.cfg), "run"])
+        wt = self.tmp / "bp"
+        sh(self.repo, "git", "worktree", "add", "-q", "--detach", str(wt), "linux-6.18.y")
+        cands = []
+        for i, (upstream, name, old, new) in enumerate((("d" * 40, "bar.c", "bar line 3", "bar line 3 PRE"),
+                                                        (self.A, "foo.c", "foo line 6", "foo line 6 FIX")), 1):
+            f = wt / name
+            f.write_text(f.read_text().replace(old, new))
+            sh(wt, "git", "commit", "-qam", "backport")
+            cands.append(engine.Candidate("6.18", upstream, "backport", "claude", ["CVE-2026-0001"],
+                                          filename=f"000{i}-{upstream[:12]}-backport.patch",
+                                          patch=sh(wt, "git", "format-patch", "-1", "--stdout")))
+        emit.write_patch_dir(self.out / "cve" / "CVE-2026-0001" / "6.18", "6.18", "h", "6.18.2", cands,
+                             {"made": "2026-11-01T00:00:00Z"})
+        head = (self.out / "patches" / "6.18" / "base").read_text().strip()
+        stack = incident.series_stack(self.out, "6.18", head, "CVE-2026-0003/6.18")
+        self.assertEqual(len(stack), 2)                               # D and A from patches/
+        self.assertFalse(any("cve/CVE-2026-0001/6.18" in t for t in stack))
+
     def test_unpatched_round_trip(self):
         cli.main(["--config", str(self.cfg), "run"])
         rc = cli.main(["--config", str(self.cfg), "cve", "--unpatched", "--adapt"])
