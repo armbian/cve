@@ -1,0 +1,135 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-CVE: CVE-2026-43073
+X-Fasttrack-Backport: cve/CVE-2026-43073/6.1
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 19 Apr 2023 19:09:52 -0700
+Subject: [PATCH] x86: remove 'zerorest' argument from __copy_user_nocache()
+
+Every caller passes in zero, meaning they don't want any partial copy to
+zero the remainder of the destination buffer.
+
+Which is just as well, because the implementation of that function
+didn't actually even look at that argument, and wasn't even aware it
+existed, although some misleading comments did mention it still.
+
+The 'zerorest' thing is a historical artifact of how "copy_from_user()"
+worked, in that it would zero the rest of the kernel buffer that it
+copied into.
+
+That zeroing still exists, but it's long since been moved to generic
+code, and the raw architecture-specific code doesn't do it.  See
+_copy_from_user() in lib/usercopy.c for this all.
+
+However, while __copy_user_nocache() shares some history and superficial
+other similarities with copy_from_user(), it is in many ways also very
+different.
+
+In particular, while the code makes it *look* similar to the generic
+user copy functions that can copy both to and from user space, and take
+faults on both reads and writes as a result, __copy_user_nocache() does
+no such thing at all.
+
+__copy_user_nocache() always copies to kernel space, and will never take
+a page fault on the destination.  What *can* happen, though, is that the
+non-temporal stores take a machine check because one of the use cases is
+for writing to stable memory, and any memory errors would then take
+synchronous faults.
+
+So __copy_user_nocache() does look a lot like copy_from_user(), but has
+faulting behavior that is more akin to our old copy_in_user() (which no
+longer exists, but copied from user space to user space and could fault
+on both source and destination).
+
+And it very much does not have the "zero the end of the destination
+buffer", since a problem with the destination buffer is very possibly
+the very source of the partial copy.
+
+So this whole thing was just a confusing historical artifact from having
+shared some code with a completely different function with completely
+different use cases.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+(cherry picked from commit e1f2750edc4afebb966a229b797fc89b98ee6098)
+
+[ Backport: same comment-only asm hunk, at the 6.1 location of
+  .Lcopy_user_handle_tail ]
+---
+ arch/x86/include/asm/uaccess_64.h | 6 ++----
+ arch/x86/lib/copy_user_64.S       | 4 ++--
+ arch/x86/lib/usercopy_64.c        | 2 +-
+ drivers/infiniband/sw/rdmavt/qp.c | 2 +-
+ 4 files changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
+index 560693d26ce0..66e060bfdd87 100644
+--- a/arch/x86/include/asm/uaccess_64.h
++++ b/arch/x86/include/asm/uaccess_64.h
+@@ -60,9 +60,7 @@ raw_copy_to_user(void __user *dst, const void *src, unsigned long size)
+ 	return copy_user_generic((__force void *)dst, src, size);
+ }
+ 
+-extern long __copy_user_nocache(void *dst, const void __user *src,
+-				unsigned size, int zerorest);
+-
++extern long __copy_user_nocache(void *dst, const void __user *src, unsigned size);
+ extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
+ extern void memcpy_page_flushcache(char *to, struct page *page, size_t offset,
+ 			   size_t len);
+@@ -74,7 +72,7 @@ __copy_from_user_inatomic_nocache(void *dst, const void __user *src,
+ 	long ret;
+ 	kasan_check_write(dst, size);
+ 	stac();
+-	ret = __copy_user_nocache(dst, src, size, 0);
++	ret = __copy_user_nocache(dst, src, size);
+ 	clac();
+ 	return ret;
+ }
+diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
+index c040d5458e93..f97564818e9b 100644
+--- a/arch/x86/lib/copy_user_64.S
++++ b/arch/x86/lib/copy_user_64.S
+@@ -171,7 +171,7 @@ SYM_FUNC_END(copy_user_enhanced_fast_string)
+ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
+ 
+ /*
+- * Try to copy last bytes and clear the rest if needed.
++ * Try to copy last bytes.
+  * Since protection fault in copy_from/to_user is not a normal situation,
+  * it is not necessary to optimize tail handling.
+  * Don't try to copy the tail if machine check happened
+@@ -201,7 +201,7 @@ SYM_CODE_START_LOCAL(.Lcopy_user_handle_tail)
+ 	_ASM_EXTABLE_CPY(1b, 2b)
+ 
+ .Lcopy_user_handle_align:
+-	addl %ecx,%edx			/* ecx is zerorest also */
++	addl %ecx,%edx
+ 	jmp .Lcopy_user_handle_tail
+ 
+ SYM_CODE_END(.Lcopy_user_handle_tail)
+diff --git a/arch/x86/lib/usercopy_64.c b/arch/x86/lib/usercopy_64.c
+index 15704c605a2b..c3a5bbc0b41e 100644
+--- a/arch/x86/lib/usercopy_64.c
++++ b/arch/x86/lib/usercopy_64.c
+@@ -48,7 +48,7 @@ long __copy_user_flushcache(void *dst, const void __user *src, unsigned size)
+ 	long rc;
+ 
+ 	stac();
+-	rc = __copy_user_nocache(dst, src, size, 0);
++	rc = __copy_user_nocache(dst, src, size);
+ 	clac();
+ 
+ 	/*
+diff --git a/drivers/infiniband/sw/rdmavt/qp.c b/drivers/infiniband/sw/rdmavt/qp.c
+index 2bdc4486c3da..de02df0e95d3 100644
+--- a/drivers/infiniband/sw/rdmavt/qp.c
++++ b/drivers/infiniband/sw/rdmavt/qp.c
+@@ -97,7 +97,7 @@ static void cacheless_memcpy(void *dst, void *src, size_t n)
+ 	 * there are no security issues.  The extra fault recovery machinery
+ 	 * is not invoked.
+ 	 */
+-	__copy_user_nocache(dst, (void __user *)src, n, 0);
++	__copy_user_nocache(dst, (void __user *)src, n);
+ }
+ 
+ void rvt_wss_exit(struct rvt_dev_info *rdi)
