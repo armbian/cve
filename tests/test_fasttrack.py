@@ -614,6 +614,24 @@ class TestFingerprint(Fixture):
         sh(self.data / "linux", "git", "update-ref", "refs/heads/linux-6.18.y", self.A)
         self.assertNotEqual(fp(), first)
 
+    def test_changes_with_attempts(self):
+        # A reviewed "not affected" in attempts.json changes report.md: a run is due.
+        import contextlib, io
+        repo = str(self.data / "linux")
+        with open(self.cfg, "a") as fh:
+            fh.write(f"sources: {{vulns: {repo}, stable_queue: {repo}, linux: {repo}, "
+                     "kev: 'file:///nonexistent', releases: 'file:///nonexistent'}\n")
+
+        def fp():
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                cli.main(["--config", str(self.cfg), "fingerprint"])
+            return buf.getvalue().split()[-1]
+        first = fp()
+        self.out.mkdir(parents=True, exist_ok=True)
+        (self.out / "attempts.json").write_text('{"CVE-2026-0003": {"6.18": {"reviewed": "2026-11-01"}}}\n')
+        self.assertNotEqual(fp(), first)
+
 
 class TestExpiry(Fixture):
     def _land_in_stable(self, sha, sub):

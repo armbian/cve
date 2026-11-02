@@ -59,8 +59,9 @@ def cmd_fingerprint(args) -> int:
     """Print a hash that changes when a run could give a different result."""
     cfg = _cfg(args)
     # cve/ backports join the patch set, so a merged one is a new input too.
+    # attempts.json too: a reviewed "not affected" changes the report.
     code = sorted(Path(__file__).parent.glob("*.py")) + [Path(args.config)] + \
-        sorted(Path(cfg["out"]).glob("cve/*/*/*"))
+        sorted(Path(cfg["out"]).glob("cve/*/*/*")) + sorted(Path(cfg["out"]).glob("attempts.json"))
     print(sync.fingerprint([str(s) for s in cfg["series"]], cfg.get("sources"), code))
     return 0
 
