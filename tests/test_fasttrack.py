@@ -422,6 +422,23 @@ git -C tree -c user.name=c -c user.email=c@c commit -qam "baz: fix race" -m "com
         cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--package"])
         self.assertTrue((d / "fasttrack.json").exists())
 
+    def test_partial_result_keeps_backport(self):
+        # CVE-7 needs A (applies) and C (does not). A rerun gives "partial": the earlier
+        # Claude backport of the whole fix stays.
+        pub = self.data / "vulns" / "cve" / "published" / "2026"
+        body = json.loads((pub / "CVE-2026-0003.json").read_text())
+        body["cveMetadata"]["cveId"] = "CVE-2026-0007"
+        (pub / "CVE-2026-0007.json").write_text(json.dumps(body))
+        (pub / "CVE-2026-0007.sha1").write_text(f"{self.A}\n{self.C}\n")
+        d = self.out / "cve" / "CVE-2026-0007" / "6.18"
+        d.mkdir(parents=True)
+        (d / "0002-backport.patch").write_text("backport\n")
+        (d / "fasttrack.json").write_text(json.dumps({"made": "2026-11-01T00:00:00Z", "patches": [
+            {"filename": "0002-backport.patch", "upstream": self.C, "source": "claude"}]}))
+        cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0007", "--package"])
+        self.assertEqual(self._cve_outcome(), "partial")
+        self.assertTrue((d / "0002-backport.patch").exists())
+
     def test_work_package_on_patch_set(self):
         cli.main(["--config", str(self.cfg), "run"])
         cli.main(["--config", str(self.cfg), "cve", "CVE-2026-0003", "--package"])
