@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-CVE: CVE-2026-80999
+X-Fasttrack-Backport: cve/CVE-2026-80999/6.1
+From: Igor Pecovnik <igor@armbian.com>
+Date: Mon, 2 Nov 2026 05:52:10 +0100
+Subject: [PATCH] net: dsa: realtek: use gpiod_set_value_cansleep() in remove
+
+The backport of fb58b6a696b3 ("net: dsa: realtek: use
+gpiod_set_value_cansleep for reset GPIO") converts only the probe
+path. In 6.1, realtek_mdio_remove() and realtek_smi_remove() still
+assert the reset GPIO with gpiod_set_value(). Mainline does this
+through rtl83xx_reset_assert(), which the upstream commit converts.
+
+Use gpiod_set_value_cansleep() in both remove functions. A reset GPIO
+on a sleeping controller then does not cause a warning on unbind.
+
+CVE: CVE-2026-80999
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ drivers/net/dsa/realtek/realtek-mdio.c | 2 +-
+ drivers/net/dsa/realtek/realtek-smi.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/dsa/realtek/realtek-mdio.c b/drivers/net/dsa/realtek/realtek-mdio.c
+index a2fe9ac94470..1691faf77f00 100644
+--- a/drivers/net/dsa/realtek/realtek-mdio.c
++++ b/drivers/net/dsa/realtek/realtek-mdio.c
+@@ -247,7 +247,7 @@ static void realtek_mdio_remove(struct mdio_device *mdiodev)
+ 
+ 	/* leave the device reset asserted */
+ 	if (priv->reset)
+-		gpiod_set_value(priv->reset, 1);
++		gpiod_set_value_cansleep(priv->reset, 1);
+ }
+ 
+ static void realtek_mdio_shutdown(struct mdio_device *mdiodev)
+diff --git a/drivers/net/dsa/realtek/realtek-smi.c b/drivers/net/dsa/realtek/realtek-smi.c
+index f1740b322cdc..3557fb0bf4d7 100644
+--- a/drivers/net/dsa/realtek/realtek-smi.c
++++ b/drivers/net/dsa/realtek/realtek-smi.c
+@@ -520,7 +520,7 @@ static int realtek_smi_remove(struct platform_device *pdev)
+ 
+ 	/* leave the device reset asserted */
+ 	if (priv->reset)
+-		gpiod_set_value(priv->reset, 1);
++		gpiod_set_value_cansleep(priv->reset, 1);
+ 
+ 	return 0;
+ }

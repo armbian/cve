@@ -10,7 +10,7 @@ Subject: [PATCH] net: stmmac: fix rx Scatter-Gather support
 commit 88095728511e0df9c89528944f5a1762ad298983 upstream.
 
 [ Backport: 6.1 uses priv->sph and priv->plat->has_gmac4 instead of priv->sph_active and core_type ]
-[ Backport: 6.1 page pool uses max_len STMMAC_MAX_RX_BUF_SIZE(num_pages) and has no SPH block; set offset 0 and widen max_len by stmmac_rx_offset() ]
+[ Backport: 6.1 page pool setup has no SPH block; set offset 0 and max_len to dma_buf_sz + stmmac_rx_offset() as upstream ]
 [ Backport: 6.1 stmmac_rx() has no net_prefetch() call and no hw_vlan_en block; context only ]
 
 When a received frame is larger than dma_buf_sz, the DMA scatters it
@@ -57,12 +57,13 @@ Fixes: 88ebe2cf7f3f ("net: stmmac: Rework stmmac_rx()")
 Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 Link: https://patch.msgid.link/20260923-stmmac-rx-sg-fix-v3-1-ed26fea7180d@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 79 ++++++++++++-------
- 1 file changed, 50 insertions(+), 29 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 78 ++++++++++++-------
+ 1 file changed, 49 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index a1e861f7046d..48e2fc64498a 100644
+index a1e861f7046d..9ce8f997a23a 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 @@ -1428,6 +1428,16 @@ static void stmmac_clear_descriptors(struct stmmac_priv *priv,
@@ -100,19 +101,18 @@ index a1e861f7046d..48e2fc64498a 100644
  	}
  
  	buf->addr = page_pool_get_dma_addr(buf->page) + buf->page_offset;
-@@ -2031,8 +2038,9 @@ static int __alloc_dma_rx_desc_resources(struct stmmac_priv *priv,
+@@ -2031,8 +2038,8 @@ static int __alloc_dma_rx_desc_resources(struct stmmac_priv *priv,
  	pp_params.nid = dev_to_node(priv->device);
  	pp_params.dev = priv->device;
  	pp_params.dma_dir = xdp_prog ? DMA_BIDIRECTIONAL : DMA_FROM_DEVICE;
 -	pp_params.offset = stmmac_rx_offset(priv);
 -	pp_params.max_len = STMMAC_MAX_RX_BUF_SIZE(num_pages);
 +	pp_params.offset = 0;
-+	pp_params.max_len = STMMAC_MAX_RX_BUF_SIZE(num_pages) +
-+			    stmmac_rx_offset(priv);
++	pp_params.max_len = dma_conf->dma_buf_sz + stmmac_rx_offset(priv);
  
  	rx_q->page_pool = page_pool_create(&pp_params);
  	if (IS_ERR(rx_q->page_pool)) {
-@@ -4710,7 +4718,7 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
+@@ -4710,7 +4717,7 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
  				break;
  		}
  
@@ -121,7 +121,7 @@ index a1e861f7046d..48e2fc64498a 100644
  			buf->sec_page = page_pool_alloc_pages(rx_q->page_pool, gfp);
  			if (!buf->sec_page)
  				break;
-@@ -4721,10 +4729,8 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
+@@ -4721,10 +4728,8 @@ static inline void stmmac_rx_refill(struct stmmac_priv *priv, u32 queue)
  		buf->addr = page_pool_get_dma_addr(buf->page) + buf->page_offset;
  
  		stmmac_set_desc_addr(priv, p, buf->addr);
@@ -134,7 +134,7 @@ index a1e861f7046d..48e2fc64498a 100644
  		stmmac_refill_desc3(priv, rx_q, p);
  
  		rx_q->rx_count_frames++;
-@@ -4755,7 +4761,9 @@ static unsigned int stmmac_rx_buf1_len(struct stmmac_priv *priv,
+@@ -4755,7 +4760,9 @@ static unsigned int stmmac_rx_buf1_len(struct stmmac_priv *priv,
  	unsigned int plen = 0, hlen = 0;
  	int coe = priv->hw->rx_csum;
  
@@ -145,7 +145,7 @@ index a1e861f7046d..48e2fc64498a 100644
  	if (priv->sph && len)
  		return 0;
  
-@@ -4766,14 +4774,16 @@ static unsigned int stmmac_rx_buf1_len(struct stmmac_priv *priv,
+@@ -4766,14 +4773,16 @@ static unsigned int stmmac_rx_buf1_len(struct stmmac_priv *priv,
  		return hlen;
  	}
  
@@ -165,7 +165,7 @@ index a1e861f7046d..48e2fc64498a 100644
  }
  
  static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
-@@ -4783,8 +4793,7 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
+@@ -4783,8 +4792,7 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
  	int coe = priv->hw->rx_csum;
  	unsigned int plen = 0;
  
@@ -175,7 +175,7 @@ index a1e861f7046d..48e2fc64498a 100644
  		return 0;
  
  	/* For GMAC4, when split header is enabled, in some rare cases, the
-@@ -4801,14 +4810,15 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
+@@ -4801,14 +4809,15 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
  	 * Thus 'plen - len' always gives the correct length of buf2.
  	 */
  
@@ -194,7 +194,7 @@ index a1e861f7046d..48e2fc64498a 100644
  }
  
  static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
-@@ -5331,6 +5341,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+@@ -5331,6 +5340,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
  	struct sk_buff *skb = NULL;
  	struct stmmac_xdp_buff ctx;
  	unsigned long flags;
@@ -202,7 +202,7 @@ index a1e861f7046d..48e2fc64498a 100644
  	int xdp_status = 0;
  	int bufsz;
  
-@@ -5436,22 +5447,23 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+@@ -5436,22 +5446,23 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
  		len += buf2_len;
  
  		/* ACS is disabled; strip manually. */
@@ -235,7 +235,7 @@ index a1e861f7046d..48e2fc64498a 100644
  			xdp_init_buff(&ctx.xdp, bufsz, &rx_q->xdp_rxq);
  			xdp_prepare_buff(&ctx.xdp, page_address(buf->page),
  					 buf->page_offset, buf1_len, false);
-@@ -5548,6 +5560,15 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+@@ -5548,6 +5559,15 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
  
  		/* Got entire packet into SKB. Finish it. */
  

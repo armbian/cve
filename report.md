@@ -2,8 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 9 patch(es)
-- added 6.1: 20 patch(es)
+- added 6.1: 6 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
@@ -444,7 +443,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 1
 
-### Included (468)
+### Included (478)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -473,14 +472,17 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98980 | `8189ab688f5a` | mainline | namei: don't reveal overmounted entries in refwalk |
 |  | CVE-2026-99026 | `489114c9ecae` | mainline | net: team: free skb when broadcast has no txable port |
 |  | CVE-2024-40965 | `4268254a3948` | stable-list | i2c: lpi2c: Avoid calling clk_get_rate during transfer |
+|  | CVE-2024-40965 | `—` | claude | i2c: lpi2c: lock the peripheral clock rate in probe |
 |  | CVE-2025-39981 | `302a1f674c00` | stable-list | Bluetooth: MGMT: Fix possible UAFs |
 |  | CVE-2025-39981 | `e8785404de06` | claude | Bluetooth: MGMT: fix crash in set_mesh_sync and |
 |  | CVE-2025-39981 | `1b9c17fd0a7f` | claude | Bluetooth: MGMT: Fix memory leak in set_ssp_complete |
 |  | CVE-2025-39981 | `17f89341cb42` | claude | Bluetooth: MGMT: Fix list corruption and UAF in command |
 |  | CVE-2025-39981 | `5f5fa4cd35f7` | claude | Bluetooth: MGMT: Fix dangling pointer on |
 |  | CVE-2026-64109 | `be309f8eae8b` | stable-list | af_unix: Fix UAF read of tail->len in unix_stream_data_wait() |
+|  | CVE-2026-80670 | `afa4363a91a1` | claude | perf stat: Introduce perf_env__get_cpu_topology() to guard |
 |  | CVE-2026-80670 | `5484b43a0ec8` | stable-list | perf tools: Use perf_env__get_cpu_topology() in machine__resolve() |
 |  | CVE-2026-80999 | `fb58b6a696b3` | stable-list | net: dsa: realtek: use gpiod_set_value_cansleep for reset GPIO |
+|  | CVE-2026-80999 | `—` | claude | net: dsa: realtek: use gpiod_set_value_cansleep() in remove |
 |  | CVE-2026-93216 | `90f095b816e2` | stable-list | mm/page_owner: use memcg_data snapshot to avoid TOCTOU in print_page_owner_memcg() |
 |  | CVE-2026-97562 | `d806d5a85dcb` | stable-list | smb: client: pin DFS superblock in iterator callback |
 |  | CVE-2026-97619 | `796aa0547557` | stable-list | io_uring/rw: end write accounting from ->ki_complete |
@@ -489,9 +491,13 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98179 | `5155002b03b2` | stable-list | drm/amdgpu: fix rmmio iounmap skipped on device removal |
 |  | CVE-2026-98212 | `5d132990475f` | stable-list | mmc: hsq: Fix use-after-free in retry work |
 |  | CVE-2026-98254 | `b7d7914a9ae3` | stable-list | swiotlb: use the adjusted address for the highmem page lookup |
-|  | CVE-2026-98509 | `b74aad23d99b` | stable-list | drm/virtio: fix memory leak of fence event on execbuffer failure |
-|  | CVE-2026-98539 | `1abd643f3783` | stable-list | fs/ntfs3: use d_instantiate_new() in ntfs_create_inode() and murder syzbot's "WARNING in do_new_mount" saga |
-|  | CVE-2026-98863 | `10180a277549` | stable-list | KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails |
+|  | CVE-2026-98509 | `e4812ab8e6b1` | stable-list | drm/virtio: Refactor and optimize job submission code path |
+|  | CVE-2026-98509 | `b74aad23d99b` | claude | drm/virtio: fix memory leak of fence event on execbuffer |
+|  | CVE-2026-98539 | `c935c6687886` | stable-list | fs/ntfs3: Redesign ntfs_create_inode to return error code instead of inode |
+|  | CVE-2026-98539 | `1abd643f3783` | claude | fs/ntfs3: use d_instantiate_new() in ntfs_create_inode() and |
+|  | CVE-2026-98863 | `b65699be2c60` | stable-list | KVM: x86: Reject nested CAP enablement if nested virtualization is disabled |
+|  | CVE-2026-98863 | `10180a277549` | claude | KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said |
+|  | CVE-2026-98924 | `3bc4e4410830` | claude | vfs: Remove unnecessary list_for_each_entry_safe() from |
 |  | CVE-2026-98924 | `7459c0218742` | stable-list | fs: avoid repeated scans in evict_inodes() |
 |  | CVE-2026-99122 | `ad9a7da3fa39` | stable-list | vsock/vmci: validate packet source for connected sockets |
 |  | CVE-2024-35808 | `cd32b27a66db` | claude | md/dm-raid: don't call md_reap_sync_thread() directly |
@@ -511,6 +517,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2024-47691 | `c7f114d864ac` | claude | f2fs: fix to avoid use-after-free in f2fs_stop_gc_thread() |
 |  | CVE-2024-56544 | `1c0844c6184e` | claude | udmabuf: change folios array from kmalloc to kvmalloc |
 |  | CVE-2024-50028 | `a42a5839f400` | claude | thermal: core: Reference count the zone in thermal_zone_get_by_id() |
+|  | CVE-2024-50028 | `—` | claude | thermal: netlink: check that the zone is registered |
 |  | CVE-2024-50166 | `—` | claude | fsl/fman: Save device references taken in mac_probe() |
 |  | CVE-2024-50166 | `1dec67e0d9fb` | claude | fsl/fman: Fix refcount handling of fman-related devices |
 |  | CVE-2024-53219 | `41748675c0bf` | claude | virtiofs: use pages instead of pointer for kernel direct IO |
@@ -622,6 +629,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-46068 | `adb3faf2db1a` | claude | crypto: nx - fix bounce buffer leaks in nx842_crypto_{alloc,free}_ctx |
 |  | CVE-2026-31444 | `48623ec358c1` | claude | ksmbd: fix use-after-free and NULL deref in smb_grant_oplock() |
 |  | CVE-2026-22996 | `123eda2e5b16` | claude | net/mlx5e: Don't store mlx5e_priv in mlx5e_dev devlink priv |
+|  | CVE-2026-22996 | `—` | claude | net/mlx5e: unregister the devlink port with mdev from |
 |  | CVE-2026-43053 | `—` | claude | xfs: only assert new size for datafork during truncate extents |
 |  | CVE-2026-43053 | `—` | claude | xfs: factor out xfs_attr3_node_entry_remove |
 |  | CVE-2026-43053 | `—` | claude | xfs: factor out xfs_attr3_leaf_init |
@@ -668,6 +676,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-53185 | `4e3c87b9421d` | claude | zram: fix synchronous reads |
 |  | CVE-2026-63805 | `4e67f504ee9d` | claude | crypto: nx - fix nx_crypto_ctx_exit argument |
 |  | CVE-2026-98906 | `aa97f11a76e5` | claude | net: lan966x: restore RX state on reload failure |
+|  | CVE-2026-98906 | `59c3d55a946c` | claude | net: lan966x: fix use-after-free and leak in |
 |  | CVE-2026-72469 | `af9b65b29af3` | claude | xprtrdma: Fix ep kref imbalance on ADDR_CHANGE |
 |  | CVE-2026-74272 | `4dd86ca99ffc` | claude | cxl/region: Resolve region deletion races |
 |  | CVE-2026-72454 | `650716f23eac` | claude | i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev() |
@@ -786,7 +795,7 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98338 | `708f9d43d6a2` | claude | wifi: cfg80211: ibss: ref BSS entry for joined event |
 |  | CVE-2026-98333 | `78183e833195` | claude | wifi: mac80211: reset the LED state when ifup fails |
 |  | CVE-2026-98334 | `3f28551d0241` | claude | wifi: mac80211: reset state when starting AP fails |
-|  | CVE-2026-98425 | `a7491b7efbd9` | claude | wifi: mac80211: don't warn when an IBSS has no channel to scan |
+|  | CVE-2026-98425 | `a7491b7efbd9` | claude | wifi: mac80211: don't warn when an IBSS has no channel to |
 |  | CVE-2026-98330 | `4635b1a1c1d6` | claude | wifi: cfg80211: get the wiphy out of a dying network namespace |
 |  | CVE-2026-98332 | `6f0a100df853` | claude | wifi: mac80211: only operate on TDLS peers in the TDLS code |
 |  | CVE-2026-98329 | `—` | claude | wifi: cfg80211: expose nl80211_chan_width_to_mhz for wide sharing |
