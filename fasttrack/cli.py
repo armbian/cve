@@ -27,7 +27,7 @@ from pathlib import Path
 
 import yaml
 
-from . import build, emit, engine, feeds, gitutil, incident, lore, sync, vulns
+from . import build, emit, engine, feeds, followups, gitutil, incident, lore, sync, vulns
 
 log = logging.getLogger("fasttrack")
 
@@ -314,6 +314,26 @@ def cmd_prune(args) -> int:
     return 0
 
 
+def cmd_followups(args) -> int:
+    """Mainline follow-ups (Fixes: tags) of patches/<series>/ upstreams that the set lacks."""
+    cfg = _cfg(args)
+    repo, out = Path(cfg["data"]) / "linux", Path(cfg["out"])
+    series = [str(s) for s in cfg["series"]]
+    newest = max(series, key=_series)
+    # The newest stable branch carries mainline history up to its release.
+    ref = gitutil.rev(repo, f"origin/linux-{newest}.y") or gitutil.rev(repo, f"linux-{newest}.y")
+    index = followups.fixes_index(repo, ref)
+    rows = []
+    for s in series:
+        d = out / "patches" / s
+        if (d / "base").exists():
+            rows += [{"series": s, **r} for r in followups.missing(repo, d, (d / "base").read_text().strip(), index)]
+    for r in rows:
+        print(f"{r['series']}: {r['patch']} needs {r['followup']} {r['subject']}")
+    (out / "followups.json").write_text(json.dumps(rows, indent=2) + "\n")
+    return 0
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="fasttrack", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -336,6 +356,8 @@ def main(argv=None) -> int:
     r.set_defaults(fn=cmd_report)
 
     sub.add_parser("prune", help="delete incident patches the stable head has absorbed").set_defaults(fn=cmd_prune)
+    sub.add_parser("followups", help="list mainline follow-ups (Fixes: tags) the patch sets miss"
+                   ).set_defaults(fn=cmd_followups)
     r = sub.add_parser("release-notes", help="print release notes: the fixes in each patches/<series>/")
     r.add_argument("--title", default="Kernel security fixes")
     r.set_defaults(fn=cmd_release_notes)

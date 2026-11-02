@@ -21,7 +21,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from fasttrack import build, cli, emit, engine, incident, sync, vulns
+from fasttrack import build, cli, emit, engine, followups, incident, sync, vulns
 from fasttrack.queue import load_queue
 
 
@@ -364,6 +364,22 @@ class TestRun(Fixture):
         self.assertEqual(v[(self.A, "CVE-2026-0001/6.18")], engine.SUPERSEDED)
         self.assertEqual([r["upstream"] for r in emit.unpatched([res])].count(self.C), 1)
         self.assertIn("cve/ backport does not apply on this base (1)", emit.report([res], []))
+
+
+    def test_followups_missing(self):
+        sh(self.repo, "git", "checkout", "-q", "master")
+        f = commit(self.repo, "foo: fix the fix", **{"foo.c": fix("foo", ("foo line 6", "foo line 6 FIXED AGAIN"))})
+        sh(self.repo, "git", "commit", "-q", "--amend", "-m", f"foo: fix the fix\n\nFixes: {self.A[:12]} (\"foo: fix overflow\")")
+        f = sh(self.repo, "git", "rev-parse", "HEAD").strip()
+        d = self.tmp / "set"
+        d.mkdir()
+        (d / "0001-a.patch").write_text(f"From 0 Mon\nX-Fasttrack-Upstream: {self.A}\nSubject: [PATCH] foo: fix overflow\n")
+        index = followups.fixes_index(self.repo, "master", since="2000-01-01")
+        rows = followups.missing(self.repo, d, "linux-6.18.y", index)
+        self.assertEqual([(r["patch"], r["followup"]) for r in rows], [("0001-a.patch", f[:12])])
+        # The set carries the follow-up: nothing is missing.
+        (d / "0002-f.patch").write_text(f"From 0 Mon\nX-Fasttrack-Upstream: {f}\nSubject: [PATCH] foo: fix the fix\n")
+        self.assertEqual(followups.missing(self.repo, d, "linux-6.18.y", index), [])
 
 
 class TestIncident(Fixture):
