@@ -7263,6 +7263,23 @@
       "prerequisites": [],
       "build_log": "",
       "backport": "CVE-2026-68086/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "16c589567a956d46a7c1363af3f64de3d420af20",
+      "subject": "ASoC: SOF: Intel: hda: Fix NULL pointer dereference",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-43137"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0428-16c589567a95-asoc-sof-intel-hda-fix-null-pointer-dereference.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-43137/6.1"
     }
   ]
 }
