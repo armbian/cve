@@ -3886,39 +3886,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-58100"
-    ],
-    "kev": false,
-    "upstream": "81f6d0530ba031b5f038a091619bf2ff29568852",
-    "subject": "bpf: check changes_pkt_data property for extension programs",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/bpf.h",
-      "kernel/bpf/verifier.c"
-    ],
-    "prerequisites": [
-      "9ef40974a82a bpf: Allow ringbuf memory to be used as map key",
-      "d1673304097c bpf: Consider all mem_types compatible for map_{key,value} args",
-      "0593dd34e534 bpf: Append _recur naming to the bpf_task_storage helper proto",
-      "4279adb094a1 bpf: Add new bpf_task_storage_get proto with no deadlock detection",
-      "8a7dac37f27a bpf: Add new bpf_task_storage_delete proto with no deadlock detection",
-      "c4bcfb38a95e bpf: Implement cgroup storage available to non-cgroup-attached bpf progs",
-      "b6d207999c35 bpf: Fix a typo in comment for DFS algorithm",
-      "a28ace782e68 bpf: Drop reg_type_may_be_refcounted_or_null",
-      "aa3496accc41 bpf: Refactor kptr_off_tab into btf_record",
-      "db559117828d bpf: Consolidate spin_lock, timer management into btf_record",
-      "f71b2f64177a bpf: Refactor map->off_arr handling",
-      "2d577252579b bpf: Remove BPF_MAP_OFF_ARR_MAX",
-      "e5feed0f64f7 bpf: Fix copy_map_value, zero_map_value",
-      "f0c5941ff5b2 bpf: Support bpf_list_head in map values",
-      "2de2669b4e52 bpf: Rename RET_PTR_TO_ALLOC_MEM"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-54191"
     ],
     "kev": false,
@@ -7991,40 +7958,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-98067"
-    ],
-    "kev": false,
-    "upstream": "82e664cf1219c459c33aae931b222cf951af9cb7",
-    "subject": "erofs: disable LZ4 rolling decompression for now",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/erofs/decompressor.c",
-      "fs/erofs/internal.h",
-      "fs/erofs/zdata.c"
-    ],
-    "prerequisites": [
-      "927e5010ff5b erofs: use kmap_local_page() only for erofs_bread()",
-      "b74d24f7a74f fs: port ->getattr() to pass mnt_idmap",
-      "7c3511a2c820 erofs: clean up erofs_iget()",
-      "768bb10afb99 erofs: remove linux/buffer_head.h dependency",
-      "3fffb589b9a6 erofs: add per-cpu threads for decompression as an option",
-      "8b58f9f02162 erofs: remove unused EROFS_GET_BLOCKS_RAW flag",
-      "61fef98945d0 erofs: unify anonymous inodes for blob",
-      "8d1b80a79452 erofs: fix an error code in z_erofs_init_zip_subsystem()",
-      "a279adedbb52 erofs: mark z_erofs_lzma_init/erofs_pcpubuf_init w/ __init",
-      "8b465fecc35a erofs: support flattened block device for multi-blob images",
-      "eb2c5e41be14 erofs: keep meta inode into erofs_buf",
-      "a97a218b0886 erofs: move packed inode out of the compression part",
-      "9e382914617c erofs: add helpers to load long xattr name prefixes",
-      "6a318ccd7e08 erofs: enable long extended attribute name prefixes",
-      "4fdadd5b0f0c erofs: get rid of z_erofs_fill_inode()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-97950"
     ],
     "kev": false,
@@ -8298,28 +8231,6 @@
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99191"
-    ],
-    "kev": false,
-    "upstream": "8070ed578b6b9134e045627fb745c887a806d46e",
-    "subject": "calipso: keep BIG TCP payload_len in calipso_skbuff_setattr()",
-    "verdict": "needs-backport",
-    "files": [
-      "net/ipv6/calipso.c"
-    ],
-    "prerequisites": [
-      "9ff74d77180a netlabel: remove impossible return value in netlbl_bitmap_walk",
-      "5f60d5f6bbc1 move asm/unaligned.h to linux/unaligned.h",
-      "8b98f34ce1d8 net: ipv6: Fix spelling mistake",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "189f164e573e Convert remaining multi-line kmalloc_obj/flex GFP_KERNEL uses"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## net/ipv6/calipso.c\nnet/ipv6/calipso.c:1365:17: error: implicit declaration of function \u2018ipv6_set_payload_len\u2019 [-Wimplicit-function-declaration]"
   },
   {
     "series": "6.1",

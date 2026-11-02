@@ -7280,6 +7280,91 @@
       "prerequisites": [],
       "build_log": "",
       "backport": "CVE-2026-43137/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "81f6d0530ba031b5f038a091619bf2ff29568852",
+      "subject": "bpf: check changes_pkt_data property for extension programs",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-58100"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0429-81f6d0530ba0-bpf-check-changes-pkt-data-property-for-extension-pr.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-58100/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "ac6542ad92759cda383ad62b4e4cbfc28136abc1",
+      "subject": "bpf: fix null dereference when computing changes_pkt_data of prog w/o subprogs",
+      "source": "claude",
+      "cves": [
+        "CVE-2024-58100"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0430-ac6542ad9275-bpf-fix-null-dereference-when-computing-changes-pkt.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2024-58100/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "b2936b4fd56294e49d6c8e9152ea6c4982757c7d",
+      "subject": "net/ipv6: Introduce payload_len helpers",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99191"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0431-b2936b4fd562-net-ipv6-introduce-payload-len-helpers.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99191/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "8070ed578b6b9134e045627fb745c887a806d46e",
+      "subject": "calipso: keep BIG TCP payload_len in calipso_skbuff_setattr()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99191"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0432-8070ed578b6b-calipso-keep-big-tcp-payload-len-in-calipso-skbuff-s.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99191/6.1"
+    },
+    {
+      "series": "6.1",
+      "upstream": "82e664cf1219c459c33aae931b222cf951af9cb7",
+      "subject": "erofs: disable LZ4 rolling decompression for now",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98067"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0433-82e664cf1219-erofs-disable-lz4-rolling-decompression-for-now.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98067/6.1"
     }
   ]
 }
