@@ -271,7 +271,8 @@ with the line `Not affected`, then explain why.
 def series_stack(out: Path, series: str, head: str, own: str) -> list[str]:
     """The patch set a new backport goes on top of: patches/<series>/ from the last
     run, then cve/ backports made since, oldest first. ``own`` (<ID>/<series>) is left
-    out. Empty when patches/<series>/ was verified on another stable head."""
+    out, and so is a superseded set: one whose fix is a clean pick in patches/<series>/.
+    Empty when patches/<series>/ was verified on another stable head."""
     d = out / "patches" / series
     if not (d / "base").exists() or (d / "base").read_text().strip() != head:
         return []
@@ -281,10 +282,15 @@ def series_stack(out: Path, series: str, head: str, own: str) -> list[str]:
         if name and not name.startswith("#") and (d / name).exists():
             texts.append((d / name).read_text(**gitutil.ENC))
     have = "".join(t for t in texts if "X-Fasttrack-Backport:" in t)
+    picks = set(re.findall(r"^X-Fasttrack-Upstream: (\S+)$",
+                           "".join(t for t in texts if "X-Fasttrack-Backport:" not in t), re.M))
     newer = []
     for meta_file in out.glob(f"cve/*/{series}/fasttrack.json"):
         meta, cdir = json.loads(meta_file.read_text()), meta_file.parent
         name = f"{cdir.parent.name}/{series}"
+        # Superseded: a clean pick carries its fix, so run leaves the whole set out.
+        if any(p.get("upstream") in picks for p in meta.get("patches", [])):
+            continue
         if meta.get("made") and name != own and f"X-Fasttrack-Backport: cve/{name}\n" not in have:
             newer.append((meta["made"], [(cdir / p["filename"]).read_text(**gitutil.ENC)
                                          for p in meta.get("patches", []) if (cdir / p["filename"]).exists()]))
