@@ -2983,7 +2983,7 @@
       "series": "6.12",
       "upstream": "4721587f96cb8de8164f3fd203093a0875560999",
       "subject": "smb: client: discard post-EOF pagecache when extending a file via clone range",
-      "source": "claude",
+      "source": "mainline",
       "cves": [
         "CVE-2026-98685"
       ],
@@ -2994,8 +2994,12 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98685/6.12",
-      "bug_commits": []
+      "backport": "",
+      "bug_commits": [
+        "358bd5f436d820bb758833050aae065b35d6986c",
+        "43801359c8971cc49b4a4db5015fba77fbd09c32",
+        "c54fc3a4f375663f2361a9cbb2955fb4ef912879"
+      ]
     },
     {
       "series": "6.12",
@@ -3019,7 +3023,7 @@
       "series": "6.12",
       "upstream": "8f8d32c1044f70e46e87550e039a15ff20a4b21c",
       "subject": "smb: client: flush dirty data before zeroing a range",
-      "source": "claude",
+      "source": "mainline",
       "cves": [
         "CVE-2026-98683"
       ],
@@ -3030,8 +3034,13 @@
       "files": [],
       "prerequisites": [],
       "build_log": "",
-      "backport": "CVE-2026-98683/6.12",
-      "bug_commits": []
+      "backport": "",
+      "bug_commits": [
+        "0a9423f99ded38b32bd1864347332cc557e6b141",
+        "13af7446428771e9e529284d390e7994df8be683",
+        "7dfa4279c55f467a88e653a5d544817181b22aea",
+        "91d1dfae464987aaf6c79ff51d8674880fb3be77"
+      ]
     },
     {
       "series": "6.12",

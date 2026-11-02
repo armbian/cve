@@ -1,16 +1,11 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: claude
+X-Fasttrack-Source: mainline
 X-Fasttrack-Upstream: 4721587f96cb8de8164f3fd203093a0875560999
 X-Fasttrack-CVE: CVE-2026-98685
-X-Fasttrack-Backport: cve/CVE-2026-98685/6.12
 From: Paulo Alcantara <pc@manguebit.org>
-Date: Sun, 1 Nov 2026 00:36:45 +0100
+Date: Sun, 20 Sep 2026 16:38:03 -0300
 Subject: [PATCH] smb: client: discard post-EOF pagecache when extending a file
  via clone range
-
-commit 4721587f96cb8de8164f3fd203093a0875560999 upstream.
-
-[ Backport: no code change; only the hunk line offset differs. ]
 
 cifs_remap_file_range() discarded the pagecache only for the folios
 overlapping the destination region, so when a clone extends the file the
@@ -37,10 +32,10 @@ Cc: stable@vger.kernel.org
  1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index 74824f534851..ca7ba3bb5b67 100644
+index f1fb4b7b7b7c..6410249f529a 100644
 --- a/fs/smb/client/cifsfs.c
 +++ b/fs/smb/client/cifsfs.c
-@@ -1383,9 +1383,14 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
+@@ -1467,9 +1467,14 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
  	i_size = target_inode->i_size;
  	spin_unlock(&target_inode->i_lock);
  

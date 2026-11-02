@@ -1,17 +1,11 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: claude
+X-Fasttrack-Source: mainline
 X-Fasttrack-Upstream: c9b1194e8ec99d95db25db45edd2fbf690f043ab
 X-Fasttrack-CVE: CVE-2026-98682
-X-Fasttrack-Backport: cve/CVE-2026-98682/6.18
 From: Paulo Alcantara <pc@manguebit.org>
 Date: Sat, 26 Sep 2026 13:04:44 -0300
 Subject: [PATCH] smb: client: drain and invalidate before server-side
  copy/clone
-
-commit c9b1194e8ec99d95db25db45edd2fbf690f043ab upstream.
-
-[ Backport: no change from upstream. It goes on top of the CVE-2026-98685
-  backport (4721587f96cb), which comes first upstream. ]
 
 cifs_file_copychunk_range() and the clone (FICLONE) path of
 cifs_remap_file_range() do not serialise the destination page cache
@@ -63,10 +57,10 @@ Cc: stable@vger.kernel.org
  1 file changed, 26 insertions(+), 5 deletions(-)
 
 diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index 37c61a938eb8..84c59bb1a2b7 100644
+index 6410249f529a..98b610b2a114 100644
 --- a/fs/smb/client/cifsfs.c
 +++ b/fs/smb/client/cifsfs.c
-@@ -1379,6 +1379,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
+@@ -1412,6 +1412,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
  	 * server could even support copy of range where source = target
  	 */
  	lock_two_nondirectories(target_inode, src_inode);
@@ -74,7 +68,7 @@ index 37c61a938eb8..84c59bb1a2b7 100644
  
  	if (len == 0) {
  		loff_t src_size = i_size_read(src_inode);
-@@ -1445,6 +1446,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
+@@ -1475,6 +1476,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
  	cifs_dbg(FYI, "about to discard pages %llx-%llx\n", fstart, fend);
  	truncate_inode_pages_range(&target_inode->i_data,
  				   min(fstart, i_size), fend);
@@ -82,7 +76,7 @@ index 37c61a938eb8..84c59bb1a2b7 100644
  
  	fscache_invalidate(cifs_inode_cookie(target_inode), NULL, i_size, 0);
  
-@@ -1487,6 +1489,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
+@@ -1513,6 +1515,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
  	if (rc)
  		CIFS_I(target_inode)->time = 0;
  unlock:
@@ -90,7 +84,7 @@ index 37c61a938eb8..84c59bb1a2b7 100644
  	/* although unlocking in the reverse order from locking is not
  	   strictly necessary here it is a little cleaner to be consistent */
  	unlock_two_nondirectories(src_inode, target_inode);
-@@ -1510,6 +1513,9 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
+@@ -1536,6 +1539,9 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
  	struct cifs_tcon *target_tcon;
  	ssize_t rc;
  
@@ -100,7 +94,7 @@ index 37c61a938eb8..84c59bb1a2b7 100644
  	cifs_dbg(FYI, "copychunk range\n");
  
  	if (!src_file->private_data || !dst_file->private_data) {
-@@ -1539,6 +1545,7 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
+@@ -1565,6 +1571,7 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
  	 * server could even support copy of range where source = target
  	 */
  	lock_two_nondirectories(target_inode, src_inode);
@@ -108,7 +102,7 @@ index 37c61a938eb8..84c59bb1a2b7 100644
  
  	cifs_dbg(FYI, "about to flush pages\n");
  
-@@ -1564,11 +1571,24 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
+@@ -1590,11 +1597,24 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
  	 * Start at the old EOF when extending so the folio straddling it, which
  	 * may hold data written past EOF through an mmap, is dropped too.
  	 */
@@ -138,7 +132,7 @@ index 37c61a938eb8..84c59bb1a2b7 100644
  
  	fscache_invalidate(cifs_inode_cookie(target_inode), NULL,
  			   i_size_read(target_inode), 0);
-@@ -1600,6 +1620,7 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
+@@ -1626,6 +1646,7 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
  	CIFS_I(target_inode)->time = 0;
  
  unlock:

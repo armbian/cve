@@ -1,13 +1,10 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: claude
+X-Fasttrack-Source: mainline
 X-Fasttrack-Upstream: 8f8d32c1044f70e46e87550e039a15ff20a4b21c
 X-Fasttrack-CVE: CVE-2026-98683
-X-Fasttrack-Backport: cve/CVE-2026-98683/6.12
 From: Paulo Alcantara <pc@manguebit.org>
 Date: Sat, 26 Sep 2026 12:59:18 -0300
 Subject: [PATCH] smb: client: flush dirty data before zeroing a range
-
-commit 8f8d32c1044f70e46e87550e039a15ff20a4b21c upstream.
 
 smb3_zero_range() emulates FALLOC_FL_ZERO_RANGE by invalidating the
 page cache over the target range with truncate_pagecache_range() and
@@ -44,10 +41,10 @@ Cc: stable@vger.kernel.org
  1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index d1a1104335d1..6e57523f4f43 100644
+index 1c41d3b24c6d..a0fcb564e7a3 100644
 --- a/fs/smb/client/smb2ops.c
 +++ b/fs/smb/client/smb2ops.c
-@@ -3504,13 +3504,11 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+@@ -3549,13 +3549,11 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
  	filemap_invalidate_lock(inode->i_mapping);
  
  	netfs_read_sizes(inode, &i_size, &remote_i_size, &zero_point);
