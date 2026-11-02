@@ -314,10 +314,15 @@ jobs:
 
       - name: Resolve incidents
         if: github.event_name == 'workflow_dispatch' && (inputs.incidents != '' || inputs.commit != '') && !inputs.claude
+        # Inputs via env, never in the script: a step before set the token in .git/config.
+        env:
+          INCIDENTS: ${{ inputs.incidents }}
+          COMMIT: ${{ inputs.commit }}
         run: |
           args=()
-          if [ "${{ inputs.incidents }}" = "unpatched" ]; then args+=(--unpatched); else args+=(${{ inputs.incidents }}); fi
-          [ -n "${{ inputs.commit }}" ] && args+=(--commit "${{ inputs.commit }}")
+          read -ra ids <<<"$INCIDENTS"
+          if [ "$INCIDENTS" = "unpatched" ]; then args+=(--unpatched); else args+=("${ids[@]}"); fi
+          [ -n "$COMMIT" ] && args+=(--commit "$COMMIT")
           args+=(--adapt --package)
           python3 -m fasttrack.cli -v cve "${args[@]}" || true
           cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
@@ -433,12 +438,16 @@ jobs:
         # No GitHub token in this step.
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          INCIDENTS: ${{ inputs.incidents }}
+          COMMIT: ${{ inputs.commit }}
+          RETRY: ${{ inputs.retry }}
         run: |
           args=()
-          if [ "${{ inputs.incidents }}" = "unpatched" ]; then args+=(--unpatched); else args+=(${{ inputs.incidents }}); fi
-          [ -n "${{ inputs.commit }}" ] && args+=(--commit "${{ inputs.commit }}")
+          read -ra ids <<<"$INCIDENTS"
+          if [ "$INCIDENTS" = "unpatched" ]; then args+=(--unpatched); else args+=("${ids[@]}"); fi
+          [ -n "$COMMIT" ] && args+=(--commit "$COMMIT")
           args+=(--claude)
-          [ "${{ inputs.retry }}" = "true" ] && args+=(--retry)
+          [ "$RETRY" = "true" ] && args+=(--retry)
           python3 -m fasttrack.cli -v cve "${args[@]}" || true
           cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
 
