@@ -524,8 +524,18 @@ def prune(repo: Path, cve_root: Path, remote: str = "origin", branch_fmt: str = 
             if not reason and patches:
                 if ref not in trees:
                     trees[ref] = stack.enter_context(gitutil.Worktree(repo, ref, Path(tmpd) / ref[:12]))
-                # reverse the whole series, newest first: all present means absorbed
-                if all(trees[ref].check(p.read_text(**gitutil.ENC), reverse=True) for p in reversed(patches)):
+                # reverse the whole series, newest first, each on the one before:
+                # all present means absorbed (a later patch can change an earlier one's lines)
+                wt, undone = trees[ref], 0
+                for p in reversed(patches):
+                    text = p.read_text(**gitutil.ENC)
+                    if not wt.check(text, reverse=True):
+                        break
+                    gitutil.git(wt.path, "apply", "-R", input=text)
+                    undone += 1
+                gitutil.git(wt.path, "reset", "--quiet", "--hard")
+                gitutil.git(wt.path, "clean", "-qfd")
+                if undone == len(patches):
                     reason = "stable head already contains every patch"
             log.info("prune %s %s: %s", cid, label, reason or "still needed")
             if reason:
