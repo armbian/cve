@@ -119,8 +119,13 @@ def report(results: list[SeriesResult], events: list[str], attempts: Optional[di
             out += [" · ".join(quiet), ""]
         # Included: clean mainline picks, then reviewed backports from cve/ (Source column).
         # A fix that does not apply unchanged is open, or "not affected" per attempts.json.
+        # "Not affected" does not hold when the patch set itself adds a commit that brings the bug,
+        # unless a person checked that commit: attempts.json "bug_in_set_ok" lists it.
+        added = {c.upstream for c in r.candidates if c.verdict == ACCEPTED and c.upstream}
+        ok = lambda c: {b for cve in c.cves for b in attempts.get(cve, {}).get(r.series, {}).get("bug_in_set_ok", [])}
+        in_set = lambda c: [b for b in c.bug_commits if b in added and b[:12] not in {o[:12] for o in ok(c)}]
         na = {id(c) for c in r.candidates
-              if c.verdict == CONFLICT and not c.backport and not_affected(c, r.series, attempts)}
+              if c.verdict == CONFLICT and not c.backport and not_affected(c, r.series, attempts) and not in_set(c)}
         checked = {i for i in na for c in r.candidates if id(c) == i and review(c, r.series, attempts)}
         open_ = lambda c: c.verdict == CONFLICT and not c.backport and id(c) not in na
         groups = [(lambda c: c.verdict == ACCEPTED, "Included"),
@@ -137,7 +142,8 @@ def report(results: list[SeriesResult], events: list[str], attempts: Optional[di
                     "| | CVE | Upstream | Source | Subject |", "|---|---|---|---|---|"]
             for c in rows:
                 flag = " ".join(f for f in ("🔥 KEV" if c.kev else "",
-                                            "does not build" if c.build_log else "") if f)
+                                            "does not build" if c.build_log else "",
+                                            f"set adds bug {in_set(c)[0][:12]}" if in_set(c) else "") if f)
                 cves = ", ".join(c.cves) or "—"
                 subject = c.subject + (f" — {why}" if (why := review(c, r.series, attempts)) else "")
                 out.append(f"| {flag} | {cves} | `{c.upstream[:12] or '—'}` | {c.source} | {subject.replace('|', '/')} |")

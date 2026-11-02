@@ -57,6 +57,7 @@ class Candidate:
     prerequisites: list[str] = field(default_factory=list)  # "sha12 subject" hints
     build_log: str = ""                                     # compiler errors the patch brings in
     backport: str = ""                                      # cve/<ID>/<series> this patch comes from
+    bug_commits: list[str] = field(default_factory=list)    # commits that bring the bug
     patch: str = field(default="", repr=False)
 
     def public(self) -> dict:
@@ -115,6 +116,8 @@ def collect(
     """Ordered candidate list for one series (queue order first, then mainline)."""
     label = f"{series[0]}.{series[1]}"
     all_fix, unfixed, subjects = _index_cves(records, series)
+    bugs = {r.cve: r.bug_commits for r in records}
+    bug_commits = lambda cves: sorted({b for c in cves for b in bugs.get(c, [])})
     out: list[Candidate] = []
     seen: set[str] = set()
 
@@ -132,14 +135,14 @@ def collect(
             continue
         seen.add(key)
         out.append(Candidate(label, q.upstream or "", q.subject, "stable-queue",
-                             sorted(set(cves)), is_kev, patch=q.body))
+                             sorted(set(cves)), is_kev, patch=q.body, bug_commits=bug_commits(cves)))
 
     for sha, cves in sorted(unfixed.items()):
         if sha in seen:
             continue
         seen.add(sha)
         out.append(Candidate(label, sha, subjects.get(sha, ""), "mainline",
-                             sorted(set(cves)), any(c in kev for c in cves)))
+                             sorted(set(cves)), any(c in kev for c in cves), bug_commits=bug_commits(cves)))
     log.info("%s: %d candidates (%d stable-queue, %d mainline)", label, len(out),
              sum(c.source == "stable-queue" for c in out), sum(c.source == "mainline" for c in out))
     # Queue order is dependency order; never reorder it (KEV only raises urgency).

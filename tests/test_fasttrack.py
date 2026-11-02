@@ -265,6 +265,30 @@ class TestRun(Fixture):
         self.assertIn("Needs a backport (1)",
                       emit.report([res], [], {"CVE-2026-0009": {"7.3": {"outcome": "not-affected-needs-review"}}}))
 
+    def test_report_not_affected_but_set_adds_bug(self):
+        # cve/ backport A brings the bug that C fixes: "not affected" from the work package is stale.
+        a = engine.Candidate("6.18", "a" * 40, "foo: rework", "claude", ["CVE-2026-0008"],
+                             verdict=engine.ACCEPTED, backport="CVE-2026-0008/6.18")
+        c = engine.Candidate("6.18", "c" * 40, "foo: fix order", "mainline", ["CVE-2026-0009"],
+                             verdict=engine.CONFLICT, bug_commits=["a" * 40])
+        res = engine.SeriesResult("6.18", "b" * 40, "6.18.2", None, [a, c])
+        md = emit.report([res], [], {"CVE-2026-0009": {"6.18": {"outcome": "not-affected-needs-review"}}})
+        self.assertIn("Needs a backport (1)", md)
+        self.assertIn("set adds bug aaaaaaaaaaaa", md)
+        self.assertNotIn("Not affected", md)
+        # A person checked it: "not affected" holds again.
+        md = emit.report([res], [], {"CVE-2026-0009": {"6.18": {"outcome": "not-affected-needs-review",
+                                                                "bug_in_set_ok": ["a" * 12]}}})
+        self.assertIn("Not affected per work package (needs review) (1)", md)
+
+    def test_record_bug_commits(self):
+        p = self.tmp / "CVE-2026-0010.json"
+        p.write_text(json.dumps({"cveMetadata": {"cveId": "CVE-2026-0010"}, "containers": {"cna": {
+            "affected": [{"product": "Linux", "versions": [
+                {"version": "a" * 40, "lessThan": "c" * 40, "status": "affected", "versionType": "git"}]},
+                         {"product": "Linux", "versions": AFFECTED}]}}}))
+        self.assertEqual(vulns.parse_record(p).bug_commits, ["a" * 40])
+
     def test_report_reviewed(self):
         c = engine.Candidate("6.18", "a" * 40, "fix foo", "mainline", ["CVE-2026-0009"], verdict=engine.CONFLICT)
         res = engine.SeriesResult("6.18", "b" * 40, "6.18.2", None, [c])
