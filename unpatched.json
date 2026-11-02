@@ -6198,6 +6198,39 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-43115"
+    ],
+    "kev": false,
+    "upstream": "a6fc88b22bc8d12ad52e8412c667ec0f5bf055af",
+    "subject": "srcu: Use irq_work to start GP in tiny SRCU",
+    "verdict": "needs-backport",
+    "files": [
+      "include/linux/srcutiny.h",
+      "kernel/rcu/srcutiny.c"
+    ],
+    "prerequisites": [
+      "51f5f78a4f80 srcu: Make Tiny synchronize_srcu() check for readers",
+      "f0f44752f5f6 rcu: Annotate SRCU's update-side lockdep dependencies",
+      "95433f726301 srcu: Begin offloading srcu_struct fields to srcu_update",
+      "ed2b9e1b6d82 srcu,notifier: Remove #ifdefs in favor of SRCU Tiny srcu_usage",
+      "65b4a59557f6 srcu: Make Tiny SRCU explicitly disable preemption",
+      "e206f33e2c07 srcu: Fill out polled grace-period APIs",
+      "0ea3acbc804c rcu/srcutiny: don't return before reenabling preemption",
+      "9407f5c3ec10 srcu: Unconditionally record srcu_read_lock_lite() in ->srcu_reader_flavor",
+      "4dca1af414fb rcu: rename PREEMPT_AUTO to PREEMPT_LAZY",
+      "da2ac5623716 srcu: Make Tiny SRCU able to operate in preemptible kernels",
+      "780818a68132 srcu: Rename srcu_check_read_flavor_lite() to srcu_check_read_flavor_force()",
+      "443971156ceb srcu: Move SRCU Tree/Tiny definitions from srcu.h",
+      "c4020620528e srcu: Add SRCU-fast readers",
+      "623baa01d5b4 srcu: Remove SRCU-lite implementation",
+      "e6a43aeb7185 srcu/tiny: Remove preempt_disable/enable() in srcu_gp_start_if_needed()"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-31458"
     ],
     "kev": false,
