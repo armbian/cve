@@ -147,7 +147,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "needs the devlink register/param-lock rework",
+      "reason": "Too large for a stable backport: Needs the devlink instance-lock and devl_register() rework (075935f0ae0f, fe578cbb2f05 and the locked-API conversion, 6.3+).",
       "run": null
     }
   },
@@ -256,7 +256,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "fix adds sleep-in-atomic; its fix needs a large xfrm/bonding series",
+      "reason": "Too large for a stable backport: The mutex change alone adds sleep-in-atomic under x->lock in 6.1; the real fix d2fddbd34799 needs 43eca05b6a3b (xfrm offload API change in all drivers), fd4e41ebf66c and other bonding offload changes.",
       "run": null
     }
   },
@@ -428,10 +428,9 @@
   "CVE-2024-50211": {
     "6.1": {
       "cost": null,
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "unpatched",
-      "reason": "needs b405c1e58b73 plus 6afdc60ec30b and 55dd5b4db3bf",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -536,10 +535,9 @@
   "CVE-2024-58100": {
     "6.1": {
       "cost": null,
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "unpatched",
-      "reason": "needs the full changes_pkt_data series across all JITs",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -789,7 +787,7 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "unpatched",
-      "reason": "needs the 6.13/6.14 netdev instance lock series",
+      "reason": "Too large for a stable backport: Replaces crit_lock with the netdev instance lock, which 6.12 lacks (5fda3f35349b, ebda2f0bbde5, afc664987ab3, 1b23cdbd2bbc, 413f0271f396 and core ndo locking, 6.13/6.14).",
       "run": null
     }
   },
@@ -799,7 +797,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "needs get_new_segment() error propagation (245930617c9b, 7d009e048d7c, f9e28904e644)",
+      "reason": "Too large for a stable backport: get_new_segment() and its callers return void in 6.1; bail-out needs 245930617c9b, 7d009e048d7c and the f2fs allocation error-path chain.",
       "run": null
     }
   },
@@ -937,7 +935,7 @@
       "date": "2026-11-02",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "The fix needs the elevator_tags infrastructure. 6.1 does not have it. A backport needs large prerequisites.",
+      "reason": "Too large for a stable backport: Needs the 6.15-6.17 elevator rework (struct elevator_tags, blk_mq_alloc_sched_tags(), q->elevator_lock, set->update_nr_hwq_lock).",
       "run": null
     },
     "6.12": {
@@ -945,7 +943,7 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "unpatched",
-      "reason": "needs the 6.15-6.17 elevator rework",
+      "reason": "Too large for a stable backport: Same as 6.1: needs elevator_tags and the sysfs store freeze rework (6.15-6.17).",
       "run": null
     }
   },
@@ -1091,8 +1089,7 @@
       "cost": null,
       "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "unpatched",
-      "reason": "fix adds a UAF; needs 32594b098549 and b824476c56a1 (+eb0dfc0ef195, ae2d90355aa5)",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -1122,7 +1119,7 @@
       "date": "2026-11-02",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "The upstream change (`mddev_lock()` -> `mddev_suspend_and_lock()` in `raid_disks_store()`) does not fix the bu",
+      "reason": "Too large for a stable backport: 6.6.160 took 3 patches (mddev_suspend helpers + fix), but 6.1 mddev_suspend() does not wait for queued r1bios: raid1 does not hold active_io until completion.",
       "run": null
     }
   },
@@ -1132,7 +1129,7 @@
       "date": "2026-11-02",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "The fix converts vkms to new DRM core vblank timer code. 6.1 does not have that code.",
+      "reason": "Not worth a backport: DRM_VKMS (default n) is not set in any 6.1 config.",
       "run": null
     },
     "6.12": {
@@ -1140,7 +1137,7 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "unpatched",
-      "reason": "needs DRM vblank timer (74afeb812850, d54dbb5963bd)",
+      "reason": "Too large for a stable backport: Needs ~460 lines of new DRM vblank timer core (74afeb812850 'drm/vblank: Add vblank timer', d54dbb5963bd 'drm/vblank: Add CRTC helpers for simple use cases') for a virtual test driver; only 6.18.34 has it.",
       "run": null
     }
   },
@@ -1498,8 +1495,7 @@
       "cost": null,
       "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "not-affected-needs-review",
-      "reason": "The fix adds a NULL check for the DAI widget in `hda_dai_get_ops()` (`sound/soc/sof/intel/hda-dai.c`).",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -1581,8 +1577,7 @@
       "cost": null,
       "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "unpatched",
-      "reason": "The fix needs struct smb_rqst.rq_iter. 6.1 does not have rq_iter.",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -1656,7 +1651,7 @@
       "date": "2026-11-02",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "The fix needs infrastructure that 6.1 does not have:",
+      "reason": "Too large for a stable backport: Needs backing-file objects (6.6), 880bd496ec72, 6af36aeb147a (backing_file LSM hooks) and follow-ups f2381b546e7e, 78fc54b934bf.",
       "run": null
     }
   },
@@ -1972,7 +1967,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "The rxrpc fix redesigns the receive path on code that 6.1 does not have.",
+      "reason": "Too large for a stable backport: Upstream (and 6.6.143) builds on the post-6.2 rxrpc I/O thread (5d7edbc9231e Rx-ring removal, d4d02d8bb5c4).",
       "run": null
     }
   },
@@ -2116,7 +2111,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "The bound needs topology ctl_stack_size and queue size validation (71776e0965f9, 629568d25fea).",
+      "reason": "Not worth a backport: amdkfd needs HSA_AMD (X86_64/ARM64/PPC64).",
       "run": null
     },
     "6.18": {
@@ -2275,7 +2270,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "The fix needs the bpf_mem_alloc destructor (1df97a7453ee); without it, kptrs leak.",
+      "reason": "Needs a large shared series: Shared with CVE-2026-98789: 6.1 memalloc.c predates the 6.2-6.6 rework.",
       "run": null
     },
     "6.18": {
@@ -2303,7 +2298,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "The fix needs resilient queued spinlocks (rqspinlock).",
+      "reason": "Needs a large shared series: rqspinlock (6.15 Resilient Queued Spin Lock series, about 25 commits).",
       "run": null
     },
     "6.12": {
@@ -2311,7 +2306,7 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "unpatched",
-      "reason": "needs rqspinlock (6.15, about 25 commits)",
+      "reason": "Needs a large shared series: Same as 6.1: rqspinlock series (6.15, ~25 commits) plus d87fdb1f27d7.",
       "run": null
     }
   },
@@ -2356,10 +2351,9 @@
   "CVE-2026-74374": {
     "6.1": {
       "cost": null,
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "unpatched",
-      "reason": "md_cloned_bio() needs the md io_clone_set rework, which 6.1 does not have.",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -2500,7 +2494,7 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "unpatched",
-      "reason": "backport removes erofs fscache (fsid=); left out of stable",
+      "reason": "Not worth a backport: Fix removes the erofs fscache backend.",
       "run": null
     },
     "6.18": {
@@ -2683,7 +2677,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "Needs the ndo_set_rx_mode_async core (db9e726525e4, 3554b4345d85).",
+      "reason": "Not worth a backport: SPARX5_SWITCH is not built in any Armbian 6.1 config (no ARCH_SPARX5).",
       "run": null
     },
     "6.12": {
@@ -2691,7 +2685,7 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "unpatched",
-      "reason": "needs ndo_set_rx_mode_async (db9e726525e4, 3554b4345d85)",
+      "reason": "Not worth a backport: SPARX5_SWITCH is not set in any Armbian 6.12 config.",
       "run": null
     },
     "6.18": {
@@ -2705,10 +2699,9 @@
   "CVE-2026-90227": {
     "6.1": {
       "cost": null,
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "unpatched",
-      "reason": "the fix needs the nvme_cmd_allowed() permission model, which 6.1 does not have.",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -2770,7 +2763,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "Upstream fix 3fe5b7c9fb72 (\"md: remove REQ_NOWAIT support from raid1/10/456\") removes a feature.",
+      "reason": "Not worth a backport: Fix removes REQ_NOWAIT support from raid1/10/456.",
       "run": null
     },
     "6.12": {
@@ -2778,7 +2771,7 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "unpatched",
-      "reason": "fix removes REQ_NOWAIT support from raid1/10/456",
+      "reason": "Not worth a backport: Feature removal (REQ_NOWAIT for raid1/10/456).",
       "run": null
     }
   },
@@ -2806,7 +2799,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "Needs the IRQ_DOMAIN_FLAG_DESTROY_GC genirq rework (e6f67ce32e8e) and irq_domain_instantiate().",
+      "reason": "Not worth a backport: RENESAS_IRQC is only selected by Renesas SoC symbols; no 6.1 config enables ARCH_RENESAS.",
       "run": null
     }
   },
@@ -2840,10 +2833,9 @@
   "CVE-2026-93235": {
     "6.1": {
       "cost": null,
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "unpatched",
-      "reason": "Needs four f2fs prerequisites absent from 6.1 (ba8dac350faf, 0b2cd5092139, c2f7c32b2540, b2205d3cfd6c).",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -2899,10 +2891,9 @@
   "CVE-2026-98067": {
     "6.1": {
       "cost": null,
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "unpatched",
-      "reason": "The upstream fix disables LZ4 rolling decompression, an existing feature.",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -3333,7 +3324,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "Needs bpf_mem_alloc draining flag, drain lock and atomic lists; 6.1 is affected.",
+      "reason": "Needs a large shared series: Same group as CVE-2026-74314.",
       "run": null
     },
     "6.18": {
@@ -3571,7 +3562,7 @@
       "date": "2026-11-01",
       "head": "6.1.191",
       "outcome": "unpatched",
-      "reason": "Needs the propagate_umount() rewrite series (about 15 commits); 6.1 has no mount->overmount.",
+      "reason": "Needs a large shared series: Needs the propagate_umount() rewrite (v6.17-rc1): 493a4bebf515 'don't have mounts pin their parents', 0e84653ea596, 592238c03ef9, 9cb79ed60e38, e031251cb249, 05da054d4377, 9ed4b9eaeaa7, 1a867d729f95, d08fa7f44ae7, 49acacdc7cd3, c93ff74ff1cb, 24368a744baf, f0d0ba19985d, t",
       "run": null
     },
     "6.12": {
@@ -3579,7 +3570,7 @@
       "date": "2026-11-01",
       "head": "6.12.115",
       "outcome": "unpatched",
-      "reason": "needs the propagate_umount() rewrite series (about 15 commits)",
+      "reason": "Needs a large shared series: Same series as 6.1 (13 prep commits ending in f0d0ba19985d 'Rewrite of propagate_umount()', then 6857e209015f).",
       "run": null
     }
   },
@@ -3682,10 +3673,9 @@
   "CVE-2026-99191": {
     "6.1": {
       "cost": null,
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "head": "6.1.191",
-      "outcome": "unpatched",
-      "reason": "6.1 BIG TCP uses an HBH jumbo header that the upstream fix does not handle.",
+      "outcome": "patched-needs-review",
       "run": null
     }
   }
