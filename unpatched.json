@@ -424,6 +424,276 @@
     "build_log": ""
   },
   {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-64160"
+    ],
+    "kev": false,
+    "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
+    "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/9p/v9fs_vfs.h",
+      "fs/9p/vfs_inode.c",
+      "fs/9p/vfs_inode_dotl.c",
+      "fs/afs/file.c",
+      "fs/afs/inode.c",
+      "fs/afs/internal.h",
+      "fs/afs/write.c",
+      "fs/netfs/buffered_read.c",
+      "fs/netfs/buffered_write.c",
+      "fs/netfs/direct_write.c",
+      "fs/netfs/misc.c",
+      "fs/netfs/write_collect.c",
+      "fs/smb/client/cifsfs.c",
+      "fs/smb/client/cifssmb.c",
+      "fs/smb/client/file.c",
+      "fs/smb/client/inode.c",
+      "fs/smb/client/readdir.c",
+      "fs/smb/client/smb2ops.c",
+      "fs/smb/client/smb2pdu.c",
+      "include/linux/netfs.h"
+    ],
+    "prerequisites": [
+      "b4dbfd8653b3 Coccinelle-based conversion to use ->i_state accessors",
+      "f5aa78e2be06 Manual conversion to use ->i_state accessors of all places not covered by coccinelle",
+      "f5a67689ba6a smb: use the new ->i_state accessors",
+      "2408900d408a netfs: Use folio_next_pos()",
+      "5b8ed52866e3 fs: inline current_umask() and move it to fs_struct.h",
+      "e6d28ebc17eb filelock: push the S_ISREG check down to ->setlease handlers",
+      "7844d50ca239 smb: move smb_sockaddr_in and smb_sockaddr_in6 to common/smb2pdu.h",
+      "9c98f5eec877 smb: move resume_key_ioctl_rsp to common/smb2pdu.h",
+      "833a75fc9ecc smb: move create_durable_req_v2 to common/smb2pdu.h",
+      "d8ac9879182a smb: move SMB_NEGOTIATE_REQ to common/smb2pdu.h",
+      "d7edd3892d97 smb: move some duplicate struct definitions to common/fscc.h",
+      "464b913993a1 smb: move FILE_SYSTEM_SIZE_INFO to common/fscc.h",
+      "95e8c1bfa56e smb: do some cleanups",
+      "5003ad718af7 smb: move create_durable_reconn to common/smb2pdu.h",
+      "c4a2a49f7df4 smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-90237"
+    ],
+    "kev": false,
+    "upstream": "3679da4ad8be84cddaf40bc307fef1fe13e051ff",
+    "subject": "netfilter: nft_ct: move custom expectation support to helper",
+    "verdict": "needs-backport",
+    "files": [
+      "include/net/netfilter/nf_conntrack_helper.h",
+      "net/netfilter/nf_conntrack_helper.c",
+      "net/netfilter/nft_ct.c"
+    ],
+    "prerequisites": [
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
+      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
+      "66b75e6bbeeb netfilter: add more netlink-based policy range checks",
+      "8e57338c3601 netfilter: nf_tables: add netlink policy based cap on registers",
+      "84dee05d9d61 netfilter: conntrack: remove UDP-Lite conntrack support",
+      "1afc25ae7528 netfilter: nf_conntrack_helper: fix possible null deref during error log",
+      "6031487d4e27 netfilter: nf_conntrack_helper: dynamically allocate struct nf_conntrack_helper",
+      "ac46f3f35b6e netfilter: nf_conntrack_helper: add refcounting from datapath",
+      "42eb1ca711b6 netfilter: nf_tables: use DEBUG_NET_WARN_ON_ONCE in packet and control paths",
+      "e3cd138e5607 netfilter: conntrack: check NULL when retrieving ct extension",
+      "b8b09dc2bf35 netfilter: nf_conntrack_expect: use conntrack GC to reap expectations",
+      "57f940017a77 netfilter: conntrack: add deprecation warnings for irc and pptp trackers",
+      "6fb421bd07f1 netfilter: nft_ct: expectation timeouts are passed in milliseconds",
+      "397c8300972f netfilter: nf_conntrack_helper: cap maximum number of expectation at helper registration",
+      "26fb502773bc netfilter: nf_conntrack_helper: do not hash by tuple"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-98118"
+    ],
+    "kev": false,
+    "upstream": "fed0b33e6c584986ba70018ec9f9787a98216e64",
+    "subject": "netfs: Fix readahead synchronisation issues by loading all folios upfront",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/netfs/buffered_read.c",
+      "fs/netfs/internal.h",
+      "fs/netfs/misc.c",
+      "fs/netfs/read_collect.c",
+      "fs/netfs/read_retry.c",
+      "fs/netfs/rolling_buffer.c",
+      "include/linux/netfs.h",
+      "include/linux/rolling_buffer.h",
+      "include/trace/events/netfs.h"
+    ],
+    "prerequisites": [
+      "b4dbfd8653b3 Coccinelle-based conversion to use ->i_state accessors",
+      "2408900d408a netfs: Use folio_next_pos()",
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
+      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
+      "5a3d5928b1a4 vfs: widen trace event i_ino fields to u64",
+      "2c8f4742bb76 netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+      "fa746e23d109 netfs: Fix kdoc warning",
+      "41376400c471 netfs: Replace wb_lock with a bit lock for asynchronicity",
+      "949eb95d5bcc cachefiles,netfs: sunset ondemand mode"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-98124"
+    ],
+    "kev": false,
+    "upstream": "448ba0ae65ca61064183564d2983c9aa59bd6ba7",
+    "subject": "smb/client: invalidate fscache for fallocate range operations",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/smb2ops.c"
+    ],
+    "prerequisites": [
+      "7844d50ca239 smb: move smb_sockaddr_in and smb_sockaddr_in6 to common/smb2pdu.h",
+      "9c98f5eec877 smb: move resume_key_ioctl_rsp to common/smb2pdu.h",
+      "e1469f56089f cifs: Use netfs_alloc/free_folioq_buffer()",
+      "83bfbd0bb902 cifs: Remove the RFC1002 header from smb_hdr",
+      "87fba18abbb8 cifs: Remove the server pointer from smb_message",
+      "f80ac7eda1cf cifs: Add a tracepoint to log EIO errors",
+      "4c91b67f87ac smb: client: fix data corruption due to racy lease checks",
+      "a5a50f141569 cifs: remove unnecessary tracing after put tcon",
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
+      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
+      "323bbfcf1ef8 Convert 'alloc_flex' family to use the new default GFP_KERNEL argument",
+      "40e75e42f49c smb: client: fix open handle lookup in cifs_open()",
+      "6b83b03c07fb smb: client: fix integer underflow in receive_encrypted_read()",
+      "2c8f4742bb76 netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+      "81a874233c30 smb: client: avoid integer overflow in SMB2 READ length check"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-72377"
+    ],
+    "kev": false,
+    "upstream": "81e985b4c3a6cbcc443fcdcd3ebda7fcc845d459",
+    "subject": "afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/afs/inode.c",
+      "fs/afs/internal.h"
+    ],
+    "prerequisites": [
+      "b4dbfd8653b3 Coccinelle-based conversion to use ->i_state accessors",
+      "f5aa78e2be06 Manual conversion to use ->i_state accessors of all places not covered by coccinelle",
+      "0b2600f81cef treewide: change inode->i_ino from unsigned long to u64",
+      "cbf56f998101 mm: remove stray references to struct pagevec",
+      "2c8f4742bb76 netfs: Fix potential for tearing in ->remote_i_size and ->zero_point"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-98125"
+    ],
+    "kev": false,
+    "upstream": "01261a6fa48b62f5ead8e88aaca1e27cb9ab9032",
+    "subject": "smb/client: fix stale page cache in insert/collapse range",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/smb2ops.c"
+    ],
+    "prerequisites": [
+      "7844d50ca239 smb: move smb_sockaddr_in and smb_sockaddr_in6 to common/smb2pdu.h",
+      "9c98f5eec877 smb: move resume_key_ioctl_rsp to common/smb2pdu.h",
+      "e1469f56089f cifs: Use netfs_alloc/free_folioq_buffer()",
+      "83bfbd0bb902 cifs: Remove the RFC1002 header from smb_hdr",
+      "87fba18abbb8 cifs: Remove the server pointer from smb_message",
+      "f80ac7eda1cf cifs: Add a tracepoint to log EIO errors",
+      "4c91b67f87ac smb: client: fix data corruption due to racy lease checks",
+      "a5a50f141569 cifs: remove unnecessary tracing after put tcon",
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
+      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
+      "323bbfcf1ef8 Convert 'alloc_flex' family to use the new default GFP_KERNEL argument",
+      "40e75e42f49c smb: client: fix open handle lookup in cifs_open()",
+      "6b83b03c07fb smb: client: fix integer underflow in receive_encrypted_read()",
+      "2c8f4742bb76 netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+      "81a874233c30 smb: client: avoid integer overflow in SMB2 READ length check"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-89556"
+    ],
+    "kev": false,
+    "upstream": "9a5ff45689329835f874cefe5174e577d141d423",
+    "subject": "module: validate string table section types",
+    "verdict": "needs-backport",
+    "files": [
+      "kernel/module/main.c"
+    ],
+    "prerequisites": [
+      "f43922162184 module: Take const arg in validate_section_offset",
+      "90f8f312db72 module: Factor out elf_validity_ehdr",
+      "c92aab819d56 module: Factor out elf_validity_cache_sechdrs",
+      "3c5700aeabd8 module: Factor out elf_validity_cache_secstrings",
+      "fbc0e4e482aa module: Factor out elf_validity_cache_index_info",
+      "0be41a9367d1 module: Factor out elf_validity_cache_index_mod",
+      "9bd4982cf7d6 module: Factor out elf_validity_cache_index_sym",
+      "0a9395334496 module: Factor out elf_validity_cache_index_str",
+      "f3f561218bb6 module: Group section index calculations together",
+      "837031e052af module: Factor out elf_validity_cache_strtab",
+      "d979e3dffa93 module: Additional validation in elf_validity_cache_strtab",
+      "05e555642c46 regularize emptiness checks in fini_module(2) and vfs_dedupe_file_range()",
+      "8152f8201088 fdget(), more trivial conversions",
+      "0c133b1e78cd module: prepare to handle ROX allocations for text",
+      "0db6f8d7820a alloc_tag: load module tags into separate contiguous memory"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-98389"
+    ],
+    "kev": false,
+    "upstream": "1f1d43418d61c8511779e0f63a954a78b9433b43",
+    "subject": "drm/amdgpu: skip gfx switch_power_profile during GPU reset",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/gpu/drm/amd/pm/amdgpu_dpm.c"
+    ],
+    "prerequisites": [
+      "610696505c3a drm/amd/pm: implement dpm sdma reset function",
+      "697cb5cc2549 drm/amd/pm: add inst to set_powergating_by_smu",
+      "ff69bba05f08 drm/amd/pm: add inst to dpm_set_powergating_by_smu",
+      "393f026b168a drm/amdgpu: add inst to amdgpu_dpm_enable_vcn",
+      "588933929897 drm/amd/pm: Revert state if force level fails",
+      "960a62877466 drm/amdgpu/pm: fix UVD handing in amdgpu_dpm_set_powergating_by_smu()",
+      "f9d35b945c59 drm/amdgpu: Generate bad page threshold cper records",
+      "d190e4d0f7b5 drm/amd/pm: add support for checking SDMA reset capability",
+      "ce615fe32845 drm/amdgpu: Check if CPER enabled when generating CPER",
+      "921c040efeca drm/amd/pm: Add link reset for SMU 13.0.6",
+      "9f7ce6a9ab95 drm/amd/pm: implement dpm vcn reset function",
+      "6dafb5d4c7cd drm/amdgpu/pm: add workload profile pause helper",
+      "54a01f775194 drm/amd/pm: Add support to query partition metrics",
+      "5cccf10f6521 drm/amdgpu: disable workload profile switching when OD is enabled",
+      "fba8d147472e drm/amd/pm: Add support to set ISP Power"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
     "series": "6.12",
     "cves": [
       "CVE-2024-58015"
@@ -1770,37 +2040,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-89866"
-    ],
-    "kev": false,
-    "upstream": "a52e6f7923c17a672135b485ffd96fbd72f46267",
-    "subject": "media: chips-media: wave5: Resume device before setting EOS flag",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c"
-    ],
-    "prerequisites": [
-      "2092b3833487 media: chips-media: wave5: Support runtime suspend/resume",
-      "88ff31fd0181 media: chips-media: wave5: Use helpers to calculate bytesperline and sizeimage.",
-      "4bf194e10e42 media: platform: drop vb2_ops_wait_prepare/finish",
-      "b2eeb35c6137 media: chips-media: wave5: Pass file pointer to wave5_cleanup_instance()",
-      "47f4b1acb4d5 media: Set file->private_data in v4l2_fh_add()",
-      "d0169457bc76 media: wave5: Access v4l2_fh from file",
-      "6f6fbd9a0c5a media: Remove redundant pm_runtime_mark_last_busy() calls",
-      "cbb9c0d50e47 media: chips-media: wave5: Fix SError of kernel panic when closed",
-      "a176ac5e701f media: chips-media: wave5: Improve performance of decoder",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "8c5a74a24cbb media: chips-media: wave5: avoid skipping device_run while VPU has work",
-      "b694ba0a5526 media: chips-media: wave5: Defer job_finish() only when a DEC_PIC was queued",
-      "e3a80073d99c media: chips-media: wave5: Fix pipeline stall when queuing fails"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-89826"
     ],
     "kev": false,
@@ -2248,38 +2487,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-98996"
-    ],
-    "kev": false,
-    "upstream": "6857e209015f95be7a8f19a9cd5dac345b9b9859",
-    "subject": "fs: don't silently unmount busy mounts",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/pnode.c"
-    ],
-    "prerequisites": [
-      "175c6a216dda fs: Fix grammar and spelling in propagate_umount()",
-      "bf630c401641 vfs: add notifications for mount attach and detach",
-      "064fe6e233e8 mount: handle mount propagation for detached mount trees",
-      "d1ddc6f1d9f0 fix IS_MNT_PROPAGATING uses",
-      "3b5260d12b1f Don't propagate mounts into detached trees",
-      "592238c03ef9 pnode: lift peers() into pnode.h",
-      "f0d0ba19985d Rewrite of propagate_umount()",
-      "493a4bebf515 don't have mounts pin their parents",
-      "406fea799925 mount: separate the flags accessed only under namespace_sem",
-      "25776a09d802 propagate_one(): get rid of dest_master",
-      "2b2a34793dc2 propagate_mnt(): handle all peer groups in the same loop",
-      "15e710b8bbb5 propagate_one(): separate the \"do we need secondary here?\" logics",
-      "e0f9396e244c propagate_one(): separate the \"what should be the master for this copy\" part",
-      "6a2ce2a74bfe propagate_one(): fold into the sole caller",
-      "bc88530a20b1 fs/pnode.c: get rid of globals"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98939"
     ],
     "kev": false,
@@ -2422,6 +2629,217 @@
     "build_log": ""
   },
   {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-64160"
+    ],
+    "kev": false,
+    "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
+    "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/9p/v9fs_vfs.h",
+      "fs/9p/vfs_inode.c",
+      "fs/9p/vfs_inode_dotl.c",
+      "fs/afs/file.c",
+      "fs/afs/inode.c",
+      "fs/afs/internal.h",
+      "fs/afs/write.c",
+      "fs/netfs/buffered_read.c",
+      "fs/netfs/buffered_write.c",
+      "fs/netfs/direct_write.c",
+      "fs/netfs/misc.c",
+      "fs/netfs/write_collect.c",
+      "fs/smb/client/cifsfs.c",
+      "fs/smb/client/cifssmb.c",
+      "fs/smb/client/file.c",
+      "fs/smb/client/inode.c",
+      "fs/smb/client/readdir.c",
+      "fs/smb/client/smb2ops.c",
+      "fs/smb/client/smb2pdu.c",
+      "include/linux/netfs.h"
+    ],
+    "prerequisites": [
+      "6c9903c330ab cifs: Remove pre-historic unused CIFSSMBCopy",
+      "0d6b0d2e3816 cifs: Recognize SFU char/block devices created by Windows NFS server on Windows Server <<2012",
+      "b2fe4a8fa0f6 smb: client: get rid of @nlsc param in cifs_tree_connect()",
+      "e1481075981d smb: client: allow reconnect when sending ioctl",
+      "796733054e4a smb: client: fix noisy message when mounting shares",
+      "a769bee5f9fb smb: use macros instead of constants for leasekey size and default cifsattrs value",
+      "f4d3cde410cc netfs: Remove redundant use of smp_rmb()",
+      "4acb665cf4f3 netfs: Work around recursion by abandoning retry if nothing read",
+      "751e213f9f8a netfs: Split retry code out of fs/netfs/write_collect.c",
+      "627cf645277b netfs: Don't use bh spinlock",
+      "6e0b503dc65c afs: Don't use mutex for I/O operation lock",
+      "9e705016eb8f afs: Add more tracepoints to do with tracking validity",
+      "e61bfaad8fd8 netfs: Add functions to build/clean a buffer in a folio_queue",
+      "49866ce7ea8d netfs: Add support for caching single monolithic objects such as AFS dirs",
+      "b2604315e87a afs: Make afs_init_request() get a key if not given a file"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-98125"
+    ],
+    "kev": false,
+    "upstream": "01261a6fa48b62f5ead8e88aaca1e27cb9ab9032",
+    "subject": "smb/client: fix stale page cache in insert/collapse range",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/smb2ops.c"
+    ],
+    "prerequisites": [
+      "e1481075981d smb: client: allow reconnect when sending ioctl",
+      "796733054e4a smb: client: fix noisy message when mounting shares",
+      "bfc115503015 smb: client: fix return value of parse_dfs_referrals()",
+      "f089ee00f205 smb: client: Remove redundant check in smb2_is_path_accessible()",
+      "6c06be908ca1 cifs: Check if server supports reparse points before using them",
+      "f83e10a23305 cifs: Remove cifs_truncate_page() as it should be superfluous",
+      "56c0bea52cef cifs: Split parse_reparse_point callback to functions: get buffer and parse buffer",
+      "51b78ffb8036 smb: client: add ParentLeaseKey support",
+      "8767cb3fbd51 Fix SMB311 posix special file creation to servers which do not advertise reparse support",
+      "309c2b776c87 cifs: Add support for creating reparse points over SMB1",
+      "5b432ae5dff5 smb: client: fix creating symlinks under POSIX mounts",
+      "f3ba7c9b0421 smb: client: rename server mid_lock to mid_queue_lock",
+      "9bd42798d5bf smb: client: add mid_counter_lock to protect the mid counter counter",
+      "3fd8ec2fc93b smb: client: smb: client: eliminate mid_flags field",
+      "e3835731e169 smb: client: fix mid_q_entry memleak leak with per-mid locking"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-89566"
+    ],
+    "kev": false,
+    "upstream": "f213e12ff5c9590b1034ae8da0e6d09665c772d0",
+    "subject": "jbd2: check need_resched() when skipping busy checkpoint buffers",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/jbd2/checkpoint.c"
+    ],
+    "prerequisites": [
+      "5f02a30eac5c jbd2: remove unused function '__cp_buffer_busy'",
+      "8a4fd33d879f jbd2: remove unused 'JBD2_CHECKPOINT_IO_ERROR' and 'j_atomic_flags'",
+      "078760d95001 jbd2: use shrink_type type instead of bool type for __jbd2_journal_clean_checkpoint_list()",
+      "26770a717cac jbd2: add prefix 'jbd2' for 'shrink_type'",
+      "0f3b05c12158 jbd2: increase IO priority of checkpoint",
+      "80d05f640a51 jbd2: store more accurate errno in superblock when possible"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-89567"
+    ],
+    "kev": false,
+    "upstream": "15cb16496446b94e67f7abcb049b8e2c75cd3d02",
+    "subject": "jbd2: bound shrinker scans by examined checkpoint buffers",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/jbd2/checkpoint.c"
+    ],
+    "prerequisites": [
+      "5f02a30eac5c jbd2: remove unused function '__cp_buffer_busy'",
+      "8a4fd33d879f jbd2: remove unused 'JBD2_CHECKPOINT_IO_ERROR' and 'j_atomic_flags'",
+      "078760d95001 jbd2: use shrink_type type instead of bool type for __jbd2_journal_clean_checkpoint_list()",
+      "26770a717cac jbd2: add prefix 'jbd2' for 'shrink_type'",
+      "0f3b05c12158 jbd2: increase IO priority of checkpoint",
+      "80d05f640a51 jbd2: store more accurate errno in superblock when possible",
+      "f213e12ff5c9 jbd2: check need_resched() when skipping busy checkpoint buffers"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-98216"
+    ],
+    "kev": false,
+    "upstream": "62f0f34fbd2b2d5653d33d3b9d42fdcabb1c0101",
+    "subject": "IB/hfi1: Fix the PIO_CRED credit-return mmap",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/infiniband/hw/hfi1/file_ops.c"
+    ],
+    "prerequisites": [
+      "1ec82317a1da IB/hfi1: Use dma_mmap_coherent for matching buffers",
+      "1c71222e5f23 mm: replace vma->vm_flags direct modifications with modifier calls",
+      "de4f5fed3f23 iov_iter: add iter_iovec() helper",
+      "23ecdcd0c070 IB/hfi1: check for user backed iterator, not specific iterator type",
+      "d2590edc93e8 IB/hfi1: Remove trace newlines",
+      "3ec648c631d2 IB: Use capital \"OR\" for multiple licenses in SPDX",
+      "7ebc540b3524 infiniband: Use user_backed_iter() to see if iterator is UBUF/IOVEC",
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
+      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
+      "297b5b747a0a RDMA/hfi1: Remove unused non-user-accessible device class",
+      "975396b9e5a4 IB/hfi1: Resolve the credit-return buffer through the send context's node"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-97950"
+    ],
+    "kev": false,
+    "upstream": "a7c1290eef60711c10289c056ad32ed1f2b47b12",
+    "subject": "configfs: pin the symlink target's dirent instead of chasing ->ci_dentry",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/configfs/symlink.c"
+    ],
+    "prerequisites": [
+      "7a77db95511c fs: port ->symlink() to pass mnt_idmap",
+      "4609e1f18e19 fs: port ->permission() to pass mnt_idmap",
+      "1b25dea3867a configfs:get_target() - release path as soon as we grab configfs_item reference",
+      "1387aedb391a configfs: mark pinned dentries persistent"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-98389"
+    ],
+    "kev": false,
+    "upstream": "1f1d43418d61c8511779e0f63a954a78b9433b43",
+    "subject": "drm/amdgpu: skip gfx switch_power_profile during GPU reset",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/gpu/drm/amd/pm/amdgpu_dpm.c"
+    ],
+    "prerequisites": [
+      "230dd6bb6117 drm/amd/amdgpu: implement mode2 reset on smu_v13_0_10",
+      "c3ed0e72c872 drm/amdgpu: added a sysfs interface for thermal throttling",
+      "21e43386aec8 drm/amd/pm: add xgmi_plpd_policy sysfs node for user to change plpd policy",
+      "3152d01e8816 drm/amd/pm: deprecate allow_xgmi_power_down interface",
+      "d60fbf2d254a drm/amdgpu: add support to powerup VPE by SMU",
+      "8cfd6a05750c drm/amd/pm: Hide irrelevant pm device attributes",
+      "fbbcb3f2b7c2 drm/amd/pm: Fix return value and drop redundant param",
+      "12c2d3b5f5bc drm/amd/pm: Add support to fetch pm metrics sample",
+      "2e9b152325f6 drm/amdgpu: optimize RLC powerdown notification on Vangogh",
+      "a2f2f43f74cd drm/amd/pm: support return vpe clock table",
+      "e3bfb8d9179e drm/amdgpu: implement smu send rma reason for smu v13.0.6",
+      "b2207dc6989f drm/amdgpu/pm: Add support for MACO flag checking",
+      "4d154b1ca580 drm/amd/pm: Add support for DPM policies",
+      "546e6309d14c drm/amd/pm: Remove legacy interface for xgmi plpd",
+      "064d92436b69 drm/amd/pm: avoid to load smu firmware for APUs"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
     "series": "6.1",
     "cves": [
       "CVE-2024-26672"
@@ -2477,7 +2895,7 @@
       "0788a47e7cec drm/amdgpu: stop resubmittting jobs in amdgpu_pci_resume"
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## drivers/gpu/drm/amd/amdgpu/amdgpu_device.c\ndrivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6086:54: error: \u2018struct amdgpu_hive_info\u2019 has no member named \u2018ras_recovery\u2019\ndrivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6090:14: error: implicit declaration of function \u2018amdgpu_ip_version\u2019; did you mean \u2018amdgpu_in_reset\u2019? [-Wimplicit-function-declaration]"
+    "build_log": "## drivers/gpu/drm/amd/amdgpu/amdgpu_device.c\ndrivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6090:54: error: \u2018struct amdgpu_hive_info\u2019 has no member named \u2018ras_recovery\u2019\ndrivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6094:14: error: implicit declaration of function \u2018amdgpu_ip_version\u2019; did you mean \u2018amdgpu_in_reset\u2019? [-Wimplicit-function-declaration]"
   },
   {
     "series": "6.1",
@@ -7383,21 +7801,32 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-97950"
+      "CVE-2026-99240"
     ],
     "kev": false,
-    "upstream": "a7c1290eef60711c10289c056ad32ed1f2b47b12",
-    "subject": "configfs: pin the symlink target's dirent instead of chasing ->ci_dentry",
+    "upstream": "610c4438fb66e06d9e693c0ad3b2c1be54c0d61f",
+    "subject": "mm/damon/core: error damos_commit_quota_goal() for zero target_value",
     "verdict": "needs-backport",
     "files": [
-      "fs/configfs/symlink.c"
+      "mm/damon/core.c"
     ],
-    "prerequisites": [
-      "7a77db95511c fs: port ->symlink() to pass mnt_idmap",
-      "4609e1f18e19 fs: port ->permission() to pass mnt_idmap",
-      "1b25dea3867a configfs:get_target() - release path as soon as we grab configfs_item reference",
-      "1387aedb391a configfs: mark pinned dentries persistent"
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99217"
     ],
+    "kev": false,
+    "upstream": "296a98c1fa50778c3b31eebed1a3f903f9684349",
+    "subject": "fork: release the files of a failed fork after sched_cancel_fork()",
+    "verdict": "needs-backport",
+    "files": [
+      "kernel/fork.c"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -7685,6 +8114,57 @@
       "7b1b3f5818c3 drm/amd/display: update dig enable sequence",
       "a1c9a1e27022 drm/amd/display: skip CLEAR_PAYLOAD_ID_TABLE if device mst_en is 0",
       "7727e7b60f82 drm/amd/display: Improve robustness of FIXED_VS link training at DP1 rates"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-64160"
+    ],
+    "kev": false,
+    "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
+    "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/9p/v9fs_vfs.h",
+      "fs/9p/vfs_inode.c",
+      "fs/9p/vfs_inode_dotl.c",
+      "fs/afs/file.c",
+      "fs/afs/inode.c",
+      "fs/afs/internal.h",
+      "fs/afs/write.c",
+      "fs/netfs/buffered_read.c",
+      "fs/netfs/buffered_write.c",
+      "fs/netfs/direct_write.c",
+      "fs/netfs/misc.c",
+      "fs/netfs/write_collect.c",
+      "fs/smb/client/cifsfs.c",
+      "fs/smb/client/cifssmb.c",
+      "fs/smb/client/file.c",
+      "fs/smb/client/inode.c",
+      "fs/smb/client/readdir.c",
+      "fs/smb/client/smb2ops.c",
+      "fs/smb/client/smb2pdu.c",
+      "include/linux/netfs.h"
+    ],
+    "prerequisites": [
+      "cac2f8b8d8b5 fs: rename current get acl method",
+      "6cd4d4e8b6e1 9p: implement get acl method",
+      "079da629383e 9p: implement set acl method",
+      "6e0149a55379 9p/fs: Remove unneeded idr.h #include",
+      "8669247524c7 fscache,cachefiles: add prepare_ondemand_read() callback",
+      "b3d3ca556757 afs: remove afs_cache_netfs and afs_zap_permits() declarations",
+      "a9eb558a5bea afs: Stop implementing ->writepage()",
+      "5970e15dbcfe filelock: move file locking definitions to separate header file",
+      "c1632a0f1120 fs: port ->setattr() to pass mnt_idmap",
+      "b74d24f7a74f fs: port ->getattr() to pass mnt_idmap",
+      "6c960e68aaed fs: port ->create() to pass mnt_idmap",
+      "7a77db95511c fs: port ->symlink() to pass mnt_idmap",
+      "c54bd91e9eab fs: port ->mkdir() to pass mnt_idmap",
+      "5ebb29bee8d5 fs: port ->mknod() to pass mnt_idmap",
+      "e18275ae55e0 fs: port ->rename() to pass mnt_idmap"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
