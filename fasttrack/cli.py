@@ -165,9 +165,13 @@ def cmd_cve(args) -> int:
 
     incidents: dict[str, list[str]] = {}
     from_list: set[str] = set()                 # from unpatched.json, not named by the user
+    open_in: set[tuple[str, str]] = set()       # (CVE, series) that unpatched.json lists
     if args.unpatched:
         incidents.update(incident.load_unpatched(out / "unpatched.json"))
-        from_list = set(incidents)
+        from_list = set(incidents) - {i.upper() for i in args.ids}
+        if (out / "unpatched.json").exists():
+            open_in = {(c, r["series"]) for r in json.loads((out / "unpatched.json").read_text())
+                       for c in r.get("cves", [])}
         if not incidents:
             print(f"nothing in {out / 'unpatched.json'}; run `fasttrack run` first")
     for cid in args.ids:
@@ -204,6 +208,9 @@ def cmd_cve(args) -> int:
         if not rec and not fixes:
             print(f"{cid}: not in vulns.git; pass --commit <mainline sha> to work from the fix directly")
         for s in series:
+            # A CVE from the list only where it is open: elsewhere the set or a backport has it.
+            if cid in from_list and (cid, f"{s[0]}.{s[1]}") not in open_in:
+                continue
             done = attempts.get(cid, {}).get(f"{s[0]}.{s[1]}")
             if args.claude and done and not args.retry:
                 print(f"{cid} {s[0]}.{s[1]}: Claude tried on {done['date']} ({done['outcome']}); --retry to run again")
