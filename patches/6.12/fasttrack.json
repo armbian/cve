@@ -2979,6 +2979,23 @@
       "prerequisites": [],
       "build_log": "",
       "backport": "CVE-2026-98715/6.12"
+    },
+    {
+      "series": "6.12",
+      "upstream": "973ea70393e885e540f714904e51bc6cac80e3d7",
+      "subject": "KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98718"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0176-973ea70393e8-kvm-sev-do-cache-maintenance-on-the-source-vm-before.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98718/6.12"
     }
   ]
 }
