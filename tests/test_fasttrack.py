@@ -229,6 +229,29 @@ class TestRun(Fixture):
             sh(wt, "git", "apply", str(d / name))
         self.assertIn("FIXED", (wt / "foo.c").read_text())
 
+    def test_cli_why(self):
+        import contextlib, io
+        from unittest import mock
+        cli.main(["--config", str(self.cfg), "run"])
+        idx = json.loads((self.out / "cves.json").read_text())
+        self.assertEqual(idx["CVE-2026-0001"]["6.18"][0]["status"], "included")
+        self.assertEqual(idx["CVE-2026-0003"]["6.18"][0]["status"], "needs-backport")
+        # a CVE that another CNA assigned: answered from the CVE.org API
+        other = json.dumps({"cveMetadata": {"assignerShortName": "Chrome"}, "containers": {"cna": {
+            "affected": [{"vendor": "Google", "product": "Chrome"}]}}}).encode()
+        resp = mock.MagicMock()
+        resp.__enter__.return_value = io.BytesIO(other)
+        buf = io.StringIO()
+        with mock.patch("urllib.request.urlopen", return_value=resp), contextlib.redirect_stdout(buf):
+            self.assertEqual(cli.main(["--config", str(self.cfg), "why", "CVE-2026-0001", "cve-2026-0002",
+                                       "CVE-2026-0003", "CVE-2026-0005", "CVE-2026-9923"]), 0)
+        out = buf.getvalue()
+        self.assertIn(f"6.18 (base 6.18.2): included: {self.A[:12]}", out)
+        self.assertIn("6.18 (base 6.18.2): fixed in stable 6.18.2", out)
+        self.assertIn("6.18 (base 6.18.2): not included: does not apply, needs a backport", out)
+        self.assertIn("6.18 (base 6.18.2): not affected: fixed in mainline 6.17, before this series", out)
+        self.assertIn("CVE-2026-9923: not covered: not a Linux kernel CVE (Chrome: Google Chrome)", out)
+
     def test_output_is_deterministic(self):
         cli.main(["--config", str(self.cfg), "run"])
         d = self.out / "patches" / "6.18"

@@ -7,6 +7,7 @@ How the tool works. For what the repository gives, see [README.md](README.md).
 ```
 ./fasttrack.sh sync                         # pull sources; linux.git is shallow from v<oldest series>
 ./fasttrack.sh run                          # gather + verify; see report.md
+./fasttrack.sh why CVE-2026-1234            # is a CVE covered, and if not, why
 ./fasttrack.sh cve --unpatched --claude     # backport every unpatched issue with Claude
 ```
 
@@ -39,6 +40,7 @@ patches/6.18/base                         stable commit the set was verified on
 patches/6.18/fasttrack.json               provenance (CVE, source, KEV)
 report.md                                 what was included, what was not, and why
 unpatched.json                            open security issues: CVE, fix commit, files, prerequisite hints
+cves.json                                 status of each CVE per series, for `why`
 ```
 
 Each candidate gets one verdict:
@@ -125,7 +127,7 @@ Once merged, the next `run` adds it to `patches/<series>/`, after the clean main
 
 - **Cache:** `data/` (the shallow `linux.git`, `vulns.git`, `stable-queue.git`) lives in the Actions cache. A fresh cache entry is made each ISO week, and between those every run starts from the last entry and fetches only what is new. Changing `fasttrack.yaml` starts a new cache.
 - **Change check, every 15 minutes:** `fasttrack fingerprint` hashes the heads of `vulns.git`, `stable-queue.git` and the stable branches, the KEV and release feeds, and the tool's own files. It takes a few seconds. A full run starts only for a new hash.
-- **Full run:** sync, `run`, then `prune`. Changes to `patches/`, `cve/` deletions, `report.md`, `unpatched.json`, `state.json` and `events.json` go to `main` through a PR that the bot merges itself. A run with nothing new commits nothing. Opens an issue labelled `security` when a pending CVE is actively exploited.
+- **Full run:** sync, `run`, then `prune`. Changes to `patches/`, `cve/` deletions, `report.md`, `unpatched.json`, `cves.json`, `state.json` and `events.json` go to `main` through a PR that the bot merges itself. A run with nothing new commits nothing. Opens an issue labelled `security` when a pending CVE is actively exploited.
 - **Release:** when a full run changes `patches/`, the job tags `patches-YYYYMMDD-HHMM`. The release notes list the fixes per series (`fasttrack release-notes`). Each series is attached as `armbian-cve-<series>-<tag>.tar.gz`.
 - **Runners:** repo variable `FASTTRACK_RUNNER` moves the full run to a self-hosted runner label, `BUILDTEST_RUNNER` the build test. Use a fixed runner for the full run, so `data/` stays on disk.
 - **Manual dispatch:** takes CVE ids, or `unpatched`, plus an optional fix commit and a Claude toggle. Results go to `cve/` on a branch, with a PR into `main` for review. Claude in CI needs the `ANTHROPIC_API_KEY` secret.

@@ -7,6 +7,7 @@ and build the missing ones (optionally with Claude).
     fasttrack cve --commit <sha> --id NAME  incident with no CVE record yet
     fasttrack cve --unpatched               every issue the last run could not patch
     fasttrack prune                         delete incident patches stable has absorbed
+    fasttrack why CVE-2026-1234 [...]       is a CVE covered, and if not, why
         --adapt     also try a 3-way cherry-pick (marked for review)
         --claude    build a work package and let Claude Code make the backport
 """
@@ -135,6 +136,7 @@ def _publish(cfg, results) -> int:
     attempts = json.loads(attempts_file.read_text()) if attempts_file.exists() else {}
     (out / "report.md").write_text(emit.report(results, events, attempts))
     (out / "unpatched.json").write_text(json.dumps(emit.unpatched(results), indent=2) + "\n")
+    (out / "cves.json").write_text(json.dumps(emit.index(results, attempts), indent=2) + "\n")
     (out / "events.json").write_text(json.dumps(events, indent=2) + "\n")
     state_file.write_text(json.dumps(state, indent=2) + "\n")
 
@@ -334,6 +336,80 @@ def cmd_followups(args) -> int:
     return 0
 
 
+WHY = {"included": "included", "needs-backport": "not included: does not apply, needs a backport",
+       "backport-stale": "not included: our backport does not apply on this base",
+       "not-affected": "not affected (reviewed)", "not-affected-needs-review": "not affected per work package, not reviewed yet",
+       "in-tree": "fixed: the stable tree has it", "other-arch": "not needed: only architectures we do not build",
+       "commit-missing": "not included: fix commit not found"}
+
+
+def _record(data: Path, cve: str):
+    """(CveRecord or None, assigner): from the vulns.git mirror, else from the CVE.org API."""
+    if (data / "vulns").is_dir() and (rec := vulns.find(data / "vulns", cve)):
+        return rec, "Linux"
+    import tempfile
+    import urllib.error
+    import urllib.request
+    try:
+        with urllib.request.urlopen(f"https://cveawg.mitre.org/api/cve/{cve}", timeout=30) as fh:
+            raw = fh.read()
+    except (urllib.error.URLError, OSError) as e:
+        return None, f"unknown ({e})"
+    meta = json.loads(raw)
+    assigner = meta.get("cveMetadata", {}).get("assignerShortName", "")
+    if assigner != "Linux":
+        aff = meta.get("containers", {}).get("cna", {}).get("affected", [{}])[0]
+        return None, f"{assigner}: {aff.get('vendor', '?')} {aff.get('product', '?')}"
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / f"{cve}.json"
+        p.write_bytes(raw)
+        return vulns.parse_record(p), assigner
+
+
+def cmd_why(args) -> int:
+    """Per series: is the CVE in the patch set, and if not, why."""
+    cfg = _cfg(args)
+    data, out = Path(cfg["data"]), Path(cfg["out"])
+    idx_file, state_file = out / "cves.json", out / "state.json"
+    idx = json.loads(idx_file.read_text()) if idx_file.exists() else {}
+    state = json.loads(state_file.read_text()).get("series", {}) if state_file.exists() else {}
+    attempts_file = out / "attempts.json"
+    attempts = json.loads(attempts_file.read_text()) if attempts_file.exists() else {}
+    if not idx:
+        print(f"note: no {idx_file}; answers come from the CVE record only")
+    # (major, minor, patch, rc); rc 99 is the final release
+    ver = lambda v: (f"{v[0]}.{v[1]}" + (f".{v[2]}" if v[2] else "") + (f"-rc{v[3]}" if v[3] != 99 else "")) if v else "?"
+    for cve in dict.fromkeys(i.upper() for i in args.ids):
+        rec, assigner = _record(data, cve)
+        if rec is None:
+            print(f"{cve}: not covered: not a Linux kernel CVE ({assigner}). armbian/cve tracks kernel CVEs only.\n")
+            continue
+        print(f"{cve}: {rec.title or rec.description[:100]}")
+        for s in (str(x) for x in cfg["series"]):
+            head = state.get(s, {}).get("version", "")
+            label = f"  {s}" + (f" (base {head})" if head else "")
+            entries = [e for e in idx.get(cve, {}).get(s, []) if e["status"] not in ("superseded", "backported")]
+            if entries:
+                for e in entries:
+                    line = f"{label}: {WHY.get(e['status'], e['status'])}: {e['upstream']} {e['subject']}"
+                    print(line + (f"\n      {e['patch']}" if e.get("patch") else "")
+                          + (f"\n      {e['reason']}" if e.get("reason") and e["status"] != "included" else ""))
+                continue
+            st, fixed = rec.status(_series(s))
+            if st == "unaffected":
+                why = (f"bug added in {ver(rec.introduced)}" if rec.introduced and _series(s) < rec.introduced[:2]
+                       else f"fixed in mainline {ver(rec.mainline_fixed)}")
+                print(f"{label}: not affected: {why}, before this series" if "mainline" in why else f"{label}: not affected: {why}")
+            elif st == "fixed-in":
+                print(f"{label}: fixed in stable {ver(fixed)}")
+            elif (a := attempts.get(cve, {}).get(s)):
+                print(f"{label}: {a.get('outcome')}: {a.get('reason') or 'see cve-report.md'}")
+            else:
+                print(f"{label}: not in the last run: no fix commit known yet, or the record is newer than the run")
+        print()
+    return 0
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="fasttrack", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -356,6 +432,9 @@ def main(argv=None) -> int:
     r.set_defaults(fn=cmd_report)
 
     sub.add_parser("prune", help="delete incident patches the stable head has absorbed").set_defaults(fn=cmd_prune)
+    r = sub.add_parser("why", help="is a CVE covered, and if not, why (reads cves.json and the CVE record)")
+    r.add_argument("ids", nargs="+", help="CVE ids")
+    r.set_defaults(fn=cmd_why)
     sub.add_parser("followups", help="list mainline follow-ups (Fixes: tags) the patch sets miss"
                    ).set_defaults(fn=cmd_followups)
     r = sub.add_parser("release-notes", help="print release notes: the fixes in each patches/<series>/")
