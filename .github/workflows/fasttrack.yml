@@ -292,7 +292,7 @@ jobs:
         run: |
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           # One path at a time: a path that does not exist fails the whole `git add`.
-          for p in patches cve report.md unpatched.json state.json events.json cve-report.md cve-result.json; do
+          for p in patches cve report.md unpatched.json cves.json state.json events.json cve-report.md cve-result.json; do
             git add -A -- "$p" 2>/dev/null || true
           done
           # main needs a PR (ruleset), and GitHub Actions cannot bypass it.

@@ -25,6 +25,14 @@ Stable releases take weeks to carry a fix, and some fixes never reach an older L
 
 Apply the patches in `series.conf` order on the commit in `base`.
 
+Check whether a CVE is covered, and if not, why:
+
+```
+./fasttrack.sh why CVE-2026-1234
+```
+
+It needs no `sync`. Without a local CVE feed, it reads the record from CVE.org.
+
 ## More
 
 - Status: [report.md](report.md)

@@ -7,6 +7,7 @@ Layout under the output directory:
     patches/6.18/base                           stable commit everything was verified on
     patches/6.18/fasttrack.json                 provenance
     unpatched.json                              security fixes that do not apply unchanged
+    cves.json                                   status of each CVE per series (`fasttrack why`)
     cve/<ID>/<series>/...                       same layout, per incident
     work/<ID>/<series>/                         backport work packages (BRIEF.md, tree/)
 
@@ -100,6 +101,69 @@ def review(c, series: str, attempts: dict) -> str:
     return "; ".join(dict.fromkeys(n["reason"] for n in notes if n.get("reviewed") and n.get("reason")))
 
 
+# Report groups: (key in cves.json, heading in report.md). Quiet groups get a count only.
+QUIET = ((PRESENT, "in-tree", "Already in tree"),
+         (OTHER_ARCH, "other-arch", "Other architectures (not built)"),
+         (SUPERSEDED, "superseded", "cve/ backports no longer needed"))
+GROUPS = (("included", "Included"),
+          ("needs-backport", "Needs a backport"),
+          ("backport-stale", "cve/ backport does not apply on this base"),
+          ("not-affected-needs-review", "Not affected per work package (needs review)"),
+          ("not-affected", "Not affected (reviewed)"),
+          ("commit-missing", "Mainline commit not in mirror"))
+
+
+def _bug_in_set(r: SeriesResult, attempts: dict):
+    """``in_set(c)``: bug-introducing commits of ``c`` that the patch set itself adds.
+    "Not affected" does not hold for those, unless a person checked the commit:
+    attempts.json "bug_in_set_ok" lists it."""
+    added = {c.upstream for c in r.candidates if c.verdict == ACCEPTED and c.upstream}
+
+    def in_set(c):
+        ok = {b[:12] for cve in c.cves for b in attempts.get(cve, {}).get(r.series, {}).get("bug_in_set_ok", [])}
+        return [b for b in c.bug_commits if b in added and b[:12] not in ok]
+    return in_set
+
+
+def classify(r: SeriesResult, attempts: dict) -> dict[int, str]:
+    """id(candidate) → group key (GROUPS, QUIET, or the verdict when no group fits)."""
+    in_set = _bug_in_set(r, attempts)
+    quiet = {verdict: key for verdict, key, _ in QUIET}
+    out = {}
+    for c in r.candidates:
+        if c.verdict == ACCEPTED:
+            key = "included"
+        elif c.verdict == CONFLICT and c.backport:
+            key = "backport-stale"
+        elif c.verdict == CONFLICT:
+            # A fix that does not apply unchanged is open, or "not affected" per attempts.json.
+            key = "needs-backport"
+            if not_affected(c, r.series, attempts) and not in_set(c):
+                key = "not-affected" if review(c, r.series, attempts) else "not-affected-needs-review"
+        else:
+            key = quiet.get(c.verdict, c.verdict)
+        out[id(c)] = key
+    return out
+
+
+def index(results: list[SeriesResult], attempts: Optional[dict] = None) -> dict:
+    """CVE → series → one entry per fix commit: what the last run did with it."""
+    attempts = attempts or {}
+    out: dict = {}
+    for r in results:
+        key = classify(r, attempts)
+        for c in r.candidates:
+            for cve in c.cves:
+                e = {"status": key[id(c)], "upstream": c.upstream[:12], "source": c.source, "subject": c.subject}
+                if c.verdict == ACCEPTED:
+                    e["patch"] = f"patches/{r.series}/{c.filename}"
+                found = [attempts.get(cve, {}).get(r.series, {}).get("reason", "")] if "not-affected" in e["status"] else []
+                if why := review(c, r.series, attempts) or next(filter(None, found), "") or c.reason:
+                    e["reason"] = why
+                out.setdefault(cve, {}).setdefault(r.series, []).append(e)
+    return {cve: out[cve] for cve in sorted(out)}
+
+
 def report(results: list[SeriesResult], events: list[str], attempts: Optional[dict] = None) -> str:
     attempts = attempts or {}
     out = ["# Kernel security fast-track", ""]
@@ -110,32 +174,16 @@ def report(results: list[SeriesResult], events: list[str], attempts: Optional[di
         if r.upstream_latest and r.upstream_latest != r.head_version:
             stale = f" — kernel.org says {r.upstream_latest}; mirror may be stale"
         out += [f"## {r.series} (base {r.head_version}, `{r.head[:12]}`){stale}", ""]
-        # Nothing to do for these: a count is enough; state.json has the list.
-        quiet = [f"{title}: {n}" for verdict, title in ((PRESENT, "Already in tree"),
-                                                        (OTHER_ARCH, "Other architectures (not built)"),
-                                                        (SUPERSEDED, "cve/ backports no longer needed"))
+        # Nothing to do for these: a count is enough; cves.json has the list.
+        quiet = [f"{title}: {n}" for verdict, _, title in QUIET
                  if (n := sum(c.verdict == verdict for c in r.candidates))]
         if quiet:
             out += [" · ".join(quiet), ""]
         # Included: clean mainline picks, then reviewed backports from cve/ (Source column).
-        # A fix that does not apply unchanged is open, or "not affected" per attempts.json.
-        # "Not affected" does not hold when the patch set itself adds a commit that brings the bug,
-        # unless a person checked that commit: attempts.json "bug_in_set_ok" lists it.
-        added = {c.upstream for c in r.candidates if c.verdict == ACCEPTED and c.upstream}
-        ok = lambda c: {b for cve in c.cves for b in attempts.get(cve, {}).get(r.series, {}).get("bug_in_set_ok", [])}
-        in_set = lambda c: [b for b in c.bug_commits if b in added and b[:12] not in {o[:12] for o in ok(c)}]
-        na = {id(c) for c in r.candidates
-              if c.verdict == CONFLICT and not c.backport and not_affected(c, r.series, attempts) and not in_set(c)}
-        checked = {i for i in na for c in r.candidates if id(c) == i and review(c, r.series, attempts)}
-        open_ = lambda c: c.verdict == CONFLICT and not c.backport and id(c) not in na
-        groups = [(lambda c: c.verdict == ACCEPTED, "Included"),
-                  (open_, "Needs a backport"),
-                  (lambda c: c.verdict == CONFLICT and c.backport, "cve/ backport does not apply on this base"),
-                  (lambda c: id(c) in na - checked, "Not affected per work package (needs review)"),
-                  (lambda c: id(c) in checked, "Not affected (reviewed)"),
-                  (lambda c: c.verdict == MISSING, "Mainline commit not in mirror")]
-        for match, title in groups:
-            rows = [c for c in r.candidates if match(c)]
+        in_set = _bug_in_set(r, attempts)
+        key = classify(r, attempts)
+        for group, title in GROUPS:
+            rows = [c for c in r.candidates if key[id(c)] == group]
             if not rows:
                 continue
             out += [f"### {title} ({len(rows)})", "",
@@ -148,7 +196,7 @@ def report(results: list[SeriesResult], events: list[str], attempts: Optional[di
                 subject = c.subject + (f" — {why}" if (why := review(c, r.series, attempts)) else "")
                 out.append(f"| {flag} | {cves} | `{c.upstream[:12] or '—'}` | {c.source} | {subject.replace('|', '/')} |")
             out.append("")
-        if any(open_(c) for c in r.candidates):
+        if any(key[id(c)] == "needs-backport" for c in r.candidates):
             out += ["Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).", ""]
         if not r.candidates:
             out += ["Nothing pending. The stable branch carries every known fix.", ""]
