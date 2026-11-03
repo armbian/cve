@@ -89,6 +89,86 @@
     },
     {
       "series": "7.3",
+      "upstream": "436d48a2ed13112d2d27085325838e5bce6b4507",
+      "subject": "io_uring/io-wq: don't hide a link from cancellations",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99255"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0005-436d48a2ed13-io-uring-io-wq-don-t-hide-a-link-from-cancellations.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "768134d4f48109b90f4248feecbeeb7d684e410c"
+      ]
+    },
+    {
+      "series": "7.3",
+      "upstream": "22e643e61b9b6299b42ff7d88bab48bccada8a5d",
+      "subject": "io_uring: don't flood a cancelling task with task_work",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99254"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0006-22e643e61b9b-io-uring-don-t-flood-a-cancelling-task-with-task-wor.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "d56d938b4bef3e1421a42023cdcd6e13c1f50831"
+      ]
+    },
+    {
+      "series": "7.3",
+      "upstream": "76a82c666abf155ad52d5f41043eac77dd3e41d8",
+      "subject": "io_uring/cancel: rearm local work wake up before sleep",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99253"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0007-76a82c666abf-io-uring-cancel-rearm-local-work-wake-up-before-slee.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "d46ab2c98ababa19b41a5709b6921d7b1add7f74"
+      ]
+    },
+    {
+      "series": "7.3",
+      "upstream": "68a95c3968895cd198f42baadb23e635fecc5a66",
+      "subject": "io_uring/mpscq: disable preemption while pushing",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99252"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0008-68a95c396889-io-uring-mpscq-disable-preemption-while-pushing.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "50cb44bd0d5f243919a06b17b1d979fdcd72cb2b"
+      ]
+    },
+    {
+      "series": "7.3",
       "upstream": "40554d1221e3d2ff2e0d192b74a05d89eb3620e7",
       "subject": "ext4: don't enable large folios on encrypted inodes",
       "source": "mainline",
@@ -98,7 +178,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0005-40554d1221e3-ext4-don-t-enable-large-folios-on-encrypted-inodes.patch",
+      "filename": "0009-40554d1221e3-ext4-don-t-enable-large-folios-on-encrypted-inodes.patch",
       "files": [],
       "prerequisites": [],
       "build_log": "",

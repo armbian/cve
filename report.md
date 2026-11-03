@@ -1,5 +1,9 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- added 7.3: 4 patch(es)
+
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no longer needed: 14
@@ -1180,7 +1184,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 147
 
-### Included (5)
+### Included (9)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1188,6 +1192,10 @@ Already in tree: 147
 |  | CVE-2026-99230 | `4c83e39f4d19` | stable-queue | io_uring/cmd: don't leave list poison in ->hash_node |
 |  | CVE-2026-99229 | `34f5a664c34d` | stable-queue | io_uring/wait: don't spin on a stuck overflow list |
 |  | CVE-2026-99228 | `63c103279a95` | stable-queue | io_uring/io-wq: don't lose the signal that ends work |
+|  | CVE-2026-99255 | `436d48a2ed13` | stable-queue | io_uring/io-wq: don't hide a link from cancellations |
+|  | CVE-2026-99254 | `22e643e61b9b` | stable-queue | io_uring: don't flood a cancelling task with task_work |
+|  | CVE-2026-99253 | `76a82c666abf` | stable-queue | io_uring/cancel: rearm local work wake up before sleep |
+|  | CVE-2026-99252 | `68a95c396889` | stable-queue | io_uring/mpscq: disable preemption while pushing |
 |  | CVE-2026-98941 | `40554d1221e3` | mainline | ext4: don't enable large folios on encrypted inodes |
 
 ### Not affected (reviewed) (7)
