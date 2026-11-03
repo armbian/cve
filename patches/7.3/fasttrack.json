@@ -169,6 +169,110 @@
     },
     {
       "series": "7.3",
+      "upstream": "b88902d8745a701d24275d012f0830e3628e2a22",
+      "subject": "io_uring: wake ring pollers for local task_work",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99268"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0009-b88902d8745a-io-uring-wake-ring-pollers-for-local-task-work.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "130bd686d9be918e4cc8c03abf5794ba2d860502"
+      ]
+    },
+    {
+      "series": "7.3",
+      "upstream": "9c151648780d89e5446e5f89f3fa2e416c3bb911",
+      "subject": "io_uring/napi: make stale entries time out after 60s",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99267"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0010-9c151648780d-io-uring-napi-make-stale-entries-time-out-after-60s.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "8d0c12a80cdeb80d5e0510e96d38fe551ed8e9b5"
+      ]
+    },
+    {
+      "series": "7.3",
+      "upstream": "ab4536bf2e5617b04f2d9396f06393c7bbfb071d",
+      "subject": "io_uring/zcrx: fix buffer offsets in areas above 4GB",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99266"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0011-ab4536bf2e56-io-uring-zcrx-fix-buffer-offsets-in-areas-above-4gb.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "11ed914bbf948c4a37248f2876973ac18014056d"
+      ]
+    },
+    {
+      "series": "7.3",
+      "upstream": "a3d7ee11289f657aa9af826d8f0844221292a27a",
+      "subject": "io_uring/openclose: keep the lock in io_pipe_fixed()",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99265"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0012-a3d7ee11289f-io-uring-openclose-keep-the-lock-in-io-pipe-fixed.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "53db8a71ecb42c2ec5e9c6925269a750255f9af5"
+      ]
+    },
+    {
+      "series": "7.3",
+      "upstream": "8444de681a179e41a4eb92d5bbe770a0677074a6",
+      "subject": "io_uring/net: don't retry recv on uncommitted buffers",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99264"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0013-8444de681a17-io-uring-net-don-t-retry-recv-on-uncommitted-buffers.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "21a4ddb0f5e933f372808c10b9ac704505751bb1",
+        "2eb7937b5fc7fcd90eab7bebb0181214b61b9283",
+        "3b53dc1c641f2884d4750fc25aaf6c36b90db606",
+        "41b70df5b38bc80967d2e0ed55cc3c3896bba781",
+        "fe9da1812f8697a38f7e30991d568ec199e16059"
+      ]
+    },
+    {
+      "series": "7.3",
       "upstream": "40554d1221e3d2ff2e0d192b74a05d89eb3620e7",
       "subject": "ext4: don't enable large folios on encrypted inodes",
       "source": "mainline",
@@ -178,7 +282,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0009-40554d1221e3-ext4-don-t-enable-large-folios-on-encrypted-inodes.patch",
+      "filename": "0014-40554d1221e3-ext4-don-t-enable-large-folios-on-encrypted-inodes.patch",
       "files": [],
       "prerequisites": [],
       "build_log": "",

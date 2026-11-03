@@ -2,13 +2,16 @@
 
 **Events this run**
 
-- added 7.3: 4 patch(es)
+- added 6.18: 1 patch(es)
+- added 6.12: 1 patch(es)
+- added 6.1: 1 patch(es)
+- added 7.3: 5 patch(es)
 
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no longer needed: 14
 
-### Included (119)
+### Included (120)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -27,6 +30,7 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-99183 | `89c2c777df17` | stable-queue | accel/rocket: search every core slot when looking up a scheduler |
 |  | CVE-2026-53024 | `84265cbd96b9` | mainline | greybus: raw: fix use-after-free if write is called after disconnect |
 |  | CVE-2026-46017 | `3bac01168982` | mainline | mm: fix deferred split queue races during migration |
+|  | CVE-2026-99270 | `97c8a3c1f73d` | mainline | tcp: Fix potential UAF in reqsk_timer_handler(). |
 |  | CVE-2026-98376 | `593980175389` | mainline | bpf: Use array_map_meta_equal for percpu array inner map replacement |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
 |  | CVE-2026-80580 | `d15d51fb26e8` | mainline | fbdev: bound mode sysfs output to the sysfs buffer |
@@ -132,10 +136,12 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-98815 | `9952f3882ecb` | claude | nvme: fix cdev lifetime |
 |  | CVE-2026-99151 | `55a67aa89342` | claude | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
 
-### Needs a backport (6)
+### Needs a backport (8)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
+|  | CVE-2026-99261 | `50b24a20be8c` | mainline | drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction |
+|  | CVE-2026-99260 | `7ed0028126b5` | mainline | ntfs: fix resident conversion in ntfs_new_attr_flags |
 |  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 |  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
@@ -182,7 +188,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no longer needed: 26
 
-### Included (187)
+### Included (188)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -219,6 +225,7 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 |  | CVE-2026-98786 | `217f64f348c9` | stable-queue | drm/amd/display: guard dc_sink dereferences in MST mode validation |
 |  | CVE-2025-71302 | `efe24898485c` | mainline | drm/panthor: fix for dma-fence safe access rules |
 |  | CVE-2026-43369 | `062ea905fff7` | mainline | drm/amd: Fix NULL pointer dereference in device cleanup |
+|  | CVE-2026-99270 | `97c8a3c1f73d` | mainline | tcp: Fix potential UAF in reqsk_timer_handler(). |
 |  | CVE-2026-98376 | `593980175389` | mainline | bpf: Use array_map_meta_equal for percpu array inner map replacement |
 |  | CVE-2026-90306 | `8ed9bff906cf` | mainline | ARM: 9481/2: breakpoint: CFI breakpoints only on demand |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
@@ -374,7 +381,7 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 |  | CVE-2026-90237 | `ac46f3f35b6e` | claude | netfilter: nf_conntrack_helper: add refcounting from datapath |
 |  | CVE-2026-90237 | `3679da4ad8be` | claude | netfilter: nft_ct: move custom expectation support to helper |
 
-### Needs a backport (11)
+### Needs a backport (13)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -384,8 +391,10 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
+|  | CVE-2026-99261 | `50b24a20be8c` | mainline | drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
+|  | CVE-2026-99260 | `7ed0028126b5` | mainline | ntfs: fix resident conversion in ntfs_new_attr_flags |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 |  | CVE-2026-98125 | `01261a6fa48b` | mainline | smb/client: fix stale page cache in insert/collapse range |
@@ -471,7 +480,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 19 · cve/ backports no longer needed: 60
 
-### Included (506)
+### Included (507)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -537,6 +546,7 @@ Already in tree: 89 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2024-27023 | `855678ed8534` | mainline | md: Fix missing release of 'active_io' for flush |
 |  | CVE-2024-41149 | `85672ca9ceea` | mainline | block: avoid to reuse `hctx` not removed from cpuhp callback list |
 |  | CVE-2026-23451 | `b7405dcf7385` | mainline | bonding: prevent potential infinite loop in bond_header_parse() |
+|  | CVE-2026-99270 | `97c8a3c1f73d` | mainline | tcp: Fix potential UAF in reqsk_timer_handler(). |
 |  | CVE-2026-72434 | `4a597a87e2e2` | mainline | netfilter: ipset: make sure gc is properly stopped — 6.1 cancel_delayed_work_sync() holds PENDING; the self-requeue in gc fails, so gc cannot run after cancel. |
 |  | CVE-2026-93184 | `3359ba93d01a` | mainline | ASoC: fsl_audmix: rework runtime PM handling in probe |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
@@ -982,7 +992,7 @@ Already in tree: 89 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-74725 | `ec680ea4ba1b` | mainline | enic: fix tx_hang_reset use-after-free on device removal |
 |  | CVE-2026-89797 | `75b1e88d3425` | claude | power: supply: ab8500_fg: fix use-after-free on remove |
 
-### Needs a backport (24)
+### Needs a backport (26)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1001,9 +1011,11 @@ Already in tree: 89 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-53185 | `732fd9f0b9c1` | mainline | zram: fix use-after-free in zram_bvec_write_partial() |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
 |  | CVE-2026-74314 | `a3a81d247651` | mainline | bpf: Cancel special fields on map value recycle |
+|  | CVE-2026-99261 | `50b24a20be8c` | mainline | drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction |
 |  | CVE-2026-68447 | `426ffae6ecc7` | mainline | drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size |
 | does not build | CVE-2026-93072 | `616dd89d81ad` | mainline | irqchip/renesas-irqc: Fix generic interrupt chip leak on remove |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
+|  | CVE-2026-99260 | `7ed0028126b5` | mainline | ntfs: fix resident conversion in ntfs_new_attr_flags |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-99240 | `610c4438fb66` | mainline | mm/damon/core: error damos_commit_quota_goal() for zero target_value |
 |  | CVE-2026-99217 | `296a98c1fa50` | mainline | fork: release the files of a failed fork after sched_cancel_fork() |
@@ -1184,7 +1196,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 147
 
-### Included (9)
+### Included (14)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1196,7 +1208,18 @@ Already in tree: 147
 |  | CVE-2026-99254 | `22e643e61b9b` | stable-queue | io_uring: don't flood a cancelling task with task_work |
 |  | CVE-2026-99253 | `76a82c666abf` | stable-queue | io_uring/cancel: rearm local work wake up before sleep |
 |  | CVE-2026-99252 | `68a95c396889` | stable-queue | io_uring/mpscq: disable preemption while pushing |
+|  | CVE-2026-99268 | `b88902d8745a` | stable-queue | io_uring: wake ring pollers for local task_work |
+|  | CVE-2026-99267 | `9c151648780d` | stable-queue | io_uring/napi: make stale entries time out after 60s |
+|  | CVE-2026-99266 | `ab4536bf2e56` | stable-queue | io_uring/zcrx: fix buffer offsets in areas above 4GB |
+|  | CVE-2026-99265 | `a3d7ee11289f` | stable-queue | io_uring/openclose: keep the lock in io_pipe_fixed() |
+|  | CVE-2026-99264 | `8444de681a17` | stable-queue | io_uring/net: don't retry recv on uncommitted buffers |
 |  | CVE-2026-98941 | `40554d1221e3` | mainline | ext4: don't enable large folios on encrypted inodes |
+
+### Needs a backport (1)
+
+| | CVE | Upstream | Source | Subject |
+|---|---|---|---|---|
+|  | CVE-2026-99262 | `89f193dc3ef4` | stable-queue | io_uring/timeout: don't lose a cancel as io-wq arms a timeout |
 
 ### Not affected (reviewed) (7)
 
@@ -1209,3 +1232,5 @@ Already in tree: 147
 |  | CVE-2026-52945 | `e94b369ff82f` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
 |  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing — 044925f9b565 removed the nr_thps code |
 |  | CVE-2026-98938 | `9a7931e847f3` | mainline | rust: irq: pass RegistrationInner as cookie to request_irq — 98c63ce4d760 removed RegistrationInner |
+
+Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).
