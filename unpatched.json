@@ -8140,23 +8140,6 @@
   {
     "series": "7.3",
     "cves": [
-      "CVE-2026-99262"
-    ],
-    "kev": false,
-    "upstream": "89f193dc3ef462059387e9691bf6af4b1808379a",
-    "subject": "io_uring/timeout: don't lose a cancel as io-wq arms a timeout",
-    "verdict": "needs-backport",
-    "files": [
-      "io_uring/io_uring.h",
-      "io_uring/timeout.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "7.3",
-    "cves": [
       "CVE-2025-68226"
     ],
     "kev": false,

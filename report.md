@@ -1,5 +1,9 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- retired 7.3: 6 patch(es) (landed upstream or superseded)
+
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no longer needed: 14
@@ -21,9 +25,9 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-98682 | `c9b1194e8ec9` | stable-queue | smb: client: drain and invalidate before server-side copy/clone |
 |  | CVE-2026-98786 | `217f64f348c9` | stable-queue | drm/amd/display: guard dc_sink dereferences in MST mode validation |
 |  | CVE-2026-99183 | `89c2c777df17` | stable-queue | accel/rocket: search every core slot when looking up a scheduler |
+|  | CVE-2026-99270 | `97c8a3c1f73d` | stable-queue | tcp: Fix potential UAF in reqsk_timer_handler(). |
 |  | CVE-2026-53024 | `84265cbd96b9` | mainline | greybus: raw: fix use-after-free if write is called after disconnect |
 |  | CVE-2026-46017 | `3bac01168982` | mainline | mm: fix deferred split queue races during migration |
-|  | CVE-2026-99270 | `97c8a3c1f73d` | mainline | tcp: Fix potential UAF in reqsk_timer_handler(). |
 |  | CVE-2026-98376 | `593980175389` | mainline | bpf: Use array_map_meta_equal for percpu array inner map replacement |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
 |  | CVE-2026-80580 | `d15d51fb26e8` | mainline | fbdev: bound mode sysfs output to the sysfs buffer |
@@ -177,7 +181,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 ## 6.12 (base 6.12.115, `03bae623ec32`)
 
-Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no longer needed: 26
+Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no longer needed: 25
 
 ### Included (188)
 
@@ -190,7 +194,6 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 |  | CVE-2026-98439 | `4fd5bad647bf` | stable-queue | smb/server: cancel async requests when closing connection |
 |  | CVE-2026-89866 | `a52e6f7923c1` | stable-queue | media: chips-media: wave5: Resume device before setting EOS flag — wave5 has no runtime PM in 6.12 (2092b3833487 missing) |
 |  | CVE-2026-93241 | `6b0d1083364f` | stable-queue | memcg: bypass the reclaim and oom killer for dying tasks once oom_reaper is done |
-|  | CVE-2026-81010 | `14572de82e50` | stable-queue | io_uring/waitid: honor task_work cancellation |
 |  | CVE-2026-98674 | `549b71ce0506` | stable-queue | iio: adc: adi-axi-adc: Initialize state mutex |
 |  | CVE-2026-99109 | `4aa2c106aef4` | stable-queue | smb: client: reject SetEA requests that do not fit the request buffer |
 |  | CVE-2026-99122 | `ad9a7da3fa39` | stable-queue | vsock/vmci: validate packet source for connected sockets |
@@ -214,9 +217,9 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 |  | CVE-2026-99026 | `489114c9ecae` | stable-queue | net: team: free skb when broadcast has no txable port |
 |  | CVE-2026-99146 | `7dedc5bb11f9` | stable-queue | drm/i915/dmc: Add sanity check for DMC load address |
 |  | CVE-2026-98786 | `217f64f348c9` | stable-queue | drm/amd/display: guard dc_sink dereferences in MST mode validation |
+|  | CVE-2026-99270 | `97c8a3c1f73d` | stable-queue | tcp: Fix potential UAF in reqsk_timer_handler(). |
 |  | CVE-2025-71302 | `efe24898485c` | mainline | drm/panthor: fix for dma-fence safe access rules |
 |  | CVE-2026-43369 | `062ea905fff7` | mainline | drm/amd: Fix NULL pointer dereference in device cleanup |
-|  | CVE-2026-99270 | `97c8a3c1f73d` | mainline | tcp: Fix potential UAF in reqsk_timer_handler(). |
 |  | CVE-2026-98376 | `593980175389` | mainline | bpf: Use array_map_meta_equal for percpu array inner map replacement |
 |  | CVE-2026-90306 | `8ed9bff906cf` | mainline | ARM: 9481/2: breakpoint: CFI breakpoints only on demand |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
@@ -305,6 +308,7 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 |  | CVE-2026-89935 | `d378fceaafd7` | claude | iio: light: apds9306: fix PM reference leak in apds9306_read_data() |
 |  | CVE-2026-80785 | `061db6b7a910` | claude | fbdev: serialize mode sysfs access with lock_fb_info() |
 |  | CVE-2026-89637 | `730d0bb19507` | claude | smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2 |
+|  | CVE-2026-81010 | `14572de82e50` | claude | io_uring/waitid: honor task_work cancellation |
 |  | CVE-2026-90317 | `180c7000712d` | claude | bpf: Invalidate RCU pointers after final spin unlock |
 |  | CVE-2026-90315 | `747b9bbbbdfd` | claude | PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers |
 |  | CVE-2026-93044 | `34746b5a84ec` | claude | bpf: Disallow interpreter fallback for arena-related insns |
@@ -532,10 +536,10 @@ Already in tree: 89 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-99026 | `489114c9ecae` | stable-queue | net: team: free skb when broadcast has no txable port |
 |  | CVE-2026-99090 | `1a6023edfbb5` | stable-queue | drm/amdgpu: serialize vblank counter reads against GPU reset |
 |  | CVE-2026-99146 | `7dedc5bb11f9` | stable-queue | drm/i915/dmc: Add sanity check for DMC load address |
+|  | CVE-2026-99270 | `97c8a3c1f73d` | stable-queue | tcp: Fix potential UAF in reqsk_timer_handler(). |
 |  | CVE-2024-27023 | `855678ed8534` | mainline | md: Fix missing release of 'active_io' for flush |
 |  | CVE-2024-41149 | `85672ca9ceea` | mainline | block: avoid to reuse `hctx` not removed from cpuhp callback list |
 |  | CVE-2026-23451 | `b7405dcf7385` | mainline | bonding: prevent potential infinite loop in bond_header_parse() |
-|  | CVE-2026-99270 | `97c8a3c1f73d` | mainline | tcp: Fix potential UAF in reqsk_timer_handler(). |
 |  | CVE-2026-72434 | `4a597a87e2e2` | mainline | netfilter: ipset: make sure gc is properly stopped — 6.1 cancel_delayed_work_sync() holds PENDING; the self-requeue in gc fails, so gc cannot run after cancel. |
 |  | CVE-2026-93184 | `3359ba93d01a` | mainline | ASoC: fsl_audmix: rework runtime PM handling in probe |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
@@ -1181,7 +1185,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 147
 
-### Included (14)
+### Included (8)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1192,19 +1196,7 @@ Already in tree: 147
 |  | CVE-2026-99255 | `436d48a2ed13` | stable-queue | io_uring/io-wq: don't hide a link from cancellations |
 |  | CVE-2026-99254 | `22e643e61b9b` | stable-queue | io_uring: don't flood a cancelling task with task_work |
 |  | CVE-2026-99253 | `76a82c666abf` | stable-queue | io_uring/cancel: rearm local work wake up before sleep |
-|  | CVE-2026-99252 | `68a95c396889` | stable-queue | io_uring/mpscq: disable preemption while pushing |
-|  | CVE-2026-99268 | `b88902d8745a` | stable-queue | io_uring: wake ring pollers for local task_work |
-|  | CVE-2026-99267 | `9c151648780d` | stable-queue | io_uring/napi: make stale entries time out after 60s |
-|  | CVE-2026-99266 | `ab4536bf2e56` | stable-queue | io_uring/zcrx: fix buffer offsets in areas above 4GB |
-|  | CVE-2026-99265 | `a3d7ee11289f` | stable-queue | io_uring/openclose: keep the lock in io_pipe_fixed() |
-|  | CVE-2026-99264 | `8444de681a17` | stable-queue | io_uring/net: don't retry recv on uncommitted buffers |
 |  | CVE-2026-98941 | `40554d1221e3` | mainline | ext4: don't enable large folios on encrypted inodes |
-
-### Needs a backport (1)
-
-| | CVE | Upstream | Source | Subject |
-|---|---|---|---|---|
-|  | CVE-2026-99262 | `89f193dc3ef4` | stable-queue | io_uring/timeout: don't lose a cancel as io-wq arms a timeout |
 
 ### Not affected (reviewed) (7)
 
@@ -1217,5 +1209,3 @@ Already in tree: 147
 |  | CVE-2026-52945 | `e94b369ff82f` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
 |  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing — 044925f9b565 removed the nr_thps code |
 |  | CVE-2026-98938 | `9a7931e847f3` | mainline | rust: irq: pass RegistrationInner as cookie to request_irq — 98c63ce4d760 removed RegistrationInner |
-
-Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).
