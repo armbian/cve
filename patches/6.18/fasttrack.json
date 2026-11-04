@@ -277,6 +277,27 @@
     },
     {
       "series": "6.18",
+      "upstream": "97c8a3c1f73d828de43a5a88e8a9a143efb2b661",
+      "subject": "tcp: Fix potential UAF in reqsk_timer_handler().",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99270"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0014-97c8a3c1f73d-tcp-fix-potential-uaf-in-reqsk-timer-handler.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "83fccfc3940c4a2db90fd7e7079f5b465cd8c6af",
+        "d3a1196bfc462943694623412d8e03aaf172bdc1"
+      ]
+    },
+    {
+      "series": "6.18",
       "upstream": "84265cbd96b97058ef67e3f8be3933667a000835",
       "subject": "greybus: raw: fix use-after-free if write is called after disconnect",
       "source": "mainline",
@@ -286,7 +307,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0014-84265cbd96b9-greybus-raw-fix-use-after-free-if-write-is-called-af.patch",
+      "filename": "0015-84265cbd96b9-greybus-raw-fix-use-after-free-if-write-is-called-af.patch",
       "files": [],
       "prerequisites": [],
       "build_log": "",
@@ -306,34 +327,13 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0015-3bac01168982-mm-fix-deferred-split-queue-races-during-migration.patch",
+      "filename": "0016-3bac01168982-mm-fix-deferred-split-queue-races-during-migration.patch",
       "files": [],
       "prerequisites": [],
       "build_log": "",
       "backport": "",
       "bug_commits": [
         "1da177e4c3f41524e886b7f1b8a0c1fc7321cac2"
-      ]
-    },
-    {
-      "series": "6.18",
-      "upstream": "97c8a3c1f73d828de43a5a88e8a9a143efb2b661",
-      "subject": "tcp: Fix potential UAF in reqsk_timer_handler().",
-      "source": "mainline",
-      "cves": [
-        "CVE-2026-99270"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0016-97c8a3c1f73d-tcp-fix-potential-uaf-in-reqsk-timer-handler.patch",
-      "files": [],
-      "prerequisites": [],
-      "build_log": "",
-      "backport": "",
-      "bug_commits": [
-        "83fccfc3940c4a2db90fd7e7079f5b465cd8c6af",
-        "d3a1196bfc462943694623412d8e03aaf172bdc1"
       ]
     },
     {

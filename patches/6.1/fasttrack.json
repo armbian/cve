@@ -1233,6 +1233,27 @@
     },
     {
       "series": "6.1",
+      "upstream": "97c8a3c1f73d828de43a5a88e8a9a143efb2b661",
+      "subject": "tcp: Fix potential UAF in reqsk_timer_handler().",
+      "source": "stable-queue",
+      "cves": [
+        "CVE-2026-99270"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0060-97c8a3c1f73d-tcp-fix-potential-uaf-in-reqsk-timer-handler.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "",
+      "bug_commits": [
+        "83fccfc3940c4a2db90fd7e7079f5b465cd8c6af",
+        "d3a1196bfc462943694623412d8e03aaf172bdc1"
+      ]
+    },
+    {
+      "series": "6.1",
       "upstream": "855678ed8534518e2b428bcbcec695de9ba248e8",
       "subject": "md: Fix missing release of 'active_io' for flush",
       "source": "mainline",
@@ -1242,7 +1263,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0060-855678ed8534-md-fix-missing-release-of-active-io-for-flush.patch",
+      "filename": "0061-855678ed8534-md-fix-missing-release-of-active-io-for-flush.patch",
       "files": [],
       "prerequisites": [],
       "build_log": "",
@@ -1265,7 +1286,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0061-85672ca9ceea-block-avoid-to-reuse-hctx-not-removed-from-cpuhp-cal.patch",
+      "filename": "0062-85672ca9ceea-block-avoid-to-reuse-hctx-not-removed-from-cpuhp-cal.patch",
       "files": [],
       "prerequisites": [],
       "build_log": "",
@@ -1287,7 +1308,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0062-b7405dcf7385-bonding-prevent-potential-infinite-loop-in-bond-head.patch",
+      "filename": "0063-b7405dcf7385-bonding-prevent-potential-infinite-loop-in-bond-head.patch",
       "files": [],
       "prerequisites": [],
       "build_log": "",
@@ -1299,27 +1320,6 @@
         "95597d11dc8bddb2b9a051c9232000bfbb5e43ba",
         "9baf26a91565b7bb2b1d9f99aaf884a2b28c2f6d",
         "b1f22a658a7b20bcb7d34d40cb2ef3e52847e2fb"
-      ]
-    },
-    {
-      "series": "6.1",
-      "upstream": "97c8a3c1f73d828de43a5a88e8a9a143efb2b661",
-      "subject": "tcp: Fix potential UAF in reqsk_timer_handler().",
-      "source": "mainline",
-      "cves": [
-        "CVE-2026-99270"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0063-97c8a3c1f73d-tcp-fix-potential-uaf-in-reqsk-timer-handler.patch",
-      "files": [],
-      "prerequisites": [],
-      "build_log": "",
-      "backport": "",
-      "bug_commits": [
-        "83fccfc3940c4a2db90fd7e7079f5b465cd8c6af",
-        "d3a1196bfc462943694623412d8e03aaf172bdc1"
       ]
     },
     {
