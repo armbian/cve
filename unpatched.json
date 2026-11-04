@@ -320,68 +320,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99261"
-    ],
-    "kev": false,
-    "upstream": "50b24a20be8c0d35f89f7d5c39533f69d84fe48e",
-    "subject": "drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c"
-    ],
-    "prerequisites": [
-      "2a28f9665dca drm/amdgpu: track the userq bo va for its obj management",
-      "873f44c32797 drm/amdgpu: keeping waiting userq fence infinitely",
-      "89926812d3b4 drm/amdgpu: validate the queue va for resuming the queue",
-      "2e7ceac0ea41 drm/amdgpu: validate userq va for GEM unmap",
-      "7877934019d7 drm/amd: Fix error handling with multiple userq IDRs",
-      "16dc933a4fcf drm/amdgpu/userq: drop VCN and VPE doorbell handling",
-      "42f148788469 drm/amdgpu/userqueue: validate userptrs for userqueues",
-      "6142aa066061 drm/amdgpu/userqueue: Fix use after free in amdgpu_userq_buffer_vas_list_cleanup()",
-      "f18719ef4bb7 drm/amdgpu: Convert amdgpu userqueue management from IDR to XArray",
-      "ef4a4b878124 drm/amd: Remove redundant pm_runtime_mark_last_busy() calls",
-      "290f46cf5726 drm/amdgpu: Implement user queue reset functionality",
-      "cd6250f3aeb5 drm/amdgpu: validate the bo from done list for NULL",
-      "3b832487a9e5 drm/amdgpu/userqueue: Remove duplicate amdgpu_reset.h header",
-      "cf856ca9b999 drm/amdgpu: Update vm start, end, hole to support 57bit address",
-      "473f12f82095 drm/amdgpu: Change user queue interface signatures"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-99260"
-    ],
-    "kev": false,
-    "upstream": "7ed0028126b5a19f278183abbae2b3166d3ca9ac",
-    "subject": "ntfs: fix resident conversion in ntfs_new_attr_flags",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/ntfs/ea.c"
-    ],
-    "prerequisites": [
-      "fc053f05ca28 ntfs: add reparse and ea operations",
-      "40c31f0563ec ntfs: Fix null pointer dereference",
-      "ea3566a3fa23 ntfs: add missing newlines to pr_err() messages",
-      "a73258681279 ntfs: fix WSL ea restore condition",
-      "a5325419e9fb ntfs: validate WSL EA payload sizes",
-      "10993e525b1e ntfs: check $EA query-length in ntfs_ea_get",
-      "c451d34ae142 ntfs: harden ntfs_ea_lookup against malformed EA entries",
-      "e6a95c5a8066 ntfs: harden ntfs_listxattr against EA entries",
-      "cd8d29c1b3c3 ntfs: fix uninitialized variables in ntfs_ea_set_wsl_inode()",
-      "937282f7d15b ntfs: add bounds check before accessing EA entries",
-      "650a2751c9ae ntfs: validate final EA attribute size",
-      "772e4c8f2555 ntfs: remove empty EA attribute pair",
-      "41e1cf4ec10d ntfs: rewrite EA stream before updating metadata"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-89611"
     ],
     "kev": false,
@@ -1997,38 +1935,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99261"
-    ],
-    "kev": false,
-    "upstream": "50b24a20be8c0d35f89f7d5c39533f69d84fe48e",
-    "subject": "drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c"
-    ],
-    "prerequisites": [
-      "42a66677805d drm/amdgpu/userq: use consistent function naming",
-      "127e612bf167 drm/amdgpu: update fence ptr with context:seqno",
-      "56801cb83c8c drm/amdgpu: remove DRM_AMDGPU_NAVI3X_USERQ config for UQ",
-      "c5e02d6588f2 drm/amdgpu/userq: take the userq_mgr lock in suspend/resume",
-      "482d48533257 drm/amdgpu/userq: take the userq_mgr lock in enforce isolation",
-      "97c39b4da606 drm/amdgpu/userq: remove unnecessary NULL check",
-      "30ff75809d03 drm/amdgpu: add drm_file reference in userq_mgr",
-      "8c97cdb1a692 drm/amdgpu: use drm_file_err in fence timeouts",
-      "c46a37628a27 drm/amdgpu: change DRM_ERROR to drm_file_err in amdgpu_userq.c",
-      "71353c1a4f91 drm/amdgpu: change DRM_DBG_DRIVER to drm_dbg_driver",
-      "f10eb185ad05 drm/amdgpu: Fix NULL dereference in amdgpu_userq_restore_worker",
-      "648a0dc0d78c drm/amdgpu: Fix user queue deadlock by reordering mutex locking",
-      "bc5bab82d360 drm/amdgpu: Fix userq ttm_bo_pin and ttm_bo_unpin lockdep warnings",
-      "96a86dcb5b5c drm/amdgpu: Fix circular locking in userq creation",
-      "c03ea34cbf88 drm/amdgpu: add support of debugfs for mqd information"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-80899"
     ],
     "kev": false,
@@ -2286,36 +2192,6 @@
       "c5b462e35373 smb/server: fix return value of smb2_read()",
       "d1a30b9ddc3d smb/server: fix return value of smb2_notify()",
       "dafe22bc676d smb/server: fix return value of smb2_query_dir()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99260"
-    ],
-    "kev": false,
-    "upstream": "7ed0028126b5a19f278183abbae2b3166d3ca9ac",
-    "subject": "ntfs: fix resident conversion in ntfs_new_attr_flags",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/ntfs/ea.c"
-    ],
-    "prerequisites": [
-      "fc053f05ca28 ntfs: add reparse and ea operations",
-      "40c31f0563ec ntfs: Fix null pointer dereference",
-      "ea3566a3fa23 ntfs: add missing newlines to pr_err() messages",
-      "a73258681279 ntfs: fix WSL ea restore condition",
-      "a5325419e9fb ntfs: validate WSL EA payload sizes",
-      "10993e525b1e ntfs: check $EA query-length in ntfs_ea_get",
-      "c451d34ae142 ntfs: harden ntfs_ea_lookup against malformed EA entries",
-      "e6a95c5a8066 ntfs: harden ntfs_listxattr against EA entries",
-      "cd8d29c1b3c3 ntfs: fix uninitialized variables in ntfs_ea_set_wsl_inode()",
-      "937282f7d15b ntfs: add bounds check before accessing EA entries",
-      "650a2751c9ae ntfs: validate final EA attribute size",
-      "772e4c8f2555 ntfs: remove empty EA attribute pair",
-      "41e1cf4ec10d ntfs: rewrite EA stream before updating metadata"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -7341,38 +7217,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99261"
-    ],
-    "kev": false,
-    "upstream": "50b24a20be8c0d35f89f7d5c39533f69d84fe48e",
-    "subject": "drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c"
-    ],
-    "prerequisites": [
-      "42a66677805d drm/amdgpu/userq: use consistent function naming",
-      "127e612bf167 drm/amdgpu: update fence ptr with context:seqno",
-      "56801cb83c8c drm/amdgpu: remove DRM_AMDGPU_NAVI3X_USERQ config for UQ",
-      "c5e02d6588f2 drm/amdgpu/userq: take the userq_mgr lock in suspend/resume",
-      "482d48533257 drm/amdgpu/userq: take the userq_mgr lock in enforce isolation",
-      "97c39b4da606 drm/amdgpu/userq: remove unnecessary NULL check",
-      "30ff75809d03 drm/amdgpu: add drm_file reference in userq_mgr",
-      "8c97cdb1a692 drm/amdgpu: use drm_file_err in fence timeouts",
-      "c46a37628a27 drm/amdgpu: change DRM_ERROR to drm_file_err in amdgpu_userq.c",
-      "71353c1a4f91 drm/amdgpu: change DRM_DBG_DRIVER to drm_dbg_driver",
-      "f10eb185ad05 drm/amdgpu: Fix NULL dereference in amdgpu_userq_restore_worker",
-      "648a0dc0d78c drm/amdgpu: Fix user queue deadlock by reordering mutex locking",
-      "bc5bab82d360 drm/amdgpu: Fix userq ttm_bo_pin and ttm_bo_unpin lockdep warnings",
-      "96a86dcb5b5c drm/amdgpu: Fix circular locking in userq creation",
-      "c03ea34cbf88 drm/amdgpu: add support of debugfs for mqd information"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-63816"
     ],
     "kev": false,
@@ -7839,36 +7683,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99260"
-    ],
-    "kev": false,
-    "upstream": "7ed0028126b5a19f278183abbae2b3166d3ca9ac",
-    "subject": "ntfs: fix resident conversion in ntfs_new_attr_flags",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/ntfs/ea.c"
-    ],
-    "prerequisites": [
-      "fc053f05ca28 ntfs: add reparse and ea operations",
-      "40c31f0563ec ntfs: Fix null pointer dereference",
-      "ea3566a3fa23 ntfs: add missing newlines to pr_err() messages",
-      "a73258681279 ntfs: fix WSL ea restore condition",
-      "a5325419e9fb ntfs: validate WSL EA payload sizes",
-      "10993e525b1e ntfs: check $EA query-length in ntfs_ea_get",
-      "c451d34ae142 ntfs: harden ntfs_ea_lookup against malformed EA entries",
-      "e6a95c5a8066 ntfs: harden ntfs_listxattr against EA entries",
-      "cd8d29c1b3c3 ntfs: fix uninitialized variables in ntfs_ea_set_wsl_inode()",
-      "937282f7d15b ntfs: add bounds check before accessing EA entries",
-      "650a2751c9ae ntfs: validate final EA attribute size",
-      "772e4c8f2555 ntfs: remove empty EA attribute pair",
-      "41e1cf4ec10d ntfs: rewrite EA stream before updating metadata"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-89611"
     ],
     "kev": false,
@@ -7981,38 +7795,6 @@
       "5ff31dfcd6d2 Subject: RDMA/rxe: Handle zero length rdma",
       "72a03627443d RDMA/rxe: Remove rxe_alloc()"
     ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99240"
-    ],
-    "kev": false,
-    "upstream": "610c4438fb66e06d9e693c0ad3b2c1be54c0d61f",
-    "subject": "mm/damon/core: error damos_commit_quota_goal() for zero target_value",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/damon/core.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99217"
-    ],
-    "kev": false,
-    "upstream": "296a98c1fa50778c3b31eebed1a3f903f9684349",
-    "subject": "fork: release the files of a failed fork after sched_cancel_fork()",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/fork.c"
-    ],
-    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
