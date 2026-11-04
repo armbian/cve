@@ -20212,17 +20212,6 @@
       }
     ]
   },
-  "CVE-2026-99217": {
-    "6.1": [
-      {
-        "status": "needs-backport",
-        "upstream": "296a98c1fa50",
-        "source": "mainline",
-        "subject": "fork: release the files of a failed fork after sched_cancel_fork()",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
-    ]
-  },
   "CVE-2026-99228": {
     "7.3": [
       {
@@ -20276,15 +20265,6 @@
         "subject": "mm/damon/core: error damos_commit_quota_goal() for zero target_value",
         "patch": "patches/6.12/0002-610c4438fb66-mm-damon-core-error-damos-commit-quota-goal-for-zero.patch"
       }
-    ],
-    "6.1": [
-      {
-        "status": "needs-backport",
-        "upstream": "610c4438fb66",
-        "source": "mainline",
-        "subject": "mm/damon/core: error damos_commit_quota_goal() for zero target_value",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
     ]
   },
   "CVE-2026-99252": {
@@ -20328,64 +20308,6 @@
         "source": "stable-queue",
         "subject": "io_uring/io-wq: don't hide a link from cancellations",
         "patch": "patches/7.3/0005-436d48a2ed13-io-uring-io-wq-don-t-hide-a-link-from-cancellations.patch"
-      }
-    ]
-  },
-  "CVE-2026-99260": {
-    "6.18": [
-      {
-        "status": "needs-backport",
-        "upstream": "7ed0028126b5",
-        "source": "mainline",
-        "subject": "ntfs: fix resident conversion in ntfs_new_attr_flags",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
-    ],
-    "6.12": [
-      {
-        "status": "needs-backport",
-        "upstream": "7ed0028126b5",
-        "source": "mainline",
-        "subject": "ntfs: fix resident conversion in ntfs_new_attr_flags",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
-    ],
-    "6.1": [
-      {
-        "status": "needs-backport",
-        "upstream": "7ed0028126b5",
-        "source": "mainline",
-        "subject": "ntfs: fix resident conversion in ntfs_new_attr_flags",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
-    ]
-  },
-  "CVE-2026-99261": {
-    "6.18": [
-      {
-        "status": "needs-backport",
-        "upstream": "50b24a20be8c",
-        "source": "mainline",
-        "subject": "drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
-    ],
-    "6.12": [
-      {
-        "status": "needs-backport",
-        "upstream": "50b24a20be8c",
-        "source": "mainline",
-        "subject": "drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
-    ],
-    "6.1": [
-      {
-        "status": "needs-backport",
-        "upstream": "50b24a20be8c",
-        "source": "mainline",
-        "subject": "drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
       }
     ]
   },

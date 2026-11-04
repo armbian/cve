@@ -1,12 +1,5 @@
 # Kernel security fast-track
 
-**Events this run**
-
-- added 6.18: 1 patch(es)
-- added 6.12: 1 patch(es)
-- added 6.1: 1 patch(es)
-- added 7.3: 5 patch(es)
-
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no longer needed: 14
@@ -136,12 +129,10 @@ Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no 
 |  | CVE-2026-98815 | `9952f3882ecb` | claude | nvme: fix cdev lifetime |
 |  | CVE-2026-99151 | `55a67aa89342` | claude | drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions |
 
-### Needs a backport (8)
+### Needs a backport (6)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2026-99261 | `50b24a20be8c` | mainline | drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction |
-|  | CVE-2026-99260 | `7ed0028126b5` | mainline | ntfs: fix resident conversion in ntfs_new_attr_flags |
 |  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 |  | CVE-2026-90237 | `3679da4ad8be` | mainline | netfilter: nft_ct: move custom expectation support to helper |
 |  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
@@ -381,7 +372,7 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 |  | CVE-2026-90237 | `ac46f3f35b6e` | claude | netfilter: nf_conntrack_helper: add refcounting from datapath |
 |  | CVE-2026-90237 | `3679da4ad8be` | claude | netfilter: nft_ct: move custom expectation support to helper |
 
-### Needs a backport (13)
+### Needs a backport (11)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -391,10 +382,8 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
-|  | CVE-2026-99261 | `50b24a20be8c` | mainline | drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
-|  | CVE-2026-99260 | `7ed0028126b5` | mainline | ntfs: fix resident conversion in ntfs_new_attr_flags |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 |  | CVE-2026-98125 | `01261a6fa48b` | mainline | smb/client: fix stale page cache in insert/collapse range |
@@ -992,7 +981,7 @@ Already in tree: 89 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-74725 | `ec680ea4ba1b` | mainline | enic: fix tx_hang_reset use-after-free on device removal |
 |  | CVE-2026-89797 | `75b1e88d3425` | claude | power: supply: ab8500_fg: fix use-after-free on remove |
 
-### Needs a backport (26)
+### Needs a backport (22)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1011,14 +1000,10 @@ Already in tree: 89 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-53185 | `732fd9f0b9c1` | mainline | zram: fix use-after-free in zram_bvec_write_partial() |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
 |  | CVE-2026-74314 | `a3a81d247651` | mainline | bpf: Cancel special fields on map value recycle |
-|  | CVE-2026-99261 | `50b24a20be8c` | mainline | drm/amdgpu: correct reservation fence slots for userq per-vm BOs eviction |
 |  | CVE-2026-68447 | `426ffae6ecc7` | mainline | drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size |
 | does not build | CVE-2026-93072 | `616dd89d81ad` | mainline | irqchip/renesas-irqc: Fix generic interrupt chip leak on remove |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
-|  | CVE-2026-99260 | `7ed0028126b5` | mainline | ntfs: fix resident conversion in ntfs_new_attr_flags |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
-|  | CVE-2026-99240 | `610c4438fb66` | mainline | mm/damon/core: error damos_commit_quota_goal() for zero target_value |
-|  | CVE-2026-99217 | `296a98c1fa50` | mainline | fork: release the files of a failed fork after sched_cancel_fork() |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
 |  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
