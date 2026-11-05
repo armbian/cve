@@ -11975,17 +11975,6 @@
       }
     ]
   },
-  "CVE-2026-89906": {
-    "6.1": [
-      {
-        "status": "other-arch",
-        "upstream": "37d545d12f21",
-        "source": "stable-queue",
-        "subject": "LoongArch: BPF: Refactor jump offset calculation in tail call",
-        "reason": "touches only architectures we do not build"
-      }
-    ]
-  },
   "CVE-2026-89913": {
     "6.1": [
       {
