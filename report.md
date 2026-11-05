@@ -1,9 +1,5 @@
 # Kernel security fast-track
 
-**Events this run**
-
-- retired 7.3: 6 patch(es) (landed upstream or superseded)
-
 ## 6.18 (base 6.18.60, `f45ed76d6791`)
 
 Already in tree: 148 · Other architectures (not built): 5 · cve/ backports no longer needed: 14
