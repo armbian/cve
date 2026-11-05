@@ -467,7 +467,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 ## 6.1 (base 6.1.191, `08889840163e`)
 
-Already in tree: 89 · Other architectures (not built): 19 · cve/ backports no longer needed: 60
+Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 60
 
 ### Included (507)
 
