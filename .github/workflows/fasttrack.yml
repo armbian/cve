@@ -307,8 +307,13 @@ jobs:
             # The squash commit has no [skip ci], so build-test still runs on main.
             git commit -q -m "$msg" -m "$body" -m "[skip ci]"
             git push -q origin "$br"
-            url=$(gh pr create --head "$br" --base "$GITHUB_REF_NAME" --title "$msg" \
-              --body "Hourly fasttrack run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
+            # One retry: the GitHub API sometimes fails a request for a moment.
+            for try in 1 2; do
+              url=$(gh pr create --head "$br" --base "$GITHUB_REF_NAME" --title "$msg" \
+                --body "Hourly fasttrack run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}") && break
+              [ "$try" = 2 ] && exit 1
+              sleep 30
+            done
             gh pr merge "$url" --squash --delete-branch --subject "$msg" --body "$body"
             git checkout -q "$GITHUB_REF_NAME"
             git pull -q origin "$GITHUB_REF_NAME"

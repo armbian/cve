@@ -97,6 +97,15 @@ def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True,
     if fresh:
         _git("init", "--quiet", "--bare", str(linux))
         _git("-C", str(linux), "remote", "add", "origin", url)
+    # No git maintenance in the background: CI saves data/ to its cache when the
+    # job ends, and a lock a background job holds then breaks every later run.
+    for key, val in (("gc.auto", "0"), ("maintenance.auto", "false"), ("fetch.writeCommitGraph", "false")):
+        _git("-C", str(linux), "config", key, val)
+    # The repository is ours alone while sync runs: any lock is stale.
+    for lock in linux.glob("**/*.lock"):
+        if not lock.is_relative_to(linux / "worktrees"):
+            log.info("remove stale %s", lock)
+            lock.unlink()
     log.info("list heads on %s", url)
     heads = set(subprocess.run(["git", "ls-remote", "--heads", url], capture_output=True, text=True,
                                check=True).stdout.split())
@@ -115,7 +124,11 @@ def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True,
     _git("-C", str(linux), "worktree", "prune")
     # Without a commit graph, "is this commit in stable?" walks the whole history:
     # about 3 s per mainline fix. --split adds only the new commits each time.
-    _git("-C", str(linux), "commit-graph", "write", "--reachable", "--split")
+    # Only a speed-up: a failed write must not fail the sync.
+    try:
+        _git("-C", str(linux), "commit-graph", "write", "--reachable", "--split")
+    except subprocess.CalledProcessError as e:
+        log.warning("commit-graph write failed (%s); run is slower", e)
 
 
 def sync(data: Path, series: list[str], urls: dict | None = None, shallow: bool = True,
