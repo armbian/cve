@@ -284,8 +284,10 @@ jobs:
         run: python3 -m fasttrack.cli -v prune
 
       # Only the main group commits to main: an incident run has its own group.
+      # A run on another branch tests a change: it publishes nothing. Else its
+      # patches PR targets that branch and merges into it.
       - name: Commit patches and reports
-        if: steps.fresh.outputs.fresh == 'true' && !(inputs.incidents || inputs.commit)
+        if: steps.fresh.outputs.fresh == 'true' && !(inputs.incidents || inputs.commit) && github.ref_name == 'main'
         env:
           # PRs, pushes and issues as armbianworker; built-in token when the secret is absent.
           GH_TOKEN: ${{ secrets.ACCESS_TOKEN_ARMBIANWORKER || github.token }}
