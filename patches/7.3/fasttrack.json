@@ -1,152 +1,10 @@
 {
   "series": "7.3",
   "base": {
-    "commit": "79a907609d53d5cd645b42c11550d295d43abf99",
-    "version": "7.3.1"
+    "commit": "d50d994bffa3c7c6db2d8bc4c5f0c55e3f46b0cd",
+    "version": "7.3.3"
   },
   "patches": [
-    {
-      "series": "7.3",
-      "upstream": "c254eec4364b9f4b4cbdce43be3fb4df5a651a70",
-      "subject": "io_uring/waitid: own the request before clearing ->head",
-      "source": "stable-queue",
-      "cves": [
-        "CVE-2026-99231"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0001-c254eec4364b-io-uring-waitid-own-the-request-before-clearing-head.patch",
-      "files": [],
-      "prerequisites": [],
-      "build_log": "",
-      "backport": "",
-      "bug_commits": [
-        "09951a4d37e33b0197afc7fb77e39f09a3213ee6",
-        "934ffdd1cdef232eb125e63c2ebafb7f2deff6af",
-        "ab673c1bcaf20ac70352eeb6bf5b828462676693"
-      ]
-    },
-    {
-      "series": "7.3",
-      "upstream": "4c83e39f4d1944d7146fd06094f2c8053238d55c",
-      "subject": "io_uring/cmd: don't leave list poison in ->hash_node",
-      "source": "stable-queue",
-      "cves": [
-        "CVE-2026-99230"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0002-4c83e39f4d19-io-uring-cmd-don-t-leave-list-poison-in-hash-node.patch",
-      "files": [],
-      "prerequisites": [],
-      "build_log": "",
-      "backport": "",
-      "bug_commits": [
-        "93b8cc60c37b9d17732b7a297e5dca29b50a990d"
-      ]
-    },
-    {
-      "series": "7.3",
-      "upstream": "34f5a664c34d3cb62f6bec7f4156754594a7d25b",
-      "subject": "io_uring/wait: don't spin on a stuck overflow list",
-      "source": "stable-queue",
-      "cves": [
-        "CVE-2026-99229"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0003-34f5a664c34d-io-uring-wait-don-t-spin-on-a-stuck-overflow-list.patch",
-      "files": [],
-      "prerequisites": [],
-      "build_log": "",
-      "backport": "",
-      "bug_commits": [
-        "3fcf19d592d5cb63eb209400b22055651e3c27d0"
-      ]
-    },
-    {
-      "series": "7.3",
-      "upstream": "63c103279a95e82280092f2f4232e91e8117a252",
-      "subject": "io_uring/io-wq: don't lose the signal that ends work",
-      "source": "stable-queue",
-      "cves": [
-        "CVE-2026-99228"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0004-63c103279a95-io-uring-io-wq-don-t-lose-the-signal-that-ends-work.patch",
-      "files": [],
-      "prerequisites": [],
-      "build_log": "",
-      "backport": "",
-      "bug_commits": [
-        "afcc4015d1bf5659b8c722aff679e9b8c41ee156"
-      ]
-    },
-    {
-      "series": "7.3",
-      "upstream": "436d48a2ed13112d2d27085325838e5bce6b4507",
-      "subject": "io_uring/io-wq: don't hide a link from cancellations",
-      "source": "stable-queue",
-      "cves": [
-        "CVE-2026-99255"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0005-436d48a2ed13-io-uring-io-wq-don-t-hide-a-link-from-cancellations.patch",
-      "files": [],
-      "prerequisites": [],
-      "build_log": "",
-      "backport": "",
-      "bug_commits": [
-        "768134d4f48109b90f4248feecbeeb7d684e410c"
-      ]
-    },
-    {
-      "series": "7.3",
-      "upstream": "22e643e61b9b6299b42ff7d88bab48bccada8a5d",
-      "subject": "io_uring: don't flood a cancelling task with task_work",
-      "source": "stable-queue",
-      "cves": [
-        "CVE-2026-99254"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0006-22e643e61b9b-io-uring-don-t-flood-a-cancelling-task-with-task-wor.patch",
-      "files": [],
-      "prerequisites": [],
-      "build_log": "",
-      "backport": "",
-      "bug_commits": [
-        "d56d938b4bef3e1421a42023cdcd6e13c1f50831"
-      ]
-    },
-    {
-      "series": "7.3",
-      "upstream": "76a82c666abf155ad52d5f41043eac77dd3e41d8",
-      "subject": "io_uring/cancel: rearm local work wake up before sleep",
-      "source": "stable-queue",
-      "cves": [
-        "CVE-2026-99253"
-      ],
-      "kev": false,
-      "verdict": "accepted",
-      "reason": "",
-      "filename": "0007-76a82c666abf-io-uring-cancel-rearm-local-work-wake-up-before-slee.patch",
-      "files": [],
-      "prerequisites": [],
-      "build_log": "",
-      "backport": "",
-      "bug_commits": [
-        "d46ab2c98ababa19b41a5709b6921d7b1add7f74"
-      ]
-    },
     {
       "series": "7.3",
       "upstream": "40554d1221e3d2ff2e0d192b74a05d89eb3620e7",
@@ -158,7 +16,7 @@
       "kev": false,
       "verdict": "accepted",
       "reason": "",
-      "filename": "0008-40554d1221e3-ext4-don-t-enable-large-folios-on-encrypted-inodes.patch",
+      "filename": "0001-40554d1221e3-ext4-don-t-enable-large-folios-on-encrypted-inodes.patch",
       "files": [],
       "prerequisites": [],
       "build_log": "",
