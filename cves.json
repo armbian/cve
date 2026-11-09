@@ -2094,21 +2094,21 @@
         "upstream": "b405c1e58b73",
         "source": "claude",
         "subject": "udf: refactor udf_next_aext() to handle error",
-        "patch": "patches/6.1/0491-b405c1e58b73-udf-refactor-udf-next-aext-to-handle-error.patch"
+        "patch": "patches/6.1/0490-b405c1e58b73-udf-refactor-udf-next-aext-to-handle-error.patch"
       },
       {
         "status": "included",
         "upstream": "c226964ec786",
         "source": "claude",
         "subject": "udf: refactor inode_bmap() to handle error",
-        "patch": "patches/6.1/0492-c226964ec786-udf-refactor-inode-bmap-to-handle-error.patch"
+        "patch": "patches/6.1/0491-c226964ec786-udf-refactor-inode-bmap-to-handle-error.patch"
       },
       {
         "status": "included",
         "upstream": "55dd5b4db3bf",
         "source": "claude",
         "subject": "udf: Make sure i_lenExtents is uptodate on inode eviction",
-        "patch": "patches/6.1/0493-55dd5b4db3bf-udf-make-sure-i-lenextents-is-uptodate-on-inode-evic.patch"
+        "patch": "patches/6.1/0492-55dd5b4db3bf-udf-make-sure-i-lenextents-is-uptodate-on-inode-evic.patch"
       }
     ]
   },
@@ -2623,105 +2623,105 @@
         "upstream": "e563d0a7cdc1",
         "source": "claude",
         "subject": "workqueue: Break up enum definitions and give names to the types",
-        "patch": "patches/6.1/0495-e563d0a7cdc1-workqueue-break-up-enum-definitions-and-give-names-t.patch"
+        "patch": "patches/6.1/0494-e563d0a7cdc1-workqueue-break-up-enum-definitions-and-give-names-t.patch"
       },
       {
         "status": "included",
         "upstream": "c7a40c49af92",
         "source": "claude",
         "subject": "workqueue: Cosmetic changes",
-        "patch": "patches/6.1/0496-c7a40c49af92-workqueue-cosmetic-changes.patch"
+        "patch": "patches/6.1/0495-c7a40c49af92-workqueue-cosmetic-changes.patch"
       },
       {
         "status": "included",
         "upstream": "d355001fa937",
         "source": "claude",
         "subject": "workqueue: Use rcu_read_lock_any_held() instead of rcu_read_lock_held()",
-        "patch": "patches/6.1/0497-d355001fa937-workqueue-use-rcu-read-lock-any-held-instead-of-rcu.patch"
+        "patch": "patches/6.1/0496-d355001fa937-workqueue-use-rcu-read-lock-any-held-instead-of-rcu.patch"
       },
       {
         "status": "included",
         "upstream": "c5140688d19a",
         "source": "claude",
         "subject": "workqueue: Rename __cancel_work_timer() to __cancel_timer_sync()",
-        "patch": "patches/6.1/0498-c5140688d19a-workqueue-rename-cancel-work-timer-to-cancel-timer-s.patch"
+        "patch": "patches/6.1/0497-c5140688d19a-workqueue-rename-cancel-work-timer-to-cancel-timer-s.patch"
       },
       {
         "status": "included",
         "upstream": "cdc6e4b329bc",
         "source": "claude",
         "subject": "workqueue: Reorganize flush and cancel[_sync] functions",
-        "patch": "patches/6.1/0499-cdc6e4b329bc-workqueue-reorganize-flush-and-cancel-sync-functions.patch"
+        "patch": "patches/6.1/0498-cdc6e4b329bc-workqueue-reorganize-flush-and-cancel-sync-functions.patch"
       },
       {
         "status": "included",
         "upstream": "c26e2f2e2fcf",
         "source": "claude",
         "subject": "workqueue: Use variable name irq_flags for saving local irq flags",
-        "patch": "patches/6.1/0500-c26e2f2e2fcf-workqueue-use-variable-name-irq-flags-for-saving-loc.patch"
+        "patch": "patches/6.1/0499-c26e2f2e2fcf-workqueue-use-variable-name-irq-flags-for-saving-loc.patch"
       },
       {
         "status": "included",
         "upstream": "c5f5b9422a49",
         "source": "claude",
         "subject": "workqueue: Introduce work_cancel_flags",
-        "patch": "patches/6.1/0501-c5f5b9422a49-workqueue-introduce-work-cancel-flags.patch"
+        "patch": "patches/6.1/0500-c5f5b9422a49-workqueue-introduce-work-cancel-flags.patch"
       },
       {
         "status": "included",
         "upstream": "e9a8e01f9b13",
         "source": "claude",
         "subject": "workqueue: Clean up enum work_bits and related constants",
-        "patch": "patches/6.1/0502-e9a8e01f9b13-workqueue-clean-up-enum-work-bits-and-related-consta.patch"
+        "patch": "patches/6.1/0501-e9a8e01f9b13-workqueue-clean-up-enum-work-bits-and-related-consta.patch"
       },
       {
         "status": "included",
         "upstream": "978b8409eab1",
         "source": "claude",
         "subject": "workqueue: Factor out work_grab_pending() from __cancel_work_sync()",
-        "patch": "patches/6.1/0503-978b8409eab1-workqueue-factor-out-work-grab-pending-from-cancel-w.patch"
+        "patch": "patches/6.1/0502-978b8409eab1-workqueue-factor-out-work-grab-pending-from-cancel-w.patch"
       },
       {
         "status": "included",
         "upstream": "afe928c1dc61",
         "source": "claude",
         "subject": "workqueue: Remove clear_work_data()",
-        "patch": "patches/6.1/0504-afe928c1dc61-workqueue-remove-clear-work-data.patch"
+        "patch": "patches/6.1/0503-afe928c1dc61-workqueue-remove-clear-work-data.patch"
       },
       {
         "status": "included",
         "upstream": "bccdc1faafaf",
         "source": "claude",
         "subject": "workqueue: Make @flags handling consistent across set_work_data() and friends",
-        "patch": "patches/6.1/0505-bccdc1faafaf-workqueue-make-flags-handling-consistent-across-set.patch"
+        "patch": "patches/6.1/0504-bccdc1faafaf-workqueue-make-flags-handling-consistent-across-set.patch"
       },
       {
         "status": "included",
         "upstream": "1211f3b21c2a",
         "source": "claude",
         "subject": "workqueue: Preserve OFFQ bits in cancel[_sync] paths",
-        "patch": "patches/6.1/0506-1211f3b21c2a-workqueue-preserve-offq-bits-in-cancel-sync-paths.patch"
+        "patch": "patches/6.1/0505-1211f3b21c2a-workqueue-preserve-offq-bits-in-cancel-sync-paths.patch"
       },
       {
         "status": "included",
         "upstream": "86898fa6b8cd",
         "source": "claude",
         "subject": "workqueue: Implement disable/enable for (delayed) work items",
-        "patch": "patches/6.1/0507-86898fa6b8cd-workqueue-implement-disable-enable-for-delayed-work.patch"
+        "patch": "patches/6.1/0506-86898fa6b8cd-workqueue-implement-disable-enable-for-delayed-work.patch"
       },
       {
         "status": "included",
         "upstream": "38f7e14519d3",
         "source": "claude",
         "subject": "workqueue: Fix UBSAN 'subtraction overflow' error in shift_and_mask()",
-        "patch": "patches/6.1/0508-38f7e14519d3-workqueue-fix-ubsan-subtraction-overflow-error-in-sh.patch"
+        "patch": "patches/6.1/0507-38f7e14519d3-workqueue-fix-ubsan-subtraction-overflow-error-in-sh.patch"
       },
       {
         "status": "included",
         "upstream": "2b0f2fc9ed62",
         "source": "claude",
         "subject": "Bluetooth: hci_conn: Use disable_delayed_work_sync",
-        "patch": "patches/6.1/0509-2b0f2fc9ed62-bluetooth-hci-conn-use-disable-delayed-work-sync.patch"
+        "patch": "patches/6.1/0508-2b0f2fc9ed62-bluetooth-hci-conn-use-disable-delayed-work-sync.patch"
       }
     ]
   },
@@ -3068,14 +3068,14 @@
         "upstream": "81f6d0530ba0",
         "source": "claude",
         "subject": "bpf: check changes_pkt_data property for extension programs",
-        "patch": "patches/6.1/0470-81f6d0530ba0-bpf-check-changes-pkt-data-property-for-extension-pr.patch"
+        "patch": "patches/6.1/0469-81f6d0530ba0-bpf-check-changes-pkt-data-property-for-extension-pr.patch"
       },
       {
         "status": "included",
         "upstream": "ac6542ad9275",
         "source": "claude",
         "subject": "bpf: fix null dereference when computing changes_pkt_data of prog w/o subprogs",
-        "patch": "patches/6.1/0471-ac6542ad9275-bpf-fix-null-dereference-when-computing-changes-pkt.patch"
+        "patch": "patches/6.1/0470-ac6542ad9275-bpf-fix-null-dereference-when-computing-changes-pkt.patch"
       }
     ]
   },
@@ -5604,28 +5604,28 @@
         "upstream": "1231eec6994b",
         "source": "claude",
         "subject": "inet: frags: add inet_frag_queue_flush()",
-        "patch": "patches/6.1/0479-1231eec6994b-inet-frags-add-inet-frag-queue-flush.patch"
+        "patch": "patches/6.1/0478-1231eec6994b-inet-frags-add-inet-frag-queue-flush.patch"
       },
       {
         "status": "included",
         "upstream": "006a5035b495",
         "source": "claude",
         "subject": "inet: frags: flush pending skbs in fqdir_pre_exit()",
-        "patch": "patches/6.1/0480-006a5035b495-inet-frags-flush-pending-skbs-in-fqdir-pre-exit.patch"
+        "patch": "patches/6.1/0479-006a5035b495-inet-frags-flush-pending-skbs-in-fqdir-pre-exit.patch"
       },
       {
         "status": "included",
         "upstream": "32594b098549",
         "source": "claude",
         "subject": "inet: frags: fix use-after-free caused by the fqdir_pre_exit() flush",
-        "patch": "patches/6.1/0481-32594b098549-inet-frags-fix-use-after-free-caused-by-the-fqdir-pr.patch"
+        "patch": "patches/6.1/0480-32594b098549-inet-frags-fix-use-after-free-caused-by-the-fqdir-pr.patch"
       },
       {
         "status": "included",
         "upstream": "b824476c56a1",
         "source": "claude",
         "subject": "inet: frags: invalidate queues before flushing them",
-        "patch": "patches/6.1/0482-b824476c56a1-inet-frags-invalidate-queues-before-flushing-them.patch"
+        "patch": "patches/6.1/0481-b824476c56a1-inet-frags-invalidate-queues-before-flushing-them.patch"
       }
     ]
   },
@@ -5909,7 +5909,7 @@
         "upstream": "a9ba4dd2f18b",
         "source": "claude",
         "subject": "ACPI: platform: Use acpi_bus_get_primary_device()",
-        "patch": "patches/6.1/0334-a9ba4dd2f18b-acpi-platform-use-acpi-bus-get-primary-device.patch"
+        "patch": "patches/6.1/0333-a9ba4dd2f18b-acpi-platform-use-acpi-bus-get-primary-device.patch"
       }
     ]
   },
@@ -6388,7 +6388,7 @@
         "upstream": "7bb09315f93d",
         "source": "mainline",
         "subject": "tls: Fix race condition in tls_sw_cancel_work_tx()",
-        "patch": "patches/6.1/0510-7bb09315f93d-tls-fix-race-condition-in-tls-sw-cancel-work-tx.patch"
+        "patch": "patches/6.1/0509-7bb09315f93d-tls-fix-race-condition-in-tls-sw-cancel-work-tx.patch"
       },
       {
         "status": "superseded",
@@ -7656,7 +7656,7 @@
         "upstream": "16c589567a95",
         "source": "claude",
         "subject": "ASoC: SOF: Intel: hda: Fix NULL pointer dereference",
-        "patch": "patches/6.1/0469-16c589567a95-asoc-sof-intel-hda-fix-null-pointer-dereference.patch"
+        "patch": "patches/6.1/0468-16c589567a95-asoc-sof-intel-hda-fix-null-pointer-dereference.patch"
       }
     ]
   },
@@ -7907,7 +7907,7 @@
         "upstream": "d78840a6a38d",
         "source": "claude",
         "subject": "smb: client: fix in-place encryption corruption in SMB2_write()",
-        "patch": "patches/6.1/0485-d78840a6a38d-smb-client-fix-in-place-encryption-corruption-in-smb.patch"
+        "patch": "patches/6.1/0484-d78840a6a38d-smb-client-fix-in-place-encryption-corruption-in-smb.patch"
       }
     ]
   },
@@ -9035,7 +9035,14 @@
         "upstream": "4e3c87b9421d",
         "source": "claude",
         "subject": "zram: fix synchronous reads",
-        "patch": "patches/6.1/0276-4e3c87b9421d-zram-fix-synchronous-reads.patch"
+        "patch": "patches/6.1/0515-4e3c87b9421d-zram-fix-synchronous-reads.patch"
+      },
+      {
+        "status": "included",
+        "upstream": "1e9460d132cc",
+        "source": "claude",
+        "subject": "zram: return errors from read_from_bdev_sync",
+        "patch": "patches/6.1/0516-1e9460d132cc-zram-return-errors-from-read-from-bdev-sync.patch"
       }
     ]
   },
@@ -9053,7 +9060,7 @@
         "upstream": "1c1e0fc88d6e",
         "source": "claude",
         "subject": "gpio: rockchip: fix generic IRQ chip leak on remove",
-        "patch": "patches/6.1/0318-1c1e0fc88d6e-gpio-rockchip-fix-generic-irq-chip-leak-on-remove.patch"
+        "patch": "patches/6.1/0317-1c1e0fc88d6e-gpio-rockchip-fix-generic-irq-chip-leak-on-remove.patch"
       }
     ]
   },
@@ -9194,7 +9201,7 @@
         "upstream": "4e67f504ee9d",
         "source": "claude",
         "subject": "crypto: nx - fix nx_crypto_ctx_exit argument",
-        "patch": "patches/6.1/0277-4e67f504ee9d-crypto-nx-fix-nx-crypto-ctx-exit-argument.patch"
+        "patch": "patches/6.1/0276-4e67f504ee9d-crypto-nx-fix-nx-crypto-ctx-exit-argument.patch"
       }
     ]
   },
@@ -9239,7 +9246,7 @@
         "upstream": "8712353ed80f",
         "source": "claude",
         "subject": "f2fs: fix to do sanity check on f2fs_get_node_folio_ra()",
-        "patch": "patches/6.1/0285-8712353ed80f-f2fs-fix-to-do-sanity-check-on-f2fs-get-node-folio-r.patch"
+        "patch": "patches/6.1/0284-8712353ed80f-f2fs-fix-to-do-sanity-check-on-f2fs-get-node-folio-r.patch"
       }
     ]
   },
@@ -9695,7 +9702,7 @@
         "upstream": "9fc75b71fdd3",
         "source": "mainline",
         "subject": "rbd: eliminate a race in lock_dwork draining on unmap",
-        "patch": "patches/6.1/0511-9fc75b71fdd3-rbd-eliminate-a-race-in-lock-dwork-draining-on-unmap.patch"
+        "patch": "patches/6.1/0510-9fc75b71fdd3-rbd-eliminate-a-race-in-lock-dwork-draining-on-unmap.patch"
       },
       {
         "status": "superseded",
@@ -9763,41 +9770,41 @@
     ],
     "6.12": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "2c8f4742bb76",
         "source": "mainline",
         "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
       },
       {
-        "status": "backport-stale",
+        "status": "included",
         "upstream": "2c8f4742bb76",
         "source": "claude",
         "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-        "reason": "another patch of CVE-2026-64160/6.12 does not apply or build"
+        "patch": "patches/6.12/0195-2c8f4742bb76-netfs-fix-potential-for-tearing-in-remote-i-size-and.patch"
       },
       {
-        "status": "backport-stale",
+        "status": "included",
         "upstream": "8cf8b5ae8e09",
         "source": "claude",
         "subject": "cifs: Fix undefined variables",
-        "reason": "another patch of CVE-2026-64160/6.12 does not apply or build"
+        "patch": "patches/6.12/0196-8cf8b5ae8e09-cifs-fix-undefined-variables.patch"
       }
     ],
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "2c8f4742bb76",
         "source": "mainline",
         "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
       },
       {
-        "status": "backport-stale",
+        "status": "included",
         "upstream": "2c8f4742bb76",
         "source": "claude",
         "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-        "reason": "another patch of CVE-2026-64160/6.1 does not apply or build"
+        "patch": "patches/6.1/0514-2c8f4742bb76-netfs-fix-potential-for-tearing-in-remote-i-size-and.patch"
       }
     ]
   },
@@ -9940,14 +9947,14 @@
         "upstream": "c7722e5e1dae",
         "source": "claude",
         "subject": "KVM: x86: Move update_cr8_intercept() to lapic.c",
-        "patch": "patches/6.1/0287-c7722e5e1dae-kvm-x86-move-update-cr8-intercept-to-lapic-c.patch"
+        "patch": "patches/6.1/0286-c7722e5e1dae-kvm-x86-move-update-cr8-intercept-to-lapic-c.patch"
       },
       {
         "status": "included",
         "upstream": "bb365a506b1e",
         "source": "claude",
         "subject": "KVM: x86: Unconditionally recompute CR8 intercept on PPR update",
-        "patch": "patches/6.1/0288-bb365a506b1e-kvm-x86-unconditionally-recompute-cr8-intercept-on-p.patch"
+        "patch": "patches/6.1/0287-bb365a506b1e-kvm-x86-unconditionally-recompute-cr8-intercept-on-p.patch"
       }
     ]
   },
@@ -10008,7 +10015,7 @@
         "upstream": "2dfe9f5c91d0",
         "source": "claude",
         "subject": "mm/khugepaged: write all dirty file folios when collapsing",
-        "patch": "patches/6.1/0468-2dfe9f5c91d0-mm-khugepaged-write-all-dirty-file-folios-when-colla.patch"
+        "patch": "patches/6.1/0467-2dfe9f5c91d0-mm-khugepaged-write-all-dirty-file-folios-when-colla.patch"
       }
     ],
     "7.3": [
@@ -10071,7 +10078,7 @@
         "upstream": "ea20c44935d6",
         "source": "claude",
         "subject": "amt: fix use-after-free in AMT delayed works",
-        "patch": "patches/6.1/0512-ea20c44935d6-amt-fix-use-after-free-in-amt-delayed-works.patch"
+        "patch": "patches/6.1/0511-ea20c44935d6-amt-fix-use-after-free-in-amt-delayed-works.patch"
       }
     ]
   },
@@ -10288,7 +10295,7 @@
         "upstream": "57d503ce32ec",
         "source": "claude",
         "subject": "wifi: mac80211: validate extension-frame layout before RX",
-        "patch": "patches/6.1/0296-57d503ce32ec-wifi-mac80211-validate-extension-frame-layout-before.patch"
+        "patch": "patches/6.1/0295-57d503ce32ec-wifi-mac80211-validate-extension-frame-layout-before.patch"
       }
     ]
   },
@@ -10419,14 +10426,14 @@
         "upstream": "",
         "source": "claude",
         "subject": "genirq/generic_chip: Introduce irq_domain_{alloc,remove}_generic_chips()",
-        "patch": "patches/6.1/0316-q-genirq-generic-chip-introduce-irq-domain-alloc-remov.patch"
+        "patch": "patches/6.1/0315-q-genirq-generic-chip-introduce-irq-domain-alloc-remov.patch"
       },
       {
         "status": "included",
         "upstream": "b11c513ad943",
         "source": "claude",
         "subject": "gpio: mvebu: free generic chips on unbind",
-        "patch": "patches/6.1/0317-b11c513ad943-gpio-mvebu-free-generic-chips-on-unbind.patch"
+        "patch": "patches/6.1/0316-b11c513ad943-gpio-mvebu-free-generic-chips-on-unbind.patch"
       }
     ]
   },
@@ -10529,7 +10536,7 @@
         "upstream": "828cd614e2af",
         "source": "claude",
         "subject": "hwmon: (pmbus/core) honor vrm_version in pmbus_data2reg_vid()",
-        "patch": "patches/6.1/0290-828cd614e2af-hwmon-pmbus-core-honor-vrm-version-in-pmbus-data2reg.patch"
+        "patch": "patches/6.1/0289-828cd614e2af-hwmon-pmbus-core-honor-vrm-version-in-pmbus-data2reg.patch"
       }
     ]
   },
@@ -10575,7 +10582,7 @@
         "upstream": "650716f23eac",
         "source": "claude",
         "subject": "i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev()",
-        "patch": "patches/6.1/0282-650716f23eac-i3c-mipi-i3c-hci-fix-race-in-i3c-hci-addr-to-dev.patch"
+        "patch": "patches/6.1/0281-650716f23eac-i3c-mipi-i3c-hci-fix-race-in-i3c-hci-addr-to-dev.patch"
       }
     ]
   },
@@ -10593,7 +10600,7 @@
         "upstream": "af9b65b29af3",
         "source": "claude",
         "subject": "xprtrdma: Fix ep kref imbalance on ADDR_CHANGE",
-        "patch": "patches/6.1/0280-af9b65b29af3-xprtrdma-fix-ep-kref-imbalance-on-addr-change.patch"
+        "patch": "patches/6.1/0279-af9b65b29af3-xprtrdma-fix-ep-kref-imbalance-on-addr-change.patch"
       }
     ]
   },
@@ -10638,7 +10645,7 @@
         "upstream": "4dd86ca99ffc",
         "source": "claude",
         "subject": "cxl/region: Resolve region deletion races",
-        "patch": "patches/6.1/0281-4dd86ca99ffc-cxl-region-resolve-region-deletion-races.patch"
+        "patch": "patches/6.1/0280-4dd86ca99ffc-cxl-region-resolve-region-deletion-races.patch"
       }
     ]
   },
@@ -10793,7 +10800,7 @@
         "upstream": "811545e0926d",
         "source": "claude",
         "subject": "md/raid1,raid10: fix error-path detection with md_cloned_bio()",
-        "patch": "patches/6.1/0484-811545e0926d-md-raid1-raid10-fix-error-path-detection-with-md-clo.patch"
+        "patch": "patches/6.1/0483-811545e0926d-md-raid1-raid10-fix-error-path-detection-with-md-clo.patch"
       }
     ]
   },
@@ -10858,7 +10865,7 @@
         "upstream": "ce57442a3792",
         "source": "claude",
         "subject": "Bluetooth: ISO: fix leaking sk after socket release",
-        "patch": "patches/6.1/0310-ce57442a3792-bluetooth-iso-fix-leaking-sk-after-socket-release.patch"
+        "patch": "patches/6.1/0309-ce57442a3792-bluetooth-iso-fix-leaking-sk-after-socket-release.patch"
       }
     ]
   },
@@ -10894,7 +10901,7 @@
         "upstream": "b80bed5c871a",
         "source": "claude",
         "subject": "ima: Instantiate file_truncate and path_truncate hooks",
-        "patch": "patches/6.1/0320-b80bed5c871a-ima-instantiate-file-truncate-and-path-truncate-hook.patch"
+        "patch": "patches/6.1/0319-b80bed5c871a-ima-instantiate-file-truncate-and-path-truncate-hook.patch"
       }
     ]
   },
@@ -10988,7 +10995,7 @@
         "upstream": "142341547127",
         "source": "claude",
         "subject": "serial: 8250_of: clear stuck empty-FIFO RX-timeout on LPC32xx",
-        "patch": "patches/6.1/0313-142341547127-serial-8250-of-clear-stuck-empty-fifo-rx-timeout-on.patch"
+        "patch": "patches/6.1/0312-142341547127-serial-8250-of-clear-stuck-empty-fifo-rx-timeout-on.patch"
       }
     ]
   },
@@ -11006,7 +11013,7 @@
         "upstream": "fde39b8a5217",
         "source": "claude",
         "subject": "net: usb: ipheth: fix carrier_work UAF on disconnect",
-        "patch": "patches/6.1/0322-fde39b8a5217-net-usb-ipheth-fix-carrier-work-uaf-on-disconnect.patch"
+        "patch": "patches/6.1/0321-fde39b8a5217-net-usb-ipheth-fix-carrier-work-uaf-on-disconnect.patch"
       }
     ]
   },
@@ -11017,7 +11024,7 @@
         "upstream": "ec680ea4ba1b",
         "source": "mainline",
         "subject": "enic: fix tx_hang_reset use-after-free on device removal",
-        "patch": "patches/6.1/0513-ec680ea4ba1b-enic-fix-tx-hang-reset-use-after-free-on-device-remo.patch"
+        "patch": "patches/6.1/0512-ec680ea4ba1b-enic-fix-tx-hang-reset-use-after-free-on-device-remo.patch"
       },
       {
         "status": "superseded",
@@ -11058,7 +11065,7 @@
         "upstream": "3dbb44d88b1e",
         "source": "claude",
         "subject": "sctp: validate cookie AUTH state before use",
-        "patch": "patches/6.1/0326-3dbb44d88b1e-sctp-validate-cookie-auth-state-before-use.patch"
+        "patch": "patches/6.1/0325-3dbb44d88b1e-sctp-validate-cookie-auth-state-before-use.patch"
       }
     ]
   },
@@ -11094,7 +11101,7 @@
         "upstream": "fa091f46c383",
         "source": "claude",
         "subject": "perf: Reject exited events as group leaders",
-        "patch": "patches/6.1/0325-fa091f46c383-perf-reject-exited-events-as-group-leaders.patch"
+        "patch": "patches/6.1/0324-fa091f46c383-perf-reject-exited-events-as-group-leaders.patch"
       }
     ],
     "7.3": [
@@ -11121,7 +11128,7 @@
         "upstream": "c125ee35a49a",
         "source": "claude",
         "subject": "mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition",
-        "patch": "patches/6.1/0315-c125ee35a49a-mmc-atmel-mci-fix-use-after-free-in-atmci-remove-due.patch"
+        "patch": "patches/6.1/0314-c125ee35a49a-mmc-atmel-mci-fix-use-after-free-in-atmci-remove-due.patch"
       }
     ]
   },
@@ -11186,7 +11193,7 @@
         "upstream": "d15d51fb26e8",
         "source": "claude",
         "subject": "fbdev: bound mode sysfs output to the sysfs buffer",
-        "patch": "patches/6.1/0328-d15d51fb26e8-fbdev-bound-mode-sysfs-output-to-the-sysfs-buffer.patch"
+        "patch": "patches/6.1/0327-d15d51fb26e8-fbdev-bound-mode-sysfs-output-to-the-sysfs-buffer.patch"
       }
     ]
   },
@@ -11204,7 +11211,7 @@
         "upstream": "35e21a4dccc5",
         "source": "claude",
         "subject": "netfilter: conntrack: revert ct extension genid infrastructure",
-        "patch": "patches/6.1/0494-35e21a4dccc5-netfilter-conntrack-revert-ct-extension-genid-infras.patch"
+        "patch": "patches/6.1/0493-35e21a4dccc5-netfilter-conntrack-revert-ct-extension-genid-infras.patch"
       }
     ]
   },
@@ -11321,7 +11328,7 @@
         "upstream": "b96c529cd255",
         "source": "claude",
         "subject": "Revert \"drm/amdgpu: fix aperture mapping leak\"",
-        "patch": "patches/6.1/0323-b96c529cd255-revert-drm-amdgpu-fix-aperture-mapping-leak.patch"
+        "patch": "patches/6.1/0322-b96c529cd255-revert-drm-amdgpu-fix-aperture-mapping-leak.patch"
       }
     ],
     "7.3": [
@@ -11380,7 +11387,7 @@
         "upstream": "061db6b7a910",
         "source": "claude",
         "subject": "fbdev: serialize mode sysfs access with lock_fb_info()",
-        "patch": "patches/6.1/0373-061db6b7a910-fbdev-serialize-mode-sysfs-access-with-lock-fb-info.patch"
+        "patch": "patches/6.1/0372-061db6b7a910-fbdev-serialize-mode-sysfs-access-with-lock-fb-info.patch"
       }
     ]
   },
@@ -11499,7 +11506,7 @@
         "upstream": "cd305ee3633a",
         "source": "claude",
         "subject": "io_uring: defer eventfd signaling when queued from a wakeup handler",
-        "patch": "patches/6.1/0335-cd305ee3633a-io-uring-defer-eventfd-signaling-when-queued-from-a.patch"
+        "patch": "patches/6.1/0334-cd305ee3633a-io-uring-defer-eventfd-signaling-when-queued-from-a.patch"
       }
     ]
   },
@@ -11725,7 +11732,7 @@
         "upstream": "730d0bb19507",
         "source": "claude",
         "subject": "smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2",
-        "patch": "patches/6.1/0340-730d0bb19507-smb-client-fix-uaf-and-buffer-leak-in-cifs-check-tra.patch"
+        "patch": "patches/6.1/0339-730d0bb19507-smb-client-fix-uaf-and-buffer-leak-in-cifs-check-tra.patch"
       }
     ]
   },
@@ -11752,7 +11759,7 @@
         "upstream": "62c0f6eaf050",
         "source": "claude",
         "subject": "nfsd: fix UAF in async copy cancel and shutdown",
-        "patch": "patches/6.1/0329-62c0f6eaf050-nfsd-fix-uaf-in-async-copy-cancel-and-shutdown.patch"
+        "patch": "patches/6.1/0328-62c0f6eaf050-nfsd-fix-uaf-in-async-copy-cancel-and-shutdown.patch"
       }
     ]
   },
@@ -11770,7 +11777,7 @@
         "upstream": "01c5d5f58a5d",
         "source": "claude",
         "subject": "nfsd: RCU-protect cl_cb_session to fix use-after-free on session teardown",
-        "patch": "patches/6.1/0330-01c5d5f58a5d-nfsd-rcu-protect-cl-cb-session-to-fix-use-after-free.patch"
+        "patch": "patches/6.1/0329-01c5d5f58a5d-nfsd-rcu-protect-cl-cb-session-to-fix-use-after-free.patch"
       }
     ]
   },
@@ -11804,7 +11811,7 @@
         "upstream": "dc76258d0132",
         "source": "claude",
         "subject": "PCI/sysfs: Fix out-of-bounds read in pci_write_legacy_io()",
-        "patch": "patches/6.1/0297-dc76258d0132-pci-sysfs-fix-out-of-bounds-read-in-pci-write-legacy.patch"
+        "patch": "patches/6.1/0296-dc76258d0132-pci-sysfs-fix-out-of-bounds-read-in-pci-write-legacy.patch"
       }
     ]
   },
@@ -11894,7 +11901,7 @@
         "upstream": "75b1e88d3425",
         "source": "claude",
         "subject": "power: supply: ab8500_fg: fix use-after-free on remove",
-        "patch": "patches/6.1/0514-75b1e88d3425-power-supply-ab8500-fg-fix-use-after-free-on-remove.patch"
+        "patch": "patches/6.1/0513-75b1e88d3425-power-supply-ab8500-fg-fix-use-after-free-on-remove.patch"
       }
     ]
   },
@@ -11957,7 +11964,7 @@
         "upstream": "0fbd5c232702",
         "source": "mainline",
         "subject": "media: cec: disable delayed work before freeing an interrupted transmit",
-        "patch": "patches/6.1/0289-0fbd5c232702-media-cec-disable-delayed-work-before-freeing-an-int.patch"
+        "patch": "patches/6.1/0288-0fbd5c232702-media-cec-disable-delayed-work-before-freeing-an-int.patch"
       },
       {
         "status": "superseded",
@@ -11982,7 +11989,7 @@
         "upstream": "f5b8f203bfc0",
         "source": "claude",
         "subject": "KVM: arm64: vgic-v3: take an LPI reference in vgic_v3_save_pending_tables",
-        "patch": "patches/6.1/0324-f5b8f203bfc0-kvm-arm64-vgic-v3-take-an-lpi-reference-in-vgic-v3-s.patch"
+        "patch": "patches/6.1/0323-f5b8f203bfc0-kvm-arm64-vgic-v3-take-an-lpi-reference-in-vgic-v3-s.patch"
       }
     ]
   },
@@ -12000,14 +12007,14 @@
         "upstream": "32912404b4b1",
         "source": "claude",
         "subject": "KVM: nVMX: Decouple INVVPID operand checks from flushing of vpid02",
-        "patch": "patches/6.1/0298-32912404b4b1-kvm-nvmx-decouple-invvpid-operand-checks-from-flushi.patch"
+        "patch": "patches/6.1/0297-32912404b4b1-kvm-nvmx-decouple-invvpid-operand-checks-from-flushi.patch"
       },
       {
         "status": "included",
         "upstream": "6d00e67326d8",
         "source": "claude",
         "subject": "KVM: nVM: Ensure INVVPID is emulated on the correct physical CPU",
-        "patch": "patches/6.1/0299-6d00e67326d8-kvm-nvm-ensure-invvpid-is-emulated-on-the-correct-ph.patch"
+        "patch": "patches/6.1/0298-6d00e67326d8-kvm-nvm-ensure-invvpid-is-emulated-on-the-correct-ph.patch"
       }
     ]
   },
@@ -12043,7 +12050,7 @@
         "upstream": "be61c8c62526",
         "source": "claude",
         "subject": "iio: chemical: atlas-sensor: use iio_trigger_poll_nested() to fix remove UAF",
-        "patch": "patches/6.1/0327-be61c8c62526-iio-chemical-atlas-sensor-use-iio-trigger-poll-neste.patch"
+        "patch": "patches/6.1/0326-be61c8c62526-iio-chemical-atlas-sensor-use-iio-trigger-poll-neste.patch"
       }
     ]
   },
@@ -12133,14 +12140,14 @@
         "upstream": "d736eba9c453",
         "source": "claude",
         "subject": "ALSA: ice1712: Fix the card leak at probe error with the auto-cleanup",
-        "patch": "patches/6.1/0337-d736eba9c453-alsa-ice1712-fix-the-card-leak-at-probe-error-with-t.patch"
+        "patch": "patches/6.1/0336-d736eba9c453-alsa-ice1712-fix-the-card-leak-at-probe-error-with-t.patch"
       },
       {
         "status": "included",
         "upstream": "e6229c0402ea",
         "source": "claude",
         "subject": "ALSA: ice1712: Fix the error handling via auto-cleanup at",
-        "patch": "patches/6.1/0338-e6229c0402ea-alsa-ice1712-fix-the-error-handling-via-auto-cleanup.patch"
+        "patch": "patches/6.1/0337-e6229c0402ea-alsa-ice1712-fix-the-error-handling-via-auto-cleanup.patch"
       }
     ]
   },
@@ -12158,7 +12165,7 @@
         "upstream": "c50e628122ae",
         "source": "claude",
         "subject": "ksmbd: scope session state changes to bound connections",
-        "patch": "patches/6.1/0336-c50e628122ae-ksmbd-scope-session-state-changes-to-bound-connectio.patch"
+        "patch": "patches/6.1/0335-c50e628122ae-ksmbd-scope-session-state-changes-to-bound-connectio.patch"
       }
     ]
   },
@@ -12196,7 +12203,7 @@
         "upstream": "b53d495c7f0d",
         "source": "claude",
         "subject": "nvme/ioctl: check SUBMIT_IO with nvme_cmd_allowed()",
-        "patch": "patches/6.1/0483-b53d495c7f0d-nvme-ioctl-check-submit-io-with-nvme-cmd-allowed.patch"
+        "patch": "patches/6.1/0482-b53d495c7f0d-nvme-ioctl-check-submit-io-with-nvme-cmd-allowed.patch"
       }
     ]
   },
@@ -12214,14 +12221,14 @@
         "upstream": "",
         "source": "claude",
         "subject": "nvme: Add the DHCHAP maximum HD IDs",
-        "patch": "patches/6.1/0331-q-nvme-add-the-dhchap-maximum-hd-ids.patch"
+        "patch": "patches/6.1/0330-q-nvme-add-the-dhchap-maximum-hd-ids.patch"
       },
       {
         "status": "included",
         "upstream": "5bb96cc21883",
         "source": "claude",
         "subject": "nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate()",
-        "patch": "patches/6.1/0332-5bb96cc21883-nvmet-fix-heap-out-of-bounds-read-in-nvmet-auth-nego.patch"
+        "patch": "patches/6.1/0331-5bb96cc21883-nvmet-fix-heap-out-of-bounds-read-in-nvmet-auth-nego.patch"
       }
     ]
   },
@@ -12292,28 +12299,28 @@
         "upstream": "6031487d4e27",
         "source": "claude",
         "subject": "netfilter: nf_conntrack_helper: dynamically allocate struct nf_conntrack_helper",
-        "patch": "patches/6.1/0475-6031487d4e27-netfilter-nf-conntrack-helper-dynamically-allocate-s.patch"
+        "patch": "patches/6.1/0474-6031487d4e27-netfilter-nf-conntrack-helper-dynamically-allocate-s.patch"
       },
       {
         "status": "included",
         "upstream": "fe97fd540a03",
         "source": "claude",
         "subject": "netfilter: nf_conntrack_pptp: move GRE specific cleanup to GRE tracker",
-        "patch": "patches/6.1/0476-fe97fd540a03-netfilter-nf-conntrack-pptp-move-gre-specific-cleanu.patch"
+        "patch": "patches/6.1/0475-fe97fd540a03-netfilter-nf-conntrack-pptp-move-gre-specific-cleanu.patch"
       },
       {
         "status": "included",
         "upstream": "ac46f3f35b6e",
         "source": "claude",
         "subject": "netfilter: nf_conntrack_helper: add refcounting from datapath",
-        "patch": "patches/6.1/0477-ac46f3f35b6e-netfilter-nf-conntrack-helper-add-refcounting-from-d.patch"
+        "patch": "patches/6.1/0476-ac46f3f35b6e-netfilter-nf-conntrack-helper-add-refcounting-from-d.patch"
       },
       {
         "status": "included",
         "upstream": "3679da4ad8be",
         "source": "claude",
         "subject": "netfilter: nft_ct: move custom expectation support to helper",
-        "patch": "patches/6.1/0478-3679da4ad8be-netfilter-nft-ct-move-custom-expectation-support-to.patch"
+        "patch": "patches/6.1/0477-3679da4ad8be-netfilter-nft-ct-move-custom-expectation-support-to.patch"
       }
     ]
   },
@@ -12394,7 +12401,7 @@
         "upstream": "747b9bbbbdfd",
         "source": "claude",
         "subject": "PCI/sysfs: Add lockdown checks to legacy I/O and memory handlers",
-        "patch": "patches/6.1/0321-747b9bbbbdfd-pci-sysfs-add-lockdown-checks-to-legacy-i-o-and-memo.patch"
+        "patch": "patches/6.1/0320-747b9bbbbdfd-pci-sysfs-add-lockdown-checks-to-legacy-i-o-and-memo.patch"
       }
     ]
   },
@@ -12446,7 +12453,7 @@
         "upstream": "2cf82b46d5e4",
         "source": "claude",
         "subject": "ocfs2: validate external xattr entries when reading metadata",
-        "patch": "patches/6.1/0319-2cf82b46d5e4-ocfs2-validate-external-xattr-entries-when-reading-m.patch"
+        "patch": "patches/6.1/0318-2cf82b46d5e4-ocfs2-validate-external-xattr-entries-when-reading-m.patch"
       }
     ]
   },
@@ -12480,7 +12487,7 @@
         "upstream": "8914a3330b72",
         "source": "claude",
         "subject": "ocfs2: validate inline xattrs during inode block validation",
-        "patch": "patches/6.1/0314-8914a3330b72-ocfs2-validate-inline-xattrs-during-inode-block-vali.patch"
+        "patch": "patches/6.1/0313-8914a3330b72-ocfs2-validate-inline-xattrs-during-inode-block-vali.patch"
       }
     ]
   },
@@ -12498,14 +12505,14 @@
         "upstream": "68c5c42567bc",
         "source": "claude",
         "subject": "dm-integrity: replace forgeable discard filler with a keyed sector marker",
-        "patch": "patches/6.1/0462-68c5c42567bc-dm-integrity-replace-forgeable-discard-filler-with-a.patch"
+        "patch": "patches/6.1/0461-68c5c42567bc-dm-integrity-replace-forgeable-discard-filler-with-a.patch"
       },
       {
         "status": "included",
         "upstream": "59e6f919d77d",
         "source": "claude",
         "subject": "dm-integrity: fix buffer overflow with keyed discard",
-        "patch": "patches/6.1/0463-59e6f919d77d-dm-integrity-fix-buffer-overflow-with-keyed-discard.patch"
+        "patch": "patches/6.1/0462-59e6f919d77d-dm-integrity-fix-buffer-overflow-with-keyed-discard.patch"
       }
     ]
   },
@@ -12523,7 +12530,7 @@
         "upstream": "c48796aa6c39",
         "source": "claude",
         "subject": "bpf: Reject >8 byte return values on return-reading trampoline paths",
-        "patch": "patches/6.1/0312-c48796aa6c39-bpf-reject-8-byte-return-values-on-return-reading-tr.patch"
+        "patch": "patches/6.1/0311-c48796aa6c39-bpf-reject-8-byte-return-values-on-return-reading-tr.patch"
       }
     ]
   },
@@ -12557,7 +12564,7 @@
         "upstream": "915672c5ae32",
         "source": "claude",
         "subject": "wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash",
-        "patch": "patches/6.1/0311-915672c5ae32-wifi-mt76-mt7921-add-pcie-aer-handler-support-to-pre.patch"
+        "patch": "patches/6.1/0310-915672c5ae32-wifi-mt76-mt7921-add-pcie-aer-handler-support-to-pre.patch"
       }
     ]
   },
@@ -12575,7 +12582,7 @@
         "upstream": "bace2010dd7a",
         "source": "claude",
         "subject": "md: scope memalloc_noio to allocation critical sections",
-        "patch": "patches/6.1/0461-bace2010dd7a-md-scope-memalloc-noio-to-allocation-critical-sectio.patch"
+        "patch": "patches/6.1/0460-bace2010dd7a-md-scope-memalloc-noio-to-allocation-critical-sectio.patch"
       }
     ]
   },
@@ -12629,7 +12636,7 @@
         "upstream": "8d31bb145164",
         "source": "claude",
         "subject": "cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active",
-        "patch": "patches/6.1/0309-8d31bb145164-cpufreq-amd-pstate-ut-skip-tests-when-amd-pstate-dri.patch"
+        "patch": "patches/6.1/0308-8d31bb145164-cpufreq-amd-pstate-ut-skip-tests-when-amd-pstate-dri.patch"
       }
     ]
   },
@@ -12656,7 +12663,7 @@
         "upstream": "bc4b7b0414c3",
         "source": "claude",
         "subject": "ext4: validate readdir offset before accessing dirent",
-        "patch": "patches/6.1/0307-bc4b7b0414c3-ext4-validate-readdir-offset-before-accessing-dirent.patch"
+        "patch": "patches/6.1/0306-bc4b7b0414c3-ext4-validate-readdir-offset-before-accessing-dirent.patch"
       }
     ]
   },
@@ -12690,7 +12697,7 @@
         "upstream": "7edbb323bab2",
         "source": "claude",
         "subject": "ext4: use fsdata to track inline data write state and fix race",
-        "patch": "patches/6.1/0308-7edbb323bab2-ext4-use-fsdata-to-track-inline-data-write-state-and.patch"
+        "patch": "patches/6.1/0307-7edbb323bab2-ext4-use-fsdata-to-track-inline-data-write-state-and.patch"
       }
     ]
   },
@@ -12792,7 +12799,7 @@
         "upstream": "fa98563ab00d",
         "source": "claude",
         "subject": "drm/v3d: Associate BOs with every job that accesses them",
-        "patch": "patches/6.1/0306-fa98563ab00d-drm-v3d-associate-bos-with-every-job-that-accesses-t.patch"
+        "patch": "patches/6.1/0305-fa98563ab00d-drm-v3d-associate-bos-with-every-job-that-accesses-t.patch"
       }
     ]
   },
@@ -12821,7 +12828,7 @@
         "upstream": "8e49055d0d49",
         "source": "claude",
         "subject": "firmware: arm_scmi: Quiesce notifications before teardown",
-        "patch": "patches/6.1/0302-8e49055d0d49-firmware-arm-scmi-quiesce-notifications-before-teard.patch"
+        "patch": "patches/6.1/0301-8e49055d0d49-firmware-arm-scmi-quiesce-notifications-before-teard.patch"
       }
     ]
   },
@@ -12855,7 +12862,7 @@
         "upstream": "2566b5cd6a27",
         "source": "claude",
         "subject": "fs/resctrl: Fix UAF from worker threads when domains are removed",
-        "patch": "patches/6.1/0300-2566b5cd6a27-fs-resctrl-fix-uaf-from-worker-threads-when-domains.patch"
+        "patch": "patches/6.1/0299-2566b5cd6a27-fs-resctrl-fix-uaf-from-worker-threads-when-domains.patch"
       }
     ]
   },
@@ -12958,28 +12965,28 @@
         "upstream": "097f50384e18",
         "source": "claude",
         "subject": "RDMA/irdma: Deduplicate the irdma_del_memlist logic",
-        "patch": "patches/6.1/0292-097f50384e18-rdma-irdma-deduplicate-the-irdma-del-memlist-logic.patch"
+        "patch": "patches/6.1/0291-097f50384e18-rdma-irdma-deduplicate-the-irdma-del-memlist-logic.patch"
       },
       {
         "status": "included",
         "upstream": "a7d0a6b58256",
         "source": "claude",
         "subject": "RDMA/irdma: Add a refcount to track user ring MR associations",
-        "patch": "patches/6.1/0293-a7d0a6b58256-rdma-irdma-add-a-refcount-to-track-user-ring-mr-asso.patch"
+        "patch": "patches/6.1/0292-a7d0a6b58256-rdma-irdma-add-a-refcount-to-track-user-ring-mr-asso.patch"
       },
       {
         "status": "included",
         "upstream": "971e99623ed7",
         "source": "claude",
         "subject": "RDMA/irdma: Add irdma_cq fields to track pbl allocations",
-        "patch": "patches/6.1/0294-971e99623ed7-rdma-irdma-add-irdma-cq-fields-to-track-pbl-allocati.patch"
+        "patch": "patches/6.1/0293-971e99623ed7-rdma-irdma-add-irdma-cq-fields-to-track-pbl-allocati.patch"
       },
       {
         "status": "included",
         "upstream": "f67d8a08f60c",
         "source": "claude",
         "subject": "RDMA/irdma: Add refcounting to user ring MRs",
-        "patch": "patches/6.1/0295-f67d8a08f60c-rdma-irdma-add-refcounting-to-user-ring-mrs.patch"
+        "patch": "patches/6.1/0294-f67d8a08f60c-rdma-irdma-add-refcounting-to-user-ring-mrs.patch"
       }
     ]
   },
@@ -13078,35 +13085,35 @@
         "upstream": "ba8dac350faf",
         "source": "claude",
         "subject": "f2fs: fix to zero post-eof page",
-        "patch": "patches/6.1/0486-ba8dac350faf-f2fs-fix-to-zero-post-eof-page.patch"
+        "patch": "patches/6.1/0485-ba8dac350faf-f2fs-fix-to-zero-post-eof-page.patch"
       },
       {
         "status": "included",
         "upstream": "c2f7c32b2540",
         "source": "claude",
         "subject": "f2fs: fix to mitigate overhead of f2fs_zero_post_eof_page()",
-        "patch": "patches/6.1/0487-c2f7c32b2540-f2fs-fix-to-mitigate-overhead-of-f2fs-zero-post-eof.patch"
+        "patch": "patches/6.1/0486-c2f7c32b2540-f2fs-fix-to-mitigate-overhead-of-f2fs-zero-post-eof.patch"
       },
       {
         "status": "included",
         "upstream": "b2205d3cfd6c",
         "source": "claude",
         "subject": "f2fs: fix to off-by-one issue in f2fs_zero_post_eof_page()",
-        "patch": "patches/6.1/0488-b2205d3cfd6c-f2fs-fix-to-off-by-one-issue-in-f2fs-zero-post-eof-p.patch"
+        "patch": "patches/6.1/0487-b2205d3cfd6c-f2fs-fix-to-off-by-one-issue-in-f2fs-zero-post-eof-p.patch"
       },
       {
         "status": "included",
         "upstream": "5eced87b7d19",
         "source": "claude",
         "subject": "f2fs: fix to zero post-EOF data when extending file size",
-        "patch": "patches/6.1/0489-5eced87b7d19-f2fs-fix-to-zero-post-eof-data-when-extending-file-s.patch"
+        "patch": "patches/6.1/0488-5eced87b7d19-f2fs-fix-to-zero-post-eof-data-when-extending-file-s.patch"
       },
       {
         "status": "included",
         "upstream": "0b2cd5092139",
         "source": "claude",
         "subject": "f2fs: fix to zero data after EOF for compressed file correctly",
-        "patch": "patches/6.1/0490-0b2cd5092139-f2fs-fix-to-zero-data-after-eof-for-compressed-file.patch"
+        "patch": "patches/6.1/0489-0b2cd5092139-f2fs-fix-to-zero-data-after-eof-for-compressed-file.patch"
       }
     ]
   },
@@ -13236,7 +13243,7 @@
         "upstream": "6aa77efaea9e",
         "source": "claude",
         "subject": "wifi: iwlwifi: mvm: validate sta_id in BA window status notif",
-        "patch": "patches/6.1/0301-6aa77efaea9e-wifi-iwlwifi-mvm-validate-sta-id-in-ba-window-status.patch"
+        "patch": "patches/6.1/0300-6aa77efaea9e-wifi-iwlwifi-mvm-validate-sta-id-in-ba-window-status.patch"
       }
     ]
   },
@@ -13405,7 +13412,7 @@
         "upstream": "5be5bdda5863",
         "source": "claude",
         "subject": "smb: client: reject out-of-bounds DataOffset in CIFSSMBRead()",
-        "patch": "patches/6.1/0374-5be5bdda5863-smb-client-reject-out-of-bounds-dataoffset-in-cifssm.patch"
+        "patch": "patches/6.1/0373-5be5bdda5863-smb-client-reject-out-of-bounds-dataoffset-in-cifssm.patch"
       }
     ]
   },
@@ -13439,7 +13446,7 @@
         "upstream": "e6142a8bfc23",
         "source": "claude",
         "subject": "smb: client: reject short READ responses in CIFSSMBRead()",
-        "patch": "patches/6.1/0356-e6142a8bfc23-smb-client-reject-short-read-responses-in-cifssmbrea.patch"
+        "patch": "patches/6.1/0355-e6142a8bfc23-smb-client-reject-short-read-responses-in-cifssmbrea.patch"
       }
     ]
   },
@@ -13450,7 +13457,7 @@
         "upstream": "ff5891b266a7",
         "source": "mainline",
         "subject": "ieee802154: cc2520: fix FIFOP work use-after-free",
-        "patch": "patches/6.1/0354-ff5891b266a7-ieee802154-cc2520-fix-fifop-work-use-after-free.patch"
+        "patch": "patches/6.1/0353-ff5891b266a7-ieee802154-cc2520-fix-fifop-work-use-after-free.patch"
       },
       {
         "status": "superseded",
@@ -13605,7 +13612,7 @@
         "upstream": "5e38d732ec67",
         "source": "claude",
         "subject": "net: stmmac: fix TX descriptor availability check for TSO traffic",
-        "patch": "patches/6.1/0398-5e38d732ec67-net-stmmac-fix-tx-descriptor-availability-check-for.patch"
+        "patch": "patches/6.1/0397-5e38d732ec67-net-stmmac-fix-tx-descriptor-availability-check-for.patch"
       }
     ]
   },
@@ -13623,7 +13630,7 @@
         "upstream": "be83178bfc44",
         "source": "claude",
         "subject": "vxlan: initialize _md in vxlan_xmit_one()",
-        "patch": "patches/6.1/0397-be83178bfc44-vxlan-initialize-md-in-vxlan-xmit-one.patch"
+        "patch": "patches/6.1/0396-be83178bfc44-vxlan-initialize-md-in-vxlan-xmit-one.patch"
       }
     ]
   },
@@ -13641,7 +13648,7 @@
         "upstream": "b8bf9bfda5f6",
         "source": "claude",
         "subject": "eth: ice: don't dereference pointers from TP_printk()",
-        "patch": "patches/6.1/0384-b8bf9bfda5f6-eth-ice-don-t-dereference-pointers-from-tp-printk.patch"
+        "patch": "patches/6.1/0383-b8bf9bfda5f6-eth-ice-don-t-dereference-pointers-from-tp-printk.patch"
       }
     ]
   },
@@ -13659,7 +13666,7 @@
         "upstream": "0ae10b6be49b",
         "source": "claude",
         "subject": "net: ipv6: Fix UDP length overflow with PMTU discover and big MTU",
-        "patch": "patches/6.1/0381-0ae10b6be49b-net-ipv6-fix-udp-length-overflow-with-pmtu-discover.patch"
+        "patch": "patches/6.1/0380-0ae10b6be49b-net-ipv6-fix-udp-length-overflow-with-pmtu-discover.patch"
       }
     ]
   },
@@ -13677,7 +13684,7 @@
         "upstream": "e4f4761879a2",
         "source": "claude",
         "subject": "vhost: invalidate vring access on IOTLB transitions",
-        "patch": "patches/6.1/0378-e4f4761879a2-vhost-invalidate-vring-access-on-iotlb-transitions.patch"
+        "patch": "patches/6.1/0377-e4f4761879a2-vhost-invalidate-vring-access-on-iotlb-transitions.patch"
       }
     ]
   },
@@ -13695,7 +13702,7 @@
         "upstream": "fa2c25b4add5",
         "source": "claude",
         "subject": "vduse: validate virtqueue alignment",
-        "patch": "patches/6.1/0379-fa2c25b4add5-vduse-validate-virtqueue-alignment.patch"
+        "patch": "patches/6.1/0378-fa2c25b4add5-vduse-validate-virtqueue-alignment.patch"
       }
     ]
   },
@@ -13713,7 +13720,7 @@
         "upstream": "0d195797a80b",
         "source": "claude",
         "subject": "vdpa_sim_net: check TX pull result before RX copy",
-        "patch": "patches/6.1/0377-0d195797a80b-vdpa-sim-net-check-tx-pull-result-before-rx-copy.patch"
+        "patch": "patches/6.1/0376-0d195797a80b-vdpa-sim-net-check-tx-pull-result-before-rx-copy.patch"
       }
     ]
   },
@@ -13731,7 +13738,7 @@
         "upstream": "62be4e3e5f5f",
         "source": "claude",
         "subject": "vhost-vdpa: protect config_ctx from being freed under the config callback",
-        "patch": "patches/6.1/0368-62be4e3e5f5f-vhost-vdpa-protect-config-ctx-from-being-freed-under.patch"
+        "patch": "patches/6.1/0367-62be4e3e5f5f-vhost-vdpa-protect-config-ctx-from-being-freed-under.patch"
       }
     ]
   },
@@ -13749,7 +13756,7 @@
         "upstream": "ccb1dc7c527f",
         "source": "claude",
         "subject": "vhost/vdpa: reject VRING_NUM larger than device max",
-        "patch": "patches/6.1/0369-ccb1dc7c527f-vhost-vdpa-reject-vring-num-larger-than-device-max.patch"
+        "patch": "patches/6.1/0368-ccb1dc7c527f-vhost-vdpa-reject-vring-num-larger-than-device-max.patch"
       }
     ]
   },
@@ -13767,7 +13774,7 @@
         "upstream": "75d276e5bb68",
         "source": "claude",
         "subject": "virtio_ring: fix stale descriptor flags after a failed packed add",
-        "patch": "patches/6.1/0376-75d276e5bb68-virtio-ring-fix-stale-descriptor-flags-after-a-faile.patch"
+        "patch": "patches/6.1/0375-75d276e5bb68-virtio-ring-fix-stale-descriptor-flags-after-a-faile.patch"
       }
     ]
   },
@@ -13785,7 +13792,7 @@
         "upstream": "00a7dd64888d",
         "source": "claude",
         "subject": "iommu/amd: Do not reallocate GA log buffers on resume",
-        "patch": "patches/6.1/0367-00a7dd64888d-iommu-amd-do-not-reallocate-ga-log-buffers-on-resume.patch"
+        "patch": "patches/6.1/0366-00a7dd64888d-iommu-amd-do-not-reallocate-ga-log-buffers-on-resume.patch"
       }
     ]
   },
@@ -13803,7 +13810,7 @@
         "upstream": "1a3a10b030c9",
         "source": "claude",
         "subject": "bpf: mark a NULL call argument precise",
-        "patch": "patches/6.1/0366-1a3a10b030c9-bpf-mark-a-null-call-argument-precise.patch"
+        "patch": "patches/6.1/0365-1a3a10b030c9-bpf-mark-a-null-call-argument-precise.patch"
       }
     ]
   },
@@ -13821,7 +13828,7 @@
         "upstream": "1aa9e143bf51",
         "source": "claude",
         "subject": "net: reject oversized tx_queue_len at netlink parse time",
-        "patch": "patches/6.1/0365-1aa9e143bf51-net-reject-oversized-tx-queue-len-at-netlink-parse-t.patch"
+        "patch": "patches/6.1/0364-1aa9e143bf51-net-reject-oversized-tx-queue-len-at-netlink-parse-t.patch"
       }
     ]
   },
@@ -13839,7 +13846,7 @@
         "upstream": "4b772869a1e5",
         "source": "claude",
         "subject": "net: bridge: mcast: properly convert mglist to rcu",
-        "patch": "patches/6.1/0364-4b772869a1e5-net-bridge-mcast-properly-convert-mglist-to-rcu.patch"
+        "patch": "patches/6.1/0363-4b772869a1e5-net-bridge-mcast-properly-convert-mglist-to-rcu.patch"
       }
     ]
   },
@@ -13857,7 +13864,7 @@
         "upstream": "b90c5d770dad",
         "source": "claude",
         "subject": "bpf: Preserve inner map identity in callback frames",
-        "patch": "patches/6.1/0362-b90c5d770dad-bpf-preserve-inner-map-identity-in-callback-frames.patch"
+        "patch": "patches/6.1/0361-b90c5d770dad-bpf-preserve-inner-map-identity-in-callback-frames.patch"
       }
     ]
   },
@@ -13875,7 +13882,7 @@
         "upstream": "ecdc5043794c",
         "source": "claude",
         "subject": "bpf: Mark NULL kptr stores precise",
-        "patch": "patches/6.1/0363-ecdc5043794c-bpf-mark-null-kptr-stores-precise.patch"
+        "patch": "patches/6.1/0362-ecdc5043794c-bpf-mark-null-kptr-stores-precise.patch"
       }
     ]
   },
@@ -13893,7 +13900,7 @@
         "upstream": "e51179a4e098",
         "source": "claude",
         "subject": "bpf: Don't predict JMP32 pointer vs zero comparisons",
-        "patch": "patches/6.1/0361-e51179a4e098-bpf-don-t-predict-jmp32-pointer-vs-zero-comparisons.patch"
+        "patch": "patches/6.1/0360-e51179a4e098-bpf-don-t-predict-jmp32-pointer-vs-zero-comparisons.patch"
       }
     ]
   },
@@ -13911,7 +13918,7 @@
         "upstream": "67b529f521a6",
         "source": "claude",
         "subject": "bpf: Don't infer non-NULL from a pointer with an unbounded offset",
-        "patch": "patches/6.1/0372-67b529f521a6-bpf-don-t-infer-non-null-from-a-pointer-with-an-unbo.patch"
+        "patch": "patches/6.1/0371-67b529f521a6-bpf-don-t-infer-non-null-from-a-pointer-with-an-unbo.patch"
       }
     ]
   },
@@ -13929,7 +13936,7 @@
         "upstream": "4ed7f3d7d435",
         "source": "claude",
         "subject": "nvme: remove stale namespaces by NSID range during scan",
-        "patch": "patches/6.1/0360-4ed7f3d7d435-nvme-remove-stale-namespaces-by-nsid-range-during-sc.patch"
+        "patch": "patches/6.1/0359-4ed7f3d7d435-nvme-remove-stale-namespaces-by-nsid-range-during-sc.patch"
       }
     ]
   },
@@ -13958,7 +13965,7 @@
         "upstream": "82e664cf1219",
         "source": "claude",
         "subject": "erofs: disable LZ4 rolling decompression for now",
-        "patch": "patches/6.1/0474-82e664cf1219-erofs-disable-lz4-rolling-decompression-for-now.patch"
+        "patch": "patches/6.1/0473-82e664cf1219-erofs-disable-lz4-rolling-decompression-for-now.patch"
       }
     ]
   },
@@ -13976,7 +13983,7 @@
         "upstream": "debac3a20dec",
         "source": "claude",
         "subject": "net: Remove conflicting altnames for dying netns in __dev_change_net_namespace().",
-        "patch": "patches/6.1/0359-debac3a20dec-net-remove-conflicting-altnames-for-dying-netns-in-d.patch"
+        "patch": "patches/6.1/0358-debac3a20dec-net-remove-conflicting-altnames-for-dying-netns-in-d.patch"
       }
     ]
   },
@@ -13994,7 +14001,7 @@
         "upstream": "2acb9f3d1cc8",
         "source": "claude",
         "subject": "btrfs: zstd: fix lost wakeup when waiting for a workspace",
-        "patch": "patches/6.1/0358-2acb9f3d1cc8-btrfs-zstd-fix-lost-wakeup-when-waiting-for-a-worksp.patch"
+        "patch": "patches/6.1/0357-2acb9f3d1cc8-btrfs-zstd-fix-lost-wakeup-when-waiting-for-a-worksp.patch"
       }
     ]
   },
@@ -14012,7 +14019,7 @@
         "upstream": "a18a6b93a284",
         "source": "claude",
         "subject": "btrfs: zoned: finish active block group cleanup if call_zone_finish() fails",
-        "patch": "patches/6.1/0357-a18a6b93a284-btrfs-zoned-finish-active-block-group-cleanup-if-cal.patch"
+        "patch": "patches/6.1/0356-a18a6b93a284-btrfs-zoned-finish-active-block-group-cleanup-if-cal.patch"
       }
     ]
   },
@@ -14046,7 +14053,7 @@
         "upstream": "dae5c0292080",
         "source": "claude",
         "subject": "sched/rt,dl: Skip migrate-disabled tasks when picking a push candidate",
-        "patch": "patches/6.1/0353-dae5c0292080-sched-rt-dl-skip-migrate-disabled-tasks-when-picking.patch"
+        "patch": "patches/6.1/0352-dae5c0292080-sched-rt-dl-skip-migrate-disabled-tasks-when-picking.patch"
       }
     ]
   },
@@ -14064,7 +14071,7 @@
         "upstream": "81c600c26302",
         "source": "claude",
         "subject": "tipc: Dont send random pad bytes in RESET/ACTIVATE messages",
-        "patch": "patches/6.1/0352-81c600c26302-tipc-dont-send-random-pad-bytes-in-reset-activate-me.patch"
+        "patch": "patches/6.1/0351-81c600c26302-tipc-dont-send-random-pad-bytes-in-reset-activate-me.patch"
       }
     ]
   },
@@ -14082,7 +14089,7 @@
         "upstream": "0c8f56c583c3",
         "source": "claude",
         "subject": "ipv6: mcast: use rcu_assign_pointer() for __rcu list updates",
-        "patch": "patches/6.1/0351-0c8f56c583c3-ipv6-mcast-use-rcu-assign-pointer-for-rcu-list-updat.patch"
+        "patch": "patches/6.1/0350-0c8f56c583c3-ipv6-mcast-use-rcu-assign-pointer-for-rcu-list-updat.patch"
       }
     ]
   },
@@ -14100,7 +14107,7 @@
         "upstream": "c073d1b070f1",
         "source": "claude",
         "subject": "ipv6: mcast: use copy-on-write RCU updates in ip6_mc_source()",
-        "patch": "patches/6.1/0370-c073d1b070f1-ipv6-mcast-use-copy-on-write-rcu-updates-in-ip6-mc-s.patch"
+        "patch": "patches/6.1/0369-c073d1b070f1-ipv6-mcast-use-copy-on-write-rcu-updates-in-ip6-mc-s.patch"
       }
     ]
   },
@@ -14118,7 +14125,7 @@
         "upstream": "93b49239840b",
         "source": "claude",
         "subject": "ipv6: mcast: fix RCU list diversion in ip6_mc_del1_src()",
-        "patch": "patches/6.1/0371-93b49239840b-ipv6-mcast-fix-rcu-list-diversion-in-ip6-mc-del1-src.patch"
+        "patch": "patches/6.1/0370-93b49239840b-ipv6-mcast-fix-rcu-list-diversion-in-ip6-mc-del1-src.patch"
       }
     ]
   },
@@ -14136,7 +14143,7 @@
         "upstream": "2987ee196c88",
         "source": "claude",
         "subject": "igmp: convert struct ip_sf_list to RCU",
-        "patch": "patches/6.1/0350-2987ee196c88-igmp-convert-struct-ip-sf-list-to-rcu.patch"
+        "patch": "patches/6.1/0349-2987ee196c88-igmp-convert-struct-ip-sf-list-to-rcu.patch"
       }
     ]
   },
@@ -14172,7 +14179,7 @@
         "upstream": "56c2b5831d39",
         "source": "claude",
         "subject": "Bluetooth: L2CAP: fix out-of-bounds write in l2cap_ecred_connect",
-        "patch": "patches/6.1/0349-56c2b5831d39-bluetooth-l2cap-fix-out-of-bounds-write-in-l2cap-ecr.patch"
+        "patch": "patches/6.1/0348-56c2b5831d39-bluetooth-l2cap-fix-out-of-bounds-write-in-l2cap-ecr.patch"
       }
     ]
   },
@@ -14190,7 +14197,7 @@
         "upstream": "a086c0892969",
         "source": "claude",
         "subject": "Bluetooth: btintel: validate version TLV value lengths",
-        "patch": "patches/6.1/0348-a086c0892969-bluetooth-btintel-validate-version-tlv-value-lengths.patch"
+        "patch": "patches/6.1/0347-a086c0892969-bluetooth-btintel-validate-version-tlv-value-lengths.patch"
       }
     ]
   },
@@ -14208,7 +14215,7 @@
         "upstream": "c61dc7b1b4a3",
         "source": "claude",
         "subject": "ksmbd: propagate DACL parsing errors",
-        "patch": "patches/6.1/0347-c61dc7b1b4a3-ksmbd-propagate-dacl-parsing-errors.patch"
+        "patch": "patches/6.1/0346-c61dc7b1b4a3-ksmbd-propagate-dacl-parsing-errors.patch"
       }
     ]
   },
@@ -14328,7 +14335,7 @@
         "upstream": "448ba0ae65ca",
         "source": "claude",
         "subject": "smb/client: invalidate fscache for fallocate range operations",
-        "patch": "patches/6.1/0345-448ba0ae65ca-smb-client-invalidate-fscache-for-fallocate-range-op.patch"
+        "patch": "patches/6.1/0344-448ba0ae65ca-smb-client-invalidate-fscache-for-fallocate-range-op.patch"
       }
     ]
   },
@@ -14351,18 +14358,18 @@
     ],
     "6.12": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "01261a6fa48b",
         "source": "mainline",
         "subject": "smb/client: fix stale page cache in insert/collapse range",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
       },
       {
-        "status": "backport-stale",
+        "status": "included",
         "upstream": "01261a6fa48b",
         "source": "claude",
         "subject": "smb/client: fix stale page cache in insert/collapse range",
-        "reason": "another patch of CVE-2026-98125/6.12 does not apply or build"
+        "patch": "patches/6.12/0197-01261a6fa48b-smb-client-fix-stale-page-cache-in-insert-collapse-r.patch"
       }
     ],
     "6.1": [
@@ -14378,7 +14385,7 @@
         "upstream": "01261a6fa48b",
         "source": "claude",
         "subject": "smb/client: fix stale page cache in insert/collapse range",
-        "patch": "patches/6.1/0375-01261a6fa48b-smb-client-fix-stale-page-cache-in-insert-collapse-r.patch"
+        "patch": "patches/6.1/0374-01261a6fa48b-smb-client-fix-stale-page-cache-in-insert-collapse-r.patch"
       }
     ]
   },
@@ -14396,7 +14403,7 @@
         "upstream": "88972e357507",
         "source": "claude",
         "subject": "smb/client: validate new EOF for zero range",
-        "patch": "patches/6.1/0343-88972e357507-smb-client-validate-new-eof-for-zero-range.patch"
+        "patch": "patches/6.1/0342-88972e357507-smb-client-validate-new-eof-for-zero-range.patch"
       }
     ]
   },
@@ -14414,7 +14421,7 @@
         "upstream": "1519dc88c87f",
         "source": "claude",
         "subject": "smb/client: validate new EOF for insert range",
-        "patch": "patches/6.1/0344-1519dc88c87f-smb-client-validate-new-eof-for-insert-range.patch"
+        "patch": "patches/6.1/0343-1519dc88c87f-smb-client-validate-new-eof-for-insert-range.patch"
       }
     ]
   },
@@ -14432,7 +14439,7 @@
         "upstream": "a5d946466a95",
         "source": "claude",
         "subject": "net: stmmac: fix dma mapping leak in stmmac_tso_xmit()",
-        "patch": "patches/6.1/0342-a5d946466a95-net-stmmac-fix-dma-mapping-leak-in-stmmac-tso-xmit.patch"
+        "patch": "patches/6.1/0341-a5d946466a95-net-stmmac-fix-dma-mapping-leak-in-stmmac-tso-xmit.patch"
       }
     ]
   },
@@ -14450,7 +14457,7 @@
         "upstream": "92312d333bf7",
         "source": "claude",
         "subject": "drm/cirrus-qemu: Validate BAR0 size during probe",
-        "patch": "patches/6.1/0341-92312d333bf7-drm-cirrus-qemu-validate-bar0-size-during-probe.patch"
+        "patch": "patches/6.1/0340-92312d333bf7-drm-cirrus-qemu-validate-bar0-size-during-probe.patch"
       }
     ]
   },
@@ -14468,7 +14475,7 @@
         "upstream": "cb732d027aa1",
         "source": "claude",
         "subject": "drm/gud: validate GUD_ROTATION_0 is present in supported rotations",
-        "patch": "patches/6.1/0339-cb732d027aa1-drm-gud-validate-gud-rotation-0-is-present-in-suppor.patch"
+        "patch": "patches/6.1/0338-cb732d027aa1-drm-gud-validate-gud-rotation-0-is-present-in-suppor.patch"
       }
     ]
   },
@@ -14511,7 +14518,7 @@
         "upstream": "6a736d2f9d0c",
         "source": "claude",
         "subject": "drm/virtio: use the DMA API for resource backing on Xen",
-        "patch": "patches/6.1/0333-6a736d2f9d0c-drm-virtio-use-the-dma-api-for-resource-backing-on-x.patch"
+        "patch": "patches/6.1/0332-6a736d2f9d0c-drm-virtio-use-the-dma-api-for-resource-backing-on-x.patch"
       }
     ]
   },
@@ -14910,7 +14917,7 @@
         "upstream": "8cf2093f5372",
         "source": "claude",
         "subject": "arm64: percpu: Fix LSE operations on {8,16}-bit types",
-        "patch": "patches/6.1/0399-8cf2093f5372-arm64-percpu-fix-lse-operations-on-8-16-bit-types.patch"
+        "patch": "patches/6.1/0398-8cf2093f5372-arm64-percpu-fix-lse-operations-on-8-16-bit-types.patch"
       }
     ]
   },
@@ -14946,7 +14953,7 @@
         "upstream": "fd95e68df6fe",
         "source": "claude",
         "subject": "ALSA: core: Fix potential UAF after asynchronous card release",
-        "patch": "patches/6.1/0401-fd95e68df6fe-alsa-core-fix-potential-uaf-after-asynchronous-card.patch"
+        "patch": "patches/6.1/0400-fd95e68df6fe-alsa-core-fix-potential-uaf-after-asynchronous-card.patch"
       }
     ]
   },
@@ -14964,7 +14971,7 @@
         "upstream": "97fcd34aa9fd",
         "source": "claude",
         "subject": "btrfs: abort transaction on failure to update inode for hole punching and reflinking",
-        "patch": "patches/6.1/0415-97fcd34aa9fd-btrfs-abort-transaction-on-failure-to-update-inode-f.patch"
+        "patch": "patches/6.1/0414-97fcd34aa9fd-btrfs-abort-transaction-on-failure-to-update-inode-f.patch"
       }
     ]
   },
@@ -14975,7 +14982,7 @@
         "upstream": "a5117e1eccac",
         "source": "mainline",
         "subject": "net: skbuff: do not leave stale header offsets after pskb_carve()",
-        "patch": "patches/6.1/0414-a5117e1eccac-net-skbuff-do-not-leave-stale-header-offsets-after-p.patch"
+        "patch": "patches/6.1/0413-a5117e1eccac-net-skbuff-do-not-leave-stale-header-offsets-after-p.patch"
       },
       {
         "status": "superseded",
@@ -15016,7 +15023,7 @@
         "upstream": "a5f7a5bb3b7f",
         "source": "claude",
         "subject": "x86/kprobes: Fix crash when probing CS CALL instructions",
-        "patch": "patches/6.1/0413-a5f7a5bb3b7f-x86-kprobes-fix-crash-when-probing-cs-call-instructi.patch"
+        "patch": "patches/6.1/0412-a5f7a5bb3b7f-x86-kprobes-fix-crash-when-probing-cs-call-instructi.patch"
       }
     ]
   },
@@ -15068,7 +15075,7 @@
         "upstream": "76bf149cd029",
         "source": "claude",
         "subject": "btrfs: handle lack of space when cleaning up verity items",
-        "patch": "patches/6.1/0410-76bf149cd029-btrfs-handle-lack-of-space-when-cleaning-up-verity-i.patch"
+        "patch": "patches/6.1/0409-76bf149cd029-btrfs-handle-lack-of-space-when-cleaning-up-verity-i.patch"
       }
     ]
   },
@@ -15118,7 +15125,7 @@
         "upstream": "ceac0de741bf",
         "source": "claude",
         "subject": "netlink: do not free nlk->groups while lockless readers can use it",
-        "patch": "patches/6.1/0409-ceac0de741bf-netlink-do-not-free-nlk-groups-while-lockless-reader.patch"
+        "patch": "patches/6.1/0408-ceac0de741bf-netlink-do-not-free-nlk-groups-while-lockless-reader.patch"
       }
     ]
   },
@@ -15181,7 +15188,7 @@
         "upstream": "c391a40f7188",
         "source": "claude",
         "subject": "drop_monitor: use timer_shutdown_sync() to prevent timer rearming during teardown",
-        "patch": "patches/6.1/0408-c391a40f7188-drop-monitor-use-timer-shutdown-sync-to-prevent-time.patch"
+        "patch": "patches/6.1/0407-c391a40f7188-drop-monitor-use-timer-shutdown-sync-to-prevent-time.patch"
       }
     ]
   },
@@ -15231,7 +15238,7 @@
         "upstream": "15989abd74f1",
         "source": "claude",
         "subject": "net: stmmac: fix TSO header length truncation",
-        "patch": "patches/6.1/0432-15989abd74f1-net-stmmac-fix-tso-header-length-truncation.patch"
+        "patch": "patches/6.1/0431-15989abd74f1-net-stmmac-fix-tso-header-length-truncation.patch"
       }
     ]
   },
@@ -15312,7 +15319,7 @@
         "upstream": "4e93c65f8782",
         "source": "claude",
         "subject": "Bluetooth: hci_qca: Do not write to the serial port after it is closed",
-        "patch": "patches/6.1/0407-4e93c65f8782-bluetooth-hci-qca-do-not-write-to-the-serial-port-af.patch"
+        "patch": "patches/6.1/0406-4e93c65f8782-bluetooth-hci-qca-do-not-write-to-the-serial-port-af.patch"
       }
     ]
   },
@@ -15357,7 +15364,7 @@
         "upstream": "23ca4ddc4fce",
         "source": "claude",
         "subject": "net: bcmgenet: restore the hardware filters on open",
-        "patch": "patches/6.1/0406-23ca4ddc4fce-net-bcmgenet-restore-the-hardware-filters-on-open.patch"
+        "patch": "patches/6.1/0405-23ca4ddc4fce-net-bcmgenet-restore-the-hardware-filters-on-open.patch"
       }
     ]
   },
@@ -15375,7 +15382,7 @@
         "upstream": "820b8cff81c7",
         "source": "claude",
         "subject": "wifi: ath11k: cleanup arsta in ath11k_mac_peer_cleanup_all()",
-        "patch": "patches/6.1/0405-820b8cff81c7-wifi-ath11k-cleanup-arsta-in-ath11k-mac-peer-cleanup.patch"
+        "patch": "patches/6.1/0404-820b8cff81c7-wifi-ath11k-cleanup-arsta-in-ath11k-mac-peer-cleanup.patch"
       }
     ]
   },
@@ -15393,14 +15400,14 @@
         "upstream": "10021ef27310",
         "source": "claude",
         "subject": "drm/ast: Automatically clean up poll helper",
-        "patch": "patches/6.1/0403-10021ef27310-drm-ast-automatically-clean-up-poll-helper.patch"
+        "patch": "patches/6.1/0402-10021ef27310-drm-ast-automatically-clean-up-poll-helper.patch"
       },
       {
         "status": "included",
         "upstream": "073a30d75f30",
         "source": "claude",
         "subject": "drm/vc4: Use managed KMS polling to fix UAF on unbind",
-        "patch": "patches/6.1/0404-073a30d75f30-drm-vc4-use-managed-kms-polling-to-fix-uaf-on-unbind.patch"
+        "patch": "patches/6.1/0403-073a30d75f30-drm-vc4-use-managed-kms-polling-to-fix-uaf-on-unbind.patch"
       }
     ]
   },
@@ -15434,7 +15441,7 @@
         "upstream": "e249a6e2a130",
         "source": "claude",
         "subject": "drm/msm/dp: skip PUSH_IDLE when the link was never enabled",
-        "patch": "patches/6.1/0402-e249a6e2a130-drm-msm-dp-skip-push-idle-when-the-link-was-never-en.patch"
+        "patch": "patches/6.1/0401-e249a6e2a130-drm-msm-dp-skip-push-idle-when-the-link-was-never-en.patch"
       }
     ]
   },
@@ -15506,7 +15513,7 @@
         "upstream": "6d79b223ec44",
         "source": "claude",
         "subject": "neighbour: Enforce min/max to NDTPA_INTERVAL_PROBE_TIME_MS.",
-        "patch": "patches/6.1/0400-6d79b223ec44-neighbour-enforce-min-max-to-ndtpa-interval-probe-ti.patch"
+        "patch": "patches/6.1/0399-6d79b223ec44-neighbour-enforce-min-max-to-ndtpa-interval-probe-ti.patch"
       }
     ]
   },
@@ -15562,7 +15569,7 @@
         "upstream": "860134b3af77",
         "source": "claude",
         "subject": "wifi: mac80211: mesh: reset the CSA state when leaving",
-        "patch": "patches/6.1/0396-860134b3af77-wifi-mac80211-mesh-reset-the-csa-state-when-leaving.patch"
+        "patch": "patches/6.1/0395-860134b3af77-wifi-mac80211-mesh-reset-the-csa-state-when-leaving.patch"
       }
     ]
   },
@@ -15580,21 +15587,21 @@
         "upstream": "",
         "source": "claude",
         "subject": "wifi: cfg80211: expose nl80211_chan_width_to_mhz for wide sharing",
-        "patch": "patches/6.1/0393-q-wifi-cfg80211-expose-nl80211-chan-width-to-mhz-for-w.patch"
+        "patch": "patches/6.1/0392-q-wifi-cfg80211-expose-nl80211-chan-width-to-mhz-for-w.patch"
       },
       {
         "status": "included",
         "upstream": "",
         "source": "claude",
         "subject": "wifi: cfg80211: expose cfg80211_chandef_get_width()",
-        "patch": "patches/6.1/0394-q-wifi-cfg80211-expose-cfg80211-chandef-get-width.patch"
+        "patch": "patches/6.1/0393-q-wifi-cfg80211-expose-cfg80211-chandef-get-width.patch"
       },
       {
         "status": "included",
         "upstream": "e14bf37bb2b3",
         "source": "claude",
         "subject": "wifi: mac80211: don't allow injecting frames wider than the chanctx",
-        "patch": "patches/6.1/0395-e14bf37bb2b3-wifi-mac80211-don-t-allow-injecting-frames-wider-tha.patch"
+        "patch": "patches/6.1/0394-e14bf37bb2b3-wifi-mac80211-don-t-allow-injecting-frames-wider-tha.patch"
       }
     ]
   },
@@ -15628,7 +15635,7 @@
         "upstream": "4635b1a1c1d6",
         "source": "claude",
         "subject": "wifi: cfg80211: get the wiphy out of a dying network namespace",
-        "patch": "patches/6.1/0391-4635b1a1c1d6-wifi-cfg80211-get-the-wiphy-out-of-a-dying-network-n.patch"
+        "patch": "patches/6.1/0390-4635b1a1c1d6-wifi-cfg80211-get-the-wiphy-out-of-a-dying-network-n.patch"
       }
     ]
   },
@@ -15664,7 +15671,7 @@
         "upstream": "6f0a100df853",
         "source": "claude",
         "subject": "wifi: mac80211: only operate on TDLS peers in the TDLS code",
-        "patch": "patches/6.1/0392-6f0a100df853-wifi-mac80211-only-operate-on-tdls-peers-in-the-tdls.patch"
+        "patch": "patches/6.1/0391-6f0a100df853-wifi-mac80211-only-operate-on-tdls-peers-in-the-tdls.patch"
       }
     ]
   },
@@ -15714,7 +15721,7 @@
         "upstream": "78183e833195",
         "source": "claude",
         "subject": "wifi: mac80211: reset the LED state when ifup fails",
-        "patch": "patches/6.1/0388-78183e833195-wifi-mac80211-reset-the-led-state-when-ifup-fails.patch"
+        "patch": "patches/6.1/0387-78183e833195-wifi-mac80211-reset-the-led-state-when-ifup-fails.patch"
       }
     ]
   },
@@ -15732,7 +15739,7 @@
         "upstream": "3f28551d0241",
         "source": "claude",
         "subject": "wifi: mac80211: reset state when starting AP fails",
-        "patch": "patches/6.1/0389-3f28551d0241-wifi-mac80211-reset-state-when-starting-ap-fails.patch"
+        "patch": "patches/6.1/0388-3f28551d0241-wifi-mac80211-reset-state-when-starting-ap-fails.patch"
       }
     ]
   },
@@ -15750,7 +15757,7 @@
         "upstream": "ac7472a24bd4",
         "source": "claude",
         "subject": "wifi: mac80211: abort chanswitch when leaving a mesh",
-        "patch": "patches/6.1/0434-ac7472a24bd4-wifi-mac80211-abort-chanswitch-when-leaving-a-mesh.patch"
+        "patch": "patches/6.1/0433-ac7472a24bd4-wifi-mac80211-abort-chanswitch-when-leaving-a-mesh.patch"
       }
     ]
   },
@@ -15768,7 +15775,7 @@
         "upstream": "733f0fde9539",
         "source": "claude",
         "subject": "wifi: mac80211: don't start a ROC while scanning",
-        "patch": "patches/6.1/0386-733f0fde9539-wifi-mac80211-don-t-start-a-roc-while-scanning.patch"
+        "patch": "patches/6.1/0385-733f0fde9539-wifi-mac80211-don-t-start-a-roc-while-scanning.patch"
       }
     ]
   },
@@ -15818,7 +15825,7 @@
         "upstream": "708f9d43d6a2",
         "source": "claude",
         "subject": "wifi: cfg80211: ibss: ref BSS entry for joined event",
-        "patch": "patches/6.1/0387-708f9d43d6a2-wifi-cfg80211-ibss-ref-bss-entry-for-joined-event.patch"
+        "patch": "patches/6.1/0386-708f9d43d6a2-wifi-cfg80211-ibss-ref-bss-entry-for-joined-event.patch"
       }
     ]
   },
@@ -15852,7 +15859,7 @@
         "upstream": "dab68a74e90b",
         "source": "claude",
         "subject": "wifi: cfg80211: don't free driver-owned scan requests",
-        "patch": "patches/6.1/0385-dab68a74e90b-wifi-cfg80211-don-t-free-driver-owned-scan-requests.patch"
+        "patch": "patches/6.1/0384-dab68a74e90b-wifi-cfg80211-don-t-free-driver-owned-scan-requests.patch"
       }
     ]
   },
@@ -15895,7 +15902,7 @@
         "upstream": "00baeade709f",
         "source": "claude",
         "subject": "RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables",
-        "patch": "patches/6.1/0355-00baeade709f-rdma-erdma-use-irq-safe-xarray-helpers-for-qp-and-cq.patch"
+        "patch": "patches/6.1/0354-00baeade709f-rdma-erdma-use-irq-safe-xarray-helpers-for-qp-and-cq.patch"
       }
     ],
     "7.3": [
@@ -16051,7 +16058,7 @@
         "upstream": "b83641e0ab8b",
         "source": "claude",
         "subject": "net: ipv4: Fix UDP length overflow with PMTU discover and big MTU",
-        "patch": "patches/6.1/0382-b83641e0ab8b-net-ipv4-fix-udp-length-overflow-with-pmtu-discover.patch"
+        "patch": "patches/6.1/0381-b83641e0ab8b-net-ipv4-fix-udp-length-overflow-with-pmtu-discover.patch"
       }
     ]
   },
@@ -16069,7 +16076,7 @@
         "upstream": "6e5ee08eb585",
         "source": "claude",
         "subject": "af_unix: Return immediately when manage_oob() returns NULL for 0-length buffer.",
-        "patch": "patches/6.1/0380-6e5ee08eb585-af-unix-return-immediately-when-manage-oob-returns-n.patch"
+        "patch": "patches/6.1/0379-6e5ee08eb585-af-unix-return-immediately-when-manage-oob-returns-n.patch"
       }
     ]
   },
@@ -16199,7 +16206,7 @@
         "upstream": "a41bd1938a9b",
         "source": "claude",
         "subject": "wifi: cfg80211: undo netns switch if renaming the wiphy fails",
-        "patch": "patches/6.1/0433-a41bd1938a9b-wifi-cfg80211-undo-netns-switch-if-renaming-the-wiph.patch"
+        "patch": "patches/6.1/0432-a41bd1938a9b-wifi-cfg80211-undo-netns-switch-if-renaming-the-wiph.patch"
       }
     ]
   },
@@ -16217,7 +16224,7 @@
         "upstream": "a7491b7efbd9",
         "source": "claude",
         "subject": "wifi: mac80211: don't warn when an IBSS has no channel to",
-        "patch": "patches/6.1/0390-a7491b7efbd9-wifi-mac80211-don-t-warn-when-an-ibss-has-no-channel.patch"
+        "patch": "patches/6.1/0389-a7491b7efbd9-wifi-mac80211-don-t-warn-when-an-ibss-has-no-channel.patch"
       }
     ]
   },
@@ -16267,7 +16274,7 @@
         "upstream": "7f4a5ec6258f",
         "source": "claude",
         "subject": "net/sched: codel: bound the dropping loop per dequeue call",
-        "patch": "patches/6.1/0412-7f4a5ec6258f-net-sched-codel-bound-the-dropping-loop-per-dequeue.patch"
+        "patch": "patches/6.1/0411-7f4a5ec6258f-net-sched-codel-bound-the-dropping-loop-per-dequeue.patch"
       }
     ]
   },
@@ -16303,7 +16310,7 @@
         "upstream": "9868f5c077df",
         "source": "claude",
         "subject": "EDAC/altera: Use parent device for devres in altr_portb_setup()",
-        "patch": "patches/6.1/0383-9868f5c077df-edac-altera-use-parent-device-for-devres-in-altr-por.patch"
+        "patch": "patches/6.1/0382-9868f5c077df-edac-altera-use-parent-device-for-devres-in-altr-por.patch"
       }
     ]
   },
@@ -16465,7 +16472,7 @@
         "upstream": "93de2a6a4b91",
         "source": "stable-list",
         "subject": "KVM: SEV: Do cache maintenance on the source VM during intra-host migration",
-        "patch": "patches/6.1/0455-93de2a6a4b91-kvm-sev-do-cache-maintenance-on-the-source-vm-during.patch"
+        "patch": "patches/6.1/0454-93de2a6a4b91-kvm-sev-do-cache-maintenance-on-the-source-vm-during.patch"
       }
     ]
   },
@@ -16562,7 +16569,7 @@
         "upstream": "26cc0e69cce0",
         "source": "claude",
         "subject": "mctp: route: iterate socket tag list in mctp_lookup_prealloc_tag()",
-        "patch": "patches/6.1/0427-26cc0e69cce0-mctp-route-iterate-socket-tag-list-in-mctp-lookup-pr.patch"
+        "patch": "patches/6.1/0426-26cc0e69cce0-mctp-route-iterate-socket-tag-list-in-mctp-lookup-pr.patch"
       }
     ]
   },
@@ -16650,7 +16657,7 @@
         "upstream": "296c83b5ccc8",
         "source": "claude",
         "subject": "gve: DQO: reject TSO packets with an out of range MSS",
-        "patch": "patches/6.1/0428-296c83b5ccc8-gve-dqo-reject-tso-packets-with-an-out-of-range-mss.patch"
+        "patch": "patches/6.1/0427-296c83b5ccc8-gve-dqo-reject-tso-packets-with-an-out-of-range-mss.patch"
       }
     ]
   },
@@ -16700,7 +16707,7 @@
         "upstream": "06e3f54e8b22",
         "source": "claude",
         "subject": "net: flush skb_defer_nodes in dev_cpu_dead()",
-        "patch": "patches/6.1/0431-06e3f54e8b22-net-flush-skb-defer-nodes-in-dev-cpu-dead.patch"
+        "patch": "patches/6.1/0430-06e3f54e8b22-net-flush-skb-defer-nodes-in-dev-cpu-dead.patch"
       }
     ]
   },
@@ -16736,7 +16743,7 @@
         "upstream": "c2cdef41e0b4",
         "source": "claude",
         "subject": "net: dsa: mt7530: fix NULL dereference on unbind of MT7531 and MT7621",
-        "patch": "patches/6.1/0426-c2cdef41e0b4-net-dsa-mt7530-fix-null-dereference-on-unbind-of-mt7.patch"
+        "patch": "patches/6.1/0425-c2cdef41e0b4-net-dsa-mt7530-fix-null-dereference-on-unbind-of-mt7.patch"
       }
     ]
   },
@@ -16797,7 +16804,7 @@
         "upstream": "a6c1edfbe240",
         "source": "claude",
         "subject": "bpf: Reject pkt arguments in mutating subprogs",
-        "patch": "patches/6.1/0424-a6c1edfbe240-bpf-reject-pkt-arguments-in-mutating-subprogs.patch"
+        "patch": "patches/6.1/0423-a6c1edfbe240-bpf-reject-pkt-arguments-in-mutating-subprogs.patch"
       }
     ]
   },
@@ -16831,7 +16838,7 @@
         "upstream": "0346ec2f080b",
         "source": "claude",
         "subject": "ipv6: Prevent rt6_insert_exception() for dying fib6_info.",
-        "patch": "patches/6.1/0421-0346ec2f080b-ipv6-prevent-rt6-insert-exception-for-dying-fib6-inf.patch"
+        "patch": "patches/6.1/0420-0346ec2f080b-ipv6-prevent-rt6-insert-exception-for-dying-fib6-inf.patch"
       }
     ]
   },
@@ -16912,7 +16919,7 @@
         "upstream": "310d1ac61a4d",
         "source": "claude",
         "subject": "net: ethernet: mtk_eth_soc: unregister net_devices in case of probe failure",
-        "patch": "patches/6.1/0417-310d1ac61a4d-net-ethernet-mtk-eth-soc-unregister-net-devices-in-c.patch"
+        "patch": "patches/6.1/0416-310d1ac61a4d-net-ethernet-mtk-eth-soc-unregister-net-devices-in-c.patch"
       }
     ]
   },
@@ -16962,7 +16969,7 @@
         "upstream": "261b61d3735b",
         "source": "claude",
         "subject": "bpf: Make post-verification instruction rewrites killable",
-        "patch": "patches/6.1/0416-261b61d3735b-bpf-make-post-verification-instruction-rewrites-kill.patch"
+        "patch": "patches/6.1/0415-261b61d3735b-bpf-make-post-verification-instruction-rewrites-kill.patch"
       }
     ]
   },
@@ -16980,7 +16987,7 @@
         "upstream": "b6ec0f797459",
         "source": "claude",
         "subject": "scsi: sd_zbc: Reject disks with too many zones",
-        "patch": "patches/6.1/0411-b6ec0f797459-scsi-sd-zbc-reject-disks-with-too-many-zones.patch"
+        "patch": "patches/6.1/0410-b6ec0f797459-scsi-sd-zbc-reject-disks-with-too-many-zones.patch"
       }
     ]
   },
@@ -17027,7 +17034,7 @@
         "upstream": "f0ea4824deeb",
         "source": "claude",
         "subject": "iio: health: max30102: fix NULL dereference in interrupt handler",
-        "patch": "patches/6.1/0346-f0ea4824deeb-iio-health-max30102-fix-null-dereference-in-interrup.patch"
+        "patch": "patches/6.1/0345-f0ea4824deeb-iio-health-max30102-fix-null-dereference-in-interrup.patch"
       }
     ]
   },
@@ -17307,7 +17314,7 @@
         "upstream": "973ea70393e8",
         "source": "claude",
         "subject": "KVM: SEV: Do cache maintenance on the source VM *before* clearing SEV state",
-        "patch": "patches/6.1/0464-973ea70393e8-kvm-sev-do-cache-maintenance-on-the-source-vm-before.patch"
+        "patch": "patches/6.1/0463-973ea70393e8-kvm-sev-do-cache-maintenance-on-the-source-vm-before.patch"
       }
     ],
     "7.3": [
@@ -17408,7 +17415,7 @@
         "upstream": "8ed67535fdff",
         "source": "claude",
         "subject": "Bluetooth: hci_sync: Fix inquiry cache use-after-free",
-        "patch": "patches/6.1/0436-8ed67535fdff-bluetooth-hci-sync-fix-inquiry-cache-use-after-free.patch"
+        "patch": "patches/6.1/0435-8ed67535fdff-bluetooth-hci-sync-fix-inquiry-cache-use-after-free.patch"
       }
     ]
   },
@@ -17593,7 +17600,7 @@
         "upstream": "7c549fb7eecd",
         "source": "claude",
         "subject": "netfilter: flowtable: generalize pending status bit",
-        "patch": "patches/6.1/0448-7c549fb7eecd-netfilter-flowtable-generalize-pending-status-bit.patch"
+        "patch": "patches/6.1/0447-7c549fb7eecd-netfilter-flowtable-generalize-pending-status-bit.patch"
       }
     ]
   },
@@ -17627,7 +17634,7 @@
         "upstream": "0d2c49915bc3",
         "source": "claude",
         "subject": "net: sparx5: skip ptp deinit if init was skipped",
-        "patch": "patches/6.1/0447-0d2c49915bc3-net-sparx5-skip-ptp-deinit-if-init-was-skipped.patch"
+        "patch": "patches/6.1/0446-0d2c49915bc3-net-sparx5-skip-ptp-deinit-if-init-was-skipped.patch"
       }
     ]
   },
@@ -17645,7 +17652,7 @@
         "upstream": "6f0c2c4f5e71",
         "source": "claude",
         "subject": "net: ethernet: mtk_eth_soc: allocate dummy netdev sooner",
-        "patch": "patches/6.1/0446-6f0c2c4f5e71-net-ethernet-mtk-eth-soc-allocate-dummy-netdev-soone.patch"
+        "patch": "patches/6.1/0445-6f0c2c4f5e71-net-ethernet-mtk-eth-soc-allocate-dummy-netdev-soone.patch"
       }
     ]
   },
@@ -17663,7 +17670,7 @@
         "upstream": "ea4d4b5dddb5",
         "source": "claude",
         "subject": "net: cap skb->queue_mapping when the tx queue is picked",
-        "patch": "patches/6.1/0445-ea4d4b5dddb5-net-cap-skb-queue-mapping-when-the-tx-queue-is-picke.patch"
+        "patch": "patches/6.1/0444-ea4d4b5dddb5-net-cap-skb-queue-mapping-when-the-tx-queue-is-picke.patch"
       }
     ]
   },
@@ -17713,7 +17720,7 @@
         "upstream": "17637e1a581a",
         "source": "claude",
         "subject": "bpf: Skip detached progs in trampoline images that are still in use",
-        "patch": "patches/6.1/0442-17637e1a581a-bpf-skip-detached-progs-in-trampoline-images-that-ar.patch"
+        "patch": "patches/6.1/0441-17637e1a581a-bpf-skip-detached-progs-in-trampoline-images-that-ar.patch"
       }
     ]
   },
@@ -17763,7 +17770,7 @@
         "upstream": "0fb5751a6e41",
         "source": "claude",
         "subject": "bpf: Wait for an RCU tasks grace period before freeing trampoline progs",
-        "patch": "patches/6.1/0443-0fb5751a6e41-bpf-wait-for-an-rcu-tasks-grace-period-before-freein.patch"
+        "patch": "patches/6.1/0442-0fb5751a6e41-bpf-wait-for-an-rcu-tasks-grace-period-before-freein.patch"
       }
     ]
   },
@@ -17781,7 +17788,7 @@
         "upstream": "37e02c42a00b",
         "source": "claude",
         "subject": "net: restrict SO_RESERVE_MEM to TCP sockets and cap max value",
-        "patch": "patches/6.1/0441-37e02c42a00b-net-restrict-so-reserve-mem-to-tcp-sockets-and-cap-m.patch"
+        "patch": "patches/6.1/0440-37e02c42a00b-net-restrict-so-reserve-mem-to-tcp-sockets-and-cap-m.patch"
       }
     ]
   },
@@ -17817,7 +17824,7 @@
         "upstream": "8ae3f4067ba4",
         "source": "claude",
         "subject": "seg6: ensure packet data is writable before modifying SRH and IPv6 DA",
-        "patch": "patches/6.1/0440-8ae3f4067ba4-seg6-ensure-packet-data-is-writable-before-modifying.patch"
+        "patch": "patches/6.1/0439-8ae3f4067ba4-seg6-ensure-packet-data-is-writable-before-modifying.patch"
       }
     ]
   },
@@ -17851,7 +17858,7 @@
         "upstream": "88095728511e",
         "source": "claude",
         "subject": "net: stmmac: fix rx Scatter-Gather support",
-        "patch": "patches/6.1/0439-88095728511e-net-stmmac-fix-rx-scatter-gather-support.patch"
+        "patch": "patches/6.1/0438-88095728511e-net-stmmac-fix-rx-scatter-gather-support.patch"
       }
     ]
   },
@@ -17887,7 +17894,7 @@
         "upstream": "04c824940d52",
         "source": "claude",
         "subject": "net/mlx5: Fix slab-out-of-bounds when handling team device events",
-        "patch": "patches/6.1/0438-04c824940d52-net-mlx5-fix-slab-out-of-bounds-when-handling-team-d.patch"
+        "patch": "patches/6.1/0437-04c824940d52-net-mlx5-fix-slab-out-of-bounds-when-handling-team-d.patch"
       }
     ]
   },
@@ -17905,7 +17912,7 @@
         "upstream": "eb7b84af0ec5",
         "source": "claude",
         "subject": "net: systemport: Fix buffer overflow in bcm_sysport_get_stats()",
-        "patch": "patches/6.1/0437-eb7b84af0ec5-net-systemport-fix-buffer-overflow-in-bcm-sysport-ge.patch"
+        "patch": "patches/6.1/0436-eb7b84af0ec5-net-systemport-fix-buffer-overflow-in-bcm-sysport-ge.patch"
       }
     ]
   },
@@ -17984,7 +17991,7 @@
         "upstream": "72ece656abd4",
         "source": "claude",
         "subject": "nvme: fix command effects log lifetime for multipath heads",
-        "patch": "patches/6.1/0430-72ece656abd4-nvme-fix-command-effects-log-lifetime-for-multipath.patch"
+        "patch": "patches/6.1/0429-72ece656abd4-nvme-fix-command-effects-log-lifetime-for-multipath.patch"
       }
     ]
   },
@@ -18048,14 +18055,14 @@
         "upstream": "",
         "source": "claude",
         "subject": "nvme: add nvme_get_ns_head()",
-        "patch": "patches/6.1/0304-q-nvme-add-nvme-get-ns-head.patch"
+        "patch": "patches/6.1/0303-q-nvme-add-nvme-get-ns-head.patch"
       },
       {
         "status": "included",
         "upstream": "9952f3882ecb",
         "source": "claude",
         "subject": "nvme: fix cdev lifetime",
-        "patch": "patches/6.1/0305-9952f3882ecb-nvme-fix-cdev-lifetime.patch"
+        "patch": "patches/6.1/0304-9952f3882ecb-nvme-fix-cdev-lifetime.patch"
       }
     ]
   },
@@ -18105,7 +18112,7 @@
         "upstream": "ad139384ecdd",
         "source": "claude",
         "subject": "bpf: Fix overflow of jump offset in constant blinding",
-        "patch": "patches/6.1/0429-ad139384ecdd-bpf-fix-overflow-of-jump-offset-in-constant-blinding.patch"
+        "patch": "patches/6.1/0428-ad139384ecdd-bpf-fix-overflow-of-jump-offset-in-constant-blinding.patch"
       }
     ]
   },
@@ -18168,7 +18175,7 @@
         "upstream": "7f93ca31f7fd",
         "source": "claude",
         "subject": "wifi: mac80211: prevent AP VLAN tx from other interfaces",
-        "patch": "patches/6.1/0423-7f93ca31f7fd-wifi-mac80211-prevent-ap-vlan-tx-from-other-interfac.patch"
+        "patch": "patches/6.1/0422-7f93ca31f7fd-wifi-mac80211-prevent-ap-vlan-tx-from-other-interfac.patch"
       }
     ]
   },
@@ -18204,7 +18211,7 @@
         "upstream": "6bdcdb31318c",
         "source": "claude",
         "subject": "wifi: mac80211: validate TX status rate metadata",
-        "patch": "patches/6.1/0422-6bdcdb31318c-wifi-mac80211-validate-tx-status-rate-metadata.patch"
+        "patch": "patches/6.1/0421-6bdcdb31318c-wifi-mac80211-validate-tx-status-rate-metadata.patch"
       }
     ]
   },
@@ -18222,7 +18229,7 @@
         "upstream": "fcf0b58e976e",
         "source": "claude",
         "subject": "rtc: ac100: Fix clock provider use-after-free on probe failure",
-        "patch": "patches/6.1/0420-fcf0b58e976e-rtc-ac100-fix-clock-provider-use-after-free-on-probe.patch"
+        "patch": "patches/6.1/0419-fcf0b58e976e-rtc-ac100-fix-clock-provider-use-after-free-on-probe.patch"
       }
     ]
   },
@@ -18240,7 +18247,7 @@
         "upstream": "aeaca27c1db3",
         "source": "claude",
         "subject": "wifi: ath9k_htc: bound TX aggregation to MAX_TX_BUF_SIZE",
-        "patch": "patches/6.1/0419-aeaca27c1db3-wifi-ath9k-htc-bound-tx-aggregation-to-max-tx-buf-si.patch"
+        "patch": "patches/6.1/0418-aeaca27c1db3-wifi-ath9k-htc-bound-tx-aggregation-to-max-tx-buf-si.patch"
       }
     ]
   },
@@ -18285,7 +18292,7 @@
         "upstream": "5e4f3509793b",
         "source": "claude",
         "subject": "wifi: mac80211: drop oversized fragments to avoid extra_len overflow",
-        "patch": "patches/6.1/0418-5e4f3509793b-wifi-mac80211-drop-oversized-fragments-to-avoid-extr.patch"
+        "patch": "patches/6.1/0417-5e4f3509793b-wifi-mac80211-drop-oversized-fragments-to-avoid-extr.patch"
       }
     ]
   },
@@ -18374,7 +18381,7 @@
         "upstream": "006c8b834aed",
         "source": "claude",
         "subject": "net: gso: limit recursive IP-in-IP segmentation",
-        "patch": "patches/6.1/0444-006c8b834aed-net-gso-limit-recursive-ip-in-ip-segmentation.patch"
+        "patch": "patches/6.1/0443-006c8b834aed-net-gso-limit-recursive-ip-in-ip-segmentation.patch"
       }
     ]
   },
@@ -18561,7 +18568,7 @@
         "upstream": "5015191096db",
         "source": "claude",
         "subject": "ksmbd: fix lease break and ack state handling",
-        "patch": "patches/6.1/0286-5015191096db-ksmbd-fix-lease-break-and-ack-state-handling.patch"
+        "patch": "patches/6.1/0285-5015191096db-ksmbd-fix-lease-break-and-ack-state-handling.patch"
       }
     ]
   },
@@ -18579,7 +18586,7 @@
         "upstream": "5ccea7eacb77",
         "source": "claude",
         "subject": "mailbox: imx: Add a channel shutdown field",
-        "patch": "patches/6.1/0283-5ccea7eacb77-mailbox-imx-add-a-channel-shutdown-field.patch"
+        "patch": "patches/6.1/0282-5ccea7eacb77-mailbox-imx-add-a-channel-shutdown-field.patch"
       }
     ]
   },
@@ -18597,7 +18604,7 @@
         "upstream": "1f602619e408",
         "source": "claude",
         "subject": "mailbox: imx: Use devm_pm_runtime_enable()",
-        "patch": "patches/6.1/0284-1f602619e408-mailbox-imx-use-devm-pm-runtime-enable.patch"
+        "patch": "patches/6.1/0283-1f602619e408-mailbox-imx-use-devm-pm-runtime-enable.patch"
       }
     ]
   },
@@ -18615,14 +18622,14 @@
         "upstream": "aa97f11a76e5",
         "source": "claude",
         "subject": "net: lan966x: restore RX state on reload failure",
-        "patch": "patches/6.1/0278-aa97f11a76e5-net-lan966x-restore-rx-state-on-reload-failure.patch"
+        "patch": "patches/6.1/0277-aa97f11a76e5-net-lan966x-restore-rx-state-on-reload-failure.patch"
       },
       {
         "status": "included",
         "upstream": "59c3d55a946c",
         "source": "claude",
         "subject": "net: lan966x: fix use-after-free and leak in",
-        "patch": "patches/6.1/0279-59c3d55a946c-net-lan966x-fix-use-after-free-and-leak-in.patch"
+        "patch": "patches/6.1/0278-59c3d55a946c-net-lan966x-fix-use-after-free-and-leak-in.patch"
       }
     ]
   },
@@ -18803,7 +18810,7 @@
         "upstream": "8fa813b7fd1e",
         "source": "claude",
         "subject": "drm/amd/display: Remove sink usage from DPMS",
-        "patch": "patches/6.1/0303-8fa813b7fd1e-drm-amd-display-remove-sink-usage-from-dpms.patch"
+        "patch": "patches/6.1/0302-8fa813b7fd1e-drm-amd-display-remove-sink-usage-from-dpms.patch"
       }
     ]
   },
@@ -18837,7 +18844,7 @@
         "upstream": "c2de369c5c5b",
         "source": "claude",
         "subject": "macsec: initialize SecY before registering the netdevice",
-        "patch": "patches/6.1/0425-c2de369c5c5b-macsec-initialize-secy-before-registering-the-netdev.patch"
+        "patch": "patches/6.1/0424-c2de369c5c5b-macsec-initialize-secy-before-registering-the-netdev.patch"
       }
     ]
   },
@@ -18868,7 +18875,7 @@
         "upstream": "eef3b67f9c67",
         "source": "mainline",
         "subject": "EDAC/altera: Fix use-after-free in error paths",
-        "patch": "patches/6.1/0435-eef3b67f9c67-edac-altera-fix-use-after-free-in-error-paths.patch"
+        "patch": "patches/6.1/0434-eef3b67f9c67-edac-altera-fix-use-after-free-in-error-paths.patch"
       },
       {
         "status": "superseded",
@@ -18893,7 +18900,7 @@
         "upstream": "a4573a3838ae",
         "source": "claude",
         "subject": "perf/core: Check kernel access when kernel callchains are requested",
-        "patch": "patches/6.1/0291-a4573a3838ae-perf-core-check-kernel-access-when-kernel-callchains.patch"
+        "patch": "patches/6.1/0290-a4573a3838ae-perf-core-check-kernel-access-when-kernel-callchains.patch"
       }
     ]
   },
@@ -19019,14 +19026,14 @@
         "upstream": "",
         "source": "claude",
         "subject": "drm/vc4: Use devm_request_irq() for automatic cleanup",
-        "patch": "patches/6.1/0457-q-drm-vc4-use-devm-request-irq-for-automatic-cleanup.patch"
+        "patch": "patches/6.1/0456-q-drm-vc4-use-devm-request-irq-for-automatic-cleanup.patch"
       },
       {
         "status": "included",
         "upstream": "6abc8e4dcfbc",
         "source": "claude",
         "subject": "drm/vc4: Disable the V3D interrupt across runtime suspend",
-        "patch": "patches/6.1/0458-6abc8e4dcfbc-drm-vc4-disable-the-v3d-interrupt-across-runtime-sus.patch"
+        "patch": "patches/6.1/0457-6abc8e4dcfbc-drm-vc4-disable-the-v3d-interrupt-across-runtime-sus.patch"
       }
     ]
   },
@@ -19044,7 +19051,7 @@
         "upstream": "7c24a4e87e21",
         "source": "claude",
         "subject": "vsock: Fix memory leak in vmci_transport_recv_dgram_cb()",
-        "patch": "patches/6.1/0456-7c24a4e87e21-vsock-fix-memory-leak-in-vmci-transport-recv-dgram-c.patch"
+        "patch": "patches/6.1/0455-7c24a4e87e21-vsock-fix-memory-leak-in-vmci-transport-recv-dgram-c.patch"
       }
     ]
   },
@@ -19121,7 +19128,7 @@
         "upstream": "44378d02c5aa",
         "source": "claude",
         "subject": "net: always dissect GSO packets in __virtio_net_hdr_to_skb()",
-        "patch": "patches/6.1/0454-44378d02c5aa-net-always-dissect-gso-packets-in-virtio-net-hdr-to.patch"
+        "patch": "patches/6.1/0453-44378d02c5aa-net-always-dissect-gso-packets-in-virtio-net-hdr-to.patch"
       }
     ]
   },
@@ -19139,7 +19146,7 @@
         "upstream": "916c484d29d8",
         "source": "claude",
         "subject": "wifi: mt76: mt7915: disable rx napi when removing device",
-        "patch": "patches/6.1/0453-916c484d29d8-wifi-mt76-mt7915-disable-rx-napi-when-removing-devic.patch"
+        "patch": "patches/6.1/0452-916c484d29d8-wifi-mt76-mt7915-disable-rx-napi-when-removing-devic.patch"
       }
     ]
   },
@@ -19175,7 +19182,7 @@
         "upstream": "858bee1c7785",
         "source": "claude",
         "subject": "btrfs: fix xattr replace when multiple xattrs are packed in the same item",
-        "patch": "patches/6.1/0452-858bee1c7785-btrfs-fix-xattr-replace-when-multiple-xattrs-are-pac.patch"
+        "patch": "patches/6.1/0451-858bee1c7785-btrfs-fix-xattr-replace-when-multiple-xattrs-are-pac.patch"
       }
     ]
   },
@@ -19272,7 +19279,7 @@
         "upstream": "e06b678e3b4e",
         "source": "claude",
         "subject": "cgroup/cpuset: Don't access cpuset_cgrp_subsys.root in is_in_v2_mode()",
-        "patch": "patches/6.1/0449-e06b678e3b4e-cgroup-cpuset-don-t-access-cpuset-cgrp-subsys-root-i.patch"
+        "patch": "patches/6.1/0448-e06b678e3b4e-cgroup-cpuset-don-t-access-cpuset-cgrp-subsys-root-i.patch"
       }
     ]
   },
@@ -19290,7 +19297,7 @@
         "upstream": "d84d6c1a7f1e",
         "source": "claude",
         "subject": "xfs: stop exchanging reflink flags when exchanging mappings",
-        "patch": "patches/6.1/0459-d84d6c1a7f1e-xfs-stop-exchanging-reflink-flags-when-exchanging-ma.patch"
+        "patch": "patches/6.1/0458-d84d6c1a7f1e-xfs-stop-exchanging-reflink-flags-when-exchanging-ma.patch"
       }
     ]
   },
@@ -19839,14 +19846,14 @@
         "upstream": "",
         "source": "claude",
         "subject": "ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure",
-        "patch": "patches/6.1/0465-q-ipc-create-ipc-ns-drop-mqueue-mount-on-sysctl-setup.patch"
+        "patch": "patches/6.1/0464-q-ipc-create-ipc-ns-drop-mqueue-mount-on-sysctl-setup.patch"
       },
       {
         "status": "included",
         "upstream": "f0e48172a59e",
         "source": "claude",
         "subject": "ipc: drop the mqueue mount with kern_unmount() on setup failure",
-        "patch": "patches/6.1/0466-f0e48172a59e-ipc-drop-the-mqueue-mount-with-kern-unmount-on-setup.patch"
+        "patch": "patches/6.1/0465-f0e48172a59e-ipc-drop-the-mqueue-mount-with-kern-unmount-on-setup.patch"
       }
     ]
   },
@@ -19864,7 +19871,7 @@
         "upstream": "81d99abe2bd8",
         "source": "claude",
         "subject": "x86/kvm: Don't consume async #PF flags on a kernel #PF in NMI context",
-        "patch": "patches/6.1/0460-81d99abe2bd8-x86-kvm-don-t-consume-async-pf-flags-on-a-kernel-pf.patch"
+        "patch": "patches/6.1/0459-81d99abe2bd8-x86-kvm-don-t-consume-async-pf-flags-on-a-kernel-pf.patch"
       }
     ]
   },
@@ -19900,14 +19907,14 @@
         "upstream": "b2936b4fd562",
         "source": "claude",
         "subject": "net/ipv6: Introduce payload_len helpers",
-        "patch": "patches/6.1/0472-b2936b4fd562-net-ipv6-introduce-payload-len-helpers.patch"
+        "patch": "patches/6.1/0471-b2936b4fd562-net-ipv6-introduce-payload-len-helpers.patch"
       },
       {
         "status": "included",
         "upstream": "8070ed578b6b",
         "source": "claude",
         "subject": "calipso: keep BIG TCP payload_len in calipso_skbuff_setattr()",
-        "patch": "patches/6.1/0473-8070ed578b6b-calipso-keep-big-tcp-payload-len-in-calipso-skbuff-s.patch"
+        "patch": "patches/6.1/0472-8070ed578b6b-calipso-keep-big-tcp-payload-len-in-calipso-skbuff-s.patch"
       }
     ]
   },
@@ -19961,7 +19968,7 @@
         "upstream": "8bf659bd54e1",
         "source": "claude",
         "subject": "netlink: reset skb headers before unicast and multicast filtering",
-        "patch": "patches/6.1/0467-8bf659bd54e1-netlink-reset-skb-headers-before-unicast-and-multica.patch"
+        "patch": "patches/6.1/0466-8bf659bd54e1-netlink-reset-skb-headers-before-unicast-and-multica.patch"
       }
     ]
   },
@@ -19995,14 +20002,14 @@
         "upstream": "",
         "source": "claude",
         "subject": "power: supply: Use power_supply_external_power_changed() in __power_supply_changed_work()",
-        "patch": "patches/6.1/0450-q-power-supply-use-power-supply-external-power-changed.patch"
+        "patch": "patches/6.1/0449-q-power-supply-use-power-supply-external-power-changed.patch"
       },
       {
         "status": "included",
         "upstream": "5b4bd13e0552",
         "source": "claude",
         "subject": "power: supply: core: prevent unregistering a power supply while a callback runs",
-        "patch": "patches/6.1/0451-5b4bd13e0552-power-supply-core-prevent-unregistering-a-power-supp.patch"
+        "patch": "patches/6.1/0450-5b4bd13e0552-power-supply-core-prevent-unregistering-a-power-supp.patch"
       }
     ]
   },

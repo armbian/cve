@@ -2767,90 +2767,7 @@
     ],
     "prerequisites": [],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/smb/client/smb2pdu.c\nfs/smb/client/smb2pdu.c:4864:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/smb2pdu.c:4864:31: error: \u2018smb_eio_trace_read_bad_offset\u2019 undeclared (first use in this function)"
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-64160"
-    ],
-    "kev": false,
-    "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
-    "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/9p/v9fs_vfs.h",
-      "fs/9p/vfs_inode.c",
-      "fs/9p/vfs_inode_dotl.c",
-      "fs/afs/file.c",
-      "fs/afs/inode.c",
-      "fs/afs/internal.h",
-      "fs/afs/write.c",
-      "fs/netfs/buffered_read.c",
-      "fs/netfs/buffered_write.c",
-      "fs/netfs/direct_write.c",
-      "fs/netfs/misc.c",
-      "fs/netfs/write_collect.c",
-      "fs/smb/client/cifsfs.c",
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/file.c",
-      "fs/smb/client/inode.c",
-      "fs/smb/client/readdir.c",
-      "fs/smb/client/smb2ops.c",
-      "fs/smb/client/smb2pdu.c",
-      "include/linux/netfs.h"
-    ],
-    "prerequisites": [
-      "6c9903c330ab cifs: Remove pre-historic unused CIFSSMBCopy",
-      "0d6b0d2e3816 cifs: Recognize SFU char/block devices created by Windows NFS server on Windows Server <<2012",
-      "b2fe4a8fa0f6 smb: client: get rid of @nlsc param in cifs_tree_connect()",
-      "e1481075981d smb: client: allow reconnect when sending ioctl",
-      "796733054e4a smb: client: fix noisy message when mounting shares",
-      "a769bee5f9fb smb: use macros instead of constants for leasekey size and default cifsattrs value",
-      "f4d3cde410cc netfs: Remove redundant use of smp_rmb()",
-      "4acb665cf4f3 netfs: Work around recursion by abandoning retry if nothing read",
-      "751e213f9f8a netfs: Split retry code out of fs/netfs/write_collect.c",
-      "627cf645277b netfs: Don't use bh spinlock",
-      "6e0b503dc65c afs: Don't use mutex for I/O operation lock",
-      "9e705016eb8f afs: Add more tracepoints to do with tracking validity",
-      "e61bfaad8fd8 netfs: Add functions to build/clean a buffer in a folio_queue",
-      "49866ce7ea8d netfs: Add support for caching single monolithic objects such as AFS dirs",
-      "b2604315e87a afs: Make afs_init_request() get a key if not given a file"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98125"
-    ],
-    "kev": false,
-    "upstream": "01261a6fa48b62f5ead8e88aaca1e27cb9ab9032",
-    "subject": "smb/client: fix stale page cache in insert/collapse range",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb2ops.c"
-    ],
-    "prerequisites": [
-      "e1481075981d smb: client: allow reconnect when sending ioctl",
-      "796733054e4a smb: client: fix noisy message when mounting shares",
-      "bfc115503015 smb: client: fix return value of parse_dfs_referrals()",
-      "f089ee00f205 smb: client: Remove redundant check in smb2_is_path_accessible()",
-      "6c06be908ca1 cifs: Check if server supports reparse points before using them",
-      "f83e10a23305 cifs: Remove cifs_truncate_page() as it should be superfluous",
-      "56c0bea52cef cifs: Split parse_reparse_point callback to functions: get buffer and parse buffer",
-      "51b78ffb8036 smb: client: add ParentLeaseKey support",
-      "8767cb3fbd51 Fix SMB311 posix special file creation to servers which do not advertise reparse support",
-      "309c2b776c87 cifs: Add support for creating reparse points over SMB1",
-      "5b432ae5dff5 smb: client: fix creating symlinks under POSIX mounts",
-      "f3ba7c9b0421 smb: client: rename server mid_lock to mid_queue_lock",
-      "9bd42798d5bf smb: client: add mid_counter_lock to protect the mid counter counter",
-      "3fd8ec2fc93b smb: client: smb: client: eliminate mid_flags field",
-      "e3835731e169 smb: client: fix mid_q_entry memleak leak with per-mid locking"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
+    "build_log": "## fs/smb/client/smb2pdu.c\nfs/smb/client/smb2pdu.c:4865:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/smb2pdu.c:4865:31: error: \u2018smb_eio_trace_read_bad_offset\u2019 undeclared (first use in this function)"
   },
   {
     "series": "6.1",
@@ -8273,57 +8190,6 @@
     "prerequisites": [],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
     "build_log": "## fs/smb/client/smb2pdu.c\nfs/smb/client/smb2pdu.c:4630:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/smb2pdu.c:4630:31: error: \u2018smb_eio_trace_read_bad_offset\u2019 undeclared (first use in this function)"
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-64160"
-    ],
-    "kev": false,
-    "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
-    "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/9p/v9fs_vfs.h",
-      "fs/9p/vfs_inode.c",
-      "fs/9p/vfs_inode_dotl.c",
-      "fs/afs/file.c",
-      "fs/afs/inode.c",
-      "fs/afs/internal.h",
-      "fs/afs/write.c",
-      "fs/netfs/buffered_read.c",
-      "fs/netfs/buffered_write.c",
-      "fs/netfs/direct_write.c",
-      "fs/netfs/misc.c",
-      "fs/netfs/write_collect.c",
-      "fs/smb/client/cifsfs.c",
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/file.c",
-      "fs/smb/client/inode.c",
-      "fs/smb/client/readdir.c",
-      "fs/smb/client/smb2ops.c",
-      "fs/smb/client/smb2pdu.c",
-      "include/linux/netfs.h"
-    ],
-    "prerequisites": [
-      "cac2f8b8d8b5 fs: rename current get acl method",
-      "6cd4d4e8b6e1 9p: implement get acl method",
-      "079da629383e 9p: implement set acl method",
-      "6e0149a55379 9p/fs: Remove unneeded idr.h #include",
-      "8669247524c7 fscache,cachefiles: add prepare_ondemand_read() callback",
-      "b3d3ca556757 afs: remove afs_cache_netfs and afs_zap_permits() declarations",
-      "a9eb558a5bea afs: Stop implementing ->writepage()",
-      "5970e15dbcfe filelock: move file locking definitions to separate header file",
-      "c1632a0f1120 fs: port ->setattr() to pass mnt_idmap",
-      "b74d24f7a74f fs: port ->getattr() to pass mnt_idmap",
-      "6c960e68aaed fs: port ->create() to pass mnt_idmap",
-      "7a77db95511c fs: port ->symlink() to pass mnt_idmap",
-      "c54bd91e9eab fs: port ->mkdir() to pass mnt_idmap",
-      "5ebb29bee8d5 fs: port ->mknod() to pass mnt_idmap",
-      "e18275ae55e0 fs: port ->rename() to pass mnt_idmap"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
   },
   {
     "series": "7.3",
