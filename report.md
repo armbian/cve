@@ -1,5 +1,10 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- added 6.12: 3 patch(es)
+- added 6.1: 2 patch(es)
+
 ## 6.18 (base 6.18.62, `c3f63d70f236`)
 
 Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no longer needed: 3
@@ -165,7 +170,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no longer needed: 25
 
-### Included (194)
+### Included (197)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -363,8 +368,11 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 |  | CVE-2026-90237 | `fe97fd540a03` | claude | netfilter: nf_conntrack_pptp: move GRE specific cleanup to GRE tracker |
 |  | CVE-2026-90237 | `ac46f3f35b6e` | claude | netfilter: nf_conntrack_helper: add refcounting from datapath |
 |  | CVE-2026-90237 | `3679da4ad8be` | claude | netfilter: nft_ct: move custom expectation support to helper |
+|  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
+|  | CVE-2026-64160 | `8cf8b5ae8e09` | claude | cifs: Fix undefined variables |
+|  | CVE-2026-98125 | `01261a6fa48b` | claude | smb/client: fix stale page cache in insert/collapse range |
 
-### Needs a backport (14)
+### Needs a backport (12)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -380,16 +388,6 @@ Already in tree: 131 · Other architectures (not built): 12 · cve/ backports no
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-99275 | `4d8930afa344` | mainline | smb: client: reject short SESSION_SETUP responses |
 | does not build | CVE-2026-99272 | `2ec9cdf469dd` | mainline | smb: client: validate the data area in SMB2_read() |
-|  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
-|  | CVE-2026-98125 | `01261a6fa48b` | mainline | smb/client: fix stale page cache in insert/collapse range |
-
-### cve/ backport does not apply on this base (3)
-
-| | CVE | Upstream | Source | Subject |
-|---|---|---|---|---|
-|  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
-|  | CVE-2026-64160 | `8cf8b5ae8e09` | claude | cifs: Fix undefined variables |
-|  | CVE-2026-98125 | `01261a6fa48b` | claude | smb/client: fix stale page cache in insert/collapse range |
 
 ### Not affected per work package (needs review) (1)
 
@@ -464,7 +462,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no longer needed: 60
 
-### Included (514)
+### Included (516)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -743,7 +741,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-64241 | `950007767823` | claude | gpio: rockchip: teardown bugs and resource leaks |
 |  | CVE-2026-80676 | `331d8900121a` | claude | Drivers: hv: vmbus: use generic driver_override infrastructure |
 |  | CVE-2026-97424 | `e3829992dd9f` | claude | drm/amdgpu/ras: add ras_suspend callback and use it for cp_ecc_error_irq |
-|  | CVE-2026-53185 | `4e3c87b9421d` | claude | zram: fix synchronous reads |
 |  | CVE-2026-63805 | `4e67f504ee9d` | claude | crypto: nx - fix nx_crypto_ctx_exit argument |
 |  | CVE-2026-98906 | `aa97f11a76e5` | claude | net: lan966x: restore RX state on reload failure |
 |  | CVE-2026-98906 | `59c3d55a946c` | claude | net: lan966x: fix use-after-free and leak in |
@@ -982,8 +979,11 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-68152 | `ea20c44935d6` | claude | amt: fix use-after-free in AMT delayed works |
 |  | CVE-2026-74725 | `ec680ea4ba1b` | mainline | enic: fix tx_hang_reset use-after-free on device removal |
 |  | CVE-2026-89797 | `75b1e88d3425` | claude | power: supply: ab8500_fg: fix use-after-free on remove |
+|  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
+|  | CVE-2026-53185 | `4e3c87b9421d` | claude | zram: fix synchronous reads |
+|  | CVE-2026-53185 | `1e9460d132cc` | claude | zram: return errors from read_from_bdev_sync |
 
-### Needs a backport (25)
+### Needs a backport (24)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1011,13 +1011,6 @@ Already in tree: 89 · Other architectures (not built): 18 · cve/ backports no 
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
 |  | CVE-2026-99275 | `4d8930afa344` | mainline | smb: client: reject short SESSION_SETUP responses |
 | does not build | CVE-2026-99272 | `2ec9cdf469dd` | mainline | smb: client: validate the data area in SMB2_read() |
-|  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
-
-### cve/ backport does not apply on this base (1)
-
-| | CVE | Upstream | Source | Subject |
-|---|---|---|---|---|
-|  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 
 ### Not affected per work package (needs review) (1)
 

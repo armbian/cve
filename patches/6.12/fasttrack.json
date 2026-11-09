@@ -3642,6 +3642,60 @@
       "build_log": "",
       "backport": "CVE-2026-90237/6.12",
       "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
+      "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64160"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0195-2c8f4742bb76-netfs-fix-potential-for-tearing-in-remote-i-size-and.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64160/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "8cf8b5ae8e093132b0dce0a932af10c9ef077936",
+      "subject": "cifs: Fix undefined variables",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64160"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0196-8cf8b5ae8e09-cifs-fix-undefined-variables.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64160/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "01261a6fa48b62f5ead8e88aaca1e27cb9ab9032",
+      "subject": "smb/client: fix stale page cache in insert/collapse range",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98125"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0197-01261a6fa48b-smb-client-fix-stale-page-cache-in-insert-collapse-r.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98125/6.12",
+      "bug_commits": []
     }
   ]
 }
