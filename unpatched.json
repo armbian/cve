@@ -426,23 +426,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99275"
-    ],
-    "kev": false,
-    "upstream": "4d8930afa3446041358a7db33e7b23a0bb9459b5",
-    "subject": "smb: client: reject short SESSION_SETUP responses",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb2misc.c",
-      "fs/smb/client/smb2pdu.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-64160"
     ],
     "kev": false,
@@ -726,80 +709,34 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-89556"
+      "CVE-2026-89692"
     ],
     "kev": false,
-    "upstream": "9a5ff45689329835f874cefe5174e577d141d423",
-    "subject": "module: validate string table section types",
+    "upstream": "b036727d334b1b7cd4c1f1fba3b59ba93a6bbe96",
+    "subject": "nfsd: clear CALLBACK_RUNNING on failed delegation recall queue",
     "verdict": "needs-backport",
     "files": [
-      "kernel/module/main.c"
+      "fs/nfsd/nfs4state.c"
     ],
     "prerequisites": [
-      "f43922162184 module: Take const arg in validate_section_offset",
-      "90f8f312db72 module: Factor out elf_validity_ehdr",
-      "c92aab819d56 module: Factor out elf_validity_cache_sechdrs",
-      "3c5700aeabd8 module: Factor out elf_validity_cache_secstrings",
-      "fbc0e4e482aa module: Factor out elf_validity_cache_index_info",
-      "0be41a9367d1 module: Factor out elf_validity_cache_index_mod",
-      "9bd4982cf7d6 module: Factor out elf_validity_cache_index_sym",
-      "0a9395334496 module: Factor out elf_validity_cache_index_str",
-      "f3f561218bb6 module: Group section index calculations together",
-      "837031e052af module: Factor out elf_validity_cache_strtab",
-      "d979e3dffa93 module: Additional validation in elf_validity_cache_strtab",
-      "05e555642c46 regularize emptiness checks in fini_module(2) and vfs_dedupe_file_range()",
-      "8152f8201088 fdget(), more trivial conversions",
-      "0c133b1e78cd module: prepare to handle ROX allocations for text",
-      "0db6f8d7820a alloc_tag: load module tags into separate contiguous memory"
+      "7e64c5bc497c NLM/NFSD: Fix lock notifications for async-capable filesystems",
+      "c757ca1a56ed nfsd: drop the ncf_cb_bmap field",
+      "f6259e2e4f64 nfsd: have nfsd4_deleg_getattr_conflict pass back write deleg pointer",
+      "600020927b00 nfsd: Fill NFSv4.1 server implementation fields in OP_EXCHANGE_ID response",
+      "ed9887b876c9 nfsd: replace call_rcu by kfree_rcu for simple kmem_cache_free callback",
+      "d08bf5ea649c NFSD: Remove dead code in nfsd4_create_session()",
+      "a2c0412c051e nfsd: Don't fail OP_SETCLIENTID when there are too many clients.",
+      "53f9ba78e07c nfsd: remove nfsd4_session->se_bchannel",
+      "10c93b5101ca nfsd: make nfsd4_session->se_flags a bool",
+      "b44ffa4c4f57 NFSD: Block DESTROY_CLIENTID only when there are ongoing async COPY operations",
+      "ac0514f4d198 NFSD: Add a laundromat reaper for async copy state",
+      "583772eec7b0 nfsd: allow for up to 32 callback session slots",
+      "935fee5d5ba8 nfsd: use new wake_up_var interfaces.",
+      "6f035c99acd6 NFSD: Clean up unused variable",
+      "0b6e14242630 nfsd: use an xarray to store v4.1 session slots"
     ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98389"
-    ],
-    "kev": false,
-    "upstream": "1f1d43418d61c8511779e0f63a954a78b9433b43",
-    "subject": "drm/amdgpu: skip gfx switch_power_profile during GPU reset",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/amd/pm/amdgpu_dpm.c"
-    ],
-    "prerequisites": [
-      "610696505c3a drm/amd/pm: implement dpm sdma reset function",
-      "697cb5cc2549 drm/amd/pm: add inst to set_powergating_by_smu",
-      "ff69bba05f08 drm/amd/pm: add inst to dpm_set_powergating_by_smu",
-      "393f026b168a drm/amdgpu: add inst to amdgpu_dpm_enable_vcn",
-      "588933929897 drm/amd/pm: Revert state if force level fails",
-      "960a62877466 drm/amdgpu/pm: fix UVD handing in amdgpu_dpm_set_powergating_by_smu()",
-      "f9d35b945c59 drm/amdgpu: Generate bad page threshold cper records",
-      "d190e4d0f7b5 drm/amd/pm: add support for checking SDMA reset capability",
-      "ce615fe32845 drm/amdgpu: Check if CPER enabled when generating CPER",
-      "921c040efeca drm/amd/pm: Add link reset for SMU 13.0.6",
-      "9f7ce6a9ab95 drm/amd/pm: implement dpm vcn reset function",
-      "6dafb5d4c7cd drm/amdgpu/pm: add workload profile pause helper",
-      "54a01f775194 drm/amd/pm: Add support to query partition metrics",
-      "5cccf10f6521 drm/amdgpu: disable workload profile switching when OD is enabled",
-      "fba8d147472e drm/amd/pm: Add support to set ISP Power"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99282"
-    ],
-    "kev": false,
-    "upstream": "782d6bb8f9b8e9d8591181662222bf74cd3ecf79",
-    "subject": "net/sched: sch_teql: fix use-after-free on lower qdisc drop",
-    "verdict": "needs-backport",
-    "files": [],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## fs/nfsd/nfs4state.c\nfs/nfsd/nfs4state.c:5492:27: error: \u2018NFSD4_CALLBACK_RUNNING\u2019 undeclared (first use in this function)\nfs/nfsd/nfs4state.c:5492:65: error: \u2018struct nfsd4_callback\u2019 has no member named \u2018cb_flags\u2019"
   },
   {
     "series": "6.12",
@@ -2739,35 +2676,119 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99275"
+      "CVE-2026-90040"
     ],
     "kev": false,
-    "upstream": "4d8930afa3446041358a7db33e7b23a0bb9459b5",
-    "subject": "smb: client: reject short SESSION_SETUP responses",
+    "upstream": "d1a3c216233413f57f5341a9b878b7e2dde7e785",
+    "subject": "KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped",
     "verdict": "needs-backport",
     "files": [
-      "fs/smb/client/smb2misc.c",
-      "fs/smb/client/smb2pdu.c"
+      "arch/x86/include/asm/kvm-x86-ops.h",
+      "arch/x86/include/asm/kvm_host.h",
+      "arch/x86/kvm/mmu/mmu.c",
+      "arch/x86/kvm/svm/sev.c",
+      "arch/x86/kvm/svm/svm.c",
+      "arch/x86/kvm/svm/svm.h",
+      "arch/x86/kvm/x86.c",
+      "include/linux/kvm_host.h",
+      "virt/kvm/guest_memfd.c"
     ],
-    "prerequisites": [],
+    "prerequisites": [
+      "037bc38b298c KVM: Drop KVM_ERR_PTR_BAD_PAGE and instead return NULL to indicate an error",
+      "3af91068b7e1 KVM: Add kvm_release_page_unused() API to put pages that KVM never consumes",
+      "6385d01eec16 KVM: x86/mmu: Don't overwrite shadow-present MMU SPTEs when prefaulting",
+      "63c5754472e6 KVM: x86/mmu: Invert @can_unsync and renamed to @synchronizing",
+      "aa85986e7150 KVM: x86/mmu: Mark folio dirty when creating SPTE, not when zapping/modifying",
+      "5f6a3badbb74 KVM: x86/mmu: Mark page/folio accessed only when zapping leaf SPTEs",
+      "6419bc52072b KVM: Rename gfn_to_page_many_atomic() to kvm_prefetch_pages()",
+      "e2d2ca71ac03 KVM: Drop @atomic param from gfn=>pfn and hva=>pfn APIs",
+      "6769d1bcd350 KVM: Replace \"async\" pointer in gfn=>pfn with \"no_wait\" and error code",
+      "084ecf95a086 KVM: x86/mmu: Drop kvm_page_fault.hva, i.e. don't track intermediate hva",
+      "cccefb0a0d3b KVM: Drop unused \"hva\" pointer from __gfn_to_pfn_memslot()",
+      "ef7db98e477f KVM: Use NULL for struct page pointer to indicate mremapped memory",
+      "2ff072ba7ad2 KVM: Migrate kvm_vcpu_map() to kvm_follow_pfn()",
+      "2bcb52a3602b KVM: Pin (as in FOLL_PIN) pages during kvm_vcpu_map()",
+      "365e31920844 KVM: Pass in write/dirty to kvm_vcpu_map(), not kvm_vcpu_unmap()"
+    ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99272"
+      "CVE-2026-98115"
     ],
     "kev": false,
-    "upstream": "2ec9cdf469dd32bcf33073aeb30c08e9356e0ca1",
-    "subject": "smb: client: validate the data area in SMB2_read()",
+    "upstream": "d12168084c8c1b6d883c8eca5853929ac5136a9e",
+    "subject": "ksmbd: safely drain sessions during logoff",
     "verdict": "needs-backport",
     "files": [
-      "fs/smb/client/smb2pdu.c"
+      "fs/smb/server/connection.c",
+      "fs/smb/server/mgmt/user_session.c",
+      "fs/smb/server/mgmt/user_session.h",
+      "fs/smb/server/smb2pdu.c",
+      "fs/smb/server/vfs_cache.c",
+      "fs/smb/server/vfs_cache.h"
     ],
-    "prerequisites": [],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/smb/client/smb2pdu.c\nfs/smb/client/smb2pdu.c:4865:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/smb2pdu.c:4865:31: error: \u2018smb_eio_trace_read_bad_offset\u2019 undeclared (first use in this function)"
+    "prerequisites": [
+      "e333e77638b3 ksmbd: add debug prints to know what smb2 requests were received",
+      "db5f8243067f ksmbd: add debug print for pending request during server shutdown",
+      "06a025448b57 ksmbd: align aux_payload_buf to avoid OOB reads in cryptographic operations",
+      "5741909697a3 VFS: improve interface for lookup_one functions",
+      "4ea0bb8aaedf ksmbd: handle set/get info file for streamed file",
+      "93893a57efd4 net: s/dev_get_flags/netif_get_flags/",
+      "09f124b2871b smb/server: use lookup_one_unlocked()",
+      "4e45cca31d4e smb/server: add ksmbd_vfs_kern_path()",
+      "b5ee94ac651a ksmbd: allow a filename to contain colons on SMB3.1.1 posix extensions",
+      "e7de2c4521ce smb: server: make use of common smbdirect.h",
+      "03a38d846750 smb: server: pass ksmbd_transport to get_smbd_max_read_write_size()",
+      "e28c5bc45640 ksmbd: increase session and share hash table bits",
+      "1ead2213dd7d smb/server: use end_removing_noperm for for target of smb2_create_link()",
+      "924067ef183b ksmbd: Use HMAC-SHA256 library for message signing and key generation",
+      "c5b462e35373 smb/server: fix return value of smb2_read()"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-98420"
+    ],
+    "kev": false,
+    "upstream": "d7fd1f98607f2cd358e583f9548bdf0173090a86",
+    "subject": "ksmbd: follow SMB2 session expiration semantics",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/server/connection.c",
+      "fs/smb/server/connection.h",
+      "fs/smb/server/mgmt/user_session.c",
+      "fs/smb/server/mgmt/user_session.h",
+      "fs/smb/server/proc.c",
+      "fs/smb/server/server.c",
+      "fs/smb/server/smb2pdu.c",
+      "fs/smb/server/smb2pdu.h",
+      "fs/smb/server/stats.h"
+    ],
+    "prerequisites": [
+      "e333e77638b3 ksmbd: add debug prints to know what smb2 requests were received",
+      "db5f8243067f ksmbd: add debug print for pending request during server shutdown",
+      "06a025448b57 ksmbd: align aux_payload_buf to avoid OOB reads in cryptographic operations",
+      "5741909697a3 VFS: improve interface for lookup_one functions",
+      "d91c0751d0a6 ksmbd: remove unnecessary softdep on crc32",
+      "4ea0bb8aaedf ksmbd: handle set/get info file for streamed file",
+      "93893a57efd4 net: s/dev_get_flags/netif_get_flags/",
+      "09f124b2871b smb/server: use lookup_one_unlocked()",
+      "4e45cca31d4e smb/server: add ksmbd_vfs_kern_path()",
+      "b5ee94ac651a ksmbd: allow a filename to contain colons on SMB3.1.1 posix extensions",
+      "e7de2c4521ce smb: server: make use of common smbdirect.h",
+      "d4b86b49093c smb: server: add a pr_info() when the server starts running",
+      "03a38d846750 smb: server: pass ksmbd_transport to get_smbd_max_read_write_size()",
+      "e28c5bc45640 ksmbd: increase session and share hash table bits",
+      "1ead2213dd7d smb/server: use end_removing_noperm for for target of smb2_create_link()"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.1",
@@ -7257,38 +7278,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-72493"
-    ],
-    "kev": false,
-    "upstream": "46762cefe7f4e5bffc1eb467810a7bbb02e461d7",
-    "subject": "net: serialize netif_running() check in enqueue_to_backlog()",
-    "verdict": "needs-backport",
-    "files": [
-      "net/core/dev.c"
-    ],
-    "prerequisites": [
-      "d120d1a63b2c net: Remove the obsolte u64_stats_fetch_*_irq() users (net).",
-      "02a68a47eade net: devlink: track netdev with devlink_port assigned",
-      "bd039b5ea2a9 net/core: Allow live renaming when an interface is up",
-      "3e52fba03a20 net: introduce a helper to move notifier block to different namespace",
-      "6af645a5b2da net: net_{enable|disable}_timestamp() optimizations",
-      "1462160c7455 net: adopt try_cmpxchg() in napi_schedule_prep() and napi_complete_done()",
-      "4ffa1d1c6842 net: adopt try_cmpxchg() in napi_{enable|disable}()",
-      "fd896e38e5df net: fix napi_disable() logic error",
-      "d93607082e98 net: add netdev_sw_irq_coalesce_default_on()",
-      "9054b41c4e1b net: Fix documentation for unregister_netdevice_notifier_net",
-      "9d03ebc71a02 bpf: Rename bpf_{prog,map}_is_dev_bound to is_offloaded",
-      "2b3486bc2d23 bpf: Introduce device-bound XDP programs",
-      "3176eb82681e net: avoid irqsave in skb_defer_free_flush",
-      "9eefedd58ae1 net: add gso_ipv4_max_size and gro_ipv4_max_size per device",
-      "d3d854fd6a1d netdev-genl: create a simple family for netdev stuff"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-63816"
     ],
     "kev": false,
@@ -8174,22 +8163,6 @@
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99272"
-    ],
-    "kev": false,
-    "upstream": "2ec9cdf469dd32bcf33073aeb30c08e9356e0ca1",
-    "subject": "smb: client: validate the data area in SMB2_read()",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/smb2pdu.c"
-    ],
-    "prerequisites": [],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/smb/client/smb2pdu.c\nfs/smb/client/smb2pdu.c:4630:22: error: implicit declaration of function \u2018smb_EIO2\u2019 [-Wimplicit-function-declaration]\nfs/smb/client/smb2pdu.c:4630:31: error: \u2018smb_eio_trace_read_bad_offset\u2019 undeclared (first use in this function)"
   },
   {
     "series": "7.3",
