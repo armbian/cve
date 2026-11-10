@@ -1,1 +1,10 @@
-[]
+[
+  "new-stable 6.18: 6.18.62 \u2192 6.18.63",
+  "added 6.18: 1 patch(es)",
+  "retired 6.18: 1 patch(es) (landed upstream or superseded)",
+  "new-stable 6.12: 6.12.116 \u2192 6.12.117",
+  "added 6.12: 9 patch(es)",
+  "retired 6.12: 45 patch(es) (landed upstream or superseded)",
+  "added 6.1: 4 patch(es)",
+  "new-stable 7.3: 7.3.3 \u2192 7.3.4"
+]
