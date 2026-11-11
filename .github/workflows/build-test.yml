@@ -23,6 +23,9 @@ concurrency:
 permissions:
   contents: read
 
+# Mirrors and DNS on hosted runners fail at times. apt retries and times out fast.
+env:
+  APT_NET: -o Acquire::Retries=5 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30
 jobs:
   # PR and push test only the series they change. A new branch or a dispatch tests all.
   # One shard per series, at most 32, so a small change starts few jobs.
@@ -84,8 +87,8 @@ jobs:
             command -v "$t-gcc" >/dev/null || need="$need gcc-${t//_/-}"
           done
           command -v bison flex bc pahole >/dev/null && [ -e /usr/include/libelf.h ] && [ -z "$need" ] && exit 0
-          sudo apt-get update -q
-          sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
+          sudo apt-get update -q $APT_NET
+          sudo apt-get install -y -q $APT_NET bc bison flex dwarves libelf-dev libssl-dev $need
 
       # Self-hosted: kernel tree and prepared builds stay between runs, one cache per runner.
       - name: Build test

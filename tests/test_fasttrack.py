@@ -1000,5 +1000,43 @@ class TestShallow(Fixture):
         sync.fetch_linux(mirror, f"file://{self.repo}", ["6.18", "7.3"], shallow=True)
 
 
+class TestSyncRetry(unittest.TestCase):
+    """A network git command that fails once (HTTP 502) is retried."""
+
+    def setUp(self):
+        self.calls, self.sleeps = [], []
+        self._run, self._sleep = subprocess.run, sync.time.sleep
+        sync.time.sleep = self.sleeps.append
+
+    def tearDown(self):
+        sync.subprocess.run, sync.time.sleep = self._run, self._sleep
+
+    def fake(self, fails):
+        def run(cmd, **kw):
+            self.calls.append(cmd)
+            if len(self.calls) <= fails:
+                raise subprocess.CalledProcessError(128, cmd)
+            return subprocess.CompletedProcess(cmd, 0, stdout="", stderr="")
+        sync.subprocess.run = run
+
+    def test_fetch_retried(self):
+        self.fake(fails=1)
+        sync._git("-C", "x", "fetch", "--depth", "1", "origin", "HEAD")
+        self.assertEqual(len(self.calls), 2)
+        self.assertEqual(self.sleeps, [sync.RETRY_DELAYS[0]])
+
+    def test_fetch_gives_up(self):
+        self.fake(fails=99)
+        with self.assertRaises(subprocess.CalledProcessError):
+            sync._git("clone", "url", "dest")
+        self.assertEqual(len(self.calls), len(sync.RETRY_DELAYS) + 1)
+
+    def test_local_command_not_retried(self):
+        self.fake(fails=1)
+        with self.assertRaises(subprocess.CalledProcessError):
+            sync._git("-C", "x", "reset", "--hard", "FETCH_HEAD")
+        self.assertEqual(len(self.calls), 1)
+
+
 if __name__ == "__main__":
     unittest.main()

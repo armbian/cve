@@ -36,6 +36,10 @@ concurrency:
   group: fasttrack-${{ (inputs.incidents || inputs.commit) && github.run_id || 'main' }}
   cancel-in-progress: false
 
+# Mirrors and DNS on hosted runners fail at times. apt retries and times out fast.
+env:
+  APT_NET: -o Acquire::Retries=5 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30
+
 permissions:
   contents: write
   pull-requests: write
@@ -133,8 +137,8 @@ jobs:
           need=""
           [ "$(uname -m)" = x86_64 ] || command -v x86_64-linux-gnu-gcc >/dev/null || need=gcc-x86-64-linux-gnu
           if ! command -v bc bison flex pahole >/dev/null || ! [ -e /usr/include/libelf.h ] || [ -n "$need" ]; then
-            sudo apt-get update -q
-            sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
+            sudo apt-get update -q $APT_NET
+            sudo apt-get install -y -q $APT_NET bc bison flex dwarves libelf-dev libssl-dev $need
           fi
           python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
           git config --global user.name  "armbianworker"
@@ -235,8 +239,8 @@ jobs:
           need=""
           [ "$(uname -m)" = x86_64 ] || command -v x86_64-linux-gnu-gcc >/dev/null || need=gcc-x86-64-linux-gnu
           if ! command -v bc bison flex pahole >/dev/null || ! [ -e /usr/include/libelf.h ] || [ -n "$need" ]; then
-            sudo apt-get update -q
-            sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
+            sudo apt-get update -q $APT_NET
+            sudo apt-get install -y -q $APT_NET bc bison flex dwarves libelf-dev libssl-dev $need
           fi
           python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
           git config --global user.name  "armbianworker"
@@ -438,8 +442,8 @@ jobs:
           need=""
           [ "$(uname -m)" = x86_64 ] || command -v x86_64-linux-gnu-gcc >/dev/null || need=gcc-x86-64-linux-gnu
           if ! command -v bc bison flex pahole >/dev/null || ! [ -e /usr/include/libelf.h ] || [ -n "$need" ]; then
-            sudo apt-get update -q
-            sudo apt-get install -y -q bc bison flex dwarves libelf-dev libssl-dev $need
+            sudo apt-get update -q $APT_NET
+            sudo apt-get install -y -q $APT_NET bc bison flex dwarves libelf-dev libssl-dev $need
           fi
           python3 -c 'import yaml' 2>/dev/null || pip install --quiet pyyaml
           npm install -g @anthropic-ai/claude-code

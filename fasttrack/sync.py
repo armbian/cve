@@ -37,14 +37,34 @@ DEFAULTS = {
 log = logging.getLogger(__name__)
 
 
+# git.kernel.org sometimes answers 502. Retry network commands before the sync fails.
+RETRY_DELAYS = (30, 120)
+
+
+def _retry(cmd: list[str], **kw) -> subprocess.CompletedProcess:
+    for delay in (*RETRY_DELAYS, None):
+        try:
+            return subprocess.run(cmd, check=True, **kw)
+        except subprocess.CalledProcessError:
+            if delay is None:
+                raise
+            print(f"warn: {' '.join(cmd[:4])} failed; retry in {delay} s")
+            time.sleep(delay)
+    raise AssertionError("unreachable")
+
+
 def _git(*args: str, cwd: Path | None = None) -> None:
     # Verbose: let git print its clone/fetch progress.
     if log.isEnabledFor(logging.INFO):
         args = tuple(a for a in args if a != "--quiet")
     log.info("$ git %s", " ".join(args))
     t = time.monotonic()
-    subprocess.run(["git", *args], cwd=cwd, check=True)
-    log.info("git %s: %.1fs", args[2] if args[0] == "-C" else args[0], time.monotonic() - t)
+    sub = args[2] if args[0] == "-C" else args[0]
+    if sub in ("clone", "fetch"):
+        _retry(["git", *args], cwd=cwd)
+    else:
+        subprocess.run(["git", *args], cwd=cwd, check=True)
+    log.info("git %s: %.1fs", sub, time.monotonic() - t)
 
 
 def _sparse_queue(url: str, dest: Path) -> None:
@@ -107,8 +127,7 @@ def fetch_linux(linux: Path, url: str, series: list[str], shallow: bool = True,
             log.info("remove stale %s", lock)
             lock.unlink()
     log.info("list heads on %s", url)
-    heads = set(subprocess.run(["git", "ls-remote", "--heads", url], capture_output=True, text=True,
-                               check=True).stdout.split())
+    heads = set(_retry(["git", "ls-remote", "--heads", url], capture_output=True, text=True).stdout.split())
     refspecs = ["+refs/heads/master:refs/remotes/origin/master"] if mainline else []
     for s in series:
         if f"refs/heads/linux-{s}.y" in heads:
