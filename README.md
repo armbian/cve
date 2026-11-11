@@ -25,7 +25,7 @@ This repository closes the gap for the LTS kernels **6.1**, **6.12** and **6.18*
 
 ## How it works
 
-![Workflow](docs/images/workflow.png)
+![Armbian kernel security fixes workflow](docs/images/workflow.png)
 
 1. Every 15 minutes, a CI job checks the upstream kernel sources for new CVE fixes.
 2. Fixes that apply cleanly go into the patch set. Every series is build-tested on arm64, arm, riscv and x86.
@@ -33,24 +33,15 @@ This repository closes the gap for the LTS kernels **6.1**, **6.12** and **6.18*
 4. A person reviews each backport before it is merged.
 5. A fix leaves the patch set when the stable kernel carries it.
 
-## Contribute in three steps
+## What happens when you contribute
 
-In VS Code, use the prompt from the tip above. In a terminal, run:
-
-```
-git clone https://github.com/armbian/cve.git
-cd cve
-claude
-> /contribute
-```
+The prompt in the tip above starts it. Then:
 
 1. Claude Code checks your setup and lists the open CVEs.
 2. You pick the CVEs. Claude makes the backports and reviews them with you.
 3. Claude asks before it pushes and opens a pull request with only the CVEs you approve.
 
 You need Linux, about 10 GB of free disk space and [Claude Code](https://docs.claude.com/en/docs/claude-code). One CVE takes 1–3 minutes and about $0.30–1.00 of your Claude plan usage.
-
-Full steps, also by hand: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Questions
 
@@ -77,6 +68,6 @@ Run `./fasttrack.sh why CVE-2026-1234`. It tells you why a CVE is or is not in t
 - Current status per kernel series: [report.md](report.md)
 - Latest backport results: [cve-report.md](cve-report.md)
 - Patch releases: [Releases](https://github.com/armbian/cve/releases)
-- How the tool works, and how to use the patches: [DEVELOPMENT.md](DEVELOPMENT.md)
+- Contribute by hand: [CONTRIBUTING.md](CONTRIBUTING.md) · Internals and patch usage: [DEVELOPMENT.md](DEVELOPMENT.md)
 - CI status: <https://actions.armbian.com/?repo=cve>
 - Armbian: <https://www.armbian.com> · Documentation: <https://docs.armbian.com>
