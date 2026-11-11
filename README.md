@@ -12,6 +12,10 @@
 > get https://github.com/armbian/cve and contribute
 > ```
 
+> [!NOTE]
+> **When are patched kernels released?**
+> Beta kernels get the fixes at the next CI run. Stable kernels get them every Monday.
+
 ## Purpose of This Repository
 
 An automatic backporting service for kernel security fixes. It targets the older LTS kernels **6.18**, **6.12** and **6.1**, and the newest stable, **7.3** — closing the gap between the moment a CVE is public and the moment a stable point release carries the fix.
