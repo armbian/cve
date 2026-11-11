@@ -1,6 +1,6 @@
 # Development
 
-How the tool works. For what the repository gives, see [README.md](README.md).
+How the tool works, and how to use its output. For an overview, see [README.md](README.md). To contribute backports, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 
@@ -10,6 +10,39 @@ How the tool works. For what the repository gives, see [README.md](README.md).
 ./fasttrack.sh why CVE-2026-1234            # is a CVE covered, and if not, why
 ./fasttrack.sh cve --unpatched --claude     # backport every unpatched issue with Claude
 ```
+
+## Using the patches
+
+Each `patches/<series>/` directory is a patch set for one kernel series:
+
+- `base` names the stable commit the set was verified on.
+- `series.conf` gives the apply order.
+
+Apply the patches in `series.conf` order on the commit in `base`. Each [release](https://github.com/armbian/cve/releases) also has every series as `armbian-cve-<series>-<tag>.tar.gz`.
+
+## Repository layout
+
+| Path | Contents |
+|---|---|
+| `patches/<series>/` | Verified fixes for a kernel series: `series.conf`, `base`, numbered `.patch` files and `fasttrack.json` provenance |
+| `cve/<CVE>/<series>/` | Reviewed per-incident backports (same layout), included into `patches/` on the next run |
+| `fasttrack/` | The Python backport tool (`python3 -m fasttrack.cli`) |
+| `scripts/` | Helper scripts, including `build-test.sh` used by CI |
+| `tests/` | Unit tests for the fasttrack tool |
+| `docs/` | Documentation assets |
+| `fasttrack.sh` | Thin wrapper that runs `python3 -m fasttrack.cli` |
+| `report.md` | Latest gather-and-verify report, per series |
+| `cve-report.md` | Latest per-incident resolution report |
+| `unpatched.json`, `cves.json`, `attempts.json` | Machine-readable state consumed by the tool |
+
+## Requirements
+
+- Linux with about 10 GB of free disk space
+- Python 3 with [PyYAML](https://pyyaml.org/)
+- Kernel build tools (Debian/Ubuntu: `build-essential bc bison flex libelf-dev libssl-dev dwarves`)
+- [Claude Code](https://docs.claude.com/en/docs/claude-code) on `PATH`, to make backports
+
+The tool is written in Python 3. `fasttrack.sh` and `scripts/build-test.sh` are Bash. CI workflows are GitHub Actions YAML.
 
 ## Sources
 
@@ -130,6 +163,7 @@ Once merged, the next `run` adds it to `patches/<series>/`, after the clean main
 - **Full run:** sync, `run`, then `prune`. Changes to `patches/`, `cve/` deletions, `report.md`, `unpatched.json`, `cves.json`, `state.json` and `events.json` go to `main` through a PR that the bot merges itself. A run with nothing new commits nothing. Opens an issue labelled `security` when a pending CVE is actively exploited.
 - **Release:** when a full run changes `patches/`, the job tags `patches-YYYYMMDD-HHMM`. The release notes list the fixes per series (`fasttrack release-notes`). Each series is attached as `armbian-cve-<series>-<tag>.tar.gz`.
 - **Runners:** repo variable `FASTTRACK_RUNNER` moves the full run to a self-hosted runner label, `BUILDTEST_RUNNER` the build test. Use a fixed runner for the full run, so `data/` stays on disk.
+- **Status:** <https://actions.armbian.com/?repo=cve> shows all workflows of this repository.
 - **Manual dispatch:** takes CVE ids, or `unpatched`, plus an optional fix commit and a Claude toggle. Results go to `cve/` on a branch, with a PR into `main` for review. Claude in CI needs the `ANTHROPIC_API_KEY` secret.
 
 ## Build test
