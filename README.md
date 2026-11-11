@@ -5,6 +5,16 @@
 
 # Armbian Kernel Security Fixes
 
+> [!TIP]
+> **Contribute with Claude Code:** clone this repository, open Claude Code in it and type `/contribute`.
+>
+> ```sh
+> git clone https://github.com/armbian/cve.git && cd cve && claude
+> > /contribute
+> ```
+>
+> Details: [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Purpose of This Repository
 
 An automatic backporting service for kernel security fixes. It targets the older LTS kernels **6.18**, **6.12** and **6.1**, and the newest stable, **7.3** — closing the gap between the moment a CVE is public and the moment a stable point release carries the fix.
