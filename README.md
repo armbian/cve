@@ -6,14 +6,11 @@
 # Armbian Kernel Security Fixes
 
 > [!TIP]
-> **Contribute with Claude Code:** clone this repository, open Claude Code in it and type `/contribute`.
+> **Contribute with Claude.** Paste this prompt into Claude Code:
 >
-> ```sh
-> git clone https://github.com/armbian/cve.git && cd cve && claude
-> > /contribute
 > ```
->
-> Details: [CONTRIBUTING.md](CONTRIBUTING.md).
+> get https://github.com/armbian/cve and contribute
+> ```
 
 ## Purpose of This Repository
 
