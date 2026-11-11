@@ -5,7 +5,7 @@
 
 # Armbian Kernel Security Fixes
 
-**Remember SETI@home?** You gave spare computing power to a good cause.
+**Remember [SETI@home](https://en.wikipedia.org/wiki/SETI@home)?** You gave spare computing power to a good cause.
 Now put your own Claude to work for open-source security.
 
 Help backport Linux kernel CVE fixes to stable kernels. AI does the heavy lifting. Humans review.
