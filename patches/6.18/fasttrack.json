@@ -1866,6 +1866,150 @@
       "build_log": "",
       "backport": "CVE-2026-99151/6.18",
       "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "3679da4ad8be84cddaf40bc307fef1fe13e051ff",
+      "subject": "netfilter: nft_ct: move custom expectation support to helper",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90237"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0100-3679da4ad8be-netfilter-nft-ct-move-custom-expectation-support-to.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90237/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "d7fd1f98607f2cd358e583f9548bdf0173090a86",
+      "subject": "ksmbd: follow SMB2 session expiration semantics",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98420"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0101-d7fd1f98607f-ksmbd-follow-smb2-session-expiration-semantics.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98420/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "fed0b33e6c589ef3bdb67c9c67de8ec2c1f3dd48",
+      "subject": "netfs: Fix readahead synchronisation issues by loading all folios upfront",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98118"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0102-fed0b33e6c58-netfs-fix-readahead-synchronisation-issues-by-loadin.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98118/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "448ba0ae65ca61064183564d2983c9aa59bd6ba7",
+      "subject": "smb/client: invalidate fscache for fallocate range operations",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98124"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0103-448ba0ae65ca-smb-client-invalidate-fscache-for-fallocate-range-op.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98124/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "81e985b4c3a60a67a1afa23671ad5786ed4b1ae3",
+      "subject": "afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-72377"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0104-81e985b4c3a6-afs-remove-setting-of-as-release-always-for-symlinks.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-72377/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "01261a6fa48b62f5ead8e88aaca1e27cb9ab9032",
+      "subject": "smb/client: fix stale page cache in insert/collapse range",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98125"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0105-01261a6fa48b-smb-client-fix-stale-page-cache-in-insert-collapse-r.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98125/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "d12168084c8c1b6d883c8eca5853929ac5136a9e",
+      "subject": "ksmbd: safely drain sessions during logoff",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98115"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0106-d12168084c8c-ksmbd-safely-drain-sessions-during-logoff.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98115/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "636abbe7a66d80e179011a31754d55001cd44f63",
+      "subject": "ksmbd: fix sparc build with atomic work state",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98115"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0107-636abbe7a66d-ksmbd-fix-sparc-build-with-atomic-work-state.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98115/6.18",
+      "bug_commits": []
     }
   ]
 }

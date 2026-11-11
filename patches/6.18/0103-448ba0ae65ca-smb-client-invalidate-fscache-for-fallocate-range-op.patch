@@ -1,0 +1,124 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 448ba0ae65ca61064183564d2983c9aa59bd6ba7
+X-Fasttrack-CVE: CVE-2026-98124
+X-Fasttrack-Backport: cve/CVE-2026-98124/6.18
+From: Huiwen He <hehuiwen@kylinos.cn>
+Date: Wed, 11 Nov 2026 13:22:28 +0100
+Subject: [PATCH] smb/client: invalidate fscache for fallocate range operations
+
+commit 448ba0ae65ca upstream.
+
+[ Backport: smb3_zero_range() in 6.18 has an early goto path and a later
+  CIFS_CACHE_READ check with query_server_eof(); place the
+  fscache_invalidate() just before smb3_zero_data() to preserve the
+  upstream intent (invalidate before the server-side write).
+  smb3_collapse_range() and smb3_insert_range() in 6.18 still call
+  netfs_wait_for_outstanding_io() after truncate_pagecache_range();
+  place fscache_invalidate() after that wait so I/O has completed, as
+  the changelog requires. smb3_collapse_range() in 6.18 uses
+  ictx->zero_point = old_eof directly rather than
+  netfs_write_zero_point(); no change needed for the invalidate hunk. ]
+
+smb3_zero_range(), smb3_punch_hole(), smb3_insert_range(), and
+smb3_collapse_range() modify file contents through server-side range
+operations. These operations discard the affected page cache, but leave
+the FS-Cache cookie valid, so a later read may return data cached before
+the range operation.
+
+Fix this by invalidating FS-Cache after outstanding I/O has completed
+and before modifying the file on the server.
+
+Run the following as root on a CIFS mount with fsc enabled and an active
+CacheFiles backend:
+
+        bash -c '
+                MNT=/mnt/cifs
+                FILE="$MNT/repro"
+
+                # Generate four 1 MiB random blocks: [A][B][C][D].
+                dd if=/dev/urandom of=/tmp/src bs=1M count=4 status=none
+
+                # Expected contents after zeroing B: [A][zero][C][D].
+                cp /tmp/src /tmp/expected
+                dd if=/dev/zero of=/tmp/expected bs=1M seek=1 count=1 \
+                        conv=notrunc status=none
+                cp /tmp/src "$FILE"
+
+                # Populate FS-Cache, then discard the page cache.
+                sync
+                echo 1 > /proc/sys/vm/drop_caches
+                cat "$FILE" > /dev/null
+                sync
+                echo 1 > /proc/sys/vm/drop_caches
+
+                fallocate --zero-range -o 1M -l 1M "$FILE"
+
+                if cmp -s /tmp/expected "$FILE"; then
+                        echo "readback: OK"
+                else
+                        echo "readback: STALE DATA"
+                fi
+        '
+
+Before this change, the readback differs from /tmp/expected:
+
+        readback: STALE DATA
+
+After this change, it matches:
+
+        readback: OK
+
+Fixes: 30175628bf7f ("[SMB3] Enable fallocate -z support for SMB3 mounts")
+Fixes: 31742c5a3317 ("enable fallocate punch hole (\"fallocate -p\") for SMB3")
+Fixes: 5476b5dd82c8 ("cifs: add support for FALLOC_FL_COLLAPSE_RANGE")
+Fixes: 7fe6fe95b936 ("cifs: add FALLOC_FL_INSERT_RANGE support")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ fs/smb/client/smb2ops.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 7cf6419df037..7bb8a988987f 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3581,6 +3581,9 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 		}
+ 	}
+ 
++	fscache_invalidate(cifs_inode_cookie(inode), NULL,
++			   i_size_read(inode), 0);
++
+ 	rc = smb3_zero_data(file, tcon, offset, len, xid);
+ 	if (rc < 0)
+ 		goto zero_range_exit;
+@@ -3648,6 +3651,8 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
+ 	 */
+ 	truncate_pagecache_range(inode, offset, offset + len - 1);
+ 	netfs_wait_for_outstanding_io(inode);
++	fscache_invalidate(cifs_inode_cookie(inode), NULL,
++			   i_size_read(inode), 0);
+ 
+ 	cifs_dbg(FYI, "Offset %lld len %lld\n", offset, len);
+ 
+@@ -4073,6 +4078,7 @@ static long smb3_collapse_range(struct file *file, struct cifs_tcon *tcon,
+ 	truncate_pagecache_range(inode, off, old_eof);
+ 	ictx->zero_point = old_eof;
+ 	netfs_wait_for_outstanding_io(inode);
++	fscache_invalidate(cifs_inode_cookie(inode), NULL, old_eof, 0);
+ 
+ 	rc = __smb2_copychunk_range(xid, cfile, cfile, off + len,
+ 				    old_eof - off - len, off);
+@@ -4135,6 +4141,7 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
+ 		goto out_2;
+ 	truncate_pagecache_range(inode, off, old_eof);
+ 	netfs_wait_for_outstanding_io(inode);
++	fscache_invalidate(cifs_inode_cookie(inode), NULL, old_eof, 0);
+ 
+ 	rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
+ 			  cfile->fid.volatile_fid, cfile->pid, new_eof);
