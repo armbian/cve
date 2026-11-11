@@ -157,6 +157,9 @@ class TestVulns(Fixture):
                 {"version": "6.8", "lessThanOrEqual": "*", "status": "unaffected",
                  "versionType": "original_commit_for_fix"}]}]}}}))
         self.assertEqual(vulns.parse_record(p).status((6, 18))[0], "unaffected")
+        # Bug added in 6.6, but stable took it into 6.1.57 and has no 6.1 fix.
+        self.assertEqual(vulns.parse_record(p).status((6, 1))[0], "unfixed")
+        self.assertEqual(vulns.parse_record(p).status((5, 15))[0], "unaffected")
 
     def test_stable_backport_by_reference(self):
         # stable carries C under its own content; only the message names C

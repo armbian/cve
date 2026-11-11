@@ -42,10 +42,11 @@ class CveRecord:
     files: list[str] = field(default_factory=list)
     description: str = ""
     bug_commits: list[str] = field(default_factory=list)  # commits that bring the bug (git ranges)
+    backported_bug: set[tuple[int, int]] = field(default_factory=set)  # older series that got the bug via stable
 
     def status(self, series: tuple[int, int]) -> tuple[str, Optional[tuple]]:
         s = series
-        if self.introduced and s < self.introduced[:2]:
+        if self.introduced and s < self.introduced[:2] and s not in self.backported_bug:
             return "unaffected", None
         if self.mainline_fixed:
             # Fixed in mainline at S.0 or during S's merge window/rcs.
@@ -100,6 +101,8 @@ def parse_record(path: Path) -> Optional[CveRecord]:
             out.bug_commits.append(v["version"])
         elif status == "affected" and ver and "lessThan" not in v and "lessThanOrEqual" not in v:
             out.introduced = ver
+        elif status == "affected" and ver and vtype == "semver" and "lessThan" in v:
+            out.backported_bug.add(ver[:2])  # "6.1.50 lessThan 6.2": stable took the bug into 6.1
         elif status == "unaffected" and v.get("version") == "0" and v.get("lessThan"):
             out.introduced = parse_version(v["lessThan"]) or out.introduced
         elif status == "unaffected" and vtype == "original_commit_for_fix" and ver:
