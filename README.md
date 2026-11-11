@@ -26,6 +26,10 @@ An automatic backporting service for kernel security fixes. It targets the older
 
 Nothing accumulates: `patches/` is rebuilt from scratch on every run.
 
+## Design in one picture
+
+![Armbian kernel security fixes workflow](docs/images/workflow.png)
+
 ## Usage
 
 Apply the patches in `series.conf` order on the commit in `base`.
@@ -83,21 +87,9 @@ For the live status of all workflows in this repository, see the Armbian CI over
 
 <https://actions.armbian.com/?repo=cve>
 
-## Contributing
-
-You can help backport fixes that do not apply cleanly by running Claude Code against open CVEs. The short way is:
-
-```sh
-git clone https://github.com/armbian/cve.git
-cd cve
-claude
-> /contribute
-```
-
-Full instructions, including the by-hand workflow, are in [CONTRIBUTING.md](CONTRIBUTING.md). Internals of the fasttrack tool are documented in [DEVELOPMENT.md](DEVELOPMENT.md).
-
 ## More
 
 - Latest series report: [report.md](report.md)
 - Latest incident resolution: [cve-report.md](cve-report.md)
+- Contribute by hand: [CONTRIBUTING.md](CONTRIBUTING.md) · Internals: [DEVELOPMENT.md](DEVELOPMENT.md)
 - Armbian project: <https://www.armbian.com> · Documentation: <https://docs.armbian.com>
