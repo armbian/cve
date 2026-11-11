@@ -11,7 +11,7 @@ Now put your own Claude to work for open-source security.
 Help backport Linux kernel CVE fixes to stable kernels. AI does the heavy lifting. Humans review.
 
 > [!TIP]
-> **Contribute with Claude.** Paste this prompt into Claude Code:
+> **Contribute with Claude.** Open [Visual Studio Code](https://code.visualstudio.com/) with the [Claude Code extension](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code). Paste this prompt into the Claude panel:
 >
 > ```
 > get https://github.com/armbian/cve and contribute
@@ -34,6 +34,8 @@ This repository closes the gap for the LTS kernels **6.1**, **6.12** and **6.18*
 5. A fix leaves the patch set when the stable kernel carries it.
 
 ## Contribute in three steps
+
+In VS Code, use the prompt from the tip above. In a terminal, run:
 
 ```
 git clone https://github.com/armbian/cve.git
