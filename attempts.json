@@ -2243,10 +2243,10 @@
   },
   "CVE-2026-72377": {
     "6.18": {
-      "cost": 0.5202957,
-      "date": "2026-10-31",
-      "head": "6.18.60",
-      "outcome": "patched-needs-review",
+      "cost": 0.977741,
+      "date": "2026-11-11",
+      "head": "6.18.63",
+      "outcome": "partial",
       "run": null
     }
   },
@@ -2531,6 +2531,24 @@
       "run": null
     }
   },
+  "CVE-2026-89566": {
+    "6.1": {
+      "cost": 0.8283304999999997,
+      "date": "2026-11-11",
+      "head": "6.1.192",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-89567": {
+    "6.1": {
+      "cost": 0.9202735,
+      "date": "2026-11-11",
+      "head": "6.1.192",
+      "outcome": "partial",
+      "run": null
+    }
+  },
   "CVE-2026-89584": {
     "6.18": {
       "cost": 0.7871119999999998,
@@ -2697,6 +2715,15 @@
       "run": null
     }
   },
+  "CVE-2026-90040": {
+    "6.12": {
+      "cost": 4.823925499999999,
+      "date": "2026-11-11",
+      "head": "6.12.117",
+      "outcome": "partial",
+      "run": null
+    }
+  },
   "CVE-2026-90098": {
     "6.1": {
       "cost": null,
@@ -2749,9 +2776,9 @@
       "run": null
     },
     "6.18": {
-      "cost": 1.8561176,
-      "date": "2026-10-31",
-      "head": "6.18.60",
+      "cost": 4.455691,
+      "date": "2026-11-11",
+      "head": "6.18.63",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -2933,10 +2960,17 @@
     }
   },
   "CVE-2026-98115": {
+    "6.12": {
+      "cost": 2.49351025,
+      "date": "2026-11-11",
+      "head": "6.12.117",
+      "outcome": "patched-needs-review",
+      "run": null
+    },
     "6.18": {
-      "cost": 1.0835241000000002,
-      "date": "2026-10-31",
-      "head": "6.18.60",
+      "cost": 2.7932940000000004,
+      "date": "2026-11-11",
+      "head": "6.18.63",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -2952,10 +2986,10 @@
       "run": null
     },
     "6.18": {
-      "cost": 0.7669991000000002,
-      "date": "2026-10-31",
-      "head": "6.18.60",
-      "outcome": "patched-needs-review",
+      "cost": 3.744156500000001,
+      "date": "2026-11-11",
+      "head": "6.18.63",
+      "outcome": "partial",
       "run": null
     }
   },
@@ -2972,9 +3006,9 @@
   },
   "CVE-2026-98124": {
     "6.18": {
-      "cost": 0.5888530000000001,
-      "date": "2026-10-31",
-      "head": "6.18.60",
+      "cost": 1.0007557500000002,
+      "date": "2026-11-11",
+      "head": "6.18.63",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -2988,9 +3022,9 @@
       "run": null
     },
     "6.18": {
-      "cost": 0.4855566,
-      "date": "2026-10-31",
-      "head": "6.18.60",
+      "cost": 1.38769825,
+      "date": "2026-11-11",
+      "head": "6.18.63",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -3112,10 +3146,17 @@
     }
   },
   "CVE-2026-98420": {
+    "6.12": {
+      "cost": 3.1128790000000013,
+      "date": "2026-11-11",
+      "head": "6.12.117",
+      "outcome": "patched-needs-review",
+      "run": null
+    },
     "6.18": {
-      "cost": 1.7137702999999997,
-      "date": "2026-10-31",
-      "head": "6.18.60",
+      "cost": 6.095260999999999,
+      "date": "2026-11-11",
+      "head": "6.18.63",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -3709,6 +3750,24 @@
       "cost": null,
       "date": "2026-11-02",
       "head": "6.1.191",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99275": {
+    "6.1": {
+      "cost": 1.7905849999999999,
+      "date": "2026-11-11",
+      "head": "6.1.192",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99282": {
+    "6.1": {
+      "cost": 0.6815865,
+      "date": "2026-11-11",
+      "head": "6.1.192",
       "outcome": "patched-needs-review",
       "run": null
     }
