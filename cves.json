@@ -6710,11 +6710,18 @@
   "CVE-2026-23295": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "1aa82181a3c2",
         "source": "mainline",
         "subject": "accel/amdxdna: Fix dead lock for suspend and resume",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "1aa82181a3c2",
+        "source": "claude",
+        "subject": "accel/amdxdna: Fix dead lock for suspend and resume",
+        "patch": "patches/6.18/0108-1aa82181a3c2-accel-amdxdna-fix-dead-lock-for-suspend-and-resume.patch"
       }
     ]
   },
@@ -7495,11 +7502,11 @@
   "CVE-2026-31710": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "c4d3fc5844d6",
         "source": "mainline",
         "subject": "smb: client: fix dir separator in SMB1 UNIX mounts",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "6.18 backport of 4fc3a433c139 uses atomic_or, no sbflags write-back"
       }
     ]
   },
@@ -8363,11 +8370,11 @@
   "CVE-2026-43446": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "6b13cb8f48a4",
         "source": "mainline",
         "subject": "accel/amdxdna: Fix runtime suspend deadlock when there is pending job",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "RPM resume in job run (69674c1c704c) not in 6.18; resume is in aie2_cmd_submit()"
       }
     ]
   },
@@ -10111,18 +10118,25 @@
   "CVE-2026-64160": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "2c8f4742bb76",
         "source": "mainline",
         "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
       },
       {
-        "status": "backport-stale",
+        "status": "included",
         "upstream": "2c8f4742bb76",
         "source": "claude",
         "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-        "reason": "another patch of CVE-2026-64160/6.18 does not apply or build"
+        "patch": "patches/6.18/0110-2c8f4742bb76-netfs-fix-potential-for-tearing-in-remote-i-size-and.patch"
+      },
+      {
+        "status": "included",
+        "upstream": "",
+        "source": "claude",
+        "subject": "cifs: Fix undefined variables",
+        "patch": "patches/6.18/0111-q-cifs-fix-undefined-variables.patch"
       }
     ],
     "6.12": [
@@ -12263,11 +12277,11 @@
   "CVE-2026-89630": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "ba22f575de9d",
         "source": "mainline",
         "subject": "smb: client: restore the data_offset bound in is_valid_oplock_break()",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "6.18 is_valid_oplock_break() still subtracts smb_buf_length; 83bfbd0bb902 only partly backported"
       }
     ]
   },
@@ -12559,11 +12573,11 @@
   "CVE-2026-89862": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "0fb52cc63246",
         "source": "mainline",
         "subject": "scsi: qla2xxx: Fix BSG job leak on validate flash image error path",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "qla28xx_validate_flash_image() (d74181ca110e) not in 6.18"
       }
     ],
     "6.12": [
@@ -15215,11 +15229,11 @@
   "CVE-2026-98144": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "7e33ba3a1d48",
         "source": "mainline",
         "subject": "accel/amdxdna: put the chained BO when its mapping fails",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "vmap failure branch (d76856beb4a4) not in 6.18; get_obj maps and drops ref itself"
       }
     ]
   },
@@ -18637,11 +18651,18 @@
   "CVE-2026-98813": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "ab39974240a0",
         "source": "mainline",
         "subject": "bpf: Hold map BTF for the memory allocator destructor record",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "ab39974240a0",
+        "source": "claude",
+        "subject": "bpf: Hold map BTF for the memory allocator destructor record",
+        "patch": "patches/6.18/0109-ab39974240a0-bpf-hold-map-btf-for-the-memory-allocator-destructor.patch"
       }
     ],
     "6.12": [
@@ -20024,11 +20045,11 @@
   "CVE-2026-98983": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "0b6f31a3c0b1",
         "source": "mainline",
         "subject": "unshare: don't drop active namespace references that were never taken",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "active ns refcount (3a18f809184b) not in 6.18; put_nsproxy() is plain refcount"
       }
     ],
     "6.12": [

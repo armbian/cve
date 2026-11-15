@@ -1,10 +1,14 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- added 6.18: 3 patch(es)
+
 ## 6.18 (base 6.18.63, `1cdda838e847`)
 
 Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no longer needed: 5
 
-### Included (107)
+### Included (111)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -115,30 +119,19 @@ Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-98125 | `01261a6fa48b` | claude | smb/client: fix stale page cache in insert/collapse range |
 |  | CVE-2026-98115 | `d12168084c8c` | claude | ksmbd: safely drain sessions during logoff |
 |  | CVE-2026-98115 | `636abbe7a66d` | claude | ksmbd: fix sparc build with atomic work state |
-
-### Needs a backport (11)
-
-| | CVE | Upstream | Source | Subject |
-|---|---|---|---|---|
-|  | CVE-2026-23295 | `1aa82181a3c2` | mainline | accel/amdxdna: Fix dead lock for suspend and resume |
-|  | CVE-2026-43446 | `6b13cb8f48a4` | mainline | accel/amdxdna: Fix runtime suspend deadlock when there is pending job |
-|  | CVE-2026-31710 | `c4d3fc5844d6` | mainline | smb: client: fix dir separator in SMB1 UNIX mounts |
-|  | CVE-2026-72377 | `81e985b4c3a6` | mainline | afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints |
-|  | CVE-2026-89862 | `0fb52cc63246` | mainline | scsi: qla2xxx: Fix BSG job leak on validate flash image error path |
-|  | CVE-2026-98144 | `7e33ba3a1d48` | mainline | accel/amdxdna: put the chained BO when its mapping fails |
-|  | CVE-2026-89630 | `ba22f575de9d` | mainline | smb: client: restore the data_offset bound in is_valid_oplock_break() |
-|  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
-|  | CVE-2026-98813 | `ab39974240a0` | mainline | bpf: Hold map BTF for the memory allocator destructor record |
-|  | CVE-2026-98983 | `0b6f31a3c0b1` | mainline | unshare: don't drop active namespace references that were never taken |
-|  | CVE-2026-64160 | `2c8f4742bb76` | mainline | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
-
-### cve/ backport does not apply on this base (1)
-
-| | CVE | Upstream | Source | Subject |
-|---|---|---|---|---|
+|  | CVE-2026-23295 | `1aa82181a3c2` | claude | accel/amdxdna: Fix dead lock for suspend and resume |
+|  | CVE-2026-98813 | `ab39974240a0` | claude | bpf: Hold map BTF for the memory allocator destructor record |
 |  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
+|  | CVE-2026-64160 | `—` | claude | cifs: Fix undefined variables |
 
-### Not affected (reviewed) (17)
+### Needs a backport (2)
+
+| | CVE | Upstream | Source | Subject |
+|---|---|---|---|---|
+|  | CVE-2026-72377 | `81e985b4c3a6` | mainline | afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints |
+|  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
+
+### Not affected (reviewed) (23)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -148,16 +141,22 @@ Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-52945 | `42bc3f45425b` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
 |  | CVE-2026-52945 | `e94b369ff82f` | mainline | Revert "wireguard: device: enable threaded NAPI" — reverts a stable-only backport; mainline keeps threaded NAPI |
 |  | CVE-2026-23288 | `1110a949675e` | mainline | accel/amdxdna: Fix out-of-bounds memset in command slot handling — memset from 3d32eb7a5ecf not in 6.18; slot space checked first |
+|  | CVE-2026-43446 | `6b13cb8f48a4` | mainline | accel/amdxdna: Fix runtime suspend deadlock when there is pending job — RPM resume in job run (69674c1c704c) not in 6.18; resume is in aie2_cmd_submit() |
 |  | CVE-2026-43095 | `4e53116437e9` | mainline | ASoC: SDCA: Fix errors in IRQ cleanup — 6.18 has no caller of sdca_irq_populate() |
+|  | CVE-2026-31710 | `c4d3fc5844d6` | mainline | smb: client: fix dir separator in SMB1 UNIX mounts — 6.18 backport of 4fc3a433c139 uses atomic_or, no sbflags write-back |
 |  | CVE-2026-80657 | `506255d46bdb` | mainline | accel/amdxdna: Guard management mailbox channel cleanup against NULL pointer — 6.18 frees the channel through the NULL-safe aie2_destroy_mgmt_chann() |
 |  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() — rseq_entry.h and the Fixes: commit 82f572449cfe not in 6.18 |
 |  | CVE-2026-72203 | `76bc14c7097f` | mainline | ntfs: skip extent mft records in writeback to prevent deadlock — fs/ntfs (classic) not in 6.18; removed in 6.9 |
 |  | CVE-2026-72200 | `ec4f061f2219` | mainline | ntfs: detect mapping-pairs LCN accumulator overflow — fs/ntfs (classic) not in 6.18; removed in 6.9 |
 |  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook — needs the per-sb xattr cache 12e9e3cd03b5, not in 6.18 |
 |  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes — fs/ntfs (classic) not in 6.18; removed in 6.9 |
+|  | CVE-2026-89862 | `0fb52cc63246` | mainline | scsi: qla2xxx: Fix BSG job leak on validate flash image error path — qla28xx_validate_flash_image() (d74181ca110e) not in 6.18 |
 |  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets — fs/ntfs (classic) not in 6.18; removed in 6.9 |
 |  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary — fs/ntfs (classic) not in 6.18; removed in 6.9 |
+|  | CVE-2026-98144 | `7e33ba3a1d48` | mainline | accel/amdxdna: put the chained BO when its mapping fails — vmap failure branch (d76856beb4a4) not in 6.18; get_obj maps and drops ref itself |
 |  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() — 6.18 checks the length before it reads it |
+|  | CVE-2026-89630 | `ba22f575de9d` | mainline | smb: client: restore the data_offset bound in is_valid_oplock_break() — 6.18 is_valid_oplock_break() still subtracts smb_buf_length; 83bfbd0bb902 only partly backported |
+|  | CVE-2026-98983 | `0b6f31a3c0b1` | mainline | unshare: don't drop active namespace references that were never taken — active ns refcount (3a18f809184b) not in 6.18; put_nsproxy() is plain refcount |
 |  | CVE-2026-98938 | `9a7931e847f3` | mainline | rust: irq: pass RegistrationInner as cookie to request_irq — fix already in 6.18.y as 8f317daa50fe |
 
 Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).

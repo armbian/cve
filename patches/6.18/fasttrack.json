@@ -2010,6 +2010,78 @@
       "build_log": "",
       "backport": "CVE-2026-98115/6.18",
       "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "1aa82181a3c285c7351523d587f7981ae4c015c8",
+      "subject": "accel/amdxdna: Fix dead lock for suspend and resume",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-23295"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0108-1aa82181a3c2-accel-amdxdna-fix-dead-lock-for-suspend-and-resume.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-23295/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "ab39974240a0cff765f3bb9cce81d8001ffdb144",
+      "subject": "bpf: Hold map BTF for the memory allocator destructor record",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98813"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0109-ab39974240a0-bpf-hold-map-btf-for-the-memory-allocator-destructor.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98813/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
+      "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64160"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0110-2c8f4742bb76-netfs-fix-potential-for-tearing-in-remote-i-size-and.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64160/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "",
+      "subject": "cifs: Fix undefined variables",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-64160"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0111-q-cifs-fix-undefined-variables.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-64160/6.18",
+      "bug_commits": []
     }
   ]
 }
