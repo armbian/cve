@@ -1,5 +1,9 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- added 6.12: 10 patch(es)
+
 ## 6.18 (base 6.18.63, `1cdda838e847`)
 
 Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no longer needed: 5
@@ -161,7 +165,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 143 · Other architectures (not built): 11
 
-### Included (169)
+### Included (180)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -194,7 +198,10 @@ Already in tree: 143 · Other architectures (not built): 11
 |  | CVE-2026-98966 | `184b5ddf82d4` | mainline | bonding: fix the program leak when XDP is replaced |
 |  | CVE-2026-46279 | `6b1842775a46` | stable-list | mm/alloc_tag: clear codetag for pages allocated before |
 |  | CVE-2026-52953 | `a6dea58d8625` | stable-list | iommu/vt-d: Fix oops due to out of scope access |
+|  | CVE-2026-52960 | `544576f0f05c` | mainline | ceph: put folios not suitable for writeback |
+|  | CVE-2026-74638 | `4da94744707b` | mainline | drm/v3d: Serialize the scheduler timeout handlers |
 |  | CVE-2026-80670 | `5484b43a0ec8` | stable-list | perf tools: Use perf_env__get_cpu_topology() in machine__resolve() |
+|  | CVE-2026-98444 | `ffb48dccce19` | mainline | xfs: drop dquot flush lock when we can't find a buffer to flush |
 |  | CVE-2026-98924 | `3bc4e4410830` | claude | vfs: Remove unnecessary list_for_each_entry_safe() from evict_inodes() |
 |  | CVE-2026-98924 | `7459c0218742` | stable-list | fs: avoid repeated scans in evict_inodes() |
 |  | CVE-2025-40025 | `c18ecd99e0c7` | claude | f2fs: fix to do sanity check on node footer for non inode dnode |
@@ -334,8 +341,16 @@ Already in tree: 143 · Other architectures (not built): 11
 |  | CVE-2026-98420 | `d7fd1f98607f` | claude | ksmbd: follow SMB2 session expiration semantics |
 |  | CVE-2026-98115 | `d12168084c8c` | claude | ksmbd: safely drain sessions during logoff |
 |  | CVE-2026-98115 | `636abbe7a66d` | claude | ksmbd: fix sparc build with atomic work state |
+|  | CVE-2026-43188 | `707104682e3c` | claude | ceph: do not propagate page array emplacement errors as batch errors |
+|  | CVE-2026-53107 | `a57f35fc19ad` | claude | wifi: libertas: use USB anchors for tracking in-flight URBs |
+|  | CVE-2026-53107 | `7c5c2b661bdb` | claude | wifi: libertas: don't kill URBs in interrupt context |
+|  | CVE-2026-72345 | `0f0e4ae6975c` | claude | net/mlx5: LAG, Fix off-by-one in single-FDB error rollback |
+|  | CVE-2026-90129 | `—` | claude | virtio_balloon: factor out virtballoon_quiesce() |
+|  | CVE-2026-90129 | `7e17eef04600` | claude | virtio_balloon: quiesce balloon work before device shutdown |
+|  | CVE-2026-98431 | `a44a3f175eae` | claude | RDMA/uverbs: Fix mmap_lock/disassociation_lock circular dependency |
+|  | CVE-2026-98813 | `ab39974240a0` | claude | bpf: Hold map BTF for the memory allocator destructor record |
 
-### Needs a backport (27)
+### Needs a backport (12)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -344,27 +359,12 @@ Already in tree: 143 · Other architectures (not built): 11
 |  | CVE-2025-38311 | `120f28a6f314` | mainline | iavf: get rid of the crit lock |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
-|  | CVE-2026-43188 | `707104682e3c` | mainline | ceph: do not propagate page array emplacement errors as batch errors |
-|  | CVE-2026-53107 | `7c5c2b661bdb` | mainline | wifi: libertas: don't kill URBs in interrupt context |
 |  | CVE-2026-43029 | `5dd8025a49c2` | mainline | mptcp: fix soft lockup in mptcp_recvmsg() |
-|  | CVE-2026-46096 | `f0f75a3d98b7` | mainline | tpm2-sessions: Fix missing tpm_buf_destroy() in tpm2_read_public() |
-|  | CVE-2026-52960 | `544576f0f05c` | mainline | ceph: put folios not suitable for writeback |
-|  | CVE-2026-72042 | `6aa9e61c4646` | mainline | ipmi: Fix user refcount underflow in event delivery |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
-|  | CVE-2026-72345 | `0f0e4ae6975c` | mainline | net/mlx5: LAG, Fix off-by-one in single-FDB error rollback |
-|  | CVE-2026-80685 | `7441d6348c70` | mainline | mm/util: don't read __page_2 for order-1 folios in snapshot_page() |
-|  | CVE-2026-80721 | `aa9f7cb2bd3a` | mainline | Bluetooth: ISO: ensure no dangling hcon references in iso_conn |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
-|  | CVE-2026-74638 | `4da94744707b` | mainline | drm/v3d: Serialize the scheduler timeout handlers |
-|  | CVE-2026-89862 | `0fb52cc63246` | mainline | scsi: qla2xxx: Fix BSG job leak on validate flash image error path |
 | does not build | CVE-2026-90129 | `7e17eef04600` | mainline | virtio_balloon: quiesce balloon work before device shutdown |
-|  | CVE-2026-89639 | `364b18323058` | mainline | cifs: use cifs_invalidate_cache() in cifs_do_truncate() for O_TRUNC |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
-|  | CVE-2026-98431 | `a44a3f175eae` | mainline | RDMA/uverbs: Fix mmap_lock/disassociation_lock circular dependency |
-|  | CVE-2026-98444 | `ffb48dccce19` | mainline | xfs: drop dquot flush lock when we can't find a buffer to flush |
-|  | CVE-2026-98813 | `ab39974240a0` | mainline | bpf: Hold map BTF for the memory allocator destructor record |
-|  | CVE-2026-98983 | `0b6f31a3c0b1` | mainline | unshare: don't drop active namespace references that were never taken |
 |  | CVE-2026-90040 | `d1a3c2162334` | mainline | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
 
 ### cve/ backport does not apply on this base (1)
@@ -379,7 +379,7 @@ Already in tree: 143 · Other architectures (not built): 11
 |---|---|---|---|---|
 |  | CVE-2026-64255 | `f056fc2b9274` | mainline | wifi: iwlwifi: mld: validate sta_mask before ffs() in BA session handlers |
 
-### Not affected (reviewed) (56)
+### Not affected (reviewed) (63)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -406,10 +406,12 @@ Already in tree: 143 · Other architectures (not built): 11
 |  | CVE-2026-31435 | `7e57523490cd` | mainline | netfs: Fix read abandonment during retry — 6.12 abandon path walks a local list; no stale subreq |
 |  | CVE-2026-31742 | `40014493cece` | mainline | vt: discard stale unicode buffer on alt screen exit after resize — alt-screen unicode save from 5eb608319bb5 not in 6.12 |
 |  | CVE-2026-46314 | `fb44d589bf31` | mainline | drm/v3d: Reject empty multisync extension to prevent infinite loop — fixed in 6.12.91 by stable 2270513b5d47 |
+|  | CVE-2026-46096 | `f0f75a3d98b7` | mainline | tpm2-sessions: Fix missing tpm_buf_destroy() in tpm2_read_public() — a3b7eb67225c (stable backport of bda1cbf73c6e) already destroys buf on every return path |
 |  | CVE-2026-52994 | `1cb36e252211` | mainline | vsock/virtio: fix MSG_ZEROCOPY pinned-pages accounting — fixed by stable 293fe8f2d1b5; zerocopy sized from pkt_len |
 |  | CVE-2026-46147 | `73b9c1e5da84` | mainline | KVM: arm64: Fix pin leak and publication ordering in __pkvm_init_vcpu() — index checked before pinning; vcpus[] only under vm_table_lock |
 |  | CVE-2026-52966 | `dc366607c41c` | mainline | drm: Replace old pointer to new idr — no drm_gem_change_handle_ioctl() in 6.12 |
 |  | CVE-2026-64212 | `d733ed481fd2` | mainline | wifi: iwlwifi: mld: don't dereference a pointer before NULL checking it — iwlwifi mld sub-driver not in 6.12 |
+|  | CVE-2026-72042 | `6aa9e61c4646` | mainline | ipmi: Fix user refcount underflow in event delivery — b52da4054ee0 (introduced the extra kref_put) not in 6.12 |
 |  | CVE-2026-63885 | `7164d78559b0` | mainline | drm/gem: fix race between change_handle and handle_delete — no GEM_CHANGE_HANDLE ioctl in 6.12 |
 |  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() — rseq_entry.h and 82f572449cfe not in 6.12 |
 |  | CVE-2026-53246 | `0861615c28de` | mainline | sctp: validate cached peer INIT chunk length in COOKIE_ECHO processing — fixed in 6.12.114 by stable 29ab56e7660b |
@@ -422,12 +424,16 @@ Already in tree: 143 · Other architectures (not built): 11
 |  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes — classic fs/ntfs not in 6.12; removed in 6.9 |
 |  | CVE-2026-98897 | `27a9bc968d4a` | mainline | ksmbd: don't hold ci->m_lock while waiting for a lease break ack — fixed in 6.12.111 by stable 5de0527f7824 |
 | does not build | CVE-2026-72365 | `ba6a9f6533c7` | mainline | netfs: Fix writethrough to use collection offload — 6.12 always queues write collection; no such flag |
+|  | CVE-2026-80685 | `7441d6348c70` | mainline | mm/util: don't read __page_2 for order-1 folios in snapshot_page() — snapshot_page() (d863a12108f2) not in 6.12 |
+|  | CVE-2026-80721 | `aa9f7cb2bd3a` | mainline | Bluetooth: ISO: ensure no dangling hcon references in iso_conn — already folded into stable 42c8bd6ac81e (backport of f958c7805b18) |
 |  | CVE-2026-89826 | `8321b093fa6c` | mainline | drm/panthor: harden firmware build-info bounds checks — panthor_fw_read_build_info() from 9d443deb0441 not in 6.12 |
 |  | CVE-2026-74639 | `2615f0fb90df` | mainline | ALSA: us144mkii: re-anchor capture URBs on resubmission — us144mkii driver not in 6.12 |
+|  | CVE-2026-89862 | `0fb52cc63246` | mainline | scsi: qla2xxx: Fix BSG job leak on validate flash image error path — qla28xx_validate_flash_image() (d74181ca110e) not in 6.12 |
 |  | CVE-2026-89675 | `62c0f6eaf050` | mainline | nfsd: fix UAF in async copy cancel and shutdown — nfsd4_copy() forces sync copies (stable 8d915bbf3926) |
 |  | CVE-2026-98162 | `39f203209671` | mainline | smb/server: fix tree connection leak in smb2_tree_connect() — fixed in 6.12.114 by stable bd58a52738f7 |
 |  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets — classic fs/ntfs not in 6.12; only ntfs3 |
 |  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary — classic fs/ntfs not in 6.12; removed in 6.9 |
+|  | CVE-2026-89639 | `364b18323058` | mainline | cifs: use cifs_invalidate_cache() in cifs_do_truncate() for O_TRUNC — cifs_do_truncate() (110fee6b9bb5) not in 6.12; O_TRUNC goes through cifs_setattr() |
 |  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() — reparse_buf_ptr() // stops before reading ReparseDataLength |
 |  | CVE-2026-98119 | `8fb45a934661` | mainline | netfs: break unbuffered write when netfs_alloc_subrequest() fails — write-side netfs_alloc_subrequest() uses mempool; never NULL |
 |  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront — single-thread read collector from e2d46f2ec332 (6.14) not in 6.12 |
@@ -438,6 +444,7 @@ Already in tree: 143 · Other architectures (not built): 11
 |  | CVE-2026-98719 | `8abbc76120a7` | mainline | KVM: SEV: Nullify "have run CPUs" mask pointer when freeing it — have_run_cpus not in 6.12 |
 |  | CVE-2026-98843 | `8db55c5cd831` | mainline | netfs: zero gaps in read-gaps folio to avoid writing back stale data — 6.12 read collector zeroes short-read tails (netfs_clear_unread()) |
 |  | CVE-2026-98839 | `39495ef5d6f8` | mainline | vt: selection: Fix unsigned underflow and slab-out-of-bounds read in paste_selection() — 6.12 checks buf_len > pasted under the lock in the loop |
+|  | CVE-2026-98983 | `0b6f31a3c0b1` | mainline | unshare: don't drop active namespace references that were never taken — active ns refs (3a18f809184b) not in 6.12; put_nsproxy() only drops refs the new nsproxy owns |
 |  | CVE-2026-99093 | `2fb552b0bee7` | mainline | mm: don't schedule deferred kernel page table freeing while booting — no deferred kernel page-table freeing (pagetable_free_kernel()) in 6.12 |
 
 Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made backport).

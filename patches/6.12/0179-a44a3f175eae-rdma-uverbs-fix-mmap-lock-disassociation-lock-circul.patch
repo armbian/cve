@@ -1,0 +1,178 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: a44a3f175eaee7e5aeb6a8fed381c4a0d5f49236
+X-Fasttrack-CVE: CVE-2026-98431
+X-Fasttrack-Backport: cve/CVE-2026-98431/6.12
+From: Or Har-Toov <ohartoov@nvidia.com>
+Date: Sun, 15 Nov 2026 11:41:13 +0100
+Subject: [PATCH] RDMA/uverbs: Fix mmap_lock/disassociation_lock circular
+ dependency
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+commit a44a3f175eae upstream.
+
+[ Backport: ib_uverbs_release_file() and the ib_uverbs_file struct live
+  in drivers/infiniband/core/uverbs_main.c and uverbs.h in 6.12 (they
+  were moved to rdma_core.c and include/rdma/uverbs_types.h in later
+  cycles), so the removals of mutex_destroy/mutex_init and the struct
+  field were applied there instead. The uverbs_main.c hunks match
+  upstream verbatim. ]
+
+Commit 51976c6cd786 ("RDMA/core: Provide rdma_user_mmap_disassociate()
+to disassociate mmap pages") introduced disassociation_lock to protect
+new mmap registrations against uverbs_user_mmap_disassociate(), but
+created an ABBA deadlock:
+
+  Thread A (mmap / fork):
+    mmap_lock -> disassociation_lock
+
+  Thread B (disassociate):
+    disassociation_lock -> mmap_lock
+
+Fix by removing disassociation_lock entirely and using the pre-existing
+hw_destroy_rwsem instead. hw_destroy_rwsem already provides the same
+protection: rdma_umap_open() and ib_uverbs_mmap() both use
+down_read_trylock() before registering a new VMA, so holding hw_destroy_rwsem
+in uverbs_user_mmap_disassociate() is sufficient to block new registrations.
+trylock is used in both mmap paths (not blocking down_read) because
+mmap_lock is already held on entry, and uverbs_user_mmap_disassociate()
+acquires mmap_lock internally — a blocking read would recreate the same
+deadlock.
+
+The only caller that was not taking hw_destroy_rwsem for write was
+rdma_user_mmap_disassociate(). Fix it to take the rwsem per-ufile while
+iterating under lists_mutex.  This is safe because ib_uverbs_close()
+releases hw_destroy_rwsem entirely before acquiring lists_mutex, so the
+two locks are never held simultaneously.
+
+Fixes: 51976c6cd786 ("RDMA/core: Provide rdma_user_mmap_disassociate() to disassociate mmap pages")
+Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20260811-fix-mmap-lockdep-v1-1-1151b41063b4@nvidia.com
+Acked-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ drivers/infiniband/core/uverbs.h      |  2 --
+ drivers/infiniband/core/uverbs_main.c | 26 +++++++++++---------------
+ 2 files changed, 11 insertions(+), 17 deletions(-)
+
+diff --git a/drivers/infiniband/core/uverbs.h b/drivers/infiniband/core/uverbs.h
+index dfd2e5a86e6f..821d93c8f712 100644
+--- a/drivers/infiniband/core/uverbs.h
++++ b/drivers/infiniband/core/uverbs.h
+@@ -160,8 +160,6 @@ struct ib_uverbs_file {
+ 	struct page *disassociate_page;
+ 
+ 	struct xarray		idr;
+-
+-	struct mutex disassociation_lock;
+ };
+ 
+ struct ib_uverbs_event {
+diff --git a/drivers/infiniband/core/uverbs_main.c b/drivers/infiniband/core/uverbs_main.c
+index 85cfc790a7bb..a1074c2f8893 100644
+--- a/drivers/infiniband/core/uverbs_main.c
++++ b/drivers/infiniband/core/uverbs_main.c
+@@ -218,7 +218,6 @@ void ib_uverbs_release_file(struct kref *ref)
+ 
+ 	if (file->disassociate_page)
+ 		__free_pages(file->disassociate_page, 0);
+-	mutex_destroy(&file->disassociation_lock);
+ 	mutex_destroy(&file->umap_lock);
+ 	mutex_destroy(&file->ucontext_lock);
+ 	kfree(file);
+@@ -701,12 +700,15 @@ static int ib_uverbs_mmap(struct file *filp, struct vm_area_struct *vma)
+ 		goto out;
+ 	}
+ 
+-	mutex_lock(&file->disassociation_lock);
++	if (!down_read_trylock(&file->hw_destroy_rwsem)) {
++		ret = -EIO;
++		goto out;
++	}
+ 
+ 	vma->vm_ops = &rdma_umap_ops;
+ 	ret = ucontext->device->ops.mmap(ucontext, vma);
+ 
+-	mutex_unlock(&file->disassociation_lock);
++	up_read(&file->hw_destroy_rwsem);
+ out:
+ 	srcu_read_unlock(&file->device->disassociate_srcu, srcu_key);
+ 	return ret;
+@@ -728,7 +730,6 @@ static void rdma_umap_open(struct vm_area_struct *vma)
+ 	/* We are racing with disassociation */
+ 	if (!down_read_trylock(&ufile->hw_destroy_rwsem))
+ 		goto out_zap;
+-	mutex_lock(&ufile->disassociation_lock);
+ 
+ 	/*
+ 	 * Disassociation already completed, the VMA should already be zapped.
+@@ -741,12 +742,10 @@ static void rdma_umap_open(struct vm_area_struct *vma)
+ 		goto out_unlock;
+ 	rdma_umap_priv_init(priv, vma, opriv->entry);
+ 
+-	mutex_unlock(&ufile->disassociation_lock);
+ 	up_read(&ufile->hw_destroy_rwsem);
+ 	return;
+ 
+ out_unlock:
+-	mutex_unlock(&ufile->disassociation_lock);
+ 	up_read(&ufile->hw_destroy_rwsem);
+ out_zap:
+ 	/*
+@@ -830,7 +829,7 @@ void uverbs_user_mmap_disassociate(struct ib_uverbs_file *ufile)
+ {
+ 	struct rdma_umap_priv *priv, *next_priv;
+ 
+-	mutex_lock(&ufile->disassociation_lock);
++	lockdep_assert_held_write(&ufile->hw_destroy_rwsem);
+ 
+ 	while (1) {
+ 		struct mm_struct *mm = NULL;
+@@ -856,10 +855,8 @@ void uverbs_user_mmap_disassociate(struct ib_uverbs_file *ufile)
+ 			break;
+ 		}
+ 		mutex_unlock(&ufile->umap_lock);
+-		if (!mm) {
+-			mutex_unlock(&ufile->disassociation_lock);
++		if (!mm)
+ 			return;
+-		}
+ 
+ 		/*
+ 		 * The umap_lock is nested under mmap_lock since it used within
+@@ -889,8 +886,6 @@ void uverbs_user_mmap_disassociate(struct ib_uverbs_file *ufile)
+ 		mmap_read_unlock(mm);
+ 		mmput(mm);
+ 	}
+-
+-	mutex_unlock(&ufile->disassociation_lock);
+ }
+ 
+ /**
+@@ -908,8 +903,11 @@ void rdma_user_mmap_disassociate(struct ib_device *device)
+ 
+ 	mutex_lock(&uverbs_dev->lists_mutex);
+ 	list_for_each_entry(ufile, &uverbs_dev->uverbs_file_list, list) {
+-		if (ufile->ucontext)
++		if (ufile->ucontext) {
++			down_write(&ufile->hw_destroy_rwsem);
+ 			uverbs_user_mmap_disassociate(ufile);
++			up_write(&ufile->hw_destroy_rwsem);
++		}
+ 	}
+ 	mutex_unlock(&uverbs_dev->lists_mutex);
+ }
+@@ -984,8 +982,6 @@ static int ib_uverbs_open(struct inode *inode, struct file *filp)
+ 	mutex_init(&file->umap_lock);
+ 	INIT_LIST_HEAD(&file->umaps);
+ 
+-	mutex_init(&file->disassociation_lock);
+-
+ 	filp->private_data = file;
+ 	list_add_tail(&file->list, &dev->uverbs_file_list);
+ 	mutex_unlock(&dev->lists_mutex);
