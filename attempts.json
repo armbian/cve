@@ -1852,10 +1852,26 @@
     }
   },
   "CVE-2026-53107": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
+      "outcome": "patched-needs-review",
+      "run": null
+    },
     "6.12": {
       "cost": 2.34629075,
       "date": "2026-11-15",
       "head": "6.12.117",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-53132": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -2022,6 +2038,17 @@
       "run": null
     }
   },
+  "CVE-2026-63999": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
+      "outcome": "not-affected-needs-review",
+      "reason": "net/ethtool/rss.c from 7112a04664bf (v6.2) not in 6.1",
+      "reviewed": "2026-11-15",
+      "run": null
+    }
+  },
   "CVE-2026-64016": {
     "6.1": {
       "cost": null,
@@ -2113,7 +2140,8 @@
       "date": "2026-10-31",
       "head": "6.12.115",
       "outcome": "not-affected-needs-review",
-      "reason": "iwlwifi mld sub-driver not in 6.12",
+      "reason": "iwlwifi mld sub-driver (drivers/net/wireless/intel/iwlwifi/mld/) not in 6.12",
+      "reviewed": "2026-11-15",
       "run": null
     }
   },
@@ -2296,6 +2324,15 @@
       "outcome": "not-affected-needs-review",
       "reason": "6.12 always queues write collection; no such flag",
       "reviewed": "2026-11-02",
+      "run": null
+    }
+  },
+  "CVE-2026-72369": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -2492,6 +2529,15 @@
       "run": null
     }
   },
+  "CVE-2026-74638": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
   "CVE-2026-74639": {
     "6.1": {
       "cost": null,
@@ -2538,6 +2584,15 @@
       "cost": 0.6084113,
       "date": "2026-10-31",
       "head": "6.18.60",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-80581": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -2894,6 +2949,13 @@
     }
   },
   "CVE-2026-90129": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
+      "outcome": "partial",
+      "run": null
+    },
     "6.12": {
       "cost": 2.2623937499999998,
       "date": "2026-11-15",
@@ -3009,6 +3071,15 @@
       "run": null
     }
   },
+  "CVE-2026-93090": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
   "CVE-2026-93135": {
     "6.18": {
       "cost": 1.0790103000000002,
@@ -3091,6 +3162,15 @@
       "outcome": "not-affected-needs-review",
       "reason": "6.1 get_target() keeps the path pinned through create_link(); needs 1b25dea3867a.",
       "reviewed": "2026-11-02",
+      "run": null
+    }
+  },
+  "CVE-2026-97975": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -3374,6 +3454,17 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98508": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
+      "outcome": "not-affected-needs-review",
+      "reason": "fix already in patch set 0110 (6.1.y 1/2 adds the !out_fence check)",
+      "reviewed": "2026-11-15",
       "run": null
     }
   },
@@ -3667,6 +3758,15 @@
       "outcome": "not-affected-needs-review",
       "reason": "6.1 has no RQF_USE_SCHED (dd6216bb16e8); cached-request paths check op_is_flush().",
       "reviewed": "2026-11-02",
+      "run": null
+    }
+  },
+  "CVE-2026-98834": {
+    "6.1": {
+      "cost": null,
+      "date": "2026-11-15",
+      "head": "6.1.192",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
