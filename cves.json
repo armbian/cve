@@ -9166,11 +9166,25 @@
     ],
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "7c5c2b661bdb",
         "source": "mainline",
         "subject": "wifi: libertas: don't kill URBs in interrupt context",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "a57f35fc19ad",
+        "source": "claude",
+        "subject": "wifi: libertas: use USB anchors for tracking in-flight URBs",
+        "patch": "patches/6.1/0534-a57f35fc19ad-wifi-libertas-use-usb-anchors-for-tracking-in-flight.patch"
+      },
+      {
+        "status": "included",
+        "upstream": "7c5c2b661bdb",
+        "source": "claude",
+        "subject": "wifi: libertas: don't kill URBs in interrupt context",
+        "patch": "patches/6.1/0535-7c5c2b661bdb-wifi-libertas-don-t-kill-urbs-in-interrupt-context.patch"
       }
     ]
   },
@@ -9249,11 +9263,18 @@
   "CVE-2026-53132": {
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "059b7dbd20a6",
         "source": "mainline",
         "subject": "vsock/virtio: fix potential unbounded skb queue",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "059b7dbd20a6",
+        "source": "claude",
+        "subject": "vsock/virtio: fix potential unbounded skb queue",
+        "patch": "patches/6.1/0539-059b7dbd20a6-vsock-virtio-fix-potential-unbounded-skb-queue.patch"
       }
     ]
   },
@@ -9798,11 +9819,11 @@
   "CVE-2026-63999": {
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "266297692f97",
         "source": "mainline",
         "subject": "ethtool: rss: fix indir_table and hkey leak on get_rxfh failure",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "net/ethtool/rss.c from 7112a04664bf (v6.2) not in 6.1"
       }
     ]
   },
@@ -10286,11 +10307,11 @@
   "CVE-2026-64255": {
     "6.12": [
       {
-        "status": "not-affected-needs-review",
+        "status": "not-affected",
         "upstream": "f056fc2b9274",
         "source": "mainline",
         "subject": "wifi: iwlwifi: mld: validate sta_mask before ffs() in BA session handlers",
-        "reason": "iwlwifi mld sub-driver not in 6.12"
+        "reason": "iwlwifi mld sub-driver (drivers/net/wireless/intel/iwlwifi/mld/) not in 6.12"
       }
     ]
   },
@@ -10961,11 +10982,18 @@
   "CVE-2026-72369": {
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "fb3e566cafc3",
         "source": "mainline",
         "subject": "minix: avoid overflow in bitmap block count calculation",
-        "reason": "applies unchanged but does not build; needs a backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "fb3e566cafc3",
+        "source": "claude",
+        "subject": "minix: avoid overflow in bitmap block count calculation",
+        "patch": "patches/6.1/0538-fb3e566cafc3-minix-avoid-overflow-in-bitmap-block-count-calculati.patch"
       }
     ]
   },
@@ -11460,11 +11488,18 @@
     ],
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "4da94744707b",
         "source": "mainline",
         "subject": "drm/v3d: Serialize the scheduler timeout handlers",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "4da94744707b",
+        "source": "claude",
+        "subject": "drm/v3d: Serialize the scheduler timeout handlers",
+        "patch": "patches/6.1/0531-4da94744707b-drm-v3d-serialize-the-scheduler-timeout-handlers.patch"
       }
     ]
   },
@@ -11807,11 +11842,18 @@
   "CVE-2026-80581": {
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "17661c67b206",
         "source": "mainline",
         "subject": "ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "17661c67b206",
+        "source": "claude",
+        "subject": "ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout",
+        "patch": "patches/6.1/0540-17661c67b206-asoc-sof-ipc4-pcm-continue-the-pipeline-trigger-in-c.patch"
       }
     ]
   },
@@ -12877,6 +12919,20 @@
         "source": "mainline",
         "subject": "virtio_balloon: quiesce balloon work before device shutdown",
         "reason": "applies unchanged but does not build; needs a backport or prerequisite"
+      },
+      {
+        "status": "included",
+        "upstream": "",
+        "source": "claude",
+        "subject": "virtio_balloon: factor out virtballoon_quiesce()",
+        "patch": "patches/6.1/0532-q-virtio-balloon-factor-out-virtballoon-quiesce.patch"
+      },
+      {
+        "status": "included",
+        "upstream": "7e17eef04600",
+        "source": "claude",
+        "subject": "virtio_balloon: quiesce balloon work before device shutdown",
+        "patch": "patches/6.1/0533-7e17eef04600-virtio-balloon-quiesce-balloon-work-before-device-sh.patch"
       }
     ]
   },
@@ -13581,11 +13637,18 @@
   "CVE-2026-93090": {
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "687d67be3d87",
         "source": "mainline",
         "subject": "firmware: arm_scmi: Clean up channels on setup failure",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "687d67be3d87",
+        "source": "claude",
+        "subject": "firmware: arm_scmi: Clean up channels on setup failure",
+        "patch": "patches/6.1/0536-687d67be3d87-firmware-arm-scmi-clean-up-channels-on-setup-failure.patch"
       }
     ]
   },
@@ -14414,11 +14477,18 @@
   "CVE-2026-97975": {
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "9b851b09b392",
         "source": "mainline",
         "subject": "Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del()",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "9b851b09b392",
+        "source": "claude",
+        "subject": "Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del()",
+        "patch": "patches/6.1/0541-9b851b09b392-bluetooth-hci-sysfs-fix-null-pointer-dereference-in.patch"
       }
     ]
   },
@@ -17353,11 +17423,11 @@
   "CVE-2026-98508": {
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "846b3c64fe3e",
         "source": "mainline",
         "subject": "drm/virtio: fix NULL pointer dereference on fence allocation failure",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "fix already in patch set 0110 (6.1.y 1/2 adds the !out_fence check)"
       }
     ]
   },
@@ -19124,11 +19194,18 @@
     ],
     "6.1": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "26300879cd8e",
         "source": "mainline",
         "subject": "mtd: core: avoid double-free of OTP NVMEM device",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "26300879cd8e",
+        "source": "claude",
+        "subject": "mtd: core: avoid double-free of OTP NVMEM device",
+        "patch": "patches/6.1/0537-26300879cd8e-mtd-core-avoid-double-free-of-otp-nvmem-device.patch"
       }
     ]
   },

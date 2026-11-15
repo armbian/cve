@@ -7042,29 +7042,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-53107"
-    ],
-    "kev": false,
-    "upstream": "7c5c2b661bdb78c1472b8833265c9ed1ee880039",
-    "subject": "wifi: libertas: don't kill URBs in interrupt context",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/wireless/marvell/libertas/if_usb.c"
-    ],
-    "prerequisites": [
-      "8fa7292fee5c treewide: Switch/rename to timer_delete[_sync]()",
-      "41cb08555c41 treewide, timers: Rename from_timer() to timer_container_of()",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "75e375816392 wifi: libertas: drop redundant device reference",
-      "a57f35fc19ad wifi: libertas: use USB anchors for tracking in-flight URBs"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-31513"
     ],
     "kev": false,
@@ -7479,38 +7456,6 @@
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
     "build_log": "## drivers/i3c/master/svc-i3c-master.c\ndrivers/i3c/master/svc-i3c-master.c:541:21: error: implicit declaration of function \u2018svc_has_quirk\u2019 [-Wimplicit-function-declaration]\ndrivers/i3c/master/svc-i3c-master.c:541:43: error: \u2018SVC_I3C_QUIRK_FALSE_SLVSTART\u2019 undeclared (first use in this function); did you mean \u2018SVC_I3C_MSTATUS_SLVSTART\u2019?"
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-53132"
-    ],
-    "kev": false,
-    "upstream": "059b7dbd20a6f0c539a45ddff1573cb8946685b5",
-    "subject": "vsock/virtio: fix potential unbounded skb queue",
-    "verdict": "needs-backport",
-    "files": [
-      "net/vmw_vsock/virtio_transport_common.c"
-    ],
-    "prerequisites": [
-      "4d1f51551777 virtio/vsock: check transport before skb allocation",
-      "b68ffb1b3bee virtio/vsock: allocate multiple skbuffs on tx",
-      "e3ec366eb0d1 virtio/vsock: check argument to avoid no effect call",
-      "634f1a7110b4 vsock: support sockmap",
-      "b8d2f61fdf2a virtio/vsock: WARN_ONCE() for invalid state of socket",
-      "78fa0d61d97a bpf, sockmap: Pass skb ownership through read_skb",
-      "051e77e33946 virtio/vsock: rework MSG_PEEK for SOCK_STREAM",
-      "a75f501de88e virtio/vsock: support MSG_PEEK for SOCK_SEQPACKET",
-      "0df7cd3c13e4 vsock/virtio/vhost: read data from non-linear skb",
-      "4b0bf10eb077 vsock/virtio: non-linear skb handling for tap",
-      "581512a6dc93 vsock/virtio: MSG_ZEROCOPY flag support",
-      "b0a930e8d90c vsock/virtio: fix \"comparison of distinct pointer types lacks a cast\" warning",
-      "0fe179896811 virtio/vsock: send credit update during setting SO_RCVLOWAT",
-      "e6ab45005772 vsock/virtio: add SIOCOUTQ support for all virtio based transports",
-      "3543152f2d33 vsock: Update rx_bytes on read_skb()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
   },
   {
     "series": "6.1",
@@ -8492,33 +8437,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-72369"
-    ],
-    "kev": false,
-    "upstream": "fb3e566cafc38fe3ba35e6843a2d529a3748870c",
-    "subject": "minix: avoid overflow in bitmap block count calculation",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/minix/minix.h"
-    ],
-    "prerequisites": [
-      "4a29a1262a47 minix: make minix_new_inode() return error as ERR_PTR(-E...)",
-      "b74d24f7a74f fs: port ->getattr() to pass mnt_idmap",
-      "2d1a9d599b3e minix: fix error handling in minix_set_link",
-      "5a77670ff863 minixfs: Convert minix_find_entry() to take a folio",
-      "6e9ead1ec9f8 minixfs: Convert minix_set_link() and minix_dotdot() to take a folio",
-      "e033fe609d74 minixfs: Convert minix_delete_entry() to work on a folio",
-      "cf04e47128af minixfs: Convert minix_prepare_chunk() to take a folio",
-      "21215ce7a95a Add error handling to minix filesystem for inode corruption detection",
-      "602544773763 uapi: promote EFSCORRUPTED and EUCLEAN to errno.h",
-      "caaa184b4243 minix: Track metadata bhs in fs-private inode part"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/minix/bitmap.c\nfs/minix/minix.h:93:16: error: implicit declaration of function \u2018DIV_ROUND_UP_POW2\u2019; did you mean \u2018DIV_ROUND_UP_ULL\u2019? [-Wimplicit-function-declaration]\n## fs/minix/dir.c\nfs/minix/minix.h:93:16: error: implicit declaration of function \u2018DIV_ROUND_UP_POW2\u2019; did you mean \u2018DIV_ROUND_UP_ULL\u2019? [-Wimplicit-function-declaration]\n## fs/minix/file.c\nfs/minix/minix.h:93:16: error: implicit declaration of function \u2018DIV_ROUND_UP_POW2\u2019; did you mean \u2018DIV_ROUND_UP_ULL\u2019? [-Wimplicit-function-declaration]"
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-68112"
     ],
     "kev": false,
@@ -8609,38 +8527,6 @@
       "eb142608e2c4 wifi: cfg80211: use a struct for inform_single_bss data",
       "dc92e54c30c4 wifi: cfg80211: use structs for TBTT information access",
       "2481b5da9c6b wifi: cfg80211: handle BSS data contained in ML probe responses"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-93090"
-    ],
-    "kev": false,
-    "upstream": "687d67be3d87894ef12e8a164434612e0b53cfae",
-    "subject": "firmware: arm_scmi: Clean up channels on setup failure",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/firmware/arm_scmi/driver.c"
-    ],
-    "prerequisites": [
-      "37b5be828032 firmware: arm_scmi: Split bus and driver into distinct modules",
-      "b0e924a955cb firmware: arm_scmi: Refactor xfer in-flight registration routines",
-      "f21c2b0ba8f3 firmware: arm_scmi: Refactor polling helpers",
-      "07cdfc44f1a4 firmware: arm_scmi: Refactor scmi_wait_for_message_response",
-      "3095a3e25d8f firmware: arm_scmi: Add xfer helpers to provide raw access",
-      "8b2bd71119dd include: trace: Add platform and channel instance references",
-      "c3d4aed763ce firmware: arm_scmi: Populate a common SCMI debugfs root",
-      "3c3d818a9317 firmware: arm_scmi: Add core raw transmission support",
-      "7063887b5386 firmware: arm_scmi: Call raw mode hooks from the core stack",
-      "9c54633e4e3d firmware: arm_scmi: Add the raw mode co-existence support",
-      "7860701d1e6e firmware: arm_scmi: Add per-channel raw injection support",
-      "8ab5059dc4f4 firmware: arm_scmi: Clean up a return statement in scmi_probe",
-      "b2b76e977fc6 firmware: arm_scmi: Fix raw coexistence mode behaviour on failure path",
-      "d617808e3b83 firmware: arm_scmi: Use the bitmap API to allocate bitmaps",
-      "5f2ea10a808a firmware: arm_scmi: Augment SMC/HVC to allow optional parameters"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -8866,71 +8752,6 @@
       "731425f3a940 wifi: mt76: add EHT rate stats for ethtool",
       "885f7af7e544 wifi: mt76: mt7915: remove mt7915_mcu_beacon_check_caps()",
       "943e4fb96e6f wifi: mt76: mt7915: report tx retries/failed counts for non-WED path"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-80581"
-    ],
-    "kev": false,
-    "upstream": "17661c67b206612cb3ba65d5ae726cd2015d0a53",
-    "subject": "ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout",
-    "verdict": "needs-backport",
-    "files": [
-      "sound/soc/sof/ipc4-pcm.c"
-    ],
-    "prerequisites": [
-      "a2ba1f70b301 ASoC: SOF: ipc4: get pipeline instance id from pipe_widget->instance_id",
-      "82b18242ae68 ASoC: SOF: pcm: do not free widgets during suspend trigger",
-      "ba223b3ad0b9 ASoC: SOF: ipc4-pcm: Define pcm_setup/free ops",
-      "37a26eec53b0 ASoC: SOF: ipc4: Add flag to skip triggering pipelines during FE DAI trigger",
-      "2d271af1af24 ASoC: SOF: ipc4-pcm: Use the PCM stream's pipeline_info during trigger",
-      "9c04363d222b ASoC: SOF: Introduce struct snd_sof_pipeline",
-      "6f9eb19a33d6 ASoC: SOF: ipc4-pcm: Rename 'data' variable to trigger_list",
-      "32c4b69872e5 ASoC: SOF: ipc4-pcm: Implement pipeline trigger reference counting",
-      "6bc4d1b714aa ASoC: SOF: ipc4-topology: Protect pipeline free with mutex",
-      "251a2b118515 ASoC: SOF: ipc4-pcm: Do not run the trigger pipelines if no spipe is stored",
-      "af74dbd0dbcf ASoC: SOF: ipc4-pcm: allocate time info for pcm delay feature",
-      "7cb19007baba ASoC: SOF: ipc4-pcm: add hw_params",
-      "3937a76c6493 ASoC: SOF: ipc4-pcm: add delay function support",
-      "e63a73f94fef ASoC: SOF: ipc4-topology: Add a new field in struct sof_ipc4_available_audio_format",
-      "7ab6b1e8302c ASoC: SOF: ipc4-topology: Modify the type of available input/output formats"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-74638"
-    ],
-    "kev": false,
-    "upstream": "4da94744707b27a3ae1197bdd7127da4505dc5b1",
-    "subject": "drm/v3d: Serialize the scheduler timeout handlers",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/v3d/v3d_drv.h",
-      "drivers/gpu/drm/v3d/v3d_sched.c"
-    ],
-    "prerequisites": [
-      "b27211db61ae drm/v3d: Avoid -Wconstant-logical-operand in nsecs_to_jiffies_timeout()",
-      "9586e2401700 drm/v3d: Annotate struct v3d_perfmon with __counted_by",
-      "56e449603f0a drm/sched: Convert the GPU scheduler to variable number of run-queues",
-      "a6149f039369 drm/sched: Convert drm scheduler to use a work queue rather than kthread",
-      "0ad5bc1ce463 drm/v3d: fix up register addresses for V3D 7.x",
-      "09a93cc4f7d1 drm/v3d: Implement show_fdinfo() callback for GPU usage stats",
-      "509433d8146c drm/v3d: Expose the total GPU usage stats on sysfs",
-      "780b9463ce66 drm/v3d: Remove unused function header",
-      "a8ad9d63a160 drm/v3d: Move wait BO ioctl to the v3d_bo file",
-      "9032d5f633ed drm/v3d: Detach job submissions IOCTLs to a new specific file",
-      "aafc1a2bea67 drm/v3d: Add a CPU job submission",
-      "1fe0879efc8f drm/v3d: Create tracepoints to track the CPU job",
-      "7c13132c4073 drm/v3d: Enable BO mapping",
-      "18b8413b25b7 drm/v3d: Create a CPU job extension for a indirect CSD job",
-      "9ba0ff3e083f drm/v3d: Create a CPU job extension for the timestamp query job"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -9342,38 +9163,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-98834"
-    ],
-    "kev": false,
-    "upstream": "26300879cd8e4612dce66bb8f6ff7cd35fcf3e59",
-    "subject": "mtd: core: avoid double-free of OTP NVMEM device",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/mtd/mtdcore.c"
-    ],
-    "prerequisites": [
-      "c5f5d0cd40e3 mtd: core: simplify (a bit) code find partition-matching dynamic OF node",
-      "2df11f00100d mtd: core: try to find OF node for every MTD partition",
-      "26422ac78e9d mtd: core: set ROOT_DEV for partitions marked as rootfs in DT",
-      "281f7a6c1a33 mtd: core: prepare mtd_otp_nvmem_add() to handle -EPROBE_DEFER",
-      "5cab06156aad mtd: Avoid printing error messages on probe deferrals",
-      "75f32f4b9d52 mtd: Avoid magic values",
-      "10a03c36b7dd drivers: remove struct module * setting from struct class",
-      "57150c40b639 mtd: Use of_property_read_bool() for boolean properties",
-      "3b270fac8443 mtd: otp: Put factory OTP/NVRAM into the entropy pool",
-      "cefa1aaa31bd mtd: otp: clean up on error in mtd_otp_nvmem_add()",
-      "0339f62a9a77 mtd: Add WARN_ON_ONCE() to mtd_read() to check the return value",
-      "2cc3b37f5b6d nvmem: add explicit config option to read old syntax fixed OF cells",
-      "f4cf4e5db331 Revert \"nvmem: add new config option\"",
-      "2fe48aaab266 mtd: Add several functions to the fail_function list",
-      "5ab9bbf6c678 mtd: Fix possible refcounting issue when going through partition nodes"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-97985"
     ],
     "kev": false,
@@ -9399,26 +9188,6 @@
       "06d4c8a80836 af_unix: Fix fortify_panic() in unix_bind_bsd().",
       "ecb4534b6a1c af_unix: Terminate sun_path when bind()ing pathname socket.",
       "859051dd165e bpf: Implement cgroup sockaddr hooks for unix sockets"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-97975"
-    ],
-    "kev": false,
-    "upstream": "9b851b09b392da68bd715601f10a5adb2d8d19b8",
-    "subject": "Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del()",
-    "verdict": "needs-backport",
-    "files": [
-      "net/bluetooth/hci_sysfs.c"
-    ],
-    "prerequisites": [
-      "1aaba11da9aa driver core: class: remove module * from class_create()",
-      "d40d6f52d5bb Bluetooth: hci_sysfs: make bt_class a static const structure",
-      "0f8a00137411 Bluetooth: Allow reset via sysfs"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
