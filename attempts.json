@@ -1542,6 +1542,15 @@
       "run": null
     }
   },
+  "CVE-2026-43188": {
+    "6.12": {
+      "cost": 0.75606125,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
   "CVE-2026-43220": {
     "6.1": {
       "cost": null,
@@ -1689,6 +1698,17 @@
       "run": null
     }
   },
+  "CVE-2026-46096": {
+    "6.12": {
+      "cost": 1.15110525,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "not-affected-needs-review",
+      "reason": "a3b7eb67225c (stable backport of bda1cbf73c6e) already destroys buf on every return path",
+      "reviewed": "2026-11-15",
+      "run": null
+    }
+  },
   "CVE-2026-46147": {
     "6.1": {
       "cost": null,
@@ -1827,6 +1847,15 @@
       "cost": 0.6585896,
       "date": "2026-10-30",
       "head": "6.18.60",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-53107": {
+    "6.12": {
+      "cost": 2.34629075,
+      "date": "2026-11-15",
+      "head": "6.12.117",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -2179,6 +2208,17 @@
       "run": null
     }
   },
+  "CVE-2026-72042": {
+    "6.12": {
+      "cost": 0.43853475,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "not-affected-needs-review",
+      "reason": "b52da4054ee0 (introduced the extra kref_put) not in 6.12",
+      "reviewed": "2026-11-15",
+      "run": null
+    }
+  },
   "CVE-2026-72198": {
     "6.12": {
       "cost": null,
@@ -2236,6 +2276,15 @@
       "outcome": "not-affected-needs-review",
       "reason": "fs/ntfs (classic) not in 6.18; removed in 6.9",
       "reviewed": "2026-10-31",
+      "run": null
+    }
+  },
+  "CVE-2026-72345": {
+    "6.12": {
+      "cost": 0.64137275,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "patched-needs-review",
       "run": null
     }
   },
@@ -2514,6 +2563,17 @@
       "run": null
     }
   },
+  "CVE-2026-80685": {
+    "6.12": {
+      "cost": 0.36515300000000006,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "not-affected-needs-review",
+      "reason": "snapshot_page() (d863a12108f2) not in 6.12",
+      "reviewed": "2026-11-15",
+      "run": null
+    }
+  },
   "CVE-2026-80704": {
     "6.1": {
       "cost": null,
@@ -2522,6 +2582,17 @@
       "outcome": "not-affected-needs-review",
       "reason": "In 6.1 the DC log macros do not read DC_LOGGER, so no context is dereferenced.",
       "reviewed": "2026-11-02",
+      "run": null
+    }
+  },
+  "CVE-2026-80721": {
+    "6.12": {
+      "cost": 0.8889909999999999,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "not-affected-needs-review",
+      "reason": "already folded into stable 42c8bd6ac81e (backport of f958c7805b18)",
+      "reviewed": "2026-11-15",
       "run": null
     }
   },
@@ -2678,6 +2749,17 @@
       "run": null
     }
   },
+  "CVE-2026-89639": {
+    "6.12": {
+      "cost": 1.3643535000000002,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "not-affected-needs-review",
+      "reason": "cifs_do_truncate() (110fee6b9bb5) not in 6.12; O_TRUNC goes through cifs_setattr()",
+      "reviewed": "2026-11-15",
+      "run": null
+    }
+  },
   "CVE-2026-89675": {
     "6.12": {
       "cost": null,
@@ -2747,6 +2829,15 @@
     }
   },
   "CVE-2026-89862": {
+    "6.12": {
+      "cost": 0.433461,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "not-affected-needs-review",
+      "reason": "qla28xx_validate_flash_image() (d74181ca110e) not in 6.12",
+      "reviewed": "2026-11-15",
+      "run": null
+    },
     "6.18": {
       "cost": 0.1991558,
       "date": "2026-11-15",
@@ -2799,6 +2890,15 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-90129": {
+    "6.12": {
+      "cost": 2.2623937499999998,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "partial",
       "run": null
     }
   },
@@ -3235,6 +3335,13 @@
     }
   },
   "CVE-2026-98431": {
+    "6.12": {
+      "cost": 1.9052157500000002,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "patched-needs-review",
+      "run": null
+    },
     "6.18": {
       "cost": 0.7503783999999999,
       "date": "2026-10-31",
@@ -3501,6 +3608,13 @@
     }
   },
   "CVE-2026-98813": {
+    "6.12": {
+      "cost": 0.7536769999999999,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "patched-needs-review",
+      "run": null
+    },
     "6.18": {
       "cost": 0.5522734,
       "date": "2026-11-15",
@@ -3704,6 +3818,15 @@
     }
   },
   "CVE-2026-98983": {
+    "6.12": {
+      "cost": 0.7276285,
+      "date": "2026-11-15",
+      "head": "6.12.117",
+      "outcome": "not-affected-needs-review",
+      "reason": "active ns refs (3a18f809184b) not in 6.12; put_nsproxy() only drops refs the new nsproxy owns",
+      "reviewed": "2026-11-15",
+      "run": null
+    },
     "6.18": {
       "cost": 0.2653604,
       "date": "2026-11-15",
