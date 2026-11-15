@@ -82,43 +82,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-23295"
-    ],
-    "kev": false,
-    "upstream": "1aa82181a3c285c7351523d587f7981ae4c015c8",
-    "subject": "accel/amdxdna: Fix dead lock for suspend and resume",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/accel/amdxdna/aie2_ctx.c",
-      "drivers/accel/amdxdna/aie2_pci.c",
-      "drivers/accel/amdxdna/aie2_pm.c",
-      "drivers/accel/amdxdna/amdxdna_ctx.c",
-      "drivers/accel/amdxdna/amdxdna_pm.c",
-      "drivers/accel/amdxdna/amdxdna_pm.h"
-    ],
-    "prerequisites": [
-      "b291e4f1a495 accel/amdxdna: Support getting last hardware error",
-      "7ea046838021 accel/amdxdna: Support firmware debug buffer",
-      "41ee90230c57 accel/amdxdna: Fix incorrect return value in aie2_hwctx_sync_debug_bo()",
-      "71829d7f2f70 accel/amdxdna: Use MSG_OP_CHAIN_EXEC_NPU when supported",
-      "1556c170d2f7 accel/amdxdna: Add IOCTL parameter for resource data",
-      "e568dc3e625d accel/amdxdna: Add IOCTL parameter for telemetry data",
-      "3a0ff7b98af4 accel/amdxdna: Support preemption requests",
-      "7818618a09a0 accel/amdxdna: Enable temporal sharing only mode",
-      "f1eac46fe5f7 accel/amdxdna: Update firmware version check for latest firmware",
-      "b853007fdcdd accel/amdxdna: Remove hardware context status",
-      "d19d963d2a4a accel/amdxdna: Fix incorrect DPM level after suspend/resume",
-      "69674c1c704c accel/amdxdna: Move RPM resume into job run function",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "323bbfcf1ef8 Convert 'alloc_flex' family to use the new default GFP_KERNEL argument"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-23288"
     ],
     "kev": false,
@@ -644,38 +607,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-98813"
-    ],
-    "kev": false,
-    "upstream": "ab39974240a0cff765f3bb9cce81d8001ffdb144",
-    "subject": "bpf: Hold map BTF for the memory allocator destructor record",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/bpf/hashtab.c"
-    ],
-    "prerequisites": [
-      "4c97c4b149a0 bpf: Extract internal structs validation logic into helpers",
-      "c6936161fd55 bpf: Add BPF_F_CPU and BPF_F_ALL_CPUS flags support for percpu_hash and lru_percpu_hash maps",
-      "713edc71449f bpf: Remove leftover accounting in htab_map_mem_usage after rqspinlock",
-      "ae51772b1e94 bpf: Lose const-ness of map in map_check_btf()",
-      "07738bc566c3 bpf: Use copy_map_value_locked() in alloc_htab_elem() for BPF_F_LOCK",
-      "16b4d3e2fb24 bpf: Implement resizable hashmap basic functions",
-      "818e00848227 bpf: Implement iteration ops for resizable hashtab",
-      "6905f8601298 bpf: Allow special fields in resizable hashtab",
-      "9dcbb5045fe5 bpf: Optimize word-sized keys for resizable hashtable",
-      "a3a81d247651 bpf: Cancel special fields on map value recycle",
-      "0a07e75b16b6 bpf: Drop duplicate blank lines in kernel/bpf/",
-      "75b0a6db4300 bpf: Fix percpu map update indexing with sparse CPU IDs",
-      "5df46ddcb7b3 bpf: Preserve special fields in recycled rhtab elements",
-      "65cc95eba9e8 bpf: Cancel special fields when recycling rhtab elements",
-      "3a2c4d55e32a treewide: refresh kmalloc_obj() conversions"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-98983"
     ],
     "kev": false,
@@ -720,57 +651,6 @@
       "rust/kernel/irq/request.rs"
     ],
     "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-64160"
-    ],
-    "kev": false,
-    "upstream": "2c8f4742bb76117d735f92a3932d85239b16c494",
-    "subject": "netfs: Fix potential for tearing in ->remote_i_size and ->zero_point",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/9p/v9fs_vfs.h",
-      "fs/9p/vfs_inode.c",
-      "fs/9p/vfs_inode_dotl.c",
-      "fs/afs/file.c",
-      "fs/afs/inode.c",
-      "fs/afs/internal.h",
-      "fs/afs/write.c",
-      "fs/netfs/buffered_read.c",
-      "fs/netfs/buffered_write.c",
-      "fs/netfs/direct_write.c",
-      "fs/netfs/misc.c",
-      "fs/netfs/write_collect.c",
-      "fs/smb/client/cifsfs.c",
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/file.c",
-      "fs/smb/client/inode.c",
-      "fs/smb/client/readdir.c",
-      "fs/smb/client/smb2ops.c",
-      "fs/smb/client/smb2pdu.c",
-      "include/linux/netfs.h"
-    ],
-    "prerequisites": [
-      "b4dbfd8653b3 Coccinelle-based conversion to use ->i_state accessors",
-      "f5aa78e2be06 Manual conversion to use ->i_state accessors of all places not covered by coccinelle",
-      "f5a67689ba6a smb: use the new ->i_state accessors",
-      "2408900d408a netfs: Use folio_next_pos()",
-      "5b8ed52866e3 fs: inline current_umask() and move it to fs_struct.h",
-      "e6d28ebc17eb filelock: push the S_ISREG check down to ->setlease handlers",
-      "7844d50ca239 smb: move smb_sockaddr_in and smb_sockaddr_in6 to common/smb2pdu.h",
-      "9c98f5eec877 smb: move resume_key_ioctl_rsp to common/smb2pdu.h",
-      "833a75fc9ecc smb: move create_durable_req_v2 to common/smb2pdu.h",
-      "d8ac9879182a smb: move SMB_NEGOTIATE_REQ to common/smb2pdu.h",
-      "d7edd3892d97 smb: move some duplicate struct definitions to common/fscc.h",
-      "464b913993a1 smb: move FILE_SYSTEM_SIZE_INFO to common/fscc.h",
-      "95e8c1bfa56e smb: do some cleanups",
-      "5003ad718af7 smb: move create_durable_reconn to common/smb2pdu.h",
-      "c4a2a49f7df4 smb: move FILE_SYSTEM_ATTRIBUTE_INFO to common/fscc.h"
-    ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
