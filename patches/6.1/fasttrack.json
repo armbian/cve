@@ -9859,6 +9859,204 @@
       "build_log": "",
       "backport": "CVE-2026-99282/6.1",
       "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "4da94744707b27a3ae1197bdd7127da4505dc5b1",
+      "subject": "drm/v3d: Serialize the scheduler timeout handlers",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-74638"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0531-4da94744707b-drm-v3d-serialize-the-scheduler-timeout-handlers.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-74638/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "",
+      "subject": "virtio_balloon: factor out virtballoon_quiesce()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90129"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0532-q-virtio-balloon-factor-out-virtballoon-quiesce.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90129/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "7e17eef04600f6c70cb1877c87d0a19ea1296e0b",
+      "subject": "virtio_balloon: quiesce balloon work before device shutdown",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-90129"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0533-7e17eef04600-virtio-balloon-quiesce-balloon-work-before-device-sh.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-90129/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "a57f35fc19add4dfe33703af575a2c19c2cef9c7",
+      "subject": "wifi: libertas: use USB anchors for tracking in-flight URBs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-53107"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0534-a57f35fc19ad-wifi-libertas-use-usb-anchors-for-tracking-in-flight.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-53107/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "7c5c2b661bdb78c1472b8833265c9ed1ee880039",
+      "subject": "wifi: libertas: don't kill URBs in interrupt context",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-53107"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0535-7c5c2b661bdb-wifi-libertas-don-t-kill-urbs-in-interrupt-context.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-53107/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "687d67be3d87894ef12e8a164434612e0b53cfae",
+      "subject": "firmware: arm_scmi: Clean up channels on setup failure",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-93090"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0536-687d67be3d87-firmware-arm-scmi-clean-up-channels-on-setup-failure.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-93090/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "26300879cd8e4612dce66bb8f6ff7cd35fcf3e59",
+      "subject": "mtd: core: avoid double-free of OTP NVMEM device",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98834"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0537-26300879cd8e-mtd-core-avoid-double-free-of-otp-nvmem-device.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98834/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "fb3e566cafc38fe3ba35e6843a2d529a3748870c",
+      "subject": "minix: avoid overflow in bitmap block count calculation",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-72369"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0538-fb3e566cafc3-minix-avoid-overflow-in-bitmap-block-count-calculati.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-72369/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "059b7dbd20a6f0c539a45ddff1573cb8946685b5",
+      "subject": "vsock/virtio: fix potential unbounded skb queue",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-53132"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0539-059b7dbd20a6-vsock-virtio-fix-potential-unbounded-skb-queue.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-53132/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "17661c67b206612cb3ba65d5ae726cd2015d0a53",
+      "subject": "ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-80581"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0540-17661c67b206-asoc-sof-ipc4-pcm-continue-the-pipeline-trigger-in-c.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-80581/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "9b851b09b392da68bd715601f10a5adb2d8d19b8",
+      "subject": "Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-97975"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0541-9b851b09b392-bluetooth-hci-sysfs-fix-null-pointer-dereference-in.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-97975/6.1",
+      "bug_commits": []
     }
   ]
 }

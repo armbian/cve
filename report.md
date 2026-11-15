@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 10 patch(es)
+- added 6.1: 10 patch(es)
 
 ## 6.18 (base 6.18.63, `1cdda838e847`)
 
@@ -373,13 +373,7 @@ Already in tree: 143 · Other architectures (not built): 11
 |---|---|---|---|---|
 |  | CVE-2026-90040 | `d1a3c2162334` | claude | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
 
-### Not affected per work package (needs review) (1)
-
-| | CVE | Upstream | Source | Subject |
-|---|---|---|---|---|
-|  | CVE-2026-64255 | `f056fc2b9274` | mainline | wifi: iwlwifi: mld: validate sta_mask before ffs() in BA session handlers |
-
-### Not affected (reviewed) (63)
+### Not affected (reviewed) (64)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -412,6 +406,7 @@ Already in tree: 143 · Other architectures (not built): 11
 |  | CVE-2026-52966 | `dc366607c41c` | mainline | drm: Replace old pointer to new idr — no drm_gem_change_handle_ioctl() in 6.12 |
 |  | CVE-2026-64212 | `d733ed481fd2` | mainline | wifi: iwlwifi: mld: don't dereference a pointer before NULL checking it — iwlwifi mld sub-driver not in 6.12 |
 |  | CVE-2026-72042 | `6aa9e61c4646` | mainline | ipmi: Fix user refcount underflow in event delivery — b52da4054ee0 (introduced the extra kref_put) not in 6.12 |
+|  | CVE-2026-64255 | `f056fc2b9274` | mainline | wifi: iwlwifi: mld: validate sta_mask before ffs() in BA session handlers — iwlwifi mld sub-driver (drivers/net/wireless/intel/iwlwifi/mld/) not in 6.12 |
 |  | CVE-2026-63885 | `7164d78559b0` | mainline | drm/gem: fix race between change_handle and handle_delete — no GEM_CHANGE_HANDLE ioctl in 6.12 |
 |  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() — rseq_entry.h and 82f572449cfe not in 6.12 |
 |  | CVE-2026-53246 | `0861615c28de` | mainline | sctp: validate cached peer INIT chunk length in COOKIE_ECHO processing — fixed in 6.12.114 by stable 29ab56e7660b |
@@ -453,7 +448,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no longer needed: 60
 
-### Included (530)
+### Included (541)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -987,8 +982,19 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-89567 | `15cb16496446` | claude | jbd2: bound shrinker scans by examined checkpoint buffers |
 |  | CVE-2026-99275 | `4d8930afa344` | claude | smb: client: reject short SESSION_SETUP responses |
 |  | CVE-2026-99282 | `782d6bb8f9b8` | claude | net/sched: sch_teql: fix use-after-free on lower qdisc drop |
+|  | CVE-2026-74638 | `4da94744707b` | claude | drm/v3d: Serialize the scheduler timeout handlers |
+|  | CVE-2026-90129 | `—` | claude | virtio_balloon: factor out virtballoon_quiesce() |
+|  | CVE-2026-90129 | `7e17eef04600` | claude | virtio_balloon: quiesce balloon work before device shutdown |
+|  | CVE-2026-53107 | `a57f35fc19ad` | claude | wifi: libertas: use USB anchors for tracking in-flight URBs |
+|  | CVE-2026-53107 | `7c5c2b661bdb` | claude | wifi: libertas: don't kill URBs in interrupt context |
+|  | CVE-2026-93090 | `687d67be3d87` | claude | firmware: arm_scmi: Clean up channels on setup failure |
+|  | CVE-2026-98834 | `26300879cd8e` | claude | mtd: core: avoid double-free of OTP NVMEM device |
+|  | CVE-2026-72369 | `fb3e566cafc3` | claude | minix: avoid overflow in bitmap block count calculation |
+|  | CVE-2026-53132 | `059b7dbd20a6` | claude | vsock/virtio: fix potential unbounded skb queue |
+|  | CVE-2026-80581 | `17661c67b206` | claude | ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout |
+|  | CVE-2026-97975 | `9b851b09b392` | claude | Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del() |
 
-### Needs a backport (71)
+### Needs a backport (61)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1020,16 +1026,13 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 | does not build | CVE-2026-23088 | `90f9f5d64cae` | mainline | tracing: Fix crash on synthetic stacktrace field usage |
 |  | CVE-2026-45901 | `7f261bb906bf` | mainline | netfilter: nf_tables: revert commit_mutex usage in reset path |
 |  | CVE-2026-46130 | `430a05cb926f` | mainline | dm-verity-fec: fix reading parity bytes split across blocks (take 3) |
-|  | CVE-2026-53107 | `7c5c2b661bdb` | mainline | wifi: libertas: don't kill URBs in interrupt context |
 |  | CVE-2026-46054 | `82544d36b172` | mainline | selinux: fix overlayfs mmap() and mprotect() access checks |
 |  | CVE-2026-31648 | `f58df566524e` | mainline | mm: filemap: fix nr_pages calculation overflow in filemap_map_pages() |
 | does not build | CVE-2026-97515 | `1effa3adfe53` | mainline | i3c: master: svc: Prevent IRQ storm from false SLVSTART on NPCM845 |
-|  | CVE-2026-53132 | `059b7dbd20a6` | mainline | vsock/virtio: fix potential unbounded skb queue |
 |  | CVE-2026-64026 | `d2bc90cf6c75` | mainline | rxrpc: Fix DATA decrypt vs splice() by copying data to buffer in recvmsg |
 |  | CVE-2026-72042 | `6aa9e61c4646` | mainline | ipmi: Fix user refcount underflow in event delivery |
 |  | CVE-2026-63812 | `1f70ddb28a3c` | mainline | f2fs: fix incorrect FI_NO_EXTENT handling in __destroy_extent_node() |
 |  | CVE-2026-64525 | `3e5241731847` | mainline | xfrm: move policy_bydst RCU sync from per-netns .exit to .pre_exit |
-|  | CVE-2026-63999 | `266297692f97` | mainline | ethtool: rss: fix indir_table and hkey leak on get_rxfh failure |
 | does not build | CVE-2026-99285 | `bb061d3de417` | mainline | netfilter: nft_byteorder: remove multi-register support |
 |  | CVE-2026-53185 | `732fd9f0b9c1` | mainline | zram: fix use-after-free in zram_bvec_write_partial() |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
@@ -1037,15 +1040,11 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-72463 | `8045c0df98d4` | mainline | xfrm: Fix dev use-after-free in xfrm async resumption |
 |  | CVE-2026-74432 | `4bdb9e471f5b` | mainline | rxrpc: Fix leak of released call in recvmsg(MSG_PEEK) |
 |  | CVE-2026-72395 | `9ef7dacd4421` | mainline | hwmon: (pmbus) Fix passing events to regulator core |
-| does not build | CVE-2026-72369 | `fb3e566cafc3` | mainline | minix: avoid overflow in bitmap block count calculation |
 |  | CVE-2026-68447 | `426ffae6ecc7` | mainline | drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size |
-|  | CVE-2026-93090 | `687d67be3d87` | mainline | firmware: arm_scmi: Clean up channels on setup failure |
 | does not build | CVE-2026-93072 | `616dd89d81ad` | mainline | irqchip/renesas-irqc: Fix generic interrupt chip leak on remove |
 |  | CVE-2026-74531 | `5761d003daa9` | mainline | Bluetooth: hci_conn: hold conn reference in abort_conn_sync() |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
 |  | CVE-2026-90373 | `6486e11a6e2f` | mainline | wifi: mt76: mt7915: clear wcid mask under mutex after RCU pointer clear |
-|  | CVE-2026-80581 | `17661c67b206` | mainline | ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout |
-|  | CVE-2026-74638 | `4da94744707b` | mainline | drm/v3d: Serialize the scheduler timeout handlers |
 |  | CVE-2026-89862 | `0fb52cc63246` | mainline | scsi: qla2xxx: Fix BSG job leak on validate flash image error path |
 |  | CVE-2026-90170 | `e9b33376bd07` | mainline | ksmbd: validate ipc response length before dereferencing its fields |
 |  | CVE-2026-98162 | `39f203209671` | mainline | smb/server: fix tree connection leak in smb2_tree_connect() |
@@ -1053,13 +1052,10 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-98085 | `387b1baefbb7` | mainline | bpf: backtrack_insn(): Handle ld_{abs,ind} subprog exit edge |
 |  | CVE-2026-98044 | `e7d28823c662` | mainline | bpf: Reject legacy packet loads from callbacks |
-|  | CVE-2026-98834 | `26300879cd8e` | mainline | mtd: core: avoid double-free of OTP NVMEM device |
 |  | CVE-2026-97985 | `94fd4debd2e3` | mainline | af_unix: Update last skb marker in manage_oob(). |
-|  | CVE-2026-97975 | `9b851b09b392` | mainline | Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del() |
 |  | CVE-2026-98420 | `d7fd1f98607f` | mainline | ksmbd: follow SMB2 session expiration semantics |
 |  | CVE-2026-98295 | `d236517c264e` | mainline | Bluetooth: coredump: Quiesce dump work on unregister |
 |  | CVE-2026-98289 | `4a4263dfeaba` | mainline | af_unix: Unify scc_index when finalising SCC in __unix_walk_scc(). |
-|  | CVE-2026-98508 | `846b3c64fe3e` | mainline | drm/virtio: fix NULL pointer dereference on fence allocation failure |
 |  | CVE-2026-98996 | `6857e209015f` | mainline | fs: don't silently unmount busy mounts |
 |  | CVE-2026-98983 | `0b6f31a3c0b1` | mainline | unshare: don't drop active namespace references that were never taken |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
@@ -1070,7 +1066,7 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 |---|---|---|---|---|
 |  | CVE-2024-35843 | `def054b01a86` | mainline | iommu/vt-d: Use device rbtree in iopf reporting path |
 
-### Not affected (reviewed) (149)
+### Not affected (reviewed) (151)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1192,6 +1188,7 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-64212 | `d733ed481fd2` | mainline | wifi: iwlwifi: mld: don't dereference a pointer before NULL checking it — The bug is in iwl_mld_remove_link() in drivers/net/wireless/intel/iwlwifi/mld/link.c. |
 |  | CVE-2026-98880 | `24f7d1824b75` | mainline | ntfs3: handle set_blocksize failures — The bug needs a block size larger than PAGE_SIZE. |
 |  | CVE-2026-64016 | `3515503322f4` | mainline | ksmbd: fix durable reconnect error path file lifetime — The vulnerable durable reconnect path does not exist in 6.1. |
+|  | CVE-2026-63999 | `266297692f97` | mainline | ethtool: rss: fix indir_table and hkey leak on get_rxfh failure — net/ethtool/rss.c from 7112a04664bf (v6.2) not in 6.1 |
 |  | CVE-2026-63983 | `9552b11e3eda` | mainline | net/sched: fix packet loop on netem when duplicate is on — 6.1 has stable commit 325f5ec67cc0 ("net/sched: Restrict conditions for adding duplicating netems to qdisc tree", backport of ec8e0e3d7ade). |
 |  | CVE-2026-63885 | `7164d78559b0` | mainline | drm/gem: fix race between change_handle and handle_delete — The vulnerable function does not exist in this tree. |
 |  | CVE-2026-53243 | `6d99479799c6` | mainline | rseq: Fix using an uninitialized stack variable in rseq_exit_user_update() — The vulnerable code does not exist in 6.1. |
@@ -1216,6 +1213,7 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets — 6.1.y removed fs/ntfs (b06b4fc2138d). |
 |  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary — 6.1.y removed fs/ntfs (b06b4fc2138d). |
 |  | CVE-2026-98365 | `d10e2a08799e` | mainline | RDMA/rxe: Fix integer overflow in mr_check_range() leading to OOB access — 6.1 mr_check_range() already uses an overflow-safe check. |
+|  | CVE-2026-98508 | `846b3c64fe3e` | mainline | drm/virtio: fix NULL pointer dereference on fence allocation failure — fix already in patch set 0110 (6.1.y 1/2 adds the !out_fence check) |
 |  | CVE-2026-98551 | `24b620729e53` | mainline | perf/core: Fill branch entries with a single assignment — 6.1 has no arm64 BRBE driver; x86 never writes new_type or priv. |
 |  | CVE-2026-98820 | `ab6c756f28c7` | mainline | blk-mq: set RQF_USE_SCHED when the operation is known — 6.1 has no RQF_USE_SCHED (dd6216bb16e8); cached-request paths check op_is_flush(). |
 |  | CVE-2026-98939 | `e3ee38c1bc0b` | mainline | x86/mm: Drop unnecessary PMD page copy when freeing — Fixes d5d8b8662e6e is absent; set_memory.c takes no init_mm mmap lock. |
