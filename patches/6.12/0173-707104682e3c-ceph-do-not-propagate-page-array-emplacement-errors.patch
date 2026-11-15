@@ -1,0 +1,67 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 707104682e3c163f7c14cdd6b07a3e95fb374759
+X-Fasttrack-CVE: CVE-2026-43188
+X-Fasttrack-Backport: cve/CVE-2026-43188/6.12
+From: Sam Edwards <cfsworks@gmail.com>
+Date: Sun, 15 Nov 2026 10:02:07 +0100
+Subject: [PATCH] ceph: do not propagate page array emplacement errors as batch
+ errors
+
+commit 707104682e3c upstream.
+
+[ Backport: adjusted hunk context to call the older
+  ceph_move_dirty_page_in_page_array() (not yet renamed to the folio
+  variant) and to live alongside the 6.12-only num_ops-- rollback that
+  precedes the redirty/unlock/break. The one-line fix (rc = 0 before
+  folio_redirty_for_writepage()) is identical to upstream. ]
+
+When fscrypt is enabled, move_dirty_folio_in_page_array() may fail
+because it needs to allocate bounce buffers to store the encrypted
+versions of each folio. Each folio beyond the first allocates its bounce
+buffer with GFP_NOWAIT. Failures are common (and expected) under this
+allocation mode; they should flush (not abort) the batch.
+
+However, ceph_process_folio_batch() uses the same `rc` variable for its
+own return code and for capturing the return codes of its routine calls;
+failing to reset `rc` back to 0 results in the error being propagated
+out to the main writeback loop, which cannot actually tolerate any
+errors here: once `ceph_wbc.pages` is allocated, it must be passed to
+ceph_submit_write() to be freed. If it survives until the next iteration
+(e.g. due to the goto being followed), ceph_allocate_page_array()'s
+BUG_ON() will oops the worker.
+
+Note that this failure mode is currently masked due to another bug
+(addressed next in this series) that prevents multiple encrypted folios
+from being selected for the same write.
+
+For now, just reset `rc` when redirtying the folio to prevent errors in
+move_dirty_folio_in_page_array() from propagating. Note that
+move_dirty_folio_in_page_array() is careful never to return errors on
+the first folio, so there is no need to check for that. After this
+change, ceph_process_folio_batch() no longer returns errors; its only
+remaining failure indicator is `locked_pages == 0`, which the caller
+already handles correctly.
+
+Cc: stable@vger.kernel.org
+Fixes: ce80b76dd327 ("ceph: introduce ceph_process_folio_batch() method")
+Signed-off-by: Sam Edwards <CFSworks@gmail.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+ fs/ceph/addr.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index aa551d94be1c..04107d66dbb4 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -1377,6 +1377,7 @@ int ceph_process_folio_batch(struct address_space *mapping,
+ 			if (ceph_wbc->len == 0)
+ 				ceph_wbc->num_ops--;
+ 
++			rc = 0;
+ 			folio_redirty_for_writepage(wbc, folio);
+ 			folio_unlock(folio);
+ 			break;

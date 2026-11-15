@@ -1272,35 +1272,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-43188"
-    ],
-    "kev": false,
-    "upstream": "707104682e3c163f7c14cdd6b07a3e95fb374759",
-    "subject": "ceph: do not propagate page array emplacement errors as batch errors",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/ceph/addr.c"
-    ],
-    "prerequisites": [
-      "3500000bb13d ceph: miscellaneous spelling fixes",
-      "e2d46f2ec332 netfs: Change the read result collector to only use one work item",
-      "fd7449d937e7 ceph: fix generic/421 test failure",
-      "15fdaf2fd60d ceph: Convert ceph_check_page_before_write() to use a folio",
-      "ad49fe2b3d54 ceph: Convert ceph_move_dirty_page_in_page_array() to move_dirty_folio_in_page_array()",
-      "d1b452673af4 ceph: Pass a folio to ceph_allocate_page_array()",
-      "59b59a943177 fscrypt: Change fscrypt_encrypt_pagecache_blocks() to take a folio",
-      "20d72b00ca81 netfs: Fix the request's work item to not require a ref",
-      "db26d62d79e4 netfs: Fix undifferentiation of DIO reads from unbuffered reads",
-      "2e3b37a7e48f fs: replace mmap hook with .mmap_prepare for simple mappings",
-      "e9d8e2bf2320 fs: change write_begin/write_end interface to take struct kiocb *",
-      "4952f35f0545 fs: Make wbc_to_tag() inline and use it in fs."
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-23341"
     ],
     "kev": false,
@@ -1446,29 +1417,6 @@
       "7768c5f41733 net: mana: Add handler for hardware servicing events",
       "4607617af1b4 net: mana: explain irq_setup() algorithm",
       "845c62c543d6 net: mana: Allow irq_setup() to skip cpus for affinity"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-53107"
-    ],
-    "kev": false,
-    "upstream": "7c5c2b661bdb78c1472b8833265c9ed1ee880039",
-    "subject": "wifi: libertas: don't kill URBs in interrupt context",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/wireless/marvell/libertas/if_usb.c"
-    ],
-    "prerequisites": [
-      "8fa7292fee5c treewide: Switch/rename to timer_delete[_sync]()",
-      "41cb08555c41 treewide, timers: Rename from_timer() to timer_container_of()",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "75e375816392 wifi: libertas: drop redundant device reference",
-      "a57f35fc19ad wifi: libertas: use USB anchors for tracking in-flight URBs"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -1665,38 +1613,6 @@
       "a3163dca4817 KVM: arm64: Use KVM extension checks for allowed protected VM capabilities",
       "7ba5b8f80475 KVM: arm64: Initialize feature id registers for protected VMs",
       "9df9186f8df5 KVM: arm64: Fix RAS trapping in pKVM for protected VMs"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-52960"
-    ],
-    "kev": false,
-    "upstream": "544576f0f05c4a759806acddfaaeb686f14fb4b0",
-    "subject": "ceph: put folios not suitable for writeback",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/ceph/addr.c"
-    ],
-    "prerequisites": [
-      "3500000bb13d ceph: miscellaneous spelling fixes",
-      "e2d46f2ec332 netfs: Change the read result collector to only use one work item",
-      "fd7449d937e7 ceph: fix generic/421 test failure",
-      "15fdaf2fd60d ceph: Convert ceph_check_page_before_write() to use a folio",
-      "ad49fe2b3d54 ceph: Convert ceph_move_dirty_page_in_page_array() to move_dirty_folio_in_page_array()",
-      "d1b452673af4 ceph: Pass a folio to ceph_allocate_page_array()",
-      "59b59a943177 fscrypt: Change fscrypt_encrypt_pagecache_blocks() to take a folio",
-      "20d72b00ca81 netfs: Fix the request's work item to not require a ref",
-      "db26d62d79e4 netfs: Fix undifferentiation of DIO reads from unbuffered reads",
-      "2e3b37a7e48f fs: replace mmap hook with .mmap_prepare for simple mappings",
-      "e9d8e2bf2320 fs: change write_begin/write_end interface to take struct kiocb *",
-      "4952f35f0545 fs: Make wbc_to_tag() inline and use it in fs.",
-      "707104682e3c ceph: do not propagate page array emplacement errors as batch errors",
-      "cac190c7674f ceph: fix write storm on fscrypted files",
-      "fa589acaac08 ceph: remove error return from ceph_process_folio_batch()"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -2237,28 +2153,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-72345"
-    ],
-    "kev": false,
-    "upstream": "0f0e4ae6975c773f7854fc48932a267f6c79088f",
-    "subject": "net/mlx5: LAG, Fix off-by-one in single-FDB error rollback",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/mellanox/mlx5/core/lag/shared_fdb.c"
-    ],
-    "prerequisites": [
-      "cf6c4c0508a9 net/mlx5: LAG, factor out shared FDB code into dedicated file",
-      "2ca494dad967 net/mlx5: LAG, replace peer count check with direct peer lookup",
-      "3cbce590b7f2 net/mlx5: LAG, extend shared FDB API with group_id filter",
-      "98d56915eef5 net/mlx5: LAG, introduce software vport LAG implementation",
-      "68c2dd59a6c7 net/mlx5: E-Switch, Tie rep load/unload to SD LAG state"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-80685"
     ],
     "kev": false,
@@ -2389,39 +2283,6 @@
       "105ca2a2c2ff block: split struct bio_integrity_payload",
       "9faab548974e md: merge common code into find_pers()",
       "bf0a73264fa4 md: only include md-cluster.h if necessary"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-74638"
-    ],
-    "kev": false,
-    "upstream": "4da94744707b27a3ae1197bdd7127da4505dc5b1",
-    "subject": "drm/v3d: Serialize the scheduler timeout handlers",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/gpu/drm/v3d/v3d_drv.h",
-      "drivers/gpu/drm/v3d/v3d_sched.c"
-    ],
-    "prerequisites": [
-      "b2ef808786d9 drm/sched: add optional errno to drm_sched_start()",
-      "eb8d395f6842 drm/v3d: Introduce gemfs",
-      "8dd6074d4719 drm/v3d: Reduce the alignment of the node allocation",
-      "e4c17720262f drm/v3d: Support Big/Super Pages when writing out PTEs",
-      "0df4a13ca8be drm/v3d: Add modparam for turning off Big/Super Pages",
-      "c6eabbab359c drm/v3d: Add DRM_IOCTL_V3D_PERFMON_SET_GLOBAL",
-      "4ee06e3b6120 drm/v3d: Fix miscellaneous documentation errors",
-      "dc4afc0de965 drm/v3d: Remove `v3d->cpu_job`",
-      "c3e4a25602f8 drm/v3d: Set job pointer to NULL when the job's fence has an error",
-      "76dbd0973c55 drm/v3d: Associate a V3D tech revision to all supported devices",
-      "1bdf2ccc351c drm/v3d: Use V3D_SMS registers for power on/off and reset on V3D 7.x",
-      "0a5dc1b67ef5 drm/sched: Rename DRM_GPU_SCHED_STAT_NOMINAL to DRM_GPU_SCHED_STAT_RESET",
-      "6b37fbacd087 drm/v3d: Use DRM_GPU_SCHED_STAT_NO_HANG to skip the reset",
-      "5774b3cfdedb drm/v3d: Add parameter to retrieve the global number of GPU resets",
-      "769c153cfc3c drm/v3d: Add parameter to retrieve the number of GPU resets per-fd"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -2792,40 +2653,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-98431"
-    ],
-    "kev": false,
-    "upstream": "a44a3f175eaee7e5aeb6a8fed381c4a0d5f49236",
-    "subject": "RDMA/uverbs: Fix mmap_lock/disassociation_lock circular dependency",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/infiniband/core/rdma_core.c",
-      "drivers/infiniband/core/uverbs_main.c",
-      "include/rdma/uverbs_types.h"
-    ],
-    "prerequisites": [
-      "dc6be4418a11 RDMA/core: Add device ufile cleanup operation",
-      "27ed2f00807c RDMA/core: Move ib_uverbs_file struct to uverbs_types.h",
-      "61e51682816d RDMA/uverbs: Introduce UCAP (User CAPabilities) API",
-      "f458ccd2aa2c RDMA/uverbs: Check CAP_NET_RAW in user namespace for flow create",
-      "9ad95a0f2b75 RDMA/uverbs: Support external FD uobjects",
-      "0ac6f4056c4a RDMA/uverbs: Add DMABUF object type and operations",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
-      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
-      "b247ed6f60bd RDMA/uverbs: Update outdated reference to remove_commit_idr_uobject()",
-      "52a9e9cd181f mm: rename zap_vma_ptes() to zap_special_vma_range()",
-      "ab2d2b2872ae RDMA/core: Move many of the little EXPORTs from uverbs_ioctl into ib_core_uverbs",
-      "2c296df0add8 RDMA/core: Remove uverbs_async_event_release()",
-      "2274d8cb4912 RDMA/core: Make a new module for the uverbs components needed by drivers",
-      "1a76adc9b38c RDMA/core: Move ucaps into ib_uverbs_support.ko",
-      "60a42d510113 RDMA/uverbs: Guard legacy bundles without method_elm"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98296"
     ],
     "kev": false,
@@ -2851,38 +2678,6 @@
       "89a33de31494 Bluetooth: btintel_pcie: Fix potential race condition in firmware download",
       "6851a0c228fc Bluetooth: hci_dev: replace 'quirks' integer by 'quirk_flags' bitmap",
       "256ab9520d15 Bluetooth: btintel_pcie: Support Function level reset"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98444"
-    ],
-    "kev": false,
-    "upstream": "ffb48dccce1960a9ea24463a2f3c21d124d6b672",
-    "subject": "xfs: drop dquot flush lock when we can't find a buffer to flush",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/xfs/xfs_qm.c"
-    ],
-    "prerequisites": [
-      "dcf606914334 xfs: iget for metadata inodes",
-      "382e275f0e8d xfs: don't count metadata directory files to quota",
-      "cc0cf84aa7fe xfs: mark quota inodes as metadata files",
-      "cd8d0490825c xfs: add a xfs_qm_unmount_rt helper",
-      "e3088ae2dcae xfs: move RT bitmap and summary information to the rtgroup",
-      "fc23a426ce6e xfs: refactor xfs_qm_destroy_quotainos",
-      "e80fbe1ad8ef xfs: use metadir for quota inodes",
-      "b28564cae1e4 xfs: fix chown with rt quota",
-      "5dd70852b039 xfs: create quota preallocation watermarks for realtime quota",
-      "edc038f7f386 xfs: enable realtime quota again",
-      "fb56fdf8b9a2 mm/list_lru: split the lock to per-cgroup scope",
-      "da0c02516c50 mm/list_lru: simplify the list_lru walk callback function",
-      "e1d8602b6cfb xfs: keep quota directory inode loaded",
-      "e57e083be9b9 xfs: don't crash on corrupt /quotas dirent",
-      "84140a96cf7a xfs: prepare to reuse the dquot pointer space in struct xfs_inode"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -2951,38 +2746,6 @@
       "bd2da08d9363 perf: Clean up pmu specific data",
       "12e766d16814 perf: Fix __percpu annotation",
       "da916e96e2de perf: Make perf_pmu_unregister() useable"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98813"
-    ],
-    "kev": false,
-    "upstream": "ab39974240a0cff765f3bb9cce81d8001ffdb144",
-    "subject": "bpf: Hold map BTF for the memory allocator destructor record",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/bpf/hashtab.c"
-    ],
-    "prerequisites": [
-      "53f2ba0b1cc0 bpf: Remove migrate_{disable|enable} in htab_elem_free",
-      "4b7e7cd1c105 bpf: Disable migration before calling ops->map_free()",
-      "45dc92c32a47 bpf: Free special fields after unlock in htab_lru_map_delete_node()",
-      "47363f1553e6 bpf: Free element after unlock in __htab_map_lookup_and_delete_elem()",
-      "bb2243f4328b bpf: Check map->record at the beginning of check_and_free_fields()",
-      "4fa8d68aa53e bpf: Convert hashtab.c to rqspinlock",
-      "5771e306b6cd bpf: Rename __htab_percpu_map_update_elem to htab_map_update_elem_in_place",
-      "2c304172e031 bpf: Support atomic update for htab of maps",
-      "e8a65856c75d bpf: Add is_fd_htab() helper",
-      "6704b1e8cfc5 bpf: Don't allocate per-cpu extra_elems for fd htab",
-      "acc3a0d2506c bpf: htab: extract helper for freeing special structs",
-      "5c8fd7e2b5b0 bpf: bpf task work plumbing",
-      "4c97c4b149a0 bpf: Extract internal structs validation logic into helpers",
-      "c6936161fd55 bpf: Add BPF_F_CPU and BPF_F_ALL_CPUS flags support for percpu_hash and lru_percpu_hash maps",
-      "713edc71449f bpf: Remove leftover accounting in htab_map_mem_usage after rqspinlock"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
