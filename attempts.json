@@ -1274,6 +1274,15 @@
       "run": null
     }
   },
+  "CVE-2026-23295": {
+    "6.18": {
+      "cost": 0.6088202999999999,
+      "date": "2026-11-15",
+      "head": "6.18.63",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
   "CVE-2026-23341": {
     "6.1": {
       "cost": null,
@@ -1397,6 +1406,17 @@
       "outcome": "not-affected-needs-review",
       "reason": "batched sends have wr_cqe NULL; send_done() runs only for the last",
       "reviewed": "2026-11-02",
+      "run": null
+    }
+  },
+  "CVE-2026-31710": {
+    "6.18": {
+      "cost": 0.34346239999999995,
+      "date": "2026-11-15",
+      "head": "6.18.63",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.18 backport of 4fc3a433c139 uses atomic_or, no sbflags write-back",
+      "reviewed": "2026-11-15",
       "run": null
     }
   },
@@ -1623,6 +1643,17 @@
       "outcome": "not-affected-needs-review",
       "reason": "no service_wq in mana_gd_setup() in 6.12",
       "reviewed": "2026-11-02",
+      "run": null
+    }
+  },
+  "CVE-2026-43446": {
+    "6.18": {
+      "cost": 0.2823042,
+      "date": "2026-11-15",
+      "head": "6.18.63",
+      "outcome": "not-affected-needs-review",
+      "reason": "RPM resume in job run (69674c1c704c) not in 6.18; resume is in aie2_cmd_submit()",
+      "reviewed": "2026-11-15",
       "run": null
     }
   },
@@ -2020,9 +2051,9 @@
       "run": null
     },
     "6.18": {
-      "cost": 1.4101600999999997,
-      "date": "2026-10-30",
-      "head": "6.18.60",
+      "cost": 1.88158,
+      "date": "2026-11-15",
+      "head": "6.18.63",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -2616,6 +2647,17 @@
       "run": null
     }
   },
+  "CVE-2026-89630": {
+    "6.18": {
+      "cost": 0.3425481,
+      "date": "2026-11-15",
+      "head": "6.18.63",
+      "outcome": "not-affected-needs-review",
+      "reason": "6.18 is_valid_oplock_break() still subtracts smb_buf_length; 83bfbd0bb902 only partly backported",
+      "reviewed": "2026-11-15",
+      "run": null
+    }
+  },
   "CVE-2026-89632": {
     "6.12": {
       "cost": null,
@@ -2701,6 +2743,17 @@
       "outcome": "not-affected-needs-review",
       "reason": "panthor_fw_read_build_info() from 9d443deb0441 not in 6.12",
       "reviewed": "2026-11-02",
+      "run": null
+    }
+  },
+  "CVE-2026-89862": {
+    "6.18": {
+      "cost": 0.1991558,
+      "date": "2026-11-15",
+      "head": "6.18.63",
+      "outcome": "not-affected-needs-review",
+      "reason": "qla28xx_validate_flash_image() (d74181ca110e) not in 6.18",
+      "reviewed": "2026-11-15",
       "run": null
     }
   },
@@ -3026,6 +3079,17 @@
       "date": "2026-11-11",
       "head": "6.18.63",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98144": {
+    "6.18": {
+      "cost": 0.29406580000000004,
+      "date": "2026-11-15",
+      "head": "6.18.63",
+      "outcome": "not-affected-needs-review",
+      "reason": "vmap failure branch (d76856beb4a4) not in 6.18; get_obj maps and drops ref itself",
+      "reviewed": "2026-11-15",
       "run": null
     }
   },
@@ -3436,6 +3500,15 @@
       "run": null
     }
   },
+  "CVE-2026-98813": {
+    "6.18": {
+      "cost": 0.5522734,
+      "date": "2026-11-15",
+      "head": "6.18.63",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
   "CVE-2026-98814": {
     "6.18": {
       "cost": 0.57693,
@@ -3627,6 +3700,17 @@
       "date": "2026-10-31",
       "head": "6.18.60",
       "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-98983": {
+    "6.18": {
+      "cost": 0.2653604,
+      "date": "2026-11-15",
+      "head": "6.18.63",
+      "outcome": "not-affected-needs-review",
+      "reason": "active ns refcount (3a18f809184b) not in 6.18; put_nsproxy() is plain refcount",
+      "reviewed": "2026-11-15",
       "run": null
     }
   },
