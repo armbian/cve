@@ -1620,6 +1620,29 @@
   {
     "series": "6.12",
     "cves": [
+      "CVE-2026-99294"
+    ],
+    "kev": false,
+    "upstream": "1d47b55b36d2ec73fe6901212c8b28a593c3b27c",
+    "subject": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
+    "verdict": "needs-backport",
+    "files": [
+      "include/net/netfilter/nf_dup_netdev.h",
+      "net/netfilter/nf_dup_netdev.c",
+      "net/netfilter/nft_fwd_netdev.c"
+    ],
+    "prerequisites": [
+      "f37ad9127039 netfilter: nf_dup_netdev: Move the recursion counter struct netdev_xmit",
+      "c6f85577584b netfilter: nf_tables_offload: add nft_flow_action_entry_next() and use it",
+      "1049970d7583 netfilter: replace skb_try_make_writable() by skb_ensure_writable()",
+      "0a0b35f0bf10 netfilter: nft_fwd_netdev: add device and headroom validate with neigh forwarding"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
       "CVE-2026-52966"
     ],
     "kev": false,
@@ -7421,6 +7444,32 @@
       "cb16301626c3 KVM: arm64: Issue CMOs when tearing down guest s2 pages",
       "40458a66afde KVM: arm64: Fix comment for __pkvm_vcpu_init_traps()",
       "66d5b53e20a6 KVM: arm64: Allocate memory mapped at hyp for host sve state in pKVM"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99294"
+    ],
+    "kev": false,
+    "upstream": "1d47b55b36d2ec73fe6901212c8b28a593c3b27c",
+    "subject": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
+    "verdict": "needs-backport",
+    "files": [
+      "include/net/netfilter/nf_dup_netdev.h",
+      "net/netfilter/nf_dup_netdev.c",
+      "net/netfilter/nft_fwd_netdev.c"
+    ],
+    "prerequisites": [
+      "a412dbf40ff3 netfilter: nf_tables: limit allowed range via nla_policy",
+      "94090b23f3f7 netfilter: add missing module descriptions",
+      "f37ad9127039 netfilter: nf_dup_netdev: Move the recursion counter struct netdev_xmit",
+      "6b94d081f81d netfilter: nf_tables: remove register tracking infrastructure",
+      "c6f85577584b netfilter: nf_tables_offload: add nft_flow_action_entry_next() and use it",
+      "1049970d7583 netfilter: replace skb_try_make_writable() by skb_ensure_writable()",
+      "0a0b35f0bf10 netfilter: nft_fwd_netdev: add device and headroom validate with neigh forwarding"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
