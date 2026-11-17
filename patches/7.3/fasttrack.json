@@ -1,8 +1,8 @@
 {
   "series": "7.3",
   "base": {
-    "commit": "7595a62d45ee1a2297eafa5f2ef5d0a45142d84d",
-    "version": "7.3.4"
+    "commit": "988117cc1bb17338c586a4e21ade88b5397eac33",
+    "version": "7.3.5"
   },
   "patches": [
     {
