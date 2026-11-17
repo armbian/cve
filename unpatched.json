@@ -2,6 +2,28 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-98112"
+    ],
+    "kev": false,
+    "upstream": "a506290f59e1c6ce9ac0a13158640bb8fee93471",
+    "subject": "ksmbd: fix listener task lifetime on netdev events",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/server/transport_tcp.c"
+    ],
+    "prerequisites": [
+      "3316a8fc840d ksmbd: server: avoid busy polling in accept loop",
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
+      "0977715850ac smb/server: introduce struct ksmbd_transport_write",
+      "49f6a485868e smb/server: use MSG_EOR for async interim response",
+      "80b6367ec37f ksmbd: keep TCP timers alive for kernel sockets"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2025-68226"
     ],
     "kev": false,
@@ -408,6 +430,22 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-68086"
+    ],
+    "kev": false,
+    "upstream": "2dfe9f5c91d0963058f8a5e46e1c2a908382cc46",
+    "subject": "mm/khugepaged: write all dirty file folios when collapsing",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/khugepaged.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2026-89862"
     ],
     "kev": false,
@@ -607,6 +645,32 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-98250"
+    ],
+    "kev": false,
+    "upstream": "f76017a7663c4ce5e379f8a8d39f032bdb1fd865",
+    "subject": "nfsd: fix handling of NFSEXP_PNFS in the netlink codepath",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/nfsd/export.c"
+    ],
+    "prerequisites": [
+      "b3c78bc53630 nfsd: do not allow exporting of special kernel filesystems",
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
+      "bf4afc53b77a Convert 'alloc_obj' family to use the new default GFP_KERNEL argument",
+      "189f164e573e Convert remaining multi-line kmalloc_obj/flex GFP_KERNEL uses",
+      "0b2600f81cef treewide: change inode->i_ino from unsigned long to u64",
+      "a002ad8a9bc8 NFSD/export: Add sign_fh export option",
+      "55a000fa1d0e sunrpc: rename sunrpc_cache_pipe_upcall() to sunrpc_cache_upcall()",
+      "912fc994b920 nfsd: add netlink upcall for the svc_export cache",
+      "01c2305795a3 nfsd: add netlink upcall for the nfsd.fh cache"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2026-98983"
     ],
     "kev": false,
@@ -657,63 +721,32 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-89692"
+      "CVE-2026-99215"
     ],
     "kev": false,
-    "upstream": "b036727d334b1b7cd4c1f1fba3b59ba93a6bbe96",
-    "subject": "nfsd: clear CALLBACK_RUNNING on failed delegation recall queue",
+    "upstream": "5b4bd13e0552926648a46c2c9a12a24dfaee3715",
+    "subject": "power: supply: core: prevent unregistering a power supply while a callback runs",
     "verdict": "needs-backport",
     "files": [
-      "fs/nfsd/nfs4state.c"
+      "drivers/power/supply/power_supply_core.c",
+      "include/linux/power_supply.h"
     ],
     "prerequisites": [
-      "7e64c5bc497c NLM/NFSD: Fix lock notifications for async-capable filesystems",
-      "c757ca1a56ed nfsd: drop the ncf_cb_bmap field",
-      "f6259e2e4f64 nfsd: have nfsd4_deleg_getattr_conflict pass back write deleg pointer",
-      "600020927b00 nfsd: Fill NFSv4.1 server implementation fields in OP_EXCHANGE_ID response",
-      "ed9887b876c9 nfsd: replace call_rcu by kfree_rcu for simple kmem_cache_free callback",
-      "d08bf5ea649c NFSD: Remove dead code in nfsd4_create_session()",
-      "a2c0412c051e nfsd: Don't fail OP_SETCLIENTID when there are too many clients.",
-      "53f9ba78e07c nfsd: remove nfsd4_session->se_bchannel",
-      "10c93b5101ca nfsd: make nfsd4_session->se_flags a bool",
-      "b44ffa4c4f57 NFSD: Block DESTROY_CLIENTID only when there are ongoing async COPY operations",
-      "ac0514f4d198 NFSD: Add a laundromat reaper for async copy state",
-      "583772eec7b0 nfsd: allow for up to 32 callback session slots",
-      "935fee5d5ba8 nfsd: use new wake_up_var interfaces.",
-      "6f035c99acd6 NFSD: Clean up unused variable",
-      "0b6e14242630 nfsd: use an xarray to store v4.1 session slots"
-    ],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## fs/nfsd/nfs4state.c\nfs/nfsd/nfs4state.c:5492:27: error: \u2018NFSD4_CALLBACK_RUNNING\u2019 undeclared (first use in this function)\nfs/nfsd/nfs4state.c:5492:65: error: \u2018struct nfsd4_callback\u2019 has no member named \u2018cb_flags\u2019"
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2025-38050"
-    ],
-    "kev": false,
-    "upstream": "113ed54ad276c352ee5ce109bdcf0df118a43bda",
-    "subject": "mm/hugetlb: fix kernel NULL pointer dereference when replacing free hugetlb folios",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/hugetlb.c"
-    ],
-    "prerequisites": [
-      "7e1fbaa0df1d mm/hugetlb: perform vmemmap optimization batchly for specific node allocation",
-      "7c53dfbdb024 mm: add PTE_MARKER_GUARD PTE marker",
-      "05d4532b60e3 memcg/hugetlb: add hugeTLB counters to memcg",
-      "d0f14f7ee0e2 hugetlb: prioritize surplus allocation from current node",
-      "d8fd84dd4ce7 mm/hugetlb: don't map folios writable without VM_WRITE when copying during fork()",
-      "052ccfbcc6cd mm/hugetlb: support FOLL_FORCE|FOLL_WRITE",
-      "991135774c0e memcg/hugetlb: introduce mem_cgroup_charge_hugetlb",
-      "04f13d241b8b mm: replace free hugepage folios after migration",
-      "923682a0dd57 mm/hugetlb: clean up map/global resv accounting when allocate",
-      "51e1de00acdb mm/hugetlb: simplify vma_has_reserves()",
-      "72d8f72631d2 mm/hugetlb: drop vma_has_reserves()",
-      "f931af2e41ab mm/hugetlb: unify restore reserve accounting for new allocations",
-      "4c640f128074 mm/hugetlb: rename isolate_hugetlb() to folio_isolate_hugetlb()",
-      "ba23f58de896 mm/migrate: don't call folio_putback_active_hugetlb() on dst hugetlb folio",
-      "b235448e8cab mm/hugetlb: rename folio_putback_active_hugetlb() to folio_putback_hugetlb()"
+      "58797abed49d power: supply: core: constify power_supply_battery_info::resist_table",
+      "ce20d5b9e370 power: supply: core: constify power_supply_battery_info::ocv_table",
+      "85d319e14f30 power: supply: core: remove {,devm_}power_supply_register_no_ws()",
+      "bd3ee57b9d4c power: supply: core: use device mutex wrappers",
+      "cf70da29c499 power: supply: core: unexport power_supply_property_is_writeable()",
+      "44fcc479a574 power: supply: hwmon: move interface to private header",
+      "172f2151c2b4 power: supply: core: rename psy_has_property() to psy_desc_has_property()",
+      "aa40f37d6365 power: supply: core: introduce power_supply_has_property()",
+      "bfc330323cf3 power: supply: core: remove power_supply_for_each_device()",
+      "f52204036326 power: supply: core: introduce dev_to_psy()",
+      "ead11ae3c0d9 power: supply: core: use dev_to_psy()",
+      "d24bf99214b1 power: supply: core: Add new \"charge_types\" property",
+      "6037802bbae8 power: supply: core: implement extension API",
+      "288a2cabcf6b power: supply: core: add UAPI to discover currently used extensions",
+      "21096800c5ac power: supply: core: fix build of extension sysfs group if CONFIG_SYSFS=n"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -2176,6 +2209,22 @@
   {
     "series": "6.12",
     "cves": [
+      "CVE-2026-68086"
+    ],
+    "kev": false,
+    "upstream": "2dfe9f5c91d0963058f8a5e46e1c2a908382cc46",
+    "subject": "mm/khugepaged: write all dirty file folios when collapsing",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/khugepaged.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
       "CVE-2026-80685"
     ],
     "kev": false,
@@ -2380,11 +2429,11 @@
       "aa0ebd21df9c NFSD: Add nfsd4_copy time-to-live",
       "9048cf05a17a NFSD: fix management of pending async copies",
       "7e13f4f8d27d nfsd: handle delegated timestamps in SETATTR",
-      "1054e8ffc5c4 nfsd: prevent callback tasks running concurrently",
       "8ad924847113 nfsd: Use lookup_one() rather than lookup_one_len()",
       "2f2b6d0b9b09 NFSD: OFFLOAD_CANCEL should mark an async COPY as completed",
       "71aeab7bd9ae NFSD: Shorten CB_OFFLOAD response to NFS4ERR_DELAY",
-      "b53a42970fa4 NFSD: Record each NFSv4 call's session slot index"
+      "b53a42970fa4 NFSD: Record each NFSv4 call's session slot index",
+      "c447d2ac987b nfsd: remove redundant WARN_ON_ONCE in nfsd4_write"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -2992,6 +3041,38 @@
     "build_log": ""
   },
   {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-92493"
+    ],
+    "kev": false,
+    "upstream": "8d31bb1451643f328db0cea0e21e63ef54b4faf2",
+    "subject": "cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/cpufreq/amd-pstate-ut.c"
+    ],
+    "prerequisites": [
+      "31f9056ed243 cpufreq/amd-pstate-ut: Add fix for min freq unit test",
+      "68cb0e77b643 cpufreq/amd-pstate: store all values in cpudata struct in khz",
+      "a9b9b4c2a4cd cpufreq/amd-pstate: Drop min and max cached frequencies",
+      "009d1c29a451 cpufreq/amd-pstate: Move perf values into a union",
+      "93984d3cea8a cpufreq/amd-pstate-ut: Use _free macro to free put policy",
+      "66030cc1c533 cpufreq/amd-pstate-ut: Allow lowest nonlinear and lowest to be the same",
+      "a7875346c689 cpufreq/amd-pstate-ut: Drop SUCCESS and FAIL enums",
+      "2aac38ac06cb cpufreq/amd-pstate-ut: Run on all of the correct CPUs",
+      "c630458c7a4b cpufreq/amd-pstate-ut: Adjust variable scope",
+      "b4cc466b9735 cpufreq/amd-pstate: Replace all AMD_CPPC_* macros with masks",
+      "6fe22abacd40 x86/msr: Rename 'rdmsrl_safe()' to 'rdmsrq_safe()'",
+      "5e404cb7ac4c x86/msr: Rename 'rdmsrl_safe_on_cpu()' to 'rdmsrq_safe_on_cpu()'",
+      "efef7f184f2e x86/msr: Add explicit includes of <asm/msr.h>",
+      "d26d16438bc5 amd-pstate-ut: Reset amd-pstate driver mode after running selftests",
+      "f6b1eebbdbc7 cpufreq/amd-pstate: Avoid shadowing ret in amd_pstate_ut_check_driver()"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
     "series": "6.1",
     "cves": [
       "CVE-2026-89567"
@@ -3092,6 +3173,38 @@
       "4d154b1ca580 drm/amd/pm: Add support for DPM policies",
       "546e6309d14c drm/amd/pm: Remove legacy interface for xgmi plpd",
       "064d92436b69 drm/amd/pm: avoid to load smu firmware for APUs"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-90262"
+    ],
+    "kev": false,
+    "upstream": "8cc569696dac51fc62bb39b3b8f530582b916d29",
+    "subject": "btrfs: retry verity reads for not-uptodate Merkle folios",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/btrfs/verity.c"
+    ],
+    "prerequisites": [
+      "c7f13d428ea1 btrfs: move fs wide helpers out of ctree.h",
+      "9b569ea0be6f btrfs: move the printk helpers out of ctree.h",
+      "07e81dc94474 btrfs: move accessor helpers into accessors.h",
+      "7572dec8f522 btrfs: move ioctl prototypes into ioctl.h",
+      "5c11adcc383a btrfs: move verity prototypes into verity.h",
+      "aa5d3003ddee btrfs: move orphan prototypes into orphan.h",
+      "72ea15f0ddd2 fsverity: pass pos and size to ->write_merkle_tree_block",
+      "06ed09351b67 btrfs: convert btrfs_read_merkle_tree_page() to use a folio",
+      "8b9d032225be btrfs: remove redundant root argument from btrfs_update_inode()",
+      "2b712e3bb2c4 btrfs: remove unused included headers",
+      "884937793db5 btrfs: convert read_key_bytes() to take a folio",
+      "1b6e068a0cc3 btrfs: add and use helper to verify the calling task has locked the inode",
+      "4f27a693940b btrfs: pass struct btrfs_inode to btrfs_sync_inode_flags_to_i_flags()",
+      "fcafdd421065 btrfs: move verity info pointer to fs-specific part of inode",
+      "9264d004a6c9 btrfs: add unlikely annotations to branches leading to EUCLEAN"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""

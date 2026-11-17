@@ -1,8 +1,8 @@
 {
   "series": {
     "6.18": {
-      "head": "1cdda838e8475edf89b73ff0cc952005dd0b1fa7",
-      "version": "6.18.63",
+      "head": "fd7cfd39c88596fec816639ad83cbf3e9d316372",
+      "version": "6.18.64",
       "accepted": [
         "",
         "",
@@ -28,7 +28,6 @@
         "2b66c83ff1751d6bd3201b3017206262ab46dc05",
         "2c8f4742bb76117d735f92a3932d85239b16c494",
         "2cf82b46d5e43be0dfbaac7fa1073cec2fc1f5e6",
-        "2ec9cdf469dd32bcf33073aeb30c08e9356e0ca1",
         "3173cba1170131816972ed2b6185cb970ba8b747",
         "34746b5a84ec37c0ea2bf6808c65c5ed8790eb51",
         "34a00895d032a414830d41106a09329ae6c251b6",
@@ -42,9 +41,9 @@
         "448ba0ae65ca61064183564d2983c9aa59bd6ba7",
         "46e8e31771f4f1c5e1cdec37a889a6730e42e9f1",
         "499485a67fbacf4d9afbdb43522388c64f853428",
-        "4d8930afa3446041358a7db33e7b23a0bb9459b5",
         "4dd86ca99ffcc413cbf79063fd9956ef54e0ca91",
         "51562a8cb11628d3a5e105b4c347ec5473e5745f",
+        "5258572aa5fd5a7ed01b123b28241e0281b6fb9b",
         "5376c9db45368eb210b4d71104ac00a59dc8b6e0",
         "55a67aa89342545b89f469dea6f29bfb6fac6f3d",
         "56e1c6bbe4bb084d7ecf61698afdf70be23dd35f",
@@ -95,7 +94,6 @@
         "af2fb3ee6679b517e2fdbd3ba16ec276a8b74312",
         "b0d8d56b7c93ed767eb4f2be9988e7b9dc023566",
         "b5d9e9d4d0c13bc8b60d8d97e7a07fb25fea639e",
-        "b5ec6c462aab1062cf5d1e667ba7c6442f737055",
         "b62793a7baeea9cf20209c9fd2e333311aaf3b8d",
         "c37460cd9b2fcb61ec66b7eb4fde737e65ec2a56",
         "c4126f1db36e6b2e1c79b0e30a8a2de91c568f4c",
@@ -119,8 +117,8 @@
       "kev": []
     },
     "6.12": {
-      "head": "d3417611a3b40b7f04a29e558cebac2bf69889d7",
-      "version": "6.12.117",
+      "head": "b869a5313cbfe7102873d3de318ddb68675146d0",
+      "version": "6.12.118",
       "accepted": [
         "",
         "",
@@ -158,7 +156,6 @@
         "2842ce397dd09882530b42f7fdb0c855767eb24e",
         "296c83b5ccc808c080865eb20fd7a477b0355bb7",
         "2c8f4742bb76117d735f92a3932d85239b16c494",
-        "2ec9cdf469dd32bcf33073aeb30c08e9356e0ca1",
         "34746b5a84ec37c0ea2bf6808c65c5ed8790eb51",
         "34abd408c8ba24d7c97bd02ba874d8c714f49db1",
         "350de5b8a9befaa2a68861c51f671d4f5f751ca5",
@@ -177,7 +174,6 @@
         "49c9b71b45081e5e5eeb507a2d6edb80d332dc59",
         "4a4263dfeabad72f95e8ab6e15146861fa4144dd",
         "4d2f8bc628cefae7f397cfd19342fed67e0ae833",
-        "4d8930afa3446041358a7db33e7b23a0bb9459b5",
         "4da94744707b27a3ae1197bdd7127da4505dc5b1",
         "4e67f504ee9ded15e256b64f4fde150e917381d7",
         "4e93c65f87825e1e012bce56615320aeb123815d",
@@ -191,7 +187,6 @@
         "55a67aa89342545b89f469dea6f29bfb6fac6f3d",
         "59052a88ba5fe4a7bb34b3a0a42aa5d453d3bb97",
         "593980175389a05793f6060aa20e626330960395",
-        "5b4bd13e0552926648a46c2c9a12a24dfaee3715",
         "5be5bdda5863eacc964b609ba927764f253431b3",
         "5c6ce05e406520290c1d89da97fb3cd70c09137d",
         "5cc809d62b8cca99f832912d8f283a8027386c02",
@@ -200,7 +195,6 @@
         "604d0efb17cc0dd197e089134736ac2698d5fca7",
         "636abbe7a66d80e179011a31754d55001cd44f63",
         "650716f23eac488c6696babdc7805f6a6b7427ad",
-        "68c5cb7574c567e83ba95258cb146db95e069a87",
         "68ff0e07f9b3f0e376bb8b95a0c3e6205695362a",
         "6abc8e4dcfbc1d26a94c0ac037dfb3716f686b1f",
         "6b1842775a460245e97d36d3a67d0cfba7c4ff79",
@@ -238,7 +232,6 @@
         "8a8c0cfdf4658fc5b295b7fc87be56e0d76741f4",
         "8ae3f4067ba4ae3a15581392f6dac422e3d3def0",
         "8cf8b5ae8e093132b0dce0a932af10c9ef077936",
-        "8d31bb1451643f328db0cea0e21e63ef54b4faf2",
         "8ed9bff906cf8036531d1559f10e82733a52b41f",
         "8fa813b7fd1eccbed13e126166cf764f1f11a7d3",
         "915672c5ae32deeb72f4572856d123f314791136",
@@ -869,8 +862,8 @@
       "kev": []
     },
     "7.3": {
-      "head": "7595a62d45ee1a2297eafa5f2ef5d0a45142d84d",
-      "version": "7.3.4",
+      "head": "988117cc1bb17338c586a4e21ade88b5397eac33",
+      "version": "7.3.5",
       "accepted": [
         "40554d1221e3d2ff2e0d192b74a05d89eb3620e7"
       ],
