@@ -735,39 +735,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99215"
-    ],
-    "kev": false,
-    "upstream": "5b4bd13e0552926648a46c2c9a12a24dfaee3715",
-    "subject": "power: supply: core: prevent unregistering a power supply while a callback runs",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/power/supply/power_supply_core.c",
-      "include/linux/power_supply.h"
-    ],
-    "prerequisites": [
-      "58797abed49d power: supply: core: constify power_supply_battery_info::resist_table",
-      "ce20d5b9e370 power: supply: core: constify power_supply_battery_info::ocv_table",
-      "85d319e14f30 power: supply: core: remove {,devm_}power_supply_register_no_ws()",
-      "bd3ee57b9d4c power: supply: core: use device mutex wrappers",
-      "cf70da29c499 power: supply: core: unexport power_supply_property_is_writeable()",
-      "44fcc479a574 power: supply: hwmon: move interface to private header",
-      "172f2151c2b4 power: supply: core: rename psy_has_property() to psy_desc_has_property()",
-      "aa40f37d6365 power: supply: core: introduce power_supply_has_property()",
-      "bfc330323cf3 power: supply: core: remove power_supply_for_each_device()",
-      "f52204036326 power: supply: core: introduce dev_to_psy()",
-      "ead11ae3c0d9 power: supply: core: use dev_to_psy()",
-      "d24bf99214b1 power: supply: core: Add new \"charge_types\" property",
-      "6037802bbae8 power: supply: core: implement extension API",
-      "288a2cabcf6b power: supply: core: add UAPI to discover currently used extensions",
-      "21096800c5ac power: supply: core: fix build of extension sysfs group if CONFIG_SYSFS=n"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2025-71309"
     ],
     "kev": false,
@@ -3171,6 +3138,39 @@
     "build_log": ""
   },
   {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99215"
+    ],
+    "kev": false,
+    "upstream": "5b4bd13e0552926648a46c2c9a12a24dfaee3715",
+    "subject": "power: supply: core: prevent unregistering a power supply while a callback runs",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/power/supply/power_supply_core.c",
+      "include/linux/power_supply.h"
+    ],
+    "prerequisites": [
+      "58797abed49d power: supply: core: constify power_supply_battery_info::resist_table",
+      "ce20d5b9e370 power: supply: core: constify power_supply_battery_info::ocv_table",
+      "85d319e14f30 power: supply: core: remove {,devm_}power_supply_register_no_ws()",
+      "bd3ee57b9d4c power: supply: core: use device mutex wrappers",
+      "cf70da29c499 power: supply: core: unexport power_supply_property_is_writeable()",
+      "44fcc479a574 power: supply: hwmon: move interface to private header",
+      "172f2151c2b4 power: supply: core: rename psy_has_property() to psy_desc_has_property()",
+      "aa40f37d6365 power: supply: core: introduce power_supply_has_property()",
+      "bfc330323cf3 power: supply: core: remove power_supply_for_each_device()",
+      "f52204036326 power: supply: core: introduce dev_to_psy()",
+      "ead11ae3c0d9 power: supply: core: use dev_to_psy()",
+      "d24bf99214b1 power: supply: core: Add new \"charge_types\" property",
+      "6037802bbae8 power: supply: core: implement extension API",
+      "288a2cabcf6b power: supply: core: add UAPI to discover currently used extensions",
+      "21096800c5ac power: supply: core: fix build of extension sysfs group if CONFIG_SYSFS=n"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
     "series": "6.1",
     "cves": [
       "CVE-2026-89567"
@@ -3304,6 +3304,34 @@
       "fcafdd421065 btrfs: move verity info pointer to fs-specific part of inode",
       "9264d004a6c9 btrfs: add unlikely annotations to branches leading to EUCLEAN"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2024-26823"
+    ],
+    "kev": false,
+    "upstream": "8b02da04ad978827e5ccd675acf170198f747a7a",
+    "subject": "irqchip/gic-v3-its: Restore quirk probing for ACPI-based systems",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-98109"
+    ],
+    "kev": false,
+    "upstream": "57938bbdb9bf7fd41cbd5cd509ec10c4b22bec18",
+    "subject": "Bluetooth: hci_core: Fix race condition during device registration",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
