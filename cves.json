@@ -342,6 +342,17 @@
       }
     ]
   },
+  "CVE-2024-26823": {
+    "6.1": [
+      {
+        "status": "needs-backport",
+        "upstream": "8b02da04ad97",
+        "source": "stable-queue",
+        "subject": "irqchip/gic-v3-its: Restore quirk probing for ACPI-based systems",
+        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+      }
+    ]
+  },
   "CVE-2024-26836": {
     "6.1": [
       {
@@ -15142,6 +15153,17 @@
       }
     ]
   },
+  "CVE-2026-98109": {
+    "6.1": [
+      {
+        "status": "needs-backport",
+        "upstream": "57938bbdb9bf",
+        "source": "stable-queue",
+        "subject": "Bluetooth: hci_core: Fix race condition during device registration",
+        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+      }
+    ]
+  },
   "CVE-2026-98111": {
     "6.1": [
       {
@@ -20818,7 +20840,7 @@
       {
         "status": "needs-backport",
         "upstream": "5b4bd13e0552",
-        "source": "stable-queue",
+        "source": "mainline",
         "subject": "power: supply: core: prevent unregistering a power supply while a callback runs",
         "reason": "does not apply unchanged; needs a manual backport or prerequisite"
       },

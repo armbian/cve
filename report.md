@@ -1,11 +1,5 @@
 # Kernel security fast-track
 
-**Events this run**
-
-- added 6.18: 1 patch(es)
-- added 6.12: 1 patch(es)
-- added 6.1: 8 patch(es)
-
 ## 6.18 (base 6.18.64, `fd7cfd39c885`)
 
 Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no longer needed: 3
@@ -356,7 +350,6 @@ Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2026-99215 | `5b4bd13e0552` | stable-queue | power: supply: core: prevent unregistering a power supply while a callback runs |
 |  | CVE-2025-71309 | `e37a75bb866c` | stable-queue | fs/ntfs3: fix deadlock in ni_read_folio_cmpr |
 |  | CVE-2025-37939 | `0a7c2a843596` | stable-queue | libbpf: Fix accessing BTF.ext core_relo header |
 |  | CVE-2026-72457 | `45cf56824104` | stable-queue | apparmor: fail policy unpack on accept2 allocation failure |
@@ -376,6 +369,7 @@ Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-90040 | `d1a3c2162334` | mainline | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
 |  | CVE-2026-92493 | `8d31bb145164` | mainline | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
+|  | CVE-2026-99215 | `5b4bd13e0552` | mainline | power: supply: core: prevent unregistering a power supply while a callback runs |
 
 ### cve/ backport does not apply on this base (3)
 
@@ -1028,7 +1022,7 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-80581 | `17661c67b206` | claude | ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout |
 |  | CVE-2026-97975 | `9b851b09b392` | claude | Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del() |
 
-### Needs a backport (63)
+### Needs a backport (65)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1036,6 +1030,8 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-98216 | `62f0f34fbd2b` | stable-queue | IB/hfi1: Fix the PIO_CRED credit-return mmap |
 |  | CVE-2026-98389 | `1f1d43418d61` | stable-queue | drm/amdgpu: skip gfx switch_power_profile during GPU reset |
 |  | CVE-2026-90262 | `8cc569696dac` | stable-queue | btrfs: retry verity reads for not-uptodate Merkle folios |
+|  | CVE-2024-26823 | `8b02da04ad97` | stable-queue | irqchip/gic-v3-its: Restore quirk probing for ACPI-based systems |
+|  | CVE-2026-98109 | `57938bbdb9bf` | stable-queue | Bluetooth: hci_core: Fix race condition during device registration |
 |  | CVE-2024-27080 | `978b63f7464a` | mainline | btrfs: fix race when detecting delalloc ranges during fiemap |
 |  | CVE-2024-26962 | `41425f96d7aa` | mainline | dm-raid456, md/raid456: fix a deadlock for dm-raid456 while io concurrent with reshape |
 |  | CVE-2024-35961 | `c6e77aa9dd82` | mainline | net/mlx5: Register devlink first under devlink lock |
