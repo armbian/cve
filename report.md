@@ -2,21 +2,19 @@
 
 **Events this run**
 
-- new-stable 6.18: 6.18.63 → 6.18.64
 - added 6.18: 1 patch(es)
-- retired 6.18: 3 patch(es) (landed upstream or superseded)
-- new-stable 6.12: 6.12.117 → 6.12.118
-- retired 6.12: 5 patch(es) (landed upstream or superseded)
-- new-stable 7.3: 7.3.4 → 7.3.5
+- added 6.12: 1 patch(es)
+- added 6.1: 8 patch(es)
 
 ## 6.18 (base 6.18.64, `fd7cfd39c885`)
 
 Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no longer needed: 3
 
-### Included (109)
+### Included (110)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
+|  | CVE-2026-80612 | `c00320b0e355` | stable-queue | net: lwtunnel: Drop skb metadata before LWT encapsulation |
 |  | CVE-2026-53024 | `84265cbd96b9` | mainline | greybus: raw: fix use-after-free if write is called after disconnect |
 |  | CVE-2026-46017 | `3bac01168982` | mainline | mm: fix deferred split queue races during migration |
 |  | CVE-2026-98376 | `593980175389` | mainline | bpf: Use array_map_meta_equal for percpu array inner map replacement |
@@ -127,11 +125,12 @@ Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 |  | CVE-2026-64160 | `—` | claude | cifs: Fix undefined variables |
 
-### Needs a backport (5)
+### Needs a backport (6)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2026-98112 | `a506290f59e1` | stable-queue | ksmbd: fix listener task lifetime on netdev events |
+|  | CVE-2025-71309 | `e37a75bb866c` | stable-queue | fs/ntfs3: fix deadlock in ni_read_folio_cmpr |
 |  | CVE-2026-72377 | `81e985b4c3a6` | mainline | afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints |
 |  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing |
 |  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
@@ -169,12 +168,14 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 ## 6.12 (base 6.12.118, `b869a5313cbf`)
 
-Already in tree: 142 · Other architectures (not built): 11
+Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no longer needed: 1
 
-### Included (176)
+### Included (177)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
+|  | CVE-2026-98353 | `00baeade709f` | stable-queue | RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables |
+|  | CVE-2026-80612 | `c00320b0e355` | stable-queue | net: lwtunnel: Drop skb metadata before LWT encapsulation |
 |  | CVE-2025-71302 | `efe24898485c` | mainline | drm/panthor: fix for dma-fence safe access rules |
 |  | CVE-2026-43369 | `062ea905fff7` | mainline | drm/amd: Fix NULL pointer dereference in device cleanup |
 |  | CVE-2026-98376 | `593980175389` | mainline | bpf: Use array_map_meta_equal for percpu array inner map replacement |
@@ -276,7 +277,6 @@ Already in tree: 142 · Other architectures (not built): 11
 |  | CVE-2026-93044 | `34746b5a84ec` | claude | bpf: Disallow interpreter fallback for arena-related insns |
 |  | CVE-2026-93270 | `7a0855e73757` | claude | bpf: Disallow interpreter fallback for BPF_ADDR_PERCPU insn |
 |  | CVE-2026-98087 | `dae5c0292080` | claude | sched/rt,dl: Skip migrate-disabled tasks when picking a push candidate |
-|  | CVE-2026-98353 | `00baeade709f` | claude | RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables |
 |  | CVE-2026-97565 | `e6142a8bfc23` | claude | smb: client: reject short READ responses in CIFSSMBRead() |
 |  | CVE-2026-98341 | `dab68a74e90b` | claude | wifi: cfg80211: don't free driver-owned scan requests |
 |  | CVE-2026-98338 | `708f9d43d6a2` | claude | wifi: cfg80211: ibss: ref BSS entry for joined event |
@@ -352,11 +352,17 @@ Already in tree: 142 · Other architectures (not built): 11
 |  | CVE-2026-98431 | `a44a3f175eae` | claude | RDMA/uverbs: Fix mmap_lock/disassociation_lock circular dependency |
 |  | CVE-2026-98813 | `ab39974240a0` | claude | bpf: Hold map BTF for the memory allocator destructor record |
 
-### Needs a backport (14)
+### Needs a backport (20)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2026-99215 | `5b4bd13e0552` | stable-queue | power: supply: core: prevent unregistering a power supply while a callback runs |
+|  | CVE-2025-71309 | `e37a75bb866c` | stable-queue | fs/ntfs3: fix deadlock in ni_read_folio_cmpr |
+|  | CVE-2025-37939 | `0a7c2a843596` | stable-queue | libbpf: Fix accessing BTF.ext core_relo header |
+|  | CVE-2026-72457 | `45cf56824104` | stable-queue | apparmor: fail policy unpack on accept2 allocation failure |
+|  | CVE-2026-72458 | `7681ca43d2b1` | stable-queue | apparmor: fix NULL pointer dereference in unpack_pdb |
+|  | CVE-2026-89646 | `c25aee9c630f` | stable-queue | ceph: fix leaked inode reference on writeback abort at umount |
+|  | CVE-2026-98574 | `7e87508b5c4d` | stable-queue | net: bcmgenet: stop Tx NAPI before disabling the queues |
 |  | CVE-2025-38311 | `120f28a6f314` | mainline | iavf: get rid of the crit lock |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
@@ -454,7 +460,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no longer needed: 60
 
-### Included (555)
+### Included (563)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -542,7 +548,15 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-99302 | `635e760169a8` | stable-queue | nvmet-rdma: reject short connection requests |
 |  | CVE-2026-99272 | `2ec9cdf469dd` | stable-queue | smb: client: validate the data area in SMB2_read() |
 |  | CVE-2026-99292 | `a377a3645c7d` | stable-queue | smb: client: fix slab-out-of-bounds write in id_mode_to_cifs_acl() |
+|  | CVE-2026-99314 | `f5d3eb483fed` | stable-queue | ALSA: us122l: Add missing NULL check in usb_stream_hwdep_mmap() |
+|  | CVE-2026-99315 | `820e00508669` | stable-queue | ALSA: us122l: Fix NULL dereference at hwdep open and release |
+|  | CVE-2026-99316 | `ceb0d8c22473` | stable-queue | ALSA: usx2y: Initialize idle URBs before submitting streams |
+|  | CVE-2026-99317 | `aee83c204f80` | stable-queue | ALSA: hwdep: Serialize DSP load requests |
+|  | CVE-2026-99312 | `c7c288d178cb` | stable-queue | KVM: x86: Unconditionally reset MMU context when emulating INIT |
+|  | CVE-2026-99318 | `f6c7bb1f0799` | stable-queue | ALSA: bcd2000: Fix use-after-free of MIDI URBs on file close |
+|  | CVE-2026-99319 | `1f8101b6adc8` | stable-queue | ALSA: usx2y: Refuse a retried DSP load after a failure |
 |  | CVE-2026-99308 | `68c5cb7574c5` | stable-queue | usb: xhci: Fix bounce buffer overflow |
+|  | CVE-2026-80612 | `c00320b0e355` | stable-queue | net: lwtunnel: Drop skb metadata before LWT encapsulation |
 |  | CVE-2024-27023 | `855678ed8534` | mainline | md: Fix missing release of 'active_io' for flush |
 |  | CVE-2024-41149 | `85672ca9ceea` | mainline | block: avoid to reuse `hctx` not removed from cpuhp callback list |
 |  | CVE-2026-23451 | `b7405dcf7385` | mainline | bonding: prevent potential infinite loop in bond_header_parse() |
