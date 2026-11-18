@@ -24,6 +24,20 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2025-71309"
+    ],
+    "kev": false,
+    "upstream": "e37a75bb866c29da954b51d0dd7670406246d9ee",
+    "subject": "fs/ntfs3: fix deadlock in ni_read_folio_cmpr",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2025-68226"
     ],
     "kev": false,
@@ -748,6 +762,90 @@
       "288a2cabcf6b power: supply: core: add UAPI to discover currently used extensions",
       "21096800c5ac power: supply: core: fix build of extension sysfs group if CONFIG_SYSFS=n"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2025-71309"
+    ],
+    "kev": false,
+    "upstream": "e37a75bb866c29da954b51d0dd7670406246d9ee",
+    "subject": "fs/ntfs3: fix deadlock in ni_read_folio_cmpr",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2025-37939"
+    ],
+    "kev": false,
+    "upstream": "0a7c2a84359612e54328aa52030eb202093da6e2",
+    "subject": "libbpf: Fix accessing BTF.ext core_relo header",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-72457"
+    ],
+    "kev": false,
+    "upstream": "45cf568241048e560a81aa2053f06a62069f5640",
+    "subject": "apparmor: fail policy unpack on accept2 allocation failure",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-72458"
+    ],
+    "kev": false,
+    "upstream": "7681ca43d2b1c776e62fe77e3167835fb1ab8319",
+    "subject": "apparmor: fix NULL pointer dereference in unpack_pdb",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-89646"
+    ],
+    "kev": false,
+    "upstream": "c25aee9c630fb86f98d79eccb75765067079b972",
+    "subject": "ceph: fix leaked inode reference on writeback abort at umount",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-98574"
+    ],
+    "kev": false,
+    "upstream": "7e87508b5c4d81210d0a736ed01962e52f5c4c56",
+    "subject": "net: bcmgenet: stop Tx NAPI before disabling the queues",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
