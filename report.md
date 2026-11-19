@@ -1,5 +1,9 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- added 6.1: 1 patch(es)
+
 ## 6.18 (base 6.18.64, `fd7cfd39c885`)
 
 Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no longer needed: 3
@@ -454,7 +458,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no longer needed: 60
 
-### Included (563)
+### Included (564)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -542,6 +546,7 @@ Already in tree: 90 · Other architectures (not built): 19 · cve/ backports no 
 |  | CVE-2026-99302 | `635e760169a8` | stable-queue | nvmet-rdma: reject short connection requests |
 |  | CVE-2026-99272 | `2ec9cdf469dd` | stable-queue | smb: client: validate the data area in SMB2_read() |
 |  | CVE-2026-99292 | `a377a3645c7d` | stable-queue | smb: client: fix slab-out-of-bounds write in id_mode_to_cifs_acl() |
+|  | CVE-2026-99320 | `66dfb2cacda7` | stable-queue | ipv6: raw: fix use-after-free in rawv6_send_hdrinc() |
 |  | CVE-2026-99314 | `f5d3eb483fed` | stable-queue | ALSA: us122l: Add missing NULL check in usb_stream_hwdep_mmap() |
 |  | CVE-2026-99315 | `820e00508669` | stable-queue | ALSA: us122l: Fix NULL dereference at hwdep open and release |
 |  | CVE-2026-99316 | `ceb0d8c22473` | stable-queue | ALSA: usx2y: Initialize idle URBs before submitting streams |
