@@ -460,6 +460,23 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-99369"
+    ],
+    "kev": false,
+    "upstream": "bbfa823f624d41e85ebca929ac77dc2182cadfed",
+    "subject": "NFSD: Destroy a recalled delegation the client does not hold",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/nfsd/nfs4state.c",
+      "fs/nfsd/state.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2026-89862"
     ],
     "kev": false,
@@ -659,6 +676,24 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-99472"
+    ],
+    "kev": false,
+    "upstream": "da260bcb56feeb6489a83f310308453a0a7de25e",
+    "subject": "KVM: pfncache: use a dedicated invalidation sequence for cache refresh",
+    "verdict": "needs-backport",
+    "files": [
+      "include/linux/kvm_host.h",
+      "virt/kvm/kvm_main.c",
+      "virt/kvm/pfncache.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2026-98250"
     ],
     "kev": false,
@@ -679,6 +714,23 @@
       "912fc994b920 nfsd: add netlink upcall for the svc_export cache",
       "01c2305795a3 nfsd: add netlink upcall for the nfsd.fh cache"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99381"
+    ],
+    "kev": false,
+    "upstream": "531aa4239b0d80d7146b102b98f7aa7da989ccdd",
+    "subject": "smb: client: reject short or out-of-range FIND response parameters",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/cifssmb.c",
+      "fs/smb/client/trace.h"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -713,6 +765,39 @@
       "2bbd9e1d14d6 kernel/fork: update obsolete use_mm references to kthread_use_mm",
       "9fd99788f3e5 io_uring: add task fork hook"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99495"
+    ],
+    "kev": false,
+    "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
+    "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/s390/crypto/zcrypt_msgtype50.c",
+      "drivers/s390/crypto/zcrypt_msgtype6.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99493"
+    ],
+    "kev": false,
+    "upstream": "7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0",
+    "subject": "s390/zcrypt: Guard domain index uses against speculative bypass",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/s390/crypto/zcrypt_api.c"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -2427,6 +2512,23 @@
   {
     "series": "6.12",
     "cves": [
+      "CVE-2026-99369"
+    ],
+    "kev": false,
+    "upstream": "bbfa823f624d41e85ebca929ac77dc2182cadfed",
+    "subject": "NFSD: Destroy a recalled delegation the client does not hold",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/nfsd/nfs4state.c",
+      "fs/nfsd/state.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
       "CVE-2026-74639"
     ],
     "kev": false,
@@ -2790,6 +2892,40 @@
   {
     "series": "6.12",
     "cves": [
+      "CVE-2026-99472"
+    ],
+    "kev": false,
+    "upstream": "da260bcb56feeb6489a83f310308453a0a7de25e",
+    "subject": "KVM: pfncache: use a dedicated invalidation sequence for cache refresh",
+    "verdict": "needs-backport",
+    "files": [
+      "include/linux/kvm_host.h",
+      "virt/kvm/kvm_main.c",
+      "virt/kvm/pfncache.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99522"
+    ],
+    "kev": false,
+    "upstream": "8a8088b899e4cdfe558428cd6113d45df81625be",
+    "subject": "RDMA/irdma: avoid use-after-free in icrdma_remove",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/infiniband/hw/irdma/icrdma_if.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
       "CVE-2026-98296"
     ],
     "kev": false,
@@ -2954,6 +3090,23 @@
   {
     "series": "6.12",
     "cves": [
+      "CVE-2026-99381"
+    ],
+    "kev": false,
+    "upstream": "531aa4239b0d80d7146b102b98f7aa7da989ccdd",
+    "subject": "smb: client: reject short or out-of-range FIND response parameters",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/cifssmb.c",
+      "fs/smb/client/trace.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
       "CVE-2026-98843"
     ],
     "kev": false,
@@ -3040,6 +3193,59 @@
   {
     "series": "6.12",
     "cves": [
+      "CVE-2026-99495"
+    ],
+    "kev": false,
+    "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
+    "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/s390/crypto/zcrypt_msgtype50.c",
+      "drivers/s390/crypto/zcrypt_msgtype6.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99349"
+    ],
+    "kev": false,
+    "upstream": "af208f36ae22440cf6011a43cb3064fd525d85b4",
+    "subject": "rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data()",
+    "verdict": "needs-backport",
+    "files": [
+      "Documentation/networking/rxrpc.rst",
+      "fs/afs/rxrpc.c",
+      "include/net/af_rxrpc.h",
+      "net/rxrpc/rxperf.c",
+      "net/rxrpc/sendmsg.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99493"
+    ],
+    "kev": false,
+    "upstream": "7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0",
+    "subject": "s390/zcrypt: Guard domain index uses against speculative bypass",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/s390/crypto/zcrypt_api.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
       "CVE-2026-99093"
     ],
     "kev": false,
@@ -3062,6 +3268,40 @@
       "06c4dfa3ced6 mm: change to return bool for ptep_clear_flush_young()/clear_flush_young_ptes()",
       "2d46a3974721 mm: change to return bool for pmdp_clear_flush_young()"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99383"
+    ],
+    "kev": false,
+    "upstream": "78f73985846465a25a7bd1d89904053661f3ca92",
+    "subject": "smb: client: reclaim credits for decrypted reads with no matching mid",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/cifsproto.h",
+      "fs/smb/client/connect.c",
+      "fs/smb/client/smb2ops.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99447"
+    ],
+    "kev": false,
+    "upstream": "0b591332a2bdc13d3f9163793131fe3651d1556a",
+    "subject": "spi: spi-pci1xxxx: quiesce DMA engines on transfer timeout",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/spi/spi-pci1xxxx.c"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -3173,6 +3413,22 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99561"
+    ],
+    "kev": false,
+    "upstream": "1f978881ce6c9ac4f4d4a7b6a6e52339eadcd350",
+    "subject": "fork: don't create io threads once PF_POSTCOREDUMP is set",
+    "verdict": "needs-backport",
+    "files": [
+      "kernel/fork.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-89567"
     ],
     "kev": false,
@@ -3272,6 +3528,202 @@
       "546e6309d14c drm/amd/pm: Remove legacy interface for xgmi plpd",
       "064d92436b69 drm/amd/pm: avoid to load smu firmware for APUs"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99492"
+    ],
+    "kev": false,
+    "upstream": "ba16e5ffbaa10fde960918d69af5e49f2b3fdd5e",
+    "subject": "HID: wacom: Advertise SW_MUTE_DEVICE capability prior to registration",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99491"
+    ],
+    "kev": false,
+    "upstream": "ef32877368a7013c060ef6bd03a30b6da2fe0c41",
+    "subject": "HID: wacom: Fix Use-After-Free in wacom_intuos_pad",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99490"
+    ],
+    "kev": false,
+    "upstream": "3a523ecf9ac3fdd33f5eb31c43937ee44135395b",
+    "subject": "HID: wacom: Fix Use-After-Free in wacom_bamboo_pad",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99489"
+    ],
+    "kev": false,
+    "upstream": "480c9cb14ae81f8e112ff83f8778b3d7b9324dc8",
+    "subject": "HID: wacom: Redesign shared sibling data lifecycle",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99555"
+    ],
+    "kev": false,
+    "upstream": "cb705f75d03e946a4514488beb9e3bac9bcdb2e6",
+    "subject": "media: usbtv: fix null-pointer dereference on disconnect",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/media/usb/usbtv/usbtv-core.c",
+      "drivers/media/usb/usbtv/usbtv-video.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99378"
+    ],
+    "kev": false,
+    "upstream": "2a25cc8e984610828a526086313b8a7aeefe507d",
+    "subject": "pnfs/blocklayout: Complete a device upcall when the pipe is closed",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99414"
+    ],
+    "kev": false,
+    "upstream": "50912a1715b8a7c614b654011a0db750e372b43e",
+    "subject": "ovl: skip copy up of empty security.capability",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99526"
+    ],
+    "kev": false,
+    "upstream": "59131dd72f62b198fc9ea1489ad9d3573154f684",
+    "subject": "smb: client: fix use-after-free infoleak via the readdir resume name",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99427"
+    ],
+    "kev": false,
+    "upstream": "570c783a96f054dd3ac409a92772e9afb705d21c",
+    "subject": "smb: client: fix OOB last_entry pointer from unbounded LastNameOffset",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99454"
+    ],
+    "kev": false,
+    "upstream": "495cb31c791bdf3f9efef255a9587b05b0526c9d",
+    "subject": "staging: rtl8723bs: fix protected RX frame validation in decrypt path",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/staging/rtl8723bs/core/rtw_recv.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99465"
+    ],
+    "kev": false,
+    "upstream": "f2eb2fd388bf3f1959556a326e797cacca341c86",
+    "subject": "media: microchip-isc: take a reference on the parsed endpoints",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/media/platform/atmel/atmel-isc-base.c",
+      "drivers/media/platform/atmel/atmel-sama5d2-isc.c",
+      "drivers/media/platform/atmel/atmel-sama7g5-isc.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99343"
+    ],
+    "kev": false,
+    "upstream": "115f9405a2ed6d78ee7ad8436bdd638743f6d1d4",
+    "subject": "KVM: x86/mmu: Bug the VM if KVM attempts to walk more levels than the MMU has",
+    "verdict": "needs-backport",
+    "files": [
+      "arch/x86/kvm/mmu/paging_tmpl.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99484"
+    ],
+    "kev": false,
+    "upstream": "34e3e04b8a1731a773797542f0781e99ce7cd755",
+    "subject": "ALSA: emux: Fix UAF of soundfont zones at note-on",
+    "verdict": "needs-backport",
+    "files": [
+      "sound/synth/emux/emux_synth.c",
+      "sound/synth/emux/soundfont.c"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -9047,6 +9499,23 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99369"
+    ],
+    "kev": false,
+    "upstream": "bbfa823f624d41e85ebca929ac77dc2182cadfed",
+    "subject": "NFSD: Destroy a recalled delegation the client does not hold",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/nfsd/nfs4state.c",
+      "fs/nfsd/state.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-80820"
     ],
     "kev": false,
@@ -9121,6 +9590,22 @@
       "e65a475117df scsi: qla2xxx: Skip image-set-valid attribute for 29xx",
       "0267b4fbaba1 scsi: qla2xxx: Adjust feature gating in BSG paths for 29xx support"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99467"
+    ],
+    "kev": false,
+    "upstream": "0f29f84317c1e35f6a9265277be33e60d3fc8c1c",
+    "subject": "media: marvell: mcam: stop DMA and cancel s_bh_work before freeing DMA buffers",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/media/platform/marvell/mcam-core.c"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -9364,6 +9849,22 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99342"
+    ],
+    "kev": false,
+    "upstream": "eacdb76c5f04956035c5d7f7e1973028f30684a2",
+    "subject": "KVM: x86/xen: Enforce 4-byte alignment of vcpu_info registration",
+    "verdict": "needs-backport",
+    "files": [
+      "arch/x86/kvm/xen.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-98365"
     ],
     "kev": false,
@@ -9523,6 +10024,22 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99522"
+    ],
+    "kev": false,
+    "upstream": "8a8088b899e4cdfe558428cd6113d45df81625be",
+    "subject": "RDMA/irdma: avoid use-after-free in icrdma_remove",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/infiniband/hw/irdma/icrdma_if.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-98295"
     ],
     "kev": false,
@@ -9583,6 +10100,22 @@
       "ab8b23150abc af_unix: Remove unix_tot_inflight.",
       "24fa77dad25c af_unix: Consolidate unix_schedule_gc() and wait_for_unix_gc()."
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99542"
+    ],
+    "kev": false,
+    "upstream": "de0cffef897c1c232ed973f89928cd6c93d0b1e3",
+    "subject": "ksmbd: deny access for an empty DACL instead of granting the request",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/server/smbacl.c"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -9782,6 +10315,39 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99382"
+    ],
+    "kev": false,
+    "upstream": "29bd6773187cb5c1bbbdf90d677c6add7d58af26",
+    "subject": "smb: client: reject FIND data areas that run past the received response",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/cifssmb.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99381"
+    ],
+    "kev": false,
+    "upstream": "531aa4239b0d80d7146b102b98f7aa7da989ccdd",
+    "subject": "smb: client: reject short or out-of-range FIND response parameters",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/cifssmb.c",
+      "fs/smb/client/trace.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-98839"
     ],
     "kev": false,
@@ -9875,6 +10441,59 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99495"
+    ],
+    "kev": false,
+    "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
+    "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/s390/crypto/zcrypt_msgtype50.c",
+      "drivers/s390/crypto/zcrypt_msgtype6.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99349"
+    ],
+    "kev": false,
+    "upstream": "af208f36ae22440cf6011a43cb3064fd525d85b4",
+    "subject": "rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data()",
+    "verdict": "needs-backport",
+    "files": [
+      "Documentation/networking/rxrpc.rst",
+      "fs/afs/rxrpc.c",
+      "include/net/af_rxrpc.h",
+      "net/rxrpc/rxperf.c",
+      "net/rxrpc/sendmsg.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99493"
+    ],
+    "kev": false,
+    "upstream": "7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0",
+    "subject": "s390/zcrypt: Guard domain index uses against speculative bypass",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/s390/crypto/zcrypt_api.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-99093"
     ],
     "kev": false,
@@ -9907,6 +10526,40 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99545"
+    ],
+    "kev": false,
+    "upstream": "4059f8986c8f50102a04335cc1da4921dfd262d8",
+    "subject": "driver core: take parent lock on deferred probe",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/base/base.h",
+      "drivers/base/bus.c",
+      "drivers/base/dd.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99506"
+    ],
+    "kev": false,
+    "upstream": "824cc56bf43c714319992bad3558803cac6e77c0",
+    "subject": "mm/hugetlb: fix use-after-free of a new anon folio",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/hugetlb.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-99151"
     ],
     "kev": false,
@@ -9932,6 +10585,84 @@
       "7b1b3f5818c3 drm/amd/display: update dig enable sequence",
       "a1c9a1e27022 drm/amd/display: skip CLEAR_PAYLOAD_ID_TABLE if device mst_en is 0",
       "7727e7b60f82 drm/amd/display: Improve robustness of FIXED_VS link training at DP1 rates"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99383"
+    ],
+    "kev": false,
+    "upstream": "78f73985846465a25a7bd1d89904053661f3ca92",
+    "subject": "smb: client: reclaim credits for decrypted reads with no matching mid",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/cifsproto.h",
+      "fs/smb/client/connect.c",
+      "fs/smb/client/smb2ops.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2024-53176"
+    ],
+    "kev": false,
+    "upstream": "3fa640d035e5ae526769615c35cb9ed4be6e3662",
+    "subject": "smb: During unmount, ensure all cached dir instances drop their dentry",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/client/cached_dir.c",
+      "fs/smb/client/cached_dir.h",
+      "fs/smb/client/cifsfs.c",
+      "fs/smb/client/cifsglob.h",
+      "fs/smb/client/inode.c",
+      "fs/smb/client/trace.h"
+    ],
+    "prerequisites": [
+      "dc765027ed29 cifs: print nosharesock value while dumping mount options",
+      "acf35d79ee8c cifs: print more detail when invalidate_inode_mapping fails",
+      "3ae872de4107 smb: client: fix shared DFS root mounts with different prefixes",
+      "61986a58bc6a cifs: new dynamic tracepoint to track ses not found errors",
+      "d14de8067e3f cifs: Add a laundromat thread for cached directories",
+      "ed5f17f66ef3 fs: Pass argument to fcntl_setlease as int",
+      "c071b34f62dd cifs: is_network_name_deleted should return a bool",
+      "9448765397b6 smb: convert to ctime accessor functions",
+      "a43f95fdd394 cifs: fix charset issue in reconnection",
+      "0d72b92883c6 fs: pass the request_mask to generic_fillattr",
+      "ce04127c5849 smb: client: ensure to try all targets when finding nested links",
+      "8b4e285d8ce3 smb: client: move some params to cifs_open_info_data",
+      "0a049935e47e smb: client: get rid of dfs naming in automount code",
+      "348a04a8d113 smb: client: get rid of dfs code dep in namespace.c",
+      "5f71ebc41294 smb: client: parse reparse point flag in create response"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-98114"
+    ],
+    "kev": false,
+    "upstream": "c61dc7b1b4a3234b4aa3965502908a292238805c",
+    "subject": "ksmbd: propagate DACL parsing errors",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/server/smbacl.c"
+    ],
+    "prerequisites": [
+      "0066f623bce8 ksmbd: use __GFP_RETRY_MAYFAIL",
+      "62e7dd0a39c2 smb: common: change the data type of num_aces to le16",
+      "8dd2e58b6273 ksmbd: remove redundant DACL check in smb_check_perm_dacl",
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
+      "e5f42cb75772 ksmbd: support access-based directory enumeration",
+      "5d47ebb2795d ksmbd: honor owner rights ACEs in maximal access"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
