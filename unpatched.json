@@ -2,6 +2,73 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-99746"
+    ],
+    "kev": false,
+    "upstream": "348bc756d912dd8f47fd36c167075717951a515e",
+    "subject": "ASoC: SOF: Intel: hda-sdw-bpt: Stop active DMA before closing BPT streams",
+    "verdict": "needs-backport",
+    "files": [
+      "sound/soc/sof/intel/hda-sdw-bpt.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99637"
+    ],
+    "kev": false,
+    "upstream": "323899b4ed233d5b6e2fc160c16fbf39cf0317da",
+    "subject": "ovl: inherit FMODE_NONOTIFY when opening directory realfiles",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/open.c",
+      "fs/overlayfs/overlayfs.h",
+      "fs/overlayfs/readdir.c",
+      "fs/overlayfs/util.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99706"
+    ],
+    "kev": false,
+    "upstream": "f681d4580d5c3c749f623cda722a21aefd3147b3",
+    "subject": "mm: fix address wraparound when scanning large folio PTEs",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/memory.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99595"
+    ],
+    "kev": false,
+    "upstream": "c282051fc2cae2ea54770ebe435dbea090272c25",
+    "subject": "sched/fair: Clear throttle state when leaving the fair class",
+    "verdict": "needs-backport",
+    "files": [
+      "kernel/sched/fair.c"
+    ],
+    "prerequisites": [],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## kernel/sched/fair.c\nkernel/sched/fair.c:5992:38: error: \u2018DEQUEUE_CLASS\u2019 undeclared (first use in this function); did you mean \u2018DEQUEUE_SLEEP\u2019?"
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2026-98112"
     ],
     "kev": false,
@@ -788,6 +855,25 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-99586"
+    ],
+    "kev": false,
+    "upstream": "84c6089a365ff5547f9ea30cb407dc5fe3124fd3",
+    "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
+    "verdict": "needs-backport",
+    "files": [
+      "Documentation/arch/arm64/silicon-errata.rst",
+      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c",
+      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c",
+      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2026-99493"
     ],
     "kev": false,
@@ -812,6 +898,109 @@
     "verdict": "needs-backport",
     "files": [
       "rust/kernel/irq/request.rs"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99792"
+    ],
+    "kev": false,
+    "upstream": "2ff3730998b015b5b0a3f28330bee16c648dd114",
+    "subject": "smb/server: prevent file publication after tree disconnect",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/server/mgmt/tree_connect.c",
+      "fs/smb/server/mgmt/tree_connect.h",
+      "fs/smb/server/smb2pdu.c",
+      "fs/smb/server/vfs_cache.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99701"
+    ],
+    "kev": false,
+    "upstream": "990d6c2194a938a19a8cf94c6cfd75171345089b",
+    "subject": "mm/ksm: fix userfaultfd protection during merge and unmerge",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/ksm.c",
+      "mm/memory.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99571"
+    ],
+    "kev": false,
+    "upstream": "2eeeaa9c1ff0c429096acc2947c296db6a56f96d",
+    "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/nvme/host/tcp.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99765"
+    ],
+    "kev": false,
+    "upstream": "6a6e7d7230cd4e0a6c003bae5b85bf37a1e77b94",
+    "subject": "scsi: target: Fix demo-mode dynamic ACL dev-entry UAF vs LUN teardown",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/target/target_core_device.c",
+      "drivers/target/target_core_tpg.c"
+    ],
+    "prerequisites": [],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## drivers/target/target_core_device.c\ndrivers/target/target_core_device.c:355:17: error: \u2018ret\u2019 undeclared (first use in this function); did you mean \u2018net\u2019?\ndrivers/target/target_core_device.c:356:17: error: label \u2018free_stats\u2019 used but not defined"
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99706"
+    ],
+    "kev": false,
+    "upstream": "f681d4580d5c3c749f623cda722a21aefd3147b3",
+    "subject": "mm: fix address wraparound when scanning large folio PTEs",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/memory.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99632"
+    ],
+    "kev": false,
+    "upstream": "da2897ee8b811945fd40ecc4aaf03291c14ce61c",
+    "subject": "drm/amdkfd: use the queue's process info for the WPTR BO eviction fence",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h",
+      "drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c",
+      "drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
@@ -3210,6 +3399,25 @@
   {
     "series": "6.12",
     "cves": [
+      "CVE-2026-99586"
+    ],
+    "kev": false,
+    "upstream": "84c6089a365ff5547f9ea30cb407dc5fe3124fd3",
+    "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
+    "verdict": "needs-backport",
+    "files": [
+      "Documentation/arch/arm64/silicon-errata.rst",
+      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c",
+      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c",
+      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
       "CVE-2026-99349"
     ],
     "kev": false,
@@ -3300,6 +3508,147 @@
     "verdict": "needs-backport",
     "files": [
       "drivers/spi/spi-pci1xxxx.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99792"
+    ],
+    "kev": false,
+    "upstream": "2ff3730998b015b5b0a3f28330bee16c648dd114",
+    "subject": "smb/server: prevent file publication after tree disconnect",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/server/mgmt/tree_connect.c",
+      "fs/smb/server/mgmt/tree_connect.h",
+      "fs/smb/server/smb2pdu.c",
+      "fs/smb/server/vfs_cache.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99798"
+    ],
+    "kev": false,
+    "upstream": "3de16279b43dc285ed2222aba06cebdc82fdb28b",
+    "subject": "io_uring: defer foreign io-wq enqueues to task_work",
+    "verdict": "needs-backport",
+    "files": [
+      "io_uring/io_uring.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99701"
+    ],
+    "kev": false,
+    "upstream": "990d6c2194a938a19a8cf94c6cfd75171345089b",
+    "subject": "mm/ksm: fix userfaultfd protection during merge and unmerge",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/ksm.c",
+      "mm/memory.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99571"
+    ],
+    "kev": false,
+    "upstream": "2eeeaa9c1ff0c429096acc2947c296db6a56f96d",
+    "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/nvme/host/tcp.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99679"
+    ],
+    "kev": false,
+    "upstream": "bcf0b7f18ad11e1d410e82ffef678705eff0a317",
+    "subject": "xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/xfs/xfs_file.c",
+      "fs/xfs/xfs_ioend.c",
+      "fs/xfs/xfs_iomap.c",
+      "fs/xfs/xfs_iomap.h",
+      "fs/xfs/xfs_pnfs.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99665"
+    ],
+    "kev": false,
+    "upstream": "fe2817e3d5ea347214342c9a5cd8bcbff20c0574",
+    "subject": "mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/khugepaged.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99664"
+    ],
+    "kev": false,
+    "upstream": "79cb51d538abc459f74e046d27797d36b133ce0e",
+    "subject": "mm/gup: recheck the PUD under PTL in follow_pud_mask()",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/gup.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99652"
+    ],
+    "kev": false,
+    "upstream": "d03df42ddae196f20e9cfb775704e60269eb6b44",
+    "subject": "mm: fix deadlock of mremap() against UFFDIO_MOVE",
+    "verdict": "needs-backport",
+    "files": [
+      "include/linux/userfaultfd_k.h",
+      "mm/huge_memory.c",
+      "mm/hugetlb.c",
+      "mm/internal.h",
+      "mm/mremap.c",
+      "mm/userfaultfd.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
@@ -3697,6 +4046,44 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99672"
+    ],
+    "kev": false,
+    "upstream": "0f3ad9ab40e3dad06d5c0693806e07935ceedbc3",
+    "subject": "can: protect the receive lists with a per-device lock",
+    "verdict": "needs-backport",
+    "files": [
+      "include/linux/can/can-ml.h",
+      "include/net/netns/can.h",
+      "net/can/af_can.c",
+      "net/can/bcm.c",
+      "net/can/isotp.c",
+      "net/can/raw.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99593"
+    ],
+    "kev": false,
+    "upstream": "58c1eb84e97701c583605ba2fd553b69afba2245",
+    "subject": "arm64: sdei: Preserve the interrupted context's exception registers",
+    "verdict": "needs-backport",
+    "files": [
+      "arch/arm64/kernel/entry-common.c",
+      "arch/arm64/kernel/sdei.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-99343"
     ],
     "kev": false,
@@ -3722,6 +4109,138 @@
     "files": [
       "sound/synth/emux/emux_synth.c",
       "sound/synth/emux/soundfont.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99567"
+    ],
+    "kev": false,
+    "upstream": "48691075b0adc590a6831390723e3603dfca76fc",
+    "subject": "assoc_array: don't chain a new shortcut onto an existing one",
+    "verdict": "needs-backport",
+    "files": [
+      "include/linux/assoc_array_priv.h",
+      "lib/assoc_array.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99690"
+    ],
+    "kev": false,
+    "upstream": "5b4696e0bfc358619adaeab25ad35b4979af8331",
+    "subject": "ocfs2: cache the mount context for dentry lock callbacks",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/ocfs2/dcache.h",
+      "fs/ocfs2/dlmglue.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99765"
+    ],
+    "kev": false,
+    "upstream": "6a6e7d7230cd4e0a6c003bae5b85bf37a1e77b94",
+    "subject": "scsi: target: Fix demo-mode dynamic ACL dev-entry UAF vs LUN teardown",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/target/target_core_device.c",
+      "drivers/target/target_core_tpg.c"
+    ],
+    "prerequisites": [],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## drivers/target/target_core_device.c\ndrivers/target/target_core_device.c:356:17: error: \u2018ret\u2019 undeclared (first use in this function); did you mean \u2018net\u2019?\ndrivers/target/target_core_device.c:357:17: error: label \u2018free_stats\u2019 used but not defined"
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99620"
+    ],
+    "kev": false,
+    "upstream": "ade92d50aad6799a5a9d7e73cd1604fd0576e656",
+    "subject": "drm/amdgpu: don't walk the CS chunks when allocating them failed",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99684"
+    ],
+    "kev": false,
+    "upstream": "0f7bf47f5a0cc26320aa4b14f4504d03a07f4b74",
+    "subject": "hwrng: virtio - prevent use-after-free after a failed restore",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/char/hw_random/virtio-rng.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99658"
+    ],
+    "kev": false,
+    "upstream": "6d65925777ecae9d7a571a327e41c63f3940a0c7",
+    "subject": "mm/mmu_notifier: finish non-blocking interval invalidation on error",
+    "verdict": "needs-backport",
+    "files": [
+      "include/linux/mmu_notifier.h",
+      "mm/mmu_notifier.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99736"
+    ],
+    "kev": false,
+    "upstream": "66ce68a249f4ac56cd6968aa6d8ded20fb4b7d09",
+    "subject": "mm/shmem: fix accounting of swapin-error markers",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/shmem.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99635"
+    ],
+    "kev": false,
+    "upstream": "d5e912448cd98b261eba8e35ab838f2dc69a79f5",
+    "subject": "vhost/vsock: size receive SKBs from declared payload",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/vhost/vsock.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
@@ -9676,6 +10195,22 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99578"
+    ],
+    "kev": false,
+    "upstream": "c710c7c2e0380d7c0eeb33b686262edcaef7cb07",
+    "subject": "wifi: rtw88: usb: route bmc frames via the high queue only for DTIM delivery",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/net/wireless/realtek/rtw88/usb.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-90170"
     ],
     "kev": false,
@@ -9978,6 +10513,23 @@
       "ecb4534b6a1c af_unix: Terminate sun_path when bind()ing pathname socket.",
       "859051dd165e bpf: Implement cgroup sockaddr hooks for unix sockets"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99577"
+    ],
+    "kev": false,
+    "upstream": "04cc8c59a3d79ef7ec2341f1c7aef1d40a0ce7df",
+    "subject": "wifi: rtw88: usb: bound what the driver feeds the after-DTIM queue",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/net/wireless/realtek/rtw88/usb.c",
+      "drivers/net/wireless/realtek/rtw88/usb.h"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -10315,6 +10867,24 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99482"
+    ],
+    "kev": false,
+    "upstream": "c53791d673ed4da6759d276078627ec4d0c6536b",
+    "subject": "ASoC: amd: ps: fix snd_acp63_remove() teardown ordering",
+    "verdict": "needs-backport",
+    "files": [
+      "sound/soc/amd/ps/acp63.h",
+      "sound/soc/amd/ps/pci-ps.c",
+      "sound/soc/amd/ps/ps-common.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-99382"
     ],
     "kev": false,
@@ -10458,18 +11028,17 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99349"
+      "CVE-2026-99586"
     ],
     "kev": false,
-    "upstream": "af208f36ae22440cf6011a43cb3064fd525d85b4",
-    "subject": "rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data()",
+    "upstream": "84c6089a365ff5547f9ea30cb407dc5fe3124fd3",
+    "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
     "verdict": "needs-backport",
     "files": [
-      "Documentation/networking/rxrpc.rst",
-      "fs/afs/rxrpc.c",
-      "include/net/af_rxrpc.h",
-      "net/rxrpc/rxperf.c",
-      "net/rxrpc/sendmsg.c"
+      "Documentation/arch/arm64/silicon-errata.rst",
+      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c",
+      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c",
+      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
@@ -10526,6 +11095,22 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99576"
+    ],
+    "kev": false,
+    "upstream": "b9b036bd1e2cfbc189d5811d62d8711e216c40b3",
+    "subject": "f2fs: zone: fix to avoid bio split on sequential zone",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/f2fs/data.c"
+    ],
+    "prerequisites": [],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## fs/f2fs/data.c\nfs/f2fs/data.c:465:13: error: implicit declaration of function \u2018f2fs_is_sequential_zone_area\u2019 [-Wimplicit-function-declaration]\ninclude/linux/f2fs_fs.h:18:41: error: called object is not a function or function pointer"
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-99545"
     ],
     "kev": false,
@@ -10536,6 +11121,22 @@
       "drivers/base/base.h",
       "drivers/base/bus.c",
       "drivers/base/dd.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99573"
+    ],
+    "kev": false,
+    "upstream": "a1b4bd2c2c262b8094c86afb99364d16ac08cb66",
+    "subject": "KVM: arm64: vgic: Stop the target vcpu when disabling LPIs",
+    "verdict": "needs-backport",
+    "files": [
+      "arch/arm64/kvm/vgic/vgic-mmio-v3.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
@@ -10610,6 +11211,248 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99792"
+    ],
+    "kev": false,
+    "upstream": "2ff3730998b015b5b0a3f28330bee16c648dd114",
+    "subject": "smb/server: prevent file publication after tree disconnect",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/smb/server/mgmt/tree_connect.c",
+      "fs/smb/server/mgmt/tree_connect.h",
+      "fs/smb/server/smb2pdu.c",
+      "fs/smb/server/vfs_cache.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99798"
+    ],
+    "kev": false,
+    "upstream": "3de16279b43dc285ed2222aba06cebdc82fdb28b",
+    "subject": "io_uring: defer foreign io-wq enqueues to task_work",
+    "verdict": "needs-backport",
+    "files": [
+      "io_uring/io_uring.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99701"
+    ],
+    "kev": false,
+    "upstream": "990d6c2194a938a19a8cf94c6cfd75171345089b",
+    "subject": "mm/ksm: fix userfaultfd protection during merge and unmerge",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/ksm.c",
+      "mm/memory.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99643"
+    ],
+    "kev": false,
+    "upstream": "eadce52a9ef657d561b3e76c9b5f178bd99735f5",
+    "subject": "khugepaged: fix readahead lock inversion in collapse_file()",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/khugepaged.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99571"
+    ],
+    "kev": false,
+    "upstream": "2eeeaa9c1ff0c429096acc2947c296db6a56f96d",
+    "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/nvme/host/tcp.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99679"
+    ],
+    "kev": false,
+    "upstream": "bcf0b7f18ad11e1d410e82ffef678705eff0a317",
+    "subject": "xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/xfs/xfs_file.c",
+      "fs/xfs/xfs_ioend.c",
+      "fs/xfs/xfs_iomap.c",
+      "fs/xfs/xfs_iomap.h",
+      "fs/xfs/xfs_pnfs.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99725"
+    ],
+    "kev": false,
+    "upstream": "1f1f8e8c5176234fa31858cd25f2e9b88aac0a45",
+    "subject": "cipso: fix optlen corruption in cipso_v4_delopt()",
+    "verdict": "needs-backport",
+    "files": [
+      "net/ipv4/cipso_ipv4.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99676"
+    ],
+    "kev": false,
+    "upstream": "5b5d8f351dd96f56a58bb516a80e2d4d742fe4e2",
+    "subject": "net: restore refcount ordering for lockless socket access",
+    "verdict": "needs-backport",
+    "files": [
+      "net/core/filter.c",
+      "net/ipv4/inet_connection_sock.c",
+      "net/ipv4/inet_hashtables.c",
+      "net/ipv4/inet_timewait_sock.c",
+      "net/ipv4/syncookies.c",
+      "net/ipv4/tcp_fastopen.c",
+      "net/ipv6/inet6_hashtables.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99601"
+    ],
+    "kev": false,
+    "upstream": "e614c3e35a6699ed691b4d17e1ec4230e34aa3eb",
+    "subject": "udf: check the unallocated space table when it is loaded",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/udf/super.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99634"
+    ],
+    "kev": false,
+    "upstream": "6d2cf411aba2aa0bd641b49be5b1964ac5097a50",
+    "subject": "mptcp: do not use Fast Open on MP_JOIN subflows",
+    "verdict": "needs-backport",
+    "files": [
+      "net/mptcp/subflow.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99665"
+    ],
+    "kev": false,
+    "upstream": "fe2817e3d5ea347214342c9a5cd8bcbff20c0574",
+    "subject": "mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/khugepaged.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99597"
+    ],
+    "kev": false,
+    "upstream": "d06917d0ba226206dbd606330d73a8eb1e3029c1",
+    "subject": "srcu: Add list_splice_init_srcu()",
+    "verdict": "needs-backport",
+    "files": [
+      "include/linux/srcu.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99349"
+    ],
+    "kev": false,
+    "upstream": "af208f36ae22440cf6011a43cb3064fd525d85b4",
+    "subject": "rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data()",
+    "verdict": "needs-backport",
+    "files": [
+      "Documentation/networking/rxrpc.rst",
+      "fs/afs/rxrpc.c",
+      "include/net/af_rxrpc.h",
+      "net/rxrpc/rxperf.c",
+      "net/rxrpc/sendmsg.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99570"
+    ],
+    "kev": false,
+    "upstream": "e74476ad8162c1facc74b74ce2d1372492df872e",
+    "subject": "f2fs: fix to invalidate curseg if change_curseg() fails",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/f2fs/segment.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2024-53176"
     ],
     "kev": false,
@@ -10663,6 +11506,77 @@
       "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types",
       "e5f42cb75772 ksmbd: support access-based directory enumeration",
       "5d47ebb2795d ksmbd: honor owner rights ACEs in maximal access"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2025-68768"
+    ],
+    "kev": false,
+    "upstream": "006a5035b495dec008805df249f92c22c89c3d2e",
+    "subject": "inet: frags: flush pending skbs in fqdir_pre_exit()",
+    "verdict": "needs-backport",
+    "files": [
+      "include/net/inet_frag.h",
+      "include/net/ipv6_frag.h",
+      "net/ipv4/inet_fragment.c",
+      "net/ipv4/ip_fragment.c"
+    ],
+    "prerequisites": [
+      "4ecbb1c27c36 net: dropreason: add SKB_DROP_REASON_DUP_FRAG",
+      "77adfd3a1d44 net: dropreason: add SKB_DROP_REASON_FRAG_REASM_TIMEOUT",
+      "3bdfb04f13eb net: dropreason: add SKB_DROP_REASON_FRAG_TOO_FAR",
+      "5b8285cca6fe net: move dropreason.h to dropreason-core.h",
+      "d20909a0689f inet: frags: eliminate kernel-doc warning",
+      "c899710fe7f9 networking: Update to register_net_sysctl_sz",
+      "802e12ff9cbf inet: frags: delay fqdir_free_fn()",
+      "bfa858f220ab sysctl: treewide: constify ctl_table_header::ctl_table_arg",
+      "1c106eb01cee net: ipv{6,4}: Remove the now superfluous sentinel elements from ctl_table array",
+      "4d25ca2d6801 net: Rename mono_delivery_time to tstamp_type for scalabilty",
+      "66fb6386d358 ipv4: Convert ip_route_input_noref() to dscp_t.",
+      "82d9983ebeb8 net: ip: make ip_route_input_noref() return drop reasons",
+      "ae2d90355aa5 inet: frags: add inet_frag_putn() helper",
+      "a2fb987c0ecf ipv4: frags: remove ipq_put()",
+      "eb0dfc0ef195 inet: frags: change inet_frag_kill() to defer refcount updates"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2024-50211"
+    ],
+    "kev": false,
+    "upstream": "c226964ec786f3797ed389a16392ce4357697d24",
+    "subject": "udf: refactor inode_bmap() to handle error",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/udf/directory.c",
+      "fs/udf/inode.c",
+      "fs/udf/partition.c",
+      "fs/udf/truncate.c",
+      "fs/udf/udfdecl.h"
+    ],
+    "prerequisites": [
+      "36273e5b4e3a udf: remove ->writepage",
+      "e57191a8d400 udf: Move setting of i_lenExtents into udf_do_extend_file()",
+      "b316c443b4e8 udf: Keep i_lenExtents consistent with the total length of extents",
+      "02113feaf62c udf: Fix spelling mistake \"lenght\" -> \"length\"",
+      "1fb40763a58c udf: remove redundant variable netype",
+      "3bea4ae1c97b udf: Zero udf name padding",
+      "ee454ad2fce7 udf: Propagate errors from udf_advance_blk()",
+      "bd904f3c7496 udf: Unify types in anchor block detection",
+      "101ee137d32a udf: Drop VARCONV support",
+      "de80dae03c43 udf: Move incrementing of goal block directly into inode_getblk()",
+      "f3a30be77750 udf: Factor out block mapping into udf_map_block()",
+      "4215db46d538 udf: Use udf_bread() in udf_get_pblock_virt15()",
+      "364a6665d573 udf: Fold udf_block_map() into udf_map_block()",
+      "b3c03fcef271 udf: Pass mapping request into inode_getblk()",
+      "809425217805 udf: Add flag to disable block preallocation"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
