@@ -646,7 +646,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99470 | `22f552ff726a` | stable-queue | media: cx23885: unregister DVB bus when SP2 CI setup fails |
 |  | CVE-2026-99469 | `3dbbbc3cafa2` | stable-queue | media: gspca: use vb2_video_unregister_device() on disconnect |
 |  | CVE-2026-99468 | `78fdfbf117c4` | stable-queue | media: imx-jpeg: cancel timeout worker when streaming stops |
-|  | CVE-2026-99464 | `af452b9e0133` | stable-queue | media: redrat3: fix UAF in probe error path leaving rc device registered |
 |  | CVE-2026-99455 | `810d467c11f0` | stable-queue | serial: core: shut down initialized port on removal |
 |  | CVE-2026-99453 | `f3e27b795572` | stable-queue | xen-blkfront: unbind irq before tearing down ring and shadow requests |
 |  | CVE-2026-99452 | `81394dfb9a79` | stable-queue | wifi: ath9k: delete channel-context timers on deinit |
@@ -884,6 +883,7 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-68245 | `04cc4aa3617b` | mainline | drm/amdgpu: fix lifetime issue of amdgpu_vm_get_task_info_pasid() |
 |  | CVE-2026-92491 | `2224b622260b` | mainline | firmware: arm_scmi: Roll back partial protocol table registration |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
+|  | CVE-2026-99464 | `af452b9e0133` | mainline | media: redrat3: fix UAF in probe error path leaving rc device registered |
 |  | CVE-2026-90199 | `20fd9f64c005` | mainline | fs/ntfs3: reject out-of-range evcn in mi_enum_attr() |
 |  | CVE-2026-98161 | `c644a2f8fef5` | mainline | nvdimm: pmem: keep PREFLUSH before data writes |
 |  | CVE-2026-98364 | `9fa903b24b1f` | mainline | xfrm: hold net_device reference under RCU in bundle creation |
@@ -1453,7 +1453,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
 |  | CVE-2026-99798 | `3de16279b43d` | mainline | io_uring: defer foreign io-wq enqueues to task_work |
 |  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
-|  | CVE-2026-99643 | `eadce52a9ef6` | mainline | khugepaged: fix readahead lock inversion in collapse_file() |
 |  | CVE-2026-99571 | `2eeeaa9c1ff0` | mainline | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
 |  | CVE-2026-99679 | `bcf0b7f18ad1` | mainline | xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks |
 |  | CVE-2026-99725 | `1f1f8e8c5176` | mainline | cipso: fix optlen corruption in cipso_v4_delopt() |
@@ -1462,6 +1461,7 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99634 | `6d2cf411aba2` | mainline | mptcp: do not use Fast Open on MP_JOIN subflows |
 |  | CVE-2026-99665 | `fe2817e3d5ea` | mainline | mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs |
 |  | CVE-2026-99597 | `d06917d0ba22` | mainline | srcu: Add list_splice_init_srcu() |
+|  | CVE-2026-99643 | `eadce52a9ef6` | mainline | khugepaged: fix readahead lock inversion in collapse_file() |
 |  | CVE-2024-53176 | `3fa640d035e5` | mainline | smb: During unmount, ensure all cached dir instances drop their dentry |
 |  | CVE-2026-98114 | `c61dc7b1b4a3` | mainline | ksmbd: propagate DACL parsing errors |
 |  | CVE-2025-68768 | `006a5035b495` | mainline | inet: frags: flush pending skbs in fqdir_pre_exit() |

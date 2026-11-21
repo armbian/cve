@@ -11299,22 +11299,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99643"
-    ],
-    "kev": false,
-    "upstream": "eadce52a9ef657d561b3e76c9b5f178bd99735f5",
-    "subject": "khugepaged: fix readahead lock inversion in collapse_file()",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/khugepaged.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-99571"
     ],
     "kev": false,
@@ -11445,6 +11429,22 @@
     "verdict": "needs-backport",
     "files": [
       "include/linux/srcu.h"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99643"
+    ],
+    "kev": false,
+    "upstream": "eadce52a9ef657d561b3e76c9b5f178bd99735f5",
+    "subject": "khugepaged: fix readahead lock inversion in collapse_file()",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/khugepaged.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",

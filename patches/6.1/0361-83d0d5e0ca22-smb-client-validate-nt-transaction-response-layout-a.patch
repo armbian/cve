@@ -4,8 +4,7 @@ X-Fasttrack-Upstream: 83d0d5e0ca22233c75daf139ec0063b9d2ff1ac7
 X-Fasttrack-CVE: CVE-2026-99380
 From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 Date: Sat, 17 Oct 2026 23:15:05 +0200
-Subject: [PATCH] smb: client: validate NT transaction response layout and
- offsets
+Subject: smb: client: validate NT transaction response layout and offsets
 
 validate_ntransact() assumes that the response uses the fixed 18-word NT
 transaction layout. A different WordCount makes get_bcc() locate the byte
@@ -34,7 +33,7 @@ Signed-off-by: Paulo Alcantara <pc@manguebit.org>
  1 file changed, 19 insertions(+), 13 deletions(-)
 
 diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index e335686a68f2f8..9ffc94ac206949 100644
+index e335686a68f2f..9ffc94ac20694 100644
 --- a/fs/smb/client/cifssmb.c
 +++ b/fs/smb/client/cifssmb.c
 @@ -3787,9 +3787,10 @@ static int
@@ -104,3 +103,6 @@ index e335686a68f2f8..9ffc94ac206949 100644
  	*pdatalen = data_count;
  	*pparmlen = parm_count;
  	return 0;
+-- 
+cgit 1.3.1-korg
+

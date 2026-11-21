@@ -1,14 +1,11 @@
 From af452b9e01331b5338a1e5141624f17607239207 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: stable-queue
+X-Fasttrack-Source: mainline
 X-Fasttrack-Upstream: af452b9e01331b5338a1e5141624f17607239207
 X-Fasttrack-CVE: CVE-2026-99464
 From: Rik van Riel <riel@surriel.com>
 Date: Sat, 8 Aug 2026 23:20:31 -0400
-Subject: media: redrat3: fix UAF in probe error path leaving rc device registered
-
-From: Rik van Riel <riel@surriel.com>
-
-commit af452b9e01331b5338a1e5141624f17607239207 upstream.
+Subject: media: redrat3: fix UAF in probe error path leaving rc device
+ registered
 
 redrat3 stores its device name and phys path inside the main rr3
 structure, and the rc device's device_name and input_phys point into
@@ -65,14 +62,15 @@ Cc: stable@vger.kernel.org
 Assisted-by: Hermes:muse-spark-1.2 syzkaller
 Signed-off-by: Rik van Riel <riel@surriel.com>
 Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/redrat3.c |    4 ++++
+ drivers/media/rc/redrat3.c | 4 ++++
  1 file changed, 4 insertions(+)
 
+diff --git a/drivers/media/rc/redrat3.c b/drivers/media/rc/redrat3.c
+index b07ff832a938c..3e82b5e66477e 100644
 --- a/drivers/media/rc/redrat3.c
 +++ b/drivers/media/rc/redrat3.c
-@@ -977,6 +977,7 @@ static int redrat3_dev_probe(struct usb_
+@@ -986,6 +986,7 @@ static int redrat3_dev_probe(struct usb_interface *intf,
  	struct device *dev = &intf->dev;
  	struct usb_host_interface *uhi;
  	struct redrat3_dev *rr3;
@@ -80,7 +78,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	struct usb_endpoint_descriptor *ep;
  	struct usb_endpoint_descriptor *ep_narrow = NULL;
  	struct usb_endpoint_descriptor *ep_wide = NULL;
-@@ -1121,9 +1122,12 @@ static int redrat3_dev_probe(struct usb_
+@@ -1130,9 +1131,12 @@ static int redrat3_dev_probe(struct usb_interface *intf,
  	return 0;
  
  led_free:
@@ -93,3 +91,6 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  no_endpoints:
  	return retval;
+-- 
+cgit 1.3.1-korg
+
