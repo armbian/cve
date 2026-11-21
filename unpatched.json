@@ -11047,6 +11047,26 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-99349"
+    ],
+    "kev": false,
+    "upstream": "af208f36ae22440cf6011a43cb3064fd525d85b4",
+    "subject": "rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data()",
+    "verdict": "needs-backport",
+    "files": [
+      "Documentation/networking/rxrpc.rst",
+      "fs/afs/rxrpc.c",
+      "include/net/af_rxrpc.h",
+      "net/rxrpc/rxperf.c",
+      "net/rxrpc/sendmsg.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2026-99493"
     ],
     "kev": false,
@@ -11107,6 +11127,22 @@
     "prerequisites": [],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
     "build_log": "## fs/f2fs/data.c\nfs/f2fs/data.c:465:13: error: implicit declaration of function \u2018f2fs_is_sequential_zone_area\u2019 [-Wimplicit-function-declaration]\ninclude/linux/f2fs_fs.h:18:41: error: called object is not a function or function pointer"
+  },
+  {
+    "series": "6.1",
+    "cves": [
+      "CVE-2026-99570"
+    ],
+    "kev": false,
+    "upstream": "e74476ad8162c1facc74b74ce2d1372492df872e",
+    "subject": "f2fs: fix to invalidate curseg if change_curseg() fails",
+    "verdict": "needs-backport",
+    "files": [
+      "fs/f2fs/segment.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
   },
   {
     "series": "6.1",
@@ -11409,42 +11445,6 @@
     "verdict": "needs-backport",
     "files": [
       "include/linux/srcu.h"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99349"
-    ],
-    "kev": false,
-    "upstream": "af208f36ae22440cf6011a43cb3064fd525d85b4",
-    "subject": "rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data()",
-    "verdict": "needs-backport",
-    "files": [
-      "Documentation/networking/rxrpc.rst",
-      "fs/afs/rxrpc.c",
-      "include/net/af_rxrpc.h",
-      "net/rxrpc/rxperf.c",
-      "net/rxrpc/sendmsg.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99570"
-    ],
-    "kev": false,
-    "upstream": "e74476ad8162c1facc74b74ce2d1372492df872e",
-    "subject": "f2fs: fix to invalidate curseg if change_curseg() fails",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/f2fs/segment.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",

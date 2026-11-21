@@ -1,12 +1,5 @@
 # Kernel security fast-track
 
-**Events this run**
-
-- added 6.18: 21 patch(es)
-- added 6.12: 24 patch(es)
-- added 6.1: 115 patch(es)
-- retired 6.1: 7 patch(es) (landed upstream or superseded)
-
 ## 6.18 (base 6.18.64, `fd7cfd39c885`)
 
 Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no longer needed: 3
@@ -1449,8 +1442,10 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
 |  | CVE-2026-99495 | `5e9b339f3232` | mainline | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
 |  | CVE-2026-99586 | `84c6089a365f` | mainline | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
+|  | CVE-2026-99349 | `af208f36ae22` | mainline | rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data() |
 |  | CVE-2026-99493 | `7b88e8b6d714` | mainline | s390/zcrypt: Guard domain index uses against speculative bypass |
 | does not build | CVE-2026-99576 | `b9b036bd1e2c` | mainline | f2fs: zone: fix to avoid bio split on sequential zone |
+|  | CVE-2026-99570 | `e74476ad8162` | mainline | f2fs: fix to invalidate curseg if change_curseg() fails |
 |  | CVE-2026-99545 | `4059f8986c8f` | mainline | driver core: take parent lock on deferred probe |
 |  | CVE-2026-99573 | `a1b4bd2c2c26` | mainline | KVM: arm64: vgic: Stop the target vcpu when disabling LPIs |
 |  | CVE-2026-99506 | `824cc56bf43c` | mainline | mm/hugetlb: fix use-after-free of a new anon folio |
@@ -1467,8 +1462,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99634 | `6d2cf411aba2` | mainline | mptcp: do not use Fast Open on MP_JOIN subflows |
 |  | CVE-2026-99665 | `fe2817e3d5ea` | mainline | mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs |
 |  | CVE-2026-99597 | `d06917d0ba22` | mainline | srcu: Add list_splice_init_srcu() |
-|  | CVE-2026-99349 | `af208f36ae22` | mainline | rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data() |
-|  | CVE-2026-99570 | `e74476ad8162` | mainline | f2fs: fix to invalidate curseg if change_curseg() fails |
 |  | CVE-2024-53176 | `3fa640d035e5` | mainline | smb: During unmount, ensure all cached dir instances drop their dentry |
 |  | CVE-2026-98114 | `c61dc7b1b4a3` | mainline | ksmbd: propagate DACL parsing errors |
 |  | CVE-2025-68768 | `006a5035b495` | mainline | inet: frags: flush pending skbs in fqdir_pre_exit() |
