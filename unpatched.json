@@ -37,38 +37,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99706"
-    ],
-    "kev": false,
-    "upstream": "f681d4580d5c3c749f623cda722a21aefd3147b3",
-    "subject": "mm: fix address wraparound when scanning large folio PTEs",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/memory.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-99595"
-    ],
-    "kev": false,
-    "upstream": "c282051fc2cae2ea54770ebe435dbea090272c25",
-    "subject": "sched/fair: Clear throttle state when leaving the fair class",
-    "verdict": "needs-backport",
-    "files": [
-      "kernel/sched/fair.c"
-    ],
-    "prerequisites": [],
-    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
-    "build_log": "## kernel/sched/fair.c\nkernel/sched/fair.c:5992:38: error: \u2018DEQUEUE_CLASS\u2019 undeclared (first use in this function); did you mean \u2018DEQUEUE_SLEEP\u2019?"
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-98112"
     ],
     "kev": false,
@@ -855,25 +823,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99586"
-    ],
-    "kev": false,
-    "upstream": "84c6089a365ff5547f9ea30cb407dc5fe3124fd3",
-    "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
-    "verdict": "needs-backport",
-    "files": [
-      "Documentation/arch/arm64/silicon-errata.rst",
-      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c",
-      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c",
-      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-99493"
     ],
     "kev": false,
@@ -971,22 +920,6 @@
     "prerequisites": [],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
     "build_log": "## drivers/target/target_core_device.c\ndrivers/target/target_core_device.c:355:17: error: \u2018ret\u2019 undeclared (first use in this function); did you mean \u2018net\u2019?\ndrivers/target/target_core_device.c:356:17: error: label \u2018free_stats\u2019 used but not defined"
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99706"
-    ],
-    "kev": false,
-    "upstream": "f681d4580d5c3c749f623cda722a21aefd3147b3",
-    "subject": "mm: fix address wraparound when scanning large folio PTEs",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/memory.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
   },
   {
     "series": "6.12",
@@ -3399,25 +3332,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99586"
-    ],
-    "kev": false,
-    "upstream": "84c6089a365ff5547f9ea30cb407dc5fe3124fd3",
-    "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
-    "verdict": "needs-backport",
-    "files": [
-      "Documentation/arch/arm64/silicon-errata.rst",
-      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c",
-      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c",
-      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-99349"
     ],
     "kev": false,
@@ -3535,22 +3449,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99798"
-    ],
-    "kev": false,
-    "upstream": "3de16279b43dc285ed2222aba06cebdc82fdb28b",
-    "subject": "io_uring: defer foreign io-wq enqueues to task_work",
-    "verdict": "needs-backport",
-    "files": [
-      "io_uring/io_uring.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-99701"
     ],
     "kev": false,
@@ -3612,22 +3510,6 @@
     "verdict": "needs-backport",
     "files": [
       "mm/khugepaged.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99664"
-    ],
-    "kev": false,
-    "upstream": "79cb51d538abc459f74e046d27797d36b133ce0e",
-    "subject": "mm/gup: recheck the PUD under PTL in follow_pud_mask()",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/gup.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
@@ -10133,22 +10015,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99578"
-    ],
-    "kev": false,
-    "upstream": "c710c7c2e0380d7c0eeb33b686262edcaef7cb07",
-    "subject": "wifi: rtw88: usb: route bmc frames via the high queue only for DTIM delivery",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/wireless/realtek/rtw88/usb.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-90170"
     ],
     "kev": false,
@@ -10467,23 +10333,6 @@
       "ecb4534b6a1c af_unix: Terminate sun_path when bind()ing pathname socket.",
       "859051dd165e bpf: Implement cgroup sockaddr hooks for unix sockets"
     ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99577"
-    ],
-    "kev": false,
-    "upstream": "04cc8c59a3d79ef7ec2341f1c7aef1d40a0ce7df",
-    "subject": "wifi: rtw88: usb: bound what the driver feeds the after-DTIM queue",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/wireless/realtek/rtw88/usb.c",
-      "drivers/net/wireless/realtek/rtw88/usb.h"
-    ],
-    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -11220,22 +11069,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99798"
-    ],
-    "kev": false,
-    "upstream": "3de16279b43dc285ed2222aba06cebdc82fdb28b",
-    "subject": "io_uring: defer foreign io-wq enqueues to task_work",
-    "verdict": "needs-backport",
-    "files": [
-      "io_uring/io_uring.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-99701"
     ],
     "kev": false,
@@ -11383,22 +11216,6 @@
     "verdict": "needs-backport",
     "files": [
       "mm/khugepaged.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99597"
-    ],
-    "kev": false,
-    "upstream": "d06917d0ba226206dbd606330d73a8eb1e3029c1",
-    "subject": "srcu: Add list_splice_init_srcu()",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/srcu.h"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
