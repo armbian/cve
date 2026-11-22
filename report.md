@@ -2,13 +2,14 @@
 
 **Events this run**
 
-- added 6.1: 3 patch(es)
+- added 6.18: 3 patch(es)
+- added 6.12: 3 patch(es)
 
 ## 6.18 (base 6.18.64, `fd7cfd39c885`)
 
 Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no longer needed: 3
 
-### Included (132)
+### Included (135)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -144,15 +145,16 @@ Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-98813 | `ab39974240a0` | claude | bpf: Hold map BTF for the memory allocator destructor record |
 |  | CVE-2026-64160 | `2c8f4742bb76` | claude | netfs: Fix potential for tearing in ->remote_i_size and ->zero_point |
 |  | CVE-2026-64160 | `—` | claude | cifs: Fix undefined variables |
+|  | CVE-2026-99706 | `f681d4580d5c` | claude | mm: fix address wraparound when scanning large folio PTEs |
+|  | CVE-2026-99595 | `c282051fc2ca` | claude | sched/fair: Clear throttle state when leaving the fair class |
+|  | CVE-2026-99586 | `84c6089a365f` | claude | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
 
-### Needs a backport (19)
+### Needs a backport (16)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2026-99746 | `348bc756d912` | stable-queue | ASoC: SOF: Intel: hda-sdw-bpt: Stop active DMA before closing BPT streams |
 |  | CVE-2026-99637 | `323899b4ed23` | stable-queue | ovl: inherit FMODE_NONOTIFY when opening directory realfiles |
-|  | CVE-2026-99706 | `f681d4580d5c` | stable-queue | mm: fix address wraparound when scanning large folio PTEs |
-| does not build | CVE-2026-99595 | `c282051fc2ca` | stable-queue | sched/fair: Clear throttle state when leaving the fair class |
 |  | CVE-2026-98112 | `a506290f59e1` | stable-queue | ksmbd: fix listener task lifetime on netdev events |
 |  | CVE-2025-71309 | `e37a75bb866c` | stable-queue | fs/ntfs3: fix deadlock in ni_read_folio_cmpr |
 |  | CVE-2026-72377 | `81e985b4c3a6` | mainline | afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints |
@@ -163,7 +165,6 @@ Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-98250 | `f76017a7663c` | mainline | nfsd: fix handling of NFSEXP_PNFS in the netlink codepath |
 |  | CVE-2026-99381 | `531aa4239b0d` | mainline | smb: client: reject short or out-of-range FIND response parameters |
 |  | CVE-2026-99495 | `5e9b339f3232` | mainline | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
-|  | CVE-2026-99586 | `84c6089a365f` | mainline | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
 |  | CVE-2026-99493 | `7b88e8b6d714` | mainline | s390/zcrypt: Guard domain index uses against speculative bypass |
 |  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
 |  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
@@ -203,7 +204,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no longer needed: 1
 
-### Included (202)
+### Included (205)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -409,13 +410,15 @@ Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-90129 | `7e17eef04600` | claude | virtio_balloon: quiesce balloon work before device shutdown |
 |  | CVE-2026-98431 | `a44a3f175eae` | claude | RDMA/uverbs: Fix mmap_lock/disassociation_lock circular dependency |
 |  | CVE-2026-98813 | `ab39974240a0` | claude | bpf: Hold map BTF for the memory allocator destructor record |
+|  | CVE-2026-99706 | `f681d4580d5c` | claude | mm: fix address wraparound when scanning large folio PTEs |
+|  | CVE-2026-99586 | `84c6089a365f` | claude | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
+|  | CVE-2026-99664 | `79cb51d538ab` | claude | mm/gup: recheck the PUD under PTL in follow_pud_mask() |
 
-### Needs a backport (41)
+### Needs a backport (37)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 | does not build | CVE-2026-99765 | `6a6e7d7230cd` | stable-queue | scsi: target: Fix demo-mode dynamic ACL dev-entry UAF vs LUN teardown |
-|  | CVE-2026-99706 | `f681d4580d5c` | stable-queue | mm: fix address wraparound when scanning large folio PTEs |
 |  | CVE-2026-99632 | `da2897ee8b81` | stable-queue | drm/amdkfd: use the queue's process info for the WPTR BO eviction fence |
 |  | CVE-2025-71309 | `e37a75bb866c` | stable-queue | fs/ntfs3: fix deadlock in ni_read_folio_cmpr |
 |  | CVE-2025-37939 | `0a7c2a843596` | stable-queue | libbpf: Fix accessing BTF.ext core_relo header |
@@ -439,18 +442,15 @@ Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-99522 | `8a8088b899e4` | mainline | RDMA/irdma: avoid use-after-free in icrdma_remove |
 |  | CVE-2026-99381 | `531aa4239b0d` | mainline | smb: client: reject short or out-of-range FIND response parameters |
 |  | CVE-2026-99495 | `5e9b339f3232` | mainline | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
-|  | CVE-2026-99586 | `84c6089a365f` | mainline | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
 |  | CVE-2026-99349 | `af208f36ae22` | mainline | rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data() |
 |  | CVE-2026-99493 | `7b88e8b6d714` | mainline | s390/zcrypt: Guard domain index uses against speculative bypass |
 |  | CVE-2026-99383 | `78f739858464` | mainline | smb: client: reclaim credits for decrypted reads with no matching mid |
 |  | CVE-2026-99447 | `0b591332a2bd` | mainline | spi: spi-pci1xxxx: quiesce DMA engines on transfer timeout |
 |  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
-|  | CVE-2026-99798 | `3de16279b43d` | mainline | io_uring: defer foreign io-wq enqueues to task_work |
 |  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
 |  | CVE-2026-99571 | `2eeeaa9c1ff0` | mainline | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
 |  | CVE-2026-99679 | `bcf0b7f18ad1` | mainline | xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks |
 |  | CVE-2026-99665 | `fe2817e3d5ea` | mainline | mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs |
-|  | CVE-2026-99664 | `79cb51d538ab` | mainline | mm/gup: recheck the PUD under PTL in follow_pud_mask() |
 |  | CVE-2026-99652 | `d03df42ddae1` | mainline | mm: fix deadlock of mremap() against UFFDIO_MOVE |
 |  | CVE-2026-90040 | `d1a3c2162334` | mainline | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
 |  | CVE-2026-92493 | `8d31bb145164` | mainline | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
@@ -887,7 +887,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-68245 | `04cc4aa3617b` | mainline | drm/amdgpu: fix lifetime issue of amdgpu_vm_get_task_info_pasid() |
 |  | CVE-2026-92491 | `2224b622260b` | mainline | firmware: arm_scmi: Roll back partial protocol table registration |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
-|  | CVE-2026-99464 | `af452b9e0133` | mainline | media: redrat3: fix UAF in probe error path leaving rc device registered |
 |  | CVE-2026-90199 | `20fd9f64c005` | mainline | fs/ntfs3: reject out-of-range evcn in mi_enum_attr() |
 |  | CVE-2026-98161 | `c644a2f8fef5` | mainline | nvdimm: pmem: keep PREFLUSH before data writes |
 |  | CVE-2026-98364 | `9fa903b24b1f` | mainline | xfrm: hold net_device reference under RCU in bundle creation |
@@ -904,6 +903,7 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99444 | `5c1c602463d5` | mainline | power: supply: sbs-battery: disable polling before supply teardown |
 |  | CVE-2026-98980 | `8189ab688f5a` | mainline | namei: don't reveal overmounted entries in refwalk |
 |  | CVE-2026-99380 | `83d0d5e0ca22` | mainline | smb: client: validate NT transaction response layout and offsets |
+|  | CVE-2026-99464 | `af452b9e0133` | mainline | media: redrat3: fix UAF in probe error path leaving rc device registered |
 |  | CVE-2024-27080 | `978b63f7464a` | stable-list | btrfs: fix race when detecting delalloc ranges during fiemap |
 |  | CVE-2024-40965 | `4268254a3948` | stable-list | i2c: lpi2c: Avoid calling clk_get_rate during transfer |
 |  | CVE-2024-40965 | `—` | claude | i2c: lpi2c: lock the peripheral clock rate in probe |
@@ -1344,7 +1344,7 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2024-53085 | `9265fed6db60` | claude | tpm: Lock TPM chip in tpm_pm_suspend() first |
 |  | CVE-2024-53085 | `17d253af4c2c` | claude | tpm: do not start chip while suspended |
 
-### Needs a backport (124)
+### Needs a backport (120)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1424,7 +1424,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99369 | `bbfa823f624d` | mainline | NFSD: Destroy a recalled delegation the client does not hold |
 |  | CVE-2026-89862 | `0fb52cc63246` | mainline | scsi: qla2xxx: Fix BSG job leak on validate flash image error path |
 |  | CVE-2026-99467 | `0f29f84317c1` | mainline | media: marvell: mcam: stop DMA and cancel s_bh_work before freeing DMA buffers |
-|  | CVE-2026-99578 | `c710c7c2e038` | mainline | wifi: rtw88: usb: route bmc frames via the high queue only for DTIM delivery |
 |  | CVE-2026-90170 | `e9b33376bd07` | mainline | ksmbd: validate ipc response length before dereferencing its fields |
 |  | CVE-2026-98162 | `39f203209671` | mainline | smb/server: fix tree connection leak in smb2_tree_connect() |
 | does not build | CVE-2026-90129 | `7e17eef04600` | mainline | virtio_balloon: quiesce balloon work before device shutdown |
@@ -1434,7 +1433,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-98085 | `387b1baefbb7` | mainline | bpf: backtrack_insn(): Handle ld_{abs,ind} subprog exit edge |
 |  | CVE-2026-98044 | `e7d28823c662` | mainline | bpf: Reject legacy packet loads from callbacks |
 |  | CVE-2026-97985 | `94fd4debd2e3` | mainline | af_unix: Update last skb marker in manage_oob(). |
-|  | CVE-2026-99577 | `04cc8c59a3d7` | mainline | wifi: rtw88: usb: bound what the driver feeds the after-DTIM queue |
 |  | CVE-2026-98420 | `d7fd1f98607f` | mainline | ksmbd: follow SMB2 session expiration semantics |
 |  | CVE-2026-99522 | `8a8088b899e4` | mainline | RDMA/irdma: avoid use-after-free in icrdma_remove |
 |  | CVE-2026-98295 | `d236517c264e` | mainline | Bluetooth: coredump: Quiesce dump work on unregister |
@@ -1457,7 +1455,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99506 | `824cc56bf43c` | mainline | mm/hugetlb: fix use-after-free of a new anon folio |
 |  | CVE-2026-99383 | `78f739858464` | mainline | smb: client: reclaim credits for decrypted reads with no matching mid |
 |  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
-|  | CVE-2026-99798 | `3de16279b43d` | mainline | io_uring: defer foreign io-wq enqueues to task_work |
 |  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
 |  | CVE-2026-99643 | `eadce52a9ef6` | mainline | khugepaged: fix readahead lock inversion in collapse_file() |
 |  | CVE-2026-99571 | `2eeeaa9c1ff0` | mainline | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
@@ -1467,7 +1464,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99601 | `e614c3e35a66` | mainline | udf: check the unallocated space table when it is loaded |
 |  | CVE-2026-99634 | `6d2cf411aba2` | mainline | mptcp: do not use Fast Open on MP_JOIN subflows |
 |  | CVE-2026-99665 | `fe2817e3d5ea` | mainline | mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs |
-|  | CVE-2026-99597 | `d06917d0ba22` | mainline | srcu: Add list_splice_init_srcu() |
 |  | CVE-2024-53176 | `3fa640d035e5` | mainline | smb: During unmount, ensure all cached dir instances drop their dentry |
 |  | CVE-2026-98114 | `c61dc7b1b4a3` | mainline | ksmbd: propagate DACL parsing errors |
 |  | CVE-2025-68768 | `006a5035b495` | mainline | inet: frags: flush pending skbs in fqdir_pre_exit() |

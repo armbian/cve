@@ -2512,6 +2512,60 @@
       "build_log": "",
       "backport": "CVE-2026-64160/6.18",
       "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "f681d4580d5c3c749f623cda722a21aefd3147b3",
+      "subject": "mm: fix address wraparound when scanning large folio PTEs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99706"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0133-f681d4580d5c-mm-fix-address-wraparound-when-scanning-large-folio.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99706/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "c282051fc2cae2ea54770ebe435dbea090272c25",
+      "subject": "sched/fair: Clear throttle state when leaving the fair class",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99595"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0134-c282051fc2ca-sched-fair-clear-throttle-state-when-leaving-the-fai.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99595/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "84c6089a365ff5547f9ea30cb407dc5fe3124fd3",
+      "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99586"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0135-84c6089a365f-iommu-arm-smmu-v3-handle-arm-erratum-for-cont-under.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99586/6.18",
+      "bug_commits": []
     }
   ]
 }

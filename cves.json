@@ -13061,7 +13061,7 @@
         "upstream": "20fd9f64c005",
         "source": "mainline",
         "subject": "fs/ntfs3: reject out-of-range evcn in mi_enum_attr()",
-        "patch": "patches/6.1/0345-20fd9f64c005-fs-ntfs3-reject-out-of-range-evcn-in-mi-enum-attr.patch"
+        "patch": "patches/6.1/0344-20fd9f64c005-fs-ntfs3-reject-out-of-range-evcn-in-mi-enum-attr.patch"
       }
     ]
   },
@@ -14927,7 +14927,7 @@
         "upstream": "d05524794240",
         "source": "mainline",
         "subject": "bpf: Mark syscall helpers as sleepable",
-        "patch": "patches/6.1/0349-d05524794240-bpf-mark-syscall-helpers-as-sleepable.patch"
+        "patch": "patches/6.1/0348-d05524794240-bpf-mark-syscall-helpers-as-sleepable.patch"
       }
     ]
   },
@@ -15553,7 +15553,7 @@
         "upstream": "c644a2f8fef5",
         "source": "mainline",
         "subject": "nvdimm: pmem: keep PREFLUSH before data writes",
-        "patch": "patches/6.1/0346-c644a2f8fef5-nvdimm-pmem-keep-preflush-before-data-writes.patch"
+        "patch": "patches/6.1/0345-c644a2f8fef5-nvdimm-pmem-keep-preflush-before-data-writes.patch"
       }
     ]
   },
@@ -16166,7 +16166,7 @@
         "upstream": "2842ce397dd0",
         "source": "mainline",
         "subject": "net: bridge: vlan: fix bugs caused by switchdev deletion errors",
-        "patch": "patches/6.1/0352-2842ce397dd0-net-bridge-vlan-fix-bugs-caused-by-switchdev-deletio.patch"
+        "patch": "patches/6.1/0351-2842ce397dd0-net-bridge-vlan-fix-bugs-caused-by-switchdev-deletio.patch"
       }
     ]
   },
@@ -16306,7 +16306,7 @@
         "upstream": "8879e3e0a84a",
         "source": "mainline",
         "subject": "Bluetooth: btmtksdio, btmtkuart: validate WMT event length before struct access",
-        "patch": "patches/6.1/0351-8879e3e0a84a-bluetooth-btmtksdio-btmtkuart-validate-wmt-event-len.patch"
+        "patch": "patches/6.1/0350-8879e3e0a84a-bluetooth-btmtksdio-btmtkuart-validate-wmt-event-len.patch"
       }
     ]
   },
@@ -16583,7 +16583,7 @@
         "upstream": "cbdd39ce4253",
         "source": "mainline",
         "subject": "netfilter: nf_nat: unregister and release hooks on error",
-        "patch": "patches/6.1/0350-cbdd39ce4253-netfilter-nf-nat-unregister-and-release-hooks-on-err.patch"
+        "patch": "patches/6.1/0349-cbdd39ce4253-netfilter-nf-nat-unregister-and-release-hooks-on-err.patch"
       }
     ]
   },
@@ -16972,7 +16972,7 @@
         "upstream": "99c24a8968eb",
         "source": "mainline",
         "subject": "RDMA/rtrs: guard against null kobj name",
-        "patch": "patches/6.1/0348-99c24a8968eb-rdma-rtrs-guard-against-null-kobj-name.patch"
+        "patch": "patches/6.1/0347-99c24a8968eb-rdma-rtrs-guard-against-null-kobj-name.patch"
       }
     ]
   },
@@ -17001,7 +17001,7 @@
         "upstream": "9fa903b24b1f",
         "source": "mainline",
         "subject": "xfrm: hold net_device reference under RCU in bundle creation",
-        "patch": "patches/6.1/0347-9fa903b24b1f-xfrm-hold-net-device-reference-under-rcu-in-bundle-c.patch"
+        "patch": "patches/6.1/0346-9fa903b24b1f-xfrm-hold-net-device-reference-under-rcu-in-bundle-c.patch"
       }
     ]
   },
@@ -17806,7 +17806,7 @@
         "upstream": "87cd6b717e40",
         "source": "mainline",
         "subject": "net: ipv6: keep room for the mac header in dst_dev_overhead()",
-        "patch": "patches/6.1/0354-87cd6b717e40-net-ipv6-keep-room-for-the-mac-header-in-dst-dev-ove.patch"
+        "patch": "patches/6.1/0353-87cd6b717e40-net-ipv6-keep-room-for-the-mac-header-in-dst-dev-ove.patch"
       }
     ]
   },
@@ -18456,7 +18456,7 @@
         "upstream": "b62a264163ca",
         "source": "mainline",
         "subject": "EDAC/altera: Drop __init from ECC setup paths for re-probe safety",
-        "patch": "patches/6.1/0355-b62a264163ca-edac-altera-drop-init-from-ecc-setup-paths-for-re-pr.patch"
+        "patch": "patches/6.1/0354-b62a264163ca-edac-altera-drop-init-from-ecc-setup-paths-for-re-pr.patch"
       }
     ]
   },
@@ -18928,7 +18928,7 @@
         "upstream": "6f63e919fe1e",
         "source": "mainline",
         "subject": "wifi: mac80211: fix slab-out-of-bounds read in ieee80211_monitor_select_queue()",
-        "patch": "patches/6.1/0356-6f63e919fe1e-wifi-mac80211-fix-slab-out-of-bounds-read-in-ieee802.patch"
+        "patch": "patches/6.1/0355-6f63e919fe1e-wifi-mac80211-fix-slab-out-of-bounds-read-in-ieee802.patch"
       }
     ]
   },
@@ -19279,7 +19279,7 @@
         "upstream": "93ce8ea70451",
         "source": "mainline",
         "subject": "wifi: ath9k: reject short WMI command responses",
-        "patch": "patches/6.1/0353-93ce8ea70451-wifi-ath9k-reject-short-wmi-command-responses.patch"
+        "patch": "patches/6.1/0352-93ce8ea70451-wifi-ath9k-reject-short-wmi-command-responses.patch"
       }
     ]
   },
@@ -20239,7 +20239,7 @@
         "upstream": "184b5ddf82d4",
         "source": "mainline",
         "subject": "bonding: fix the program leak when XDP is replaced",
-        "patch": "patches/6.1/0357-184b5ddf82d4-bonding-fix-the-program-leak-when-xdp-is-replaced.patch"
+        "patch": "patches/6.1/0356-184b5ddf82d4-bonding-fix-the-program-leak-when-xdp-is-replaced.patch"
       }
     ]
   },
@@ -20336,7 +20336,7 @@
         "upstream": "8189ab688f5a",
         "source": "mainline",
         "subject": "namei: don't reveal overmounted entries in refwalk",
-        "patch": "patches/6.1/0359-8189ab688f5a-namei-don-t-reveal-overmounted-entries-in-refwalk.patch"
+        "patch": "patches/6.1/0358-8189ab688f5a-namei-don-t-reveal-overmounted-entries-in-refwalk.patch"
       }
     ]
   },
@@ -21850,7 +21850,7 @@
         "upstream": "83d0d5e0ca22",
         "source": "mainline",
         "subject": "smb: client: validate NT transaction response layout and offsets",
-        "patch": "patches/6.1/0360-83d0d5e0ca22-smb-client-validate-nt-transaction-response-layout-a.patch"
+        "patch": "patches/6.1/0359-83d0d5e0ca22-smb-client-validate-nt-transaction-response-layout-a.patch"
       }
     ]
   },
@@ -22284,7 +22284,7 @@
         "upstream": "5c1c602463d5",
         "source": "mainline",
         "subject": "power: supply: sbs-battery: disable polling before supply teardown",
-        "patch": "patches/6.1/0358-5c1c602463d5-power-supply-sbs-battery-disable-polling-before-supp.patch"
+        "patch": "patches/6.1/0357-5c1c602463d5-power-supply-sbs-battery-disable-polling-before-supp.patch"
       }
     ]
   },
@@ -22416,7 +22416,7 @@
         "upstream": "af452b9e0133",
         "source": "mainline",
         "subject": "media: redrat3: fix UAF in probe error path leaving rc device registered",
-        "patch": "patches/6.1/0344-af452b9e0133-media-redrat3-fix-uaf-in-probe-error-path-leaving-rc.patch"
+        "patch": "patches/6.1/0360-af452b9e0133-media-redrat3-fix-uaf-in-probe-error-path-leaving-rc.patch"
       }
     ]
   },
@@ -23328,28 +23328,6 @@
       }
     ]
   },
-  "CVE-2026-99577": {
-    "6.1": [
-      {
-        "status": "needs-backport",
-        "upstream": "04cc8c59a3d7",
-        "source": "mainline",
-        "subject": "wifi: rtw88: usb: bound what the driver feeds the after-DTIM queue",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
-    ]
-  },
-  "CVE-2026-99578": {
-    "6.1": [
-      {
-        "status": "needs-backport",
-        "upstream": "c710c7c2e038",
-        "source": "mainline",
-        "subject": "wifi: rtw88: usb: route bmc frames via the high queue only for DTIM delivery",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
-    ]
-  },
   "CVE-2026-99582": {
     "6.1": [
       {
@@ -23375,20 +23353,34 @@
   "CVE-2026-99586": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "84c6089a365f",
         "source": "mainline",
         "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "84c6089a365f",
+        "source": "claude",
+        "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
+        "patch": "patches/6.18/0135-84c6089a365f-iommu-arm-smmu-v3-handle-arm-erratum-for-cont-under.patch"
       }
     ],
     "6.12": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "84c6089a365f",
         "source": "mainline",
         "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "84c6089a365f",
+        "source": "claude",
+        "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
+        "patch": "patches/6.12/0204-84c6089a365f-iommu-arm-smmu-v3-handle-arm-erratum-for-cont-under.patch"
       }
     ],
     "6.1": [
@@ -23481,22 +23473,18 @@
   "CVE-2026-99595": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "c282051fc2ca",
         "source": "stable-queue",
         "subject": "sched/fair: Clear throttle state when leaving the fair class",
-        "reason": "applies unchanged but does not build; needs a backport or prerequisite"
-      }
-    ]
-  },
-  "CVE-2026-99597": {
-    "6.1": [
+        "reason": "carried by a reviewed backport from cve/"
+      },
       {
-        "status": "needs-backport",
-        "upstream": "d06917d0ba22",
-        "source": "mainline",
-        "subject": "srcu: Add list_splice_init_srcu()",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "status": "included",
+        "upstream": "c282051fc2ca",
+        "source": "claude",
+        "subject": "sched/fair: Clear throttle state when leaving the fair class",
+        "patch": "patches/6.18/0134-c282051fc2ca-sched-fair-clear-throttle-state-when-leaving-the-fai.patch"
       }
     ]
   },
@@ -24069,11 +24057,18 @@
   "CVE-2026-99664": {
     "6.12": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "79cb51d538ab",
         "source": "mainline",
         "subject": "mm/gup: recheck the PUD under PTL in follow_pud_mask()",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "79cb51d538ab",
+        "source": "claude",
+        "subject": "mm/gup: recheck the PUD under PTL in follow_pud_mask()",
+        "patch": "patches/6.12/0205-79cb51d538ab-mm-gup-recheck-the-pud-under-ptl-in-follow-pud-mask.patch"
       }
     ]
   },
@@ -24518,20 +24513,34 @@
   "CVE-2026-99706": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "f681d4580d5c",
         "source": "stable-queue",
         "subject": "mm: fix address wraparound when scanning large folio PTEs",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "f681d4580d5c",
+        "source": "claude",
+        "subject": "mm: fix address wraparound when scanning large folio PTEs",
+        "patch": "patches/6.18/0133-f681d4580d5c-mm-fix-address-wraparound-when-scanning-large-folio.patch"
       }
     ],
     "6.12": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "f681d4580d5c",
         "source": "stable-queue",
         "subject": "mm: fix address wraparound when scanning large folio PTEs",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "f681d4580d5c",
+        "source": "claude",
+        "subject": "mm: fix address wraparound when scanning large folio PTEs",
+        "patch": "patches/6.12/0203-f681d4580d5c-mm-fix-address-wraparound-when-scanning-large-folio.patch"
       }
     ]
   },
@@ -25361,26 +25370,6 @@
         "source": "stable-queue",
         "subject": "io_uring/cancel: drop sqd->lock while SQPOLL waits",
         "patch": "patches/6.1/0209-cb0306c52ffa-io-uring-cancel-drop-sqd-lock-while-sqpoll-waits.patch"
-      }
-    ]
-  },
-  "CVE-2026-99798": {
-    "6.12": [
-      {
-        "status": "needs-backport",
-        "upstream": "3de16279b43d",
-        "source": "mainline",
-        "subject": "io_uring: defer foreign io-wq enqueues to task_work",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
-      }
-    ],
-    "6.1": [
-      {
-        "status": "needs-backport",
-        "upstream": "3de16279b43d",
-        "source": "mainline",
-        "subject": "io_uring: defer foreign io-wq enqueues to task_work",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
       }
     ]
   },
