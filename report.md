@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- retired 6.1: 1 patch(es) (landed upstream or superseded)
+- added 6.1: 3 patch(es)
 
 ## 6.18 (base 6.18.64, `fd7cfd39c885`)
 
@@ -456,12 +456,13 @@ Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-92493 | `8d31bb145164` | mainline | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
 |  | CVE-2026-99215 | `5b4bd13e0552` | mainline | power: supply: core: prevent unregistering a power supply while a callback runs |
 
-### cve/ backport does not apply on this base (3)
+### cve/ backport does not apply on this base (4)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2026-90040 | `d1a3c2162334` | claude | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
 |  | CVE-2026-92493 | `8d31bb145164` | claude | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
+|  | CVE-2026-99215 | `—` | claude | power: supply: Use power_supply_external_power_changed() in __power_supply_changed_work() |
 |  | CVE-2026-99215 | `5b4bd13e0552` | claude | power: supply: core: prevent unregistering a power supply while a callback runs |
 
 ### Not affected (reviewed) (64)
@@ -539,7 +540,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no longer needed: 60
 
-### Included (796)
+### Included (799)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -903,6 +904,7 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99444 | `5c1c602463d5` | mainline | power: supply: sbs-battery: disable polling before supply teardown |
 |  | CVE-2026-98980 | `8189ab688f5a` | mainline | namei: don't reveal overmounted entries in refwalk |
 |  | CVE-2026-99380 | `83d0d5e0ca22` | mainline | smb: client: validate NT transaction response layout and offsets |
+|  | CVE-2024-27080 | `978b63f7464a` | stable-list | btrfs: fix race when detecting delalloc ranges during fiemap |
 |  | CVE-2024-40965 | `4268254a3948` | stable-list | i2c: lpi2c: Avoid calling clk_get_rate during transfer |
 |  | CVE-2024-40965 | `—` | claude | i2c: lpi2c: lock the peripheral clock rate in probe |
 |  | CVE-2025-39981 | `302a1f674c00` | stable-list | Bluetooth: MGMT: Fix possible UAFs |
@@ -1339,8 +1341,10 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-53132 | `059b7dbd20a6` | claude | vsock/virtio: fix potential unbounded skb queue |
 |  | CVE-2026-80581 | `17661c67b206` | claude | ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout |
 |  | CVE-2026-97975 | `9b851b09b392` | claude | Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del() |
+|  | CVE-2024-53085 | `9265fed6db60` | claude | tpm: Lock TPM chip in tpm_pm_suspend() first |
+|  | CVE-2024-53085 | `17d253af4c2c` | claude | tpm: do not start chip while suspended |
 
-### Needs a backport (126)
+### Needs a backport (124)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1374,13 +1378,11 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-90262 | `8cc569696dac` | stable-queue | btrfs: retry verity reads for not-uptodate Merkle folios |
 |  | CVE-2024-26823 | `8b02da04ad97` | stable-queue | irqchip/gic-v3-its: Restore quirk probing for ACPI-based systems |
 |  | CVE-2026-98109 | `57938bbdb9bf` | stable-queue | Bluetooth: hci_core: Fix race condition during device registration |
-|  | CVE-2024-27080 | `978b63f7464a` | mainline | btrfs: fix race when detecting delalloc ranges during fiemap |
 |  | CVE-2024-26962 | `41425f96d7aa` | mainline | dm-raid456, md/raid456: fix a deadlock for dm-raid456 while io concurrent with reshape |
 |  | CVE-2024-35961 | `c6e77aa9dd82` | mainline | net/mlx5: Register devlink first under devlink lock |
 |  | CVE-2024-46698 | `b49420d6a1ae` | mainline | video/aperture: optionally match the device in sysfb_disable() |
 |  | CVE-2024-46678 | `2aeeef906d5a` | mainline | bonding: change ipsec_lock from spin lock to mutex |
 |  | CVE-2024-58241 | `989fa5171f00` | mainline | Bluetooth: hci_core: Disable works on hci_unregister_dev |
-|  | CVE-2024-53085 | `9265fed6db60` | mainline | tpm: Lock TPM chip in tpm_pm_suspend() first |
 |  | CVE-2024-53177 | `a9685b409a03` | mainline | smb: prevent use-after-free due to open_cached_dir error paths |
 |  | CVE-2025-21907 | `b81679b1633a` | mainline | mm: memory-failure: update ttu flag inside unmap_poisoned_folio |
 |  | CVE-2025-38333 | `bb5eb8a5b222` | mainline | f2fs: fix to bail out in get_new_segment() |
