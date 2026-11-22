@@ -2,7 +2,7 @@
 
 **Events this run**
 
-- added 6.12: 1 patch(es)
+- added 6.1: 5 patch(es)
 
 ## 6.18 (base 6.18.64, `fd7cfd39c885`)
 
@@ -546,7 +546,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no longer needed: 60
 
-### Included (799)
+### Included (804)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1349,8 +1349,13 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-97975 | `9b851b09b392` | claude | Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del() |
 |  | CVE-2024-53085 | `9265fed6db60` | claude | tpm: Lock TPM chip in tpm_pm_suspend() first |
 |  | CVE-2024-53085 | `17d253af4c2c` | claude | tpm: do not start chip while suspended |
+|  | CVE-2026-99701 | `990d6c2194a9` | claude | mm/ksm: fix userfaultfd protection during merge and unmerge |
+|  | CVE-2026-99586 | `84c6089a365f` | claude | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
+|  | CVE-2026-99593 | `58c1eb84e977` | claude | arm64: sdei: Preserve the interrupted context's exception registers |
+|  | CVE-2026-99573 | `a1b4bd2c2c26` | claude | KVM: arm64: vgic: Stop the target vcpu when disabling LPIs |
+|  | CVE-2026-97985 | `94fd4debd2e3` | claude | af_unix: Update last skb marker in manage_oob(). |
 
-### Needs a backport (120)
+### Needs a backport (115)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1370,7 +1375,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99454 | `495cb31c791b` | stable-queue | staging: rtl8723bs: fix protected RX frame validation in decrypt path |
 |  | CVE-2026-99465 | `f2eb2fd388bf` | stable-queue | media: microchip-isc: take a reference on the parsed endpoints |
 |  | CVE-2026-99672 | `0f3ad9ab40e3` | stable-queue | can: protect the receive lists with a per-device lock |
-|  | CVE-2026-99593 | `58c1eb84e977` | stable-queue | arm64: sdei: Preserve the interrupted context's exception registers |
 |  | CVE-2026-99343 | `115f9405a2ed` | stable-queue | KVM: x86/mmu: Bug the VM if KVM attempts to walk more levels than the MMU has |
 |  | CVE-2026-99484 | `34e3e04b8a17` | stable-queue | ALSA: emux: Fix UAF of soundfont zones at note-on |
 |  | CVE-2026-99567 | `48691075b0ad` | stable-queue | assoc_array: don't chain a new shortcut onto an existing one |
@@ -1438,7 +1442,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99360 | `14996e662f3b` | mainline | NFSD: Set nn->cld_net before registering the cld pipe |
 |  | CVE-2026-98085 | `387b1baefbb7` | mainline | bpf: backtrack_insn(): Handle ld_{abs,ind} subprog exit edge |
 |  | CVE-2026-98044 | `e7d28823c662` | mainline | bpf: Reject legacy packet loads from callbacks |
-|  | CVE-2026-97985 | `94fd4debd2e3` | mainline | af_unix: Update last skb marker in manage_oob(). |
 |  | CVE-2026-98420 | `d7fd1f98607f` | mainline | ksmbd: follow SMB2 session expiration semantics |
 |  | CVE-2026-99522 | `8a8088b899e4` | mainline | RDMA/irdma: avoid use-after-free in icrdma_remove |
 |  | CVE-2026-98295 | `d236517c264e` | mainline | Bluetooth: coredump: Quiesce dump work on unregister |
@@ -1451,17 +1454,14 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-98983 | `0b6f31a3c0b1` | mainline | unshare: don't drop active namespace references that were never taken |
 |  | CVE-2026-98789 | `fbd97dd1d3ce` | mainline | bpf: Fix objects stuck in free_by_rcu_ttrace |
 |  | CVE-2026-99495 | `5e9b339f3232` | mainline | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
-|  | CVE-2026-99586 | `84c6089a365f` | mainline | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
 |  | CVE-2026-99349 | `af208f36ae22` | mainline | rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data() |
 |  | CVE-2026-99493 | `7b88e8b6d714` | mainline | s390/zcrypt: Guard domain index uses against speculative bypass |
 | does not build | CVE-2026-99576 | `b9b036bd1e2c` | mainline | f2fs: zone: fix to avoid bio split on sequential zone |
 |  | CVE-2026-99570 | `e74476ad8162` | mainline | f2fs: fix to invalidate curseg if change_curseg() fails |
 |  | CVE-2026-99545 | `4059f8986c8f` | mainline | driver core: take parent lock on deferred probe |
-|  | CVE-2026-99573 | `a1b4bd2c2c26` | mainline | KVM: arm64: vgic: Stop the target vcpu when disabling LPIs |
 |  | CVE-2026-99506 | `824cc56bf43c` | mainline | mm/hugetlb: fix use-after-free of a new anon folio |
 |  | CVE-2026-99383 | `78f739858464` | mainline | smb: client: reclaim credits for decrypted reads with no matching mid |
 |  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
-|  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
 |  | CVE-2026-99643 | `eadce52a9ef6` | mainline | khugepaged: fix readahead lock inversion in collapse_file() |
 |  | CVE-2026-99571 | `2eeeaa9c1ff0` | mainline | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
 |  | CVE-2026-99679 | `bcf0b7f18ad1` | mainline | xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks |

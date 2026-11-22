@@ -3933,23 +3933,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99593"
-    ],
-    "kev": false,
-    "upstream": "58c1eb84e97701c583605ba2fd553b69afba2245",
-    "subject": "arm64: sdei: Preserve the interrupted context's exception registers",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/arm64/kernel/entry-common.c",
-      "arch/arm64/kernel/sdei.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-99343"
     ],
     "kev": false,
@@ -10291,38 +10274,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-97985"
-    ],
-    "kev": false,
-    "upstream": "94fd4debd2e3a69cf93e766c8b328a810c228119",
-    "subject": "af_unix: Update last skb marker in manage_oob().",
-    "verdict": "needs-backport",
-    "files": [
-      "net/unix/af_unix.c"
-    ],
-    "prerequisites": [
-      "b27401a30ee4 unix: Improve locking scheme in unix_show_fdinfo()",
-      "abf08576afe3 fs: port vfs_*() helpers to struct mnt_idmap",
-      "509f15b9c551 net: add missing includes of linux/splice.h",
-      "96449f902407 net: Pass max frags into skb_append_pagefrags()",
-      "a0dbf5f818f9 af_unix: Support MSG_SPLICE_PAGES",
-      "57d44a354a43 unix: Convert unix_stream_sendpage() to use MSG_SPLICE_PAGES",
-      "5e2ff6704a27 scm: add SO_PASSPIDFD and SCM_PIDFD",
-      "7b26952a91cf net: core: add getsockopt SO_PEERPIDFD",
-      "3f5f118bb657 af_unix: Call scm_recv() only after scm_set_cred().",
-      "dc97391e6610 sock: Remove ->sendpage*() in favour of sendmsg(MSG_SPLICE_PAGES)",
-      "9d797ee2dce1 Revert \"af_unix: Call scm_recv() only after scm_set_cred().\"",
-      "a9c49cc2f5b5 net: scm: introduce and use scm_recv_unix helper",
-      "06d4c8a80836 af_unix: Fix fortify_panic() in unix_bind_bsd().",
-      "ecb4534b6a1c af_unix: Terminate sun_path when bind()ing pathname socket.",
-      "859051dd165e bpf: Implement cgroup sockaddr hooks for unix sockets"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-98420"
     ],
     "kev": false,
@@ -10815,25 +10766,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99586"
-    ],
-    "kev": false,
-    "upstream": "84c6089a365ff5547f9ea30cb407dc5fe3124fd3",
-    "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
-    "verdict": "needs-backport",
-    "files": [
-      "Documentation/arch/arm64/silicon-errata.rst",
-      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c",
-      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c",
-      "drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-99349"
     ],
     "kev": false,
@@ -10952,22 +10884,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99573"
-    ],
-    "kev": false,
-    "upstream": "a1b4bd2c2c262b8094c86afb99364d16ac08cb66",
-    "subject": "KVM: arm64: vgic: Stop the target vcpu when disabling LPIs",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/arm64/kvm/vgic/vgic-mmio-v3.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-99506"
     ],
     "kev": false,
@@ -11045,23 +10961,6 @@
       "fs/smb/server/mgmt/tree_connect.h",
       "fs/smb/server/smb2pdu.c",
       "fs/smb/server/vfs_cache.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99701"
-    ],
-    "kev": false,
-    "upstream": "990d6c2194a938a19a8cf94c6cfd75171345089b",
-    "subject": "mm/ksm: fix userfaultfd protection during merge and unmerge",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/ksm.c",
-      "mm/memory.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
