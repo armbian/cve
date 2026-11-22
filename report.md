@@ -1,5 +1,9 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- retired 6.1: 1 patch(es) (landed upstream or superseded)
+
 ## 6.18 (base 6.18.64, `fd7cfd39c885`)
 
 Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no longer needed: 3
@@ -535,7 +539,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no longer needed: 60
 
-### Included (797)
+### Included (796)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -730,7 +734,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99304 | `b3bf89767e3c` | stable-queue | ceph: fix integer overflow in the snap trace bounds check |
 |  | CVE-2026-99302 | `635e760169a8` | stable-queue | nvmet-rdma: reject short connection requests |
 |  | CVE-2026-99272 | `2ec9cdf469dd` | stable-queue | smb: client: validate the data area in SMB2_read() |
-|  | CVE-2026-99360 | `14996e662f3b` | stable-queue | NFSD: Set nn->cld_net before registering the cld pipe |
 |  | CVE-2026-99350 | `7801c42c3bb7` | stable-queue | rxrpc: Fix update of call->tx_pending without holding lock |
 |  | CVE-2026-99355 | `62319c2534b6` | stable-queue | SUNRPC: fix oversized GSS proxy token copy |
 |  | CVE-2026-99347 | `f5e1a9a3fdda` | stable-queue | ALSA: x86: hdmi: fix chmap array missing terminator entry |
@@ -1337,7 +1340,7 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-80581 | `17661c67b206` | claude | ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout |
 |  | CVE-2026-97975 | `9b851b09b392` | claude | Bluetooth: hci_sysfs: Fix NULL pointer dereference in device_del() |
 
-### Needs a backport (125)
+### Needs a backport (126)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1425,6 +1428,7 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 | does not build | CVE-2026-90129 | `7e17eef04600` | mainline | virtio_balloon: quiesce balloon work before device shutdown |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
 |  | CVE-2026-99342 | `eacdb76c5f04` | mainline | KVM: x86/xen: Enforce 4-byte alignment of vcpu_info registration |
+|  | CVE-2026-99360 | `14996e662f3b` | mainline | NFSD: Set nn->cld_net before registering the cld pipe |
 |  | CVE-2026-98085 | `387b1baefbb7` | mainline | bpf: backtrack_insn(): Handle ld_{abs,ind} subprog exit edge |
 |  | CVE-2026-98044 | `e7d28823c662` | mainline | bpf: Reject legacy packet loads from callbacks |
 |  | CVE-2026-97985 | `94fd4debd2e3` | mainline | af_unix: Update last skb marker in manage_oob(). |
@@ -1453,6 +1457,7 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
 |  | CVE-2026-99798 | `3de16279b43d` | mainline | io_uring: defer foreign io-wq enqueues to task_work |
 |  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
+|  | CVE-2026-99643 | `eadce52a9ef6` | mainline | khugepaged: fix readahead lock inversion in collapse_file() |
 |  | CVE-2026-99571 | `2eeeaa9c1ff0` | mainline | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
 |  | CVE-2026-99679 | `bcf0b7f18ad1` | mainline | xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks |
 |  | CVE-2026-99725 | `1f1f8e8c5176` | mainline | cipso: fix optlen corruption in cipso_v4_delopt() |
@@ -1461,7 +1466,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99634 | `6d2cf411aba2` | mainline | mptcp: do not use Fast Open on MP_JOIN subflows |
 |  | CVE-2026-99665 | `fe2817e3d5ea` | mainline | mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs |
 |  | CVE-2026-99597 | `d06917d0ba22` | mainline | srcu: Add list_splice_init_srcu() |
-|  | CVE-2026-99643 | `eadce52a9ef6` | mainline | khugepaged: fix readahead lock inversion in collapse_file() |
 |  | CVE-2024-53176 | `3fa640d035e5` | mainline | smb: During unmount, ensure all cached dir instances drop their dentry |
 |  | CVE-2026-98114 | `c61dc7b1b4a3` | mainline | ksmbd: propagate DACL parsing errors |
 |  | CVE-2025-68768 | `006a5035b495` | mainline | inet: frags: flush pending skbs in fqdir_pre_exit() |
