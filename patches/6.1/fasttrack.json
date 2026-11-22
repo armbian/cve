@@ -15362,6 +15362,96 @@
       "build_log": "",
       "backport": "CVE-2024-53085/6.1",
       "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "990d6c2194a938a19a8cf94c6cfd75171345089b",
+      "subject": "mm/ksm: fix userfaultfd protection during merge and unmerge",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99701"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0800-990d6c2194a9-mm-ksm-fix-userfaultfd-protection-during-merge-and-u.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99701/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "84c6089a365ff5547f9ea30cb407dc5fe3124fd3",
+      "subject": "iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99586"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0801-84c6089a365f-iommu-arm-smmu-v3-handle-arm-erratum-for-cont-under.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99586/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "58c1eb84e97701c583605ba2fd553b69afba2245",
+      "subject": "arm64: sdei: Preserve the interrupted context's exception registers",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99593"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0802-58c1eb84e977-arm64-sdei-preserve-the-interrupted-context-s-except.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99593/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "a1b4bd2c2c262b8094c86afb99364d16ac08cb66",
+      "subject": "KVM: arm64: vgic: Stop the target vcpu when disabling LPIs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99573"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0803-a1b4bd2c2c26-kvm-arm64-vgic-stop-the-target-vcpu-when-disabling-l.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99573/6.1",
+      "bug_commits": []
+    },
+    {
+      "series": "6.1",
+      "upstream": "94fd4debd2e3a69cf93e766c8b328a810c228119",
+      "subject": "af_unix: Update last skb marker in manage_oob().",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-97985"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0804-94fd4debd2e3-af-unix-update-last-skb-marker-in-manage-oob.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-97985/6.1",
+      "bug_commits": []
     }
   ]
 }
