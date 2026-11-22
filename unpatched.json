@@ -4686,38 +4686,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2024-27080"
-    ],
-    "kev": false,
-    "upstream": "978b63f7464abcfd364a6c95f734282c50f3decf",
-    "subject": "btrfs: fix race when detecting delalloc ranges during fiemap",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/btrfs/extent_io.c"
-    ],
-    "prerequisites": [
-      "83ae4133ac94 btrfs: add a cached_state to try_lock_extent",
-      "123a7f008c9e btrfs: cache the failed state when locking extents",
-      "e5e886bad9e9 btrfs: add cached_state to read_extent_buffer_subpage",
-      "b98c6cd59e90 btrfs: drop pointless memset when cloning extent buffer",
-      "206c1d32f381 btrfs: drop redundant bflags initialization when allocating extent buffer",
-      "ceb707da9ad9 btrfs: directly pass the inode to btrfs_is_data_extent_shared()",
-      "61dbb952f0a5 btrfs: turn the backref sharedness check cache into a context object",
-      "84a7949d4097 btrfs: move ulists to data extent sharedness check context",
-      "877c14767f10 btrfs: avoid duplicated resolution of indirect backrefs during fiemap",
-      "48acc47d7813 btrfs: do not use GFP_ATOMIC in the read endio",
-      "ec8eb376e271 btrfs: move BTRFS_FS_STATE* definitions and helpers to fs.h",
-      "07e81dc94474 btrfs: move accessor helpers into accessors.h",
-      "43dd529abed2 btrfs: update function comments",
-      "7c8ede162805 btrfs: move file-item prototypes into their own header",
-      "af142b6f44d3 btrfs: move file prototypes to file.h"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2024-35794"
     ],
     "kev": false,
@@ -5671,36 +5639,6 @@
     ],
     "reason": "applies unchanged but does not build; needs a backport or prerequisite",
     "build_log": "## fs/btrfs/volumes.c\nfs/btrfs/volumes.c:1188:23: error: \u2018struct btrfs_device\u2019 has no member named \u2018bdev_file\u2019"
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-53085"
-    ],
-    "kev": false,
-    "upstream": "9265fed6db601ee2ec47577815387458ef4f047a",
-    "subject": "tpm: Lock TPM chip in tpm_pm_suspend() first",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/char/tpm/tpm-chip.c",
-      "drivers/char/tpm/tpm-interface.c"
-    ],
-    "prerequisites": [
-      "e10de46bc3c6 tpm: Avoid function type cast of put_device()",
-      "1aaba11da9aa driver core: class: remove module * from class_create()",
-      "a010eb881243 tpm: fix up the tpm_class shutdown_pre pointer when created",
-      "6b301ded45a6 tpm: Fix a possible dereference of ERR_PTR in tpm_init()",
-      "d2e8071bed0b tpm: make all 'class' structures const",
-      "ea72883a3bf1 tpm: Fix typo in tpmrm class definition",
-      "6a57a21943da Normalise \"name (ad@dr)\" MODULE_AUTHORs to \"name <ad@dr>\"",
-      "4f0feb5463cc tpm: Remove tpm_send()",
-      "e1b72e1b1110 tpm: Store the length of the tpm_buf data separately.",
-      "699e3efd6c64 tpm: Add HMAC session start and end functions",
-      "eb24c9788cd9 tpm: disable the TPM if NULL name changes",
-      "df745e25098d tpm: Lazily flush the auth session"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
   },
   {
     "series": "6.1",
