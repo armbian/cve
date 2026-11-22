@@ -874,6 +874,22 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-99571"
+    ],
+    "kev": false,
+    "upstream": "2eeeaa9c1ff0c429096acc2947c296db6a56f96d",
+    "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/nvme/host/tcp.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2026-99701"
     ],
     "kev": false,
@@ -883,22 +899,6 @@
     "files": [
       "mm/ksm.c",
       "mm/memory.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-99571"
-    ],
-    "kev": false,
-    "upstream": "2eeeaa9c1ff0c429096acc2947c296db6a56f96d",
-    "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/nvme/host/tcp.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
@@ -3449,23 +3449,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99701"
-    ],
-    "kev": false,
-    "upstream": "990d6c2194a938a19a8cf94c6cfd75171345089b",
-    "subject": "mm/ksm: fix userfaultfd protection during merge and unmerge",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/ksm.c",
-      "mm/memory.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-99571"
     ],
     "kev": false,
@@ -3494,22 +3477,6 @@
       "fs/xfs/xfs_iomap.c",
       "fs/xfs/xfs_iomap.h",
       "fs/xfs/xfs_pnfs.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99665"
-    ],
-    "kev": false,
-    "upstream": "fe2817e3d5ea347214342c9a5cd8bcbff20c0574",
-    "subject": "mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/khugepaged.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
@@ -3638,6 +3605,23 @@
       "288a2cabcf6b power: supply: core: add UAPI to discover currently used extensions",
       "21096800c5ac power: supply: core: fix build of extension sysfs group if CONFIG_SYSFS=n"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99701"
+    ],
+    "kev": false,
+    "upstream": "990d6c2194a938a19a8cf94c6cfd75171345089b",
+    "subject": "mm/ksm: fix userfaultfd protection during merge and unmerge",
+    "verdict": "needs-backport",
+    "files": [
+      "mm/ksm.c",
+      "mm/memory.c"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },

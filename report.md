@@ -2,8 +2,7 @@
 
 **Events this run**
 
-- added 6.18: 3 patch(es)
-- added 6.12: 3 patch(es)
+- added 6.12: 1 patch(es)
 
 ## 6.18 (base 6.18.64, `fd7cfd39c885`)
 
@@ -167,8 +166,14 @@ Already in tree: 156 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-99495 | `5e9b339f3232` | mainline | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
 |  | CVE-2026-99493 | `7b88e8b6d714` | mainline | s390/zcrypt: Guard domain index uses against speculative bypass |
 |  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
-|  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
 |  | CVE-2026-99571 | `2eeeaa9c1ff0` | mainline | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
+|  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
+
+### cve/ backport does not apply on this base (1)
+
+| | CVE | Upstream | Source | Subject |
+|---|---|---|---|---|
+|  | CVE-2026-99701 | `990d6c2194a9` | claude | mm/ksm: fix userfaultfd protection during merge and unmerge |
 
 ### Not affected (reviewed) (23)
 
@@ -204,7 +209,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no longer needed: 1
 
-### Included (205)
+### Included (206)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -268,6 +273,7 @@ Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-98444 | `ffb48dccce19` | mainline | xfs: drop dquot flush lock when we can't find a buffer to flush |
 |  | CVE-2026-98924 | `3bc4e4410830` | claude | vfs: Remove unnecessary list_for_each_entry_safe() from evict_inodes() |
 |  | CVE-2026-98924 | `7459c0218742` | stable-list | fs: avoid repeated scans in evict_inodes() |
+|  | CVE-2026-99665 | `fe2817e3d5ea` | stable-list | mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs |
 |  | CVE-2025-40025 | `c18ecd99e0c7` | claude | f2fs: fix to do sanity check on node footer for non inode dnode |
 |  | CVE-2025-71117 | `935a20d1bebf` | claude | block: Remove queue freezing from several sysfs store callbacks |
 |  | CVE-2025-68304 | `79a2d4678ba9` | claude | Bluetooth: hci_core: lookup hci_conn on RX path on protocol side |
@@ -414,7 +420,7 @@ Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-99586 | `84c6089a365f` | claude | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
 |  | CVE-2026-99664 | `79cb51d538ab` | claude | mm/gup: recheck the PUD under PTL in follow_pud_mask() |
 
-### Needs a backport (37)
+### Needs a backport (36)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -447,16 +453,15 @@ Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-99383 | `78f739858464` | mainline | smb: client: reclaim credits for decrypted reads with no matching mid |
 |  | CVE-2026-99447 | `0b591332a2bd` | mainline | spi: spi-pci1xxxx: quiesce DMA engines on transfer timeout |
 |  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
-|  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
 |  | CVE-2026-99571 | `2eeeaa9c1ff0` | mainline | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
 |  | CVE-2026-99679 | `bcf0b7f18ad1` | mainline | xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks |
-|  | CVE-2026-99665 | `fe2817e3d5ea` | mainline | mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs |
 |  | CVE-2026-99652 | `d03df42ddae1` | mainline | mm: fix deadlock of mremap() against UFFDIO_MOVE |
 |  | CVE-2026-90040 | `d1a3c2162334` | mainline | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
 |  | CVE-2026-92493 | `8d31bb145164` | mainline | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
 |  | CVE-2026-99215 | `5b4bd13e0552` | mainline | power: supply: core: prevent unregistering a power supply while a callback runs |
+|  | CVE-2026-99701 | `990d6c2194a9` | mainline | mm/ksm: fix userfaultfd protection during merge and unmerge |
 
-### cve/ backport does not apply on this base (4)
+### cve/ backport does not apply on this base (5)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -464,6 +469,7 @@ Already in tree: 142 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-92493 | `8d31bb145164` | claude | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
 |  | CVE-2026-99215 | `—` | claude | power: supply: Use power_supply_external_power_changed() in __power_supply_changed_work() |
 |  | CVE-2026-99215 | `5b4bd13e0552` | claude | power: supply: core: prevent unregistering a power supply while a callback runs |
+|  | CVE-2026-99701 | `990d6c2194a9` | claude | mm/ksm: fix userfaultfd protection during merge and unmerge |
 
 ### Not affected (reviewed) (64)
 
@@ -887,6 +893,7 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-68245 | `04cc4aa3617b` | mainline | drm/amdgpu: fix lifetime issue of amdgpu_vm_get_task_info_pasid() |
 |  | CVE-2026-92491 | `2224b622260b` | mainline | firmware: arm_scmi: Roll back partial protocol table registration |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
+|  | CVE-2026-99464 | `af452b9e0133` | mainline | media: redrat3: fix UAF in probe error path leaving rc device registered |
 |  | CVE-2026-90199 | `20fd9f64c005` | mainline | fs/ntfs3: reject out-of-range evcn in mi_enum_attr() |
 |  | CVE-2026-98161 | `c644a2f8fef5` | mainline | nvdimm: pmem: keep PREFLUSH before data writes |
 |  | CVE-2026-98364 | `9fa903b24b1f` | mainline | xfrm: hold net_device reference under RCU in bundle creation |
@@ -903,7 +910,6 @@ Already in tree: 91 · Other architectures (not built): 20 · cve/ backports no 
 |  | CVE-2026-99444 | `5c1c602463d5` | mainline | power: supply: sbs-battery: disable polling before supply teardown |
 |  | CVE-2026-98980 | `8189ab688f5a` | mainline | namei: don't reveal overmounted entries in refwalk |
 |  | CVE-2026-99380 | `83d0d5e0ca22` | mainline | smb: client: validate NT transaction response layout and offsets |
-|  | CVE-2026-99464 | `af452b9e0133` | mainline | media: redrat3: fix UAF in probe error path leaving rc device registered |
 |  | CVE-2024-27080 | `978b63f7464a` | stable-list | btrfs: fix race when detecting delalloc ranges during fiemap |
 |  | CVE-2024-40965 | `4268254a3948` | stable-list | i2c: lpi2c: Avoid calling clk_get_rate during transfer |
 |  | CVE-2024-40965 | `—` | claude | i2c: lpi2c: lock the peripheral clock rate in probe |
