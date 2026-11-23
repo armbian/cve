@@ -1,1 +1,8 @@
-[]
+[
+  "added 6.18: 1 patch(es)",
+  "retired 6.18: 22 patch(es) (landed upstream or superseded)",
+  "added 6.12: 2 patch(es)",
+  "retired 6.12: 25 patch(es) (landed upstream or superseded)",
+  "added 6.1: 19 patch(es)",
+  "retired 6.1: 300 patch(es) (landed upstream or superseded)"
+]
