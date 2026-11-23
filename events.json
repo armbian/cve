@@ -1,8 +1,10 @@
 [
-  "added 6.18: 1 patch(es)",
-  "retired 6.18: 22 patch(es) (landed upstream or superseded)",
-  "added 6.12: 2 patch(es)",
-  "retired 6.12: 25 patch(es) (landed upstream or superseded)",
-  "added 6.1: 19 patch(es)",
-  "retired 6.1: 300 patch(es) (landed upstream or superseded)"
+  "new-stable 6.18: 6.18.64 \u2192 6.18.65",
+  "retired 6.18: 5 patch(es) (landed upstream or superseded)",
+  "new-stable 6.12: 6.12.118 \u2192 6.12.119",
+  "retired 6.12: 5 patch(es) (landed upstream or superseded)",
+  "new-stable 6.1: 6.1.192 \u2192 6.1.193",
+  "added 6.1: 1 patch(es)",
+  "retired 6.1: 86 patch(es) (landed upstream or superseded)",
+  "new-stable 7.3: 7.3.5 \u2192 7.3.6"
 ]

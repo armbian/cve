@@ -1,18 +1,17 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: claude
+From f50866a958ed18302be8d01f704414f169186f74 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: stable-queue
 X-Fasttrack-Upstream: 990d6c2194a938a19a8cf94c6cfd75171345089b
 X-Fasttrack-CVE: CVE-2026-99701
-X-Fasttrack-Backport: cve/CVE-2026-99701/6.1
-From: Lance Yang <lance.yang@linux.dev>
-Date: Mon, 26 Oct 2026 21:00:54 +0800
-Subject: [PATCH] mm/ksm: fix userfaultfd protection during merge and unmerge
+From: Sasha Levin <sashal@kernel.org>
+Date: Sat, 21 Nov 2026 21:56:53 +0800
+Subject: mm/ksm: fix userfaultfd protection during merge and unmerge
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-commit 990d6c2194a938a19a8cf94c6cfd75171345089b upstream.
+From: Lance Yang <lance.yang@linux.dev>
 
-[ Backport: 6.1 has no RWP mode: keep only the uffd_wp bit in replace_page(), via pte_uffd_wp()/pte_mkuffd_wp(). wp_page_copy() and do_wp_page() already keep uffd-wp on unshare in 6.1. ]
+[ Upstream commit 990d6c2194a938a19a8cf94c6cfd75171345089b ]
 
 KSM loses userfaultfd protection when replace_page() builds a new PTE from
 vma->vm_page_prot.  Dropping its uffd bit lets a subsequent write go
@@ -82,22 +81,26 @@ Cc: SJ Park <sj@kernel.org>
 Cc: Zi Yan <ziy@nvidia.com>
 Cc: Mohammed EL Kadiri <med08elkadiri@gmail.com>
 Cc: <stable@vger.kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  mm/ksm.c | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/mm/ksm.c b/mm/ksm.c
-index 5be08cb1603a..ecf2f809bfac 100644
+index 99147df91a69c..6b38684ce4552 100644
 --- a/mm/ksm.c
 +++ b/mm/ksm.c
-@@ -1178,6 +1178,10 @@ static int replace_page(struct vm_area_struct *vma, struct page *page,
- 		dec_mm_counter(mm, MM_ANONPAGES);
- 	}
+@@ -1182,6 +1182,10 @@ static int replace_page(struct vm_area_struct *vma, struct page *page,
+ 	if (pte_soft_dirty(orig_pte))
+ 		newpte = pte_mksoft_dirty(newpte);
  
-+	/* Preserve uffd protection when replacing the page. */
++	/* Preserve uffd-wp when replacing the page. */
 +	if (pte_uffd_wp(orig_pte))
 +		newpte = pte_mkuffd_wp(newpte);
 +
  	flush_cache_page(vma, addr, pte_pfn(*ptep));
  	/*
  	 * No need to notify as we are replacing a read only page with another
+-- 
+2.53.0
+
