@@ -2042,6 +2042,24 @@
       "build_log": "",
       "backport": "CVE-2026-99586/6.18",
       "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "da260bcb56feeb6489a83f310308453a0a7de25e",
+      "subject": "KVM: pfncache: use a dedicated invalidation sequence for cache refresh",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99472"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0110-da260bcb56fe-kvm-pfncache-use-a-dedicated-invalidation-sequence-f.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99472/6.18",
+      "bug_commits": []
     }
   ]
 }
