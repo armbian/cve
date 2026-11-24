@@ -2,39 +2,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99495"
-    ],
-    "kev": false,
-    "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
-    "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/s390/crypto/zcrypt_msgtype50.c",
-      "drivers/s390/crypto/zcrypt_msgtype6.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-99493"
-    ],
-    "kev": false,
-    "upstream": "7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0",
-    "subject": "s390/zcrypt: Guard domain index uses against speculative bypass",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/s390/crypto/zcrypt_api.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2025-68226"
     ],
     "kev": false,
@@ -859,29 +826,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99294"
-    ],
-    "kev": false,
-    "upstream": "1d47b55b36d2ec73fe6901212c8b28a593c3b27c",
-    "subject": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/netfilter/nf_dup_netdev.h",
-      "net/netfilter/nf_dup_netdev.c",
-      "net/netfilter/nft_fwd_netdev.c"
-    ],
-    "prerequisites": [
-      "f37ad9127039 netfilter: nf_dup_netdev: Move the recursion counter struct netdev_xmit",
-      "c6f85577584b netfilter: nf_tables_offload: add nft_flow_action_entry_next() and use it",
-      "1049970d7583 netfilter: replace skb_try_make_writable() by skb_ensure_writable()",
-      "0a0b35f0bf10 netfilter: nft_fwd_netdev: add device and headroom validate with neigh forwarding"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-74260"
     ],
     "kev": false,
@@ -900,23 +844,6 @@
       "0a0b35f0bf10 netfilter: nft_fwd_netdev: add device and headroom validate with neigh forwarding",
       "1d47b55b36d2 netfilter: nft_fwd_netdev: use recursion counter in neigh egress path"
     ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99495"
-    ],
-    "kev": false,
-    "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
-    "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/s390/crypto/zcrypt_msgtype50.c",
-      "drivers/s390/crypto/zcrypt_msgtype6.c"
-    ],
-    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -2508,23 +2435,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99369"
-    ],
-    "kev": false,
-    "upstream": "bbfa823f624d41e85ebca929ac77dc2182cadfed",
-    "subject": "NFSD: Destroy a recalled delegation the client does not hold",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/nfsd/nfs4state.c",
-      "fs/nfsd/state.h"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-74639"
     ],
     "kev": false,
@@ -2888,22 +2798,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99522"
-    ],
-    "kev": false,
-    "upstream": "8a8088b899e4cdfe558428cd6113d45df81625be",
-    "subject": "RDMA/irdma: avoid use-after-free in icrdma_remove",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/infiniband/hw/irdma/icrdma_if.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98296"
     ],
     "kev": false,
@@ -3068,23 +2962,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99381"
-    ],
-    "kev": false,
-    "upstream": "531aa4239b0d80d7146b102b98f7aa7da989ccdd",
-    "subject": "smb: client: reject short or out-of-range FIND response parameters",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/trace.h"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-98843"
     ],
     "kev": false,
@@ -3171,22 +3048,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99493"
-    ],
-    "kev": false,
-    "upstream": "7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0",
-    "subject": "s390/zcrypt: Guard domain index uses against speculative bypass",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/s390/crypto/zcrypt_api.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-99093"
     ],
     "kev": false,
@@ -3231,46 +3092,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99792"
-    ],
-    "kev": false,
-    "upstream": "2ff3730998b015b5b0a3f28330bee16c648dd114",
-    "subject": "smb/server: prevent file publication after tree disconnect",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/mgmt/tree_connect.c",
-      "fs/smb/server/mgmt/tree_connect.h",
-      "fs/smb/server/smb2pdu.c",
-      "fs/smb/server/vfs_cache.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99652"
-    ],
-    "kev": false,
-    "upstream": "d03df42ddae196f20e9cfb775704e60269eb6b44",
-    "subject": "mm: fix deadlock of mremap() against UFFDIO_MOVE",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/userfaultfd_k.h",
-      "mm/huge_memory.c",
-      "mm/hugetlb.c",
-      "mm/internal.h",
-      "mm/mremap.c",
-      "mm/userfaultfd.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-90040"
     ],
     "kev": false,
@@ -3304,176 +3125,6 @@
       "2ff072ba7ad2 KVM: Migrate kvm_vcpu_map() to kvm_follow_pfn()",
       "2bcb52a3602b KVM: Pin (as in FOLL_PIN) pages during kvm_vcpu_map()",
       "365e31920844 KVM: Pass in write/dirty to kvm_vcpu_map(), not kvm_vcpu_unmap()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-92493"
-    ],
-    "kev": false,
-    "upstream": "8d31bb1451643f328db0cea0e21e63ef54b4faf2",
-    "subject": "cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/cpufreq/amd-pstate-ut.c"
-    ],
-    "prerequisites": [
-      "31f9056ed243 cpufreq/amd-pstate-ut: Add fix for min freq unit test",
-      "68cb0e77b643 cpufreq/amd-pstate: store all values in cpudata struct in khz",
-      "a9b9b4c2a4cd cpufreq/amd-pstate: Drop min and max cached frequencies",
-      "009d1c29a451 cpufreq/amd-pstate: Move perf values into a union",
-      "93984d3cea8a cpufreq/amd-pstate-ut: Use _free macro to free put policy",
-      "66030cc1c533 cpufreq/amd-pstate-ut: Allow lowest nonlinear and lowest to be the same",
-      "a7875346c689 cpufreq/amd-pstate-ut: Drop SUCCESS and FAIL enums",
-      "2aac38ac06cb cpufreq/amd-pstate-ut: Run on all of the correct CPUs",
-      "c630458c7a4b cpufreq/amd-pstate-ut: Adjust variable scope",
-      "b4cc466b9735 cpufreq/amd-pstate: Replace all AMD_CPPC_* macros with masks",
-      "6fe22abacd40 x86/msr: Rename 'rdmsrl_safe()' to 'rdmsrq_safe()'",
-      "5e404cb7ac4c x86/msr: Rename 'rdmsrl_safe_on_cpu()' to 'rdmsrq_safe_on_cpu()'",
-      "efef7f184f2e x86/msr: Add explicit includes of <asm/msr.h>",
-      "d26d16438bc5 amd-pstate-ut: Reset amd-pstate driver mode after running selftests",
-      "f6b1eebbdbc7 cpufreq/amd-pstate: Avoid shadowing ret in amd_pstate_ut_check_driver()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98304"
-    ],
-    "kev": false,
-    "upstream": "23ca4ddc4fce2c233a49e9fd34d4b5b02bd7324e",
-    "subject": "net: bcmgenet: restore the hardware filters on open",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/net/ethernet/broadcom/genet/bcmgenet.c"
-    ],
-    "prerequisites": [
-      "e96321fad3ad net: ethernet: Switch back to struct platform_driver::remove()",
-      "61bf0009a765 dim: pass dim_sample to net_dim() by reference",
-      "fda960354eac net: broadcom: use ethtool string helpers",
-      "d2b41068056b net: bcmgenet: bcmgenet_hw_params clean up",
-      "a2bdde505f14 net: bcmgenet: move feature flags to bcmgenet_priv",
-      "59a97b8184ef net: bcmgenet: BCM7712 is GENETv5 compatible",
-      "f841f5ef9911 net: bcmgenet: extend bcmgenet_hfb_* API",
-      "6d31f8fc6c2f net: bcmgenet: add support for RX_CLS_FLOW_DISC",
-      "e985b97ac1b1 net: bcmgenet: count hw discarded packets in missed stat",
-      "bbdf9ec61053 net: bcmgenet: expose more stats in ethtool",
-      "28ed9bed5fb2 net: bcmgenet: use napi_complete_done return value",
-      "078bb22cfc65 net: bcmgenet: enable GRO software interrupt coalescing by default",
-      "378e6523ebb1 net: bcmgenet: remove unused platform code",
-      "335d78c6161b net: bcmgenet: extract GRXRINGS from .get_rxnfc",
-      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98799"
-    ],
-    "kev": false,
-    "upstream": "17637e1a581a22466ac3620a91e099683ff9cc6f",
-    "subject": "bpf: Skip detached progs in trampoline images that are still in use",
-    "verdict": "needs-backport",
-    "files": [
-      "arch/arm64/net/bpf_jit_comp.c",
-      "arch/loongarch/net/bpf_jit.c",
-      "arch/powerpc/net/bpf_jit_comp.c",
-      "arch/riscv/net/bpf_jit_comp64.c",
-      "arch/s390/net/bpf_jit_comp.c",
-      "arch/x86/net/bpf_jit_comp.c",
-      "include/linux/bpf.h",
-      "kernel/bpf/trampoline.c"
-    ],
-    "prerequisites": [
-      "1cb80d9e93f8 bpf: Support __uptr type tag in BTF",
-      "ba512b00e5ef bpf: Add uptr support in the map_value of the task local storage.",
-      "d243b62b7bd3 powerpc64/bpf: Add support for bpf trampolines",
-      "61c6fefa92bb bpf: decouple BPF link/attach hook and BPF program sleepable semantics",
-      "0c3beacf681e asm-generic: introduce text-patching.h",
-      "213a695297e1 bpf: Replace the document for PTR_TO_BTF_ID_OR_NULL",
-      "e00931c02568 bpf: Enable private stack for eligible subprogs",
-      "7d1cd70d4b16 bpf, x86: Support private stack in jit",
-      "5bd36da1e37e bpf: Support private stack for struct_ops progs",
-      "a1087da9d11e bpf, x86: Propagate tailcall info only for subprogs",
-      "7cd1107f48e2 bpf, xdp: constify some bpf_prog * function arguments",
-      "4e885fab7164 bpf: Add a __btf_get_by_fd helper",
-      "0a5807219a86 bpf, arm64: Simplify if logic in emit_lse_atomic()",
-      "66bb58ac06c2 bpf, arm64: Factor out emit_a64_add_i()",
-      "8c21f88407d2 bpf, arm64: Emit A64_{ADD,SUB}_I when possible in emit_{lse,ll_sc}_atomic()"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-98800"
-    ],
-    "kev": false,
-    "upstream": "0fb5751a6e411b1b466c06e50021818d9391df98",
-    "subject": "bpf: Wait for an RCU tasks grace period before freeing trampoline progs",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/bpf.h",
-      "kernel/bpf/syscall.c",
-      "kernel/bpf/trampoline.c"
-    ],
-    "prerequisites": [
-      "1cb80d9e93f8 bpf: Support __uptr type tag in BTF",
-      "ba512b00e5ef bpf: Add uptr support in the map_value of the task local storage.",
-      "61c6fefa92bb bpf: decouple BPF link/attach hook and BPF program sleepable semantics",
-      "24507ce81eaf bpf: ensure RCU Tasks Trace GP for sleepable raw tracepoint BPF links",
-      "d920179b3d48 bpf: Add support for uprobe multi session attach",
-      "213a695297e1 bpf: Replace the document for PTR_TO_BTF_ID_OR_NULL",
-      "e00931c02568 bpf: Enable private stack for eligible subprogs",
-      "7d1cd70d4b16 bpf, x86: Support private stack in jit",
-      "5bd36da1e37e bpf: Support private stack for struct_ops progs",
-      "7cd1107f48e2 bpf, xdp: constify some bpf_prog * function arguments",
-      "4e885fab7164 bpf: Add a __btf_get_by_fd helper",
-      "4d3ae294f900 bpf: Add fd_array_cnt attribute for prog_load",
-      "4b7e7cd1c105 bpf: Disable migration before calling ops->map_free()",
-      "1751f872cc97 treewide: const qualify ctl_tables where applicable",
-      "432051806f61 bpf: Make every prog keep a copy of ctx_arg_info"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99215"
-    ],
-    "kev": false,
-    "upstream": "5b4bd13e0552926648a46c2c9a12a24dfaee3715",
-    "subject": "power: supply: core: prevent unregistering a power supply while a callback runs",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/power/supply/power_supply_core.c",
-      "include/linux/power_supply.h"
-    ],
-    "prerequisites": [
-      "58797abed49d power: supply: core: constify power_supply_battery_info::resist_table",
-      "ce20d5b9e370 power: supply: core: constify power_supply_battery_info::ocv_table",
-      "85d319e14f30 power: supply: core: remove {,devm_}power_supply_register_no_ws()",
-      "bd3ee57b9d4c power: supply: core: use device mutex wrappers",
-      "cf70da29c499 power: supply: core: unexport power_supply_property_is_writeable()",
-      "44fcc479a574 power: supply: hwmon: move interface to private header",
-      "172f2151c2b4 power: supply: core: rename psy_has_property() to psy_desc_has_property()",
-      "aa40f37d6365 power: supply: core: introduce power_supply_has_property()",
-      "bfc330323cf3 power: supply: core: remove power_supply_for_each_device()",
-      "f52204036326 power: supply: core: introduce dev_to_psy()",
-      "ead11ae3c0d9 power: supply: core: use dev_to_psy()",
-      "d24bf99214b1 power: supply: core: Add new \"charge_types\" property",
-      "6037802bbae8 power: supply: core: implement extension API",
-      "288a2cabcf6b power: supply: core: add UAPI to discover currently used extensions",
-      "21096800c5ac power: supply: core: fix build of extension sysfs group if CONFIG_SYSFS=n"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""

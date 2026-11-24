@@ -2139,6 +2139,42 @@
       "build_log": "",
       "backport": "CVE-2026-99792/6.18",
       "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0",
+      "subject": "s390/zcrypt: Guard domain index uses against speculative bypass",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99493"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0115-7b88e8b6d714-s390-zcrypt-guard-domain-index-uses-against-speculat.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99493/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
+      "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99495"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0116-5e9b339f3232-s390-zcrypt-fix-and-improve-zcrypt-reply-message-ver.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99495/6.18",
+      "bug_commits": []
     }
   ]
 }
