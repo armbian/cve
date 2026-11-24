@@ -2,14 +2,14 @@
 
 **Events this run**
 
-- added 6.12: 4 patch(es)
-- added 6.1: 11 patch(es)
+- added 6.18: 2 patch(es)
+- added 6.12: 13 patch(es)
 
 ## 6.18 (base 6.18.65, `4700e3adf3b2`)
 
 Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no longer needed: 6
 
-### Included (114)
+### Included (116)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -127,13 +127,13 @@ Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-99472 | `da260bcb56fe` | claude | KVM: pfncache: use a dedicated invalidation sequence for cache refresh |
 |  | CVE-2026-99381 | `531aa4239b0d` | claude | smb: client: reject short or out-of-range FIND response parameters |
 |  | CVE-2026-99792 | `2ff3730998b0` | claude | smb/server: prevent file publication after tree disconnect |
+|  | CVE-2026-99493 | `7b88e8b6d714` | claude | s390/zcrypt: Guard domain index uses against speculative bypass |
+|  | CVE-2026-99495 | `5e9b339f3232` | claude | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
 
-### Needs a backport (8)
+### Needs a backport (6)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2026-99495 | `5e9b339f3232` | stable-queue | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
-|  | CVE-2026-99493 | `7b88e8b6d714` | stable-queue | s390/zcrypt: Guard domain index uses against speculative bypass |
 |  | CVE-2026-72377 | `81e985b4c3a6` | mainline | afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints |
 |  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
 |  | CVE-2026-74752 | `3dbb44d88b1e` | mainline | sctp: validate cookie AUTH state before use |
@@ -184,9 +184,9 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 ## 6.12 (base 6.12.119, `e2e4b92c2b2a`)
 
-Already in tree: 145 · Other architectures (not built): 11 · cve/ backports no longer needed: 3
+Already in tree: 145 · Other architectures (not built): 11 · cve/ backports no longer needed: 7
 
-### Included (183)
+### Included (197)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -373,51 +373,45 @@ Already in tree: 145 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-98813 | `ab39974240a0` | claude | bpf: Hold map BTF for the memory allocator destructor record |
 |  | CVE-2026-99586 | `84c6089a365f` | claude | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
 |  | CVE-2026-99664 | `79cb51d538ab` | claude | mm/gup: recheck the PUD under PTL in follow_pud_mask() |
+|  | CVE-2026-99369 | `bbfa823f624d` | claude | NFSD: Destroy a recalled delegation the client does not hold |
+|  | CVE-2026-99381 | `531aa4239b0d` | claude | smb: client: reject short or out-of-range FIND response parameters |
+|  | CVE-2026-99792 | `2ff3730998b0` | claude | smb/server: prevent file publication after tree disconnect |
+|  | CVE-2026-98304 | `23ca4ddc4fce` | claude | net: bcmgenet: restore the hardware filters on open |
+|  | CVE-2026-92493 | `8d31bb145164` | claude | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
+|  | CVE-2026-98800 | `0fb5751a6e41` | claude | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
+|  | CVE-2026-98799 | `17637e1a581a` | claude | bpf: Skip detached progs in trampoline images that are still in use |
+|  | CVE-2026-99215 | `—` | claude | power: supply: Use power_supply_external_power_changed() in __power_supply_changed_work() |
+|  | CVE-2026-99215 | `5b4bd13e0552` | claude | power: supply: core: prevent unregistering a power supply while a callback runs |
+|  | CVE-2026-99294 | `1d47b55b36d2` | claude | netfilter: nft_fwd_netdev: use recursion counter in neigh egress path |
+|  | CVE-2026-99493 | `7b88e8b6d714` | claude | s390/zcrypt: Guard domain index uses against speculative bypass |
+|  | CVE-2026-99495 | `5e9b339f3232` | claude | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
+|  | CVE-2026-99522 | `8a8088b899e4` | claude | RDMA/irdma: avoid use-after-free in icrdma_remove |
+|  | CVE-2026-99652 | `d03df42ddae1` | claude | mm: fix deadlock of mremap() against UFFDIO_MOVE |
 
-### Needs a backport (26)
+### Needs a backport (12)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
-|  | CVE-2026-99294 | `1d47b55b36d2` | stable-queue | netfilter: nft_fwd_netdev: use recursion counter in neigh egress path |
 |  | CVE-2026-74260 | `2354e975932d` | stable-queue | netfilter: nf_dup_netdev: add nf_dev_xmit_recursion*() helpers and use them |
-|  | CVE-2026-99495 | `5e9b339f3232` | stable-queue | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
 |  | CVE-2025-38311 | `120f28a6f314` | mainline | iavf: get rid of the crit lock |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
 |  | CVE-2026-43029 | `5dd8025a49c2` | mainline | mptcp: fix soft lockup in mptcp_recvmsg() |
 |  | CVE-2026-74337 | `89edbdfc5d03` | mainline | bpf: Fix NMI/tracepoint re-entry deadlock on lru locks |
 |  | CVE-2026-80899 | `c37460cd9b2f` | mainline | erofs: remove fscache backend entirely |
-|  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing |
 |  | CVE-2026-90401 | `3fe5b7c9fb72` | mainline | md: remove REQ_NOWAIT support from raid1/10/456 |
-|  | CVE-2026-99369 | `bbfa823f624d` | mainline | NFSD: Destroy a recalled delegation the client does not hold |
 | does not build | CVE-2026-90129 | `7e17eef04600` | mainline | virtio_balloon: quiesce balloon work before device shutdown |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
-|  | CVE-2026-99522 | `8a8088b899e4` | mainline | RDMA/irdma: avoid use-after-free in icrdma_remove |
-|  | CVE-2026-99381 | `531aa4239b0d` | mainline | smb: client: reject short or out-of-range FIND response parameters |
-|  | CVE-2026-99493 | `7b88e8b6d714` | mainline | s390/zcrypt: Guard domain index uses against speculative bypass |
 |  | CVE-2026-99447 | `0b591332a2bd` | mainline | spi: spi-pci1xxxx: quiesce DMA engines on transfer timeout |
-|  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
-|  | CVE-2026-99652 | `d03df42ddae1` | mainline | mm: fix deadlock of mremap() against UFFDIO_MOVE |
 |  | CVE-2026-90040 | `d1a3c2162334` | mainline | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
-|  | CVE-2026-92493 | `8d31bb145164` | mainline | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
-|  | CVE-2026-98304 | `23ca4ddc4fce` | mainline | net: bcmgenet: restore the hardware filters on open |
-|  | CVE-2026-98799 | `17637e1a581a` | mainline | bpf: Skip detached progs in trampoline images that are still in use |
-|  | CVE-2026-98800 | `0fb5751a6e41` | mainline | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
-|  | CVE-2026-99215 | `5b4bd13e0552` | mainline | power: supply: core: prevent unregistering a power supply while a callback runs |
 
-### cve/ backport does not apply on this base (7)
+### cve/ backport does not apply on this base (1)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2026-90040 | `d1a3c2162334` | claude | KVM: SEV: Forcefully invalidate SNP VMSA if its backing gmem page is zapped |
-|  | CVE-2026-92493 | `8d31bb145164` | claude | cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active |
-|  | CVE-2026-98304 | `23ca4ddc4fce` | claude | net: bcmgenet: restore the hardware filters on open |
-|  | CVE-2026-98799 | `17637e1a581a` | claude | bpf: Skip detached progs in trampoline images that are still in use |
-|  | CVE-2026-98800 | `0fb5751a6e41` | claude | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
-|  | CVE-2026-99215 | `—` | claude | power: supply: Use power_supply_external_power_changed() in __power_supply_changed_work() |
-|  | CVE-2026-99215 | `5b4bd13e0552` | claude | power: supply: core: prevent unregistering a power supply while a callback runs |
 
-### Not affected (reviewed) (64)
+### Not affected (reviewed) (65)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -463,6 +457,7 @@ Already in tree: 145 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes — classic fs/ntfs not in 6.12; removed in 6.9 |
 |  | CVE-2026-98897 | `27a9bc968d4a` | mainline | ksmbd: don't hold ci->m_lock while waiting for a lease break ack — fixed in 6.12.111 by stable 5de0527f7824 |
 | does not build | CVE-2026-72365 | `ba6a9f6533c7` | mainline | netfs: Fix writethrough to use collection offload — 6.12 always queues write collection; no such flag |
+|  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing — fix already in 6.12.y as 9108ee3d5f70 |
 |  | CVE-2026-80685 | `7441d6348c70` | mainline | mm/util: don't read __page_2 for order-1 folios in snapshot_page() — snapshot_page() (d863a12108f2) not in 6.12 |
 |  | CVE-2026-80721 | `aa9f7cb2bd3a` | mainline | Bluetooth: ISO: ensure no dangling hcon references in iso_conn — already folded into stable 42c8bd6ac81e (backport of f958c7805b18) |
 |  | CVE-2026-89826 | `8321b093fa6c` | mainline | drm/panthor: harden firmware build-info bounds checks — panthor_fw_read_build_info() from 9d443deb0441 not in 6.12 |

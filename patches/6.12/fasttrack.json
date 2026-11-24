@@ -3396,6 +3396,258 @@
       "build_log": "",
       "backport": "CVE-2026-99664/6.12",
       "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "bbfa823f624d41e85ebca929ac77dc2182cadfed",
+      "subject": "NFSD: Destroy a recalled delegation the client does not hold",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99369"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0184-bbfa823f624d-nfsd-destroy-a-recalled-delegation-the-client-does-n.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99369/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "531aa4239b0d80d7146b102b98f7aa7da989ccdd",
+      "subject": "smb: client: reject short or out-of-range FIND response parameters",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99381"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0185-531aa4239b0d-smb-client-reject-short-or-out-of-range-find-respons.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99381/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "2ff3730998b015b5b0a3f28330bee16c648dd114",
+      "subject": "smb/server: prevent file publication after tree disconnect",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99792"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0186-2ff3730998b0-smb-server-prevent-file-publication-after-tree-disco.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99792/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "23ca4ddc4fce2c233a49e9fd34d4b5b02bd7324e",
+      "subject": "net: bcmgenet: restore the hardware filters on open",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98304"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0187-23ca4ddc4fce-net-bcmgenet-restore-the-hardware-filters-on-open.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98304/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "8d31bb1451643f328db0cea0e21e63ef54b4faf2",
+      "subject": "cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-92493"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0188-8d31bb145164-cpufreq-amd-pstate-ut-skip-tests-when-amd-pstate-dri.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-92493/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "0fb5751a6e411b1b466c06e50021818d9391df98",
+      "subject": "bpf: Wait for an RCU tasks grace period before freeing trampoline progs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98800"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0189-0fb5751a6e41-bpf-wait-for-an-rcu-tasks-grace-period-before-freein.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98800/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "17637e1a581a22466ac3620a91e099683ff9cc6f",
+      "subject": "bpf: Skip detached progs in trampoline images that are still in use",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-98799"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0190-17637e1a581a-bpf-skip-detached-progs-in-trampoline-images-that-ar.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-98799/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "",
+      "subject": "power: supply: Use power_supply_external_power_changed() in __power_supply_changed_work()",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99215"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0191-q-power-supply-use-power-supply-external-power-changed.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99215/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "5b4bd13e0552926648a46c2c9a12a24dfaee3715",
+      "subject": "power: supply: core: prevent unregistering a power supply while a callback runs",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99215"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0192-5b4bd13e0552-power-supply-core-prevent-unregistering-a-power-supp.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99215/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "1d47b55b36d2ec73fe6901212c8b28a593c3b27c",
+      "subject": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99294"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0193-1d47b55b36d2-netfilter-nft-fwd-netdev-use-recursion-counter-in-ne.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99294/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0",
+      "subject": "s390/zcrypt: Guard domain index uses against speculative bypass",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99493"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0194-7b88e8b6d714-s390-zcrypt-guard-domain-index-uses-against-speculat.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99493/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
+      "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99495"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0195-5e9b339f3232-s390-zcrypt-fix-and-improve-zcrypt-reply-message-ver.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99495/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "8a8088b899e4cdfe558428cd6113d45df81625be",
+      "subject": "RDMA/irdma: avoid use-after-free in icrdma_remove",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99522"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0196-8a8088b899e4-rdma-irdma-avoid-use-after-free-in-icrdma-remove.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99522/6.12",
+      "bug_commits": []
+    },
+    {
+      "series": "6.12",
+      "upstream": "d03df42ddae196f20e9cfb775704e60269eb6b44",
+      "subject": "mm: fix deadlock of mremap() against UFFDIO_MOVE",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99652"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0197-d03df42ddae1-mm-fix-deadlock-of-mremap-against-uffdio-move.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99652/6.12",
+      "bug_commits": []
     }
   ]
 }
