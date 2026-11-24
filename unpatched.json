@@ -2,6 +2,39 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-99495"
+    ],
+    "kev": false,
+    "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
+    "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/s390/crypto/zcrypt_msgtype50.c",
+      "drivers/s390/crypto/zcrypt_msgtype6.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-99493"
+    ],
+    "kev": false,
+    "upstream": "7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0",
+    "subject": "s390/zcrypt: Guard domain index uses against speculative bypass",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/s390/crypto/zcrypt_api.c"
+    ],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2025-68226"
     ],
     "kev": false,
@@ -681,39 +714,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99495"
-    ],
-    "kev": false,
-    "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
-    "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/s390/crypto/zcrypt_msgtype50.c",
-      "drivers/s390/crypto/zcrypt_msgtype6.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-99493"
-    ],
-    "kev": false,
-    "upstream": "7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0",
-    "subject": "s390/zcrypt: Guard domain index uses against speculative bypass",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/s390/crypto/zcrypt_api.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-98938"
     ],
     "kev": false,
@@ -853,6 +853,70 @@
       "373f2f44c300 bpf,x86: adjust the \"jmp\" mode for bpf trampoline",
       "ae4a3160d19c bpf: specify the old and new poke_type for bpf_arch_text_poke"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99294"
+    ],
+    "kev": false,
+    "upstream": "1d47b55b36d2ec73fe6901212c8b28a593c3b27c",
+    "subject": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
+    "verdict": "needs-backport",
+    "files": [
+      "include/net/netfilter/nf_dup_netdev.h",
+      "net/netfilter/nf_dup_netdev.c",
+      "net/netfilter/nft_fwd_netdev.c"
+    ],
+    "prerequisites": [
+      "f37ad9127039 netfilter: nf_dup_netdev: Move the recursion counter struct netdev_xmit",
+      "c6f85577584b netfilter: nf_tables_offload: add nft_flow_action_entry_next() and use it",
+      "1049970d7583 netfilter: replace skb_try_make_writable() by skb_ensure_writable()",
+      "0a0b35f0bf10 netfilter: nft_fwd_netdev: add device and headroom validate with neigh forwarding"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-74260"
+    ],
+    "kev": false,
+    "upstream": "2354e975932dabb06fad239f07a3b68fd1809737",
+    "subject": "netfilter: nf_dup_netdev: add nf_dev_xmit_recursion*() helpers and use them",
+    "verdict": "needs-backport",
+    "files": [
+      "include/net/netfilter/nf_dup_netdev.h",
+      "net/netfilter/nf_dup_netdev.c",
+      "net/netfilter/nft_fwd_netdev.c"
+    ],
+    "prerequisites": [
+      "f37ad9127039 netfilter: nf_dup_netdev: Move the recursion counter struct netdev_xmit",
+      "c6f85577584b netfilter: nf_tables_offload: add nft_flow_action_entry_next() and use it",
+      "1049970d7583 netfilter: replace skb_try_make_writable() by skb_ensure_writable()",
+      "0a0b35f0bf10 netfilter: nft_fwd_netdev: add device and headroom validate with neigh forwarding",
+      "1d47b55b36d2 netfilter: nft_fwd_netdev: use recursion counter in neigh egress path"
+    ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-99495"
+    ],
+    "kev": false,
+    "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
+    "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
+    "verdict": "needs-backport",
+    "files": [
+      "drivers/s390/crypto/zcrypt_msgtype50.c",
+      "drivers/s390/crypto/zcrypt_msgtype6.c"
+    ],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -1751,29 +1815,6 @@
       "a3163dca4817 KVM: arm64: Use KVM extension checks for allowed protected VM capabilities",
       "7ba5b8f80475 KVM: arm64: Initialize feature id registers for protected VMs",
       "9df9186f8df5 KVM: arm64: Fix RAS trapping in pKVM for protected VMs"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99294"
-    ],
-    "kev": false,
-    "upstream": "1d47b55b36d2ec73fe6901212c8b28a593c3b27c",
-    "subject": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
-    "verdict": "needs-backport",
-    "files": [
-      "include/net/netfilter/nf_dup_netdev.h",
-      "net/netfilter/nf_dup_netdev.c",
-      "net/netfilter/nft_fwd_netdev.c"
-    ],
-    "prerequisites": [
-      "f37ad9127039 netfilter: nf_dup_netdev: Move the recursion counter struct netdev_xmit",
-      "c6f85577584b netfilter: nf_tables_offload: add nft_flow_action_entry_next() and use it",
-      "1049970d7583 netfilter: replace skb_try_make_writable() by skb_ensure_writable()",
-      "0a0b35f0bf10 netfilter: nft_fwd_netdev: add device and headroom validate with neigh forwarding"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
@@ -3130,43 +3171,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99495"
-    ],
-    "kev": false,
-    "upstream": "5e9b339f323216d71f3ede8a0a427abf7859c486",
-    "subject": "s390/zcrypt: Fix and improve zcrypt reply message verification checks",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/s390/crypto/zcrypt_msgtype50.c",
-      "drivers/s390/crypto/zcrypt_msgtype6.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99349"
-    ],
-    "kev": false,
-    "upstream": "af208f36ae22440cf6011a43cb3064fd525d85b4",
-    "subject": "rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data()",
-    "verdict": "needs-backport",
-    "files": [
-      "Documentation/networking/rxrpc.rst",
-      "fs/afs/rxrpc.c",
-      "include/net/af_rxrpc.h",
-      "net/rxrpc/rxperf.c",
-      "net/rxrpc/sendmsg.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-99493"
     ],
     "kev": false,
@@ -3211,24 +3215,6 @@
   {
     "series": "6.12",
     "cves": [
-      "CVE-2026-99383"
-    ],
-    "kev": false,
-    "upstream": "78f73985846465a25a7bd1d89904053661f3ca92",
-    "subject": "smb: client: reclaim credits for decrypted reads with no matching mid",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/cifsproto.h",
-      "fs/smb/client/connect.c",
-      "fs/smb/client/smb2ops.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
       "CVE-2026-99447"
     ],
     "kev": false,
@@ -3256,42 +3242,6 @@
       "fs/smb/server/mgmt/tree_connect.h",
       "fs/smb/server/smb2pdu.c",
       "fs/smb/server/vfs_cache.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99571"
-    ],
-    "kev": false,
-    "upstream": "2eeeaa9c1ff0c429096acc2947c296db6a56f96d",
-    "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/nvme/host/tcp.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99679"
-    ],
-    "kev": false,
-    "upstream": "bcf0b7f18ad11e1d410e82ffef678705eff0a317",
-    "subject": "xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/xfs/xfs_file.c",
-      "fs/xfs/xfs_ioend.c",
-      "fs/xfs/xfs_iomap.c",
-      "fs/xfs/xfs_iomap.h",
-      "fs/xfs/xfs_pnfs.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
@@ -9311,22 +9261,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99467"
-    ],
-    "kev": false,
-    "upstream": "0f29f84317c1e35f6a9265277be33e60d3fc8c1c",
-    "subject": "media: marvell: mcam: stop DMA and cancel s_bh_work before freeing DMA buffers",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/media/platform/marvell/mcam-core.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-74642"
     ],
     "kev": false,
@@ -9805,22 +9739,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99542"
-    ],
-    "kev": false,
-    "upstream": "de0cffef897c1c232ed973f89928cd6c93d0b1e3",
-    "subject": "ksmbd: deny access for an empty DACL instead of granting the request",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/smbacl.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-98508"
     ],
     "kev": false,
@@ -10032,22 +9950,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99382"
-    ],
-    "kev": false,
-    "upstream": "29bd6773187cb5c1bbbdf90d677c6add7d58af26",
-    "subject": "smb: client: reject FIND data areas that run past the received response",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/cifssmb.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-99381"
     ],
     "kev": false,
@@ -10175,26 +10077,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99349"
-    ],
-    "kev": false,
-    "upstream": "af208f36ae22440cf6011a43cb3064fd525d85b4",
-    "subject": "rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data()",
-    "verdict": "needs-backport",
-    "files": [
-      "Documentation/networking/rxrpc.rst",
-      "fs/afs/rxrpc.c",
-      "include/net/af_rxrpc.h",
-      "net/rxrpc/rxperf.c",
-      "net/rxrpc/sendmsg.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-99493"
     ],
     "kev": false,
@@ -10275,40 +10157,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99545"
-    ],
-    "kev": false,
-    "upstream": "4059f8986c8f50102a04335cc1da4921dfd262d8",
-    "subject": "driver core: take parent lock on deferred probe",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/base/base.h",
-      "drivers/base/bus.c",
-      "drivers/base/dd.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99506"
-    ],
-    "kev": false,
-    "upstream": "824cc56bf43c714319992bad3558803cac6e77c0",
-    "subject": "mm/hugetlb: fix use-after-free of a new anon folio",
-    "verdict": "needs-backport",
-    "files": [
-      "mm/hugetlb.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-99151"
     ],
     "kev": false,
@@ -10335,24 +10183,6 @@
       "a1c9a1e27022 drm/amd/display: skip CLEAR_PAYLOAD_ID_TABLE if device mst_en is 0",
       "7727e7b60f82 drm/amd/display: Improve robustness of FIXED_VS link training at DP1 rates"
     ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99383"
-    ],
-    "kev": false,
-    "upstream": "78f73985846465a25a7bd1d89904053661f3ca92",
-    "subject": "smb: client: reclaim credits for decrypted reads with no matching mid",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/cifsproto.h",
-      "fs/smb/client/connect.c",
-      "fs/smb/client/smb2ops.c"
-    ],
-    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -10410,26 +10240,6 @@
   {
     "series": "6.1",
     "cves": [
-      "CVE-2026-99679"
-    ],
-    "kev": false,
-    "upstream": "bcf0b7f18ad11e1d410e82ffef678705eff0a317",
-    "subject": "xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/xfs/xfs_file.c",
-      "fs/xfs/xfs_ioend.c",
-      "fs/xfs/xfs_iomap.c",
-      "fs/xfs/xfs_iomap.h",
-      "fs/xfs/xfs_pnfs.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
       "CVE-2026-99725"
     ],
     "kev": false,
@@ -10460,38 +10270,6 @@
       "net/ipv4/syncookies.c",
       "net/ipv4/tcp_fastopen.c",
       "net/ipv6/inet6_hashtables.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99601"
-    ],
-    "kev": false,
-    "upstream": "e614c3e35a6699ed691b4d17e1ec4230e34aa3eb",
-    "subject": "udf: check the unallocated space table when it is loaded",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/udf/super.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2026-99634"
-    ],
-    "kev": false,
-    "upstream": "6d2cf411aba2aa0bd641b49be5b1964ac5097a50",
-    "subject": "mptcp: do not use Fast Open on MP_JOIN subflows",
-    "verdict": "needs-backport",
-    "files": [
-      "net/mptcp/subflow.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
