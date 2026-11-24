@@ -33,7 +33,7 @@ Signed-off-by: Paulo Alcantara <pc@manguebit.org>
  1 file changed, 19 insertions(+), 13 deletions(-)
 
 diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index e335686a68f2f8..9ffc94ac206949 100644
+index e335686a68f2f..9ffc94ac20694 100644
 --- a/fs/smb/client/cifssmb.c
 +++ b/fs/smb/client/cifssmb.c
 @@ -3787,9 +3787,10 @@ static int
