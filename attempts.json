@@ -1451,6 +1451,16 @@
       "run": null
     }
   },
+  "CVE-2026-43029": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "unpatched",
+      "reason": "6.12 recvmsg peeks msk->receive_queue, so sk_wait_data(last) does not apply; needs new logic, wait for the 6.12.y post on stable@",
+      "run": null
+    }
+  },
   "CVE-2026-43042": {
     "6.18": {
       "cost": 0.6829311000000001,
@@ -3061,6 +3071,15 @@
       "run": null
     }
   },
+  "CVE-2026-92493": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
   "CVE-2026-93044": {
     "6.18": {
       "cost": 0.3726733,
@@ -3710,6 +3729,13 @@
     }
   },
   "CVE-2026-98799": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    },
     "6.18": {
       "cost": 3.522869200000001,
       "date": "2026-10-31",
@@ -3719,6 +3745,13 @@
     }
   },
   "CVE-2026-98800": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    },
     "6.18": {
       "cost": 0.6599068,
       "date": "2026-10-31",
@@ -4099,6 +4132,15 @@
       "run": null
     }
   },
+  "CVE-2026-99215": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
   "CVE-2026-99275": {
     "6.1": {
       "cost": 1.7905849999999999,
@@ -4113,6 +4155,24 @@
       "cost": 0.6815865,
       "date": "2026-11-11",
       "head": "6.1.192",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99294": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99349": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
       "outcome": "patched-needs-review",
       "run": null
     }
@@ -4149,6 +4209,66 @@
       "run": null
     }
   },
+  "CVE-2026-99383": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99447": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "unpatched",
+      "reason": "6.12 has one shared DMA IRQ and no per-instance vectors (3e36c822506d); ISR guards need a redesign",
+      "run": null
+    }
+  },
+  "CVE-2026-99493": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    },
+    "6.18": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.18.65",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99495": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    },
+    "6.18": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.18.65",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99522": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
   "CVE-2026-99571": {
     "6.12": {
       "cost": null,
@@ -4161,6 +4281,24 @@
       "cost": null,
       "date": "2026-11-24",
       "head": "6.18.65",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99652": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99679": {
+    "6.12": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.12.119",
       "outcome": "patched-needs-review",
       "run": null
     }
