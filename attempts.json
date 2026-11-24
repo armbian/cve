@@ -2146,6 +2146,15 @@
     }
   },
   "CVE-2026-68086": {
+    "6.18": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.18.65",
+      "outcome": "not-affected-needs-review",
+      "reason": "fix already in 6.18.39 as 1c2672781b1b",
+      "reviewed": "2026-11-24",
+      "run": null
+    },
     "7.3": {
       "cost": null,
       "date": "2026-10-31",
@@ -3311,6 +3320,17 @@
       "run": null
     }
   },
+  "CVE-2026-98250": {
+    "6.18": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.18.65",
+      "outcome": "not-affected-needs-review",
+      "reason": "nfsd_nl_parse_one_export() (912fc994b920) not in 6.18; svc_export_parse() already checks NFSEXP_PNFS",
+      "reviewed": "2026-11-24",
+      "run": null
+    }
+  },
   "CVE-2026-98284": {
     "6.18": {
       "cost": null,
@@ -4075,6 +4095,42 @@
       "cost": 0.6815865,
       "date": "2026-11-11",
       "head": "6.1.192",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99369": {
+    "6.18": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.18.65",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99381": {
+    "6.18": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.18.65",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99571": {
+    "6.18": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.18.65",
+      "outcome": "patched-needs-review",
+      "run": null
+    }
+  },
+  "CVE-2026-99792": {
+    "6.18": {
+      "cost": null,
+      "date": "2026-11-24",
+      "head": "6.18.65",
       "outcome": "patched-needs-review",
       "run": null
     }
