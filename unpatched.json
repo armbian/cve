@@ -422,23 +422,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99369"
-    ],
-    "kev": false,
-    "upstream": "bbfa823f624d41e85ebca929ac77dc2182cadfed",
-    "subject": "NFSD: Destroy a recalled delegation the client does not hold",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/nfsd/nfs4state.c",
-      "fs/nfsd/state.h"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-89862"
     ],
     "kev": false,
@@ -664,23 +647,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99381"
-    ],
-    "kev": false,
-    "upstream": "531aa4239b0d80d7146b102b98f7aa7da989ccdd",
-    "subject": "smb: client: reject short or out-of-range FIND response parameters",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/client/cifssmb.c",
-      "fs/smb/client/trace.h"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-98983"
     ],
     "kev": false,
@@ -756,41 +722,6 @@
     "verdict": "needs-backport",
     "files": [
       "rust/kernel/irq/request.rs"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-99792"
-    ],
-    "kev": false,
-    "upstream": "2ff3730998b015b5b0a3f28330bee16c648dd114",
-    "subject": "smb/server: prevent file publication after tree disconnect",
-    "verdict": "needs-backport",
-    "files": [
-      "fs/smb/server/mgmt/tree_connect.c",
-      "fs/smb/server/mgmt/tree_connect.h",
-      "fs/smb/server/smb2pdu.c",
-      "fs/smb/server/vfs_cache.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
-      "CVE-2026-99571"
-    ],
-    "kev": false,
-    "upstream": "2eeeaa9c1ff0c429096acc2947c296db6a56f96d",
-    "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/nvme/host/tcp.c"
     ],
     "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",

@@ -10460,11 +10460,11 @@
   "CVE-2026-68086": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "2dfe9f5c91d0",
         "source": "mainline",
         "subject": "mm/khugepaged: write all dirty file folios when collapsing",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "fix already in 6.18.39 as 1c2672781b1b"
       }
     ],
     "6.12": [
@@ -15411,11 +15411,11 @@
   "CVE-2026-98250": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "not-affected",
         "upstream": "f76017a7663c",
         "source": "mainline",
         "subject": "nfsd: fix handling of NFSEXP_PNFS in the netlink codepath",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "nfsd_nl_parse_one_export() (912fc994b920) not in 6.18; svc_export_parse() already checks NFSEXP_PNFS"
       }
     ]
   },
@@ -19998,11 +19998,18 @@
   "CVE-2026-99369": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "bbfa823f624d",
         "source": "mainline",
         "subject": "NFSD: Destroy a recalled delegation the client does not hold",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "bbfa823f624d",
+        "source": "claude",
+        "subject": "NFSD: Destroy a recalled delegation the client does not hold",
+        "patch": "patches/6.18/0111-bbfa823f624d-nfsd-destroy-a-recalled-delegation-the-client-does-n.patch"
       }
     ],
     "6.12": [
@@ -20047,11 +20054,18 @@
   "CVE-2026-99381": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "531aa4239b0d",
         "source": "mainline",
         "subject": "smb: client: reject short or out-of-range FIND response parameters",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "531aa4239b0d",
+        "source": "claude",
+        "subject": "smb: client: reject short or out-of-range FIND response parameters",
+        "patch": "patches/6.18/0112-531aa4239b0d-smb-client-reject-short-or-out-of-range-find-respons.patch"
       }
     ],
     "6.12": [
@@ -20340,11 +20354,18 @@
   "CVE-2026-99571": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "2eeeaa9c1ff0",
         "source": "mainline",
         "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "2eeeaa9c1ff0",
+        "source": "claude",
+        "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
+        "patch": "patches/6.18/0113-2eeeaa9c1ff0-nvme-tcp-validate-the-queue-state-under-the-queue-lo.patch"
       }
     ],
     "6.12": [
@@ -20704,11 +20725,18 @@
   "CVE-2026-99792": {
     "6.18": [
       {
-        "status": "needs-backport",
+        "status": "backported",
         "upstream": "2ff3730998b0",
         "source": "mainline",
         "subject": "smb/server: prevent file publication after tree disconnect",
-        "reason": "does not apply unchanged; needs a manual backport or prerequisite"
+        "reason": "carried by a reviewed backport from cve/"
+      },
+      {
+        "status": "included",
+        "upstream": "2ff3730998b0",
+        "source": "claude",
+        "subject": "smb/server: prevent file publication after tree disconnect",
+        "patch": "patches/6.18/0114-2ff3730998b0-smb-server-prevent-file-publication-after-tree-disco.patch"
       }
     ],
     "6.12": [

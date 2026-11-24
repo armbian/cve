@@ -1,0 +1,358 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: claude
+X-Fasttrack-Upstream: 2ff3730998b015b5b0a3f28330bee16c648dd114
+X-Fasttrack-CVE: CVE-2026-99792
+X-Fasttrack-Backport: cve/CVE-2026-99792/6.18
+From: Weiming Shi <bestswngs@gmail.com>
+Date: Tue, 24 Nov 2026 02:04:11 +0100
+Subject: [PATCH] smb/server: prevent file publication after tree disconnect
+
+commit 2ff3730998b015b5b0a3f28330bee16c648dd114 upstream.
+
+[ Backport: track the opening request's file reference with a local flag;
+  6.18 has no work->request_open or smb2_complete_request_open(). ]
+[ Backport: drop the fp->share_conf hunks; 6.18 ksmbd_file has no
+  share_conf reference. ]
+[ Backport: drop the open_files_count hunk context; 6.18 accounts it
+  outside __ksmbd_close_fd(). ]
+[ Backport: ksmbd_reopen_durable_fd() returns directly; 6.18 has no out
+  label or f_lock around the rebind. ]
+
+TREE_DISCONNECT closes the tree's published file handles before marking and
+removing the tree connection. A concurrent CREATE that already holds a tree
+reference can therefore publish its file after the close pass. When CREATE
+drops its reference, the tree can be freed while the published file still
+points to it.
+
+Mark and remove the tree connection before closing its files, and serialize
+both new-open and durable-reconnect volatile ID publication with that state
+transition. An opener is then either published in time for the close pass
+or rejected after disconnect with STATUS_NETWORK_NAME_DELETED.
+
+Keep a tree reference while a file carries its tree pointer. This protects
+asynchronous users that can defer the file's final destruction past tree
+disconnect.
+
+The close pass can race the successful FP_NEW to FP_INITED transition.
+Take the opening request's file reference atomically with that transition.
+This keeps the file alive until request completion even if teardown removes
+the ID immediately.
+
+  BUG: KASAN: slab-use-after-free in proc_show_files (fs/smb/server/vfs_cache.c:126)
+  Read of size 4 at addr ff11000101540f80 by task poc/153
+
+  Call Trace:
+    proc_show_files (fs/smb/server/vfs_cache.c:126)
+    seq_read_iter (fs/seq_file.c:231)
+    proc_reg_read_iter (fs/proc/inode.c:299)
+    vfs_read (fs/read_write.c:574)
+    ksys_read (fs/read_write.c:716)
+    do_syscall_64 (arch/x86/entry/syscall_64.c:84)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+
+  Allocated by:
+    ksmbd_tree_conn_connect (fs/smb/server/mgmt/tree_connect.c:35)
+    smb2_tree_connect (fs/smb/server/smb2pdu.c:2819)
+    handle_ksmbd_work (fs/smb/server/server.c:368)
+
+  Freed by:
+    kfree (mm/slub.c:6801)
+    handle_ksmbd_work (fs/smb/server/server.c:332)
+
+Fixes: f44158485826 ("cifsd: add file operations")
+Cc: stable@vger.kernel.org
+Reported-by: <co+d531129f2f9fbf88@bugs.sh>
+Assisted-by: LLM
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+---
+ fs/smb/server/mgmt/tree_connect.c |  7 ++++
+ fs/smb/server/mgmt/tree_connect.h |  2 +
+ fs/smb/server/smb2pdu.c           | 27 ++++++++++---
+ fs/smb/server/vfs_cache.c         | 63 +++++++++++++++++++++----------
+ 4 files changed, 74 insertions(+), 25 deletions(-)
+
+diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
+index c769902ec554..5195ae33f40c 100644
+--- a/fs/smb/server/mgmt/tree_connect.c
++++ b/fs/smb/server/mgmt/tree_connect.c
+@@ -101,6 +101,13 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
+ 	return status;
+ }
+ 
++struct ksmbd_tree_connect *
++ksmbd_tree_connect_get(struct ksmbd_tree_connect *tcon)
++{
++	atomic_inc(&tcon->refcount);
++	return tcon;
++}
++
+ void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon)
+ {
+ 	if (atomic_dec_and_test(&tcon->refcount)) {
+diff --git a/fs/smb/server/mgmt/tree_connect.h b/fs/smb/server/mgmt/tree_connect.h
+index f0023d86716f..82891ff9b7b9 100644
+--- a/fs/smb/server/mgmt/tree_connect.h
++++ b/fs/smb/server/mgmt/tree_connect.h
+@@ -51,6 +51,8 @@ struct ksmbd_session;
+ 
+ struct ksmbd_tree_conn_status
+ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name);
++struct ksmbd_tree_connect *
++ksmbd_tree_connect_get(struct ksmbd_tree_connect *tcon);
+ void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon);
+ 
+ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index dcd6ec9740b2..1e006c86c483 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2271,9 +2271,10 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
+ 		goto err_out;
+ 	}
+ 
++	err = ksmbd_tree_conn_disconnect(sess, tcon);
++
+ 	ksmbd_close_tree_conn_fds(work);
+ 
+-	err = ksmbd_tree_conn_disconnect(sess, tcon);
+ 	if (err) {
+ 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+ 		goto err_out;
+@@ -3044,6 +3045,7 @@ int smb2_open(struct ksmbd_work *work)
+ 	char *name = NULL;
+ 	char *stream_name = NULL;
+ 	bool file_present = false, created = false, already_permitted = false;
++	bool request_open = false;
+ 	int share_ret, need_truncate = 0;
+ 	u64 time, alloc_size = 0;
+ 	umode_t posix_mode = 0;
+@@ -3160,8 +3162,12 @@ int smb2_open(struct ksmbd_work *work)
+ 				goto err_out2;
+ 
+ 			rc = ksmbd_reopen_durable_fd(work, dh_info.fp);
+-			if (rc)
++			if (rc) {
++				if (rc == -ENOTCONN)
++					rsp->hdr.Status =
++						STATUS_NETWORK_NAME_DELETED;
+ 				goto err_out2;
++			}
+ 
+ 			fp = dh_info.fp;
+ 
+@@ -3521,6 +3527,8 @@ int smb2_open(struct ksmbd_work *work)
+ 	if (IS_ERR(fp)) {
+ 		fput(filp);
+ 		rc = PTR_ERR(fp);
++		if (rc == -ENOTCONN)
++			rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+ 		fp = NULL;
+ 		goto err_out;
+ 	}
+@@ -3975,8 +3983,12 @@ int smb2_open(struct ksmbd_work *work)
+ 	if (!rc) {
+ 		rc = ksmbd_update_fstate(&work->sess->file_table, fp,
+ 					 FP_INITED);
+-		if (!rc)
++		if (rc == -ENOENT)
++			rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
++		if (!rc) {
++			request_open = true;
+ 			rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
++		}
+ 	}
+ 	if (rc) {
+ 		if (rc == -EINVAL)
+@@ -3988,8 +4000,7 @@ int smb2_open(struct ksmbd_work *work)
+ 				rsp->hdr.Status = STATUS_PRIVILEGE_NOT_HELD;
+ 			else
+ 				rsp->hdr.Status = STATUS_ACCESS_DENIED;
+-		}
+-		else if (rc == -ENOENT)
++		} else if (rc == -ENOENT && !rsp->hdr.Status)
+ 			rsp->hdr.Status = STATUS_OBJECT_NAME_INVALID;
+ 		else if (rc == -EPERM)
+ 			rsp->hdr.Status = STATUS_SHARING_VIOLATION;
+@@ -4009,12 +4020,16 @@ int smb2_open(struct ksmbd_work *work)
+ 			rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
+ 
+ 		if (fp) {
+-			if (dh_info.reconnected && fp == dh_info.fp)
++			if (request_open)
++				ksmbd_close_fd(work, fp->volatile_id);
++			else if (dh_info.reconnected && fp == dh_info.fp)
+ 				ksmbd_unpublish_reopened_fd(work, fp);
+ 			ksmbd_fd_put(work, fp);
+ 		}
+ 		smb2_set_err_rsp(work);
+ 		ksmbd_debug(SMB, "Error response: %x\n", rsp->hdr.Status);
++	} else if (request_open) {
++		ksmbd_fd_put(work, fp);
+ 	}
+ 
+ 	if (dh_info.reconnected) {
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 8cb3d8ee979a..abe172e13b45 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -410,15 +410,17 @@ static void __ksmbd_close_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
+ 	}
+ 
+ 	/*
+-	 * Drop fp's strong reference on conn (taken in ksmbd_open_fd() /
+-	 * ksmbd_reopen_durable_fd()).  Durable fps that reached the
+-	 * scavenger have already had fp->conn cleared by session_fd_check(),
+-	 * in which case there is nothing to drop here.
++	 * Drop fp's strong connection references.  Durable fps that reached
++	 * the scavenger have already had these cleared by session_fd_check().
+ 	 */
+ 	if (fp->conn) {
+ 		ksmbd_conn_put(fp->conn);
+ 		fp->conn = NULL;
+ 	}
++	if (fp->tcon) {
++		ksmbd_tree_connect_put(fp->tcon);
++		fp->tcon = NULL;
++	}
+ 
+ 	if (ksmbd_stream_fd(fp))
+ 		kfree(fp->stream.name);
+@@ -782,14 +784,13 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
+ 
+ 	fp->filp		= filp;
+ 	/*
+-	 * fp owns a strong reference on fp->conn for as long as fp->conn is
+-	 * non-NULL, so session_fd_check() and __ksmbd_close_fd() never
+-	 * dereference a dangling pointer.  Paired with ksmbd_conn_put() in
+-	 * session_fd_check() (durable preserve), in __ksmbd_close_fd()
+-	 * (final close), and on the error paths below.
++	 * fp owns strong references on fp->conn and fp->tcon for as long as
++	 * they are non-NULL.  Paired with the puts in session_fd_check()
++	 * (durable preserve), in __ksmbd_close_fd() (final close), and on the
++	 * error paths below.
+ 	 */
+ 	fp->conn		= ksmbd_conn_get(work->conn);
+-	fp->tcon		= work->tcon;
++	fp->tcon		= ksmbd_tree_connect_get(work->tcon);
+ 	fp->volatile_id		= KSMBD_NO_FID;
+ 	fp->persistent_id	= KSMBD_NO_FID;
+ 	fp->f_state		= FP_NEW;
+@@ -800,7 +801,13 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
+ 		goto err_out;
+ 	}
+ 
+-	ret = __open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
++	down_read(&work->sess->tree_conns_lock);
++	if (work->tcon->t_state == TREE_CONNECTED)
++		ret = __open_id(&work->sess->file_table, fp,
++				OPEN_ID_TYPE_VOLATILE_ID);
++	else
++		ret = -ENOTCONN;
++	up_read(&work->sess->tree_conns_lock);
+ 	if (ret) {
+ 		ksmbd_inode_put(fp->f_ci);
+ 		goto err_out;
+@@ -810,7 +817,8 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
+ 	return fp;
+ 
+ err_out:
+-	/* fp->conn was set and refcounted before every branch here. */
++	/* fp->conn and fp->tcon were refcounted before every branch here. */
++	ksmbd_tree_connect_put(fp->tcon);
+ 	ksmbd_conn_put(fp->conn);
+ 	kmem_cache_free(filp_cache, fp);
+ err_fd_limit:
+@@ -826,8 +834,9 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
+  *
+  * Return: 0 on success.  The FP_NEW -> FP_INITED transition is special:
+  * -ENOENT if teardown already unpublished @fp by advancing the state or
+- * clearing the volatile id.  Other state updates preserve the historical
+- * fire-and-forget behavior.
++ * clearing the volatile id.  On success it also takes a reference for the
++ * opening request, which must be released with ksmbd_fd_put().  Other state
++ * updates preserve the historical fire-and-forget behavior.
+  */
+ int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+ 			unsigned int state)
+@@ -843,6 +852,8 @@ int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+ 		ret = -ENOENT;
+ 	} else {
+ 		fp->f_state = state;
++		if (state == FP_INITED)
++			atomic_inc(&fp->refcount);
+ 		ret = 0;
+ 	}
+ 	write_unlock(&ft->lock);
+@@ -1271,6 +1282,7 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
+ 	struct ksmbd_inode *ci;
+ 	struct oplock_info *op;
+ 	struct ksmbd_conn *conn;
++	struct ksmbd_tree_connect *tree_conn;
+ 	struct ksmbd_lock *smb_lock, *tmp_lock;
+ 
+ 	if (!is_reconnectable(fp))
+@@ -1291,6 +1303,7 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
+ 	 * body of this function regardless of any op->conn puts below.
+ 	 */
+ 	conn = fp->conn;
++	tree_conn = fp->tcon;
+ 	ci = fp->f_ci;
+ 	down_write(&ci->m_lock);
+ 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry) {
+@@ -1323,6 +1336,7 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
+ 
+ 	/* Drop fp's own reference on conn. */
+ 	ksmbd_conn_put(conn);
++	ksmbd_tree_connect_put(tree_conn);
+ 	return true;
+ }
+ 
+@@ -1410,6 +1424,7 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_lock *smb_lock;
+ 	unsigned int old_f_state;
++	int ret;
+ 
+ 	write_lock(&global_ft.lock);
+ 	if (!fp->is_durable || fp->conn || fp->tcon) {
+@@ -1430,24 +1445,34 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
+ 	 * concurrent teardown that iterates the table can observe a valid
+ 	 * volatile_id with fp->conn == NULL and preserve a
+ 	 * partially-initialized fp.  fp owns a strong reference on the new
+-	 * conn (see ksmbd_open_fd()); undo it on __open_id() failure.
++	 * conn (see ksmbd_open_fd()); undo it on __open_id() failure.  Serialize
++	 * publication with tree disconnect just as ksmbd_open_fd() does.
+ 	 */
+ 	fp->conn = ksmbd_conn_get(conn);
+-	fp->tcon = work->tcon;
++	fp->tcon = ksmbd_tree_connect_get(work->tcon);
+ 	write_unlock(&global_ft.lock);
+ 
+ 	old_f_state = fp->f_state;
+ 	fp->f_state = FP_NEW;
+ 
+-	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
+-	if (!has_file_id(fp->volatile_id)) {
++	down_read(&work->sess->tree_conns_lock);
++	if (work->tcon->t_state == TREE_CONNECTED)
++		ret = __open_id(&work->sess->file_table, fp,
++				OPEN_ID_TYPE_VOLATILE_ID);
++	else
++		ret = -ENOTCONN;
++	up_read(&work->sess->tree_conns_lock);
++	if (ret) {
+ 		write_lock(&global_ft.lock);
+ 		fp->conn = NULL;
+ 		fp->tcon = NULL;
+ 		write_unlock(&global_ft.lock);
+ 		ksmbd_conn_put(conn);
++		ksmbd_tree_connect_put(work->tcon);
+ 		fp->f_state = old_f_state;
+-		return -EBADF;
++		if (ret != -ENOTCONN)
++			ret = -EBADF;
++		return ret;
+ 	}
+ 
+ 	list_for_each_entry(smb_lock, &fp->lock_list, flist) {
