@@ -1,10 +1,14 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- added 6.18: 4 patch(es)
+
 ## 6.18 (base 6.18.65, `4700e3adf3b2`)
 
 Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no longer needed: 4
 
-### Included (110)
+### Included (114)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -118,21 +122,19 @@ Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-99595 | `c282051fc2ca` | claude | sched/fair: Clear throttle state when leaving the fair class |
 |  | CVE-2026-99586 | `84c6089a365f` | claude | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
 |  | CVE-2026-99472 | `da260bcb56fe` | claude | KVM: pfncache: use a dedicated invalidation sequence for cache refresh |
+|  | CVE-2026-99369 | `bbfa823f624d` | claude | NFSD: Destroy a recalled delegation the client does not hold |
+|  | CVE-2026-99381 | `531aa4239b0d` | claude | smb: client: reject short or out-of-range FIND response parameters |
+|  | CVE-2026-99571 | `2eeeaa9c1ff0` | claude | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
+|  | CVE-2026-99792 | `2ff3730998b0` | claude | smb/server: prevent file publication after tree disconnect |
 
-### Needs a backport (14)
+### Needs a backport (8)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2026-72377 | `81e985b4c3a6` | mainline | afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints |
-|  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing |
-|  | CVE-2026-99369 | `bbfa823f624d` | mainline | NFSD: Destroy a recalled delegation the client does not hold |
 |  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
-|  | CVE-2026-98250 | `f76017a7663c` | mainline | nfsd: fix handling of NFSEXP_PNFS in the netlink codepath |
-|  | CVE-2026-99381 | `531aa4239b0d` | mainline | smb: client: reject short or out-of-range FIND response parameters |
 |  | CVE-2026-99495 | `5e9b339f3232` | mainline | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
 |  | CVE-2026-99493 | `7b88e8b6d714` | mainline | s390/zcrypt: Guard domain index uses against speculative bypass |
-|  | CVE-2026-99792 | `2ff3730998b0` | mainline | smb/server: prevent file publication after tree disconnect |
-|  | CVE-2026-99571 | `2eeeaa9c1ff0` | mainline | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
 |  | CVE-2026-74752 | `3dbb44d88b1e` | mainline | sctp: validate cookie AUTH state before use |
 |  | CVE-2026-98558 | `06e3f54e8b22` | mainline | net: flush skb_defer_nodes in dev_cpu_dead() |
 |  | CVE-2026-98799 | `17637e1a581a` | mainline | bpf: Skip detached progs in trampoline images that are still in use |
@@ -147,7 +149,7 @@ Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-98799 | `17637e1a581a` | claude | bpf: Skip detached progs in trampoline images that are still in use |
 |  | CVE-2026-98800 | `0fb5751a6e41` | claude | bpf: Wait for an RCU tasks grace period before freeing trampoline progs |
 
-### Not affected (reviewed) (23)
+### Not affected (reviewed) (25)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -166,12 +168,14 @@ Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-72200 | `ec4f061f2219` | mainline | ntfs: detect mapping-pairs LCN accumulator overflow — fs/ntfs (classic) not in 6.18; removed in 6.9 |
 |  | CVE-2026-74342 | `6cccc49b027c` | mainline | kernfs: link kn to its parent before the LSM init hook — needs the per-sb xattr cache 12e9e3cd03b5, not in 6.18 |
 |  | CVE-2026-72198 | `097cdfd0a55d` | mainline | ntfs: reject non-resident records for resident-only attributes — fs/ntfs (classic) not in 6.18; removed in 6.9 |
+|  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing — fix already in 6.18.39 as 1c2672781b1b |
 |  | CVE-2026-89862 | `0fb52cc63246` | mainline | scsi: qla2xxx: Fix BSG job leak on validate flash image error path — qla28xx_validate_flash_image() (d74181ca110e) not in 6.18 |
 |  | CVE-2026-89611 | `a83e82b0ec3a` | mainline | ntfs: validate non-resident attribute offsets — fs/ntfs (classic) not in 6.18; removed in 6.9 |
 |  | CVE-2026-89610 | `fea9e4488f38` | mainline | ntfs: verify run length exceeding volume boundary — fs/ntfs (classic) not in 6.18; removed in 6.9 |
 |  | CVE-2026-98144 | `7e33ba3a1d48` | mainline | accel/amdxdna: put the chained BO when its mapping fails — vmap failure branch (d76856beb4a4) not in 6.18; get_obj maps and drops ref itself |
 |  | CVE-2026-89632 | `05f78e6cf34e` | mainline | smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr() — 6.18 checks the length before it reads it |
 |  | CVE-2026-89630 | `ba22f575de9d` | mainline | smb: client: restore the data_offset bound in is_valid_oplock_break() — 6.18 is_valid_oplock_break() still subtracts smb_buf_length; 83bfbd0bb902 only partly backported |
+|  | CVE-2026-98250 | `f76017a7663c` | mainline | nfsd: fix handling of NFSEXP_PNFS in the netlink codepath — nfsd_nl_parse_one_export() (912fc994b920) not in 6.18; svc_export_parse() already checks NFSEXP_PNFS |
 |  | CVE-2026-98983 | `0b6f31a3c0b1` | mainline | unshare: don't drop active namespace references that were never taken — active ns refcount (3a18f809184b) not in 6.18; put_nsproxy() is plain refcount |
 |  | CVE-2026-98938 | `9a7931e847f3` | mainline | rust: irq: pass RegistrationInner as cookie to request_irq — fix already in 6.18.y as 8f317daa50fe |
 

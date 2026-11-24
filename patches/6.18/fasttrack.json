@@ -2060,6 +2060,78 @@
       "build_log": "",
       "backport": "CVE-2026-99472/6.18",
       "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "bbfa823f624d41e85ebca929ac77dc2182cadfed",
+      "subject": "NFSD: Destroy a recalled delegation the client does not hold",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99369"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0111-bbfa823f624d-nfsd-destroy-a-recalled-delegation-the-client-does-n.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99369/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "531aa4239b0d80d7146b102b98f7aa7da989ccdd",
+      "subject": "smb: client: reject short or out-of-range FIND response parameters",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99381"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0112-531aa4239b0d-smb-client-reject-short-or-out-of-range-find-respons.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99381/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "2eeeaa9c1ff0c429096acc2947c296db6a56f96d",
+      "subject": "nvme-tcp: Validate the queue state under the queue lock in the address attribute",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99571"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0113-2eeeaa9c1ff0-nvme-tcp-validate-the-queue-state-under-the-queue-lo.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99571/6.18",
+      "bug_commits": []
+    },
+    {
+      "series": "6.18",
+      "upstream": "2ff3730998b015b5b0a3f28330bee16c648dd114",
+      "subject": "smb/server: prevent file publication after tree disconnect",
+      "source": "claude",
+      "cves": [
+        "CVE-2026-99792"
+      ],
+      "kev": false,
+      "verdict": "accepted",
+      "reason": "",
+      "filename": "0114-2ff3730998b0-smb-server-prevent-file-publication-after-tree-disco.patch",
+      "files": [],
+      "prerequisites": [],
+      "build_log": "",
+      "backport": "CVE-2026-99792/6.18",
+      "bug_commits": []
     }
   ]
 }
