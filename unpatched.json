@@ -638,24 +638,6 @@
   {
     "series": "6.18",
     "cves": [
-      "CVE-2026-99472"
-    ],
-    "kev": false,
-    "upstream": "da260bcb56feeb6489a83f310308453a0a7de25e",
-    "subject": "KVM: pfncache: use a dedicated invalidation sequence for cache refresh",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/kvm_host.h",
-      "virt/kvm/kvm_main.c",
-      "virt/kvm/pfncache.c"
-    ],
-    "prerequisites": [],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.18",
-    "cves": [
       "CVE-2026-98250"
     ],
     "kev": false,
@@ -2928,24 +2910,6 @@
       "f298e3765528 netfs: Fix collection of results during pause when collection offloaded",
       "15e9aaf9fc49 netfs: Fix rolling_buffer_load_from_ra() to not clear mark bits"
     ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.12",
-    "cves": [
-      "CVE-2026-99472"
-    ],
-    "kev": false,
-    "upstream": "da260bcb56feeb6489a83f310308453a0a7de25e",
-    "subject": "KVM: pfncache: use a dedicated invalidation sequence for cache refresh",
-    "verdict": "needs-backport",
-    "files": [
-      "include/linux/kvm_host.h",
-      "virt/kvm/kvm_main.c",
-      "virt/kvm/pfncache.c"
-    ],
-    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },

@@ -2,20 +2,14 @@
 
 **Events this run**
 
-- new-stable 6.18: 6.18.64 → 6.18.65
-- retired 6.18: 5 patch(es) (landed upstream or superseded)
-- new-stable 6.12: 6.12.118 → 6.12.119
-- retired 6.12: 5 patch(es) (landed upstream or superseded)
-- new-stable 6.1: 6.1.192 → 6.1.193
-- added 6.1: 1 patch(es)
-- retired 6.1: 86 patch(es) (landed upstream or superseded)
-- new-stable 7.3: 7.3.5 → 7.3.6
+- added 6.18: 1 patch(es)
+- added 6.12: 1 patch(es)
 
 ## 6.18 (base 6.18.65, `4700e3adf3b2`)
 
-Already in tree: 157 · Other architectures (not built): 4 · cve/ backports no longer needed: 4
+Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no longer needed: 4
 
-### Included (109)
+### Included (110)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -128,8 +122,9 @@ Already in tree: 157 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-64160 | `—` | claude | cifs: Fix undefined variables |
 |  | CVE-2026-99595 | `c282051fc2ca` | claude | sched/fair: Clear throttle state when leaving the fair class |
 |  | CVE-2026-99586 | `84c6089a365f` | claude | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
+|  | CVE-2026-99472 | `da260bcb56fe` | claude | KVM: pfncache: use a dedicated invalidation sequence for cache refresh |
 
-### Needs a backport (15)
+### Needs a backport (14)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -137,7 +132,6 @@ Already in tree: 157 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-68086 | `2dfe9f5c91d0` | mainline | mm/khugepaged: write all dirty file folios when collapsing |
 |  | CVE-2026-99369 | `bbfa823f624d` | mainline | NFSD: Destroy a recalled delegation the client does not hold |
 |  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
-|  | CVE-2026-99472 | `da260bcb56fe` | mainline | KVM: pfncache: use a dedicated invalidation sequence for cache refresh |
 |  | CVE-2026-98250 | `f76017a7663c` | mainline | nfsd: fix handling of NFSEXP_PNFS in the netlink codepath |
 |  | CVE-2026-99381 | `531aa4239b0d` | mainline | smb: client: reject short or out-of-range FIND response parameters |
 |  | CVE-2026-99495 | `5e9b339f3232` | mainline | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
@@ -190,9 +184,9 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 ## 6.12 (base 6.12.119, `e2e4b92c2b2a`)
 
-Already in tree: 144 · Other architectures (not built): 11 · cve/ backports no longer needed: 4
+Already in tree: 145 · Other architectures (not built): 11 · cve/ backports no longer needed: 3
 
-### Included (178)
+### Included (179)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -233,6 +227,7 @@ Already in tree: 144 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-98444 | `ffb48dccce19` | mainline | xfs: drop dquot flush lock when we can't find a buffer to flush |
 |  | CVE-2026-98924 | `3bc4e4410830` | claude | vfs: Remove unnecessary list_for_each_entry_safe() from evict_inodes() |
 |  | CVE-2026-98924 | `7459c0218742` | stable-list | fs: avoid repeated scans in evict_inodes() |
+|  | CVE-2026-99472 | `da260bcb56fe` | stable-list | KVM: pfncache: use a dedicated invalidation sequence for cache refresh |
 |  | CVE-2025-40025 | `c18ecd99e0c7` | claude | f2fs: fix to do sanity check on node footer for non inode dnode |
 |  | CVE-2025-71117 | `935a20d1bebf` | claude | block: Remove queue freezing from several sysfs store callbacks |
 |  | CVE-2025-68304 | `79a2d4678ba9` | claude | Bluetooth: hci_core: lookup hci_conn on RX path on protocol side |
@@ -375,7 +370,7 @@ Already in tree: 144 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-99586 | `84c6089a365f` | claude | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
 |  | CVE-2026-99664 | `79cb51d538ab` | claude | mm/gup: recheck the PUD under PTL in follow_pud_mask() |
 
-### Needs a backport (30)
+### Needs a backport (29)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -391,7 +386,6 @@ Already in tree: 144 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-99369 | `bbfa823f624d` | mainline | NFSD: Destroy a recalled delegation the client does not hold |
 | does not build | CVE-2026-90129 | `7e17eef04600` | mainline | virtio_balloon: quiesce balloon work before device shutdown |
 | does not build | CVE-2026-90098 | `b62793a7baee` | mainline | net: sparx5: fix sleep in atomic context in MAC table access |
-|  | CVE-2026-99472 | `da260bcb56fe` | mainline | KVM: pfncache: use a dedicated invalidation sequence for cache refresh |
 |  | CVE-2026-99522 | `8a8088b899e4` | mainline | RDMA/irdma: avoid use-after-free in icrdma_remove |
 |  | CVE-2026-99381 | `531aa4239b0d` | mainline | smb: client: reject short or out-of-range FIND response parameters |
 |  | CVE-2026-99495 | `5e9b339f3232` | mainline | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
@@ -495,7 +489,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 ## 6.1 (base 6.1.193, `1ca1436ccc68`)
 
-Already in tree: 142 · Other architectures (not built): 18 · cve/ backports no longer needed: 12
+Already in tree: 117 · Other architectures (not built): 18 · cve/ backports no longer needed: 12
 
 ### Included (436)
 
@@ -1050,7 +1044,7 @@ Already in tree: 142 · Other architectures (not built): 18 · cve/ backports no
 |  | CVE-2026-93235 | `5eced87b7d19` | mainline | f2fs: fix to zero post-EOF data when extending file size |
 |  | CVE-2024-50211 | `c226964ec786` | mainline | udf: refactor inode_bmap() to handle error |
 
-### cve/ backport does not apply on this base (46)
+### cve/ backport does not apply on this base (44)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1085,8 +1079,6 @@ Already in tree: 142 · Other architectures (not built): 18 · cve/ backports no
 |  | CVE-2026-97953 | `5e38d732ec67` | claude | net: stmmac: fix TX descriptor availability check for TSO traffic |
 |  | CVE-2026-98288 | `15989abd74f1` | claude | net: stmmac: fix TSO header length truncation |
 |  | CVE-2026-98803 | `88095728511e` | claude | net: stmmac: fix rx Scatter-Gather support |
-|  | CVE-2026-99172 | `—` | claude | ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure |
-|  | CVE-2026-99172 | `f0e48172a59e` | claude | ipc: drop the mqueue mount with kern_unmount() on setup failure |
 |  | CVE-2025-68768 | `1231eec6994b` | claude | inet: frags: add inet_frag_queue_flush() |
 |  | CVE-2025-68768 | `006a5035b495` | claude | inet: frags: flush pending skbs in fqdir_pre_exit() |
 |  | CVE-2025-68768 | `32594b098549` | claude | inet: frags: fix use-after-free caused by the fqdir_pre_exit() flush |
