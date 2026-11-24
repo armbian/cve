@@ -1,22 +1,14 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: claude
+From f85d6af75a94fe3ead45c22ed07d1ad9a566921a Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: stable-queue
 X-Fasttrack-Upstream: 4d8930afa3446041358a7db33e7b23a0bb9459b5
 X-Fasttrack-CVE: CVE-2026-99275
-X-Fasttrack-Backport: cve/CVE-2026-99275/6.1
+From: Sasha Levin <sashal@kernel.org>
+Date: Thu, 22 Oct 2026 06:53:14 +0300
+Subject: smb: client: reject short SESSION_SETUP responses
+
 From: Abdifatah Suruur <suruurism@gmail.com>
-Date: Wed, 11 Nov 2026 11:56:10 +0100
-Subject: [PATCH] smb: client: reject short SESSION_SETUP responses
 
-commit 4d8930afa3446041358a7db33e7b23a0bb9459b5 upstream.
-
-[ Backport:
-  - smb2_check_message() in 6.1 has no per-command smb2_min_pdu_len[] table,
-    so use sizeof(struct smb2_sess_setup_rsp) in place of smb2_min_pdu_len[command].
-  - SMB2_sess_auth_rawntlmssp_negotiate() in 6.1 has no local 'boff' variable
-    (it inlines le16_to_cpu(rsp->SecurityBufferOffset)); introduce 'blen' only,
-    and express the upstream '(u32)boff + blen > iov_len' check using the inline
-    offset read. The prior check guarantees SecurityBufferOffset equals
-    offsetof(..., Buffer), so the comparison is equivalent. ]
+[ Upstream commit 4d8930afa3446041358a7db33e7b23a0bb9459b5 ]
 
 smb2_check_message() accepts frames shorter than struct smb2_pdu when
 the SMB2 status is non-zero, before the minimum-PDU check added by
@@ -45,14 +37,14 @@ Cc: stable@vger.kernel.org
 Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Igor Pecovnik <igor@armbian.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  fs/smb/client/smb2misc.c | 16 ++++++++++++++++
- fs/smb/client/smb2pdu.c  | 12 ++++++++++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2pdu.c  | 18 ++++++++++++------
+ 2 files changed, 28 insertions(+), 6 deletions(-)
 
 diff --git a/fs/smb/client/smb2misc.c b/fs/smb/client/smb2misc.c
-index 27d0fc56cd82..531fd0b6eeae 100644
+index 27d0fc56cd825..531fd0b6eeaef 100644
 --- a/fs/smb/client/smb2misc.c
 +++ b/fs/smb/client/smb2misc.c
 @@ -193,6 +193,22 @@ smb2_check_message(char *buf, unsigned int len, struct TCP_Server_Info *server)
@@ -79,26 +71,28 @@ index 27d0fc56cd82..531fd0b6eeae 100644
  		if ((len >= hdr_size)
  		    && (shdr->Status != 0)) {
 diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 253aa34af1c6..0e7a8dbf9873 100644
+index 75942195b619c..82052c5a0ea43 100644
 --- a/fs/smb/client/smb2pdu.c
 +++ b/fs/smb/client/smb2pdu.c
-@@ -1614,6 +1614,7 @@ SMB2_sess_auth_rawntlmssp_negotiate(struct SMB2_sess_data *sess_data)
- 	unsigned char *ntlmssp_blob = NULL;
- 	bool use_spnego = false; /* else use raw ntlmssp */
- 	u16 blob_length = 0;
-+	u16 blen;
- 	bool is_binding = false;
+@@ -1657,15 +1657,21 @@ SMB2_sess_auth_rawntlmssp_negotiate(struct SMB2_sess_data *sess_data)
+ 	if (rc)
+ 		goto out;
  
- 	/*
-@@ -1664,8 +1665,15 @@ SMB2_sess_auth_rawntlmssp_negotiate(struct SMB2_sess_data *sess_data)
+-	if (offsetof(struct smb2_sess_setup_rsp, Buffer) !=
+-			le16_to_cpu(rsp->SecurityBufferOffset)) {
+-		cifs_dbg(VFS, "Invalid security buffer offset %d\n",
+-			le16_to_cpu(rsp->SecurityBufferOffset));
++	u16 boff = le16_to_cpu(rsp->SecurityBufferOffset);
++	u16 blen = le16_to_cpu(rsp->SecurityBufferLength);
++
++	if (offsetof(struct smb2_sess_setup_rsp, Buffer) != boff) {
++		cifs_dbg(VFS, "Invalid security buffer offset %d\n", boff);
  		rc = -EIO;
  		goto out;
  	}
 -	rc = decode_ntlmssp_challenge(rsp->Buffer,
 -			le16_to_cpu(rsp->SecurityBufferLength), ses);
-+	blen = le16_to_cpu(rsp->SecurityBufferLength);
-+	if ((u32)le16_to_cpu(rsp->SecurityBufferOffset) + blen >
-+			sess_data->iov[0].iov_len) {
++	if ((u32)boff + blen > sess_data->iov[0].iov_len) {
 +		cifs_dbg(VFS, "%s: invalid security buffer length: %u\n",
 +			 __func__, blen);
 +		rc = -EINVAL;
@@ -108,3 +102,6 @@ index 253aa34af1c6..0e7a8dbf9873 100644
  	if (rc)
  		goto out;
  
+-- 
+2.53.0
+
