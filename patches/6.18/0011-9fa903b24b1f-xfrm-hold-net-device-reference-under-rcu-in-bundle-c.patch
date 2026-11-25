@@ -1,10 +1,14 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: mainline
+From 9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: stable-queue
 X-Fasttrack-Upstream: 9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1
 X-Fasttrack-CVE: CVE-2026-98364
 From: "Cen Zhang (Microsoft Security FORGE Labs)" <blbllhy@gmail.com>
 Date: Wed, 26 Aug 2026 16:17:45 -0400
-Subject: [PATCH] xfrm: hold net_device reference under RCU in bundle creation
+Subject: xfrm: hold net_device reference under RCU in bundle creation
+
+From: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
+
+commit 9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1 upstream.
 
 xfrm_bundle_create() and xfrm_create_dummy_bundle() read dst->dev into
 a local pointer without taking a device reference, then pass it to
@@ -35,15 +39,14 @@ Cc: AutonomousCodeSecurity@microsoft.com
 Assisted-by: GitHub-Copilot:claude-opus-4.6
 Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_policy.c | 20 +++++++++++++++-----
+ net/xfrm/xfrm_policy.c |   20 +++++++++++++++-----
  1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 932a313b9460..513c9f228334 100644
 --- a/net/xfrm/xfrm_policy.c
 +++ b/net/xfrm/xfrm_policy.c
-@@ -2770,9 +2770,12 @@ static struct dst_entry *xfrm_bundle_create(struct xfrm_policy *policy,
+@@ -2777,9 +2777,12 @@ static struct dst_entry *xfrm_bundle_cre
  	xdst0->path = dst;
  
  	err = -ENODEV;
@@ -58,7 +61,7 @@ index 932a313b9460..513c9f228334 100644
  
  	xfrm_init_path(xdst0, dst, nfheader_len);
  	xfrm_init_pmtu(bundle, nx);
-@@ -2780,8 +2783,10 @@ static struct dst_entry *xfrm_bundle_create(struct xfrm_policy *policy,
+@@ -2787,8 +2790,10 @@ static struct dst_entry *xfrm_bundle_cre
  	for (xdst_prev = xdst0; xdst_prev != (struct xfrm_dst *)dst;
  	     xdst_prev = (struct xfrm_dst *) xfrm_dst_child(&xdst_prev->u.dst)) {
  		err = xfrm_fill_dst(xdst_prev, dev, fl);
@@ -70,7 +73,7 @@ index 932a313b9460..513c9f228334 100644
  
  		xdst_prev->u.dst.header_len = header_len;
  		xdst_prev->u.dst.trailer_len = trailer_len;
-@@ -2789,6 +2794,7 @@ static struct dst_entry *xfrm_bundle_create(struct xfrm_policy *policy,
+@@ -2796,6 +2801,7 @@ static struct dst_entry *xfrm_bundle_cre
  		trailer_len -= xdst_prev->u.dst.xfrm->props.trailer_len;
  	}
  
@@ -78,7 +81,7 @@ index 932a313b9460..513c9f228334 100644
  	return &xdst0->u.dst;
  
  put_states:
-@@ -3058,11 +3064,15 @@ static struct xfrm_dst *xfrm_create_dummy_bundle(struct net *net,
+@@ -3065,11 +3071,15 @@ static struct xfrm_dst *xfrm_create_dumm
  	xfrm_init_path((struct xfrm_dst *)dst1, dst, 0);
  
  	err = -ENODEV;

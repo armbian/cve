@@ -1,5 +1,9 @@
 # Kernel security fast-track
 
+**Events this run**
+
+- added 6.1: 2 patch(es)
+
 ## 6.18 (base 6.18.65, `4700e3adf3b2`)
 
 Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no longer needed: 6
@@ -17,20 +21,20 @@ Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-99701 | `990d6c2194a9` | stable-queue | mm/ksm: fix userfaultfd protection during merge and unmerge |
 |  | CVE-2026-99369 | `bbfa823f624d` | stable-queue | NFSD: Destroy a recalled delegation the client does not hold |
 |  | CVE-2026-99571 | `2eeeaa9c1ff0` | stable-queue | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
-|  | CVE-2026-53024 | `84265cbd96b9` | mainline | greybus: raw: fix use-after-free if write is called after disconnect |
+|  | CVE-2026-98285 | `2842ce397dd0` | stable-queue | net: bridge: vlan: fix bugs caused by switchdev deletion errors |
+|  | CVE-2026-98364 | `9fa903b24b1f` | stable-queue | xfrm: hold net_device reference under RCU in bundle creation |
+|  | CVE-2026-98570 | `87cd6b717e40` | stable-queue | net: ipv6: keep room for the mac header in dst_dev_overhead() |
+|  | CVE-2026-98802 | `8ae3f4067ba4` | stable-queue | seg6: ensure packet data is writable before modifying SRH and IPv6 DA |
+|  | CVE-2026-98834 | `26300879cd8e` | stable-queue | mtd: core: avoid double-free of OTP NVMEM device |
+|  | CVE-2026-53024 | `84265cbd96b9` | stable-queue | greybus: raw: fix use-after-free if write is called after disconnect |
 |  | CVE-2026-46017 | `3bac01168982` | mainline | mm: fix deferred split queue races during migration |
 |  | CVE-2026-98376 | `593980175389` | mainline | bpf: Use array_map_meta_equal for percpu array inner map replacement |
-|  | CVE-2026-98364 | `9fa903b24b1f` | mainline | xfrm: hold net_device reference under RCU in bundle creation |
 |  | CVE-2026-98355 | `99c24a8968eb` | mainline | RDMA/rtrs: guard against null kobj name |
-|  | CVE-2026-98834 | `26300879cd8e` | mainline | mtd: core: avoid double-free of OTP NVMEM device |
 |  | CVE-2026-98332 | `6f0a100df853` | mainline | wifi: mac80211: only operate on TDLS peers in the TDLS code |
 |  | CVE-2026-98292 | `8879e3e0a84a` | mainline | Bluetooth: btmtksdio, btmtkuart: validate WMT event length before struct access |
-|  | CVE-2026-98285 | `2842ce397dd0` | mainline | net: bridge: vlan: fix bugs caused by switchdev deletion errors |
 |  | CVE-2026-98824 | `6bdcdb31318c` | mainline | wifi: mac80211: validate TX status rate metadata |
 |  | CVE-2026-98551 | `24b620729e53` | mainline | perf/core: Fill branch entries with a single assignment |
-|  | CVE-2026-98570 | `87cd6b717e40` | mainline | net: ipv6: keep room for the mac header in dst_dev_overhead() |
 |  | CVE-2026-98810 | `6f63e919fe1e` | mainline | wifi: mac80211: fix slab-out-of-bounds read in ieee80211_monitor_select_queue() |
-|  | CVE-2026-98802 | `8ae3f4067ba4` | mainline | seg6: ensure packet data is writable before modifying SRH and IPv6 DA |
 |  | CVE-2026-98966 | `184b5ddf82d4` | mainline | bonding: fix the program leak when XDP is replaced |
 |  | CVE-2026-100073 | `46e8e31771f4` | claude | ext4: fix transaction overflow during writeback |
 |  | CVE-2026-43042 | `629ec78ef860` | claude | mpls: add seqcount to protect the platform_label{,s} pair |
@@ -125,10 +129,12 @@ Already in tree: 158 · Other architectures (not built): 4 · cve/ backports no 
 |  | CVE-2026-99493 | `7b88e8b6d714` | claude | s390/zcrypt: Guard domain index uses against speculative bypass |
 |  | CVE-2026-99495 | `5e9b339f3232` | claude | s390/zcrypt: Fix and improve zcrypt reply message verification checks |
 
-### Needs a backport (6)
+### Needs a backport (8)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
+|  | CVE-2026-52906 | `da2346a48a5a` | stable-queue | 9p: fix access mode flags being ORed instead of replaced |
+|  | CVE-2026-98268 | `88aed0422f39` | stable-queue | perf: Fix null pointer access in is_include_guest_event() |
 |  | CVE-2026-72377 | `81e985b4c3a6` | mainline | afs: Remove setting of AS_RELEASE_ALWAYS for symlinks and mountpoints |
 |  | CVE-2026-98118 | `fed0b33e6c58` | mainline | netfs: Fix readahead synchronisation issues by loading all folios upfront |
 |  | CVE-2026-74752 | `3dbb44d88b1e` | mainline | sctp: validate cookie AUTH state before use |
@@ -383,11 +389,14 @@ Already in tree: 145 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-99522 | `8a8088b899e4` | claude | RDMA/irdma: avoid use-after-free in icrdma_remove |
 |  | CVE-2026-99652 | `d03df42ddae1` | claude | mm: fix deadlock of mremap() against UFFDIO_MOVE |
 
-### Needs a backport (12)
+### Needs a backport (15)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
 |  | CVE-2026-74260 | `2354e975932d` | stable-queue | netfilter: nf_dup_netdev: add nf_dev_xmit_recursion*() helpers and use them |
+|  | CVE-2026-52906 | `da2346a48a5a` | stable-queue | 9p: fix access mode flags being ORed instead of replaced |
+|  | CVE-2026-90059 | `23680bf5f8c6` | stable-queue | net: stmmac: restore NET_IP_ALIGN in the RX DMA offset |
+|  | CVE-2026-98571 | `0a7822e34a0b` | stable-queue | net: stmmac: clear stale buf->page after recycling on skb build failure |
 |  | CVE-2025-38311 | `120f28a6f314` | mainline | iavf: get rid of the crit lock |
 |  | CVE-2025-40146 | `b86433721f46` | mainline | blk-mq: fix potential deadlock while nr_requests grown |
 |  | CVE-2025-71315 | `02e2681ffe1a` | mainline | drm/vkms: Convert to DRM's vblank timer |
@@ -482,7 +491,7 @@ Fix any of these with `fasttrack cve <ID>` (add `--claude` for a Claude-made bac
 
 Already in tree: 117 · Other architectures (not built): 18 · cve/ backports no longer needed: 14
 
-### Included (447)
+### Included (449)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -503,6 +512,8 @@ Already in tree: 117 · Other architectures (not built): 18 · cve/ backports no
 |  | CVE-2026-99634 | `6d2cf411aba2` | stable-queue | mptcp: do not use Fast Open on MP_JOIN subflows |
 |  | CVE-2026-99601 | `e614c3e35a66` | stable-queue | udf: check the unallocated space table when it is loaded |
 |  | CVE-2026-99573 | `a1b4bd2c2c26` | stable-queue | KVM: arm64: vgic: Stop the target vcpu when disabling LPIs |
+|  | CVE-2026-99809 | `420bed9131db` | stable-queue | vfio/platform: prevent read-only region mappings from becoming writable |
+|  | CVE-2026-99810 | `25fd8b27ee8d` | stable-queue | vfio/fsl-mc: prevent read-only region mappings from becoming writable |
 |  | CVE-2026-31448 | `5422fe71d26d` | stable-queue | ext4: avoid infinite loops caused by residual data |
 |  | CVE-2024-27023 | `855678ed8534` | mainline | md: Fix missing release of 'active_io' for flush |
 |  | CVE-2024-41149 | `85672ca9ceea` | mainline | block: avoid to reuse `hctx` not removed from cpuhp callback list |
@@ -1091,7 +1102,7 @@ Already in tree: 117 · Other architectures (not built): 18 · cve/ backports no
 |---|---|---|---|---|
 |  | CVE-2024-35843 | `def054b01a86` | mainline | iommu/vt-d: Use device rbtree in iopf reporting path |
 
-### Not affected (reviewed) (150)
+### Not affected (reviewed) (149)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
@@ -1138,7 +1149,6 @@ Already in tree: 117 · Other architectures (not built): 18 · cve/ backports no
 |  | CVE-2024-54191 | `7a17308c1788` | mainline | Bluetooth: iso: Fix circular lock in iso_conn_big_sync — no iso_conn_big_sync() or PA/BIG sync path in 6.1 |
 |  | CVE-2024-57935 | `0572eccf239c` | mainline | RDMA/hns: Fix accessing invalid dip_ctx during destroying QP — hr_qp->dip (faa62440a577) not in 6.1 |
 |  | CVE-2025-21634 | `3cb97a927fff` | mainline | cgroup/cpuset: remove kernfs active break — stable 2d6a67c2b3b8 removes the WARN; upstream change needs sync hotplug |
-|  | CVE-2024-57984 | `b75439c945b9` | mainline | i3c: dw: Fix use-after-free in dw_i3c_master driver due to race condition — no i3c hj_work (1d08326020fb) in 6.1 |
 |  | CVE-2025-21679 | `fe4de594f7a2` | mainline | btrfs: add the missing error handling inside get_canonical_dev_path — get_canonical_dev_path() (7e06de7c83a7) not in 6.1 |
 |  | CVE-2025-21985 | `8adbb2a98b00` | mainline | drm/amd/display: Fix out-of-bound accesses — no dc/dml2 in 6.1 |
 |  | CVE-2025-38038 | `db1cafc77aaa` | mainline | cpufreq: amd-pstate: Remove unnecessary driver_lock in set_boost — 6.1 set_boost takes no amd_pstate_driver_lock |

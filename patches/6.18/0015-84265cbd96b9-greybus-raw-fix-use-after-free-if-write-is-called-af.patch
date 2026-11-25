@@ -1,14 +1,17 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: mainline
+From 84265cbd96b97058ef67e3f8be3933667a000835 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: stable-queue
 X-Fasttrack-Upstream: 84265cbd96b97058ef67e3f8be3933667a000835
 X-Fasttrack-CVE: CVE-2026-53024
 From: =?UTF-8?q?Damien=20Ri=C3=A9gel?= <damien.riegel@silabs.com>
 Date: Tue, 24 Mar 2026 10:00:39 -0400
-Subject: [PATCH] greybus: raw: fix use-after-free if write is called after
- disconnect
+Subject: greybus: raw: fix use-after-free if write is called after disconnect
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+
+From: Damien Riégel <damien.riegel@silabs.com>
+
+commit 84265cbd96b97058ef67e3f8be3933667a000835 upstream.
 
 If a user writes to the chardev after disconnect has been called, the
 kernel panics with the following trace (with
@@ -46,12 +49,11 @@ Reviewed-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Damien Riégel <damien.riegel@silabs.com>
 Link: https://patch.msgid.link/20260324140039.40001-2-damien.riegel@silabs.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/greybus/raw.c | 23 +++++++++++++++++++++--
+ drivers/staging/greybus/raw.c |   23 +++++++++++++++++++++--
  1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/greybus/raw.c b/drivers/staging/greybus/raw.c
-index 47a984554681..459aed0f1240 100644
 --- a/drivers/staging/greybus/raw.c
 +++ b/drivers/staging/greybus/raw.c
 @@ -21,6 +21,8 @@ struct gb_raw {
@@ -63,7 +65,7 @@ index 47a984554681..459aed0f1240 100644
  	struct cdev cdev;
  	struct device dev;
  };
-@@ -200,6 +202,7 @@ static int gb_raw_probe(struct gb_bundle *bundle,
+@@ -200,6 +202,7 @@ static int gb_raw_probe(struct gb_bundle
  
  	INIT_LIST_HEAD(&raw->list);
  	mutex_init(&raw->list_lock);
@@ -71,7 +73,7 @@ index 47a984554681..459aed0f1240 100644
  
  	raw->connection = connection;
  	greybus_set_drvdata(bundle, raw);
-@@ -235,6 +238,11 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
+@@ -235,6 +238,11 @@ static void gb_raw_disconnect(struct gb_
  	struct raw_data *temp;
  
  	cdev_device_del(&raw->cdev, &raw->dev);
@@ -83,7 +85,7 @@ index 47a984554681..459aed0f1240 100644
  	gb_connection_disable(connection);
  	gb_connection_destroy(connection);
  
-@@ -277,11 +285,22 @@ static ssize_t raw_write(struct file *file, const char __user *buf,
+@@ -277,11 +285,22 @@ static ssize_t raw_write(struct file *fi
  	if (count > MAX_PACKET_SIZE)
  		return -E2BIG;
  

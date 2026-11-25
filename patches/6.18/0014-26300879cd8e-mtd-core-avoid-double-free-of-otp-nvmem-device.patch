@@ -1,10 +1,14 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: mainline
+From 26300879cd8e4612dce66bb8f6ff7cd35fcf3e59 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: stable-queue
 X-Fasttrack-Upstream: 26300879cd8e4612dce66bb8f6ff7cd35fcf3e59
 X-Fasttrack-CVE: CVE-2026-98834
 From: Karl Mehltretter <kmehltretter@gmail.com>
 Date: Sun, 16 Aug 2026 18:30:27 +0200
-Subject: [PATCH] mtd: core: avoid double-free of OTP NVMEM device
+Subject: mtd: core: avoid double-free of OTP NVMEM device
+
+From: Karl Mehltretter <kmehltretter@gmail.com>
+
+commit 26300879cd8e4612dce66bb8f6ff7cd35fcf3e59 upstream.
 
 If factory OTP setup fails after the user OTP NVMEM device has been
 registered, mtd_otp_nvmem_add() unregisters the user device but leaves
@@ -19,15 +23,14 @@ Fixes: fe0b8213c012 ("mtd: core: Don't fail mtd_otp_nvmem_add() if OTP is unsupp
 Assisted-by: Codex:gpt-5.6-sol
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdcore.c | 1 +
+ drivers/mtd/mtdcore.c |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 16629382a787..6158452be24d 100644
 --- a/drivers/mtd/mtdcore.c
 +++ b/drivers/mtd/mtdcore.c
-@@ -1083,6 +1083,7 @@ static int mtd_otp_nvmem_add(struct mtd_info *mtd)
+@@ -1082,6 +1082,7 @@ static int mtd_otp_nvmem_add(struct mtd_
  
  err:
  	nvmem_unregister(mtd->otp_user_nvmem);
