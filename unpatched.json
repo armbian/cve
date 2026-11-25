@@ -2,6 +2,34 @@
   {
     "series": "6.18",
     "cves": [
+      "CVE-2026-52906"
+    ],
+    "kev": false,
+    "upstream": "da2346a48a5a1fed86c3fe3d73c0b60e7b3027c9",
+    "subject": "9p: fix access mode flags being ORed instead of replaced",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
+      "CVE-2026-98268"
+    ],
+    "kev": false,
+    "upstream": "88aed0422f39b22406f35f1e758cea25e7bbcfb5",
+    "subject": "perf: Fix null pointer access in is_include_guest_event()",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.18",
+    "cves": [
       "CVE-2025-68226"
     ],
     "kev": false,
@@ -844,6 +872,48 @@
       "0a0b35f0bf10 netfilter: nft_fwd_netdev: add device and headroom validate with neigh forwarding",
       "1d47b55b36d2 netfilter: nft_fwd_netdev: use recursion counter in neigh egress path"
     ],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-52906"
+    ],
+    "kev": false,
+    "upstream": "da2346a48a5a1fed86c3fe3d73c0b60e7b3027c9",
+    "subject": "9p: fix access mode flags being ORed instead of replaced",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-90059"
+    ],
+    "kev": false,
+    "upstream": "23680bf5f8c69c923546b84a8e6c401bef8b88fe",
+    "subject": "net: stmmac: restore NET_IP_ALIGN in the RX DMA offset",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
+    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
+    "build_log": ""
+  },
+  {
+    "series": "6.12",
+    "cves": [
+      "CVE-2026-98571"
+    ],
+    "kev": false,
+    "upstream": "0a7822e34a0bfde31b194ac3da3253e5032b44cc",
+    "subject": "net: stmmac: clear stale buf->page after recycling on skb build failure",
+    "verdict": "needs-backport",
+    "files": [],
+    "prerequisites": [],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
   },
@@ -4715,38 +4785,6 @@
       "5273ee254e34 cgroup/cpuset: remove unneeded header files",
       "a453be9725a1 cgroup/cpuset: simplify the percpu kthreads check in update_tasks_cpumask()",
       "48f074565bb7 cgroup/cpuset: avoid unneeded cpuset_mutex re-lock"
-    ],
-    "reason": "does not apply unchanged; needs a manual backport or prerequisite",
-    "build_log": ""
-  },
-  {
-    "series": "6.1",
-    "cves": [
-      "CVE-2024-57984"
-    ],
-    "kev": false,
-    "upstream": "b75439c945b94dd8a2b645355bdb56f948052601",
-    "subject": "i3c: dw: Fix use-after-free in dw_i3c_master driver due to race condition",
-    "verdict": "needs-backport",
-    "files": [
-      "drivers/i3c/master/dw-i3c-master.c"
-    ],
-    "prerequisites": [
-      "510d2358c466 i3c: master: dw: stop hardcoding initial speed",
-      "1dae3f1df700 i3c: dw: drop of_match_ptr for ID table",
-      "04b5f1be2673 i3c: dw: Convert to platform remove callback returning void",
-      "67df5ce9dd88 i3c: dw: Return the length from a read priv_xfer",
-      "66b32e3d2c6d i3c: dw: use bus mode rather than device reg for conditional tCAS setting",
-      "d782188cbb05 i3c: dw: Add infrastructure for platform-specific implementations",
-      "79f42b31c2ec i3c: dw: Create a generic fifo read function",
-      "e2d43101f61d i3c: dw: Turn DAT array entry into a struct",
-      "e389b1d72a62 i3c: dw: Add support for in-band interrupts",
-      "f3a3553a51e6 i3c: dw: Add a platform facility for IBI PEC workarounds",
-      "014c9a0e6f9f i3c: dw: Annotate struct dw_i3c_xfer with __counted_by",
-      "10201396ef64 i3c: dw: Disable IBI IRQ depends on hot-join and SIR enabling",
-      "1d08326020fb i3c: dw: Add hot-join support.",
-      "8f2cb0327938 i3c: dw: Fix clearing queue thld",
-      "64bf14590806 i3c: dw: Fix IBI intr programming"
     ],
     "reason": "does not apply unchanged; needs a manual backport or prerequisite",
     "build_log": ""
