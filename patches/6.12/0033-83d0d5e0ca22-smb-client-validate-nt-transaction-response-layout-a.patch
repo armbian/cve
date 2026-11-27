@@ -1,14 +1,10 @@
-From 9bb3dba87a6d14b7b0157a3ff75cd8ddf78d5377 Mon Sep 17 00:00:00 2001
-X-Fasttrack-Source: stable-queue
+From 83d0d5e0ca22233c75daf139ec0063b9d2ff1ac7 Mon Sep 17 00:00:00 2001
+X-Fasttrack-Source: mainline
 X-Fasttrack-Upstream: 83d0d5e0ca22233c75daf139ec0063b9d2ff1ac7
 X-Fasttrack-CVE: CVE-2026-99380
-From: Sasha Levin <sashal@kernel.org>
+From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 Date: Sat, 17 Oct 2026 23:15:05 +0200
 Subject: smb: client: validate NT transaction response layout and offsets
-
-From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-
-[ Upstream commit 83d0d5e0ca22233c75daf139ec0063b9d2ff1ac7 ]
 
 validate_ntransact() assumes that the response uses the fixed 18-word NT
 transaction layout. A different WordCount makes get_bcc() locate the byte
@@ -32,16 +28,15 @@ Cc: stable@vger.kernel.org
 Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  fs/smb/client/cifssmb.c | 32 +++++++++++++++++++-------------
  1 file changed, 19 insertions(+), 13 deletions(-)
 
 diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 3ab798341f0f0..4a06923b2efa4 100644
+index e335686a68f2f..9ffc94ac20694 100644
 --- a/fs/smb/client/cifssmb.c
 +++ b/fs/smb/client/cifssmb.c
-@@ -3313,9 +3313,10 @@ static int
+@@ -3787,9 +3787,10 @@ static int
  validate_ntransact(char *buf, char **ppparm, char **ppdata,
  		   __u32 *pparmlen, __u32 *pdatalen)
  {
@@ -53,7 +48,7 @@ index 3ab798341f0f0..4a06923b2efa4 100644
  	u16 bcc;
  
  	*pdatalen = 0;
-@@ -3326,37 +3327,42 @@ validate_ntransact(char *buf, char **ppparm, char **ppdata,
+@@ -3800,37 +3801,42 @@ validate_ntransact(char *buf, char **ppparm, char **ppdata,
  
  	pSMBr = (struct smb_com_ntransact_rsp *)buf;
  
@@ -109,5 +104,5 @@ index 3ab798341f0f0..4a06923b2efa4 100644
  	*pparmlen = parm_count;
  	return 0;
 -- 
-2.53.0
+cgit 1.3.1-korg
 

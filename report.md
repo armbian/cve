@@ -191,7 +191,6 @@ Already in tree: 145 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-45903 | `802eef5afb18` | stable-queue | bpf: Fix memory access flags in helper prototypes |
 |  | CVE-2026-99701 | `990d6c2194a9` | stable-queue | mm/ksm: fix userfaultfd protection during merge and unmerge |
 |  | CVE-2026-99383 | `78f739858464` | stable-queue | smb: client: reclaim credits for decrypted reads with no matching mid |
-|  | CVE-2026-99380 | `83d0d5e0ca22` | stable-queue | smb: client: validate NT transaction response layout and offsets |
 |  | CVE-2026-99349 | `af208f36ae22` | stable-queue | rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data() |
 |  | CVE-2026-99679 | `bcf0b7f18ad1` | stable-queue | xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks |
 |  | CVE-2026-99571 | `2eeeaa9c1ff0` | stable-queue | nvme-tcp: Validate the queue state under the queue lock in the address attribute |
@@ -220,6 +219,7 @@ Already in tree: 145 · Other architectures (not built): 11 · cve/ backports no
 |  | CVE-2026-98810 | `6f63e919fe1e` | mainline | wifi: mac80211: fix slab-out-of-bounds read in ieee80211_monitor_select_queue() |
 |  | CVE-2026-98802 | `8ae3f4067ba4` | mainline | seg6: ensure packet data is writable before modifying SRH and IPv6 DA |
 |  | CVE-2026-98966 | `184b5ddf82d4` | mainline | bonding: fix the program leak when XDP is replaced |
+|  | CVE-2026-99380 | `83d0d5e0ca22` | mainline | smb: client: validate NT transaction response layout and offsets |
 |  | CVE-2026-46279 | `6b1842775a46` | stable-list | mm/alloc_tag: clear codetag for pages allocated before |
 |  | CVE-2026-52953 | `a6dea58d8625` | stable-list | iommu/vt-d: Fix oops due to out of scope access |
 |  | CVE-2026-52960 | `544576f0f05c` | mainline | ceph: put folios not suitable for writeback |
@@ -498,11 +498,9 @@ Already in tree: 117 · Other architectures (not built): 18 · cve/ backports no
 |  | CVE-2026-99542 | `de0cffef897c` | stable-queue | ksmbd: deny access for an empty DACL instead of granting the request |
 |  | CVE-2026-99506 | `824cc56bf43c` | stable-queue | mm/hugetlb: fix use-after-free of a new anon folio |
 |  | CVE-2026-99467 | `0f29f84317c1` | stable-queue | media: marvell: mcam: stop DMA and cancel s_bh_work before freeing DMA buffers |
-|  | CVE-2026-99464 | `af452b9e0133` | stable-queue | media: redrat3: fix UAF in probe error path leaving rc device registered |
 |  | CVE-2026-99383 | `78f739858464` | stable-queue | smb: client: reclaim credits for decrypted reads with no matching mid |
 |  | CVE-2026-99382 | `29bd6773187c` | stable-queue | smb: client: reject FIND data areas that run past the received response |
 |  | CVE-2026-99275 | `4d8930afa344` | stable-queue | smb: client: reject short SESSION_SETUP responses |
-|  | CVE-2026-99380 | `83d0d5e0ca22` | stable-queue | smb: client: validate NT transaction response layout and offsets |
 |  | CVE-2026-99349 | `af208f36ae22` | stable-queue | rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data() |
 |  | CVE-2026-99679 | `bcf0b7f18ad1` | stable-queue | xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks |
 |  | CVE-2026-99634 | `6d2cf411aba2` | stable-queue | mptcp: do not use Fast Open on MP_JOIN subflows |
@@ -521,6 +519,7 @@ Already in tree: 117 · Other architectures (not built): 18 · cve/ backports no
 |  | CVE-2026-68245 | `04cc4aa3617b` | mainline | drm/amdgpu: fix lifetime issue of amdgpu_vm_get_task_info_pasid() |
 |  | CVE-2026-92491 | `2224b622260b` | mainline | firmware: arm_scmi: Roll back partial protocol table registration |
 |  | CVE-2026-80579 | `95e647d2a530` | mainline | fbdev: clear fb_info->mode before deleting a videomode |
+|  | CVE-2026-99464 | `af452b9e0133` | mainline | media: redrat3: fix UAF in probe error path leaving rc device registered |
 |  | CVE-2026-90199 | `20fd9f64c005` | mainline | fs/ntfs3: reject out-of-range evcn in mi_enum_attr() |
 |  | CVE-2026-98161 | `c644a2f8fef5` | mainline | nvdimm: pmem: keep PREFLUSH before data writes |
 |  | CVE-2026-98364 | `9fa903b24b1f` | mainline | xfrm: hold net_device reference under RCU in bundle creation |
@@ -536,6 +535,7 @@ Already in tree: 117 · Other architectures (not built): 18 · cve/ backports no
 |  | CVE-2026-98966 | `184b5ddf82d4` | mainline | bonding: fix the program leak when XDP is replaced |
 |  | CVE-2026-99444 | `5c1c602463d5` | mainline | power: supply: sbs-battery: disable polling before supply teardown |
 |  | CVE-2026-98980 | `8189ab688f5a` | mainline | namei: don't reveal overmounted entries in refwalk |
+|  | CVE-2026-99380 | `83d0d5e0ca22` | mainline | smb: client: validate NT transaction response layout and offsets |
 |  | CVE-2024-27080 | `978b63f7464a` | stable-list | btrfs: fix race when detecting delalloc ranges during fiemap |
 |  | CVE-2024-40965 | `4268254a3948` | stable-list | i2c: lpi2c: Avoid calling clk_get_rate during transfer |
 |  | CVE-2024-40965 | `—` | claude | i2c: lpi2c: lock the peripheral clock rate in probe |
