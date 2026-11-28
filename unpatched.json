@@ -3202,6 +3202,38 @@
   {
     "series": "6.1",
     "cves": [
+      "CVE-2026-23461"
+    ],
+    "kev": false,
+    "upstream": "752a6c9596dd25efd6978a73ff21f3b592668f4a",
+    "subject": "Bluetooth: L2CAP: Fix use-after-free in l2cap_unregister_user",
+    "verdict": "needs-backport",
+    "files": [
+      "net/bluetooth/l2cap_core.c"
+    ],
+    "prerequisites": [
+      "462fcd53924c Bluetooth: Add CONFIG_BT_LE_L2CAP_ECRED",
+      "b8b23001b802 Bluetooth: L2CAP: Delay identity address updates",
+      "bf98feea5b65 Bluetooth: hci_conn: Always use sk_timeo as conn_timeout",
+      "600b0bbe73d3 Bluetooth: l2cap: Don't double set the HCI_CONN_MGMT_CONNECTED bit",
+      "2e7ed5f5e69b Bluetooth: hci_sync: Use advertised PHYs on hci_le_ext_create_conn_sync",
+      "1c08108f3014 Bluetooth: L2CAP: Avoid -Wflex-array-member-not-at-end warnings",
+      "c695439d198d Bluetooth: fix connection setup in l2cap_connect",
+      "ab4eedb790ca Bluetooth: L2CAP: Fix corrupted list in hci_chan_del",
+      "c9d84da18d1e Bluetooth: L2CAP: convert timeouts to secs_to_jiffies()",
+      "11770f41b8a7 Bluetooth: L2CAP: add TX timestamping",
+      "e2e49e214145 Bluetooth: l2cap: Process valid commands in too long frame",
+      "3908feb1bd7f Bluetooth: L2CAP: copy RX timestamp to new fragments",
+      "76e20da0bd00 Revert \"Bluetooth: L2CAP: convert timeouts to secs_to_jiffies()\"",
+      "79a2d4678ba9 Bluetooth: hci_core: lookup hci_conn on RX path on protocol side",
+      "69050f8d6d07 treewide: Replace kmalloc with kmalloc_obj for non-scalar types"
+    ],
+    "reason": "applies unchanged but does not build; needs a backport or prerequisite",
+    "build_log": "## net/bluetooth/l2cap_core.c\nnet/bluetooth/l2cap_core.c:1792:25: error: \u2018struct l2cap_conn\u2019 has no member named \u2018lock\u2019\nnet/bluetooth/l2cap_core.c:1813:27: error: \u2018struct l2cap_conn\u2019 has no member named \u2018lock\u2019\nnet/bluetooth/l2cap_core.c:1820:25: error: \u2018struct l2cap_conn\u2019 has no member named \u2018lock\u2019\nnet/bluetooth/l2cap_core.c:1829:27: error: \u2018struct l2cap_conn\u2019 has no member named \u2018lock\u2019"
+  },
+  {
+    "series": "6.1",
+    "cves": [
       "CVE-2024-26672"
     ],
     "kev": false,

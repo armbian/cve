@@ -941,10 +941,11 @@ Already in tree: 117 · Other architectures (not built): 18 · cve/ backports no
 |  | CVE-2026-99586 | `84c6089a365f` | claude | iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA |
 |  | CVE-2026-97985 | `94fd4debd2e3` | claude | af_unix: Update last skb marker in manage_oob(). |
 
-### Needs a backport (97)
+### Needs a backport (98)
 
 | | CVE | Upstream | Source | Subject |
 |---|---|---|---|---|
+| does not build | CVE-2026-23461 | `752a6c9596dd` | stable-queue | Bluetooth: L2CAP: Fix use-after-free in l2cap_unregister_user |
 |  | CVE-2024-26962 | `41425f96d7aa` | mainline | dm-raid456, md/raid456: fix a deadlock for dm-raid456 while io concurrent with reshape |
 | does not build | CVE-2024-26890 | `de4e88ec58c4` | mainline | Bluetooth: btrtl: fix out of bounds memory access |
 |  | CVE-2024-26888 | `a6e06258f4c3` | mainline | Bluetooth: msft: Fix memory leak |

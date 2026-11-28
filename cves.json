@@ -7051,6 +7051,17 @@
       }
     ]
   },
+  "CVE-2026-23461": {
+    "6.1": [
+      {
+        "status": "needs-backport",
+        "upstream": "752a6c9596dd",
+        "source": "stable-queue",
+        "subject": "Bluetooth: L2CAP: Fix use-after-free in l2cap_unregister_user",
+        "reason": "applies unchanged but does not build; needs a backport or prerequisite"
+      }
+    ]
+  },
   "CVE-2026-31413": {
     "6.18": [
       {
